@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "common/base.html" %}
 {% load static %}
 {% block title %}All Sub Category{% endblock title%}
 {% block content %}
@@ -13,7 +13,7 @@
                 {{catname}}
                 ]</h6>
             <div class="row justify-content-center align-items-center p-1">
-                <a href="{% url 'add_sub_category' catid catname%}">
+                <a href="{% url 'dashboard_app:add_sub_category' catid catname%}">
                 <span class="badge badge-sm bg-gradient-info ">
                     <i class="fa-solid fa-user-plus"></i>
                      Create New Sub Category</span>
@@ -68,7 +68,7 @@
                     <td class="align-middle">
                         <div class="row">
                             <div class="col">
-                                <a href="{% url 'update_sub_category' catid row.subcatid catname %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                <a href="{% url 'dashboard_app:update_sub_category' catid row.subcatid catname %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                     Edit
                                   </a>
                             </div>

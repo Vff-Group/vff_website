@@ -11,7 +11,7 @@
           <div class="card-header pb-0 d-flex justify-content-between">
             <h6>All Delivery Agents</h6>
             <div class="row justify-content-center align-items-center p-1">
-                <a href="{% url 'add_delivery_agent' %}">
+                <a href="{% url 'dashboard_app:add_delivery_agent' %}">
                 <span class="badge badge-sm bg-gradient-dark ">
                     <i class="fa-solid fa-user-plus"></i>
                      Add New Delivery Agent</span>
@@ -87,7 +87,7 @@
                     <td class="align-middle">
                         <div class="row">
                             <div class="col">
-                                <a href="{% url 'update_delivery_agent' row.usrid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                <a href="{% url 'dashboard_app:update_delivery_agent' row.usrid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                     Edit
                                   </a>
                             </div>

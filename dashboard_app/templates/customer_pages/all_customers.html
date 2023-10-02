@@ -11,7 +11,7 @@
           <div class="card-header pb-0 d-flex justify-content-between">
             <h6>All Customers</h6>
             <div class="row justify-content-center align-items-center p-1">
-                <a href="{% url 'add_customer' %}">
+                <a href="{% url 'dashboard_app:add_customer' %}">
                 <span class="badge badge-sm bg-gradient-success ">
                     <i class="fa-solid fa-user-plus"></i>
                      Add Customer</span>
@@ -87,7 +87,7 @@
                     <td class="align-middle">
                         <div class="row">
                             <div class="col">
-                                <a href="{% url 'update_customer' row.usrid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                <a href="{% url 'dashboard_app:update_customer' row.usrid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                     Edit
                                   </a>
                             </div>

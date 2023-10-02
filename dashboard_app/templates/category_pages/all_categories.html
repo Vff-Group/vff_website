@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "common/base.html" %}
 {% load static %}
 {% block title %}All Category{% endblock title%}
 {% block content %}
@@ -11,7 +11,7 @@
           <div class="card-header pb-0 d-flex justify-content-between">
             <h6>All Category</h6>
             <div class="row justify-content-center align-items-center p-1">
-                <a href="{% url 'add_category' %}">
+                <a href="{% url 'dashboard_app:add_category' %}">
                 <span class="badge badge-sm bg-gradient-info ">
                     <i class="fa-solid fa-user-plus"></i>
                      Create New Category</span>
@@ -73,12 +73,12 @@
                     <td class="align-middle">
                         <div class="row">
                             <div class="col">
-                                <a href="{% url 'update_category' row.catid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                <a href="{% url 'dashboard_app:update_category' row.catid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                     Edit
                                   </a>
                             </div>
                             <div class="col">
-                                <a href="{% url 'all_sub_categories' row.catid row.categoryname %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                <a href="{% url 'dashboard_app:all_sub_categories' row.catid row.categoryname %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                     View Sub Category
                                   </a>
                             </div>
