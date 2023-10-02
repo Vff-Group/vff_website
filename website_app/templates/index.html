@@ -1,0 +1,238 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <!-- banner section -->
+    <section class="banner-19">
+        <div class="banner-layer">
+            <video autoplay muted loop id="myVideo">
+		    <source src="{% static 'videos/video.mp4' %}" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video>
+            <div class="main-content-top">
+                <div class="container">
+                    <div class="main-content">
+                        <h4>Laundry & Dry Cleaning Services</h4>
+                        <p class="mt-3">Welcome to our Laundry & Dry Cleaning Services! We understand that your garments deserve the best care, and we're here to provide just that</p>
+                        <a href="" class="btn btn-style mt-md-5 mt-4">Explore More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- //banner section -->
+
+    <!-- banner bottom section -->
+    <section class="w3l-bottom-grids-6 py-5">
+        <div class="container pt-lg-5 pt-md-4 pt-2">
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6">
+                    <div class="area-box">
+                        <i class="fas fa-stopwatch-20"></i>
+                        <h4><a href="" class="title-head">Save Time and Money</a></h4>
+                        <p class="">Optimize your laundry routine. Our services save you time and money, 
+                            so you can focus on what matters most.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mt-md-0 mt-4">
+                    <div class="area-box">
+                        <i class="fas fa-comments-dollar"></i>
+                        <h4><a href="" class="title-head">Pay Online in Seconds</a></h4>
+                        <p class="">Effortless payments. Pay for your laundry quickly and securely online through our Mobile App.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mt-lg-0 mt-4">
+                    <div class="area-box">
+                        <i class="fas fa-thumbs-up"></i>
+                        <h4><a href="" class="title-head">Satisfaction Guarantee</a></h4>
+                        <p class="">At Velvet Wash Laundry, your satisfaction is our guarantee. We strive to exceed your 
+                            expectations with every garment we handle.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- //banner bottom section -->
+
+    <!-- about section -->
+    <section class="w3l-about-2 py-5">
+        <div class="container py-lg-5 py-md-4 py-2">
+            <div class="row justify-content-between align-items-center pb-lg-5">
+                <div class="col-lg-6 about-2-secs-right mb-lg-0 mb-5">
+                    <div class="image-box inverse position-relative">
+                        <div class="image-box__static">
+				<img src="{% static 'images/about1.jpg' %}" alt="" width="364" height="459">
+                        </div>
+                        <div class="image-box__float">
+				<img src="{% static 'images/about2.jpg' %}" alt="" width="364" height="459">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 about-2-secs-left ps-lg-5 mt-lg-4 mt-5">
+                    <h5 class="sub-title">More than 5 Years of Experience</h5>
+                    <h3 class="title-style">We are passionate about Laundry</h3>
+                    <p class="mt-4">At Velvet Wash Laundry, we channel our passion 
+                        for laundry into providing an exceptional experience. 
+                        From superior cleanliness to attentive care,
+                         your satisfaction is our devotion and commitment</p>
+                    <ul class="mt-4 list-style-lis">
+                        <li><i class="fas fa-check-circle"></i>100% Customer Satisfaction</li>
+                        <li><i class="fas fa-check-circle"></i>Free Collection & Delivery</li>
+                        <li><i class="fas fa-check-circle"></i>Affordable Prices</li>
+                    </ul>
+		    <a href="{% url 'aboutus' %}%" class="btn btn-style mt-5">Discover More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- //about section -->
+
+    <!-- services section -->
+    <div class="w3l-grids-block-5 pb-5 pt-md-2 pt-4">
+        <div class="container pb-lg-5 pb-md-4 pb-2">
+            <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
+                <h5 class="sub-title">What We Offer</h5>
+                <h3 class="title-style">Our Services</h3>
+            </div>
+            <div class="row text-center justify-content-center">
+                <div class="col-lg-4 col-md-6">
+                    <div class="servicecard-single">
+                        <div class="grids5-info position-relative">
+                            <img src="{% static 'images/service1.jpg' %}" alt="" class="img-fluid" />
+                        </div>
+                        <div class="content-main-top">
+				<h4><a href="{% url 'services' %}">Laundry Services</a></h4>
+                            <p>Discover a Range of Exceptional Laundry Services at Velvet Wash. We Handle Your Laundry Needs with Care, Precision, and a Commitment to Excellence.
+                            </p>
+                            <a class="btn btn-style mt-4" href="services.html">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mt-md-0 mt-4">
+                    <div class="servicecard-single">
+                        <div class="grids5-info position-relative">
+                            <img src="{% static 'images/service2.jpg' %}" alt="" class="img-fluid" />
+                        </div>
+                        <div class="content-main-top">
+				<h4><a href="{% url 'services' %}">Dry Cleaning</a></h4>
+                            <p>Experience Exceptional Dry Cleaning at Velvet Wash. Trust Us for Immaculately Cleaned Garments and Fabrics, Delivered with Care and Professionalism.
+                            </p>
+                            <a class="btn btn-style mt-4" href="services.html">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mt-lg-0 mt-4">
+                    <div class="servicecard-single">
+                        <div class="grids5-info position-relative">
+                            <img src="{% static 'images/service3.jpg' %}" alt="" class="img-fluid" />
+                        </div>
+                        <div class="content-main-top">
+				<h4><a href="{% url 'services' %}">Steam Iron</a></h4>
+                            <p>Revitalize Your Clothes with Our Professional Steam Ironing Services at Velvet Wash. Attain Wrinkle-Free Perfection and a Polished Look for Your Wardrobe.
+                            </p>
+                            <a class="btn btn-style mt-4" href="services.html">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //services section -->
+
+    <!-- image with content section -->
+    <section class="home-block-3 py-xl-4 py-2">
+        <div class="row m-0 align-items-center">
+            <div class="col-lg-6 left-w3l-img p-0">
+		    <img src="{% static 'images/about3.jpg' %}" alt="card-image" class="img-fluid">
+            </div>
+            <div class="col-lg-6 right-w3l-img mt-lg-0 mt-sm-4 mt-5">
+                <div class="p-xl-5 p-sm-4 mx-xl-3">
+                    <h5 class="sub-title">Get Discounts</h5>
+                    <h3 class="title-style">Book Our Laundry Services</h3>
+                    <p class="sub-title mt-3">Book Your Hassle-Free Laundry Services with Velvet Wash. 
+                        Enjoy Fresh, Clean Clothes Delivered Right to Your Doorstep.
+                         Schedule Your Service Now!.</p>
+                    <div class="row mt-5 pt-xl-4">
+                        <div class="col-sm-6 icon-style">
+                            <i class="fas fa-tshirt"></i>
+                            <div class="ab-detail">
+                                <h4 class="title-head mb-sm-3 mb-2"><a href="services.html">Clean Result</a></h4>
+                                <p>Where Immaculacy Meets Quality, Ensuring Exceptional Clean Results.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 icon-style mt-sm-0 mt-4">
+                            <i class="fas fa-shipping-fast"></i>
+                            <div class="ab-detail">
+                                <h4 class="title-head mb-sm-3 mb-2"><a href="services.html">Fast Delivery</a></h4>
+                                <p>Enjoy Rapid Delivery for Your Freshly Laundered Garments.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- //image with content section -->
+
+    <!-- works section -->
+    <section class="w3l-feature-8 py-5">
+        <div class="container py-md-5 py-4">
+            <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
+                <h5 class="sub-title">Pickup & Deliver</h5>
+                <h3 class="title-style">How We Works</h3>
+            </div>
+            <div class="row features text-center justify-content-center">
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-body p-xl-4">
+                        <div class="feature-images position-relative">
+                            <i class="fas fa-tshirt"></i>
+                            <span>1</span>
+                        </div>
+                        <div class="feature-info mt-4">
+                            <h3 class="feature-title">
+                                <a href="about.html">Pick Up Your Clothes</a>
+                            </h3>
+                            <p class="feature-text">Schedule a Pick-Up, Relax, 
+                                and Let Us Revive Your Wardrobe with Care</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mt-md-0 mt-5">
+                    <div class="feature-body p-xl-4">
+                        <div class="feature-images position-relative">
+                            <i class="fas fa-biohazard"></i>
+                            <span>2</span>
+                        </div>
+                        <div class="feature-info mt-4">
+                            <h3 class="feature-title">
+                                <a href="about.html">Laundry & Dry Clean</a>
+                            </h3>
+                            <p class="feature-text">Your One-Stop Solution for Expert Laundry and Dry Cleaning Services</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mt-lg-0 mt-5">
+                    <div class="feature-body p-xl-4">
+                        <div class="feature-images position-relative">
+                            <i class="fas fa-truck"></i>
+                            <span>3</span>
+                        </div>
+                        <div class="feature-info mt-4">
+                            <h3 class="feature-title">
+                                <a href="about.html">Fold Clothes & Deliver</a>
+                            </h3>
+                            <p class="feature-text">Precisely Folded Clothes, Delivered to Your Doorstep with Care</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <a href="services.html" class="btn btn-style mt-5">Book Our Services Now</a>
+            </div>
+        </div>
+    </section>
+    <!-- //works section -->
+
+  {% endblock %}
+

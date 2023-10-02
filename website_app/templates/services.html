@@ -1,0 +1,246 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <!-- inner banner -->
+    <section class="inner-banner py-5">
+        <div class="w3l-breadcrumb py-lg-5">
+            <div class="container pt-5 pb-sm-4 pb-2">
+                <h4 class="inner-text-title font-weight-bold pt-5">Services</h4>
+                <ul class="breadcrumbs-custom-path">
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li class="active"><i class="fas fa-angle-right mx-2"></i>Services</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <!-- //inner banner -->
+
+    <!-- services section -->
+    <div class="w3l-grids-block-5 py-5">
+        <div class="container py-lg-5 py-md-4 py-2">
+            <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
+                <h5 class="sub-title">What We Offer</h5>
+                <h3 class="title-style">Our Services</h3>
+            </div>
+            <div class="row text-center justify-content-center">
+                <div class="col-lg-4 col-md-6">
+                    <div class="servicecard-single">
+                        <div class="grids5-info position-relative">
+                            <img src="{% static 'images/service1.jpg' %}" alt="" class="img-fluid" />
+                        </div>
+                        <div class="content-main-top">
+                            <h4><a href="{% url 'services' %}">Laundry Services</a></h4>
+                            <p>Discover a Range of Exceptional Laundry Services at Velvet Wash. We Handle Your Laundry Needs with Care, Precision, and a Commitment to Excellence.
+                            </p>
+                            <a class="btn btn-style mt-4" href="{% url 'services' %}">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mt-md-0 mt-4">
+                    <div class="servicecard-single">
+                        <div class="grids5-info position-relative">
+                            <img src="{% static 'images/service2.jpg' %}" alt="" class="img-fluid" />
+                        </div>
+                        <div class="content-main-top">
+                            <h4><a href="{% url 'services' %}">Dry Cleaning</a></h4>
+                            <p>Experience Exceptional Dry Cleaning at Velvet Wash. Trust Us for Immaculately Cleaned Garments and Fabrics, Delivered with Care and Professionalism.
+                            </p>
+                            <a class="btn btn-style mt-4" href="{% url 'services' %}">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mt-lg-0 mt-4">
+                    <div class="servicecard-single">
+                        <div class="grids5-info position-relative">
+                            <img src="{% static 'images/service3.jpg' %}" alt="" class="img-fluid" />
+                        </div>
+                        <div class="content-main-top">
+                            <h4><a href="{% url 'services' %}">Steam Iron</a></h4>
+                            <p>Revitalize Your Clothes with Our Professional Steam Ironing Services at Velvet Wash. Attain Wrinkle-Free Perfection and a Polished Look for Your Wardrobe.
+                            </p>
+                            <a class="btn btn-style mt-4" href="{% url 'services' %}">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mt-4">
+                    <div class="servicecard-single">
+                        <div class="grids5-info position-relative">
+                            <img src="{% static 'images/service4.jpg' %}" alt="" class="img-fluid" />
+                        </div>
+                        <div class="content-main-top">
+                            <h4><a href="{% url 'services' %}">Stain Removal</a></h4>
+                            <p>Say Farewell to Stains: Our Expertise Ensures Impeccably Clean Garments, Free from Blemishes. Trust Velvet Wash for Effective Stain Removal.
+                            </p>
+                            <a class="btn btn-style mt-4" href="{% url 'services' %}">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mt-4">
+                    <div class="servicecard-single">
+                        <div class="grids5-info position-relative">
+                            <img src="{% static 'images/service5.jpg' %}" alt="" class="img-fluid" />
+                        </div>
+                        <div class="content-main-top">
+                            <h4><a href="{% url 'services' %}">Wet washing</a></h4>
+                            <p>Revitalize Your Fabrics: Opt for Wet Washing at Velvet Wash Laundry for Thorough Cleaning and Fresh, Hygienic Clothes Every Time.
+                            </p>
+                            <a class="btn btn-style mt-4" href="{% url 'services' %}">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mt-4">
+                    <div class="servicecard-single">
+                        <div class="grids5-info position-relative">
+                            <img src="{% static 'images/service6.jpg' %}" alt="" class="img-fluid" />
+                        </div>
+                        <div class="content-main-top">
+                            <h4><a href="{% url 'services' %}">Commercial Laundry</a></h4>
+                            <p>Reliable Commercial Laundry Solutions Tailored for Your Business Needs. Choose Velvet Wash for Efficient, Professional, and Top-Quality Commercial Laundry Services.
+                            </p>
+                            <a class="btn btn-style mt-4" href="{% url 'services' %}">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //services section -->
+
+    <!-- pricing section -->
+    <section class="w3l-pricing py-5">
+        <div class="container py-lg-5 py-md-4 py-2">
+            <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
+                <h5 class="sub-title">Pricing Plans</h5>
+                <h3 class="title-style">More Details on Pricing</h3>
+            </div>
+            <div class="row t-in justify-content-center">
+                <div class="col-lg-4 col-md-6 price-main-info">
+                    <div class="price-inner card">
+                        <div class="card-body">
+                            <h4 class="text-center mb-3">Dry Cleaning</h4>
+                            <h5 class="card-title pricing-card-title">
+                                <span class="align-top">₹</span>99/piece
+                            </h5>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li> <span class="fa fa-check"></span> All Shirts </li>
+                                <li> <span class="fa fa-check"></span> Pants, Jeans, Skirts </li>
+                                <li> <span class="fa fa-check"></span> Sweaters</li>
+                                <li> <span class="fa fa-check"></span> Tie, Scarf </li>
+                                <li> <span class="fa fa-check"></span> Coat, Jacket, Dress </li>
+				<li> <span class="fa fa-check"></span> Shoes, Bags, and much more</li>
+                            </ul>
+                            <div class="read-more mt-4 pt-lg-2 text-center">
+                                <a href="{% url 'contactus' %}" class="btn btn-style"> Order Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 price-main-info mt-md-0 mt-4">
+                    <div class="price-inner card">
+                        <div class="card-body">
+                            <h4 class="text-center mb-3">Steam Ironing</h4>
+                            <h5 class="card-title pricing-card-title">
+                                <span class="align-top">₹</span>15/piece
+
+                            </h5>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li> <span class="fa fa-check"></span> All Shirts </li>
+                                <li> <span class="fa fa-check"></span> Pants, Jeans, Skirts </li>
+                                <li> <span class="fa fa-check"></span> Sweaters</li>
+                                <li> <span class="fa fa-check"></span> Tie, Scarf </li>
+                                <li> <span class="fa fa-check"></span> Coat, Jacket, Dress</li>
+				<li> <span class="fa fa-check"></span> Shoes, Bags, and much more</li>
+                            </ul>
+                            <div class="read-more mt-4 pt-lg-2 text-center">
+                                <a href="{% url 'contactus' %}" class="btn btn-style"> Order Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 price-main-info mt-lg-0 mt-4">
+                    <div class="price-inner card">
+                        <div class="card-body">
+                            <h4 class="text-center mb-3">Premium wash</h4>
+                            <h5 class="card-title pricing-card-title">
+                                <span class="align-top">₹</span>129/kg
+                            </h5>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li> <span class="fa fa-check"></span> All Shirts </li>
+                                <li> <span class="fa fa-check"></span> Pants, Jeans, Skirts </li>
+                                <li> <span class="fa fa-check"></span> Sweaters</li>
+                                <li> <span class="fa fa-check"></span> Tie, Scarf </li>
+                                <li> <span class="fa fa-check"></span> Coat, Jacket, Dress</li>
+				<li> <span class="fa fa-check"></span> Shoes, Bags, and much more</li>
+                            </ul>
+                            <div class="read-more mt-4 pt-lg-2 text-center">
+                                <a href="{% url 'contactus' %}" class="btn btn-style"> Order Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- //pricing section -->
+
+    <!-- works section -->
+    <section class="w3l-feature-8 py-5">
+        <div class="container py-md-5 py-4">
+            <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
+                <h5 class="sub-title">Pickup & Deliver</h5>
+                <h3 class="title-style">How We Works</h3>
+            </div>
+            <div class="row features text-center justify-content-center">
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-body p-xl-4">
+                        <div class="feature-images position-relative">
+                            <i class="fas fa-tshirt"></i>
+                            <span>1</span>
+                        </div>
+                        <div class="feature-info mt-4">
+                            <h3 class="feature-title">
+                                <a href="{% url 'index' %}">Pick Up Your Clothes</a>
+                            </h3>
+                            <p class="feature-text">Schedule a Pick-Up, Relax, 
+                                and Let Us Revive Your Wardrobe with Care</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mt-md-0 mt-5">
+                    <div class="feature-body p-xl-4">
+                        <div class="feature-images position-relative">
+                            <i class="fas fa-biohazard"></i>
+                            <span>2</span>
+                        </div>
+                        <div class="feature-info mt-4">
+                            <h3 class="feature-title">
+                                <a href="{% url 'index' %}">Laundry & Dry Clean</a>
+                            </h3>
+                            <p class="feature-text">Your One-Stop Solution for Expert Laundry and Dry Cleaning Services</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mt-lg-0 mt-5">
+                    <div class="feature-body p-xl-4">
+                        <div class="feature-images position-relative">
+                            <i class="fas fa-truck"></i>
+                            <span>3</span>
+                        </div>
+                        <div class="feature-info mt-4">
+                            <h3 class="feature-title">
+                                <a href="{% url 'index' %}">Fold Clothes & Deliver</a>
+                            </h3>
+                            <p class="feature-text">Precisely Folded Clothes, Delivered to Your Doorstep with Care</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <a href="{% url 'index' %}" class="btn btn-style mt-5">Book Our Services Now</a>
+            </div>
+        </div>
+    </section>
+    <!-- //works section -->
+
+    {% endblock %}
