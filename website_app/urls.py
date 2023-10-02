@@ -1,5 +1,8 @@
 from django.urls import path
 from . import views
+
+app_name = 'website_app' #namespace
+
 urlpatterns = [
     path('', views.index,name='index'),
     path('aboutus/',views.about_us,name="aboutus"),

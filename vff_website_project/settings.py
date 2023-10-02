@@ -23,11 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-w$a1myz)1y_m=5xxq(8857a&4p3#8*pez_m8)oi!54jg7vj3!k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['vffgroup.in','vff-group.com','localhost','62.72.57.222']
 
-
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'website_app',
+    'dashboard_app',
 ]
 
 MIDDLEWARE = [
@@ -77,8 +78,8 @@ WSGI_APPLICATION = 'vff_website_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'vff_db',
-        'USER': 'vff_user',
+        'NAME': 'postgres',
+        'USER': 'postgres',
         'PASSWORD': 'Vff!@#321',
         'HOST': 'localhost',
         'PORT': '5432',
@@ -135,3 +136,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

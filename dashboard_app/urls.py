@@ -3,6 +3,8 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+app_name = 'dashboard_app' #nameSpace
+
 urlpatterns = [
     path('',views.login_view,name='login'),
     path('all_branches/',views.all_branches,name='all_branches'),

@@ -27,6 +27,7 @@ def login_view(request):
         user_data = execute_raw_query_fetch_one(query)
         if user_data and user_data[2]:
                 # User is authorized
+                print('User is Authorized')
                 request.session['usrname'] = user_data[0]
                 request.session['username'] = user_data[1]
                 request.session['password'] = user_data[2]
@@ -35,8 +36,8 @@ def login_view(request):
                 request.session['is_logged_in'] = True
                 # Setting the session to expire after one day (86400 seconds)
                 request.session.set_expiry(43400)
-                
-                return redirect('all_branches')
+                print('All Session Data Saved') 
+                return redirect('dashboard_app:all_branches')
         else:
             context = {
                 'username': username,
@@ -49,8 +50,10 @@ def login_view(request):
 
 #All Branches
 def all_branches(request):
+    print("All Branches")
     error_msg = "No Vendors Data Found"
     usrid = request.session.get('userid')
+    print(f'Admin Usrid ::{usrid}')
     query = "select branchtbl.branchid,branch_name,address,branch_type,creation_date,branchtbl.status from vff.branchtbl,vff.admintbl where admintbl.branchid=branchtbl.branchid and branchtbl.owner_id=admintbl.usrid and branchtbl.owner_id='"+str(usrid)+"'"
     rows = execute_raw_query(query)
     data = []    
@@ -82,18 +85,19 @@ def save_selected_branch(request):
         request.session['branch_selected'] = True
         request.session.save()  # Save the session to persist the changes
 
-        return redirect('dashboard')
+        return redirect('dashboard_app:dashboard')
     else:
-        return redirect('all_branches')
+        return redirect('dashboard_app:all_branches')
 #Dashboard Page
 def dashboard(request):
+    print('admin Dashboard Welcome page')
     # Check if the session variable 'is_logged_in' exists and is set to True
     # if not request.session.get('is_logged_in', False):
     #     # User is not logged in, redirect to the login page
-    #     return redirect('login')
+    #     return redirect('dashboard_app:login')
     isLogin = is_loggedin(request)
     if isLogin == False:
-        return redirect('login')
+        return redirect('dashboard_app:login')
     
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
@@ -104,7 +108,7 @@ def dashboard(request):
 def all_customers(request):
     isLogin = is_loggedin(request)
     if isLogin == False:
-        return redirect('login')
+        return redirect('dashboard_app:login')
     error_msg = "No Customers Data Found"
     branch_id = request.session.get('branchid')
     filter = ''
@@ -154,7 +158,7 @@ def all_customers(request):
 def add_customer(request,usrid=None):
     isLogin = is_loggedin(request)
     if isLogin == False:
-        return redirect('login')
+        return redirect('dashboard_app:login')
     if request.method == "POST":
         uname = request.POST.get('fullname')
         primary_mobno = request.POST.get('primaryno')
@@ -220,7 +224,7 @@ def add_customer(request,usrid=None):
                 connection.commit()
 
                 print("Customer Added/Updated Successfully.")
-                return redirect('customers')
+                return redirect('dashboard_app:customers')
         except Exception as e:
             print(f"Error loading data: {e}")
 
@@ -261,7 +265,7 @@ def add_customer(request,usrid=None):
 def all_delivery_agents(request):
     isLogin = is_loggedin(request)
     if isLogin == False:
-        return redirect('login')
+        return redirect('dashboard_app:login')
     error_msg = "No Delivery Agents Data Found"
     branch_id = request.session.get('branchid')
     filter = ''
@@ -311,7 +315,7 @@ def all_delivery_agents(request):
 def add_delivery_agent(request,usrid=None):
     isLogin = is_loggedin(request)
     if isLogin == False:
-        return redirect('login')
+        return redirect('dashboard_app:login')
     if request.method == "POST":
         uname = request.POST.get('fullname')
         primary_mobno = request.POST.get('primaryno')
@@ -370,7 +374,7 @@ def add_delivery_agent(request,usrid=None):
                 connection.commit()
 
                 print("Delivery Agent Added/Updated Successfully.")
-                return redirect('delivery_agents')
+                return redirect('dashboard_app:delivery_agents')
         except Exception as e:
             print(f"Error loading data: {e}")
 
@@ -409,7 +413,7 @@ def add_delivery_agent(request,usrid=None):
 def all_orders(request):
     isLogin = is_loggedin(request)
     if isLogin == False:
-        return redirect('login')
+        return redirect('dashboard_app:login')
     current_url = request.get_full_path()
     return render (request, 'order_pages/all_orders.html', {'current_url': current_url})
 
@@ -417,14 +421,14 @@ def all_orders(request):
 def create_new_order(request):
     isLogin = is_loggedin(request)
     if isLogin == False:
-        return redirect('login')
+        return redirect('dashboard_app:login')
     return render (request, 'order_pages/create_new_order.html')
     
 #All Categories
 def all_categories(request):
     isLogin = is_loggedin(request)
     if isLogin == False:
-        return redirect('login')
+        return redirect('dashboard_app:login')
     error_msg = "No Categories Found"
     branch_id = request.session.get('branchid')
     # filter = ''
@@ -465,7 +469,7 @@ def all_categories(request):
 def add_category(request, catid=None):
     isLogin = is_loggedin(request)
     if isLogin == False:
-        return redirect('login')
+        return redirect('dashboard_app:login')
 
     data = {}
 
@@ -532,7 +536,7 @@ def add_category(request, catid=None):
                 connection.commit()
 
                 print("Category Added/Updated Successfully.")
-                return redirect('all_categories')
+                return redirect('dashboard_app:all_categories')
         except Exception as e:
             print(f"Error loading data: {e}")
 
@@ -542,7 +546,7 @@ def add_category(request, catid=None):
 def all_sub_categories(request,catid,catname):
     isLogin = is_loggedin(request)
     if isLogin == False:
-        return redirect('login')
+        return redirect('dashboard_app:login')
     error_msg = "No Sub-Categories Found"
     branch_id = request.session.get('branchid')
     # filter = ''
@@ -583,7 +587,7 @@ def all_sub_categories(request,catid,catname):
 def add_sub_category(request, catid,catname):
     isLogin = is_loggedin(request)
     if isLogin == False:
-        return redirect('login')
+        return redirect('dashboard_app:login')
 
     data = {}
 
@@ -644,7 +648,7 @@ def add_sub_category(request, catid,catname):
 def update_sub_category(request, catid,subcatid,catname):
     isLogin = is_loggedin(request)
     if isLogin == False:
-        return redirect('login')
+        return redirect('dashboard_app:login')
 
     data = {}
 
