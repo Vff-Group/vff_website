@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="../assets/img/apple-icon.png"
+    />
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+    <title>VFF Group | Dashboard</title>
+    <!--     Fonts and icons     -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
+      rel="stylesheet"
+    />
+    <!-- Nucleo Icons -->
+    <link href="{% static 'css/nucleo-icons.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/nucleo-svg.css' %}" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script
+      src="https://kit.fontawesome.com/eea5b138cd.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- CSS Files -->
+    <link
+      id="pagestyle"
+      href="{% static 'css/vff-group-dashboard.css' %}"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="g-sidenav-show bg-gray-100">
+    <div id="preloader-active">
+      <div class="preloader d-flex align-items-center justify-content-center">
+          <div class="preloader-inner position-relative">
+              <div class="preloader-circle"></div>
+              <div class="preloader-img pere-text">
+                  <img src="{% static 'img/logos/logo.png' %}" alt="">
+              </div>
+          </div>
+      </div>
+  </div>
+    <main
+    class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg"
+  >
+    <!-- Navbar -->
+    <nav
+      class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl"
+      id="navbarBlur"
+      navbar-scroll="true"
+    >
+      <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+          <h6 class="font-weight-bolder mb-0">{% block title %}{% endblock title%}</h6>
+        </nav>
+    </div>
+</nav>
+
+ {% block content %}
+ {% endblock %}
+</main>
+    <!--   Core JS Files   -->
+    <script src="{% static 'js/core/popper.min.js' %}"></script>
+    <script src="{% static 'js/core/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/plugins/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/plugins/smooth-scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/plugins/chartjs.min.js' %}"></script>
+    
+   
+    
+    <script src="{% static 'js/vff-group-dashboard.min.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>

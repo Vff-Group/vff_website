@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}All Sub Category{% endblock title%}
+{% block content %}
+
+  <div class="container-fluid py-4">
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header pb-0 d-flex justify-content-between">
+            <h6>All Sub Category For - [
+                {{catname}}
+                ]</h6>
+            <div class="row justify-content-center align-items-center p-1">
+                <a href="{% url 'add_sub_category' catid catname%}">
+                <span class="badge badge-sm bg-gradient-info ">
+                    <i class="fa-solid fa-user-plus"></i>
+                     Create New Sub Category</span>
+                    </a>
+            </div>
+          </div>
+          <!-- Action Buttons  -->
+          
+          <!-- Action Buttons End  -->
+          <div class="card-body px-0 pt-0 pb-2">
+            <div class="table-responsive p-0">
+              <table class="table align-items-center mb-0">
+                <thead>
+                  <tr>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sub-Category Image</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Sub-Category Name</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Adult Cost</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Kids Cost</th>
+                    <th class="text-secondary opacity-7"></th>
+                  </tr>
+                </thead>
+                {% if not query_result%}
+                <div class="alert alert-info alert-dismissible m-4 fade show" role="alert">
+                  <span class="alert-icon text-white"><i class="ni ni-like-2"></i></span>
+                  <span class="alert-text text-white"><strong>Info!</strong> {{error_msg}}!</span>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              {% else %}
+                <tbody>
+                  {% for row in query_result %}
+                  <tr>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div>
+                          <img src="{{row.sub_cat_img}}" class="avatar avatar-sm me-3" alt="user1">
+                        </div>
+                        
+                      </div>
+                    </td>
+                   <td>
+                    <h6 class="mb-0 text-sm">{{row.sub_cat_name}}</h6>
+                   </td>
+                   <td>
+                    <h6 class="mb-0 text-sm">{{row.adult_cost}}/{{row.adult_type}}</h6>
+                   </td>
+                   <td>
+                    <h6 class="mb-0 text-sm">{{row.kids_cost}}/{{row.kids_type}}</h6>
+                   </td>
+                   
+                    <td class="align-middle">
+                        <div class="row">
+                            <div class="col">
+                                <a href="{% url 'update_sub_category' catid row.subcatid catname %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                    Edit
+                                  </a>
+                            </div>
+                            
+                            <div class="col">
+                                <a href="" class="text-danger font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.subcatid}}">
+                                    Delete
+                                  </a>
+                            </div>
+                        </div>
+                      
+                      
+                    </td>
+                  </tr>
+
+                  <div class="col-md-4">
+                    
+                    <div class="modal fade" id="modal-default{{row.usrid}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+                      <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h6 class="modal-title" id="modal-title-default">Are you sure you want to delete ?</h6>
+                            <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="alert  m-4" role="alert">
+                              <strong>Alert! </strong>{{row.usrname}} will be deleted permanantely!
+                          </div>
+                            
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn bg-gradient-danger">Delete</button>
+                            <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+</div>
+</main>
+{% endblock  %}

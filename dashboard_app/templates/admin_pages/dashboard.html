@@ -1,0 +1,409 @@
+{% extends 'base.html' %} 
+{% block title %}Dashboard{% endblock title%}
+{% load static %} {% block content %}
+
+
+
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <p class="text-sm mb-0 text-capitalize font-weight-bold">
+                    Today's Money
+                  </p>
+                  <h5 class="font-weight-bolder mb-0">
+                    ₹0
+                    <span class="text-success text-sm font-weight-bolder"
+                      >0%</span
+                    >
+                  </h5>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div
+                  class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md"
+                >
+                  <i
+                    class="ni ni-money-coins text-lg opacity-10"
+                    aria-hidden="true"
+                  ></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <p class="text-sm mb-0 text-capitalize font-weight-bold">
+                    Today's Users
+                  </p>
+                  <h5 class="font-weight-bolder mb-0">
+                    0
+                    <span class="text-success text-sm font-weight-bolder"
+                      >0%</span
+                    >
+                  </h5>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div
+                  class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md"
+                >
+                  <i
+                    class="ni ni-world text-lg opacity-10"
+                    aria-hidden="true"
+                  ></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <p class="text-sm mb-0 text-capitalize font-weight-bold">
+                    New Clients
+                  </p>
+                  <h5 class="font-weight-bolder mb-0">
+                    0
+                    <span class="text-danger text-sm font-weight-bolder"
+                      >0%</span
+                    >
+                  </h5>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div
+                  class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md"
+                >
+                  <i
+                    class="ni ni-paper-diploma text-lg opacity-10"
+                    aria-hidden="true"
+                  ></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <p class="text-sm mb-0 text-capitalize font-weight-bold">
+                    Sales
+                  </p>
+                  <h5 class="font-weight-bolder mb-0">
+                    ₹0
+                    <span class="text-success text-sm font-weight-bolder"
+                      >0%</span
+                    >
+                  </h5>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div
+                  class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md"
+                >
+                  <i
+                    class="ni ni-cart text-lg opacity-10"
+                    aria-hidden="true"
+                  ></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="row my-4">
+      <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
+        <div class="card">
+          <div class="card-header pb-0">
+            <div class="row">
+              <div class="col-lg-6 col-7">
+                <h6>Current Orders</h6>
+                <p class="text-sm mb-0">
+                  <i class="fa fa-check text-info" aria-hidden="true"></i>
+                  <span class="font-weight-bold ms-1">Displays</span> no orders found
+                </p>
+              </div>
+              <div class="col-lg-6 col-5 my-auto text-end">
+                <div class="dropdown float-lg-end pe-4">
+                  <a
+                    class="cursor-pointer"
+                    id="dropdownTable"
+                    
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <i class="fa fa-ellipsis-v text-secondary"></i>
+                  </a>
+                  <ul
+                    class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5"
+                    aria-labelledby="dropdownTable"
+                  >
+                    <li>
+                      <a
+                        class="dropdown-item border-radius-md"
+                        href="javascript:;"
+                        
+                        >View All Order</a
+                      >
+                    </li>
+                    
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body px-0 pb-2">
+            <div class="table-responsive">
+              <table class="table align-items-center mb-0">
+                <thead>
+                  {% comment %} <tr>
+                    <th
+                      class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                    >
+                      Client Name
+                    </th>
+                    <th
+                      class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                    >
+                      Location
+                    </th>
+                    <th
+                      class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                    >
+                      Delivery Assigned To
+                    </th>
+                    <th
+                      class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                    >
+                      Clothing Type
+                    </th>
+                    <th
+                      class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                    >
+                      Completion
+                    </th>
+                  </tr> {% endcomment %}
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div>
+                          <img
+                            src="{% static 'img/curved-images/curved0.jpg' %}"
+                            class="avatar avatar-sm me-3"
+                            alt=""
+                          />
+                        </div>
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">Shaheed Maniyar</h6>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="avatar-group mt-2">
+                        <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">New Vaibhav Nagar Belgaum</h6>
+                          </div>
+                      </div>
+                    </td>
+                    <td>
+                        <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Khalil</h6>
+                          </div>
+                    </td>
+                    <td class="align-middle text-center text-sm">
+                      <span class="text-xs font-weight-bold"> Wash and Iron Only </span>
+                    </td>
+                    <td class="align-middle">
+                      <div class="progress-wrapper w-75 mx-auto">
+                        <div class="progress-info">
+                          <div class="progress-percentage">
+                            <span class="text-xs font-weight-bold">60%</span>
+                          </div>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-gradient-info w-60"
+                            role="progressbar"
+                            aria-valuenow="60"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                          ></div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-lg-5 mb-lg-0 mb-4">
+          <div class="card z-index-2">
+            <div class="card-body p-3">
+              <div class="bg-gradient-dark border-radius-lg py-3 pe-1 mb-3">
+                <div class="chart">
+                  <canvas
+                    id="chart-bars"
+                    class="chart-canvas"
+                    height="170"
+                  ></canvas>
+                </div>
+              </div>
+              <h6 class="ms-2 mt-4 mb-0">Active Delivery</h6>
+              <p class="text-sm ms-2">
+                (<span class="font-weight-bolder">+23%</span>) than last week
+              </p>
+              <div class="container border-radius-lg">
+                <div class="row justify-content-center">
+                  <div class="col-3 py-3 ps-0">
+                    <div class="d-flex mb-2">
+                      <div class="icon icon-shape icon-xxs shadow border-radius-sm bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center">
+                      <div class="row align-items-center">
+                          <div class="col p-5">
+  
+                              <i class="fa-solid fa-users fa-lg "></i>
+                          </div>
+                      </div>
+                      </div>
+                      <p class="text-xs mt-1 mb-0 font-weight-bold">Customers</p>
+                    </div>
+                    <h4 class="font-weight-bolder">36</h4>
+                    <div class="progress w-75">
+                      <div
+                        class="progress-bar bg-dark w-60"
+                        role="progressbar"
+                        aria-valuenow="60"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="col-3 py-3 ps-0">
+                    <div class="d-flex mb-2">
+                      <div
+                        class="icon icon-shape icon-xxs shadow border-radius-sm bg-gradient-info text-center me-2 d-flex align-items-center justify-content-center"
+                      >
+                      <div class="row align-items-center">
+                          <div class="col p-5">
+  
+                              <i class="fa-solid fa-truck"></i>
+                          </div>
+                      </div>
+                      </div>
+                      <p class="text-xs mt-1 mb-0 font-weight-bold">Delivery</p>
+                    </div>
+                    <h4 class="font-weight-bolder">2m</h4>
+                    <div class="progress w-75">
+                      <div
+                        class="progress-bar bg-dark w-90"
+                        role="progressbar"
+                        aria-valuenow="90"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="col-3 py-3 ps-0">
+                    <div class="d-flex mb-2">
+                      <div
+                        class="icon icon-shape icon-xxs shadow border-radius-sm bg-gradient-warning text-center me-2 d-flex align-items-center justify-content-center"
+                      >
+                      <div class="row align-items-center">
+                          <div class="col p-5">
+  
+                              <i class="fa-brands fa-adversal"></i>
+                          </div>
+                      </div>
+                      </div>
+                      <p class="text-xs mt-1 mb-0 font-weight-bold">Sales</p>
+                    </div>
+                    <h4 class="font-weight-bolder">₹40,035</h4>
+                    <div class="progress w-75">
+                      <div
+                        class="progress-bar bg-dark w-30"
+                        role="progressbar"
+                        aria-valuenow="30"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="card z-index-2">
+            <div class="card-header pb-0">
+              <h6>Sales overview</h6>
+              <p class="text-sm">
+                <i class="fa fa-arrow-up text-success"></i>
+                <span class="font-weight-bold">4% more</span> in 2023
+              </p>
+            </div>
+            <div class="card-body p-3">
+              <div class="chart">
+                <canvas
+                  id="chart-line"
+                  class="chart-canvas"
+                  height="300"
+                ></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <footer class="footer pt-3">
+      <div class="container-fluid">
+        <div class="row align-items-center justify-content-lg-between">
+          <div class="col mb-lg-0 mb-4">
+            <div class="copyright text-center text-sm text-muted text-lg-start">
+              ©
+              <script>
+                document.write(new Date().getFullYear());
+              </script>
+              VFF Group
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </footer>
+  </div>
+
+
+
+
+{% endblock %}

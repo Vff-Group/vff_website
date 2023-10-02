@@ -1,0 +1,26 @@
+#github password key: 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
+create schema vff;
+
+#Admin Table 
+    create table vff.admintbl (adminid bigserial,username text not null,password text not null,usrid bigint not null,type text default 'NA',branchid bigint default '-1',status integer default '1');
+
+#User Table 
+    create table vff.usertbl (usrid bigserial,usrname text not null,mobile_no text default '-1',address text default 'NA',lat double precision DEFAULT 0,lng double precision DEFAULT 0,token text default 'vff_abcd',created_date DATE DEFAULT CURRENT_DATE,epoch DOUBLE PRECISION DEFAULT EXTRACT(EPOCH FROM NOW()),status integer default '1',age integer default '-1',gender text default 'NA', date_of_birth date not null default CURRENT_DATE,pincode integer default '-1',landmark text default 'NA',aadhar_no bigint default '-1',profile_img bytea DEFAULT E'\\x');
+
+#Customer Table
+    create table vff.laundry_customertbl(consmrid bigserial,usrid bigint not null,status integer default '1',column is_online integer default '0',query text default 'NA');
+
+#Delivery Boy Table
+    create table vff.laundry_delivery_boytbl(delivery_boy_id bigserial,usrid bigint not null default '-1',name text default 'NA',is_online integer default '0',is_active integer default '1',branchid bigint default '-1')
+
+#Branch Table
+    create table vff.branchtbl (branchid bigserial,branch_name text default 'NA',owner_name text default 'NA',owner_id bigint default '-1',address text default 'NA',branch_type text default 'NA', branchtype_id bigint default '-1', status integer default '1',creation_date DATE DEFAULT CURRENT_DATE,epoch DOUBLE PRECISION DEFAULT EXTRACT(EPOCH FROM NOW()));
+
+#Branch Type Table
+    create table vff.branch_type(branch_type_id bigserial,branch_type text default 'NA',status integer default '1')
+
+#Category Table
+    create table vff.laundry_categorytbl(catid bigserial,category_name text default 'NA',cat_img text default 'NA',branch_id bigint default '-1',regular_price double precision default '0',regular_price_type text default 'NA',express_price_type text default 'NA',express_price double precision default '0',offer_price double precision default '0',offer_price_type text default 'NA',priority bigint default '-1',description text default 'NA');
+
+#Sub-Category Table
+    create table vff.laundry_sub_categorytbl(subcatid bigserial,catid bigint default '-1',sub_cat_name text default 'NA',sub_cat_img text default 'NA',adult_cost double precision default '0',adult_type text default 'NA',kids_cost double precision default '0',kids_type text default 'NA');

@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Delivery Agents{% endblock title%}
+{% block content %}
+
+  <div class="container-fluid py-4">
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header pb-0 d-flex justify-content-between">
+            <h6>All Delivery Agents</h6>
+            <div class="row justify-content-center align-items-center p-1">
+                <a href="{% url 'add_delivery_agent' %}">
+                <span class="badge badge-sm bg-gradient-dark ">
+                    <i class="fa-solid fa-user-plus"></i>
+                     Add New Delivery Agent</span>
+                    </a>
+            </div>
+          </div>
+          <!-- Action Buttons  -->
+          
+          <!-- Action Buttons End  -->
+          <div class="card-body px-0 pt-0 pb-2">
+            <div class="table-responsive p-0">
+              <table class="table align-items-center mb-0">
+                <thead>
+                  <tr>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Address</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Joined</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Last Service</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                    <th class="text-secondary opacity-7"></th>
+                  </tr>
+                </thead>
+                {% if not query_result%}
+                <div class="alert alert-info alert-dismissible m-4 fade show" role="alert">
+                  <span class="alert-icon text-white"><i class="ni ni-like-2"></i></span>
+                  <span class="alert-text text-white"><strong>Info!</strong> {{error_msg}}!</span>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              {% else %}
+                <tbody>
+                  {% for row in query_result %}
+                  <tr>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div>
+                          <img src="{{row.profile_img}}" class="avatar avatar-sm me-3" alt="user1">
+                        </div>
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">{{row.usrname}}</h6>
+                          <p class="text-xs text-secondary mb-0">{{row.email}}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">{{row.address}}</p>
+                      <p class="text-xs text-secondary mb-0"></p>
+                    </td>
+                    <td>
+                        <p class="text-xs font-weight-bold mb-0 text-center">{{row.creation_date_time}}</p>
+                        {% comment %} <p class="text-xs text-secondary mb-0 text-center">{{row.creation_time}}</p> {% endcomment %}
+                      </td>
+                    
+                    <td class="align-middle text-center">
+                      <span class="text-secondary text-xs font-weight-bold">
+                        {% comment %} {{row.last_service}} {% endcomment %}
+                        Need to add
+                      </span>
+                    </td>
+                    <td class="align-middle text-center text-sm">
+                      {% if row.is_online == 1 %}
+                        <span class="badge badge-sm bg-success">
+                            Online
+                        </span>
+                      {% else %}
+                          <span class="badge badge-sm bg-warning">
+                          Offline
+                          </span>
+                      {% endif %}
+                        
+                      </td>
+                    <td class="align-middle">
+                        <div class="row">
+                            <div class="col">
+                                <a href="{% url 'update_delivery_agent' row.usrid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                    Edit
+                                  </a>
+                            </div>
+                            <div class="col">
+                                <a href="" class="text-danger font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.usrid}}">
+                                    Delete
+                                  </a>
+                            </div>
+                        </div>
+                      
+                      
+                    </td>
+                  </tr>
+
+                  <div class="col-md-4">
+                    
+                    <div class="modal fade" id="modal-default{{row.usrid}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+                      <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h6 class="modal-title" id="modal-title-default">Are you sure you want to delete ?</h6>
+                            <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="alert  m-4" role="alert">
+                              <strong>Alert! </strong>{{row.usrname}} will be deleted permanantely!
+                          </div>
+                            
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn bg-gradient-danger">Delete</button>
+                            <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+</div>
+</main>
+{% endblock  %}

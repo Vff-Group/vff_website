@@ -1,0 +1,29 @@
+from django.urls import path
+from . import views
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    path('',views.login_view,name='login'),
+    path('all_branches/',views.all_branches,name='all_branches'),
+    path('selected_branch/',views.save_selected_branch,name='selected_branches'),
+    path('dashboard/',views.dashboard,name='dashboard'),
+    path('customers/',views.all_customers,name='customers'),
+    path('customers/add_customer/',views.add_customer,name='add_customer'),
+    path('customers/update_customer/<int:usrid>',views.add_customer,name='update_customer'),
+    path('delivery_agents/',views.all_delivery_agents,name='delivery_agents'),
+    path('delivery_agents/add_delivery_agent/',views.add_delivery_agent,name='add_delivery_agent'),
+    path('delivery_agents/add_delivery_agent/<int:usrid>',views.add_delivery_agent,name='update_delivery_agent'),
+    path('all_orders/',views.all_orders,name='all_orders'),
+    path('all_orders/create_order/',views.create_new_order,name='create_order'),
+    path('categories/',views.all_categories,name='all_categories'),
+    path('categories/add_category/',views.add_category,name='add_category'),
+    path('categories/update_category_details/<int:catid>',views.add_category,name='update_category'),
+    path('sub_categories/<int:catid>/<str:catname>',views.all_sub_categories,name='all_sub_categories'),
+    path('sub_categories/add_sub_category/<int:catid>/<str:catname>',views.add_sub_category,name='add_sub_category'),
+    path('sub_categories/update_sub_category_details/<int:catid>/<int:subcatid>/<str:catname>',views.update_sub_category,name='update_sub_category'),
+    
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

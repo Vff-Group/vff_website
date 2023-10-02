@@ -1,0 +1,159 @@
+{% extends "full_page_base.html" %}
+{% load static %}
+{% block title%}
+{% if data %}
+Update Sub-Category Details
+{% else %}
+Add New Sub-Category Details
+{% endif %}
+{% endblock title %}
+{% block content %}
+
+<div class="main-content">
+   
+    
+    <!-- Page content -->
+    <div class="container-fluid mt-2 mb-4">
+       
+        <div class="card card-profile shadow mb-4">
+        <div class="card-body">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+      <h6 class="heading-small text-muted mb-4">Sub-Category Details [Category Name:- {{catname}}]</h6>
+      <div class="pl-lg-4">
+        <div class="row">
+          <div class="col-lg-1">
+            <div class="form-group">
+              <div class="avatar avatar-xl position-relative" id="input-profile">
+                <label for="image_upload" class="avatar-img-label cursor-pointer">
+                  {% if data.sub_cat_img %}
+                    <div class="row">
+                      <div class="col mt-4">
+                        <div class="card mb-4 shadow-lg">
+                          <img src="{{ data.sub_cat_img }}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                        </div>
+                      </div>
+                    </div>
+                  {% else %}
+                    <div class="row">
+                      <div class="col mt-4">
+                        <div class="card mb-4 shadow-lg d-flex" id="imageCard">
+                          <i class="fa fa-plus text-secondary m-3 p-4"></i>
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
+                </label>
+                <input type="file" id="image_upload" class="d-none" accept="image/*" name="profile-image1" onchange="displayImage(event)">
+              </div>
+            </div>
+          </div>
+    
+          <div class="col-lg-8">
+            <div class="form-group">
+              <label class="form-control-label" for="input-subcategoryname">Sub-Category Name</label>
+              <input type="text" id="input-subcategoryname" class="form-control form-control-alternative" placeholder="Enter Sub Category Name" name="subcategoryname" autocomplete="off" value="{{ data.sub_cat_name|default:'' }}"  required>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-adult_cost">Adult Cost</label>
+              <input type="number" id="input-adult_cost" class="form-control form-control-alternative" placeholder="Enter Adult Cost" name="adult_cost" autocomplete="off" value="{{ data.adult_cost|default:'' }}"  required>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-adult-type">Adult Cost Type [Per Kg/Piece]</label>
+              <select class="form-control form-control-alternative" id="input-adult-type" name="adult_type" required>
+                <option value="Piece" {% if data.adult_type == 'Piece' %}selected{% endif %}>Piece</option>
+                <option value="Kg"  {% if data.adult_type == 'Kg' %}selected{% endif %}>Kg</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-kids_cost">Kids Cost</label>
+              <input type="number" id="input-kids_cost" class="form-control form-control-alternative" placeholder="Enter Kids Cost" name="kids_cost" autocomplete="off" value="{{ data.kids_cost|default:'' }}"  required>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-kids-type">Kids Cost Type [Per Kg/Piece]</label>
+              <select class="form-control form-control-alternative" id="input-kids-type" name="kids_type" required>
+                <option value="Piece" {% if data.kids_type == 'Piece' %}selected{% endif %}>Piece</option>
+                <option value="Kg"  {% if data.kids_type == 'Kg' %}selected{% endif %}>Kg</option>
+              </select>
+            </div>
+          </div>
+        </div>
+       
+      </div>
+      
+
+      <div class="row justify-content-end p-4 mt--1">
+        <div class="col-lg-2">
+        {% if data %}
+        <button type="submit" class="btn btn-primary my-4">Update Sub-Category </button>
+        {% else %}
+        <button type="submit" class="btn btn-primary my-4">Add New Sub-Category</button>
+        {% endif %}
+    </div>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+</div>
+
+<script>
+  const imageInput = document.getElementById('image_upload');
+  const imageDiv = document.getElementById('input-profile');
+
+  imageDiv.addEventListener('click', () => {
+     // imageInput.click();
+  });
+
+  imageInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      // Optionally display the selected image, e.g., for preview
+      if (file) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+              imageDiv.getElementsByTagName('img')[0].src = event.target.result;
+          };
+          reader.readAsDataURL(file);
+      }
+  });
+</script>
+
+<script>
+    //Calculate Age when dob is selected
+document.addEventListener('DOMContentLoaded', function () {
+    // Get references to the date of birth and age input fields
+    const dateOfBirthInput = document.getElementById('date-of-birth');
+    const ageInput = document.getElementById('input-age');
+
+    // Attach an event listener to the date of birth input field
+    dateOfBirthInput.addEventListener('input', function () {
+        // Get the selected date of birth
+        const dateOfBirth = new Date(dateOfBirthInput.value);
+
+        // Calculate the age
+        const today = new Date();
+        const age = today.getFullYear() - dateOfBirth.getFullYear();
+
+        // Update the age input field with the calculated age
+        ageInput.value = age;
+    });
+});
+</script>
+
+{% endblock %}
