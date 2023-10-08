@@ -326,7 +326,7 @@ def add_delivery_agent(request,usrid=None):
         land_mark = request.POST.get('landmark')
         date_of_birth = request.POST.get('dateofbirth')
         aadharno = request.POST.get('aadharno')
-        # image_url = 'NA'
+        image_url = 'NA'
         if request.FILES.get('delivery-image'):
             uploaded_image = request.FILES['delivery-image']
             image_url = upload_images2(uploaded_image)
@@ -339,6 +339,7 @@ def add_delivery_agent(request,usrid=None):
             age = '-1'
         if not land_mark:
             land_mark = 'NA'
+        
         branch_id = request.session.get('branchid')
         print(f'branch_id:{branch_id}')
         
