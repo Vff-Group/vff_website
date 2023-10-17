@@ -12,3 +12,6 @@ def services(request):
 
 def contactus(request):
     return render(request,"contactus.html")
+
+def privacy(request):
+    return render(request,"privacy.html")
