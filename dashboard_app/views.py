@@ -639,7 +639,7 @@ def add_sub_category(request, catid,catname):
                 connection.commit()
 
                 print("Sub Category Added/Updated Successfully.")
-                return redirect(reverse('all_sub_categories', kwargs={'catid': catid,'catname':catname}))
+                return redirect(reverse('dashboard_app:all_sub_categories', kwargs={'catid': catid,'catname':catname}))
         except Exception as e:
             print(f"Error loading data: {e}")
 
@@ -704,7 +704,7 @@ def update_sub_category(request, catid,subcatid,catname):
                 connection.commit()
 
                 print("Sub Category Added/Updated Successfully.")
-                return redirect(reverse('all_sub_categories', kwargs={'catid': catid,'catname':catname}))
+                return redirect(reverse('dashboard_app:all_sub_categories', kwargs={'catid': catid,'catname':catname}))
         except Exception as e:
             print(f"Error loading data: {e}")
 
