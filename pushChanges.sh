@@ -30,7 +30,7 @@ git commit -m "$COMMIT_MSG" || handle_error "Failed to commit changes."
 
 # Push changes
 echo "Pushing changes..."
-git push https://$USERNAME:$PASSWORD@$REPO_URL || handle_error "Failed to push changes."
+git push $USERNAME:$PASSWORD@$REPO_URL || handle_error "Failed to push changes."
 
 echo "Operation completed successfully."
 
