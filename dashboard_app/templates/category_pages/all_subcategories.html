@@ -24,6 +24,7 @@
         </div>
         
       </form>
+      <div id="url-container" data-url="{% url 'dashboard_app:all_sub_categories' row.catid row.category_name %}"></div>
       <div class="col-12">
         <div class="card mb-4">
           <div class="card-header pb-0 d-flex justify-content-between">
@@ -146,16 +147,19 @@
       // Get the selected option's value
       var selectedValue = $(this).val();
 
-      // Create a data object with the selected value and CSRF token
+      // Get the URL from the data-url attribute
+      var url = $('#url-container').data('url');
+
+      // Create a data object with the selected value
       var postData = {
         section_type: selectedValue,
-        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()  // Include the CSRF token
+        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
       };
 
-      // Send a POST request to your Django view
+      // Send a POST request to the generated URL
       $.ajax({
         type: 'POST',
-        url: '/handle_dropdown/',  // Replace with the actual URL
+        url: url,
         data: postData,
         success: function(response) {
           // Handle the response here (e.g., update the page content)
@@ -169,4 +173,5 @@
     });
   });
 </script>
+
 {% endblock  %}
