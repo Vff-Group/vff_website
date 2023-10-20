@@ -12,6 +12,23 @@
             <h6>All Sub Category For - [
                 {{catname}}
                 ]</h6>
+                <form method="post">
+                  {% csrf_token %}
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-section_type">Type of Section</label>
+                        <select class="form-control form-control-alternative" id="input-section_type" name="section_type" required>
+                          <option value="All" >All</option>
+                          <option value="Men" >Men</option>
+                          <option value="Women">Women</option>
+                          <option value="Kids">Kids</option>
+                          <option value="Others">Others</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </form>
             <div class="row justify-content-center align-items-center p-1">
                 <a href="{% url 'dashboard_app:add_sub_category' catid catname%}">
                 <span class="badge badge-sm bg-gradient-info ">

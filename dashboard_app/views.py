@@ -550,15 +550,38 @@ def all_sub_categories(request,catid,catname):
         return redirect('dashboard_app:login')
     error_msg = "No Sub-Categories Found"
     branch_id = request.session.get('branchid')
+    if request.method == "POST":
+        section_type = request.POST.get('section_type')
+        query = "select subcatid,sub_cat_name,sub_cat_img,cost,type,category_name,section_type from vff.laundry_categorytbl,vff.laundry_sub_categorytbl where laundry_categorytbl.catid=laundry_sub_categorytbl.catid and laundry_sub_categorytbl.catid='"+str(catid)+"' and section_type='"+str(section_type)+"'"
+        query_result = execute_raw_query(query)
+         
+        data = []    
+        if not query_result == 500:
+            for row in query_result:
+            
+                data.append({
+                    'catid':catid,
+                    'subcatid':row[0],
+                    'sub_cat_name':row[1],
+                    'sub_cat_img': row[2],
+                    'cost': row[3],
+                    'type': row[4],
+                    'category_name':row[5],
+                    'section_type':row[6]
+            
+               
+                 })
+        current_url = request.get_full_path()
+        # using the 'current_url' variable to determine the active card.
+        context = {'query_result': data,'current_url': current_url,'error_msg':error_msg,'catname':catname,'catid':catid}
+    
+        return render(request, 'category_pages/all_subcategories.html', context)
     # filter = ''
     # if branch_id :
     #     filter = " and laundry_delivery_boytbl.branchid='"+str(branch_id)+"'"
     query = "select subcatid,sub_cat_name,sub_cat_img,cost,type,category_name,section_type from vff.laundry_categorytbl,vff.laundry_sub_categorytbl where laundry_categorytbl.catid=laundry_sub_categorytbl.catid and laundry_sub_categorytbl.catid='"+str(catid)+"'"
-    
     query_result = execute_raw_query(query)
-    
-    
-        
+         
     data = []    
     if not query_result == 500:
         for row in query_result:
