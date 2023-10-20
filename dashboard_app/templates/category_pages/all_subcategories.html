@@ -6,7 +6,7 @@
   <div class="container-fluid py-4">
     
     <div class="row">
-      <form method="post">
+      <form method="post" id="myForm">
         {% csrf_token %}
         
           <div class="col-lg-4">
@@ -141,36 +141,19 @@
 </div>
 </main>
 <script>
-  $(document).ready(function() {
-    // Attach a change event handler to the dropdown
-    $('#input-section_type').on('change', function() {
-      // Get the selected option's value
-      var selectedValue = $(this).val();
+  // Get a reference to the dropdown element
+  var dropdown = document.getElementById("input-section_type");
+  
+  // Add an event listener to detect changes in the dropdown
+  dropdown.addEventListener("change", function() {
+      // Get a reference to the form
+      var form = document.getElementById("myForm");
 
-      // Get the URL from the data-url attribute
-      var url = $('#url-container').data('url');
+      // Set the form's method to "post"
+      form.method = "post";
 
-      // Create a data object with the selected value
-      var postData = {
-        section_type: selectedValue,
-        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-      };
-
-      // Send a POST request to the generated URL
-      $.ajax({
-        type: 'POST',
-        url: url,
-        data: postData,
-        success: function(response) {
-          // Handle the response here (e.g., update the page content)
-          console.log(response);
-        },
-        error: function(error) {
-          // Handle errors here
-          console.error(error);
-        }
-      });
-    });
+      // Submit the form
+      form.submit();
   });
 </script>
 
