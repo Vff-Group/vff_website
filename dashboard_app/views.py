@@ -553,7 +553,7 @@ def all_sub_categories(request,catid,catname):
     # filter = ''
     # if branch_id :
     #     filter = " and laundry_delivery_boytbl.branchid='"+str(branch_id)+"'"
-    query = "select subcatid,sub_cat_name,sub_cat_img,adult_cost,adult_type,kids_cost,kids_type,category_name from vff.laundry_categorytbl,vff.laundry_sub_categorytbl where laundry_categorytbl.catid=laundry_sub_categorytbl.catid and laundry_sub_categorytbl.catid='"+str(catid)+"'"
+    query = "select subcatid,sub_cat_name,sub_cat_img,cost,type,category_name,section_type from vff.laundry_categorytbl,vff.laundry_sub_categorytbl where laundry_categorytbl.catid=laundry_sub_categorytbl.catid and laundry_sub_categorytbl.catid='"+str(catid)+"'"
     
     query_result = execute_raw_query(query)
     
@@ -568,11 +568,10 @@ def all_sub_categories(request,catid,catname):
                 'subcatid':row[0],
                 'sub_cat_name':row[1],
                 'sub_cat_img': row[2],
-                'adult_cost': row[3],
-                'adult_type': row[4],
-                'kids_cost': row[5],
-                'kids_type': row[6],
-                'category_name':row[7]
+                'cost': row[3],
+                'type': row[4],
+                'category_name':row[5],
+                'section_type':row[6]
             
                
             })
