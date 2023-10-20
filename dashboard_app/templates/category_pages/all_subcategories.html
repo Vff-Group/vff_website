@@ -13,11 +13,11 @@
             <div class="form-group">
               <label class="form-control-label" for="input-section_type">Type of Section</label>
               <select class="form-control form-control-alternative" id="input-section_type" name="section_type" required>
-                <option value="All" >All</option>
-                <option value="Men" >Men</option>
-                <option value="Women">Women</option>
-                <option value="Kids">Kids</option>
-                <option value="Others">Others</option>
+                <option value="All" {% if selected_section == 'All' %}selected{% endif %} >All</option>
+                <option value="Men" {% if selected_section == 'Men' %}selected{% endif %} >Men</option>
+                <option value="Women" {% if selected_section == 'Women' %}selected{% endif %} >Women</option>
+                <option value="Kids" {% if selected_section == 'Kids' %}selected{% endif %} >Kids</option>
+                <option value="Others" {% if selected_section == 'Others' %}selected{% endif %} >Others</option>
               </select>
             </div>
           
