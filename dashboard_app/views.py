@@ -556,7 +556,7 @@ def all_sub_categories(request,catid,catname):
         print(f"section_type::{section_type}")
         
         if section_type == "All":
-            query = "select subcatid,sub_cat_name,sub_cat_img,cost,type,category_name,section_type from vff.laundry_categorytbl,vff.laundry_sub_categorytbl where laundry_categorytbl.catid=laundry_sub_categorytbl.catid and laundry_sub_categorytbl.catid='"+str(catid)+"'"
+            query = "select subcatid,sub_cat_name,sub_cat_img,cost,type,category_name,section_type from vff.laundry_categorytbl,vff.laundry_sub_categorytbl where laundry_categorytbl.catid=laundry_sub_categorytbl.catid and laundry_sub_categorytbl.catid='"+str(catid)+"' order by time_epoch desc"
             query_result = execute_raw_query(query)
          
             data = []    
@@ -583,7 +583,7 @@ def all_sub_categories(request,catid,catname):
                 return render(request, 'category_pages/all_subcategories.html', context)
             
             
-        query = "select subcatid,sub_cat_name,sub_cat_img,cost,type,category_name,section_type from vff.laundry_categorytbl,vff.laundry_sub_categorytbl where laundry_categorytbl.catid=laundry_sub_categorytbl.catid and laundry_sub_categorytbl.catid='"+str(catid)+"' and section_type='"+str(section_type)+"'"
+        query = "select subcatid,sub_cat_name,sub_cat_img,cost,type,category_name,section_type from vff.laundry_categorytbl,vff.laundry_sub_categorytbl where laundry_categorytbl.catid=laundry_sub_categorytbl.catid and laundry_sub_categorytbl.catid='"+str(catid)+"' and section_type='"+str(section_type)+"' order by time_epoch desc"
         query_result = execute_raw_query(query)
          
         data = []    
@@ -613,7 +613,7 @@ def all_sub_categories(request,catid,catname):
     # filter = ''
     # if branch_id :
     #     filter = " and laundry_delivery_boytbl.branchid='"+str(branch_id)+"'"
-    query = "select subcatid,sub_cat_name,sub_cat_img,cost,type,category_name,section_type from vff.laundry_categorytbl,vff.laundry_sub_categorytbl where laundry_categorytbl.catid=laundry_sub_categorytbl.catid and laundry_sub_categorytbl.catid='"+str(catid)+"'"
+    query = "select subcatid,sub_cat_name,sub_cat_img,cost,type,category_name,section_type from vff.laundry_categorytbl,vff.laundry_sub_categorytbl where laundry_categorytbl.catid=laundry_sub_categorytbl.catid and laundry_sub_categorytbl.catid='"+str(catid)+"' order by time_epoch desc"
     query_result = execute_raw_query(query)
          
     data = []    
@@ -714,7 +714,7 @@ def update_sub_category(request, catid,subcatid,catname):
         # Fetch existing category data if catid is provided
         try:
             with connection.cursor() as cursor:
-                query = "select subcatid,sub_cat_name,sub_cat_img,cost,type,section_type from vff.laundry_sub_categorytbl where subcatid='"+str(subcatid)+"'"
+                query = "select subcatid,sub_cat_name,sub_cat_img,cost,type,section_type from vff.laundry_sub_categorytbl where subcatid='"+str(subcatid)+"' "
                 cursor.execute(query)
                 print(query)
                 row = cursor.fetchone()
