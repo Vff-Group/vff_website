@@ -49,34 +49,46 @@ Add New Sub-Category Details
             </div>
           </div>
     
-          <div class="col-lg-8">
+          <div class="col-lg-4">
             <div class="form-group">
               <label class="form-control-label" for="input-subcategoryname">Sub-Category Name</label>
               <input type="text" id="input-subcategoryname" class="form-control form-control-alternative" placeholder="Enter Sub Category Name" name="subcategoryname" autocomplete="off" value="{{ data.sub_cat_name|default:'' }}"  required>
             </div>
           </div>
-        </div>
 
-        <div class="row">
-          <div class="col-lg-6">
+          <div class="col-lg-4">
             <div class="form-group">
-              <label class="form-control-label" for="input-adult_cost">Adult Cost</label>
-              <input type="number" id="input-adult_cost" class="form-control form-control-alternative" placeholder="Enter Adult Cost" name="adult_cost" autocomplete="off" value="{{ data.adult_cost|default:'' }}"  required>
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label class="form-control-label" for="input-adult-type">Adult Cost Type [Per Kg/Piece]</label>
-              <select class="form-control form-control-alternative" id="input-adult-type" name="adult_type" required>
-                <option value="Piece" {% if data.adult_type == 'Piece' %}selected{% endif %}>Piece</option>
-                <option value="Kg"  {% if data.adult_type == 'Kg' %}selected{% endif %}>Kg</option>
+              <label class="form-control-label" for="input-section_type">Type of Section</label>
+              <select class="form-control form-control-alternative" id="input-section_type" name="section_type" required>
+                <option value="Men"  {% if data.section_type == 'Male' %}selected{% endif %}>Men</option>
+                <option value="Women" {% if data.section_type == 'Female' %}selected{% endif %}>Women</option>
+                <option value="Kids" {% if data.section_type == 'Kids' %}selected{% endif %}>Kids</option>
+                <option value="Others" {% if data.section_type == 'Other' %}selected{% endif %}>Others</option>
               </select>
             </div>
           </div>
         </div>
 
         <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-cost">Cost</label>
+              <input type="number" id="input-cost" class="form-control form-control-alternative" placeholder="Enter Cost for this item" name="cost" autocomplete="off" value="{{ data.adult_cost|default:'' }}"  required>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-type">Cost Type [Per Kg/Piece]</label>
+              <select class="form-control form-control-alternative" id="input-type" name="type" required>
+                <option value="Piece" {% if data.type == 'Piece' %}selected{% endif %}>Piece</option>
+                <option value="Kg"  {% if data.type == 'Kg' %}selected{% endif %}>Kg</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {% comment %} <div class="row">
           <div class="col-lg-6">
             <div class="form-group">
               <label class="form-control-label" for="input-kids_cost">Kids Cost</label>
@@ -93,7 +105,7 @@ Add New Sub-Category Details
               </select>
             </div>
           </div>
-        </div>
+        </div> {% endcomment %}
        
       </div>
       

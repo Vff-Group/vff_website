@@ -596,7 +596,7 @@ def add_sub_category(request, catid,catname):
         # Fetch existing category data if catid is provided
         try:
             with connection.cursor() as cursor:
-                cursor.execute("select subcatid,sub_cat_name,sub_cat_img,adult_cost,adult_type,kids_cost,kids_type from vff.laundry_sub_categorytbl where catid='"+str(catid)+"'")
+                cursor.execute("select subcatid,sub_cat_name,sub_cat_img,cost,type,section_type from vff.laundry_sub_categorytbl where catid='"+str(catid)+"'")
                 row = cursor.fetchone()
                 if row:
                     data = {
@@ -604,20 +604,20 @@ def add_sub_category(request, catid,catname):
                         'subcatid':row[0],
                         'sub_cat_name':row[1],
                         'sub_cat_img': row[2],
-                        'adult_cost': row[3],
-                        'adult_type': row[4],
-                        'kids_cost': row[5],
-                        'kids_type': row[6],
+                        'cost': row[3],
+                        'type': row[4],
+                        
                     }
         except Exception as e:
             print(f"Error loading data: {e}")
 
     if request.method == "POST":
         subcategoryname = request.POST.get('subcategoryname')
-        adult_cost = request.POST.get('adult_cost')
-        adult_type = request.POST.get('adult_type')
-        kids_cost = request.POST.get('kids_cost')
-        kids_type = request.POST.get('kids_type')
+        cost = request.POST.get('cost')
+        ctype = request.POST.get('type')
+        # kids_cost = request.POST.get('kids_cost')
+        # kids_type = request.POST.get('kids_type')
+        section_type = request.POST.get('section_type')
         uploaded_image = request.FILES.get('profile-image1')
 
         if uploaded_image:
@@ -633,7 +633,7 @@ def add_sub_category(request, catid,catname):
                 if catid:
                     
                     # Insert a new sub category
-                    insert_query = "insert into vff.laundry_sub_categorytbl (catid,sub_cat_name,sub_cat_img,adult_cost,adult_type,kids_cost,kids_type) values ('"+str(catid)+"','"+str(subcategoryname)+"','"+str(image_url)+"','"+str(adult_cost)+"','"+str(adult_type)+"','"+str(kids_cost)+"','"+str(kids_type)+"')"
+                    insert_query = "insert into vff.laundry_sub_categorytbl (catid,sub_cat_name,sub_cat_img,cost,type,section_type) values ('"+str(catid)+"','"+str(subcategoryname)+"','"+str(image_url)+"','"+str(cost)+"','"+str(ctype)+"','"+str(section_type)+"')"
                     cursor.execute(insert_query)
 
                 connection.commit()
@@ -652,12 +652,13 @@ def update_sub_category(request, catid,subcatid,catname):
         return redirect('dashboard_app:login')
 
     data = {}
-
+    
+    
     if subcatid:
         # Fetch existing category data if catid is provided
         try:
             with connection.cursor() as cursor:
-                query = "select subcatid,sub_cat_name,sub_cat_img,adult_cost,adult_type,kids_cost,kids_type from vff.laundry_sub_categorytbl where subcatid='"+str(subcatid)+"'"
+                query = "select subcatid,sub_cat_name,sub_cat_img,cost,type,section_type from vff.laundry_sub_categorytbl where subcatid='"+str(subcatid)+"'"
                 cursor.execute(query)
                 print(query)
                 row = cursor.fetchone()
@@ -667,22 +668,22 @@ def update_sub_category(request, catid,subcatid,catname):
                         'subcatid':row[0],
                         'sub_cat_name':row[1],
                         'sub_cat_img': row[2],
-                        'adult_cost': row[3],
-                        'adult_type': row[4],
-                        'kids_cost': row[5],
-                        'kids_type': row[6],
+                        'cost': row[3],
+                        'type': row[4],
+                        'section_type': row[5],
                     }
         except Exception as e:
             print(f"Error loading data: {e}")
 
     if request.method == "POST":
         subcategoryname = request.POST.get('subcategoryname')
-        adult_cost = request.POST.get('adult_cost')
-        adult_type = request.POST.get('adult_type')
-        kids_cost = request.POST.get('kids_cost')
-        kids_type = request.POST.get('kids_type')
+        cost = request.POST.get('cost')
+        type = request.POST.get('type')
+        # kids_cost = request.POST.get('kids_cost')
+        # kids_type = request.POST.get('kids_type')
+        section_type = request.POST.get('section_type')
         uploaded_image = request.FILES.get('profile-image1')
-
+        
         if uploaded_image:
             image_url = upload_images2(uploaded_image)
         elif data.get('sub_cat_img'):
@@ -696,7 +697,7 @@ def update_sub_category(request, catid,subcatid,catname):
                 if subcatid:
                     # Update an existing category
                     update_query = (
-                        "update vff.laundry_sub_categorytbl set sub_cat_name='"+str(subcategoryname)+"',sub_cat_img='"+str(image_url)+"',adult_cost='"+str(adult_cost)+"',adult_type='"+str(adult_type)+"',kids_cost='"+str(kids_cost)+"',kids_type='"+str(kids_type)+"' where subcatid='"+str(subcatid)+"'"
+                        "update vff.laundry_sub_categorytbl set sub_cat_name='"+str(subcategoryname)+"',sub_cat_img='"+str(image_url)+"',cost='"+str(cost)+"',type='"+str(type)+"',section_type='"+str(section_type)+"' where subcatid='"+str(subcatid)+"'"
                     )
                     cursor.execute(update_query)
                 
