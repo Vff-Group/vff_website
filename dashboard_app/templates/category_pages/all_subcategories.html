@@ -6,29 +6,31 @@
   <div class="container-fluid py-4">
     
     <div class="row">
+      <form method="post">
+        {% csrf_token %}
+        
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label" for="input-section_type">Type of Section</label>
+              <select class="form-control form-control-alternative" id="input-section_type" name="section_type" required>
+                <option value="All" >All</option>
+                <option value="Men" >Men</option>
+                <option value="Women">Women</option>
+                <option value="Kids">Kids</option>
+                <option value="Others">Others</option>
+              </select>
+            </div>
+          
+        </div>
+        
+      </form>
       <div class="col-12">
         <div class="card mb-4">
           <div class="card-header pb-0 d-flex justify-content-between">
             <h6>All Sub Category For - [
                 {{catname}}
                 ]</h6>
-                <form method="post">
-                  {% csrf_token %}
-                  <div class="row">
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-section_type">Type of Section</label>
-                        <select class="form-control form-control-alternative" id="input-section_type" name="section_type" required>
-                          <option value="All" >All</option>
-                          <option value="Men" >Men</option>
-                          <option value="Women">Women</option>
-                          <option value="Kids">Kids</option>
-                          <option value="Others">Others</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </form>
+                
             <div class="row justify-content-center align-items-center p-1">
                 <a href="{% url 'dashboard_app:add_sub_category' catid catname%}">
                 <span class="badge badge-sm bg-gradient-info ">
@@ -137,4 +139,34 @@
     </div>
 </div>
 </main>
+<script>
+  $(document).ready(function() {
+    // Attach a change event handler to the dropdown
+    $('#input-section_type').on('change', function() {
+      // Get the selected option's value
+      var selectedValue = $(this).val();
+
+      // Create a data object with the selected value and CSRF token
+      var postData = {
+        section_type: selectedValue,
+        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()  // Include the CSRF token
+      };
+
+      // Send a POST request to your Django view
+      $.ajax({
+        type: 'POST',
+        url: '/handle_dropdown/',  // Replace with the actual URL
+        data: postData,
+        success: function(response) {
+          // Handle the response here (e.g., update the page content)
+          console.log(response);
+        },
+        error: function(error) {
+          // Handle errors here
+          console.error(error);
+        }
+      });
+    });
+  });
+</script>
 {% endblock  %}
