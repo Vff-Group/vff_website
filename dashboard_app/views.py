@@ -123,7 +123,7 @@ def all_customers(request):
     data = []    
     if not query_result == 500:
         for row in query_result:
-            epoch_time = row[13]
+            epoch_time = row[12]
             print(f'Epoch_time::{epoch_time}')
             datetime_obj = datetime.utcfromtimestamp(epoch_time)
             print(f'datetime_obj::{datetime_obj}')
