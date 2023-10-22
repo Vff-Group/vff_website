@@ -145,7 +145,7 @@ def all_customers(request):
                 'is_online': row[11],
                 'branch_name': row[12],
                 'creation_date_time':formatted_datetime,
-                'profile_img': row[14],
+                'profile_img': row[13],
                
             })
     else:
