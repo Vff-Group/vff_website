@@ -65,11 +65,20 @@
                       </td>
                     
                     <td class="align-middle text-center">
-                      <span class="text-secondary text-xs font-weight-bold">Order Recieved At {{row.order_taken_epoch}} </span>
-                      <span class="text-secondary text-xs font-weight-bold">Delivered At {{row.delivery_epoch}} </span>
+                      <p class="text-xs font-weight-bold mb-0">Order Recieved At : {{row.order_taken_epoch}} </p>
+                        <p class="text-xs font-weight-bold mb-0">Delivered At : {{row.delivery_epoch}} </p>
                     </td>
                     <td class="align-middle text-center text-sm">
+                      {% if row.order_status == "Completed" %}
                         <span class="badge badge-sm bg-success">{{row.order_status}}</span>
+                        {% elif row.order_status == "Accepted" %}
+                        <span class="badge badge-sm bg-primary">{{row.order_status}}</span>
+                        {% elif row.order_status == "Processing" %}
+                        <span class="badge badge-sm bg-info">{{row.order_status}}</span>
+                        {% elif row.order_status == "Payment Done" %}
+                        <span class="badge badge-sm bg-purple">{{row.order_status}}</span>
+                        {% else %}
+                        <span class="badge badge-sm bg-warning">{{row.order_status}}</span>
                       </td>
                       
                     <td class="align-middle">
