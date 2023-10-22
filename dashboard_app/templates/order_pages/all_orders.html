@@ -26,47 +26,57 @@
               <table class="table align-items-center mb-0">
                 <thead>
                   <tr>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+                    
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Order ID #</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Customer</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Address</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Joined</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Last Service</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Delivery Boy Name</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Time</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Current Status</th>
+                    <!-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Quantity</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Price</th> -->
                     <th class="text-secondary opacity-7"></th>
                   </tr>
                 </thead>
                 <tbody>
+                  {% for row in query_result %}
                   <tr>
+                    <td>
+                      <h6 class="mb-0 text-sm">{{row.orderid}}</h6>
+                    </td>
                     <td>
                       <div class="d-flex px-2 py-1">
                         <div>
-                          <img src="{% static 'img/team-4.jpg' %}" class="avatar avatar-sm me-3" alt="user1">
+                          <img src="{{row.profile_img}}" class="avatar avatar-sm me-3" alt="user1">
                         </div>
                         <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-sm">Shaheed Maniyar</h6>
-                          <p class="text-xs text-secondary mb-0">sam@gmail.com</p>
+                          <h6 class="mb-0 text-sm">{{row.customer_name}}</h6>
+                          <p class="text-xs text-secondary mb-0">{{row.mobile_no}}</p>
                         </div>
                       </div>
                     </td>
                     <td>
-                      <p class="text-xs font-weight-bold mb-0">New Vaibhav Nagar</p>
-                      <p class="text-xs text-secondary mb-0">6th cross Belagavi-590010</p>
+                      <p class="text-xs font-weight-bold mb-0">{{row.address}}</p>
+                      <p class="text-xs text-secondary mb-0">{{row.city}}-{{row.pincode}},{{row.landmark}}</p>
                     </td>
                     <td>
-                        <p class="text-xs font-weight-bold mb-0 text-center">27/10/2023</p>
-                        <p class="text-xs text-secondary mb-0 text-center">12:20:00 AM</p>
+                        <p class="text-xs font-weight-bold mb-0 text-center">{{row.delivery_boy_name}}</p>
+                        <!-- <p class="text-xs text-secondary mb-0 text-center">12:20:00 AM</p> -->
                       </td>
                     
                     <td class="align-middle text-center">
-                      <span class="text-secondary text-xs font-weight-bold">Wash & Iron</span>
+                      <span class="text-secondary text-xs font-weight-bold">Order Recieved At {{row.order_taken_epoch}} </span>
+                      <span class="text-secondary text-xs font-weight-bold">Delivered At {{row.delivery_epoch}} </span>
                     </td>
                     <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-success">Online</span>
+                        <span class="badge badge-sm bg-success">{{row.order_status}}</span>
                       </td>
+                      
                     <td class="align-middle">
                         <div class="row">
                             <div class="col">
                                 <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                    Update Status
+                                    View Details
                                   </a>
                             </div>
                             <div class="col">
@@ -79,7 +89,7 @@
                       
                     </td>
                   </tr>
-                  
+                  {% endfor %}
                 </tbody>
               </table>
             </div>

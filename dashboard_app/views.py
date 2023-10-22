@@ -425,8 +425,58 @@ def all_orders(request):
     isLogin = is_loggedin(request)
     if isLogin == False:
         return redirect('dashboard_app:login')
+    error_msg = "No Orders Data Found"
+    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name from vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id order by orderid desc"
+    query_result = execute_raw_query(query)
+    
+    
+        
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            depoch = row[25]#delivery epoch
+            oepoch = row[22]#order taken epoch
+            
+            deliveryEpoch = epochToDateTime(depoch)
+            orderTakenEpoch = epochToDateTime(oepoch)
+            
+            data.append({
+                'consmrid': row[0],
+                'usrid': row[1],
+                'customer_name': row[2],
+                'mobile_no': row[3],
+                'houseno': row[4],
+                'address': row[5],
+                'city': row[6],
+                'pincode': row[7],
+                'landmark': row[8],
+                'profile_img': row[9],
+                'device_token': row[10],
+                'orderid': row[11],
+                'delivery_boyid': row[12],
+                'quantity':row[13],
+                'price': row[14],
+                'pickup_dt': row[15],
+                'delivery_dt': row[16],
+                'clat': row[17],
+                'clng': row[18],
+                'order_completed': row[19],
+                'order_status': row[20],
+                'additional_instruction': row[21],
+                'order_taken_epoch': orderTakenEpoch,
+                'cancel_reason': row[23],
+                'feedback': row[24],
+                'delivery_epoch': deliveryEpoch,
+                'delivery_boy_name': row[26],
+                
+               
+            })
+    else:
+        error_msg = 'Something Went Wrong'
     current_url = request.get_full_path()
-    return render (request, 'order_pages/all_orders.html', {'current_url': current_url})
+     # using the 'current_url' variable to determine the active card.
+    context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    return render (request, 'order_pages/all_orders.html', context)
 
 #Create New Order
 def create_new_order(request):
@@ -855,6 +905,12 @@ def is_loggedin(request):
 def branch_selected(request):
     return request.session.get('branch_selected',False)
 
+def epochToDateTime(epoch):
+    datetime_obj = datetime.utcfromtimestamp(epoch)
+    gmt_plus_0530 = pytz.timezone('Asia/Kolkata')
+    datetime_obj_gmt_plus_0530 = datetime_obj.replace(tzinfo=pytz.utc).astimezone(gmt_plus_0530)
+    deliveryEpoch = datetime_obj_gmt_plus_0530.strftime('%Y-%m-%d %I:%M:%S %p')
+    return deliveryEpoch
 
 def upload_images2(uploaded_image):
     # Generate a unique identifier for the image
