@@ -162,6 +162,36 @@ def add_customer(request,usrid=None):
     isLogin = is_loggedin(request)
     if isLogin == False:
         return redirect('dashboard_app:login')
+    # If usrid is provided, retrieve the data for the selected Customer
+    data = {}
+    print(usrid)
+    if usrid:
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute("select usrname,mobile_no,usertbl.address,age,gender,consmrid,landmark,date_of_birth,pincode,query,profile_img"
+                               " from vff.laundry_customertbl,vff.usertbl where laundry_customertbl.usrid=usertbl.usrid and laundry_customertbl.usrid='"+str(usrid)+"'")
+                row = cursor.fetchone()
+                print(f'fetching the single user data::{row}')
+                if row:
+                    image_url = row[10]
+                    data = {
+                        'usrid': usrid,
+                        'fullname': row[0],
+                        'primaryno': row[1],
+                        'fulladdress': row[2],
+                        'age': row[3],
+                        'gender': row[4],
+                        'customerid': row[5],
+                        'landmark': row[6],
+                        'dateofbirth': row[7],
+                        'pincode': row[8],
+                        'questions': row[9],
+                        'profile_img': image_url,
+                        
+                    }
+        except Exception as e:
+            print(f"Error loading data: {e}") 
+       
     if request.method == "POST":
         uname = request.POST.get('fullname')
         primary_mobno = request.POST.get('primaryno')
@@ -172,11 +202,21 @@ def add_customer(request,usrid=None):
         land_mark = request.POST.get('landmark')
         date_of_birth = request.POST.get('dateofbirth')
         queries = request.POST.get('questions')
-        if image_url == "":
-            image_url = 'NA'
-            if request.FILES.get('profile-image1'):
-                uploaded_image = request.FILES['profile-image1']
-                image_url = upload_images2(uploaded_image)
+        uploaded_image = request.FILES.get('profile-image1')
+
+        
+        if uploaded_image:
+            image_url = upload_images2(uploaded_image)
+        elif data.get('profile_img'):
+            image_url = data.get('profile_img')
+        else:
+            # Handle the case where there's no uploaded image and no previous image
+            image_url = 'NA'  # Set it to a default value or handle accordingly
+            
+        # image_url = 'NA'
+        # if request.FILES.get('profile-image1'):
+        #         uploaded_image = request.FILES['profile-image1']
+        #         image_url = upload_images2(uploaded_image)
             
 
         
@@ -234,36 +274,7 @@ def add_customer(request,usrid=None):
             print(f"Error loading data: {e}")
 
     
-    # If usrid is provided, retrieve the data for the selected Customer
-    data = {}
-    print(usrid)
-    if usrid:
-        try:
-            with connection.cursor() as cursor:
-                cursor.execute("select usrname,mobile_no,usertbl.address,age,gender,consmrid,landmark,date_of_birth,pincode,query,profile_img"
-                               " from vff.laundry_customertbl,vff.usertbl where laundry_customertbl.usrid=usertbl.usrid and laundry_customertbl.usrid='"+str(usrid)+"'")
-                row = cursor.fetchone()
-                print(f'fetching the single user data::{row}')
-                if row:
-                    image_url = row[10]
-                    data = {
-                        'usrid': usrid,
-                        'fullname': row[0],
-                        'primaryno': row[1],
-                        'fulladdress': row[2],
-                        'age': row[3],
-                        'gender': row[4],
-                        'customerid': row[5],
-                        'landmark': row[6],
-                        'dateofbirth': row[7],
-                        'pincode': row[8],
-                        'questions': row[9],
-                        'profile_img': image_url,
-                        
-                    }
-        except Exception as e:
-            print(f"Error loading data: {e}") 
-       
+    
     return render(request,'customer_pages/add_customer.html',{'data':data})
 
 
@@ -322,6 +333,36 @@ def add_delivery_agent(request,usrid=None):
     isLogin = is_loggedin(request)
     if isLogin == False:
         return redirect('dashboard_app:login')
+     # If usrid is provided, retrieve the data for the selected delievry boy
+    data = {}
+    print(usrid)
+    if usrid:
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute("select usrname,mobile_no,usertbl.address,age,gender,delivery_boy_id,landmark,date_of_birth,pincode,aadhar_no,profile_img,laundry_delivery_boytbl.username,laundry_delivery_boytbl.password"
+                               " from vff.laundry_delivery_boytbl,vff.usertbl where laundry_delivery_boytbl.usrid=usertbl.usrid and laundry_delivery_boytbl.usrid='"+str(usrid)+"'")
+                row = cursor.fetchone()
+                print(f'fetching the single user data::{row}')
+                if row:
+                    data = {
+                        'usrid': usrid,
+                        'fullname': row[0],
+                        'primaryno': row[1],
+                        'fulladdress': row[2],
+                        'age': row[3],
+                        'gender': row[4],
+                        'customerid': row[5],
+                        'landmark': row[6],
+                        'dateofbirth': row[7],
+                        'pincode': row[8],
+                        'aadharno': row[9],
+                        'profile_img': row[10],
+                        'username': row[11],
+                        'password': row[12],
+                    }
+        except Exception as e:
+            print(f"Error loading data: {e}") 
+      
     if request.method == "POST":
         uname = request.POST.get('fullname')
         primary_mobno = request.POST.get('primaryno')
@@ -334,13 +375,23 @@ def add_delivery_agent(request,usrid=None):
         aadharno = request.POST.get('aadharno')
         username = request.POST.get('username')
         password = request.POST.get('password')
-        image_url = data.get('profile_img', 'NA')
+        uploaded_image = request.FILES.get('profile-image1')
+
+        
+        if uploaded_image:
+            image_url = upload_images2(uploaded_image)
+        elif data.get('profile_img'):
+            image_url = data.get('profile_img')
+        else:
+            # Handle the case where there's no uploaded image and no previous image
+            image_url = 'NA'  # Set it to a default value or handle accordingly
+            
         # if request.FILES.get('delivery-image'):
         #     uploaded_image = request.FILES['delivery-image']
         #     image_url = upload_images2(uploaded_image)
-        if request.FILES.get('profile-image1'):
-            uploaded_image = request.FILES['profile-image1']
-            image_url = upload_images2(uploaded_image)
+        # if request.FILES.get('profile-image1'):
+        #     uploaded_image = request.FILES['profile-image1']
+        #     image_url = upload_images2(uploaded_image)
         errors = []
         if not date_of_birth:
             today_date = timezone.now().date() 
@@ -391,36 +442,7 @@ def add_delivery_agent(request,usrid=None):
             print(f"Error loading data: {e}")
 
     
-    # If usrid is provided, retrieve the data for the selected delievry boy
-    data = {}
-    print(usrid)
-    if usrid:
-        try:
-            with connection.cursor() as cursor:
-                cursor.execute("select usrname,mobile_no,usertbl.address,age,gender,delivery_boy_id,landmark,date_of_birth,pincode,aadhar_no,profile_img,laundry_delivery_boytbl.username,laundry_delivery_boytbl.password"
-                               " from vff.laundry_delivery_boytbl,vff.usertbl where laundry_delivery_boytbl.usrid=usertbl.usrid and laundry_delivery_boytbl.usrid='"+str(usrid)+"'")
-                row = cursor.fetchone()
-                print(f'fetching the single user data::{row}')
-                if row:
-                    data = {
-                        'usrid': usrid,
-                        'fullname': row[0],
-                        'primaryno': row[1],
-                        'fulladdress': row[2],
-                        'age': row[3],
-                        'gender': row[4],
-                        'customerid': row[5],
-                        'landmark': row[6],
-                        'dateofbirth': row[7],
-                        'pincode': row[8],
-                        'aadharno': row[9],
-                        'profile_img': row[10],
-                        'username': row[11],
-                        'password': row[12],
-                    }
-        except Exception as e:
-            print(f"Error loading data: {e}") 
-      
+   
     return render (request, 'delivery_agents_pages/add_new_delivery_agent.html',{'data':data})
 
 #All Orders
