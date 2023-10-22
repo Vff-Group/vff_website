@@ -169,6 +169,7 @@ def add_customer(request,usrid=None):
         land_mark = request.POST.get('landmark')
         date_of_birth = request.POST.get('dateofbirth')
         queries = request.POST.get('questions')
+        image_url = 'NA'
         if request.FILES.get('profile-image1'):
             uploaded_image = request.FILES['profile-image1']
             image_url = upload_images2(uploaded_image)
@@ -326,9 +327,14 @@ def add_delivery_agent(request,usrid=None):
         land_mark = request.POST.get('landmark')
         date_of_birth = request.POST.get('dateofbirth')
         aadharno = request.POST.get('aadharno')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
         image_url = 'NA'
-        if request.FILES.get('delivery-image'):
-            uploaded_image = request.FILES['delivery-image']
+        # if request.FILES.get('delivery-image'):
+        #     uploaded_image = request.FILES['delivery-image']
+        #     image_url = upload_images2(uploaded_image)
+        if request.FILES.get('profile-image1'):
+            uploaded_image = request.FILES['profile-image1']
             image_url = upload_images2(uploaded_image)
         errors = []
         if not date_of_birth:
@@ -355,7 +361,7 @@ def add_delivery_agent(request,usrid=None):
                     cursor.execute(update_query)
                     
                     update_customer = (
-                        "update vff.laundry_delivery_boytbl set name='"+str(uname)+"' where usrid='"+str(usrid)+"'"
+                        "update vff.laundry_delivery_boytbl set name='"+str(uname)+"',username='"+str(username)+"',password='"+str(password)+"' where usrid='"+str(usrid)+"'"
                     )
                     print(f"update customer details::{update_customer}")
                     cursor.execute(update_customer)
@@ -366,8 +372,8 @@ def add_delivery_agent(request,usrid=None):
                     usrid = cursor.fetchone()[0]  # Retrieve the returned usrid
 
                     insert_query = (
-                        "insert into vff.laundry_delivery_boytbl (usrid,branchid,name) values "
-                        "('"+str(usrid)+"','"+str(branch_id)+"','"+str(uname)+"')"
+                        "insert into vff.laundry_delivery_boytbl (usrid,branchid,name,username,password) values "
+                        "('"+str(usrid)+"','"+str(branch_id)+"','"+str(uname)+"','"+str(username)+"','"+str(password)+"')"
                         
                     )
                     print(f"Create New user details::{insert_query}")
@@ -386,7 +392,7 @@ def add_delivery_agent(request,usrid=None):
     if usrid:
         try:
             with connection.cursor() as cursor:
-                cursor.execute("select usrname,mobile_no,usertbl.address,age,gender,delivery_boy_id,landmark,date_of_birth,pincode,aadhar_no,profile_img"
+                cursor.execute("select usrname,mobile_no,usertbl.address,age,gender,delivery_boy_id,landmark,date_of_birth,pincode,aadhar_no,profile_img,laundry_delivery_boytbl.username,laundry_delivery_boytbl.password"
                                " from vff.laundry_delivery_boytbl,vff.usertbl where laundry_delivery_boytbl.usrid=usertbl.usrid and laundry_delivery_boytbl.usrid='"+str(usrid)+"'")
                 row = cursor.fetchone()
                 print(f'fetching the single user data::{row}')
@@ -404,6 +410,8 @@ def add_delivery_agent(request,usrid=None):
                         'pincode': row[8],
                         'aadharno': row[9],
                         'profile_img': row[10],
+                        'username': row[11],
+                        'password': row[12],
                     }
         except Exception as e:
             print(f"Error loading data: {e}") 
