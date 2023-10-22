@@ -112,8 +112,8 @@ def all_customers(request):
     error_msg = "No Customers Data Found"
     branch_id = request.session.get('branchid')
     filter = ''
-    if branch_id :
-        filter = " and laundry_customertbl.branchid='"+str(branch_id)+"'"
+    # if branch_id :
+    #     filter = " and laundry_customertbl.branchid='"+str(branch_id)+"'"
     query = " select laundry_customertbl.usrid,usrname,mobile_no,usertbl.address,lat,lng,age,gender,laundry_customertbl.branchid,consmrid,laundry_customertbl.status,is_online,branch_name,usertbl.epoch,profile_img from vff.branchtbl,vff.laundry_customertbl,vff.usertbl where laundry_customertbl.usrid=usertbl.usrid and laundry_customertbl.branchid=branchtbl.branchid "+filter+" order by usrname desc"
     
     query_result = execute_raw_query(query)
