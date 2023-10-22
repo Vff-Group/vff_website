@@ -6,116 +6,227 @@
   <div class="container-fluid py-4">
     <div class="row">
         <div class="col-lg-8">
-            <div class="row">
-                <div class="col-12">
-                  <div class="card mb-4">
-                    <div class="card-header pb-0 d-flex justify-content-between">
-                      <div class="row">
-                        <div class="col-lg-6">
-                            <h6>Shaheed Maniyar</h6>
+          <div class="row">
+            <div class="col-12">
+              <div class="card mb-4">
+                <div class="card-header pb-0">
+                  <div class="row">
+                    <div class="col-6">
+                      <h6 class="mb-2">Shaheed Maniyar</h6>
+                      <div class="col">
+                        <small>H no 234</small>
+                      </div>
+                      <div class="col">
+                        <small>New Vaibhav Nagar</small>
+                      </div>
+                      <div class="col">
+                        <small>Belgaum - 590010</small>
+                      </div>
+                      <div class="col">
+                        <small>Transaction ID - rcyuoi123</small>
+                      </div>
+                    </div>
+                    <div class="col-6 d-flex flex-column justify-content-end align-items-end">
+                      <h6 class="mb-2">Order ID:#567546</h6>
+                      <div class="col">
+                        <small>Order Date:24/10/2023</small>
+                      </div>
+                      <div class="col">
+                          <small>Delivery Date:24/10/2023</small>
+                      </div>
+                      <div class="col">
+                          <p class="text-bold">Order Status: </p>
+                      </div>
+                      <div class="col">
+                        <small>Processing</small>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+                <!-- Action Buttons  -->
+
+                <!-- Action Buttons End  -->
+                <div class="card-body px-0 pt-0 pb-2 mt-2">
+                  <div class="table-responsive p-0">
+                    <table class="table align-items-center mb-0">
+                      <thead>
+                        <tr>
+                          <th
+                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                          >
+                            Order ID #
+                          </th>
+                          <th
+                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                          >
+                            Service Name
+                          </th>
+                          <th
+                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                          >
+                            Rate
+                          </th>
+                          <th
+                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                          >
+                            Quantity
+                          </th>
+                          <th
+                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                          >
+                            Total
+                          </th>
+                          <th
+                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                          >
+                            Delivery Time
+                          </th>
+                          <th
+                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                          >
+                            Current Status
+                          </th>
+                          <!-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Quantity</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Price</th> -->
+                          <th class="text-secondary opacity-7"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for row in query_result %}
+                  <tr>
+                    <td>
+                      <h6 class="mb-0 text-sm text-center">#{{row.orderid}}</h6>
+                    </td>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div>
+                          <img src="{{row.profile_img}}" class="avatar avatar-sm me-3" alt="user1">
                         </div>
-                        <div class="col-lg-6">
-                            <h6>Order ID: #234</h6>
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">{{row.customer_name}}</h6>
+                          <p class="text-xs text-secondary mb-0">{{row.mobile_no}}</p>
                         </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">{{row.address}}</p>
+                      <p class="text-xs text-secondary mb-0">{{row.city}}-{{row.pincode}},{{row.landmark}}</p>
+                    </td>
+                    <td>
+                        <h6 class="text-xs font-weight-bold mb-0 text-center">{{row.delivery_boy_name}}</h6>
+                        <!-- <p class="text-xs text-secondary mb-0 text-center">12:20:00 AM</p> -->
+                      </td>
+                    
+                    <td class="align-middle text-center">
+                      <span class="text-xs font-weight-bold mb-0">{{row.order_taken_epoch}} </span>
+                        
+                    </td>
+                    <td class="align-middle text-center">
+                      <span class="text-xs font-weight-bold mb-0">{{row.delivery_epoch}} </span>
+                        
+                    </td>
+                    <td class="align-middle text-center text-sm">
+                      {% if row.order_status == "Completed" %}
+                        <span class="badge badge-sm bg-success">{{row.order_status}}</span>
+                        {% elif row.order_status == "Accepted" %}
+                        <span class="badge badge-sm bg-info">{{row.order_status}}</span>
+                        {% elif row.order_status == "Processing" %}
+                        <span class="badge badge-sm bg-grey">{{row.order_status}}</span>
+                        {% elif row.order_status == "Payment Done" %}
+                        <span class="badge badge-sm bg-info">{{row.order_status}}</span>
+                        {% else %}
+                        <span class="badge badge-sm bg-danger">{{row.order_status}}</span>
+                        {% endif %}
+                      </td>
+                      
+                    <td class="align-middle">
+                        <div class="row">
+                            <div class="col">
+                                <a href="{% url 'dashboard_app:view_order_detail' row.orderid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                    View Details
+                                  </a>
+                            </div>
+                            <div class="col">
+                                <a href="" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                    Delete
+                                  </a>
+                            </div>
+                        </div>
+                      
+                      
+                    </td>
+                  </tr>
+                  {% endfor %}
+                      </tbody>
+                      
+                    </table>
+                  </div>
+                </div>
+                <div class="card-footer px-2 pt-0 pb-2 mt-2">
+                  <div class="row">
+                      <div class="col-6">
+                        <h6 class="mb-2">Invoice To:</h6>
+                        <div class="col">
+                          <small>Shaheed Maniyar</small>
+                        </div>
+                        
+                      </div>
+                      <div class="col-6 d-flex flex-column justify-content-end align-items-end">
+                        <h6 class="mb-2">Payment Details</h6>
+                        <div class="col d-flex flex-column align-items-center">
+                          <small>Total: </small><h6 class="text-primary"> ₹800/-</h6>
+                        </div>
+                        
+                        
                       </div>
                       
                     </div>
-                    <!-- Action Buttons  -->
-                    
-                    <!-- Action Buttons End  -->
-                    <div class="card-body px-0 pt-0 pb-2">
-                      <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0">
-                          <thead>
-                            <tr>
-                              
-                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Order ID #</th>
-                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Customer</th>
-                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Address</th>
-                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Delivery Boy Name</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Order Recieved Time</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Delivery Time</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Current Status</th>
-                              <!-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Quantity</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Price</th> -->
-                              <th class="text-secondary opacity-7"></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="col-lg-4">
-          <div class="card h-100">
+          <div class="card ">
             <div class="card-header pb-0 p-3">
               <div class="row">
                 <div class="col-6 d-flex align-items-center">
-                  <h6 class="mb-0">Invoices</h6>
+                  <h6 class="mb-0">Service Addons</h6>
                 </div>
-                <div class="col-6 text-end">
-                  <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
-                </div>
+                
               </div>
             </div>
             <div class="card-body p-3 pb-0">
               <ul class="list-group">
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="mb-1 text-dark font-weight-bold text-sm">March, 01, 2020</h6>
-                    <span class="text-xs">#MS-415646</span>
+                
+                <li
+                  class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2  bg-gray-100 border-radius-lg"
+                >
+                  <div class="d-flex flex-column m-1">
+                    <h6 class="text-dark font-weight-bold text-sm ">
+                      Softner : $24.0
+                    </h6>
+                    
                   </div>
-                  <div class="d-flex align-items-center text-sm">
-                    $180
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
+                 
                 </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="text-dark mb-1 font-weight-bold text-sm">February, 10, 2021</h6>
-                    <span class="text-xs">#RV-126749</span>
+                
+                <li
+                  class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2  bg-gray-100 border-radius-lg"
+                >
+                  <div class="d-flex flex-column m-1">
+                    <h6 class="text-dark font-weight-bold text-sm ">
+                      Scented Detergent : $44.0
+                    </h6>
+                    
                   </div>
-                  <div class="d-flex align-items-center text-sm">
-                    $250
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
+                 
                 </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="text-dark mb-1 font-weight-bold text-sm">April, 05, 2020</h6>
-                    <span class="text-xs">#FB-212562</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    $560
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="text-dark mb-1 font-weight-bold text-sm">June, 25, 2019</h6>
-                    <span class="text-xs">#QW-103578</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    $120
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="text-dark mb-1 font-weight-bold text-sm">March, 01, 2019</h6>
-                    <span class="text-xs">#AR-803481</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    $300
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
+                
               </ul>
+              <button id="printButton" type="submit" class="btn btn-primary my-4">Print Invoice</button>
+
             </div>
           </div>
         </div>
@@ -123,4 +234,10 @@
       
   </div>
 </main>
+<script>
+    document.getElementById('printButton').addEventListener('click', function () {
+        window.print();
+    });
+</script>
 {% endblock  %}
+
