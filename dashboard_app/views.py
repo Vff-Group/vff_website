@@ -158,6 +158,7 @@ def all_customers(request):
 
 #Add New Customer Page
 def add_customer(request,usrid=None):
+    
     isLogin = is_loggedin(request)
     if isLogin == False:
         return redirect('dashboard_app:login')
@@ -171,10 +172,11 @@ def add_customer(request,usrid=None):
         land_mark = request.POST.get('landmark')
         date_of_birth = request.POST.get('dateofbirth')
         queries = request.POST.get('questions')
-        image_url = 'NA'
-        if request.FILES.get('profile-image1'):
-            uploaded_image = request.FILES['profile-image1']
-            image_url = upload_images2(uploaded_image)
+        if image_url == "":
+            image_url = 'NA'
+            if request.FILES.get('profile-image1'):
+                uploaded_image = request.FILES['profile-image1']
+                image_url = upload_images2(uploaded_image)
             
 
         
@@ -243,6 +245,7 @@ def add_customer(request,usrid=None):
                 row = cursor.fetchone()
                 print(f'fetching the single user data::{row}')
                 if row:
+                    image_url = row[10]
                     data = {
                         'usrid': usrid,
                         'fullname': row[0],
@@ -255,7 +258,7 @@ def add_customer(request,usrid=None):
                         'dateofbirth': row[7],
                         'pincode': row[8],
                         'questions': row[9],
-                        'profile_img': row[10],
+                        'profile_img': image_url,
                         
                     }
         except Exception as e:
@@ -331,7 +334,7 @@ def add_delivery_agent(request,usrid=None):
         aadharno = request.POST.get('aadharno')
         username = request.POST.get('username')
         password = request.POST.get('password')
-        image_url = 'NA'
+        image_url = data.get('profile_img', 'NA')
         # if request.FILES.get('delivery-image'):
         #     uploaded_image = request.FILES['delivery-image']
         #     image_url = upload_images2(uploaded_image)
