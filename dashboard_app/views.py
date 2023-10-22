@@ -124,7 +124,9 @@ def all_customers(request):
     if not query_result == 500:
         for row in query_result:
             epoch_time = row[13]
+            print(f'Epoch_time::{epoch_time}')
             datetime_obj = datetime.utcfromtimestamp(epoch_time)
+            print(f'datetime_obj::{datetime_obj}')
             gmt_plus_0530 = pytz.timezone('Asia/Kolkata')
             datetime_obj_gmt_plus_0530 = datetime_obj.replace(tzinfo=pytz.utc).astimezone(gmt_plus_0530)
             formatted_datetime = datetime_obj_gmt_plus_0530.strftime('%Y-%m-%d %I:%M:%S %p')
