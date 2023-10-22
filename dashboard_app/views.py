@@ -511,7 +511,45 @@ def create_new_order(request):
     if isLogin == False:
         return redirect('dashboard_app:login')
     return render (request, 'order_pages/create_new_order.html')
+
+#View Order Details
+#Add New Customer Page
+def view_order_detail(request,orderid):
     
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    
+    query = "select catid,category_name,cat_img,regular_price,regular_price_type,express_price,express_price_type,offer_price,offer_price_type,description from vff.laundry_categorytbl order by priority"
+    
+    query_result = execute_raw_query(query)
+    
+    
+        
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            data.append({
+                'catid': row[0],
+                'categoryname': row[1],
+                'categoryimg': row[2],
+                'regular_prize': row[3],
+                'regular_prize_type': row[4],
+                'express_prize': row[5],
+                'express_prize_type': row[6],
+                'offer_prize': row[7],
+                'offer_prize_type': row[8],
+                'description': row[9],
+               
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+       
+    context ={'data':data}
+    
+    return render(request,'order_pages/order_details.html',context)
+
 #All Categories
 def all_categories(request):
     isLogin = is_loggedin(request)
