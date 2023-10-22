@@ -10,13 +10,13 @@
         <div class="card mb-4">
           <div class="card-header pb-0 d-flex justify-content-between">
             <h6>All Orders</h6>
-            <div class="row justify-content-center align-items-center p-1">
+            <!-- <div class="row justify-content-center align-items-center p-1">
                 <a href="{% url 'dashboard_app:create_order' %}">
                 <span class="badge badge-sm bg-gradient-info ">
                     <i class="fa-solid fa-user-plus"></i>
                      Create New Order</span>
                     </a>
-            </div>
+            </div> -->
           </div>
           <!-- Action Buttons  -->
           
@@ -31,7 +31,8 @@
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Customer</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Address</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Delivery Boy Name</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Time</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Order Recieved Time</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Delivery Time</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Current Status</th>
                     <!-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Quantity</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Price</th> -->
@@ -65,8 +66,12 @@
                       </td>
                     
                     <td class="align-middle text-center">
-                      <p class="text-xs font-weight-bold mb-0">Order Recieved At : {{row.order_taken_epoch}} </p>
-                        <p class="text-xs font-weight-bold mb-0">Delivered At : {{row.delivery_epoch}} </p>
+                      <span class="text-xs font-weight-bold mb-0">{{row.order_taken_epoch}} </span>
+                        
+                    </td>
+                    <td class="align-middle text-center">
+                      <span class="text-xs font-weight-bold mb-0">{{row.delivery_epoch}} </span>
+                        
                     </td>
                     <td class="align-middle text-center text-sm">
                       {% if row.order_status == "Completed" %}

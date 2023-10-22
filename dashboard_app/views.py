@@ -436,9 +436,11 @@ def all_orders(request):
         for row in query_result:
             depoch = row[25]#delivery epoch
             oepoch = row[22]#order taken epoch
-            
+            orderStatus = row[20]
             deliveryEpoch = epochToDateTime(depoch)
             orderTakenEpoch = epochToDateTime(oepoch)
+            if orderStatus != "Completed":
+                deliveryEpoch = "Not Delivered Yet"
             
             data.append({
                 'consmrid': row[0],
@@ -461,7 +463,7 @@ def all_orders(request):
                 'clat': row[17],
                 'clng': row[18],
                 'order_completed': row[19],
-                'order_status': row[20],
+                'order_status': orderStatus,
                 'additional_instruction': row[21],
                 'order_taken_epoch': orderTakenEpoch,
                 'cancel_reason': row[23],
