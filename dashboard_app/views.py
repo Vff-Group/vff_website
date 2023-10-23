@@ -679,10 +679,10 @@ def view_order_detail(request,orderid):
     
     return render(request,'order_pages/order_details.html',context)
 
-def update_order_status(request):
+def update_order_status(request,order_id):
     if request.method == "POST":
         order_status = request.POST.get('order-status')
-        order_id = request.session.get('order_id')
+        # order_id = request.session.get('order_id')
         userid = request.session.get('userid')
         order_completed  = "0"
         if order_status == "Completed":
@@ -722,6 +722,7 @@ def update_order_status(request):
                 return redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id}))
         except Exception as e:
             print(f"Error loading data: {e}")
+    return redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id}))
             
         
         
