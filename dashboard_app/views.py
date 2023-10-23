@@ -814,11 +814,13 @@ def update_order_status(request,order_id):
             
             #To send to customer
             title = "VFF Group"
-            msg = "Your Laundry Package is on its way to deliver"
+            
             if order_status == "Completed":
-                msg = "Laundry Package Delivery Successfully. Keep Ordering with Velvet Wash"
+                msg = "Laundry Package Delivery Successfully for Order ID : #"+str(order_id)+" . Keep Ordering with Velvet Wash"
             elif order_status == "Processing":
                 msg = "Processing has been started for your Order ID : #"+str(order_id)+""
+            else:
+                msg = "Your Laundry Package is on its way to deliver for Order ID : #"+str(order_id)+""
             data = {
                  'intent':'DMainRoute',
                  
