@@ -711,10 +711,11 @@ def update_order_status(request,order_id):
                 sendFMCMsg(device_token,msg,title,data)
             #To send to customer
             query_customer = "select usrname,device_token,customerid from vff.laundry_customertbl,vff.usertbl,vff.laundry_ordertbl where usertbl.usrid=laundry_customertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and orderid='"+str(order_id)+"'"
-            token_result = execute_raw_query_fetch_one(query_customer)
-            if token_result:   
+            ctoken_result = execute_raw_query_fetch_one(query_customer)
+            if ctoken_result:   
                 customerid = token_result[2]
                 cdevice_token = token_result[1]
+                print(f'CustomersToken::{cdevice_token}')
                 
                 
                 title = "VFF Group"
