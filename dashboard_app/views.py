@@ -694,6 +694,7 @@ def update_order_status(request,order_id):
         else:
             order_completed = "0"
         if order_status == "Out for Delivery":
+            #To Send for Delivery Boy
             query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
             token_result = execute_raw_query_fetch_one(query_token)
             if token_result:   
@@ -708,6 +709,21 @@ def update_order_status(request,order_id):
                          
                          }
                 sendFMCMsg(device_token,msg,title,data)
+            #To send to customer
+            query_customer = "select usrname,device_token,customerid from vff.laundry_customertbl,vff.usertbl,vff.laundry_ordertbl where usertbl.usrid=laundry_customertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and orderid='"+str(order_id)+"'"
+            token_result = execute_raw_query_fetch_one(query_customer)
+            if token_result:   
+                customerid = token_result[2]
+                cdevice_token = token_result[1]
+                
+                
+                title = "VFF Group"
+                msg = "Your Laundry Package is on its way to deliver"
+                data = {
+                         'intent':'DMainRoute',
+                         
+                         }
+                sendFMCMsg(cdevice_token,msg,title,data)
         try:
             with connection.cursor() as cursor:
                 
@@ -717,8 +733,13 @@ def update_order_status(request,order_id):
                 query2 = "insert into vff.laundry_order_historytbl(order_id,order_stages) values ('"+str(order_id)+"','"+str(order_status)+"')"
                 cursor.execute(query2)
                 connection.commit()
+                #Insert Delivery Boy Record
                 insert_notify="insert into vff.laundry_notificationtbl(title,body,reciever_id,sender_id,order_id) values ('"+str(title)+"','"+str(msg)+"','"+str(delivery_boy_id)+"','"+str(userid)+"','"+str(order_id)+"')"
                 cursor.execute(insert_notify)
+                connection.commit()
+                #Insert Customers Record
+                cinsert_notify="insert into vff.laundry_notificationtbl(title,body,reciever_id,sender_id,order_id) values ('"+str(title)+"','"+str(msg)+"','"+str(customerid)+"','"+str(userid)+"','"+str(order_id)+"')"
+                cursor.execute(cinsert_notify)
                 connection.commit()
                 print("Order Status Updated Successfully")
                 return redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id}))
