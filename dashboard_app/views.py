@@ -714,8 +714,8 @@ def update_order_status(request,order_id):
             ctoken_result = execute_raw_query_fetch_one(query_customer)
             print(f'Customer_query::{ctoken_result}')
             if ctoken_result:   
-                cdevice_token = token_result[1]
-                customerid = token_result[2]
+                cdevice_token = ctoken_result[1]
+                customerid = ctoken_result[2]
                 print(f'CustomersToken::{cdevice_token}')
                 
                 
