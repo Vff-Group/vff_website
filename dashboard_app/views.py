@@ -605,7 +605,7 @@ def view_order_detail(request,orderid):
         delivery_price = 0
         delivery_query = "select price  from vff.laundry_delivery_chargetbl"
         dlvrych_result = execute_raw_query_fetch_one(delivery_query)
-        if dlvrych_result and dlvrych_result[2]:   
+        if dlvrych_result and dlvrych_result[1]:   
             delivery_price = dlvrych_result[0]
         
         extra_item_sum = sum(extra['extra_item_price'] for extra in extra_data)
