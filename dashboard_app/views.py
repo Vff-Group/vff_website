@@ -709,7 +709,7 @@ def update_order_status(request,order_id):
         try:
             with connection.cursor() as cursor:
                 
-                query = "update vff.laundry_ordertbl set order_status='"+str(order_status)+"',order_completed='"+str(order_completed)+"'"
+                query = "update vff.laundry_ordertbl set order_status='"+str(order_status)+"',order_completed='"+str(order_completed)+"' where orderid='"+str(order_id)+"'"
                 cursor.execute(query)
                 connection.commit()
                 query2 = "insert into vff.laundry_order_historytbl(order_id,order_stages) values ('"+str(order_id)+"','"+str(order_status)+"')"

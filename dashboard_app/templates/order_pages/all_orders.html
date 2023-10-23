@@ -80,8 +80,10 @@
                         {% elif row.order_status == "Accepted" %}
                         <span class="badge badge-sm bg-info">{{row.order_status}}</span>
                         {% elif row.order_status == "Processing" %}
-                        <span class="badge badge-sm bg-grey">{{row.order_status}}</span>
+                        <span class="badge badge-sm bg-info">{{row.order_status}}</span>
                         {% elif row.order_status == "Payment Done" %}
+                        <span class="badge badge-sm bg-info">{{row.order_status}}</span>
+                        {% elif row.order_status == "Out for Delivery" %}
                         <span class="badge badge-sm bg-info">{{row.order_status}}</span>
                         {% else %}
                         <span class="badge badge-sm bg-danger">{{row.order_status}}</span>
