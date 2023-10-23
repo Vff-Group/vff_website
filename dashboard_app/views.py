@@ -582,6 +582,10 @@ def view_order_detail(request,orderid):
                 
                
             })
+        total_item_cost = sum(item['item_cost'] for item in data)
+        first_order_id = data[0]['orderid'] if data else None
+        print(f'OrderID::{first_order_id}')
+        print(f'total_item_cost::{total_item_cost}')
     else:
         error_msg = 'Something Went Wrong'
        
