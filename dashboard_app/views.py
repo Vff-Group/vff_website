@@ -614,9 +614,10 @@ def view_order_detail(request,orderid):
         total_laundry_cost = sum(item['item_cost'] for item in data)
         print(f'total_laundry_cost::{total_laundry_cost}')
         print(f'extra_item_sum::{extra_item_sum}')
+        print(f'delivery_price::{delivery_price}')
         
         if total_laundry_cost != 0:
-            if total_laundry_cost < dlvrych_result:
+            if total_laundry_cost < delivery_price:
                 total_laundry_cost += delivery_price
             else:
                 delivery_price = 0
