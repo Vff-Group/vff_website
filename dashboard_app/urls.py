@@ -19,6 +19,7 @@ urlpatterns = [
     path('all_orders/',views.all_orders,name='all_orders'),
     path('all_orders/create_order/',views.create_new_order,name='create_order'),
     path('all_orders/order_details/<int:orderid>',views.view_order_detail,name='view_order_detail'),
+    path('all_orders/order_details/<int:orderid>/update_order_status',views.update_order_status,name='update_order_status'),
     path('categories/',views.all_categories,name='all_categories'),
     path('categories/add_category/',views.add_category,name='add_category'),
     path('categories/update_category_details/<int:catid>',views.add_category,name='update_category'),

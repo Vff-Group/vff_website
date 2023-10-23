@@ -234,16 +234,19 @@
               {% endif %}
               <button id="printButton" type="submit" class="btn btn-primary my-4">Print Invoice</button>
               <div class="col">
-                <form method="post">
+                <form method="post" action="{% url 'dashboard_app:update_order_status' %}">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label class="form-control-label" for="input-gender">Change Order Status</label>
-                                <select class="form-control form-control-alternative" id="input-gender" name="gender">
-                                  <option value="Male"  {% if data.gender == 'Male' %}selected{% endif %}>Male</option>
-                                  <option value="Female" {% if data.gender == 'Female' %}selected{% endif %}>Female</option>
-                                  <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option>
+                                <label class="form-control-label" for="input-order-status">Change Order Status</label>
+                                <select class="form-control form-control-alternative" id="input-order-status" name="order-status">
+                                  <option value="Accepted"  {% if order_status == 'Accepted' %}selected{% endif %}>Accepted</option>
+                                  <option value="Payment Done" {% if order_status == 'Payment Done' %}selected{% endif %}>Payment Done</option>
+                                  <option value="Processing" {% if order_status == 'Processing' %}selected{% endif %}>Processing</option>
+                                  <option value="Out for Delivery" {% if order_status == 'Out for Delivery' %}selected{% endif %}>Out for Delivery</option>
+                                  <option value="Completed" {% if order_status == 'Completed' %}selected{% endif %}>Completed</option>
+                                  <option value="Cancelled" {% if order_status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
                                 </select>
                               </div>
                         </div>

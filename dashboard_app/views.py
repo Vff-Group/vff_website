@@ -12,8 +12,33 @@ import base64
 import os
 import uuid
 import mimetypes
+import requests
 from PIL import Image  # Pillow library for image processing
 # Create your views here.
+serverToken="AAAApZY1ur0:APA91bHsk-e3OC5R2vqO7dD0WZp7ifULNzqrUPnQu07et7RLFMWWcwOqY9Bl-9YQWkuXUP5nM7bVMgMP-qKISf9Jcf2ix9j7oOkScq9-3BH0hfCH3nIWgkn4hbnmSLyw4pmq66rMZz8R"
+
+def sendFMCMsg(deviceToken,msg,title,data,requests):
+    global serverToken
+    deviceToken=deviceToken.replace('__colon__',':')
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'key=' + serverToken,
+    }
+    body = {
+        'notification': {'title': title,
+        'body': msg
+    },
+        'data': data,
+        'to':
+        deviceToken,
+        'priority': 'high',
+#   'data': dataPayLoad,
+    }
+    response = requests.post("https://fcm.googleapis.com/fcm/send",headers = headers, data=json.dumps(body))
+    print(response)
+    print(response.json())
+    print(response.status_code)
+
 
 #Login Page
 @never_cache
@@ -514,7 +539,7 @@ def create_new_order(request):
 
 #View Order Details
 def view_order_detail(request,orderid):
-    
+    request.session['order_id'] = ""
     isLogin = is_loggedin(request)
     if isLogin == False:
         return redirect('dashboard_app:login')
@@ -635,7 +660,7 @@ def view_order_detail(request,orderid):
         order_completed = data[0]['order_completed'] if data else ''
         order_date = data[0]['order_taken_epoch'] if data else ''
         delivery_date = data[0]['delivery_epoch'] if data else ''
-        
+        request.session['order_id'] = first_order_id
         order_completed_status = ""
         if order_completed == 0:
             order_completed_status = "Accepted"
@@ -654,6 +679,54 @@ def view_order_detail(request,orderid):
     
     return render(request,'order_pages/order_details.html',context)
 
+def update_order_status(request):
+    if request.method == "POST":
+        order_status = request.POST.get('order-status')
+        order_id = request.session.get('order_id')
+        userid = request.session.get('userid')
+        order_completed  = "0"
+        if order_status == "Completed":
+            order_completed = "1"
+        elif order_status == "Cancelled":
+            order_completed = "2"
+        else:
+            order_completed = "0"
+        if order_status == "Out for Delivery":
+            query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
+            token_result = execute_raw_query_fetch_one(query_token)
+            if token_result:   
+                delivery_boy_id = token_result[3]
+                device_token = token_result[2]
+                
+                
+                title = "VFF Group"
+                msg = "Delivery Package is ready pick it up from store"
+                data = {
+                         'intent':'DMainRoute',
+                         
+                         }
+                sendFMCMsg(device_token,msg,title,data)
+        try:
+            with connection.cursor() as cursor:
+                
+                query = "update vff.laundry_ordertbl set order_status='"+str(order_status)+"',order_completed='"+str(order_completed)+"'"
+                cursor.execute(query)
+                connection.commit()
+                query2 = "insert into vff.laundry_order_historytbl(order_id,order_stages) values ('"+str(order_id)+"','"+str(order_status)+"')"
+                cursor.execute(query2)
+                connection.commit()
+                insert_notify="insert into vff.laundry_notificationtbl(title,body,reciever_id,sender_id,order_id) values ('"+str(title)+"','"+str(msg)+"','"+str(delivery_boy_id)+"','"+str(userid)+"','"+str(order_id)+"')"
+                cursor.execute(insert_notify)
+                connection.commit()
+                print("Order Status Updated Successfully")
+                return redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id}))
+        except Exception as e:
+            print(f"Error loading data: {e}")
+            
+        
+        
+        
+        
 #All Categories
 def all_categories(request):
     isLogin = is_loggedin(request)
