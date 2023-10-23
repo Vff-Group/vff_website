@@ -824,7 +824,7 @@ def update_order_status(request,order_id):
                 filter = ""
                 if order_status == "Completed":
                     current_timestamp = time.time()
-                    current_datetime = datetime.now()
+                    current_datetime = datetime.now().strftime("%Y-%m-%d")
                     print(f'current_timestamp::{current_timestamp} current_date::{current_datetime}')
                     filter = ",delivery='"+str(current_datetime)+"',delivery_epoch='"+str(current_timestamp)+"'"
                 query = "update vff.laundry_ordertbl set order_status='"+str(order_status)+"',order_completed='"+str(order_completed)+"'"+filter+" where orderid='"+str(order_id)+"'"
