@@ -34,12 +34,11 @@
                       <div class="col">
                           <small>Delivery Date:24/10/2023</small>
                       </div>
-                      <div class="col">
-                          <p class="text-bold">Order Status: </p>
-                      </div>
-                      <div class="col">
-                        <small>Processing</small>
-                      </div>
+                      <div class="col mt-1">
+                        <p class="">Order Status: Processing</p>
+                        
+                    </div>
+                   
                     </div>
                     
                   </div>
@@ -77,19 +76,7 @@
                           >
                             Total
                           </th>
-                          <th
-                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-                          >
-                            Delivery Time
-                          </th>
-                          <th
-                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-                          >
-                            Current Status
-                          </th>
-                          <!-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Quantity</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Price</th> -->
-                          <th class="text-secondary opacity-7"></th>
+                          
                         </tr>
                       </thead>
                       <tbody>
@@ -101,61 +88,35 @@
                     <td>
                       <div class="d-flex px-2 py-1">
                         <div>
-                          <img src="{{row.profile_img}}" class="avatar avatar-sm me-3" alt="user1">
+                        {% if row.sub_cat_img == "NA" %}
+                          <img src="{{row.cat_img}}" class="avatar avatar-sm me-3" alt="">
+                          {% else %}
+                          <img src="{{row.sub_cat_img}}" class="avatar avatar-sm me-3" alt="">
+                          {% endif %}
                         </div>
                         <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-sm">{{row.customer_name}}</h6>
-                          <p class="text-xs text-secondary mb-0">{{row.mobile_no}}</p>
+                            {% if row.sub_cat_name == "NA" %}
+                          <h6 class="mb-0 text-sm">{{row.cat_name}}</h6>
+                          <p class="text-xs text-secondary mb-0">{{row.item_cost}}</p>
+                          {% else %}
+                          <h6 class="mb-0 text-sm">{{row.sub_cat_name}}</h6>
+                          <p class="text-xs text-blue mb-0">[ {{row.section_type}} ]</p>
+                          {% endif %}
                         </div>
                       </div>
                     </td>
                     <td>
-                      <p class="text-xs font-weight-bold mb-0">{{row.address}}</p>
-                      <p class="text-xs text-secondary mb-0">{{row.city}}-{{row.pincode}},{{row.landmark}}</p>
+                        <p class="text-xs font-weight-bold mb-0">${{row.actual_cost}} /  {{row.type_of}}</p>
+                      </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">{{row.item_quantity}}</p>
                     </td>
                     <td>
-                        <h6 class="text-xs font-weight-bold mb-0 text-center">{{row.delivery_boy_name}}</h6>
-                        <!-- <p class="text-xs text-secondary mb-0 text-center">12:20:00 AM</p> -->
+                        <h6 class="text-xs font-weight-bold mb-0 text-center">{{row.item_cost}}</h6>
+                        
                       </td>
                     
-                    <td class="align-middle text-center">
-                      <span class="text-xs font-weight-bold mb-0">{{row.order_taken_epoch}} </span>
-                        
-                    </td>
-                    <td class="align-middle text-center">
-                      <span class="text-xs font-weight-bold mb-0">{{row.delivery_epoch}} </span>
-                        
-                    </td>
-                    <td class="align-middle text-center text-sm">
-                      {% if row.order_status == "Completed" %}
-                        <span class="badge badge-sm bg-success">{{row.order_status}}</span>
-                        {% elif row.order_status == "Accepted" %}
-                        <span class="badge badge-sm bg-info">{{row.order_status}}</span>
-                        {% elif row.order_status == "Processing" %}
-                        <span class="badge badge-sm bg-grey">{{row.order_status}}</span>
-                        {% elif row.order_status == "Payment Done" %}
-                        <span class="badge badge-sm bg-info">{{row.order_status}}</span>
-                        {% else %}
-                        <span class="badge badge-sm bg-danger">{{row.order_status}}</span>
-                        {% endif %}
-                      </td>
-                      
-                    <td class="align-middle">
-                        <div class="row">
-                            <div class="col">
-                                <a href="{% url 'dashboard_app:view_order_detail' row.orderid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                    View Details
-                                  </a>
-                            </div>
-                            <div class="col">
-                                <a href="" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                    Delete
-                                  </a>
-                            </div>
-                        </div>
-                      
-                      
-                    </td>
+                   
                   </tr>
                   {% endfor %}
                       </tbody>
@@ -163,7 +124,7 @@
                     </table>
                   </div>
                 </div>
-                <div class="card-footer px-2 pt-0 pb-2 mt-2">
+                <div class="card-footer px-4 pt-0 pb-2 mt-2">
                   <div class="row">
                       <div class="col-6">
                         <h6 class="mb-2">Invoice To:</h6>

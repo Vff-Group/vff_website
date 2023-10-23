@@ -513,14 +513,13 @@ def create_new_order(request):
     return render (request, 'order_pages/create_new_order.html')
 
 #View Order Details
-#Add New Customer Page
 def view_order_detail(request,orderid):
     
     isLogin = is_loggedin(request)
     if isLogin == False:
         return redirect('dashboard_app:login')
     
-    query = "select catid,category_name,cat_img,regular_price,regular_price_type,express_price,express_price_type,offer_price,offer_price_type,description from vff.laundry_categorytbl order by priority"
+    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name,categoryid,subcategoryid,ordertype,dt,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,time,item_cost,item_quantity,type,section_type from vff.laundry_active_orders_tbl,vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and laundry_active_orders_tbl.order_id=laundry_ordertbl.orderid and orderid='54' order by orderid desc;"
     
     query_result = execute_raw_query(query)
     
@@ -529,24 +528,64 @@ def view_order_detail(request,orderid):
     data = []    
     if not query_result == 500:
         for row in query_result:
+            depoch = row[25]#delivery epoch
+            oepoch = row[22]#order taken epoch
+            orderStatus = row[20]
+            deliveryEpoch = epochToDateTime(depoch)
+            orderTakenEpoch = epochToDateTime(oepoch)
+            if orderStatus != "Completed":
+                deliveryEpoch = "Not Delivered Yet"
             
             data.append({
-                'catid': row[0],
-                'categoryname': row[1],
-                'categoryimg': row[2],
-                'regular_prize': row[3],
-                'regular_prize_type': row[4],
-                'express_prize': row[5],
-                'express_prize_type': row[6],
-                'offer_prize': row[7],
-                'offer_prize_type': row[8],
-                'description': row[9],
+                'consmrid': row[0],
+                'usrid': row[1],
+                'customer_name': row[2],
+                'mobile_no': row[3],
+                'houseno': row[4],
+                'address': row[5],
+                'city': row[6],
+                'pincode': row[7],
+                'landmark': row[8],
+                'profile_img': row[9],
+                'device_token': row[10],
+                'orderid': row[11],
+                'delivery_boyid': row[12],
+                'quantity':row[13],
+                'price': row[14],
+                'pickup_dt': row[15],
+                'delivery_dt': row[16],
+                'clat': row[17],
+                'clng': row[18],
+                'order_completed': row[19],
+                'order_status': orderStatus,
+                'additional_instruction': row[21],
+                'order_taken_epoch': orderTakenEpoch,
+                'cancel_reason': row[23],
+                'feedback': row[24],
+                'delivery_epoch': deliveryEpoch,
+                'delivery_boy_name': row[26],
+                'categoryid': row[27],
+                'subcategoryid': row[28],
+                'ordertype': row[29],
+                'dt': row[30],
+                'cat_img': row[31],
+                'cat_name': row[32],
+                'sub_cat_name': row[33],
+                'sub_cat_img': row[34],
+                'actual_cost': row[35],
+                'time': row[36],
+                'item_cost': row[37],
+                'item_quantity': row[38],
+                'type_of': row[39],
+                'section_type': row[40],
+                
+                
                
             })
     else:
         error_msg = 'Something Went Wrong'
        
-    context ={'data':data}
+    context ={'query_result':data,'error_msg':error_msg}
     
     return render(request,'order_pages/order_details.html',context)
 
