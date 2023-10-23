@@ -780,12 +780,16 @@ def update_order_status(request,order_id):
                     print(f"Error loading data: {e}")
         else:
             order_completed = "0"
-        if order_status == "Out for Delivery" or order_status == "Completed" :
+        if order_status == "Out for Delivery" or order_status == "Completed" or order_status == "Processing":
             #To Send for Delivery Boy
             title = "VFF Group"
             msg = "Delivery Package is ready pick it up from store"
             if order_status == "Completed":
                 msg = "Laundry Package Delivery Successfully. Now You are free to accept new Orders"
+            elif order_status == "Processing":
+                msg = "Processing has been started for Order ID : #"+str(order_id)+""
+            else:
+                msg = "Delivery Package is ready pick it up from store"
             
             data = {
                  'intent':'DMainRoute',
@@ -813,6 +817,8 @@ def update_order_status(request,order_id):
             msg = "Your Laundry Package is on its way to deliver"
             if order_status == "Completed":
                 msg = "Laundry Package Delivery Successfully. Keep Ordering with Velvet Wash"
+            elif order_status == "Processing":
+                msg = "Processing has been started for your Order ID : #"+str(order_id)+""
             data = {
                  'intent':'DMainRoute',
                  
