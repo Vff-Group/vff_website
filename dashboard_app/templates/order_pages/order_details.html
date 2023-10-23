@@ -251,8 +251,37 @@
                               </div>
                         </div>
                         <div class="col m-2">
-                            <button type="submit" class="btn btn-primary my-4">Update</button>
+                            <button type="button" class="btn btn-primary my-4" data-bs-toggle="modal" data-bs-target="#modal-default{{order_id}}">Update</button>
                         </div>
+
+<!-- modal code  -->
+<div class="col-md-4">
+                    
+    <div class="modal fade" id="modal-default{{order_id}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+      <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h6 class="modal-title" id="modal-title-default">Be sure before updating Order Status ?</h6>
+            <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="alert  m-4" role="alert">
+              <strong>Alert! </strong>Do you want to Update the Status from {{order_status}} to !
+          </div>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn bg-gradient-danger">Update</button>
+            <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- model code ends  -->
+
                     </div>
                 </form>
               </div>
