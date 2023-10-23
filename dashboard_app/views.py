@@ -712,9 +712,10 @@ def update_order_status(request,order_id):
             #To send to customer
             query_customer = "select usrname,device_token,customerid from vff.laundry_customertbl,vff.usertbl,vff.laundry_ordertbl where usertbl.usrid=laundry_customertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and orderid='"+str(order_id)+"'"
             ctoken_result = execute_raw_query_fetch_one(query_customer)
+            print(f'Customer_query::{ctoken_result}')
             if ctoken_result:   
-                customerid = token_result[2]
                 cdevice_token = token_result[1]
+                customerid = token_result[2]
                 print(f'CustomersToken::{cdevice_token}')
                 
                 
