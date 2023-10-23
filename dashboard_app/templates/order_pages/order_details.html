@@ -27,7 +27,7 @@
                       </div>
                     </div>
                     <div class="col-6 d-flex flex-column justify-content-end align-items-end">
-                      <h6 class="mb-2">Order ID:#567546</h6>
+                      <h6 class="mb-2">Order ID:#{{query_result['orderid'][0]}}</h6>
                       <div class="col">
                         <small>Order Date:24/10/2023</small>
                       </div>
@@ -51,11 +51,7 @@
                     <table class="table align-items-center mb-0">
                       <thead>
                         <tr>
-                          <th
-                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-                          >
-                            Order ID #
-                          </th>
+                          
                           <th
                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
                           >
@@ -82,9 +78,7 @@
                       <tbody>
                         {% for row in query_result %}
                   <tr>
-                    <td>
-                      <h6 class="mb-0 text-sm text-center">#{{row.orderid}}</h6>
-                    </td>
+                    
                     <td>
                       <div class="d-flex px-2 py-1">
                         <div>
@@ -97,7 +91,7 @@
                         <div class="d-flex flex-column justify-content-center">
                             {% if row.sub_cat_name == "NA" %}
                           <h6 class="mb-0 text-sm">{{row.cat_name}}</h6>
-                          <p class="text-xs text-secondary mb-0">{{row.item_cost}}</p>
+                          
                           {% else %}
                           <h6 class="mb-0 text-sm">{{row.sub_cat_name}}</h6>
                           <p class="text-xs text-blue mb-0">[ {{row.section_type}} ]</p>
