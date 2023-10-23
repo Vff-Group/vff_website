@@ -94,6 +94,39 @@
                                     View Details
                                   </a>
                             </div>
+                            {% if row.order_status == 'Rejected' %}
+                            <div class="col">
+                              <a href="{% url 'dashboard_app:view_order_detail' row.orderid %}" class="text-secondary font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.orderid}}">
+                                  Assign 
+                                </a>
+                          </div>
+
+                          <div class="col-md-4">
+                    
+                            <div class="modal fade" id="modal-default{{row.orderid}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+                              <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h6 class="modal-title" id="modal-title-default">Assign Delivery</h6>
+                                    <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">×</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="alert  m-4" role="alert">
+                                      <strong>Alert! </strong> will be deleted permanantely!
+                                  </div>
+                                    
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn bg-gradient-danger">Assign</button>
+                                    <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          {% endif %}
                             <div class="col">
                                 <a href="" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                     Delete
