@@ -603,6 +603,7 @@ def view_order_detail(request,orderid):
                 })
         #delivery charges
         delivery_price = 0
+        total_laundry_cost = 0
         delivery_query = "select price  from vff.laundry_delivery_chargetbl"
         dlvrych_result = execute_raw_query_fetch_one(delivery_query)
         if dlvrych_result:   
@@ -614,10 +615,11 @@ def view_order_detail(request,orderid):
         print(f'total_laundry_cost::{total_laundry_cost}')
         print(f'extra_item_sum::{extra_item_sum}')
         
-        if total_laundry_cost < dlvrych_result:
-            total_laundry_cost += delivery_price
-        else:
-            delivery_price = 0
+        if total_laundry_cost != 0:
+            if total_laundry_cost < dlvrych_result:
+                total_laundry_cost += delivery_price
+            else:
+                delivery_price = 0
         
         total_cost = total_laundry_cost + extra_item_sum
         print(f'total_cost::{total_cost}')
