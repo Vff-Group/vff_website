@@ -19,28 +19,63 @@ from PIL import Image  # Pillow library for image processing
 # Create your views here.
 serverToken="AAAApZY1ur0:APA91bHsk-e3OC5R2vqO7dD0WZp7ifULNzqrUPnQu07et7RLFMWWcwOqY9Bl-9YQWkuXUP5nM7bVMgMP-qKISf9Jcf2ix9j7oOkScq9-3BH0hfCH3nIWgkn4hbnmSLyw4pmq66rMZz8R"
 
-def sendFMCMsg(deviceToken,msg,title,data):
+# def sendFMCMsg(deviceToken,msg,title,data):
+#     global serverToken
+#     deviceToken=deviceToken.replace('__colon__',':')
+#     headers = {
+#         'Content-Type': 'application/json',
+#         'Authorization': 'key=' + serverToken,
+#     }
+#     body = {
+#         'notification': {'title': title,
+#         'body': msg
+#     },
+#         'data': data,
+#         'to':
+#         deviceToken,
+#         'priority': 'high',
+# #   'data': dataPayLoad,
+#     }
+#     response = requests.post("https://fcm.googleapis.com/fcm/send",headers = headers, data=json.dumps(body))
+#     print(response)
+#     print(response.json())
+#     print(response.status_code)
+
+def sendFMCMsg(deviceToken, msg, title, data):
     global serverToken
-    deviceToken=deviceToken.replace('__colon__',':')
+    deviceToken = deviceToken.replace('__colon__', ':')
+
+    # Validate the device token
+    if not deviceToken:
+        print("Invalid device token")
+        return
+
+    # Check if the token has already been sent a notification
+    # (You may want to implement a more robust solution to track notifications)
+
     headers = {
         'Content-Type': 'application/json',
         'Authorization': 'key=' + serverToken,
     }
-    body = {
-        'notification': {'title': title,
-        'body': msg
-    },
-        'data': data,
-        'to':
-        deviceToken,
-        'priority': 'high',
-#   'data': dataPayLoad,
-    }
-    response = requests.post("https://fcm.googleapis.com/fcm/send",headers = headers, data=json.dumps(body))
-    print(response)
-    print(response.json())
-    print(response.status_code)
 
+    body = {
+        'notification': {
+            'title': title,
+            'body': msg
+        },
+        'data': data,
+        'to': deviceToken,
+        'priority': 'high',
+    }
+
+    try:
+        response = requests.post("https://fcm.googleapis.com/fcm/send", headers=headers, data=json.dumps(body))
+        response_data = response.json()
+        print("FCM Response:")
+        print(response_data)
+        print("Status Code:", response.status_code)
+    except requests.exceptions.RequestException as e:
+        print("Error sending FCM notification:", e)
 
 #Login Page
 @never_cache
