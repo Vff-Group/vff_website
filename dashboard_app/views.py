@@ -13,6 +13,7 @@ import os
 import uuid
 import mimetypes
 import requests
+import json
 
 from PIL import Image  # Pillow library for image processing
 # Create your views here.
