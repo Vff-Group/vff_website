@@ -12,12 +12,13 @@ import base64
 import os
 import uuid
 import mimetypes
+import requests
 
 from PIL import Image  # Pillow library for image processing
 # Create your views here.
 serverToken="AAAApZY1ur0:APA91bHsk-e3OC5R2vqO7dD0WZp7ifULNzqrUPnQu07et7RLFMWWcwOqY9Bl-9YQWkuXUP5nM7bVMgMP-qKISf9Jcf2ix9j7oOkScq9-3BH0hfCH3nIWgkn4hbnmSLyw4pmq66rMZz8R"
 
-def sendFMCMsg(deviceToken,msg,title,data,requests):
+def sendFMCMsg(deviceToken,msg,title,data):
     global serverToken
     deviceToken=deviceToken.replace('__colon__',':')
     headers = {
