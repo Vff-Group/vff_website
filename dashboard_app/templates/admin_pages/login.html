@@ -10,10 +10,10 @@
     <link
       rel="apple-touch-icon"
       sizes="76x76"
-      href="../assets/img/apple-icon.png"
+      href="{% static 'img/logos/logo.png' %}"
     />
-    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
-    <title>VFF Group | Dashboard</title>
+    <link rel="icon" type="image/png" href="{% static 'img/logos/logo.png' %}" />
+    <title>VFF Group</title>
     <!--     Fonts and icons     -->
     <link
       href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
@@ -23,14 +23,21 @@
     <link href="{% static 'css/nucleo-icons.css' %}" rel="stylesheet" />
     <link href="{% static 'css/nucleo-svg.css' %}" rel="stylesheet" />
     <!-- Font Awesome Icons -->
-    <script src="https://kit.fontawesome.com/eea5b138cd.js" crossorigin="anonymous"></script>
-
+    <script
+      src="https://kit.fontawesome.com/42d5adcbca.js"
+      crossorigin="anonymous"
+    ></script>
+    <link href="{% static 'css/nucleo-svg.css' %}" rel="stylesheet" />
     <!-- CSS Files -->
     <link
       id="pagestyle"
       href="{% static 'css/vff-group-dashboard.css' %}"
       rel="stylesheet"
     />
+    <script
+      src="https://kit.fontawesome.com/eea5b138cd.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
 
   <body class="">
@@ -56,7 +63,7 @@
             <div class="container-fluid">
               <a
                 class="navbar-brand font-weight-bolder ms-lg-0 ms-3"
-                href="../admin_pages/dashboard.html"
+                href=""
               >
                 VFF Group
               </a>
@@ -212,7 +219,8 @@
                     class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6"
                     
                   >
-                  <img src="{% static '/img/curved-images/curved6.jpg' %}" alt=""></div>
+                  {% comment %} <img src="{% static '/img/curved-images/curved6.jpg' %}" alt=""></div> {% endcomment %}
+                  <img src="{% static 'img/logos/logo.png' %}" alt=""></div>
                 </div>
               </div>
             </div>
