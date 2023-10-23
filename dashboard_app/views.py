@@ -706,7 +706,7 @@ def update_order_status(request,order_id):
                          'intent':'DMainRoute',
                          
                          }
-                sendFMCMsg(device_token,msg,title,data,request)
+                sendFMCMsg(device_token,msg,title,data)
         try:
             with connection.cursor() as cursor:
                 
