@@ -586,8 +586,8 @@ def view_order_detail(request,orderid):
         #Payment Details
         payment_id = 'Payment Not Done'
         query_payment = "select razor_pay_payment_id,status,time,dt from vff.laundry_payment_tbl where order_id='"+str(orderid)+"'"
-        pay_result = execute_raw_query_fetch_one(query)
-        if pay_result and pay_result[2]:   
+        pay_result = execute_raw_query_fetch_one(query_payment)
+        if pay_result:   
             payment_id = pay_result[0]
         
         #extra_cart_item like softner
