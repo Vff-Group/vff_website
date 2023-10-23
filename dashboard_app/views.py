@@ -681,6 +681,42 @@ def view_order_detail(request,orderid):
     
     return render(request,'order_pages/order_details.html',context)
 
+#To Send notification to delivery boy for order ID
+def send_notification_to_delivery_boy(order_id,title,body,data=None):
+    query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
+    token_result = execute_raw_query_fetch_one(query_token)
+    if token_result:  
+        usrname = token_result[0] 
+        delivery_boy_id = token_result[3]
+        device_token = token_result[2]
+        
+        
+        title = title
+        msg = body
+        data = data 
+        
+        sendFMCMsg(device_token,msg,title,data)
+        print(f'Notification sent to {usrname} successfully')
+        
+#To Send notification to customer for order ID
+def send_notification_customer(order_id,title,body,data=None):
+    query_customer = "select usrname,device_token,customerid from vff.laundry_customertbl,vff.usertbl,vff.laundry_ordertbl where usertbl.usrid=laundry_customertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and orderid='"+str(order_id)+"'"
+    ctoken_result = execute_raw_query_fetch_one(query_customer)
+    print(f'Customer_query::{ctoken_result}')
+    if ctoken_result:   
+        
+        usrname = ctoken_result[0]
+        cdevice_token = ctoken_result[1]
+        customerid = ctoken_result[2]
+        print(f'CustomersToken::{cdevice_token}')
+        
+        
+        title = title
+        msg = body
+        data = data
+        sendFMCMsg(cdevice_token,msg,title,data)
+        print(f'Notification sent to {usrname} successfully')
+        
 def update_order_status(request,order_id):
     if request.method == "POST":
         order_status = request.POST.get('order-status')
@@ -695,37 +731,24 @@ def update_order_status(request,order_id):
             order_completed = "0"
         if order_status == "Out for Delivery":
             #To Send for Delivery Boy
-            query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
-            token_result = execute_raw_query_fetch_one(query_token)
-            if token_result:   
-                delivery_boy_id = token_result[3]
-                device_token = token_result[2]
-                
-                
-                title = "VFF Group"
-                msg = "Delivery Package is ready pick it up from store"
-                data = {
-                         'intent':'DMainRoute',
-                         
-                         }
-                sendFMCMsg(device_token,msg,title,data)
+            title = "VFF Group"
+            msg = "Delivery Package is ready pick it up from store"
+            data = {
+                 'intent':'DMainRoute',
+                 
+                 }
+            send_notification_to_delivery_boy(order_id,title,msg,data)
+            
+            
             #To send to customer
-            query_customer = "select usrname,device_token,customerid from vff.laundry_customertbl,vff.usertbl,vff.laundry_ordertbl where usertbl.usrid=laundry_customertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and orderid='"+str(order_id)+"'"
-            ctoken_result = execute_raw_query_fetch_one(query_customer)
-            print(f'Customer_query::{ctoken_result}')
-            if ctoken_result:   
-                cdevice_token = ctoken_result[1]
-                customerid = ctoken_result[2]
-                print(f'CustomersToken::{cdevice_token}')
-                
-                
-                title = "VFF Group"
-                msg = "Your Laundry Package is on its way to deliver"
-                data = {
-                         'intent':'DMainRoute',
-                         
-                         }
-                sendFMCMsg(cdevice_token,msg,title,data)
+            title = "VFF Group"
+            msg = "Your Laundry Package is on its way to deliver"
+            data = {
+                 'intent':'DMainRoute',
+                 
+                 }
+            send_notification_customer(order_id,title,msg,data)
+            
         try:
             with connection.cursor() as cursor:
                 
