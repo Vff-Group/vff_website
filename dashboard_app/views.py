@@ -519,7 +519,7 @@ def view_order_detail(request,orderid):
     if isLogin == False:
         return redirect('dashboard_app:login')
     error_msg = "No Order Details Found"
-    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name,categoryid,subcategoryid,ordertype,dt,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,time,item_cost,item_quantity,type,section_type from vff.laundry_active_orders_tbl,vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and laundry_active_orders_tbl.order_id=laundry_ordertbl.orderid and orderid='54' order by orderid desc;"
+    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name,categoryid,subcategoryid,ordertype,dt,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,time,item_cost,item_quantity,type,section_type from vff.laundry_active_orders_tbl,vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and laundry_active_orders_tbl.order_id=laundry_ordertbl.orderid and orderid='"+str(orderid)+"' order by orderid desc;"
     
     query_result = execute_raw_query(query)
     
@@ -582,14 +582,71 @@ def view_order_detail(request,orderid):
                 
                
             })
-        total_item_cost = sum(item['item_cost'] for item in data)
-        first_order_id = data[0]['orderid'] if data else None
+        
+        #Payment Details
+        payment_id = 'Payment Not Done'
+        query_payment = "select razor_pay_payment_id,status,time,dt from vff.laundry_payment_tbl where order_id='"+str(orderid)+"'"
+        pay_result = execute_raw_query_fetch_one(query)
+        if pay_result and pay_result[2]:   
+            payment_id = pay_result[0]
+        
+        #extra_cart_item like softner
+        extra_error = "No Extra Items added"
+        extra_query = "select extra_item_name,price from vff.laundry_cart_extra_items_tbl where order_id='"+str(orderid)+"'"
+        extra_query_result = execute_raw_query(extra_query)
+        extra_data = []    
+        if not extra_query_result == 500:
+            for row in extra_query_result:
+                extra_data.append({
+                    'extra_item_name':row[0],
+                    'extra_item_price':row[1]
+                })
+        #delivery charges
+        delivery_price = 0
+        delivery_query = "select price  from vff.laundry_delivery_chargetbl"
+        dlvrych_result = execute_raw_query_fetch_one(delivery_query)
+        if dlvrych_result and dlvrych_result[2]:   
+            delivery_price = dlvrych_result[0]
+        
+        extra_item_sum = sum(extra['extra_item_price'] for extra in extra_data)
+
+        total_laundry_cost = sum(item['item_cost'] for item in data)
+        if total_laundry_cost < dlvrych_result:
+            total_laundry_cost += delivery_price
+        else:
+            delivery_price = 0
+        
+        total_cost = total_laundry_cost + extra_item_sum
+        
+        first_order_id = data[0]['orderid'] if data else ''
+        customer_name = data[0]['customer_name'] if data else ''
+        address = data[0]['address'] if data else ''
+        houseno = data[0]['houseno'] if data else ''
+        city = data[0]['city'] if data else ''
+        pincode = data[0]['pincode'] if data else ''
+        landmark = data[0]['landmark'] if data else ''
+        order_status = data[0]['order_status'] if data else ''
+        order_completed = data[0]['order_completed'] if data else ''
+        order_date = data[0]['order_taken_epoch'] if data else ''
+        delivery_date = data[0]['delivery_epoch'] if data else ''
+        
+        order_completed_status = ""
+        if order_completed == 0:
+            order_completed_status = "Accepted"
+        elif order_completed == 1:
+            order_completed_status = "Completed"
+        elif order_completed_status == 2:
+            order_completed_status = "Cancelled"
+            
         print(f'OrderID::{first_order_id}')
-        print(f'total_item_cost::{total_item_cost}')
+        print(f'total_laundry_cost::{total_laundry_cost}')
+        print(f'extra_item_sum::{extra_item_sum}')
+        print(f'total_cost::{total_cost}')
     else:
         error_msg = 'Something Went Wrong'
        
-    context ={'query_result':data,'error_msg':error_msg}
+    context ={'query_result':data,'extra_data':extra_data,'error_msg':error_msg,'payment_id':payment_id,'order_id':first_order_id,'customer_name':customer_name
+              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error}
     
     return render(request,'order_pages/order_details.html',context)
 

@@ -13,30 +13,34 @@
                 <div class="card-header pb-0">
                   <div class="row">
                     <div class="col-6">
-                      <h6 class="mb-2">Shaheed Maniyar</h6>
+                      <h6 class="mb-2">{{customer_name}}</h6>
                       <div class="col">
-                        <small>H no 234</small>
+                        <small>{{houseno}}</small>
                       </div>
                       <div class="col">
-                        <small>New Vaibhav Nagar</small>
+                        <small>{{address}}</small>
                       </div>
                       <div class="col">
-                        <small>Belgaum - 590010</small>
+                        <small>{{city}} - {{pincode}}</small>
                       </div>
                       <div class="col">
-                        <small>Transaction ID - rcyuoi123</small>
+                        <small>Transaction ID - {{payment_id}}</small>
                       </div>
                     </div>
                     <div class="col-6 d-flex flex-column justify-content-end align-items-end">
-                      <h6 class="mb-2">Order ID:#</h6>
+                      <h6 class="mb-2">Order ID:#{{order_id}}</h6>
                       <div class="col">
-                        <small>Order Date:24/10/2023</small>
+                        <small>Order Date:{{order_date}}</small>
                       </div>
                       <div class="col">
-                          <small>Delivery Date:24/10/2023</small>
+                          <small>Delivery Date:{{delivery_date}}</small>
                       </div>
                       <div class="col mt-1">
-                        <p class="">Order Status: Processing</p>
+                        <p class="">Order: {{order_completed_status}}</p>
+                        
+                    </div>
+                    <div class="col mt-1">
+                        <p class="">Order Status: {{order_status}}</p>
                         
                     </div>
                    
@@ -76,6 +80,15 @@
                           
                         </tr>
                       </thead>
+                      {% if not query_result%}
+                <div class="alert alert-info alert-dismissible m-4 fade show" role="alert">
+                  <span class="alert-icon text-white"><i class="ni ni-like-2"></i></span>
+                  <span class="alert-text text-white"><strong>Info!</strong> {{error_msg}}!</span>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              {% else %}
                       <tbody>
                         {% for row in query_result %}
                   <tr>
@@ -94,6 +107,7 @@
                           <h6 class="mb-0 text-sm">{{row.cat_name}}</h6>
                           
                           {% else %}
+                          
                           <h6 class="mb-0 text-sm">{{row.sub_cat_name}}</h6>
                           <p class="text-xs text-blue mb-0">[ {{row.section_type}} ]</p>
                           {% endif %}
@@ -101,10 +115,11 @@
                       </div>
                     </td>
                     <td>
-                        <p class="text-xs font-weight-bold mb-0">${{row.actual_cost}} /  {{row.type_of}}</p>
+                        <p class="text-xs font-weight-bold mb-0">₹ {{row.actual_cost}} /  {{row.type_of}}</p>
+                        <small>{{row.ordertype}}</small>
                       </td>
                     <td>
-                      <p class="text-xs font-weight-bold mb-0">{{row.item_quantity}}</p>
+                      <p class="text-xs font-weight-bold mb-0">{{row.item_quantity}} {{row.type_of}}</p>
                     </td>
                     <td>
                         <h6 class="text-xs font-weight-bold mb-0 text-center">{{row.item_cost}}</h6>
@@ -115,23 +130,47 @@
                   </tr>
                   {% endfor %}
                       </tbody>
-                      
+                      {% endif %}
                     </table>
                   </div>
                 </div>
                 <div class="card-footer px-4 pt-0 pb-2 mt-2">
+                    <div class="row">
+                        <div class="col-6">
+                          <small class="mb-2">Extra addons:</small>
+                        </div>
+                        <div
+                          class="col-6 d-flex flex-column justify-content-end align-items-end"
+                        >
+                          
+                          <small class="text-primary">₹ {{ extra_item_sum}}/-</small>
+                        </div>
+                      </div>
+                      <hr />
+                      <div class="row">
+                        <div class="col-6">
+                          <small class="mb-2">Delivery charges:</small>
+                          
+                        </div>
+                        <div
+                          class="col-6 d-flex flex-column justify-content-end align-items-end"
+                        >
+                          <small class="text-primary">₹ {{delivery_price}}/-</small>
+                        </div>
+                      </div>
+                      <hr />
                   <div class="row">
                       <div class="col-6">
                         <h6 class="mb-2">Invoice To:</h6>
                         <div class="col">
-                          <small>Shaheed Maniyar</small>
+                          <small>{{customer_name}}</small>
                         </div>
                         
                       </div>
                       <div class="col-6 d-flex flex-column justify-content-end align-items-end">
                         <h6 class="mb-2">Payment Details</h6>
                         <div class="col d-flex flex-column align-items-center">
-                          <small>Total: </small><h6 class="text-primary"> ₹800/-</h6>
+                          <small>Total: </small><h6 class="text-primary"> ₹ {{total_cost}}/-</h6>
                         </div>
                         
                         
@@ -154,33 +193,35 @@
               </div>
             </div>
             <div class="card-body p-3 pb-0">
+                {% if not extra_data%}
+                <div class="alert alert-info alert-dismissible m-4 fade show" role="alert">
+                  <span class="alert-icon text-white"><i class="ni ni-like-2"></i></span>
+                  <span class="alert-text text-white"><strong>Info!</strong> {{extra_error}}!</span>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              {% else %}
               <ul class="list-group">
-                
+                {% for row in extra_data %}
+
+
                 <li
                   class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2  bg-gray-100 border-radius-lg"
                 >
                   <div class="d-flex flex-column m-1">
                     <h6 class="text-dark font-weight-bold text-sm ">
-                      Softner : $24.0
+                      {{row.extra_item_name}} : ₹ {{row.extra_item_price}}/-
                     </h6>
                     
                   </div>
                  
                 </li>
                 
-                <li
-                  class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2  bg-gray-100 border-radius-lg"
-                >
-                  <div class="d-flex flex-column m-1">
-                    <h6 class="text-dark font-weight-bold text-sm ">
-                      Scented Detergent : $44.0
-                    </h6>
-                    
-                  </div>
-                 
-                </li>
+                {% endfor %}
                 
               </ul>
+              {% endif %}
               <button id="printButton" type="submit" class="btn btn-primary my-4">Print Invoice</button>
 
             </div>
