@@ -611,13 +611,16 @@ def view_order_detail(request,orderid):
         extra_item_sum = sum(extra['extra_item_price'] for extra in extra_data)
 
         total_laundry_cost = sum(item['item_cost'] for item in data)
+        print(f'total_laundry_cost::{total_laundry_cost}')
+        print(f'extra_item_sum::{extra_item_sum}')
+        
         if total_laundry_cost < dlvrych_result:
             total_laundry_cost += delivery_price
         else:
             delivery_price = 0
         
         total_cost = total_laundry_cost + extra_item_sum
-        
+        print(f'total_cost::{total_cost}')
         first_order_id = data[0]['orderid'] if data else ''
         customer_name = data[0]['customer_name'] if data else ''
         address = data[0]['address'] if data else ''
@@ -639,9 +642,7 @@ def view_order_detail(request,orderid):
             order_completed_status = "Cancelled"
             
         print(f'OrderID::{first_order_id}')
-        print(f'total_laundry_cost::{total_laundry_cost}')
-        print(f'extra_item_sum::{extra_item_sum}')
-        print(f'total_cost::{total_cost}')
+        
     else:
         error_msg = 'Something Went Wrong'
        
