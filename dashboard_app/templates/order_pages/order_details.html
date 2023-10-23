@@ -35,26 +35,7 @@
                       <div class="col">
                         <small>Transaction ID - {{payment_id}}</small>
                       </div>
-                      <div class="col">
-                        <form method="post">
-                            {% csrf_token %}
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="input-gender">Change Order Status</label>
-                                        <select class="form-control form-control-alternative" id="input-gender" name="gender">
-                                          <option value="Male"  {% if data.gender == 'Male' %}selected{% endif %}>Male</option>
-                                          <option value="Female" {% if data.gender == 'Female' %}selected{% endif %}>Female</option>
-                                          <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option>
-                                        </select>
-                                      </div>
-                                </div>
-                                <div class="col m-2">
-                                    <button type="submit" class="btn btn-primary my-4">Update</button>
-                                </div>
-                            </div>
-                        </form>
-                      </div>
+                      
                     </div>
                     <div class="col-6 d-flex flex-column justify-content-end align-items-end">
                       <h6 class="mb-2">Order ID:#{{order_id}}</h6>
@@ -252,7 +233,26 @@
               </ul>
               {% endif %}
               <button id="printButton" type="submit" class="btn btn-primary my-4">Print Invoice</button>
-
+              <div class="col">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-gender">Change Order Status</label>
+                                <select class="form-control form-control-alternative" id="input-gender" name="gender">
+                                  <option value="Male"  {% if data.gender == 'Male' %}selected{% endif %}>Male</option>
+                                  <option value="Female" {% if data.gender == 'Female' %}selected{% endif %}>Female</option>
+                                  <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option>
+                                </select>
+                              </div>
+                        </div>
+                        <div class="col m-2">
+                            <button type="submit" class="btn btn-primary my-4">Update</button>
+                        </div>
+                    </div>
+                </form>
+              </div>
             </div>
           </div>
         
