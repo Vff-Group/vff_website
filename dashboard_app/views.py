@@ -773,7 +773,21 @@ def update_order_status(request,order_id):
                  
                  }
             send_notification_to_delivery_boy(order_id,title,msg,data)
-            
+            query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
+            token_result = execute_raw_query_fetch_one(query_token)
+            if token_result:  
+                usrname = token_result[0] 
+                delivery_boy_id = token_result[3]
+                device_token = token_result[2]
+                try:
+                    with connection.cursor() as cursor:
+                        update_free = "update vff.laundry_delivery_boytbl set status='Free' where delivery_boy_id='"+str(delivery_boy_id)+"'"
+                        cursor.execute(update_free)
+                        connection.commit()
+                    
+                except Exception as e:
+                    print(f"Error loading data: {e}")
+                
             
             #To send to customer
             title = "VFF Group"
