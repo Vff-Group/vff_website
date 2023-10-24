@@ -42,12 +42,9 @@
       src="https://kit.fontawesome.com/eea5b138cd.js"
       crossorigin="anonymous"
     ></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-messaging.js"></script>
-    <!-- <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-messaging-compat.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-messaging-compat.js"></script>
     <!-- <script src="{% static 'js/firebase-messaging-sw.js' %}"></script> -->
 
     <script>
@@ -64,40 +61,32 @@
       };
     
       // Initialize Firebase
-       // Initialize Firebase
-       firebase.initializeApp(firebaseConfig);
-       firebase.analytics();
-     
-       const messaging = firebase.messaging();
-       console.log(messaging.getToken())
-       messaging.getToken({ vapidKey: 'AAAApZY1ur0:APA91bHsk-e3OC5R2vqO7dD0WZp7ifULNzqrUPnQu07et7RLFMWWcwOqY9Bl-9YQWkuXUP5nM7bVMgMP-qKISf9Jcf2ix9j7oOkScq9-3BH0hfCH3nIWgkn4hbnmSLyw4pmq66rMZz8R' }).then((currentToken) => {
-       if (currentToken) {
-         
-         console.log(currentToken)
-       } else {
-         console.log('No registration token available. Request permission to generate one.');
-      
-       }
-     }).catch((err) => {
-       console.log('An error occurred while retrieving token. ', err);
-     });
-     
-     
-       messaging
-        .requestPermission()
-        .then(function () {
-          console.log("Notification permission granted.");
-          return messaging.getToken()
-        })
-        .catch(function (err) {
-        console.log("Unable to get permission to notify.", err);
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+      messaging.getToken({ vapidKey: 'AAAApZY1ur0:APA91bHsk-e3OC5R2vqO7dD0WZp7ifULNzqrUPnQu07et7RLFMWWcwOqY9Bl-9YQWkuXUP5nM7bVMgMP-qKISf9Jcf2ix9j7oOkScq9-3BH0hfCH3nIWgkn4hbnmSLyw4pmq66rMZz8R' }).then((currentToken) => {
+        if (currentToken) {
+          // Send the token to your server and update the UI if necessary
+          console.log(currentToken)
+          // ...
+        } else {
+          // Show permission request UI
+          console.log('No registration token available. Request permission to generate one.');
+          requestPermission();
+          // ...
+        }
+      }).catch((err) => {
+        console.log('An error occurred while retrieving token. ', err);
+        // ...
       });
-     
-     
-       messaging.onMessage((payload) => {
-       console.log('Message received. ', payload);
-      
-     });
+      function requestPermission() {
+        console.log('Requesting permission...');
+        Notification.requestPermission().then((permission) => {
+          if (permission === 'granted') {
+            console.log('Notification permission granted.');
+          }
+        })
+      }
+
     </script>
     
   </head>
