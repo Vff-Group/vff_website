@@ -717,7 +717,7 @@ def view_order_detail(request,orderid):
         error_msg = 'Something Went Wrong'
        
     context ={'query_result':data,'extra_data':extra_data,'error_msg':error_msg,'payment_id':payment_id,'order_id':first_order_id,'customer_name':customer_name
-              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error}
+              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range}
     
     return render(request,'order_pages/order_details.html',context)
 
