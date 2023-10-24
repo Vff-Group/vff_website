@@ -42,7 +42,7 @@
       src="https://kit.fontawesome.com/eea5b138cd.js"
       crossorigin="anonymous"
     ></script>
-    
+
     <!-- <script src="{% static 'js/firebase-messaging-sw.js' %}"></script> -->
     <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics-compat.js"></script>
@@ -62,8 +62,13 @@
       requestPermission();
       console.log(firebaseConfig);
       // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
+      //const app = initializeApp(firebaseConfig);
+      //const analytics = getAnalytics(app);
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      // Initialize Firebase Cloud Messaging and get a reference to the service
+      const messaging = firebase.messaging();
       messaging
         .getToken({
           vapidKey:
