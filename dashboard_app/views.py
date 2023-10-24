@@ -673,7 +673,7 @@ def view_order_detail(request,orderid):
         dlvrych_result = execute_raw_query_fetch_one(delivery_query)
         if dlvrych_result:   
             delivery_price = dlvrych_result[0]
-            range = dlvrych_result[0]
+            range = dlvrych_result[1]
         
         extra_item_sum = sum(extra['extra_item_price'] for extra in extra_data)
 
