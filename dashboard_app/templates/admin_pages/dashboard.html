@@ -16,10 +16,10 @@
                     Today's Money
                   </p>
                   <h5 class="font-weight-bolder mb-0">
-                    ₹0
-                    <span class="text-success text-sm font-weight-bolder"
+                    ₹ {{total_money}}
+                    {% comment %} <span class="text-success text-sm font-weight-bolder"
                       >0%</span
-                    >
+                    > {% endcomment %}
                   </h5>
                 </div>
               </div>
@@ -44,13 +44,13 @@
               <div class="col-8">
                 <div class="numbers">
                   <p class="text-sm mb-0 text-capitalize font-weight-bold">
-                    Today's Users
+                    Total Customer's
                   </p>
                   <h5 class="font-weight-bolder mb-0">
-                    0
-                    <span class="text-success text-sm font-weight-bolder"
+                    {{total_customers}}
+                    {% comment %} <span class="text-success text-sm font-weight-bolder"
                       >0%</span
-                    >
+                    > {% endcomment %}
                   </h5>
                 </div>
               </div>
@@ -75,13 +75,13 @@
               <div class="col-8">
                 <div class="numbers">
                   <p class="text-sm mb-0 text-capitalize font-weight-bold">
-                    New Clients
+                    Delivery Agents
                   </p>
                   <h5 class="font-weight-bolder mb-0">
-                    0
-                    <span class="text-danger text-sm font-weight-bolder"
+                    {{total_delivery_boys}}
+                    {% comment %} <span class="text-danger text-sm font-weight-bolder"
                       >0%</span
-                    >
+                    > {% endcomment %}
                   </h5>
                 </div>
               </div>
@@ -106,13 +106,13 @@
               <div class="col-8">
                 <div class="numbers">
                   <p class="text-sm mb-0 text-capitalize font-weight-bold">
-                    Sales
+                    Delivered
                   </p>
                   <h5 class="font-weight-bolder mb-0">
-                    ₹0
-                    <span class="text-success text-sm font-weight-bolder"
+                    ₹ {{total_orders_delivered}}
+                    {% comment %} <span class="text-success text-sm font-weight-bolder"
                       >0%</span
-                    >
+                    > {% endcomment %}
                   </h5>
                 </div>
               </div>

@@ -163,10 +163,40 @@ def dashboard(request):
     if isLogin == False:
         return redirect('dashboard_app:login')
     #Total Amount
-    #select sum(price) as total_cost from vff.laundry_ordertbl
+    query_amount = "select sum(price) as total_cost from vff.laundry_ordertbl"
+    result = execute_raw_query_fetch_one(query_amount)
+    if result:  
+        total_money = result[0] 
+    
+    #Total Customers
+    query_customers = "select count(*) from vff.laundry_customertbl"
+    c_result = execute_raw_query_fetch_one(query_customers)
+    if c_result:  
+        total_customers = c_result[0] 
+        
+    #Total Delivery Boys
+    query_delivery = "select count(*) from vff.laundry_delivery_boytbl"
+    d_result = execute_raw_query_fetch_one(query_delivery)
+    if d_result:  
+        total_delivery_boys = d_result[0] 
+    
+    #Total Orders Delivered
+    query_orders = "select count(*) from vff.laundry_ordertbl where order_completed='1'"
+    d_result = execute_raw_query_fetch_one(query_orders)
+    if d_result:  
+        total_orders_delivered = d_result[0] 
+        
+    
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
-    return render(request, 'admin_pages/dashboard.html', {'current_url': current_url})
+    context = {
+        'current_url': current_url,
+        'total_money': total_money,
+        'total_customers':total_customers,
+        'total_delivery_boys':total_delivery_boys,
+        'total_orders_delivered':total_orders_delivered
+    }
+    return render(request, 'admin_pages/dashboard.html', context)
     
     
 #All Customers Page
@@ -725,11 +755,11 @@ def view_order_detail(request,orderid):
 #To Send notification to delivery boy for order ID
 def send_notification_to_delivery_boy(order_id,title,body,data=None):
     query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
-    token_result = execute_raw_query_fetch_one(query_token)
-    if token_result:  
-        usrname = token_result[0] 
-        delivery_boy_id = token_result[3]
-        device_token = token_result[2]
+    result = execute_raw_query_fetch_one(query_token)
+    if result:  
+        usrname = result[0] 
+        delivery_boy_id = result[3]
+        device_token = result[2]
         
         
         title = title
@@ -742,13 +772,13 @@ def send_notification_to_delivery_boy(order_id,title,body,data=None):
 #To Send notification to customer for order ID
 def send_notification_customer(order_id,title,body,data=None):
     query_customer = "select usrname,device_token,customerid from vff.laundry_customertbl,vff.usertbl,vff.laundry_ordertbl where usertbl.usrid=laundry_customertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and orderid='"+str(order_id)+"'"
-    ctoken_result = execute_raw_query_fetch_one(query_customer)
-    print(f'Customer_query::{ctoken_result}')
-    if ctoken_result:   
+    cresult = execute_raw_query_fetch_one(query_customer)
+    print(f'Customer_query::{cresult}')
+    if cresult:   
         
-        usrname = ctoken_result[0]
-        cdevice_token = ctoken_result[1]
-        customerid = ctoken_result[2]
+        usrname = cresult[0]
+        cdevice_token = cresult[1]
+        customerid = cresult[2]
         print(f'CustomersToken::{cdevice_token}')
         
         
@@ -769,11 +799,11 @@ def update_order_status(request,order_id):
         elif order_status == "Cancelled":
             order_completed = "2"
             query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
-            token_result = execute_raw_query_fetch_one(query_token)
-            if token_result:  
-                usrname = token_result[0] 
-                delivery_boy_id = token_result[3]
-                device_token = token_result[2]
+            result = execute_raw_query_fetch_one(query_token)
+            if result:  
+                usrname = result[0] 
+                delivery_boy_id = result[3]
+                device_token = result[2]
                 try:
                     with connection.cursor() as cursor:
                         update_free = "update vff.laundry_delivery_boytbl set status='Free' where delivery_boy_id='"+str(delivery_boy_id)+"'"
@@ -801,11 +831,11 @@ def update_order_status(request,order_id):
                  }
             send_notification_to_delivery_boy(order_id,title,msg,data)
             query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
-            token_result = execute_raw_query_fetch_one(query_token)
-            if token_result:  
-                usrname = token_result[0] 
-                delivery_boy_id = token_result[3]
-                device_token = token_result[2]
+            result = execute_raw_query_fetch_one(query_token)
+            if result:  
+                usrname = result[0] 
+                delivery_boy_id = result[3]
+                device_token = result[2]
                 try:
                     with connection.cursor() as cursor:
                         update_free = "update vff.laundry_delivery_boytbl set status='Free' where delivery_boy_id='"+str(delivery_boy_id)+"'"
