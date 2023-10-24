@@ -160,13 +160,15 @@
                       <div class="row">
                         <div class="col-6">
                           <small class="mb-2">Delivery charges:</small>
-                          <small class="mb-2">You will only be charge if your total amount is less then ₹ {{range_price}}</small>
+                         <div class="col-6">
+                            <small class="mb-2">You will only be charge if your total amount is less then ₹ {{range_price}}</small>
+                         </div>
                           
                         </div>
                         <div
                           class="col-6 d-flex flex-column justify-content-end align-items-end"
                         >
-                          <small class="text-primary">₹ {{delivery_price}}/-</small>
+                          <p class="text-primary">₹ {{delivery_price}}/-</p>
                         </div>
                       </div>
                       <hr />

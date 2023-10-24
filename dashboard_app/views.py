@@ -162,7 +162,8 @@ def dashboard(request):
     isLogin = is_loggedin(request)
     if isLogin == False:
         return redirect('dashboard_app:login')
-    
+    #Total Amount
+    #select sum(price) as total_cost from vff.laundry_ordertbl
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
     return render(request, 'admin_pages/dashboard.html', {'current_url': current_url})
