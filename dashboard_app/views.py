@@ -48,8 +48,9 @@ def showFirebaseJS(request):
     
   data='import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";'\
   'import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";'\
+'import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-messaging.js";'
   
-  'const firebaseConfig = {'\
+  'var firebaseConfig = {'\
   '  apiKey: "AIzaSyB377d4_AFRtoEIjpN2Puf3CYwe-I9dCGE",'\
   '  authDomain: "vff-group-b185c.firebaseapp.com",'\
   '  projectId: "vff-group-b185c",'\
@@ -59,12 +60,49 @@ def showFirebaseJS(request):
   '  measurementId: "G-RWGD4RD6R8"'\
   '};'\
 
-  '  #Initialize Firebase'\
-  'const app = initializeApp(firebaseConfig);'\
-  'const analytics = getAnalytics(app);'
+  'firebase.initializeApp(firebaseConfig);' \
+         'const messaging=firebase.messaging();' \
+         'messaging.setBackgroundMessageHandler(function (payload) {' \
+         '    console.log(payload);' \
+         '    const notification=JSON.parse(payload);' \
+         '    const notificationOption={' \
+         '        body:notification.body,' \
+         '        icon:notification.icon' \
+         '    };' \
+         '    return self.registration.showNotification(payload.notification.title,notificationOption);' \
+         '});'
   
   
   return HttpResponse(data,content_type="text/javascript")
+
+def send(request):
+    resgistration  = [
+    ]
+    send_notification(resgistration , 'Code Keen added a new video' , 'Code Keen new video alert')
+    return HttpResponse("sent")
+def send_notification(registration_ids , message_title , message_desc):
+    fcm_api =serverToken
+    url = "https://fcm.googleapis.com/fcm/send"
+    
+    headers = {
+    "Content-Type":"application/json",
+    "Authorization": 'key='+fcm_api}
+
+    payload = {
+        "registration_ids" :registration_ids,
+        "priority" : "high",
+        "notification" : {
+            "body" : message_desc,
+            "title" : message_title,
+            "image" : "https://i.ytimg.com/vi/m5WUPHRgdOA/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDwz-yjKEdwxvKjwMANGk5BedCOXQ",
+            "icon": "https://yt3.ggpht.com/ytc/AKedOLSMvoy4DeAVkMSAuiuaBdIGKC7a5Ib75bKzKO3jHg=s900-c-k-c0x00ffffff-no-rj",
+            
+        }
+    }
+
+    result = requests.post(url,  data=json.dumps(payload), headers=headers )
+    print(result.json())
+
 
 def sendFMCMsg(deviceToken, msg, title, data):
     global serverToken
