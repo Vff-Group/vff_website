@@ -20,7 +20,7 @@ from dashboard_app.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('website_app.urls',namespace='website_app')),
-    path('send/' , send),
-    path('firebase-messaging-sw.js',showFirebaseJS,name="show_firebase_js"),
+    # path('send/' , send),
+    # path('firebase-messaging-sw.js',showFirebaseJS,name="show_firebase_js"),
     path('admin_dashboard/',include('dashboard_app.urls',namespace='dashboard_app')),
 ]
