@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect, reverse
 from django.db import connection, DatabaseError
 from django.views.decorators.cache import never_cache
 from django.contrib.auth import logout
-from django.http import HttpResponseServerError,JsonResponse
+from django.http import HttpResponseServerError,JsonResponse,HttpResponse
 from colorama import Fore, Style
 from django.views.decorators.cache import never_cache
 from django.utils import timezone
@@ -42,6 +42,29 @@ serverToken="AAAApZY1ur0:APA91bHsk-e3OC5R2vqO7dD0WZp7ifULNzqrUPnQu07et7RLFMWWcwO
 #     print(response)
 #     print(response.json())
 #     print(response.status_code)
+
+#To Register for Firebase Web Setup
+def showFirebaseJS(request):
+    
+  data='import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";'\
+  'import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";'\
+  
+  'const firebaseConfig = {'\
+  '  apiKey: "AIzaSyB377d4_AFRtoEIjpN2Puf3CYwe-I9dCGE",'\
+  '  authDomain: "vff-group-b185c.firebaseapp.com",'\
+  '  projectId: "vff-group-b185c",'\
+  '  storageBucket: "vff-group-b185c.appspot.com",'\
+  '  messagingSenderId: "711189707453",'\
+  '  appId: "1:711189707453:web:e74dd4a2a8c2c4b00b55d4",'\
+  '  measurementId: "G-RWGD4RD6R8"'\
+  '};'\
+
+  '  #Initialize Firebase'\
+  'const app = initializeApp(firebaseConfig);'\
+  'const analytics = getAnalytics(app);'
+  
+  
+  return HttpResponse(data,content_type="text/javascript")
 
 def sendFMCMsg(deviceToken, msg, title, data):
     global serverToken
