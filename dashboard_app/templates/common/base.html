@@ -42,13 +42,14 @@
       src="https://kit.fontawesome.com/eea5b138cd.js"
       crossorigin="anonymous"
     ></script>
-    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-messaging-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js"></script>
     <!-- <script src="{% static 'js/firebase-messaging-sw.js' %}"></script> -->
 
     <script>
-     
       // For Firebase JS SDK v7.20.0 and later, measurementId is optional
       const firebaseConfig = {
         apiKey: "AIzaSyB377d4_AFRtoEIjpN2Puf3CYwe-I9dCGE",
@@ -57,38 +58,44 @@
         storageBucket: "vff-group-b185c.appspot.com",
         messagingSenderId: "711189707453",
         appId: "1:711189707453:web:e74dd4a2a8c2c4b00b55d4",
-        measurementId: "G-RWGD4RD6R8"
+        measurementId: "G-RWGD4RD6R8",
       };
-    console.log(firebaseConfig);
+      console.log(firebaseConfig);
       // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-      messaging.getToken({ vapidKey: 'AAAApZY1ur0:APA91bHsk-e3OC5R2vqO7dD0WZp7ifULNzqrUPnQu07et7RLFMWWcwOqY9Bl-9YQWkuXUP5nM7bVMgMP-qKISf9Jcf2ix9j7oOkScq9-3BH0hfCH3nIWgkn4hbnmSLyw4pmq66rMZz8R' }).then((currentToken) => {
-        if (currentToken) {
-          // Send the token to your server and update the UI if necessary
-          console.log(currentToken)
-          // ...
-        } else {
-          // Show permission request UI
-          console.log('No registration token available. Request permission to generate one.');
-          requestPermission();
-          // ...
-        }
-      }).catch((err) => {
-        console.log('An error occurred while retrieving token. ', err);
-        // ...
-      });
-      function requestPermission() {
-        console.log('Requesting permission...');
-        Notification.requestPermission().then((permission) => {
-          if (permission === 'granted') {
-            console.log('Notification permission granted.');
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      messaging
+        .getToken({
+          vapidKey:
+            "AAAApZY1ur0:APA91bHsk-e3OC5R2vqO7dD0WZp7ifULNzqrUPnQu07et7RLFMWWcwOqY9Bl-9YQWkuXUP5nM7bVMgMP-qKISf9Jcf2ix9j7oOkScq9-3BH0hfCH3nIWgkn4hbnmSLyw4pmq66rMZz8R",
+        })
+        .then((currentToken) => {
+          if (currentToken) {
+            // Send the token to your server and update the UI if necessary
+            console.log(currentToken);
+            // ...
+          } else {
+            // Show permission request UI
+            console.log(
+              "No registration token available. Request permission to generate one."
+            );
+            requestPermission();
+            // ...
           }
         })
+        .catch((err) => {
+          console.log("An error occurred while retrieving token. ", err);
+          // ...
+        });
+      function requestPermission() {
+        console.log("Requesting permission...");
+        Notification.requestPermission().then((permission) => {
+          if (permission === "granted") {
+            console.log("Notification permission granted.");
+          }
+        });
       }
-
     </script>
-    
   </head>
   <body class="g-sidenav-show bg-gray-100">
     <div id="preloader-active">
@@ -117,7 +124,8 @@ const analytics = getAnalytics(app);
             class="navbar-brand-img h-100"
             alt="l"
           />
-          {% comment %} <span class="ms-1 font-weight-bold">VFF Group</span> {% endcomment %}
+          {% comment %} <span class="ms-1 font-weight-bold">VFF Group</span> {%
+          endcomment %}
         </a>
       </div>
       <hr class="horizontal dark mt-0" />
