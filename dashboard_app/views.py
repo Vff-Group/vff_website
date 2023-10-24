@@ -46,9 +46,9 @@ serverToken="AAAApZY1ur0:APA91bHsk-e3OC5R2vqO7dD0WZp7ifULNzqrUPnQu07et7RLFMWWcwO
 #To Register for Firebase Web Setup
 def showFirebaseJS(request):
     
-  data='import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";'\
-  'import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";'\
-'import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-messaging.js";'
+  data='importScripts("https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js");' \
+         'importScripts("https://www.gstatic.com/firebasejs/10.5.0/firebase-messaging.js"); ' \
+# 'import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-messaging.js";'
   
   'var firebaseConfig = {'\
   '  apiKey: "AIzaSyB377d4_AFRtoEIjpN2Puf3CYwe-I9dCGE",'\
@@ -62,15 +62,16 @@ def showFirebaseJS(request):
 
   'firebase.initializeApp(firebaseConfig);' \
          'const messaging=firebase.messaging();' \
-         'messaging.setBackgroundMessageHandler(function (payload) {' \
-         '    console.log(payload);' \
-         '    const notification=JSON.parse(payload);' \
-         '    const notificationOption={' \
-         '        body:notification.body,' \
-         '        icon:notification.icon' \
-         '    };' \
-         '    return self.registration.showNotification(payload.notification.title,notificationOption);' \
-         '});'
+         'messaging.onBackgroundMessage((payload) => {'\
+            "console.log('[firebase-messaging-sw.js] Received background message ', payload);"\
+         " const notificationTitle = 'Background Message Title';"\
+         "const notificationOptions = {"\
+             "body: 'Background Message body.',"\
+                 "};"\
+                     'self.registration.showNotification(notificationTitle, notificationOptions);'\
+    '});'
+                
+                              
   
   
   return HttpResponse(data,content_type="text/javascript")
