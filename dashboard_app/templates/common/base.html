@@ -77,6 +77,7 @@
 
       // Initialize Firebase Cloud Messaging and get a reference to the service
       const messaging = firebase.messaging();
+      console.log(messaging.getToken())
       messaging
         .getToken({
           vapidKey:
