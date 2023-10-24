@@ -46,8 +46,8 @@ serverToken="AAAApZY1ur0:APA91bHsk-e3OC5R2vqO7dD0WZp7ifULNzqrUPnQu07et7RLFMWWcwO
 #To Register for Firebase Web Setup
 def showFirebaseJS(request):
     
-  data='importScripts("https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js");' \
-         'importScripts("https://www.gstatic.com/firebasejs/10.5.0/firebase-messaging-compat.js"); ' \
+  data='importScripts("https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js");' \
+         'importScripts("https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js"); ' \
 # 'import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-messaging.js";'
   
   'var firebaseConfig = {'\
@@ -56,8 +56,8 @@ def showFirebaseJS(request):
   '  projectId: "vff-group-b185c",'\
   '  storageBucket: "vff-group-b185c.appspot.com",'\
   '  messagingSenderId: "711189707453",'\
-  '  appId: "1:711189707453:web:e74dd4a2a8c2c4b00b55d4",'\
-  '  measurementId: "G-RWGD4RD6R8"'\
+  '  appId: "1:711189707453:web:3813986a11e36f830b55d4",'\
+  '  measurementId: "G-YYEJHD2GJ1"'\
   '};'\
 
   'firebase.initializeApp(firebaseConfig);' \
