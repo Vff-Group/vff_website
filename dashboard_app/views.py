@@ -829,7 +829,7 @@ def send_notification_to_delivery_boy(order_id,title,body,data,order_status):
     showAlert = ""
     delivery_boy_id = "-1"
     if order_status == "Out for Delivery":
-        query_token = "select usertbl.usrid,mobile_no,profile_img,device_token,delivery_boy_id,usrname from vff.laundry_delivery_boytbl,vff.usertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and is_online='1' and status='Free'"
+        query_token = "select usrname,device_token,mobile_no,delivery_boy_id,profile_img,usertbl.usrid from vff.laundry_delivery_boytbl,vff.usertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and is_online='1' and status='Free'"
     else:
         query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
     
@@ -910,7 +910,7 @@ def update_order_status(request,order_id):
             if order_status == "Completed":
                 msg = "Laundry Package Delivery Successfully. Now You are free to accept new Orders"
             elif order_status == "Processing":
-                msg = "Processing has been started for Order ID : #"+str(order_id)+""
+                msg = "Processing has been started for Order ID : #"+str(order_id)+". You are now free to recieve new orders."
             elif order_status == "Pick Up Done":
                 msg = "Laundry PickUp Done for Order ID : #"+str(order_id)+""
             else:
