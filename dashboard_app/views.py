@@ -914,7 +914,7 @@ def update_order_status(request,order_id):
             elif order_status == "Pick Up Done":
                 msg = "Laundry PickUp Done for Order ID : #"+str(order_id)+""
             else:
-                msg = "Delivery Package is ready pick it up from store"
+                msg = "Order ID #"+str(order_id)+" Assigned.\nDelivery Package is ready pick it up from store"
             
             data = {
                  'intent':'ShowDeliveryBoyOrders',
