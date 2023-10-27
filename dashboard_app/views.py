@@ -677,7 +677,7 @@ def view_order_detail(request,orderid):
     if isLogin == False:
         return redirect('dashboard_app:login')
     error_msg = "No Order Details Found"
-    query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
+    query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(orderid)+"'"
     alert_delivery_boy =""
     result = execute_raw_query_fetch_one(query_token)
     if result:  
