@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect, reverse
 from django.db import connection, DatabaseError
 from django.views.decorators.cache import never_cache
 from django.contrib.auth import logout
-from django.http import HttpResponseServerError,JsonResponse,HttpResponse
+from django.http import HttpResponseServerError,JsonResponse,HttpResponse,HttpResponseRedirect
 from colorama import Fore, Style
 from django.views.decorators.cache import never_cache
 from django.utils import timezone
@@ -677,15 +677,16 @@ def view_order_detail(request,orderid):
     if isLogin == False:
         return redirect('dashboard_app:login')
     error_msg = "No Order Details Found"
-    query_token = "select usertbl.usrid,mobile_no,profile_img,device_token,delivery_boy_id,usrname from vff.laundry_delivery_boytbl,vff.usertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and is_online='1' and status='Free'"
-    alert_delivery_boy =""
-    result = execute_raw_query_fetch_one(query_token)
-    if result:  
-        device_token = result[2]
-        delivery_boy_id = result[3]
-        usrname = result[0] 
-    else:
-        alert_delivery_boy = "No Delivery Boy is Free To Recieve Orders"
+    alert_delivery_boy = request.GET.get('no_delivery', None)
+    #query_token = "select usertbl.usrid,mobile_no,profile_img,device_token,delivery_boy_id,usrname from vff.laundry_delivery_boytbl,vff.usertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and is_online='1' and status='Free'"
+    # alert_delivery_boy =""
+    # result = execute_raw_query_fetch_one(query_token)
+    # if result:  
+    #     device_token = result[2]
+    #     delivery_boy_id = result[3]
+    #     usrname = result[0] 
+    # else:
+    #     alert_delivery_boy = "No Delivery Boy is Free To Recieve Orders"
     query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name,categoryid,subcategoryid,ordertype,dt,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,time,item_cost,item_quantity,type,section_type from vff.laundry_active_orders_tbl,vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and laundry_active_orders_tbl.order_id=laundry_ordertbl.orderid and orderid='"+str(orderid)+"' order by orderid desc;"
     
     query_result = execute_raw_query(query)
@@ -875,7 +876,8 @@ def send_notification_customer(order_id,title,body,data=None):
     else:
         showAlert = "Notification was not sent to Customer"
     return showAlert
-        
+  
+#Upadting Order Status        
 def update_order_status(request,order_id):
     if request.method == "POST":
         order_status = request.POST.get('order-status')
@@ -1010,7 +1012,11 @@ def update_order_status(request,order_id):
                 except Exception as e:
                     print(f"Error loading data: {e}")
             else:
-                redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id}))
+                alert_delivery_boy = "No Delivery Boy is Free To Receive Orders"
+                redirect_url = reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id})
+                redirect_url += f'?no_delivery={alert_delivery_boy}'
+                return HttpResponseRedirect(redirect_url)
+                #redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id}))
                 
         else:
             try:
