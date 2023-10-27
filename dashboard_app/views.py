@@ -816,13 +816,18 @@ def view_order_detail(request,orderid):
     return render(request,'order_pages/order_details.html',context)
 
 #To Send notification to delivery boy for order ID
-def send_notification_to_delivery_boy(order_id,title,body,data=None):
-    query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
+def send_notification_to_delivery_boy(order_id,title,body,data,order_status):
+    showAlert = ""
+    if order_status == "Out for Delivery":
+        query_token = "select usertbl.usrid,mobile_no,profile_img,device_token,delivery_boy_id,usrname from vff.laundry_delivery_boytbl,vff.usertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and is_online='1' and status='Free'"
+    else:
+        query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
+    
     result = execute_raw_query_fetch_one(query_token)
     if result:  
-        usrname = result[0] 
-        delivery_boy_id = result[3]
-        device_token = result[2]
+        device_token = result[3]
+        delivery_boy_id = result[4]
+        usrname = result[5] 
         
         
         title = title
@@ -830,10 +835,16 @@ def send_notification_to_delivery_boy(order_id,title,body,data=None):
         data = data 
         
         sendFMCMsg(device_token,msg,title,data)
+        showAlert = f"Notification sent to {usrname} Delivery Successfully"
         print(f'Notification sent to {usrname} successfully')
+    else:
+        showAlert = "No Delivery Boy is Free to Take Orders"
+        print('No Delivery Boy is Free to Take Order')
+    return showAlert
         
 #To Send notification to customer for order ID
 def send_notification_customer(order_id,title,body,data=None):
+    showAlert = ""
     query_customer = "select usrname,device_token,customerid from vff.laundry_customertbl,vff.usertbl,vff.laundry_ordertbl where usertbl.usrid=laundry_customertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and orderid='"+str(order_id)+"'"
     cresult = execute_raw_query_fetch_one(query_customer)
     print(f'Customer_query::{cresult}')
@@ -849,7 +860,11 @@ def send_notification_customer(order_id,title,body,data=None):
         msg = body
         data = data
         sendFMCMsg(cdevice_token,msg,title,data)
+        showAlert = f"Notification sent to {usrname} Customer successfully"
         print(f'Notification sent to {usrname} successfully')
+    else:
+        showAlert = "Notification was not sent to Customer"
+    return showAlert
         
 def update_order_status(request,order_id):
     if request.method == "POST":
@@ -861,6 +876,7 @@ def update_order_status(request,order_id):
             order_completed = "1"
         elif order_status == "Cancelled":
             order_completed = "2"
+            #Sending Notification to Delivery Boy who is free to take orders
             query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
             result = execute_raw_query_fetch_one(query_token)
             if result:  
@@ -877,7 +893,7 @@ def update_order_status(request,order_id):
                     print(f"Error loading data: {e}")
         else:
             order_completed = "0"
-        if order_status == "Out for Delivery" or order_status == "Completed" or order_status == "Processing":
+        if order_status == "Out for Delivery" or order_status == "Completed" or order_status == "Processing" or order_status == "Pick Up Done":
             #To Send for Delivery Boy
             title = "VFF Group"
             msg = "Delivery Package is ready pick it up from store"
@@ -889,11 +905,13 @@ def update_order_status(request,order_id):
                 msg = "Delivery Package is ready pick it up from store"
             
             data = {
-                 'intent':'DMainRoute',
-                 
+                 'intent':'ShowDeliveryBoyOrders',
+                 'order_id_pickup':order_id
                  }
-            send_notification_to_delivery_boy(order_id,title,msg,data)
-            query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
+            notifyDeliveryBoy = send_notification_to_delivery_boy(order_id,title,msg,data,order_status)
+            
+            print(f"notifyDeliveryBoy::{notifyDeliveryBoy}")
+            query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and (laundry_ordertbl.drop_delivery_boy_id=vff.laundry_delivery_boytbl.delivery_boy_id) and orderid='"+str(order_id)+"'"
             result = execute_raw_query_fetch_one(query_token)
             if result:  
                 usrname = result[0] 
@@ -911,7 +929,6 @@ def update_order_status(request,order_id):
             
             #To send to customer
             title = "VFF Group"
-            
             if order_status == "Completed":
                 msg = "Laundry Package Delivery Successfully for Order ID : #"+str(order_id)+" . Keep Ordering with Velvet Wash"
             elif order_status == "Processing":
@@ -919,10 +936,10 @@ def update_order_status(request,order_id):
             else:
                 msg = "Your Laundry Package is on its way to deliver for Order ID : #"+str(order_id)+""
             data = {
-                 'intent':'DMainRoute',
+                 'intent':'MainRoute',
                  
                  }
-            send_notification_customer(order_id,title,msg,data)
+            notifyCustomer = send_notification_customer(order_id,title,msg,data)
             
         try:
             with connection.cursor() as cursor:
@@ -930,8 +947,9 @@ def update_order_status(request,order_id):
                 if order_status == "Completed":
                     current_timestamp = time.time()
                     current_datetime = datetime.now().strftime("%Y-%m-%d")
-                    print(f'current_timestamp::{current_timestamp} current_date::{current_datetime}')
                     filter = ",delivery='"+str(current_datetime)+"',delivery_epoch='"+str(current_timestamp)+"'"
+                if order_status == "Out for Delivery" and delivery_boy_id !='-1':
+                    filter = ",drop_delivery_boy_id='"+str(delivery_boy_id)+"'"
                 query = "update vff.laundry_ordertbl set order_status='"+str(order_status)+"',order_completed='"+str(order_completed)+"'"+filter+" where orderid='"+str(order_id)+"'"
                 print(f'----------------------------------- Updating Order ID with delivery Epoch ----------------')
                 print(f'query_update::{query}')

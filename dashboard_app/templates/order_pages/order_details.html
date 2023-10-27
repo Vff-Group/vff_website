@@ -246,6 +246,7 @@
                                 <select class="form-control form-control-alternative" id="input-order-status" name="order-status">
                                   <option value="Accepted"  {% if order_status == 'Accepted' %}selected{% endif %}>Accepted</option>
                                   <option value="Payment Done" {% if order_status == 'Payment Done' %}selected{% endif %}>Payment Done</option>
+                                  <option value="Pick Up Done" {% if order_status == 'Pick Up Done' %}selected{% endif %}>Pick Up Done</option>
                                   <option value="Processing" {% if order_status == 'Processing' %}selected{% endif %}>Processing</option>
                                   <option value="Out for Delivery" {% if order_status == 'Out for Delivery' %}selected{% endif %}>Out for Delivery</option>
                                   <option value="Completed" {% if order_status == 'Completed' %}selected{% endif %}>Completed</option>
