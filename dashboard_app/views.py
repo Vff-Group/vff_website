@@ -827,6 +827,7 @@ def view_order_detail(request,orderid):
 #To Send notification to delivery boy for order ID
 def send_notification_to_delivery_boy(order_id,title,body,data,order_status):
     showAlert = ""
+    delivery_boy_id = "-1"
     if order_status == "Out for Delivery":
         query_token = "select usertbl.usrid,mobile_no,profile_img,device_token,delivery_boy_id,usrname from vff.laundry_delivery_boytbl,vff.usertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and is_online='1' and status='Free'"
     else:
@@ -849,7 +850,7 @@ def send_notification_to_delivery_boy(order_id,title,body,data,order_status):
     else:
         showAlert = "No Delivery Boy is Free to Take Orders"
         print('No Delivery Boy is Free to Take Order')
-    return showAlert
+    return showAlert,delivery_boy_id
         
 #To Send notification to customer for order ID
 def send_notification_customer(order_id,title,body,data=None):
@@ -919,8 +920,8 @@ def update_order_status(request,order_id):
                  'intent':'ShowDeliveryBoyOrders',
                  'order_id_pickup':order_id
                  }
-            notifyDeliveryBoy = send_notification_to_delivery_boy(order_id,title,msg,data,order_status)
-            
+            notifyDeliveryBoy,deliveryBoyID = send_notification_to_delivery_boy(order_id,title,msg,data,order_status)
+            print(f'deliveryBoyID::{deliveryBoyID}')
             if not notifyDeliveryBoy:
                 print(f"notifyDeliveryBoy::{notifyDeliveryBoy}")
                 query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and (laundry_ordertbl.drop_delivery_boy_id=vff.laundry_delivery_boytbl.delivery_boy_id) and orderid='"+str(order_id)+"'"
@@ -963,7 +964,7 @@ def update_order_status(request,order_id):
                             current_timestamp = time.time()
                             current_datetime = datetime.now().strftime("%Y-%m-%d")
                             filter = ",delivery='"+str(current_datetime)+"',delivery_epoch='"+str(current_timestamp)+"'"
-                        if order_status == "Out for Delivery" and delivery_boy_id !='-1':
+                        if order_status == "Out for Delivery" and deliveryBoyID != '-1':
                             filter = ",drop_delivery_boy_id='"+str(delivery_boy_id)+"'"
                         query = "update vff.laundry_ordertbl set order_status='"+str(order_status)+"',order_completed='"+str(order_completed)+"'"+filter+" where orderid='"+str(order_id)+"'"
                         print(f'----------------------------------- Updating Order ID with delivery Epoch ----------------')
