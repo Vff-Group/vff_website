@@ -985,7 +985,7 @@ def update_order_status(request,order_id):
                 except Exception as e:
                     print(f"Error loading data: {e}")
             else:
-                redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id,'deliveryboy_error_msg':notifyDeliveryBoy}))
+                redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id,'alert_delivery_boy':notifyDeliveryBoy}))
                 
         else:
             try:
