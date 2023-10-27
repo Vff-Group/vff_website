@@ -928,7 +928,7 @@ def update_order_status(request,order_id):
                         filter = ""
                         
                         if order_status == "Out for Delivery" and deliveryBoyID != '-1':
-                            filter = ",drop_delivery_boy_id='"+str(delivery_boy_id)+"'"
+                            filter = ",drop_delivery_boy_id='"+str(deliveryBoyID)+"'"
                         query = "update vff.laundry_ordertbl set order_status='"+str(order_status)+"',order_completed='"+str(order_completed)+"'"+filter+" where orderid='"+str(order_id)+"'"
                         print('Updating To Busy Status')
                         cursor.execute(query)
