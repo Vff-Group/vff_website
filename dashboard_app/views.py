@@ -825,9 +825,9 @@ def send_notification_to_delivery_boy(order_id,title,body,data,order_status):
     
     result = execute_raw_query_fetch_one(query_token)
     if result:  
-        device_token = result[3]
-        delivery_boy_id = result[4]
-        usrname = result[5] 
+        device_token = result[2]
+        delivery_boy_id = result[3]
+        usrname = result[0] 
         
         
         title = title
