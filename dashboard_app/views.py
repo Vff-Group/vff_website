@@ -936,9 +936,14 @@ def update_order_status(request,order_id):
                 except Exception as e:
                     print(e)
                     
-            if not notifyDeliveryBoy:
+            if deliveryBoyID != "-1":
                 print(f"notifyDeliveryBoy::{notifyDeliveryBoy}")
-                query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and (laundry_ordertbl.delivery_boyid=vff.laundry_delivery_boytbl.delivery_boy_id or laundry_ordertbl.drop_delivery_boy_id=vff.laundry_delivery_boytbl.delivery_boy_id) and orderid='"+str(order_id)+"'"
+                jfilter = ""
+                if order_status == "Out for Delivery":
+                    jfilter =",drop_delivery_boy_id"
+                else:
+                    jfilter = ",delivery_boy_id"
+                query_token = "select usrname,mobile_no,device_token"+jfilter+" from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and (laundry_ordertbl.delivery_boyid=vff.laundry_delivery_boytbl.delivery_boy_id or laundry_ordertbl.drop_delivery_boy_id=vff.laundry_delivery_boytbl.delivery_boy_id) and orderid='"+str(order_id)+"'"
                 result = execute_raw_query_fetch_one(query_token)
                 if result:  
                     usrname = result[0] 
