@@ -922,6 +922,20 @@ def update_order_status(request,order_id):
                  }
             notifyDeliveryBoy,deliveryBoyID = send_notification_to_delivery_boy(order_id,title,msg,data,order_status)
             print(f'deliveryBoyID::{deliveryBoyID}')
+            if deliveryBoyID != '-1' and order_status == "Out for Delivery":
+                try:
+                    with connection.cursor() as cursor:
+                        filter = ""
+                        
+                        if order_status == "Out for Delivery" and deliveryBoyID != '-1':
+                            filter = ",drop_delivery_boy_id='"+str(delivery_boy_id)+"'"
+                        query = "update vff.laundry_ordertbl set order_status='"+str(order_status)+"',order_completed='"+str(order_completed)+"'"+filter+" where orderid='"+str(order_id)+"'"
+                        print('Updating To Busy Status')
+                        cursor.execute(query)
+                        connection.commit()
+                except Exception as e:
+                    print(e)
+                    
             if not notifyDeliveryBoy:
                 print(f"notifyDeliveryBoy::{notifyDeliveryBoy}")
                 query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and (laundry_ordertbl.delivery_boyid=vff.laundry_delivery_boytbl.delivery_boy_id or laundry_ordertbl.drop_delivery_boy_id=vff.laundry_delivery_boytbl.delivery_boy_id) and orderid='"+str(order_id)+"'"
