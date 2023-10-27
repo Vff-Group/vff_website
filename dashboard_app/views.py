@@ -930,7 +930,7 @@ def update_order_status(request,order_id):
                         if order_status == "Out for Delivery" and deliveryBoyID != '-1':
                             filter = ",drop_delivery_boy_id='"+str(deliveryBoyID)+"'"
                         query = "update vff.laundry_ordertbl set order_status='"+str(order_status)+"',order_completed='"+str(order_completed)+"'"+filter+" where orderid='"+str(order_id)+"'"
-                        print('Updating To Busy Status')
+                        print(f'Updating To Busy Status::{query}')
                         cursor.execute(query)
                         connection.commit()
                 except Exception as e:
@@ -938,20 +938,24 @@ def update_order_status(request,order_id):
                     
             if deliveryBoyID != "-1":
                 print(f"notifyDeliveryBoy::{notifyDeliveryBoy}")
-                jfilter = ""
+                jfilter = "" 
+                status = ""
                 if order_status == "Out for Delivery":
                     jfilter =",drop_delivery_boy_id"
+                    status = "Busy"
                 else:
                     jfilter = ",delivery_boy_id"
+                    status = "Free"
                 query_token = "select usrname,mobile_no,device_token"+jfilter+" from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and (laundry_ordertbl.delivery_boyid=vff.laundry_delivery_boytbl.delivery_boy_id or laundry_ordertbl.drop_delivery_boy_id=vff.laundry_delivery_boytbl.delivery_boy_id) and orderid='"+str(order_id)+"'"
                 result = execute_raw_query_fetch_one(query_token)
                 if result:  
                     usrname = result[0] 
                     delivery_boy_id = result[3]
                     device_token = result[2]
+                    
                     try:
                         with connection.cursor() as cursor:
-                            update_free = "update vff.laundry_delivery_boytbl set status='Free' where delivery_boy_id='"+str(delivery_boy_id)+"'"
+                            update_free = "update vff.laundry_delivery_boytbl set status='"+str(status)+"' where delivery_boy_id='"+str(delivery_boy_id)+"'"
                             cursor.execute(update_free)
                             connection.commit()
 
