@@ -920,7 +920,8 @@ def update_order_status(request,order_id):
                  'order_id_pickup':order_id
                  }
             notifyDeliveryBoy = send_notification_to_delivery_boy(order_id,title,msg,data,order_status)
-            if notifyDeliveryBoy:
+            
+            if not notifyDeliveryBoy:
                 print(f"notifyDeliveryBoy::{notifyDeliveryBoy}")
                 query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and (laundry_ordertbl.drop_delivery_boy_id=vff.laundry_delivery_boytbl.delivery_boy_id) and orderid='"+str(order_id)+"'"
                 result = execute_raw_query_fetch_one(query_token)
