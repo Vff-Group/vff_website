@@ -879,6 +879,7 @@ def send_notification_customer(order_id,title,body,data=None):
   
 #Upadting Order Status        
 def update_order_status(request,order_id):
+    alert_delivery_boy = ""
     if request.method == "POST":
         order_status = request.POST.get('order-status')
         # order_id = request.session.get('order_id')
