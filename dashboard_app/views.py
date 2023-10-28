@@ -964,7 +964,11 @@ def delivery_accept(request,order_id,delivery_boy_id):
                 }
                 intent = "MainRoute"
                 order_status = "Assigning"
-                send_notification_to_delivery_boy(order_id,title,body,data,order_status)
+                query_token = "select usrname,mobile_no,device_token,delivery_boy_id,profile_img,usertbl.usrid from vff.laundry_delivery_boytbl,vff.usertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and is_online='1' and status='Free' and delivery_boy_id='"+str(delivery_boy_id)+"'"
+                result = execute_raw_query_fetch_one(query_token)
+                if result:  
+                    device_token = result[2] 
+                    sendFMCMsg(device_token,body,title,data)
                 return redirect('dashboard_app:all_orders')
         except Exception as e:
             print(e)
