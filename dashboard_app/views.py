@@ -609,7 +609,7 @@ def all_orders(request):
     if isLogin == False:
         return redirect('dashboard_app:login')
     error_msg = "No Orders Data Found"
-    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name from vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id order by orderid desc"
+    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name,drop_boy_name from vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id order by orderid desc"
     query_result = execute_raw_query(query)
     
     
@@ -624,7 +624,9 @@ def all_orders(request):
             orderTakenEpoch = epochToDateTime(oepoch)
             if orderStatus != "Completed":
                 deliveryEpoch = "Not Delivered Yet"
-            
+            drop_delivery_boy_name = row[27]
+            if drop_delivery_boy_name == "NA":
+                drop_delivery_boy_name = "Not Delivered Yet"
             data.append({
                 'consmrid': row[0],
                 'usrid': row[1],
@@ -653,6 +655,7 @@ def all_orders(request):
                 'feedback': row[24],
                 'delivery_epoch': deliveryEpoch,
                 'delivery_boy_name': row[26],
+                'drop_delivery_boy_name': drop_delivery_boy_name,
                 
                
             })
