@@ -604,6 +604,7 @@ def add_delivery_agent(request,usrid=None):
     return render (request, 'delivery_agents_pages/add_new_delivery_agent.html',{'data':data})
 
 def all_unassigned_orders(request):
+    error_msg=""
     query="select orderid,laundry_ordertbl.epoch,pickup_dt,customer_name,order_status,address,mobile_no,profile_img,city,landmark,houseno,device_token from vff.usertbl,vff.laundry_customertbl,vff.laundry_ordertbl where laundry_customertbl.consmrid=laundry_ordertbl.customerid and usertbl.usrid=laundry_customertbl.usrid  and delivery_boyid='-1' and order_status='NA'"
     query_result = execute_raw_query(query)
     data = []    
@@ -634,7 +635,7 @@ def all_unassigned_orders(request):
     current_url = request.get_full_path()
      # using the 'current_url' variable to determine the active card.
     context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
-    return render (request, 'order_pages/all_orders.html', context)
+    return render (request, 'order_pages/all_unassigned_orders.html', context)
 #All Orders
 def all_orders(request):
     isLogin = is_loggedin(request)
