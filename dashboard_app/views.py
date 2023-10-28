@@ -828,6 +828,7 @@ def view_order_detail(request,orderid):
 #To Send notification to delivery boy for order ID
 def send_notification_to_delivery_boy(order_id,title,body,data,order_status):
     showAlert = ""
+    usrname = ""
     delivery_boy_id = "-1"
     if order_status == "Out for Delivery":
         query_token = "select usrname,mobile_no,device_token,delivery_boy_id,profile_img,usertbl.usrid from vff.laundry_delivery_boytbl,vff.usertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and is_online='1' and status='Free'"
@@ -932,7 +933,7 @@ def update_order_status(request,order_id):
                 print(f"notifyDeliveryBoy::{notifyDeliveryBoy}")
                 
             
-                if (order_status == "Out for Delivery" and deliveryBoyID != '-1') or order_status == "Reached Store":
+                if (order_status == "Out for Delivery" and deliveryBoyID != '-1' and not usrname) or order_status == "Reached Store":
                     try:
                         with connection.cursor() as cursor:
                             filter = ""
@@ -945,7 +946,13 @@ def update_order_status(request,order_id):
                             connection.commit()
                     except Exception as e:
                         print(e)
-                    
+                else:
+                    print('Coming to Else Part Only')
+                    alert_delivery_boy = "No Delivery Boy is Free To Receive Orders"
+                    redirect_url = reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id})
+                    redirect_url += f'?no_delivery={alert_delivery_boy}'
+                    return HttpResponseRedirect(redirect_url)
+                    #redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id}))
             if (order_status == "Out for Delivery" and order_status !="Processing") and deliveryBoyID != '-1':
                 
                 jfilter = "" 
@@ -1021,13 +1028,7 @@ def update_order_status(request,order_id):
                     return redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id}))
             except Exception as e:
                     print(f"Error loading data: {e}")
-            else:
-                print('Coming to Else Part Only')
-                alert_delivery_boy = "No Delivery Boy is Free To Receive Orders"
-                redirect_url = reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id})
-                redirect_url += f'?no_delivery={alert_delivery_boy}'
-                return HttpResponseRedirect(redirect_url)
-                #redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id}))
+            
                 
         else:
             #Only when Delivery boy is not needed to update status
