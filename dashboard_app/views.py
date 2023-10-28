@@ -906,6 +906,7 @@ def update_order_status(request,order_id):
                     print(f"Error loading data: {e}")
         else:
             order_completed = "0"
+        print(f'Currentorder_status::{order_status}')
         if order_status == "Out for Delivery" or order_status == "Completed" or order_status == "Processing" or order_status == "Pick Up Done" or order_status== "Reached Store":
             #To Send for Delivery Boy
             if order_status !="Processing":
@@ -928,6 +929,8 @@ def update_order_status(request,order_id):
                      }
                 notifyDeliveryBoy,deliveryBoyID = send_notification_to_delivery_boy(order_id,title,msg,data,order_status)
                 print(f'deliveryBoyID::{deliveryBoyID}')
+            print('Condition::')
+            print(((order_status == "Out for Delivery" and deliveryBoyID != '-1')))
             if ((order_status == "Out for Delivery" and deliveryBoyID != '-1') or order_status == "Reached Store"):
                 try:
                     with connection.cursor() as cursor:
@@ -1018,9 +1021,10 @@ def update_order_status(request,order_id):
                 except Exception as e:
                     print(f"Error loading data: {e}")
             else:
+                print('Coming to Else Part Only')
                 alert_delivery_boy = "No Delivery Boy is Free To Receive Orders"
                 redirect_url = reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id})
-                redirect_url += f'?no_delivery={alert_delivery_boy}'
+                redirect_url += f'?no_delvery={alert_delivery_boy}'
                 return HttpResponseRedirect(redirect_url)
                 #redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id}))
                 
