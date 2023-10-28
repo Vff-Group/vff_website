@@ -21,6 +21,7 @@ urlpatterns = [
     path('all_unassigned_orders/',views.all_unassigned_orders,name='all_unassigned_orders'),
     path('all_orders/create_order/',views.create_new_order,name='create_order'),
     path('all_orders/order_details/<int:orderid>',views.view_order_detail,name='view_order_detail'),
+    path('assigned_delivery_boy/<int:orderid>',views.assigned_delivery_boy,name='assigned_delivery_boy'),
     path('update_order_status/<int:order_id>',views.update_order_status,name='update_order_status'),
     path('categories/',views.all_categories,name='all_categories'),
     path('categories/add_category/',views.add_category,name='add_category'),

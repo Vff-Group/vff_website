@@ -938,6 +938,32 @@ def send_notification_customer(order_id,title,body,data=None):
         showAlert = "Notification was not sent to Customer"
     return showAlert,customerid
   
+#Assign Delivery Boy to Order ID
+def assigned_delivery_boy(request,order_id):
+    error_msg = ""
+    query = "select delivery_boy_id,name,is_online,status,profile_img,mobile_no,address from vff.usertbl,vff.laundry_delivery_boytbl where laundry_delivery_boytbl.usrid=usertbl.usrid"
+    query_result = execute_raw_query(query)
+       
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+             data.append({
+                 'delivery_boy_id':row[0],
+                 'name':row[1],
+                 'is_online':row[2],
+                 'status':row[3],
+                 'profile_img':row[4],
+                 'mobile_no':row[5],
+                 'address':row[6],
+                 'order_id':order_id
+             })
+    else:
+        error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+     # using the 'current_url' variable to determine the active card.
+    context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    return render(request,'order_pages/all_assigning_delivery_boy.html',context)
+
 #Upadting Order Status        
 def update_order_status(request,order_id):
     alert_delivery_boy = ""
