@@ -225,9 +225,9 @@ def search_orderid_or_mobile_number(request):
             result = execute_raw_query_fetch_one(query)
             if result:  
                 orderid = result[0]
-                print('Send to Order Details Screen')
+                return redirect('dashboard_app:view_order_detail',orderid=orderid)
             else:
-                 print('Order Details Not found')
+                return redirect('dashboard_app:dashboard')
         else:
             query = "select usrname,address,device_token from vff.usertbl where mobile_no='"+str(searchid)+"'"
             result = execute_raw_query_fetch_one(query)
