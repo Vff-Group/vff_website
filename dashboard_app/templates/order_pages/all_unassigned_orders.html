@@ -85,7 +85,10 @@
                     <td class="align-middle">
                         <div class="row">
                             <div class="col">
-                                <a href="{% url 'dashboard_app:assign_deliveyr_boy' row.orderid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                {% comment %} <a href="{% url 'dashboard_app:assign_deliveyr_boy' row.orderid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                    Assign Delivery Boy
+                                  </a> {% endcomment %}
+                                  <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                     Assign Delivery Boy
                                   </a>
                             </div>
