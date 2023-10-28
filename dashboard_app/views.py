@@ -968,7 +968,7 @@ def delivery_accept(request,order_id,delivery_boy_id):
                 return redirect('dashboard_app:all_orders')
         except Exception as e:
             print(e)
-    return redirect('dashboard_app:all_unassigned_orders')
+    return render(request,'order_pages/all_assigning_delivery_boy.html')
 #Assign Delivery Boy to Order ID
 def assigned_delivery_boy(request,orderid):
     error_msg = ""
