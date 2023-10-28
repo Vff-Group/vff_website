@@ -926,7 +926,7 @@ def update_order_status(request,order_id):
                      'order_id_pickup':order_id
                      }
                 notifyDeliveryBoy,deliveryBoyID = send_notification_to_delivery_boy(order_id,title,msg,data,order_status)
-            print(f'deliveryBoyID::{deliveryBoyID}')
+                print(f'deliveryBoyID::{deliveryBoyID}')
             if ((order_status == "Out for Delivery" and deliveryBoyID != '-1') or order_status == "Reached Store"):
                 try:
                     with connection.cursor() as cursor:
