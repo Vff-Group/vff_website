@@ -912,8 +912,8 @@ def update_order_status(request,order_id):
                 msg = "Delivery Package is ready pick it up from store"
                 if order_status == "Completed":
                     msg = "Laundry Package Delivery Successfully. Now You are free to accept new Orders"
-                elif order_status == "Processing":
-                    msg = "Processing has been started for Order ID : #"+str(order_id)+". You are now free to recieve new orders."
+                # elif order_status == "Processing":
+                #     msg = "Processing has been started for Order ID : #"+str(order_id)+". You are now free to recieve new orders."
                 elif order_status == "Pick Up Done":
                     msg = "Laundry PickUp Done for Order ID : #"+str(order_id)+""
                 elif order_status == "Reached Store":
