@@ -907,26 +907,27 @@ def update_order_status(request,order_id):
             order_completed = "0"
         if order_status == "Out for Delivery" or order_status == "Completed" or order_status == "Processing" or order_status == "Pick Up Done" or order_status== "Reached Store":
             #To Send for Delivery Boy
-            title = "VFF Group"
-            msg = "Delivery Package is ready pick it up from store"
-            if order_status == "Completed":
-                msg = "Laundry Package Delivery Successfully. Now You are free to accept new Orders"
-            elif order_status == "Processing":
-                msg = "Processing has been started for Order ID : #"+str(order_id)+". You are now free to recieve new orders."
-            elif order_status == "Pick Up Done":
-                msg = "Laundry PickUp Done for Order ID : #"+str(order_id)+""
-            elif order_status == "Reached Store":
-                msg = "Now you are ready to Receive New Orders."
-            else:
-                msg = "Order ID #"+str(order_id)+" Assigned.\nDelivery Package is ready pick it up from store"
-            
-            data = {
-                 
-                 'order_id_pickup':order_id
-                 }
-            notifyDeliveryBoy,deliveryBoyID = send_notification_to_delivery_boy(order_id,title,msg,data,order_status)
+            if order_status !="Processing":
+                title = "VFF Group"
+                msg = "Delivery Package is ready pick it up from store"
+                if order_status == "Completed":
+                    msg = "Laundry Package Delivery Successfully. Now You are free to accept new Orders"
+                elif order_status == "Processing":
+                    msg = "Processing has been started for Order ID : #"+str(order_id)+". You are now free to recieve new orders."
+                elif order_status == "Pick Up Done":
+                    msg = "Laundry PickUp Done for Order ID : #"+str(order_id)+""
+                elif order_status == "Reached Store":
+                    msg = "Now you are ready to Receive New Orders."
+                else:
+                    msg = "Order ID #"+str(order_id)+" Assigned.\nDelivery Package is ready pick it up from store"
+
+                data = {
+
+                     'order_id_pickup':order_id
+                     }
+                notifyDeliveryBoy,deliveryBoyID = send_notification_to_delivery_boy(order_id,title,msg,data,order_status)
             print(f'deliveryBoyID::{deliveryBoyID}')
-            if deliveryBoyID != '-1' and (order_status == "Out for Delivery" or order_status == "Reached Store"):
+            if ((order_status == "Out for Delivery" and deliveryBoyID != '-1') or order_status == "Reached Store"):
                 try:
                     with connection.cursor() as cursor:
                         filter = ""
@@ -940,7 +941,7 @@ def update_order_status(request,order_id):
                 except Exception as e:
                     print(e)
                     
-            if deliveryBoyID != "-1":
+            if ((order_status == "Out for Delivery" and deliveryBoyID != '-1') or order_status == "Reached Store"):
                 print(f"notifyDeliveryBoy::{notifyDeliveryBoy}")
                 jfilter = "" 
                 status = ""
