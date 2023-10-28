@@ -107,7 +107,7 @@
                               <span aria-hidden="true">×</span>
                             </button>
                           </div>
-                          <form method="post" action="{% url 'dashboard_app:delivery_accept' order_id,delivery_boy_id %}">
+                          <form method="post" action="{% url 'dashboard_app:delivery_accept' order_id delivery_boy_id %}">
                           <div class="modal-body">
                             
                                 {% csrf_token %}
