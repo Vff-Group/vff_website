@@ -17,6 +17,7 @@ urlpatterns = [
     path('delivery_agents/add_delivery_agent/',views.add_delivery_agent,name='add_delivery_agent'),
     path('delivery_agents/add_delivery_agent/<int:usrid>',views.add_delivery_agent,name='update_delivery_agent'),
     path('all_orders/',views.all_orders,name='all_orders'),
+    path('all_unassigned_orders/',views.all_unassigned_orders,name='all_unassigned_orders'),
     path('all_orders/create_order/',views.create_new_order,name='create_order'),
     path('all_orders/order_details/<int:orderid>',views.view_order_detail,name='view_order_detail'),
     path('update_order_status/<int:order_id>',views.update_order_status,name='update_order_status'),

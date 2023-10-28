@@ -603,13 +603,45 @@ def add_delivery_agent(request,usrid=None):
    
     return render (request, 'delivery_agents_pages/add_new_delivery_agent.html',{'data':data})
 
+def all_unassigned_orders(request):
+    query="select orderid,laundry_ordertbl.epoch,pickup_dt,customer_name,order_status,address,mobile_no,profile_img,city,landmark,houseno,device_token from vff.usertbl,vff.laundry_customertbl,vff.laundry_ordertbl where laundry_customertbl.consmrid=laundry_ordertbl.customerid and usertbl.usrid=laundry_customertbl.usrid  and delivery_boyid='-1' and order_status='NA'"
+    query_result = execute_raw_query(query)
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            otepoch = row[1]#order taken epoch
+            orderTime = epochToDateTime(otepoch)
+            
+            data.append({
+                'orderid': row[0],
+                'orderTime': orderTime,
+                'pickup_dt': row[2],
+                'customer_name': row[3],
+                'order_status': row[4],
+                'address': row[5],
+                'mobile_no': row[6],
+                'profile_img': row[7],
+                'city': row[7],
+                'landmark': row[8],
+                'houseno': row[9],
+                'device_token': row[10],
+               
+                
+               
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+     # using the 'current_url' variable to determine the active card.
+    context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    return render (request, 'order_pages/all_orders.html', context)
 #All Orders
 def all_orders(request):
     isLogin = is_loggedin(request)
     if isLogin == False:
         return redirect('dashboard_app:login')
     error_msg = "No Orders Data Found"
-    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,time,name as deliveryboy_name,drop_boy_name from vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id order by orderid desc"
+    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name,drop_boy_name from vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id order by orderid desc"
     query_result = execute_raw_query(query)
     
     
@@ -699,7 +731,7 @@ def view_order_detail(request,orderid):
     data = []    
     if not query_result == 500:
         for row in query_result:
-            depoch = row[36]#delivery epoch
+            depoch = row[25]#delivery epoch
             oepoch = row[22]#order taken epoch
             orderStatus = row[20]
             print("Delivery Epoch:"+str(depoch))
@@ -810,7 +842,7 @@ def view_order_detail(request,orderid):
         order_status = data[0]['order_status'] if data else ''
         order_completed = data[0]['order_completed'] if data else ''
         order_date = data[0]['order_taken_epoch'] if data else ''
-        delivery_date = data[0]['time'] if data else ''
+        delivery_date = data[0]['delivery_epoch'] if data else ''
         request.session['order_id'] = first_order_id
         order_completed_status = ""
         if order_completed == 0:
