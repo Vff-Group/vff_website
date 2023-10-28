@@ -451,15 +451,30 @@
           <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h6 class="modal-title" id="modal-title-default">Are you sure you want to delete ?</h6>
+                <h6 class="modal-title" id="modal-title-default">Search</h6>
                 <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">×</span>
                 </button>
               </div>
               <div class="modal-body">
-                <div class="alert  m-4" role="alert">
-                  <strong>Alert! </strong> will be deleted permanantely!
-              </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-cost">Cost</label>
+                      <input type="number" id="input-cost" class="form-control form-control-alternative" placeholder="Enter Cost for this item" name="cost" autocomplete="off" value="{{ data.cost|default:'' }}"  required>
+                    </div>
+                  </div>
+        
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-type">Cost Type [Per Kg/Piece]</label>
+                      <select class="form-control form-control-alternative" id="input-type" name="type" required>
+                        <option value="Piece" {% if data.type == 'Piece' %}selected{% endif %}>Piece</option>
+                        <option value="Kg"  {% if data.type == 'Kg' %}selected{% endif %}>Kg</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
                 
               </div>
               <div class="modal-footer">
