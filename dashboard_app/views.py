@@ -229,13 +229,14 @@ def search_orderid_or_mobile_number(request):
             else:
                 return redirect('dashboard_app:dashboard')
         else:
-            query = "select usrname,address,device_token from vff.usertbl where mobile_no='"+str(searchid)+"'"
-            result = execute_raw_query_fetch_one(query)
-            if result:  
-                orderid = result[0]
-                print('Show User Details Here')
-            else:
-                 print('User  Not found')
+            return redirect('dashboard_app:dashboard')
+            # query = "select usrname,address,device_token from vff.usertbl where mobile_no='"+str(searchid)+"'"
+            # result = execute_raw_query_fetch_one(query)
+            # if result:  
+            #     orderid = result[0]
+            #     print('Show User Details Here')
+            # else:
+            #      print('User  Not found')
 #Dashboard Page
 def dashboard(request):
     print('admin Dashboard Welcome page')
