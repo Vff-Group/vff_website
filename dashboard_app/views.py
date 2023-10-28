@@ -1054,7 +1054,7 @@ def update_order_status(request,order_id):
                 print(f"notifyDeliveryBoy::{notifyDeliveryBoy}")
                 
             
-                if (order_status == "Out for Delivery" and deliveryBoyID != '-1' and not usrname) or order_status == "Reached Store":
+                if (order_status == "Out for Delivery" and deliveryBoyID != '-1' ) or order_status == "Reached Store":
                     try:
                         with connection.cursor() as cursor:
                             filter = ""
