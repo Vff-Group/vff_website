@@ -609,7 +609,7 @@ def all_orders(request):
     if isLogin == False:
         return redirect('dashboard_app:login')
     error_msg = "No Orders Data Found"
-    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name,drop_boy_name from vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id order by orderid desc"
+    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,time,name as deliveryboy_name,drop_boy_name from vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id order by orderid desc"
     query_result = execute_raw_query(query)
     
     
@@ -699,7 +699,7 @@ def view_order_detail(request,orderid):
     data = []    
     if not query_result == 500:
         for row in query_result:
-            depoch = row[25]#delivery epoch
+            depoch = row[36]#delivery epoch
             oepoch = row[22]#order taken epoch
             orderStatus = row[20]
             print("Delivery Epoch:"+str(depoch))
@@ -735,7 +735,7 @@ def view_order_detail(request,orderid):
                 'order_taken_epoch': orderTakenEpoch,
                 'cancel_reason': row[23],
                 'feedback': row[24],
-                'delivery_epoch': deliveryEpoch,
+                'delivery_epoch': row[25],
                 'delivery_boy_name': row[26],
                 'categoryid': row[27],
                 'subcategoryid': row[28],
@@ -746,7 +746,7 @@ def view_order_detail(request,orderid):
                 'sub_cat_name': row[33],
                 'sub_cat_img': row[34],
                 'actual_cost': row[35],
-                'time': row[36],
+                'time': deliveryEpoch,
                 'item_cost': row[37],
                 'item_quantity': row[38],
                 'type_of': row[39],
@@ -810,7 +810,7 @@ def view_order_detail(request,orderid):
         order_status = data[0]['order_status'] if data else ''
         order_completed = data[0]['order_completed'] if data else ''
         order_date = data[0]['order_taken_epoch'] if data else ''
-        delivery_date = data[0]['delivery_epoch'] if data else ''
+        delivery_date = data[0]['time'] if data else ''
         request.session['order_id'] = first_order_id
         order_completed_status = ""
         if order_completed == 0:
