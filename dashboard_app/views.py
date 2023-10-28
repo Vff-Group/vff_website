@@ -215,6 +215,27 @@ def save_selected_branch(request):
         return redirect('dashboard_app:dashboard')
     else:
         return redirect('dashboard_app:all_branches')
+    
+def search_orderid_or_mobile_number(request):
+    if request.method == "POST":
+        searchid = request.POST.get("searchid")
+        type = request.POST.get("type")
+        if type == "Order ID":
+            query = "select orderid from vff.laundry_ordertbl where orderid='"+str(searchid)+"'"
+            result = execute_raw_query_fetch_one(query)
+            if result:  
+                orderid = result[0]
+                print('Send to Order Details Screen')
+            else:
+                 print('Order Details Not found')
+        else:
+            query = "select usrname,address,device_token from vff.usertbl where mobile_no='"+str(searchid)+"'"
+            result = execute_raw_query_fetch_one(query)
+            if result:  
+                orderid = result[0]
+                print('Show User Details Here')
+            else:
+                 print('User  Not found')
 #Dashboard Page
 def dashboard(request):
     print('admin Dashboard Welcome page')

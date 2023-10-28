@@ -10,6 +10,7 @@ urlpatterns = [
     path('all_branches/',views.all_branches,name='all_branches'),
     path('selected_branch/',views.save_selected_branch,name='selected_branches'),
     path('dashboard/',views.dashboard,name='dashboard'),
+    path('search/',views.search_orderid_or_mobile_number,name='search'),
     path('customers/',views.all_customers,name='customers'),
     path('customers/add_customer/',views.add_customer,name='add_customer'),
     path('customers/update_customer/<int:usrid>',views.add_customer,name='update_customer'),
