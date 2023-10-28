@@ -890,7 +890,7 @@ def send_notification_to_delivery_boy(order_id,title,body,data,order_status):
     showAlert = ""
     usrname = ""
     delivery_boy_id = "-1"
-    if order_status == "Out for Delivery":
+    if order_status == "Out for Delivery" or order_status=="Assigning":
         query_token = "select usrname,mobile_no,device_token,delivery_boy_id,profile_img,usertbl.usrid from vff.laundry_delivery_boytbl,vff.usertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and is_online='1' and status='Free'"
     else:
         query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
@@ -937,7 +937,38 @@ def send_notification_customer(order_id,title,body,data=None):
     else:
         showAlert = "Notification was not sent to Customer"
     return showAlert,customerid
-  
+
+#Accept Delivery or Assigned Delivery to
+def delivery_accept(request,order_id,delivery_boy_id):
+    if request.method == "POST": 
+        try:
+            with connection.cursor() as cursor:
+                status = "Accepted"
+                query = "insert into vff.laundry_delivery_accept_tbl(delivery_boy_id,status,order_id) values ('"+str(delivery_boy_id)+"','"+str(status)+"','"+str(order_id)+"')"
+                print(f'Updating To Busy Status::{query}')
+                cursor.execute(query)
+                connection.commit()
+                query2="update vff.laundry_ordertbl set delivery_boyid='"+str(delivery_boy_id)+"',order_status='"+str(status)+"' where orderid='"+str(order_id)+"'"
+                cursor.execute(query2)
+                connection.commit()
+                query3="update vff.laundry_delivery_boytbl set status='Busy' where delivery_boy_id='"+str(delivery_boy_id)+"'"
+                cursor.execute(query3)
+                connection.commit()
+                query4="insert into vff.laundry_order_historytbl(order_id,order_stages) values ('"+str(order_id)+"','"+str(status)+"')"
+                cursor.execute(query4)
+                connection.commit()
+                title="VFF Group Order Assigned"
+                body = "New Order assigned by admin for Order ID #"+str(order_id)+""
+                data={
+                    'orderid':str(order_id)
+                }
+                intent = "MainRoute"
+                order_status = "Assigning"
+                send_notification_to_delivery_boy(order_id,title,body,data,order_status)
+                return redirect('dashboard_app:all_orders')
+        except Exception as e:
+            print(e)
+    return redirect('dashboard_app:all_unassigned_orders')
 #Assign Delivery Boy to Order ID
 def assigned_delivery_boy(request,orderid):
     error_msg = ""
