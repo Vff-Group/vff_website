@@ -851,7 +851,7 @@ def send_notification_to_delivery_boy(order_id,title,body,data,order_status):
     else:
         showAlert = "No Delivery Boy is Free to Take Orders"
         print('No Delivery Boy is Free to Take Order')
-    return showAlert,delivery_boy_id
+    return showAlert,delivery_boy_id,usrname
         
 #To Send notification to customer for order ID
 def send_notification_customer(order_id,title,body,data=None):
@@ -927,7 +927,7 @@ def update_order_status(request,order_id):
 
                      'order_id_pickup':order_id
                      }
-                notifyDeliveryBoy,deliveryBoyID = send_notification_to_delivery_boy(order_id,title,msg,data,order_status)
+                notifyDeliveryBoy,deliveryBoyID,deliveryBOYName = send_notification_to_delivery_boy(order_id,title,msg,data,order_status)
                 print(f'deliveryBoyID::{deliveryBoyID}')
                 print(f"notifyDeliveryBoy::{notifyDeliveryBoy}")
                 
@@ -936,9 +936,9 @@ def update_order_status(request,order_id):
                     try:
                         with connection.cursor() as cursor:
                             filter = ""
-                            
-                            if (order_status == "Out for Delivery" or order_status == "Reached Store") and deliveryBoyID != '-1':
-                                filter = ",drop_delivery_boy_id='"+str(deliveryBoyID)+"'"
+
+                            if order_status == "Out for Delivery" and deliveryBoyID != '-1':
+                                filter = ",drop_delivery_boy_id='"+str(deliveryBoyID)+"',drop_boy_name='"+str(deliveryBOYName)+"'"
                             query = "update vff.laundry_ordertbl set order_status='"+str(order_status)+"',order_completed='"+str(order_completed)+"'"+filter+" where orderid='"+str(order_id)+"'"
                             print(f'Updating To Busy Status::{query}')
                             cursor.execute(query)
