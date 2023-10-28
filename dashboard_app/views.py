@@ -929,6 +929,7 @@ def update_order_status(request,order_id):
                      }
                 notifyDeliveryBoy,deliveryBoyID = send_notification_to_delivery_boy(order_id,title,msg,data,order_status)
                 print(f'deliveryBoyID::{deliveryBoyID}')
+                print(f"notifyDeliveryBoy::{notifyDeliveryBoy}")
             print('Condition::')
             print(((order_status == "Out for Delivery" and deliveryBoyID != '-1')))
             if (order_status == "Out for Delivery" and deliveryBoyID != '-1') or order_status == "Reached Store":
@@ -946,7 +947,7 @@ def update_order_status(request,order_id):
                     print(e)
                     
             if (order_status == "Out for Delivery" and deliveryBoyID != '-1') or order_status == "Reached Store":
-                print(f"notifyDeliveryBoy::{notifyDeliveryBoy}")
+                
                 jfilter = "" 
                 status = ""
                 if order_status == "Out for Delivery":
@@ -1009,9 +1010,10 @@ def update_order_status(request,order_id):
                         cursor.execute(query2)
                         connection.commit()
                         #Insert Delivery Boy Record
-                        insert_notify="insert into vff.laundry_notificationtbl(title,body,reciever_id,sender_id,order_id) values ('"+str(title)+"','"+str(msg)+"','"+str(delivery_boy_id)+"','"+str(userid)+"','"+str(order_id)+"')"
-                        cursor.execute(insert_notify)
-                        connection.commit()
+                        if order_status != "Processing":
+                            insert_notify="insert into vff.laundry_notificationtbl(title,body,reciever_id,sender_id,order_id) values ('"+str(title)+"','"+str(msg)+"','"+str(delivery_boy_id)+"','"+str(userid)+"','"+str(order_id)+"')"
+                            cursor.execute(insert_notify)
+                            connection.commit()
                         #Insert Customers Record
                         cinsert_notify="insert into vff.laundry_notificationtbl(title,body,reciever_id,sender_id,order_id) values ('"+str(title)+"','"+str(msg)+"','"+str(customerid)+"','"+str(userid)+"','"+str(order_id)+"')"
                         cursor.execute(cinsert_notify)
