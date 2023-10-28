@@ -622,10 +622,10 @@ def all_unassigned_orders(request):
                 'address': row[5],
                 'mobile_no': row[6],
                 'profile_img': row[7],
-                'city': row[7],
-                'landmark': row[8],
-                'houseno': row[9],
-                'device_token': row[10],
+                'city': row[8],
+                'landmark': row[9],
+                'houseno': row[10],
+                'device_token': row[11],
                
                 
                
