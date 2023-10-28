@@ -368,7 +368,7 @@
                 </a>
               </li>
               <li class="nav-item px-3 d-flex align-items-center">
-                <a href="" class="nav-link text-body p-0" type="button" data-toggle="modal" data-target="#modal-form-search">
+                <a href="" class="nav-link text-body p-0" data-bs-toggle="modal" data-bs-target="#modal-default-search">
                   <i
                     class="fa fa-search  fixed-plugin-button-nav cursor-pointer"
                   ></i>
@@ -445,63 +445,28 @@
         </div>
       </nav>
       <!-- End Navbar -->
-      <div class="modal fade" id="modal-form-search" tabindex="-1" role="dialog" aria-labelledby="labelsenior" aria-hidden="true">
-        <div class="modal-dialog modal- modal-dialog-centered modal-sm" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="labelsenior">Search Senior Citizen via mobile number</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-              
-            </div>
-            <div class="modal-body p-0">
-              <div class="card bg-secondary border-0 mb-0 m-2">
-                <div class="card-body px-lg-5 py-lg-5">
-                  <div class="text-center text-muted mb-4">
-                      <small>Use Valid Mobile Number</small>
-                  </div>
-                  <form role="form" method="post" >
-                    {% csrf_token %}
-                      <div class="form-group mb-3">
-                          <div class="input-group input-group-merge input-group-alternative">
-                              <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
-                              </div>
-                              <input class="form-control" placeholder="Mobile Number" type="number" name="search_no">
-                          </div>
-                      </div>
-                      
-                     
-                      <div class="text-center">
-                          <button type="submit" class="btn btn-primary my-4">Search</button>
-                      </div>
-                  </form>
-                  
-                {% if data %}
-                  <div class="modal-footer">
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                      <span class="alert-icon"><i class="ni ni-like-2"></i></span>
-                      <span class="alert-text"><strong>Success!</strong> This is a success alert—check it out!</span>
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                      </button>
-                  </div>
-                </div>
-                {% elif error_code %}
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                  <span class="alert-icon"><i class="ni ni-like-2"></i></span>
-                  <span class="alert-text"><strong>Danger!</strong> This is a danger alert—check it out!</span>
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
-              </div>            
-                {% endif %}
-  
+      <div class="col-md-4">
+                    
+        <div class="modal fade" id="modal-default-search" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+          <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h6 class="modal-title" id="modal-title-default">Are you sure you want to delete ?</h6>
+                <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
               </div>
+              <div class="modal-body">
+                <div class="alert  m-4" role="alert">
+                  <strong>Alert! </strong> will be deleted permanantely!
+              </div>
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn bg-gradient-danger">Delete</button>
+                <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
               </div>
             </div>
-            
           </div>
         </div>
       </div>
