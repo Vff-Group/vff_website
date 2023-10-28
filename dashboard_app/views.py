@@ -702,6 +702,8 @@ def view_order_detail(request,orderid):
             depoch = row[25]#delivery epoch
             oepoch = row[22]#order taken epoch
             orderStatus = row[20]
+            print("Delivery Epoch:"+str(depoch))
+            print("Order Taken Epoch:"+str(oepoch))
             deliveryEpoch = epochToDateTime(depoch)
             orderTakenEpoch = epochToDateTime(oepoch)
             if orderStatus != "Completed":
