@@ -56,7 +56,7 @@
 
                               <div class="form-group">
                                 <label class="form-control-label" for="input-country">Expense Amount</label>
-                                <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="Postal code" name="pincode" value="{{ data.pincode|default:'' }}"  required>
+                                <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="Enter Expense Amount" name="pincode" value="{{ data.pincode|default:'' }}"  required>
                               </div>
 
                               <div class="form-group">
@@ -92,6 +92,14 @@
           <label for="taxPercentage">Tax Percentage:</label>
           <input type="text" class="form-control" id="taxPercentage" name="taxPercentage">
         </div>
+
+    
+      <div class="pl-lg-4">
+        <div class="form-group">
+          <label>Notes</label>
+          <textarea rows="4" class="form-control form-control-alternative" placeholder="Enter Notes" name="questions" ></textarea>
+        </div>
+      </div>
 
                         </div>
                         </div>
@@ -236,6 +244,9 @@
       </div>
     </div>
 </div>
+
+
+
 <script>
     // Show/hide the tax percentage input when the "YES" radio button is selected
     $('input[name="taxIncluded"]').change(function() {
@@ -246,7 +257,4 @@
       }
     });
   </script>
-</main>
-
-
 {% endblock  %}
