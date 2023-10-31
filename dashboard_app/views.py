@@ -1207,7 +1207,7 @@ def update_order_status(request,order_id,booking_id):
                         current_datetime = datetime.now().strftime("%Y-%m-%d")
                         filter = ",delivery='"+str(current_datetime)+"',delivery_epoch='"+str(current_timestamp)+"'"
                     if order_status == "Out for Delivery" and deliveryBoyID != '-1':
-                        filter = ",delivery_boy_id='"+str(delivery_boy_id)+"'"
+                        filter = ",delivery_boyid='"+str(delivery_boy_id)+"'"
                     query = "update vff.laundry_ordertbl set order_status='"+str(order_status)+"',order_completed='"+str(order_completed)+"'"+filter+" where orderid='"+str(order_id)+"'"
                     print(f'----------------------------------- Updating Order ID with delivery Epoch ----------------')
                     print(f'query_update::{query}')
