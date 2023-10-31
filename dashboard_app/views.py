@@ -1104,6 +1104,16 @@ def update_order_status(request,order_id,booking_id):
             order_completed = "0"
         print(f'Currentorder_status::{order_status}')
         if order_status == "Out for Delivery" or order_status == "Completed" or order_status == "Processing" or order_status == "Pick Up Done" or order_status== "Reached Store":
+            
+            #To Check if Order is Already Assigned to Someone or what
+            if order_status == "Out for Delivery":
+                query_check = "select delivery_boy_id,orderid from vff.laundry_order_assignmenttbl,vff.laundry_ordertbl where laundry_ordertbl.orderid=laundry_order_assignmenttbl.order_id and laundry_ordertbl.booking_id=laundry_order_assignmenttbl.booking_id and type_of_order='Drop' and laundry_order_assignmenttbl.order_id='"+str(order_id)+"'"
+                cresult = execute_raw_query_fetch_one(query_check)
+                if cresult:
+                    alert_delivery_boy = "Delivery boy Already Assinged To this Order."
+                    redirect_url = reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id})
+                    redirect_url += f'?no_delivery={alert_delivery_boy}'
+                    return HttpResponseRedirect(redirect_url)
             #To Send for Delivery Boy
             if order_status !="Processing":
                 title = "VFF Group"
@@ -1151,7 +1161,7 @@ def update_order_status(request,order_id,booking_id):
                     except Exception as e:
                         print(e)
                 else:
-                    print('Coming to Else Part Only')
+                    print('No Delivery Boy is Available to Take Orders')
                     alert_delivery_boy = "No Delivery Boy is Free To Receive Orders"
                     redirect_url = reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id})
                     redirect_url += f'?no_delivery={alert_delivery_boy}'
