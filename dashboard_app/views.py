@@ -1670,7 +1670,7 @@ def order_status_screen(request):
     # using the 'current_url' variable to determine the active card.
     # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
     
-    return render(request, 'orders_pages/orders_status_screen.html', {'current_url': current_url})
+    return render(request, 'order_pages/orders_status_screen.html', {'current_url': current_url})
 
 
 
