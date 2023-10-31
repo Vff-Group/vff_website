@@ -39,6 +39,9 @@ urlpatterns = [
     #Expenses Laundry
     path('all_expenses/',views.all_expenses,name='all_expenses'),
     path('expense_category/',views.expense_category,name='expense_category'),
+    
+    #Order Screens
+    path('order_status_screen/',views.order_status_screen,name='order_status_screen'),
 ]
 
 if settings.DEBUG:

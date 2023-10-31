@@ -214,6 +214,24 @@
           <li class="nav-item">
             <a
               class="nav-link"
+              href="{% url 'dashboard_app:order_status_screen' %}"
+              data-url="{% url 'dashboard_app:order_status_screen' %}"
+            >
+              <div
+                class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
+              >
+              
+                <i
+                  class="fa-solid fa-dumpster-fire fa-lg {% if not current_url == '/admin_dashboard/order_status_screen/' %}text-dark{% endif %}"
+                ></i>
+              </div>
+              <span class="nav-link-text ms-1">Orders Status Screen</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a
+              class="nav-link"
               href="{% url 'dashboard_app:all_orders' %}"
               data-url="{% url 'dashboard_app:all_orders' %}"
             >
@@ -227,6 +245,7 @@
               <span class="nav-link-text ms-1">Active Orders</span>
             </a>
           </li>
+
           <li class="nav-item mt-3">
             <h6
               class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6"
