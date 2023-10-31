@@ -124,18 +124,16 @@
                         <div class="d-flex flex-column justify-content-center">
                             {% if row.type_of == "Kg" %}
                           <h6 class="mb-0 text-sm">{{row.cat_name}}</h6>
-                          <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="messageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              All Items
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="messageDropdown">
-                              <!-- <small class="text-sm">{{row.sub_cat_name}}</small> -->
-                              <a class="dropdown-item" href="#">{{ row.sub_cat_name }}</a>
-                              <!-- {% for message in messages %}
-                                <a class="dropdown-item" href="#">{{ message }}</a>
-                              {% endfor %} -->
+                          
+                            <div class="form-group">
+                              <label class="form-control-label" for="input-gender">Gender</label>
+                              <select class="form-control form-control-alternative" id="input-gender" name="gender">
+                                <option value="Male"  {% if data.gender == 'Male' %}selected{% endif %}>Male</option>
+                                <option value="Female" {% if data.gender == 'Female' %}selected{% endif %}>Female</option>
+                                <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option>
+                              </select>
                             </div>
-                          </div>
+                          
                           
                           {% else %}
                           
