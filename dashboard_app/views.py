@@ -1062,7 +1062,7 @@ def delivery_accept(request,booking_id,delivery_boy_id):
             delivery_boyid = cresult[0] #Selected from DB
             bookingid = cresult[1]
             print(f'DB delivery_boyid::{delivery_boyid}')
-            if delivery_boyid != '-1':
+            if delivery_boyid != -1:
                 query_order_check = "select orderid from vff.laundry_ordertbl where booking_id='"+str(booking_id)+"'"
                 oresult = execute_raw_query_fetch_one(query_order_check)
                 print(f'Order Status Check::{oresult}')   
