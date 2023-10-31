@@ -85,7 +85,7 @@
                     <td class="align-middle">
                         <div class="row">
                             <div class="col">
-                                <a href="" class="text-secondary font-weight-bold text-xs"  data-bs-toggle="modal" data-bs-target="#modal-default{{order_id}}">
+                                <a href="" class="text-secondary font-weight-bold text-xs"  data-bs-toggle="modal" data-bs-target="#modal-default{{row.delivery_boy_id}}">
                                     Assign
                                   </a>
                             </div>
@@ -98,11 +98,11 @@
 
                   <div class="col-md-4">
                     
-                    <div class="modal fade" id="modal-default{{order_id}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+                    <div class="modal fade" id="modal-default{{row.delivery_boy_id}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
                       <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h6 class="modal-title" id="modal-title-default">Assign this Delivery Boy For Order ID:#{{order_id}}</h6>
+                            <h6 class="modal-title" id="modal-title-default">Assign this Delivery Boy For Booking ID:#{{order_id}}</h6>
                             <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">×</span>
                             </button>
