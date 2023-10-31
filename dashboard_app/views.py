@@ -1453,7 +1453,7 @@ def fit_to_thermal_printer_paper(bill_content):
   return formatted_bill_content
 
 # Example usage:
-formatted_bill_content = fit_to_thermal_printer_paper(bill_content)
+#formatted_bill_content = fit_to_thermal_printer_paper(bill_content)
 
 # Print or store the formatted_bill_content string as needed.
 
