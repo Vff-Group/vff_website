@@ -80,6 +80,10 @@
                         <span class="badge badge-sm bg-success">{{row.order_status}}</span>
                         {% elif row.order_status == "Accepted" %}
                         <span class="badge badge-sm bg-primary">{{row.order_status}}</span>
+                        {% elif row.order_status == "Pick Up Done" %}
+                        <span class="badge badge-sm bg-primary">{{row.order_status}}</span>
+                        {% elif row.order_status == "Reached Store" %}
+                        <span class="badge badge-sm bg-primary">{{row.order_status}}</span>
                         {% elif row.order_status == "Processing" %}
                         <span class="badge badge-sm bg-warning">{{row.order_status}}</span>
                         {% elif row.order_status == "Payment Done" %}
@@ -140,11 +144,11 @@
                             </div>
                           </div>
                           {% endif %} -->
-                            <div class="col">
+                            <!-- <div class="col">
                                 <a href="" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                     Delete
                                   </a>
-                            </div>
+                            </div> -->
                         </div>
                       
                       
