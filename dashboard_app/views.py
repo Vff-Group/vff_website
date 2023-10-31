@@ -1629,7 +1629,7 @@ def expense_category(request):
     # using the 'current_url' variable to determine the active card.
     # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
     
-    return render(request, 'expenses_pages/expenses_categories.html', {'current_url': current_url})
+    return render(request, 'expenses_pages/expense_categories.html', {'current_url': current_url})
 
 
 #All Categories
