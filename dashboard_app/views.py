@@ -1059,18 +1059,20 @@ def delivery_accept(request,booking_id,delivery_boy_id):
         cresult = execute_raw_query_fetch_one(query_check)
         print(f'delivery_accept_query_check::{cresult}')
         if cresult:
-            
+            delivery_boyid = cresult[0] #Selected from DB
             bookingid = cresult[1]
-            query_order_check = "select orderid from vff.laundry_ordertbl where booking_id='"+str(booking_id)+"'"
-            oresult = execute_raw_query_fetch_one(query_order_check)
-            print(f'Order Status Check::{oresult}')   
-            if oresult:
-                order_id = oresult[0]
-                return redirect('dashboard_app:all_orders')
-            #TODO:Send to Current Bookings Page
-            return redirect('dashboard_app:all_orders')
+            if delivery_boyid != '-1':
+                query_order_check = "select orderid from vff.laundry_ordertbl where booking_id='"+str(booking_id)+"'"
+                oresult = execute_raw_query_fetch_one(query_order_check)
+                print(f'Order Status Check::{oresult}')   
+                if oresult:
+                    order_id = oresult[0]
+                    return redirect('dashboard_app:all_orders')
+                #TODO:Send to Current Bookings Page
+                return redirect('dashboard_app:all_bookings')
         try:
             with connection.cursor() as cursor:
+                print('Assigning Delivery Boy')
                 title="VFF Group Order Assigned"
                 body = "New Order assigned by admin for Booking ID #"+str(booking_id)+""
                 data={
