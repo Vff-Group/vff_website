@@ -292,9 +292,9 @@ def all_customers(request):
     error_msg = "No Customers Data Found"
     branch_id = request.session.get('branchid')
     filter = ''
-    # if branch_id :
-    #     filter = " and laundry_customertbl.branchid='"+str(branch_id)+"'"
-    query = " select laundry_customertbl.usrid,usrname,mobile_no,usertbl.address,lat,lng,age,gender,laundry_customertbl.branchid,consmrid,laundry_customertbl.status,is_online,usertbl.epoch,profile_img from vff.laundry_customertbl,vff.usertbl where laundry_customertbl.usrid=usertbl.usrid order by usrname desc"
+    if branch_id :
+        filter = " and laundry_customertbl.branchid='"+str(branch_id)+"'"
+    query = " select laundry_customertbl.usrid,usrname,mobile_no,usertbl.address,lat,lng,age,gender,laundry_customertbl.branchid,consmrid,laundry_customertbl.status,is_online,usertbl.epoch,profile_img from vff.laundry_customertbl,vff.usertbl where laundry_customertbl.usrid=usertbl.usrid order "+filter+" by usrname desc"
     
     query_result = execute_raw_query(query)
     
@@ -348,7 +348,7 @@ def add_customer(request,usrid=None):
     if usrid:
         try:
             with connection.cursor() as cursor:
-                cursor.execute("select usrname,mobile_no,usertbl.address,age,gender,consmrid,landmark,date_of_birth,pincode,query,profile_img"
+                cursor.execute("select usrname,mobile_no,usertbl.address,age,gender,consmrid,landmark,date_of_birth,pincode,query,profile_img,branchid"
                                " from vff.laundry_customertbl,vff.usertbl where laundry_customertbl.usrid=usertbl.usrid and laundry_customertbl.usrid='"+str(usrid)+"'")
                 row = cursor.fetchone()
                 print(f'fetching the single user data::{row}')
@@ -367,6 +367,7 @@ def add_customer(request,usrid=None):
                         'pincode': row[8],
                         'questions': row[9],
                         'profile_img': image_url,
+                        'branch_id': row[11],
                         
                     }
         except Exception as e:
@@ -414,9 +415,10 @@ def add_customer(request,usrid=None):
             land_mark = 'NA'
         branch_id = request.session.get('branchid')
         print(f'branch_id:{branch_id}')
-        if errors:
+        if not branch_id:
             # If there are validation errors, render the form with error messages
-            return render(request, 'delivery_agents_pages/add_new_delivery_agent.html', {'errors': errors})
+            errors = "Please select Branch ID to add new customer"
+            return render(request,'customer_pages/add_customer.html',{'data':data,'error':errors})
         
         try:
             with connection.cursor() as cursor:
@@ -435,7 +437,7 @@ def add_customer(request,usrid=None):
                     cursor.execute(update_customer)
                 else:
                     # Insert a new customers
-                    usertbl_query = "insert into vff.usertbl (usrname,mobile_no,address,age,gender,date_of_birth,pincode,landmark,profile_img) VALUES ('"+str(uname)+"', '"+str(primary_mobno)+"', '"+str(address)+"','"+str(age)+"','"+str(gender)+"','"+str(date_of_birth)+"','"+str(pincode)+"','"+str(land_mark)+"','"+str(image_url)+"') RETURNING usrid"
+                    usertbl_query = "insert into vff.usertbl (usrname,mobile_no,address,age,gender,date_of_birth,pincode,landmark,profile_img,branchid) VALUES ('"+str(uname)+"', '"+str(primary_mobno)+"', '"+str(address)+"','"+str(age)+"','"+str(gender)+"','"+str(date_of_birth)+"','"+str(pincode)+"','"+str(land_mark)+"','"+str(image_url)+"','"+str(branch_id)+"') RETURNING usrid"
                     cursor.execute(usertbl_query)
                     usrid = cursor.fetchone()[0]  # Retrieve the returned usrid
 
@@ -457,6 +459,39 @@ def add_customer(request,usrid=None):
     
     return render(request,'customer_pages/add_customer.html',{'data':data})
 
+#Delete Customers
+def delete_customer(request, usrid):
+    try:
+        with connection.cursor() as cursor:
+            # Delete the senior citizen using usrid
+            delete_query = "DELETE FROM vff.laundry_customertbl WHERE usrid = '"+str(usrid)+"'"
+            cursor.execute(delete_query)
+            delete_user_query = "DELETE FROM vff.usertbl WHERE usrid = '"+str(usrid)+"'"
+            cursor.execute(delete_user_query)
+            connection.commit()
+
+            print(f"Customer  with usrid {usrid} deleted successfully.")
+    except Exception as e:
+        print(f"Error deleting Customer: {e}")
+
+    return redirect('dashboard_app:customers')
+
+#Delete delivery Boy
+def delete_delivery_boy(request, usrid):
+    try:
+        with connection.cursor() as cursor:
+            # Delete the senior citizen using usrid
+            delete_query = "DELETE FROM vff.laundry_delivery_boytbl WHERE usrid = '"+str(usrid)+"'"
+            cursor.execute(delete_query)
+            delete_user_query = "DELETE FROM vff.usertbl WHERE usrid = '"+str(usrid)+"'"
+            cursor.execute(delete_user_query)
+            connection.commit()
+
+            print(f"Customer  with usrid {usrid} deleted successfully.")
+    except Exception as e:
+        print(f"Error deleting Customer: {e}")
+
+    return redirect('dashboard_app:customers')
 
 #All Delivery Agents
 def all_delivery_agents(request):
@@ -1169,9 +1204,46 @@ def update_order_status(request,order_id):
     return redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id}))
             
         
-        
-        
-        
+#Thermal Printer size
+def generate_bill(request, order_id):
+    order = Order.objects.get(id=order_id)
+    total_amount = calculate_total(order)
+
+    # Create a plain text bill content
+    bill_content = "DMart\n"
+    bill_content += f"Order Date: {order.date}\n"
+    bill_content += f"Customer: {order.customer.name}\n"
+    bill_content += "-" * 40 + "\n"  # Separator line
+
+    # Table header
+    bill_content += "{:<20} {:<10} {:<10} {:<10}\n".format("Product", "Price", "Quantity", "Total")
+    bill_content += "-" * 40 + "\n"
+
+    # Loop through order items
+    for item in order.orderproduct_set.all():
+        product_name = item.product.name[:20].ljust(20)  # Left-justify and pad with spaces to 20 characters
+        product_price = item.product.price
+        quantity = item.quantity
+        item_total = quantity * product_price
+        bill_content += "{:<20} {:<10} {:<10} {:<10}\n".format(product_name, product_price, quantity, item_total)
+
+    bill_content += "-" * 40 + "\n"
+
+    # Highlight the "Total Amount" with larger font size
+    bill_content += "\x1B\x21\x10"  # Set text size to double-height and double-width
+    bill_content += f"Total Amount: {total_amount}\n"
+    bill_content += "\x1B\x21\x00"  # Reset text size to normal
+
+# Display Terms and Conditions in a smaller font
+    bill_content += "\x1B\x21\x01"  # Set text size to small
+    bill_content += "Terms and Conditions:\n"
+    bill_content += "These terms and conditions are subject to change without notice...\n"
+    bill_content += "\x1B\x21\x00"  # Reset text size to normal
+    # Print or store 'bill_content' as needed
+
+    return HttpResponse(bill_content)
+
+
 #All Categories
 def all_categories(request):
     isLogin = is_loggedin(request)

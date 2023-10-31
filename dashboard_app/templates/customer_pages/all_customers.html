@@ -120,7 +120,11 @@
                             
                           </div>
                           <div class="modal-footer">
-                            <button type="button" class="btn bg-gradient-danger">Delete</button>
+                            <form action="{% url 'dashboard_app:delete_customer' row.usrid %}" method="post">
+                              {% csrf_token %}
+                              <button type="submit" class="btn bg-gradient-danger">Delete</button>
+                            </form>
+                            
                             <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
                           </div>
                         </div>

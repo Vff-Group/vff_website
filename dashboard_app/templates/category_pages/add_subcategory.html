@@ -60,6 +60,7 @@ Add New Sub-Category Details
             <div class="form-group">
               <label class="form-control-label" for="input-section_type">Type of Section</label>
               <select class="form-control form-control-alternative" id="input-section_type" name="section_type" required>
+                <option value="All"  {% if data.section_type == 'All' %}selected{% endif %}>All</option>
                 <option value="Men"  {% if data.section_type == 'Male' %}selected{% endif %}>Men</option>
                 <option value="Women" {% if data.section_type == 'Female' %}selected{% endif %}>Women</option>
                 <option value="Kids" {% if data.section_type == 'Kids' %}selected{% endif %}>Kids</option>
