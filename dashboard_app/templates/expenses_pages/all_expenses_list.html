@@ -101,9 +101,9 @@
             
           </div>
           <div class="modal-footer">
-            <form action="{% url 'dashboard_app:delete_customer' row.usrid %}" method="post">
+            <form action="" method="post">
               {% csrf_token %}
-              <button type="submit" class="btn bg-gradient-danger">Delete</button>
+              <button type="submit" class="btn bg-gradient-danger">Save</button>
             </form>
             
             <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
