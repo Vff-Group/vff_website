@@ -1413,7 +1413,8 @@ def generate_bill(request, orderid):
     bill_content += "\x1B\x21\x00"  # Reset text size to normal
     # Print or store 'bill_content' as needed
     formatted_bill_content = fit_to_thermal_printer_paper(bill_content)
-    return HttpResponse(formatted_bill_content)
+    # return HttpResponse(formatted_bill_content)
+    return render(request,'invoice_pages/print_bill.html')
 
 import textwrap
 
