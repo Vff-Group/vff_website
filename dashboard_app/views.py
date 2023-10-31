@@ -1141,7 +1141,7 @@ def update_order_status(request,order_id,booking_id):
                             connection.commit()
                             
                             #Insert While Assigning Order for delivery
-                            query_assign = "insert into vff.laundry_order_assignmenttbl (booking_id,order_id,delivery_boy_id,type_of_order) values ('"+str(booking_id)+"','"+str(order_id)+"','"+str(delivery_boy_id)+"','Drop')"
+                            query_assign = "insert into vff.laundry_order_assignmenttbl (booking_id,order_id,delivery_boy_id,type_of_order) values ('"+str(booking_id)+"','"+str(order_id)+"','"+str(deliveryBoyID)+"','Drop')"
                             print(f'Inserting Assing to Drop::{query_assign}')
                             cursor.execute(query_assign)
                             connection.commit()
