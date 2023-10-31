@@ -1110,7 +1110,7 @@ def update_order_status(request,order_id,booking_id):
                 query_check = "select delivery_boy_id,orderid from vff.laundry_order_assignmenttbl,vff.laundry_ordertbl where laundry_ordertbl.orderid=laundry_order_assignmenttbl.order_id and laundry_ordertbl.booking_id=laundry_order_assignmenttbl.booking_id and type_of_order='Drop' and laundry_order_assignmenttbl.order_id='"+str(order_id)+"'"
                 cresult = execute_raw_query_fetch_one(query_check)
                 if cresult:
-                    alert_delivery_boy = "Delivery boy Already Assinged To this Order."
+                    alert_delivery_boy = "Delivery boy Already Assigned To this Order."
                     redirect_url = reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id})
                     redirect_url += f'?no_delivery={alert_delivery_boy}'
                     return HttpResponseRedirect(redirect_url)
