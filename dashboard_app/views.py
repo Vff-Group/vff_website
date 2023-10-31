@@ -695,9 +695,44 @@ def all_unassigned_orders(request):
     context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
     return render (request, 'order_pages/all_unassigned_orders.html', context)
 
+#ALL Assigned Bookings
+def all_bookings(request):
+    error_msg="No Bookings Found"
+    query="select bookingid,customerid,laundry_order_bookingtbl.address,laundry_order_bookingtbl.city,laundry_order_bookingtbl.pincode,laundry_order_bookingtbl.landmark,time_at,booking_status,profile_img,mobile_no,usrname,device_token from vff.usertbl,vff.laundry_customertbl,vff.laundry_order_bookingtbl where laundry_customertbl.consmrid=laundry_order_bookingtbl.customerid and laundry_customertbl.usrid=usertbl.usrid and  delivery_boy_id!='-1' and booking_status!='NA'"
+    query_result = execute_raw_query(query)
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            otepoch = row[6]#order taken epoch
+            orderTime = epochToDateTime(otepoch)
+            
+            data.append({
+                'bookingid': row[0],
+                'customerid': row[1],
+                'address': row[2],
+                'city': row[3],
+                'pincode': row[4],
+                'landmark': row[5],
+                'orderTime': orderTime,
+                'order_status': row[7],
+                'profile_img': row[8],
+                'mobile_no': row[9],
+                'customer_name': row[10],
+                'device_token': row[11],
+               
+                
+               
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+     # using the 'current_url' variable to determine the active card.
+    context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    return render (request, 'bookings_pages/all_current_bookings.html', context)
+
 #Un Assigned Bookings
 def all_unassigned_bookings(request):
-    error_msg=""
+    error_msg="No UnAssigned Bookings Found"
     query="select bookingid,customerid,laundry_order_bookingtbl.address,laundry_order_bookingtbl.city,laundry_order_bookingtbl.pincode,laundry_order_bookingtbl.landmark,time_at,booking_status,profile_img,mobile_no,usrname,device_token from vff.usertbl,vff.laundry_customertbl,vff.laundry_order_bookingtbl where laundry_customertbl.consmrid=laundry_order_bookingtbl.customerid and laundry_customertbl.usrid=usertbl.usrid and  delivery_boy_id='-1' and booking_status='NA'"
     query_result = execute_raw_query(query)
     data = []    
@@ -1013,8 +1048,24 @@ def send_notification_customer(order_id,title,body,data=None):
     return showAlert,customerid
 
 #Accept Delivery or Assigned Delivery to
-def delivery_accept(request,order_id,delivery_boy_id):
+def delivery_accept(request,booking_id,delivery_boy_id):
     if request.method == "POST": 
+        
+        #Checking if the Order/ Booking id is assigned or not
+        query_check = "select delivery_boy_id,bookingid,branch_id from vff.laundry_order_bookingtbl where bookingid='"+str(booking_id)+"'"
+        cresult = execute_raw_query_fetch_one(query_check)
+        print(f'delivery_accept_query_check::{cresult}')
+        if cresult:
+            
+            bookingid = cresult[1]
+            query_order_check = "select orderid from vff.laundry_ordertbl where booking_id='"+str(booking_id)+"'"
+            oresult = execute_raw_query_fetch_one(query_order_check)
+            print(f'Order Status Check::{oresult}')   
+            if oresult:
+                order_id = oresult[0]
+                return redirect('dashboard_app:all_orders')
+            #TODO:Send to Current Bookings Page
+            return redirect('dashboard_app:all_orders')
         try:
             with connection.cursor() as cursor:
                 status = "Accepted"
@@ -1037,7 +1088,7 @@ def delivery_accept(request,order_id,delivery_boy_id):
                     'orderid':str(order_id)
                 }
                 intent = "MainRoute"
-                order_status = "Assigning"
+                order_status = "Accepted"
                 query_token = "select usrname,mobile_no,device_token,delivery_boy_id,profile_img,usertbl.usrid from vff.laundry_delivery_boytbl,vff.usertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and is_online='1' and status='Free' and delivery_boy_id='"+str(delivery_boy_id)+"'"
                 result = execute_raw_query_fetch_one(query_token)
                 if result:  

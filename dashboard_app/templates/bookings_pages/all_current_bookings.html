@@ -1,0 +1,112 @@
+{% extends "common/base.html" %}
+{% load static %}
+{% block title %}All Bookings{% endblock title%}
+{% block content %}
+
+  <div class="container-fluid py-4">
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header pb-0 d-flex justify-content-between">
+            <h6>All  Bookings</h6>
+            <!-- <div class="row justify-content-center align-items-center p-1">
+                <a href="{% url 'dashboard_app:create_order' %}">
+                <span class="badge badge-sm bg-gradient-info ">
+                    <i class="fa-solid fa-user-plus"></i>
+                     Create New Order</span>
+                    </a>
+            </div> -->
+          </div>
+          <!-- Action Buttons  -->
+          
+          <!-- Action Buttons End  -->
+          <div class="card-body px-0 pt-0 pb-2">
+            <div class="table-responsive p-0">
+              <table class="table align-items-center mb-0">
+                <thead>
+                  <tr>
+                    
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Booking ID #</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Customer</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Address</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Order Recieved Time</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Current Status</th>
+                    <!-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Quantity</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Price</th> -->
+                    <th class="text-secondary opacity-7"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for row in query_result %}
+                  <tr>
+                    <td>
+                      <h6 class="mb-0 text-sm text-center">#{{row.bookingid}}</h6>
+                    </td>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div>
+                          <img src="{{row.profile_img}}" class="avatar avatar-sm me-3" alt="user1">
+                        </div>
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">{{row.customer_name}}</h6>
+                          <p class="text-xs text-secondary mb-0">{{row.mobile_no}}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">{{row.address}}</p>
+                      <p class="text-xs text-secondary mb-0">{{row.city}},{{row.landmark}}</p>
+                    </td>
+                    
+                    
+                    <td class="align-middle text-center">
+                      <span class="text-xs font-weight-bold mb-0">{{row.orderTime}} </span>
+                        
+                    </td>
+                    
+                    <td class="align-middle text-center text-sm">
+    
+                      {% if row.order_status == "Completed" %}
+                        <span class="badge badge-sm bg-success">{{row.order_status}}</span>
+                        {% elif row.order_status == "Accepted" %}
+                        <span class="badge badge-sm bg-primary">{{row.order_status}}</span>
+                        {% elif row.order_status == "Processing" %}
+                        <span class="badge badge-sm bg-warning">{{row.order_status}}</span>
+                        {% elif row.order_status == "Payment Done" %}
+                        <span class="badge badge-sm bg-info">{{row.order_status}}</span>
+                        {% elif row.order_status == "Out for Delivery" %}
+                        <span class="badge badge-sm bg-info">{{row.order_status}}</span>
+                        {% else %}
+                        <span class="badge badge-sm bg-danger">{{row.order_status}}</span>
+                        {% endif %}
+                      </td>
+                      
+                    {% comment %} <td class="align-middle">
+                        <div class="row">
+                            <div class="col">
+                                <a href="{% url 'dashboard_app:assigned_delivery_boy' row.bookingid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                    Assign Delivery Boy
+                                  </a> 
+                                  {% comment %} <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                    Assign Delivery Boy
+                                  </a> 
+                            </div>
+                           
+                          
+                        </div>
+                      
+                      
+                    </td> {% endcomment %}
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</main>
+{% endblock  %}
