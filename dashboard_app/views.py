@@ -1412,8 +1412,8 @@ def generate_bill(request, orderid):
     bill_content += "These terms and conditions are subject to change without notice...\n"
     bill_content += "\x1B\x21\x00"  # Reset text size to normal
     # Print or store 'bill_content' as needed
-
-    return fit_to_thermal_printer_paper(bill_content)
+    formatted_bill_content = fit_to_thermal_printer_paper(bill_content)
+    return HttpResponse(formatted_bill_content)
 
 import textwrap
 
