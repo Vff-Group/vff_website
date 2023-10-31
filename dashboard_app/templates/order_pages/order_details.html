@@ -244,7 +244,9 @@
                 
               </ul>
               {% endif %}
-              <button id="printButton" type="submit" class="btn btn-primary my-4">Print Invoice</button>
+              <form action="{% url 'dashboard_app:generate_bill' order_id%}" method="post">
+                <button id="printButton" type="submit" class="btn btn-primary my-4">Print Invoice</button>
+              </form>
               <div class="col">
                 <form method="post" action="{% url 'dashboard_app:update_order_status' order_id %}">
                     {% csrf_token %}
@@ -311,9 +313,9 @@
   </div>
 </main>
 <script>
-    document.getElementById('printButton').addEventListener('click', function () {
-        window.print();
-    });
+    //document.getElementById('printButton').addEventListener('click', function () {
+      //  window.print();
+    //});
 </script>
 {% endblock  %}
 

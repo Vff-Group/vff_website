@@ -1242,14 +1242,149 @@ def update_order_status(request,order_id):
             
         
 #Thermal Printer size
-def generate_bill(request, order_id):
-    order = Order.objects.get(id=order_id)
-    total_amount = calculate_total(order)
+def generate_bill(request, orderid):
+    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name,categoryid,subcategoryid,booking_type,dt,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,time,item_cost,item_quantity,type,section_type from vff.laundry_active_orders_tbl,vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and laundry_active_orders_tbl.order_id=laundry_ordertbl.orderid and orderid='"+str(orderid)+"' order by orderid desc;"
+    
+    query_result = execute_raw_query(query)
+    print(f'query_result:::{query_result}')
+    
+        
+    data = []
+    sub_items = []    
+    if not query_result == 500:
+        for row in query_result:
+            depoch = row[25]#delivery epoch
+            oepoch = row[22]#order taken epoch
+            orderStatus = row[20]
+            print("Delivery Epoch:"+str(depoch))
+            print("Order Taken Epoch:"+str(oepoch))
+            deliveryEpoch = epochToDateTime(depoch)
+            orderTakenEpoch = epochToDateTime(oepoch)
+            if orderStatus != "Completed":
+                deliveryEpoch = "Not Delivered Yet"
+            sub_items.append(row[33])
+            data.append({
+                'consmrid': row[0],
+                'usrid': row[1],
+                'customer_name': row[2],
+                'mobile_no': row[3],
+                'houseno': row[4],
+                'address': row[5],
+                'city': row[6],
+                'pincode': row[7],
+                'landmark': row[8],
+                'profile_img': row[9],
+                'device_token': row[10],
+                'orderid': row[11],
+                'delivery_boyid': row[12],
+                'quantity':row[13],
+                'price': row[14],
+                'pickup_dt': row[15],
+                'delivery_dt': row[16],
+                'clat': row[17],
+                'clng': row[18],
+                'order_completed': row[19],
+                'order_status': orderStatus,
+                'additional_instruction': row[21],
+                'order_taken_epoch': orderTakenEpoch,
+                'cancel_reason': row[23],
+                'feedback': row[24],
+                'delivery_epoch': deliveryEpoch,
+                'delivery_boy_name': row[26],
+                'categoryid': row[27],
+                'subcategoryid': row[28],
+                'ordertype': row[29],
+                'dt': row[30],
+                'cat_img': row[31],
+                'cat_name': row[32],
+                'sub_cat_name': row[33],
+                'sub_cat_img': row[34],
+                'actual_cost': row[35],
+                'time': row[36],
+                'item_cost': row[37],
+                'item_quantity': row[38],
+                'type_of': row[39],
+                'section_type': row[40],
+                
+                
+               
+            })
+        
+        #Payment Details
+        payment_id = 'Payment Not Done'
+        query_payment = "select razor_pay_payment_id,status,time,dt from vff.laundry_payment_tbl where order_id='"+str(orderid)+"'"
+        pay_result = execute_raw_query_fetch_one(query_payment)
+        if pay_result:   
+            payment_id = pay_result[0]
+        
+        #extra_cart_item like softner
+        extra_error = "No Extra Items added"
+        extra_query = "select extra_item_name,price from vff.laundry_cart_extra_items_tbl where order_id='"+str(orderid)+"'"
+        extra_query_result = execute_raw_query(extra_query)
+        extra_data = []    
+        if not extra_query_result == 500:
+            for row in extra_query_result:
+                extra_data.append({
+                    'extra_item_name':row[0],
+                    'extra_item_price':row[1]
+                })
+        #delivery charges
+        delivery_price = 0
+        total_laundry_cost = 0
+        range = 0
+        delivery_query = "select price,range  from vff.laundry_delivery_chargetbl"
+        dlvrych_result = execute_raw_query_fetch_one(delivery_query)
+        if dlvrych_result:   
+            delivery_price = dlvrych_result[0]
+            range = dlvrych_result[1]
+        
+        extra_item_sum = sum(extra['extra_item_price'] for extra in extra_data)
+
+        total_laundry_cost = sum(item['item_cost'] for item in data)
+        print(f'total_laundry_cost::{total_laundry_cost}')
+        print(f'extra_item_sum::{extra_item_sum}')
+        print(f'delivery_price::{delivery_price}')
+        
+        if total_laundry_cost != 0:
+            if total_laundry_cost < range:
+                total_laundry_cost += delivery_price
+                print(f'Updating TotalCost:{total_laundry_cost}')
+            else:
+                delivery_price = 0
+        
+        total_cost = total_laundry_cost + extra_item_sum
+        print(f'total_cost::{total_cost}')
+        first_order_id = data[0]['orderid'] if data else ''
+        customer_name = data[0]['customer_name'] if data else ''
+        address = data[0]['address'] if data else ''
+        houseno = data[0]['houseno'] if data else ''
+        city = data[0]['city'] if data else ''
+        pincode = data[0]['pincode'] if data else ''
+        landmark = data[0]['landmark'] if data else ''
+        order_status = data[0]['order_status'] if data else ''
+        order_completed = data[0]['order_completed'] if data else ''
+        order_date = data[0]['order_taken_epoch'] if data else ''
+        delivery_date = data[0]['delivery_epoch'] if data else ''
+        request.session['order_id'] = first_order_id
+        order_completed_status = ""
+        if order_completed == 0:
+            order_completed_status = "Accepted"
+        elif order_completed == 1:
+            order_completed_status = "Completed"
+        elif order_completed_status == 2:
+            order_completed_status = "Cancelled"
+            
+        print(f'OrderID::{first_order_id}')
+        print(f'sub_items:::{sub_items}')
+        
+    else:
+        error_msg = 'Something Went Wrong'
 
     # Create a plain text bill content
-    bill_content = "DMart\n"
-    bill_content += f"Order Date: {order.date}\n"
-    bill_content += f"Customer: {order.customer.name}\n"
+    bill_content = "VFF Group\n"
+    bill_content += f"Order Date: {order_date}\n"
+    bill_content += f"Delivery Date: {delivery_date}\n"
+    bill_content += f"Customer: {customer_name}\n"
     bill_content += "-" * 40 + "\n"  # Separator line
 
     # Table header
@@ -1257,18 +1392,18 @@ def generate_bill(request, order_id):
     bill_content += "-" * 40 + "\n"
 
     # Loop through order items
-    for item in order.orderproduct_set.all():
-        product_name = item.product.name[:20].ljust(20)  # Left-justify and pad with spaces to 20 characters
-        product_price = item.product.price
-        quantity = item.quantity
-        item_total = quantity * product_price
-        bill_content += "{:<20} {:<10} {:<10} {:<10}\n".format(product_name, product_price, quantity, item_total)
+    # for item in order.orderproduct_set.all():
+    #     product_name = item.product.name[:20].ljust(20)  # Left-justify and pad with spaces to 20 characters
+    #     product_price = item.product.price
+    #     quantity = item.quantity
+    #     item_total = quantity * product_price
+    #     bill_content += "{:<20} {:<10} {:<10} {:<10}\n".format(product_name, product_price, quantity, item_total)
 
     bill_content += "-" * 40 + "\n"
 
     # Highlight the "Total Amount" with larger font size
     bill_content += "\x1B\x21\x10"  # Set text size to double-height and double-width
-    bill_content += f"Total Amount: {total_amount}\n"
+    bill_content += f"Total Amount: {total_cost}\n"
     bill_content += "\x1B\x21\x00"  # Reset text size to normal
 
 # Display Terms and Conditions in a smaller font

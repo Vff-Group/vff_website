@@ -24,6 +24,7 @@ urlpatterns = [
     path('all_unassigned_bookings/',views.all_unassigned_bookings,name='all_unassigned_bookings'),
     path('all_orders/create_order/',views.create_new_order,name='create_order'),
     path('all_orders/order_details/<int:orderid>',views.view_order_detail,name='view_order_detail'),
+    path('all_orders/generate_bill/<int:orderid>',views.generate_bill,name='generate_bill'),
     path('assigned_delivery_boy/<int:orderid>',views.assigned_delivery_boy,name='assigned_delivery_boy'),
     path('delivery_accept/<int:order_id>/<int:delivery_boy_id>',views.delivery_accept,name='delivery_accept'),
     path('update_order_status/<int:order_id>',views.update_order_status,name='update_order_status'),
