@@ -821,7 +821,8 @@ def view_order_detail(request,orderid):
     print(f'query_result:::{query_result}')
     
         
-    data = []    
+    data = []
+    sub_items = []    
     if not query_result == 500:
         for row in query_result:
             depoch = row[25]#delivery epoch
@@ -833,7 +834,7 @@ def view_order_detail(request,orderid):
             orderTakenEpoch = epochToDateTime(oepoch)
             if orderStatus != "Completed":
                 deliveryEpoch = "Not Delivered Yet"
-            
+            sub_items.append(row[33])
             data.append({
                 'consmrid': row[0],
                 'usrid': row[1],
@@ -946,6 +947,7 @@ def view_order_detail(request,orderid):
             order_completed_status = "Cancelled"
             
         print(f'OrderID::{first_order_id}')
+        print(f'sub_items:::{sub_items}')
         
     else:
         error_msg = 'Something Went Wrong'
