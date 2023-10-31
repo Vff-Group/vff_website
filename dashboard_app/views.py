@@ -815,7 +815,7 @@ def view_order_detail(request,orderid):
     #     usrname = result[0] 
     # else:
     #     alert_delivery_boy = "No Delivery Boy is Free To Recieve Orders"
-    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name,categoryid,subcategoryid,booking_type,dt,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,time,item_cost,item_quantity,type,section_type from vff.laundry_active_orders_tbl,vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and laundry_active_orders_tbl.order_id=laundry_ordertbl.orderid and orderid='"+str(orderid)+"' order by orderid desc;"
+    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name,categoryid,subcategoryid,booking_type,dt,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,time,item_cost,item_quantity,type,section_type,booking_id from vff.laundry_active_orders_tbl,vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and laundry_active_orders_tbl.order_id=laundry_ordertbl.orderid and orderid='"+str(orderid)+"' order by orderid desc;"
     
     query_result = execute_raw_query(query)
     print(f'query_result:::{query_result}')
@@ -877,6 +877,7 @@ def view_order_detail(request,orderid):
                 'item_quantity': row[38],
                 'type_of': row[39],
                 'section_type': row[40],
+                'booking_id': row[41],
                 
                 
                
@@ -1072,7 +1073,7 @@ def assigned_delivery_boy(request,orderid):
     return render(request,'order_pages/all_assigning_delivery_boy.html',context)
 
 #Upadting Order Status        
-def update_order_status(request,order_id):
+def update_order_status(request,order_id,booking_id):
     alert_delivery_boy = ""
     if request.method == "POST":
         order_status = request.POST.get('order-status')
@@ -1126,16 +1127,22 @@ def update_order_status(request,order_id):
                 print(f"notifyDeliveryBoy::{notifyDeliveryBoy}")
                 
             
-                if (order_status == "Out for Delivery" and deliveryBoyID != '-1' ) or order_status == "Reached Store":
+                if (order_status == "Out for Delivery" and deliveryBoyID != '-1' ):
                     try:
                         with connection.cursor() as cursor:
                             filter = ""
 
                             if order_status == "Out for Delivery" and deliveryBoyID != '-1':
-                                filter = ",drop_delivery_boy_id='"+str(deliveryBoyID)+"',drop_boy_name='"+str(deliveryBOYName)+"'"
+                                filter = ",delivery_boy_id='"+str(deliveryBoyID)+"'"
                             query = "update vff.laundry_ordertbl set order_status='"+str(order_status)+"',order_completed='"+str(order_completed)+"'"+filter+" where orderid='"+str(order_id)+"'"
                             print(f'Updating To Busy Status::{query}')
                             cursor.execute(query)
+                            connection.commit()
+                            
+                            #Insert While Assigning Order for delivery
+                            query_assign = "insert into vff.laundry_order_assignmenttbl (booking_id,order_id,delivery_boy_id,type_of_order) values ('"+str(booking_id)+"','"+str(order_id)+"','"+str(delivery_boy_id)+"','Drop')"
+                            print(f'Inserting Assing to Drop::{query_assign}')
+                            cursor.execute(query_assign)
                             connection.commit()
                     except Exception as e:
                         print(e)
@@ -1151,12 +1158,12 @@ def update_order_status(request,order_id):
                 jfilter = "" 
                 status = ""
                 if order_status == "Out for Delivery":
-                    jfilter =",drop_delivery_boy_id"
+                    #jfilter =",drop_delivery_boy_id"
                     status = "Busy"
                 else:
                     jfilter = ",delivery_boy_id"
                     status = "Free"
-                query_token = "select usrname,mobile_no,device_token"+jfilter+" from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and (laundry_ordertbl.delivery_boyid=vff.laundry_delivery_boytbl.delivery_boy_id or laundry_ordertbl.drop_delivery_boy_id=vff.laundry_delivery_boytbl.delivery_boy_id) and orderid='"+str(order_id)+"'"
+                query_token = "select usrname,mobile_no,device_token"+jfilter+" from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=vff.laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
                 result = execute_raw_query_fetch_one(query_token)
                 if result:  
                     usrname = result[0] 
@@ -1199,7 +1206,7 @@ def update_order_status(request,order_id):
                         current_datetime = datetime.now().strftime("%Y-%m-%d")
                         filter = ",delivery='"+str(current_datetime)+"',delivery_epoch='"+str(current_timestamp)+"'"
                     if order_status == "Out for Delivery" and deliveryBoyID != '-1':
-                        filter = ",drop_delivery_boy_id='"+str(delivery_boy_id)+"'"
+                        filter = ",delivery_boy_id='"+str(delivery_boy_id)+"'"
                     query = "update vff.laundry_ordertbl set order_status='"+str(order_status)+"',order_completed='"+str(order_completed)+"'"+filter+" where orderid='"+str(order_id)+"'"
                     print(f'----------------------------------- Updating Order ID with delivery Epoch ----------------')
                     print(f'query_update::{query}')

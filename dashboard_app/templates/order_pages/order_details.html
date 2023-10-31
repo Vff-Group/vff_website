@@ -249,7 +249,7 @@
                 <button id="printButton" type="submit" class="btn btn-primary my-4">Print Invoice</button>
               </form>
               <div class="col">
-                <form method="post" action="{% url 'dashboard_app:update_order_status' order_id %}">
+                <form method="post" action="{% url 'dashboard_app:update_order_status' order_id booking_id%}">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col">
