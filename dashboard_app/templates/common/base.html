@@ -244,7 +244,7 @@
                 class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
               >
                 <i
-                  class="fa-solid fa-bookmark fa-lg {% if not current_url == '/admin_dashboard/all_bookings/*' %}text-dark{% endif %}"
+                  class="fa-solid fa-bookmark fa-lg {% if not current_url == '/admin_dashboard/all_bookings/' %}text-dark{% endif %}"
                 ></i>
               </div>
               <span class="nav-link-text ms-1">Current Bookings</span>
@@ -273,6 +273,18 @@
             >
               Finance
             </h6>
+            <ul>
+              <li class="nav-item">
+                <a class="nav-link" href="">
+                  <div
+                    class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
+                  >
+                    <i class="fa-solid fa-money-bill-1 fa-lg text-dark"></i>
+                  </div>
+                  <span class="nav-link-text ms-1">Payments</span>
+                </a>
+              </li>
+            </ul>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="">
