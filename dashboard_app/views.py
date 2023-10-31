@@ -700,7 +700,7 @@ def all_bookings(request):
     error_msg="No Bookings Found"
     branch_id = request.session.get('branchid')
     
-    query="select bookingid,customerid,laundry_order_bookingtbl.address,laundry_order_bookingtbl.city,laundry_order_bookingtbl.pincode,laundry_order_bookingtbl.landmark,time_at,booking_status,profile_img,mobile_no,usrname,device_token,name from vff.laundry_delivery_boytbl,vff.usertbl,vff.laundry_customertbl,vff.laundry_order_bookingtbl where laundry_delivery_boytbl.delivery_boy_id=laundry_order_bookingtbl.delivery_boy_id  and laundry_customertbl.consmrid=laundry_order_bookingtbl.customerid and laundry_customertbl.usrid=usertbl.usrid and  laundry_order_bookingtbl.delivery_boy_id!='-1' and booking_status!='NA'  and branch_id='"+str(branch_id)+"'"
+    query="select bookingid,customerid,laundry_order_bookingtbl.address,laundry_order_bookingtbl.city,laundry_order_bookingtbl.pincode,laundry_order_bookingtbl.landmark,time_at,booking_status,profile_img,mobile_no,usrname,device_token,name from vff.laundry_delivery_boytbl,vff.usertbl,vff.laundry_customertbl,vff.laundry_order_bookingtbl where laundry_delivery_boytbl.delivery_boy_id=laundry_order_bookingtbl.delivery_boy_id  and laundry_customertbl.consmrid=laundry_order_bookingtbl.customerid and laundry_customertbl.usrid=usertbl.usrid and  laundry_order_bookingtbl.delivery_boy_id!='-1' and booking_status!='NA'  and branch_id='"+str(branch_id)+"' order by bookingid desc"
     query_result = execute_raw_query(query)
     data = []    
     if not query_result == 500:
