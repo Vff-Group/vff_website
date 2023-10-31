@@ -42,6 +42,10 @@ urlpatterns = [
     
     #Order Screens
     path('order_status_screen/',views.order_status_screen,name='order_status_screen'),
+    
+    #Reports Screen
+    path('daily_report/',views.daily_report,name='daily_report'),
+    
 ]
 
 if settings.DEBUG:
