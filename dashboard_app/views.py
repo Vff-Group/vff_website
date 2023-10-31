@@ -1550,9 +1550,6 @@ def fit_to_thermal_printer_paper(bill_content):
 # Print or store the formatted_bill_content string as needed.
 
 #All Expenses
-
-
-
 def all_expenses(request):
     isLogin = is_loggedin(request)
     if isLogin == False:
@@ -1592,6 +1589,48 @@ def all_expenses(request):
     # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
     
     return render(request, 'expenses_pages/all_expenses_list.html', {'current_url': current_url})
+
+#Expenses Category
+def expense_category(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    error_msg = "No Categories Found"
+    branch_id = request.session.get('branchid')
+    # filter = ''
+    # if branch_id :
+    #     filter = " and laundry_delivery_boytbl.branchid='"+str(branch_id)+"'"
+    # query = "select catid,category_name,cat_img,regular_price,regular_price_type,express_price,express_price_type,offer_price,offer_price_type,description from vff.laundry_categorytbl order by catid desc"
+    
+    # query_result = execute_raw_query(query)
+    
+    
+        
+    # data = []    
+    # if not query_result == 500:
+    #     for row in query_result:
+            
+    #         data.append({
+    #             'catid': row[0],
+    #             'categoryname': row[1],
+    #             'categoryimg': row[2],
+    #             'regular_prize': row[3],
+    #             'regular_prize_type': row[4],
+    #             'express_prize': row[5],
+    #             'express_prize_type': row[6],
+    #             'offer_prize': row[7],
+    #             'offer_prize_type': row[8],
+    #             'description': row[9],
+               
+    #         })
+    # else:
+    #     error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    
+    return render(request, 'expenses_pages/expenses_categories.html', {'current_url': current_url})
+
 
 #All Categories
 def all_categories(request):

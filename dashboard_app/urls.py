@@ -37,8 +37,8 @@ urlpatterns = [
     path('sub_categories/update_sub_category_details/<int:catid>/<int:subcatid>/<str:catname>',views.update_sub_category,name='update_sub_category'),
     
     #Expenses Laundry
-    
     path('all_expenses/',views.all_expenses,name='all_expenses'),
+    path('expense_category/',views.expense_category,name='expense_category'),
 ]
 
 if settings.DEBUG:
