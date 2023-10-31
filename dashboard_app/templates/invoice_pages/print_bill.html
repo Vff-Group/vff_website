@@ -1,6 +1,51 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
-  <head>
+    <head>
+        <meta charset="utf-8" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="76x76"
+          href="{% static 'img/logos/logo.png' %}"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          href="{% static 'img/logos/logo.png' %}"
+        />
+        <title>VFF Group Receipt</title>
+        <!--     Fonts and icons     -->
+        <link
+          href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
+          rel="stylesheet"
+        />
+        <!-- Nucleo Icons -->
+        <link href="{% static 'css/nucleo-icons.css' %}" rel="stylesheet" />
+        <link href="{% static 'css/nucleo-svg.css' %}" rel="stylesheet" />
+        <!-- Font Awesome Icons -->
+        <script
+          src="https://kit.fontawesome.com/42d5adcbca.js"
+          crossorigin="anonymous"
+        ></script>
+        <link href="{% static 'css/nucleo-svg.css' %}" rel="stylesheet" />
+        <!-- CSS Files -->
+        <link
+          id="pagestyle"
+          href="{% static 'css/vff-group-dashboard.css' %}"
+          rel="stylesheet"
+        />
+        <script
+          src="https://kit.fontawesome.com/eea5b138cd.js"
+          crossorigin="anonymous"
+        ></script>
+    
+       
+      </head>
+  {% comment %} <head>
     <title>Receipt</title>
     <style>
       @media print {
@@ -13,8 +58,8 @@
         }
       }
     </style>
-  </head>
-  <body>
+  </head> {% endcomment %}
+  <body class="g-sidenav-show bg-gray-100">
     <h1>VFF Group</h1>
     <h2>Receipt</h2>
 
@@ -44,5 +89,14 @@
     <h2>Total: $25.00</h2>
 
     <p>Thank you for your purchase!</p>
+
+    <script src="{% static 'js/core/popper.min.js' %}"></script>
+    <script src="{% static 'js/core/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/plugins/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/plugins/smooth-scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/plugins/chartjs.min.js' %}"></script>
+    <script src="{% static 'js/vff-group-dashboard.min.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
   </body>
 </html>
