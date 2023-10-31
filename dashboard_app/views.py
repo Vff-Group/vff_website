@@ -751,9 +751,7 @@ def all_orders(request):
             orderTakenEpoch = epochToDateTime(oepoch)
             if orderStatus != "Completed":
                 deliveryEpoch = "Not Delivered Yet"
-            drop_delivery_boy_name = row[27]
-            if drop_delivery_boy_name == "NA":
-                drop_delivery_boy_name = "Not Delivered Yet"
+            
             data.append({
                 'consmrid': row[0],
                 'usrid': row[1],
