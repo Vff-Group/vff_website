@@ -294,7 +294,7 @@ def all_customers(request):
     filter = ''
     if branch_id :
         filter = " and laundry_customertbl.branchid='"+str(branch_id)+"'"
-    query = " select laundry_customertbl.usrid,usrname,mobile_no,usertbl.address,lat,lng,age,gender,laundry_customertbl.branchid,consmrid,laundry_customertbl.status,is_online,usertbl.epoch,profile_img from vff.laundry_customertbl,vff.usertbl where laundry_customertbl.usrid=usertbl.usrid order "+filter+" by usrname desc"
+    query = " select laundry_customertbl.usrid,usrname,mobile_no,usertbl.address,lat,lng,age,gender,laundry_customertbl.branchid,consmrid,laundry_customertbl.status,is_online,usertbl.epoch,profile_img from vff.laundry_customertbl,vff.usertbl where laundry_customertbl.usrid=usertbl.usrid "+filter+"  order by usrname desc"
     
     query_result = execute_raw_query(query)
     
