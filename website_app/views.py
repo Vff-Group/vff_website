@@ -20,3 +20,5 @@ def contactus(request):
 def privacy(request):
     current_url = request.get_full_path()
     return render(request,"privacy.html",{'current_url': current_url})
+
+

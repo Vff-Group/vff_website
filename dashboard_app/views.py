@@ -1146,7 +1146,7 @@ def update_order_status(request,order_id):
                     redirect_url += f'?no_delivery={alert_delivery_boy}'
                     return HttpResponseRedirect(redirect_url)
                     #redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id}))
-            if (order_status == "Out for Delivery" and order_status !="Processing") and deliveryBoyID != '-1':
+            if order_status == "Out for Delivery" and deliveryBoyID != '-1':
                 
                 jfilter = "" 
                 status = ""
