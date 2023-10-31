@@ -1053,7 +1053,7 @@ def send_notification_customer(order_id,title,body,data=None):
 #Accept Delivery or Assigned Delivery to
 def delivery_accept(request,booking_id,delivery_boy_id):
     if request.method == "POST": 
-        
+        branch_id = request.session.get('branchid')
         #Checking if the Order/ Booking id is assigned or not
         query_check = "select delivery_boy_id,bookingid,branch_id from vff.laundry_order_bookingtbl where bookingid='"+str(booking_id)+"'"
         cresult = execute_raw_query_fetch_one(query_check)
@@ -1071,24 +1071,10 @@ def delivery_accept(request,booking_id,delivery_boy_id):
             return redirect('dashboard_app:all_orders')
         try:
             with connection.cursor() as cursor:
-                status = "Accepted"
-                query = "insert into vff.laundry_delivery_accept_tbl(delivery_boy_id,status,order_id) values ('"+str(delivery_boy_id)+"','"+str(status)+"','"+str(order_id)+"')"
-                print(f'Updating To Busy Status::{query}')
-                cursor.execute(query)
-                connection.commit()
-                query2="update vff.laundry_ordertbl set delivery_boyid='"+str(delivery_boy_id)+"',order_status='"+str(status)+"' where orderid='"+str(order_id)+"'"
-                cursor.execute(query2)
-                connection.commit()
-                query3="update vff.laundry_delivery_boytbl set status='Busy' where delivery_boy_id='"+str(delivery_boy_id)+"'"
-                cursor.execute(query3)
-                connection.commit()
-                query4="insert into vff.laundry_order_historytbl(order_id,order_stages) values ('"+str(order_id)+"','"+str(status)+"')"
-                cursor.execute(query4)
-                connection.commit()
                 title="VFF Group Order Assigned"
-                body = "New Order assigned by admin for Order ID #"+str(order_id)+""
+                body = "New Order assigned by admin for Booking ID #"+str(booking_id)+""
                 data={
-                    'orderid':str(order_id)
+                    'booking_id':str(booking_id)
                 }
                 intent = "MainRoute"
                 order_status = "Accepted"
@@ -1097,7 +1083,20 @@ def delivery_accept(request,booking_id,delivery_boy_id):
                 if result:  
                     device_token = result[2] 
                     sendFMCMsg(device_token,body,title,data)
-                return redirect('dashboard_app:all_orders')
+                status = "Accepted"
+                query = "insert into vff.laundry_delivery_accept_tbl(delivery_boy_id,status,booking_id,branch_id) values ('"+str(delivery_boy_id)+"','"+str(status)+"','"+str(booking_id)+"','"+str(branch_id)+"')"
+                print(f'Updating To Busy Status::{query}')
+                cursor.execute(query)
+                connection.commit()
+                query2="update vff.laundry_order_bookingtbl set delivery_boy_id='"+str(delivery_boy_id)+"',booking_status='"+str(status)+"' where bookingid='"+str(booking_id)+"'"
+                cursor.execute(query2)
+                connection.commit()
+                query3="update vff.laundry_delivery_boytbl set status='Busy' where delivery_boy_id='"+str(delivery_boy_id)+"'"
+                cursor.execute(query3)
+                connection.commit()
+                
+                
+                return redirect('dashboard_app:all_bookings')
         except Exception as e:
             print(e)
     return redirect('dashboard_app:all_unassigned_orders')
