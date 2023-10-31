@@ -1413,7 +1413,49 @@ def generate_bill(request, orderid):
     bill_content += "\x1B\x21\x00"  # Reset text size to normal
     # Print or store 'bill_content' as needed
 
-    return HttpResponse(bill_content)
+    return fit_to_thermal_printer_paper(bill_content)
+
+import textwrap
+
+def fit_to_thermal_printer_paper(bill_content):
+  """Fits the given bill content string to thermal printer paper.
+
+  Args:
+    bill_content: A string containing the bill content.
+
+  Returns:
+    A string containing the bill content, wrapped to the maximum line width and
+    with formatting characters to control the text size and other options.
+  """
+
+  # Calculate the maximum line width.
+  max_line_width = 40
+
+  # Wrap the bill content string to the maximum line width.
+  wrapped_bill_content = textwrap.wrap(bill_content, max_line_width)
+
+  # Insert formatting characters to control the text size and other options.
+  formatted_bill_content = ""
+  for line in wrapped_bill_content:
+    formatted_bill_content += line + "\n"
+
+    # Set the text size to double-height and double-width for the "Total Amount" line.
+    if line.startswith("Total Amount"):
+      formatted_bill_content += "\x1B\x21\x10"
+
+      # Reset the text size to normal after the "Total Amount" line.
+    elif line.startswith("Terms and Conditions"):
+      formatted_bill_content += "\x1B\x21\x01"
+
+      # Reset the text size to normal after the "Terms and Conditions" section.
+    formatted_bill_content += "\x1B\x21\x00"
+
+  return formatted_bill_content
+
+# Example usage:
+formatted_bill_content = fit_to_thermal_printer_paper(bill_content)
+
+# Print or store the formatted_bill_content string as needed.
 
 
 #All Categories
