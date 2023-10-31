@@ -21,6 +21,7 @@ urlpatterns = [
     path('delivery_agents/delete_delivery_agent/<int:usrid>',views.delete_delivery_boy,name='delete_delivery_boy'),
     path('all_orders/',views.all_orders,name='all_orders'),
     path('all_unassigned_orders/',views.all_unassigned_orders,name='all_unassigned_orders'),
+    path('all_unassigned_bookings/',views.all_unassigned_bookings,name='all_unassigned_bookings'),
     path('all_orders/create_order/',views.create_new_order,name='create_order'),
     path('all_orders/order_details/<int:orderid>',views.view_order_detail,name='view_order_detail'),
     path('assigned_delivery_boy/<int:orderid>',views.assigned_delivery_boy,name='assigned_delivery_boy'),

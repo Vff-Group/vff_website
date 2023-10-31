@@ -660,6 +660,7 @@ def add_delivery_agent(request,usrid=None):
    
     return render (request, 'delivery_agents_pages/add_new_delivery_agent.html',{'data':data})
 
+#Un Assigned Orders
 def all_unassigned_orders(request):
     error_msg=""
     query="select orderid,laundry_ordertbl.epoch,pickup_dt,customer_name,order_status,address,mobile_no,profile_img,city,landmark,houseno,device_token from vff.usertbl,vff.laundry_customertbl,vff.laundry_ordertbl where laundry_customertbl.consmrid=laundry_ordertbl.customerid and usertbl.usrid=laundry_customertbl.usrid  and delivery_boyid='-1' and order_status='NA'"
@@ -693,13 +694,49 @@ def all_unassigned_orders(request):
      # using the 'current_url' variable to determine the active card.
     context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
     return render (request, 'order_pages/all_unassigned_orders.html', context)
+
+#Un Assigned Bookings
+def all_unassigned_bookings(request):
+    error_msg=""
+    query="select bookingid,customerid,laundry_order_bookingtbl.address,laundry_order_bookingtbl.city,laundry_order_bookingtbl.pincode,laundry_order_bookingtbl.landmark,time_at,booking_status,profile_img,mobile_no,usrname,device_token from vff.usertbl,vff.laundry_customertbl,vff.laundry_order_bookingtbl where laundry_customertbl.consmrid=laundry_order_bookingtbl.customerid and laundry_customertbl.usrid=usertbl.usrid and  delivery_boy_id='-1' and booking_status='NA'"
+    query_result = execute_raw_query(query)
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            otepoch = row[6]#order taken epoch
+            orderTime = epochToDateTime(otepoch)
+            
+            data.append({
+                'bookingid': row[0],
+                'customerid': row[1],
+                'address': row[2],
+                'city': row[3],
+                'pincode': row[4],
+                'landmark': row[5],
+                'orderTime': orderTime,
+                'order_status': row[7],
+                'profile_img': row[8],
+                'mobile_no': row[9],
+                'customer_name': row[10],
+                'device_token': row[11],
+               
+                
+               
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+     # using the 'current_url' variable to determine the active card.
+    context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    return render (request, 'bookings_pages/all_unassigned_bookings.html', context)
+
 #All Orders
 def all_orders(request):
     isLogin = is_loggedin(request)
     if isLogin == False:
         return redirect('dashboard_app:login')
     error_msg = "No Orders Data Found"
-    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name,drop_boy_name from vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and order_status !='NA'  order by orderid desc"
+    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name from vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and order_status !='NA'  order by orderid desc"
     query_result = execute_raw_query(query)
     
     
@@ -745,7 +782,7 @@ def all_orders(request):
                 'feedback': row[24],
                 'delivery_epoch': deliveryEpoch,
                 'delivery_boy_name': row[26],
-                'drop_delivery_boy_name': drop_delivery_boy_name,
+                
                 
                
             })
@@ -1254,7 +1291,7 @@ def all_categories(request):
     # filter = ''
     # if branch_id :
     #     filter = " and laundry_delivery_boytbl.branchid='"+str(branch_id)+"'"
-    query = "select catid,category_name,cat_img,regular_price,regular_price_type,express_price,express_price_type,offer_price,offer_price_type,description from vff.laundry_categorytbl order by priority"
+    query = "select catid,category_name,cat_img,regular_price,regular_price_type,express_price,express_price_type,offer_price,offer_price_type,description from vff.laundry_categorytbl order by catid desc"
     
     query_result = execute_raw_query(query)
     
