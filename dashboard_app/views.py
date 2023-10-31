@@ -1159,7 +1159,7 @@ def update_order_status(request,order_id,booking_id):
                 jfilter = "" 
                 status = ""
                 if order_status == "Out for Delivery":
-                    #jfilter =",drop_delivery_boy_id"
+                    jfilter =",delivery_boyid"
                     status = "Busy"
                 else:
                     jfilter = ",delivery_boy_id"
