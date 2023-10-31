@@ -1070,37 +1070,38 @@ def delivery_accept(request,booking_id,delivery_boy_id):
                     return redirect('dashboard_app:all_orders')
                 #TODO:Send to Current Bookings Page
                 return redirect('dashboard_app:all_bookings')
-        try:
-            with connection.cursor() as cursor:
-                print('Assigning Delivery Boy')
-                title="VFF Group Order Assigned"
-                body = "New Order assigned by admin for Booking ID #"+str(booking_id)+""
-                data={
-                    'booking_id':str(booking_id)
-                }
-                intent = "MainRoute"
-                order_status = "Accepted"
-                query_token = "select usrname,mobile_no,device_token,delivery_boy_id,profile_img,usertbl.usrid from vff.laundry_delivery_boytbl,vff.usertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and is_online='1' and status='Free' and delivery_boy_id='"+str(delivery_boy_id)+"'"
-                result = execute_raw_query_fetch_one(query_token)
-                if result:  
-                    device_token = result[2] 
-                    sendFMCMsg(device_token,body,title,data)
-                status = "Accepted"
-                query = "insert into vff.laundry_delivery_accept_tbl(delivery_boy_id,status,booking_id,branch_id) values ('"+str(delivery_boy_id)+"','"+str(status)+"','"+str(booking_id)+"','"+str(branch_id)+"')"
-                print(f'Updating To Busy Status::{query}')
-                cursor.execute(query)
-                connection.commit()
-                query2="update vff.laundry_order_bookingtbl set delivery_boy_id='"+str(delivery_boy_id)+"',booking_status='"+str(status)+"' where bookingid='"+str(booking_id)+"'"
-                cursor.execute(query2)
-                connection.commit()
-                query3="update vff.laundry_delivery_boytbl set status='Busy' where delivery_boy_id='"+str(delivery_boy_id)+"'"
-                cursor.execute(query3)
-                connection.commit()
-                
-                
-                return redirect('dashboard_app:all_bookings')
-        except Exception as e:
-            print(e)
+            else:
+                    try:
+                        with connection.cursor() as cursor:
+                            print('Assigning Delivery Boy')
+                            title="VFF Group Order Assigned"
+                            body = "New Order assigned by admin for Booking ID #"+str(booking_id)+""
+                            data={
+                                'booking_id':str(booking_id)
+                            }
+                            intent = "MainRoute"
+                            order_status = "Accepted"
+                            query_token = "select usrname,mobile_no,device_token,delivery_boy_id,profile_img,usertbl.usrid from vff.laundry_delivery_boytbl,vff.usertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and is_online='1' and status='Free' and delivery_boy_id='"+str(delivery_boy_id)+"'"
+                            result = execute_raw_query_fetch_one(query_token)
+                            if result:  
+                                device_token = result[2] 
+                                sendFMCMsg(device_token,body,title,data)
+                            status = "Accepted"
+                            query = "insert into vff.laundry_delivery_accept_tbl(delivery_boy_id,status,booking_id,branch_id) values ('"+str(delivery_boy_id)+"','"+str(status)+"','"+str(booking_id)+"','"+str(branch_id)+"')"
+                            print(f'Updating To Busy Status::{query}')
+                            cursor.execute(query)
+                            connection.commit()
+                            query2="update vff.laundry_order_bookingtbl set delivery_boy_id='"+str(delivery_boy_id)+"',booking_status='"+str(status)+"' where bookingid='"+str(booking_id)+"'"
+                            cursor.execute(query2)
+                            connection.commit()
+                            query3="update vff.laundry_delivery_boytbl set status='Busy' where delivery_boy_id='"+str(delivery_boy_id)+"'"
+                            cursor.execute(query3)
+                            connection.commit()
+
+
+                            return redirect('dashboard_app:all_bookings')
+                    except Exception as e:
+                        print(e)
     return redirect('dashboard_app:all_unassigned_orders')
 #Assign Delivery Boy to Order ID
 def assigned_delivery_boy(request,orderid):
