@@ -1241,26 +1241,7 @@ def update_order_status(request,order_id,booking_id):
                 
         else:
             #Only when Delivery boy is not needed to update status
-            #To send to customer
-            title = "VFF Group"
-            if order_status == "Completed":
-                title = "Order Completed"
-                msg = "Laundry Package Delivery Successfully for Order ID : #"+str(order_id)+" . Keep Ordering with Velvet Wash"
-            elif order_status == "Processing":
-                title = "Processing Status"
-                msg = "Processing has been started for your Order ID : #"+str(order_id)+""
-            elif order_status == "Pick Up Done":
-                title = "Pick Up Done"
-                msg = "Laundry PickUp Done for Order ID : #"+str(order_id)+""
-            elif order_status == "Reached Store":
-                title = "Reached Store"
-                msg = "Your Laundry has arrived at Store for Order ID : #"+str(order_id)+".\nWe will ping you once the processing has been started Thank you."
-            else:
-                msg = "Your Laundry Package is on its way to deliver for Order ID : #"+str(order_id)+""
-            data = {
-                 'intent':'MainRoute',
-                 }
-            notifyCustomer,customerid = send_notification_customer(order_id,title,msg,data)
+            
             try:
                 with connection.cursor() as cursor:
                     query2 = "insert into vff.laundry_order_historytbl(order_id,order_stages) values ('"+str(order_id)+"','"+str(order_status)+"')"
