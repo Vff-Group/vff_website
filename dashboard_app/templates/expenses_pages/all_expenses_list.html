@@ -327,23 +327,12 @@ Expenses{% endblock title%} {% block content %}
                           Edit
                         </a>
                       </div>
-                      {% comment %}
-                      <div class="col">
-                        <a
-                          href=""
-                          class="text-danger font-weight-bold text-xs"
-                          data-bs-toggle="modal"
-                          data-bs-target="#modal-default{{row.usrid}}"
-                        >
-                          Delete
-                        </a>
-                      </div>
-                      {% endcomment %}
+                     
                     </div>
                   </td>
                 </tr>
 
-                <div class="col-md-4">
+                <!-- <div class="col-md-4">
                   <div
                     class="modal fade"
                     id="modal-default{{row.usrid}}"
@@ -401,7 +390,7 @@ Expenses{% endblock title%} {% block content %}
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
                 {% endfor %}
               </tbody>
             </table>
