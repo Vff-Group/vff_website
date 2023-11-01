@@ -316,11 +316,12 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link"href="{% url 'dashboard_app:payment_receipt' %}"
+            data-url="{% url 'dashboard_app:payment_receipt' %}">
               <div
                 class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
               >
-                <i class="fa-solid fa-money-bill-1 fa-lg text-dark"></i>
+                <i class="fa-solid fa-money-bill-1 fa-lg {% if not current_url == '/admin_dashboard/payment_receipt/' %}text-dark{% endif %}"></i>
               </div>
               <span class="nav-link-text ms-1">Payment Receipts</span>
             </a>

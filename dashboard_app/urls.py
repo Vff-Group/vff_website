@@ -50,6 +50,9 @@ urlpatterns = [
     path('expense_report/',views.expense_report,name='expense_report'),
     path('tax_report/',views.tax_report,name='tax_report'),
     
+    #Payments Screen
+    path('payment_receipt/',views.payment_receipt,name='payment_receipt'),
+    
 ]
 
 if settings.DEBUG:
