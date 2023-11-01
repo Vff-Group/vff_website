@@ -1669,7 +1669,7 @@ def add_expense_category(request):
     return render(request, 'expenses_pages/expense_categories.html', {'current_url': current_url})
 
 #Add Expense New Item
-def add_expense_new_item(request,exp_catid):
+def add_expense_new_item(request):
     isLogin = is_loggedin(request)
     if isLogin == False:
         return redirect('dashboard_app:login')
@@ -1685,7 +1685,13 @@ def add_expense_new_item(request,exp_catid):
         tax_included = request.POST.get("taxIncluded")
         tax_percentage = request.POST.get("taxPercentage")
         notes = request.POST.get("notes")
+        exp_catid = request.POST.get('selectedCategoryId')
+        print(f'exp_catid:::{exp_catid}')
         tax = 0
+        if not notes:
+            notes='NA'
+        if not tax_percentage:
+            tax_percentage = 0
         if tax_included == "yes":
             # The tax is included, and you can access the tax percentage
             print("Tax is included, and the percentage is:", tax_percentage)

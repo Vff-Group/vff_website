@@ -38,7 +38,7 @@ urlpatterns = [
     
     #Expenses Laundry
     path('all_expenses/',views.all_expenses,name='all_expenses'),
-    path('all_expenses/add_expense_new_item/<int:exp_catid>',views.add_expense_new_item,name='add_expense_new_item'),
+    path('all_expenses/add_expense_new_item/',views.add_expense_new_item,name='add_expense_new_item'),
     
     #Expense Category Routes
     path('expense_category/',views.expense_category,name='expense_category'),
