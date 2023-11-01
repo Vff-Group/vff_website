@@ -111,18 +111,19 @@ Categories{% endblock title%} {% block content %}
                   <th
                     class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
                   >
-                    Expense Category
+                    Expense Name
+                  </th>
+                  <th
+                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                  >
+                    Expense Name
                   </th>
                   <th
                     class=" text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
                   >
                     Status
                   </th>
-                  <th
-                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-                  >
-                    Created By
-                  </th>
+                 
 
                   <th class="text-secondary opacity-7"></th>
                 </tr>
@@ -153,15 +154,15 @@ Categories{% endblock title%} {% block content %}
                   <tr>
                     
                         <td>
-                            <p class="text-xs font-weight-bold mb-0 text-center">{{ forloop.counter }}</p>
+                            <p class="text-xs font-weight-bold mb-0 ">{{ forloop.counter }}</p>
                         </td>
                     
                     <td>
-                      <p class="text-xs font-weight-bold mb-0  text-center">{{row.category_name}}</p>
+                      <p class="text-xs font-weight-bold mb-0  ">{{row.category_name}}</p>
                       
                     </td>
                     <td>
-                        <p class="text-xs font-weight-bold mb-0 text-center">{{row.category_type}}</p>
+                        <p class="text-xs font-weight-bold mb-0 ">{{row.category_type}}</p>
                         
                       </td>
                     
