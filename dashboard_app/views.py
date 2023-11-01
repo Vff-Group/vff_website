@@ -1556,39 +1556,54 @@ def all_expenses(request):
         return redirect('dashboard_app:login')
     error_msg = "No Categories Found"
     branch_id = request.session.get('branchid')
-    # filter = ''
-    # if branch_id :
-    #     filter = " and laundry_delivery_boytbl.branchid='"+str(branch_id)+"'"
-    # query = "select catid,category_name,cat_img,regular_price,regular_price_type,express_price,express_price_type,offer_price,offer_price_type,description from vff.laundry_categorytbl order by catid desc"
     
-    # query_result = execute_raw_query(query)
+    query_all_categories = "select expcatid,category_name,category_type,status from vff.laundry_expense_categorytbl"
+    result_categories = execute_raw_query(query_all_categories)
+    
+    data_category = []    
+    if not result_categories == 500:
+        for row in result_categories:
+            
+            data_category.append({
+                'expcatid': row[0],
+                'category_name': row[1],
+                'category_type': row[2],
+                'status': row[3],  
+            })
+    
+    filter = ''
+    if branch_id :
+        filter = " where branch_id='"+str(branch_id)+"'"
+    query = "select expensesid,exp_catgry_name,exp_catid,exp_amount,payment_mode,tax_included,tax_percentage,extra_note,epoch_time,date from vff.laundry_expensestbl "+filter+" order by expensesid desc"
+    
+    query_result = execute_raw_query(query)
     
     
         
-    # data = []    
-    # if not query_result == 500:
-    #     for row in query_result:
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
             
-    #         data.append({
-    #             'catid': row[0],
-    #             'categoryname': row[1],
-    #             'categoryimg': row[2],
-    #             'regular_prize': row[3],
-    #             'regular_prize_type': row[4],
-    #             'express_prize': row[5],
-    #             'express_prize_type': row[6],
-    #             'offer_prize': row[7],
-    #             'offer_prize_type': row[8],
-    #             'description': row[9],
+            data.append({
+                'expensesid': row[0],
+                'exp_catgry_name': row[1],
+                'exp_catid': row[2],
+                'exp_amount': row[3],
+                'payment_mode': row[4],
+                'tax_included': row[5],
+                'tax_percentage': row[6],
+                'extra_note': row[7],
+                'epoch_time': row[8],
+                'date': row[9],
                
-    #         })
-    # else:
-    #     error_msg = 'Something Went Wrong'
+            })
+    else:
+        error_msg = 'Something Went Wrong'
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
-    # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    context = {'query_result': data,'data_all_categories':data_category,'current_url': current_url,'error_msg':error_msg}
     
-    return render(request, 'expenses_pages/all_expenses_list.html', {'current_url': current_url})
+    return render(request, 'expenses_pages/all_expenses_list.html', context)
 
 #Expenses Category
 def expense_category(request):
@@ -1597,39 +1612,102 @@ def expense_category(request):
         return redirect('dashboard_app:login')
     error_msg = "No Categories Found"
     branch_id = request.session.get('branchid')
-    # filter = ''
-    # if branch_id :
-    #     filter = " and laundry_delivery_boytbl.branchid='"+str(branch_id)+"'"
-    # query = "select catid,category_name,cat_img,regular_price,regular_price_type,express_price,express_price_type,offer_price,offer_price_type,description from vff.laundry_categorytbl order by catid desc"
+    filter = ''
     
-    # query_result = execute_raw_query(query)
+    query = "select expcatid,category_name,category_type,status from vff.laundry_expense_categorytbl order by expcatid"
+    
+    query_result = execute_raw_query(query)
     
     
         
-    # data = []    
-    # if not query_result == 500:
-    #     for row in query_result:
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
             
-    #         data.append({
-    #             'catid': row[0],
-    #             'categoryname': row[1],
-    #             'categoryimg': row[2],
-    #             'regular_prize': row[3],
-    #             'regular_prize_type': row[4],
-    #             'express_prize': row[5],
-    #             'express_prize_type': row[6],
-    #             'offer_prize': row[7],
-    #             'offer_prize_type': row[8],
-    #             'description': row[9],
+            data.append({
+                'expcatid': row[0],
+                'category_name': row[1],
+                'category_type': row[2],
+                'status': row[3],
+                
                
-    #         })
-    # else:
-    #     error_msg = 'Something Went Wrong'
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    
+    return render(request, 'expenses_pages/expense_categories.html', context)
+
+#Add Expense Category
+def add_expense_category(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    error_msg = ""
+    branch_id = request.session.get('branchid')
+    if request.method == "POST":
+        category_name = request.POST.get('category_name')
+        category_type = request.POST.get('category_type')
+        try:
+            with connection.cursor() as cursor:
+                
+                insert_query = "insert into vff.laundry_expense_categorytbl(category_name,category_type) values ('"+str(category_name)+"','"+str(category_type)+"') "
+                cursor.execute(insert_query)
+
+                connection.commit()
+
+                print("Expense category Added/Updated Successfully.")
+                return redirect('dashboard_app:all_sub_categories')
+        except Exception as e:
+            print(f"Error loading data: {e}")
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
     # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
     
     return render(request, 'expenses_pages/expense_categories.html', {'current_url': current_url})
+
+#Add Expense New Item
+def add_expense_new_item(request,exp_catid):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    error_msg = ""
+    branch_id = request.session.get('branchid')
+    if not branch_id:
+        branch_id = 1
+    if request.method == "POST":
+        dateofexpense = request.POST.get('dateofexpense')
+        exp_category = request.POST.get('exp_category')
+        exp_amount = request.POST.get('exp_amount')
+        payment_mode = request.POST.get('payment_mode')
+        tax_included = request.POST.get("taxIncluded")
+        tax_percentage = request.POST.get("taxPercentage")
+        notes = request.POST.get("notes")
+        tax = 0
+        if tax_included == "yes":
+            # The tax is included, and you can access the tax percentage
+            print("Tax is included, and the percentage is:", tax_percentage)
+            tax = 1
+        else:
+            # Tax is not included
+            print("Tax is not included")
+        try:
+            with connection.cursor() as cursor:
+                
+                insert_query = "insert into vff.laundry_expensestbl (exp_catgry_name,exp_catid,exp_amount,payment_mode,tax_included,tax_percentage,extra_note,date,branch_id) values ('"+str(exp_category)+"','"+str(exp_catid)+"','"+str(exp_amount)+"','"+str(payment_mode)+"','"+str(tax)+"','"+str(tax_percentage)+"','"+str(notes)+"','"+str(dateofexpense)+"','"+str(branch_id)+"')"
+                cursor.execute(insert_query)
+
+                connection.commit()
+
+                print(f"New Expenses Item {exp_category} Added Successfully.")
+                return redirect('dashboard_app:all_expenses')
+        except Exception as e:
+            print(f"Error loading data: {e}")
+    return redirect('dashboard_app:all_expenses')
+
+
 
 #Orders Status Screen
 def order_status_screen(request):

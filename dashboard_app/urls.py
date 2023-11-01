@@ -38,7 +38,11 @@ urlpatterns = [
     
     #Expenses Laundry
     path('all_expenses/',views.all_expenses,name='all_expenses'),
+    path('all_expenses/add_expense_new_item/<int:exp_catid>',views.add_expense_new_item,name='add_expense_new_item'),
+    
+    #Expense Category Routes
     path('expense_category/',views.expense_category,name='expense_category'),
+    path('expense_category/add_expense_category/',views.add_expense_category,name='add_expense_category'),
     
     #Order Screens
     path('order_status_screen/',views.order_status_screen,name='order_status_screen'),
