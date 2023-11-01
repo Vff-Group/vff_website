@@ -1554,7 +1554,7 @@ def all_expenses(request):
     isLogin = is_loggedin(request)
     if isLogin == False:
         return redirect('dashboard_app:login')
-    error_msg = "No Categories Found"
+    error_msg = "No Expenses Record Found"
     branch_id = request.session.get('branchid')
     
     query_all_categories = "select expcatid,category_name,category_type,status from vff.laundry_expense_categorytbl"
@@ -1610,7 +1610,7 @@ def expense_category(request):
     isLogin = is_loggedin(request)
     if isLogin == False:
         return redirect('dashboard_app:login')
-    error_msg = "No Categories Found"
+    error_msg = "No Expense Category added till now"
     branch_id = request.session.get('branchid')
     filter = ''
     
