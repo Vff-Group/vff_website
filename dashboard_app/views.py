@@ -1659,7 +1659,7 @@ def add_expense_category(request):
                 connection.commit()
 
                 print("Expense category Added/Updated Successfully.")
-                return redirect('dashboard_app:expense_category')
+                return redirect('dashboard_app:all_expenses')
         except Exception as e:
             print(f"Error loading data: {e}")
     current_url = request.get_full_path()
