@@ -45,6 +45,10 @@ urlpatterns = [
     
     #Reports Screen
     path('daily_report/',views.daily_report,name='daily_report'),
+    path('order_report/',views.order_report,name='order_report'),
+    path('sales_report/',views.sales_report,name='sales_report'),
+    path('expense_report/',views.expense_report,name='expense_report'),
+    path('tax_report/',views.tax_report,name='tax_report'),
     
 ]
 

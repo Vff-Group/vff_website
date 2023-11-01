@@ -1713,6 +1713,171 @@ def daily_report(request):
     
     return render(request, 'reports/daily_report.html', {'current_url': current_url})
 
+#Orders Reports Screen
+def order_report(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    error_msg = ""
+    branch_id = request.session.get('branchid')
+    # filter = ''
+    # if branch_id :
+    #     filter = " and laundry_delivery_boytbl.branchid='"+str(branch_id)+"'"
+    # query = "select catid,category_name,cat_img,regular_price,regular_price_type,express_price,express_price_type,offer_price,offer_price_type,description from vff.laundry_categorytbl order by catid desc"
+    
+    # query_result = execute_raw_query(query)
+    
+    
+        
+    # data = []    
+    # if not query_result == 500:
+    #     for row in query_result:
+            
+    #         data.append({
+    #             'catid': row[0],
+    #             'categoryname': row[1],
+    #             'categoryimg': row[2],
+    #             'regular_prize': row[3],
+    #             'regular_prize_type': row[4],
+    #             'express_prize': row[5],
+    #             'express_prize_type': row[6],
+    #             'offer_prize': row[7],
+    #             'offer_prize_type': row[8],
+    #             'description': row[9],
+               
+    #         })
+    # else:
+    #     error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    
+    return render(request, 'reports/orders_report.html', {'current_url': current_url})
+
+#Sales Reports Screen
+def sales_report(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    error_msg = ""
+    branch_id = request.session.get('branchid')
+    # filter = ''
+    # if branch_id :
+    #     filter = " and laundry_delivery_boytbl.branchid='"+str(branch_id)+"'"
+    # query = "select catid,category_name,cat_img,regular_price,regular_price_type,express_price,express_price_type,offer_price,offer_price_type,description from vff.laundry_categorytbl order by catid desc"
+    
+    # query_result = execute_raw_query(query)
+    
+    
+        
+    # data = []    
+    # if not query_result == 500:
+    #     for row in query_result:
+            
+    #         data.append({
+    #             'catid': row[0],
+    #             'categoryname': row[1],
+    #             'categoryimg': row[2],
+    #             'regular_prize': row[3],
+    #             'regular_prize_type': row[4],
+    #             'express_prize': row[5],
+    #             'express_prize_type': row[6],
+    #             'offer_prize': row[7],
+    #             'offer_prize_type': row[8],
+    #             'description': row[9],
+               
+    #         })
+    # else:
+    #     error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    
+    return render(request, 'reports/sales_report.html', {'current_url': current_url})
+
+#Expense Reports Screen
+def expense_report(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    error_msg = ""
+    branch_id = request.session.get('branchid')
+    # filter = ''
+    # if branch_id :
+    #     filter = " and laundry_delivery_boytbl.branchid='"+str(branch_id)+"'"
+    # query = "select catid,category_name,cat_img,regular_price,regular_price_type,express_price,express_price_type,offer_price,offer_price_type,description from vff.laundry_categorytbl order by catid desc"
+    
+    # query_result = execute_raw_query(query)
+    
+    
+        
+    # data = []    
+    # if not query_result == 500:
+    #     for row in query_result:
+            
+    #         data.append({
+    #             'catid': row[0],
+    #             'categoryname': row[1],
+    #             'categoryimg': row[2],
+    #             'regular_prize': row[3],
+    #             'regular_prize_type': row[4],
+    #             'express_prize': row[5],
+    #             'express_prize_type': row[6],
+    #             'offer_prize': row[7],
+    #             'offer_prize_type': row[8],
+    #             'description': row[9],
+               
+    #         })
+    # else:
+    #     error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    
+    return render(request, 'reports/expense_report.html', {'current_url': current_url})
+
+#Expense Reports Screen
+def tax_report(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    error_msg = ""
+    branch_id = request.session.get('branchid')
+    # filter = ''
+    # if branch_id :
+    #     filter = " and laundry_delivery_boytbl.branchid='"+str(branch_id)+"'"
+    # query = "select catid,category_name,cat_img,regular_price,regular_price_type,express_price,express_price_type,offer_price,offer_price_type,description from vff.laundry_categorytbl order by catid desc"
+    
+    # query_result = execute_raw_query(query)
+    
+    
+        
+    # data = []    
+    # if not query_result == 500:
+    #     for row in query_result:
+            
+    #         data.append({
+    #             'catid': row[0],
+    #             'categoryname': row[1],
+    #             'categoryimg': row[2],
+    #             'regular_prize': row[3],
+    #             'regular_prize_type': row[4],
+    #             'express_prize': row[5],
+    #             'express_prize_type': row[6],
+    #             'offer_prize': row[7],
+    #             'offer_prize_type': row[8],
+    #             'description': row[9],
+               
+    #         })
+    # else:
+    #     error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    
+    return render(request, 'reports/tax_report.html', {'current_url': current_url})
+
+
 
 
 #All Categories
