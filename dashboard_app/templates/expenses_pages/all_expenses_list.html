@@ -39,10 +39,12 @@ Expenses{% endblock title%} {% block content %}
               <span aria-hidden="true">×</span>
             </button>
           </div> -->
-          <form method="post" action="{% url 'dashboard_app:add_expense_new_item' %}">
-            {% csrf_token %}
-                <div class="modal-body">
-                  
+                <form
+                  method="post"
+                  action="{% url 'dashboard_app:add_expense_new_item' %}"
+                >
+                  {% csrf_token %}
+                  <div class="modal-body">
                     <h6 class="heading-small text-muted mb-4">Add Expense</h6>
                     <div class="pl-lg-4">
                       <div class="row">
@@ -73,14 +75,16 @@ Expenses{% endblock title%} {% block content %}
                               class="form-control form-control-alternative"
                               id="input-category"
                               name="exp_category"
-                              
                               required
                             >
                               <option disabled selected>
                                 Choose Expense Category
                               </option>
                               {% for category in data_all_categories %}
-                              <option value="{{ category.category_name }}" data-catid="{{ category.expcatid }}">
+                              <option
+                                value="{{ category.category_name }}"
+                                data-catid="{{ category.expcatid }}"
+                              >
                                 {{ category.category_name }}
                               </option>
                               {% endfor %}
@@ -88,8 +92,13 @@ Expenses{% endblock title%} {% block content %}
                               <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
                             </select>
                           </div>
-                          
-                          <input type="hidden" id="selectedCategoryId" name="selectedCategoryId" value="">
+
+                          <input
+                            type="hidden"
+                            id="selectedCategoryId"
+                            name="selectedCategoryId"
+                            value=""
+                          />
 
                           <div class="form-group">
                             <label
@@ -195,25 +204,21 @@ Expenses{% endblock title%} {% block content %}
                         </div>
                       </div>
                     </div>
-                  
-                </div>
-                <div class="modal-footer">
-                 
+                  </div>
+                  <div class="modal-footer">
                     <button type="submit" class="btn bg-gradient-success">
                       Save
                     </button>
-                  
 
-                  <button
-                    type="button"
-                    class="btn btn-link ml-auto"
-                    data-bs-dismiss="modal"
-                  >
-                    Cancel
-                  </button>
-                </div>
-
-            </form>
+                    <button
+                      type="button"
+                      class="btn btn-link ml-auto"
+                      data-bs-dismiss="modal"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
@@ -242,7 +247,7 @@ Expenses{% endblock title%} {% block content %}
                     Towards
                   </th>
                   <th
-                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
                   >
                     Tax Included?
                   </th>
@@ -252,7 +257,7 @@ Expenses{% endblock title%} {% block content %}
                     Payment Mode
                   </th>
                   <th
-                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
                   >
                     Notes
                   </th>
@@ -285,16 +290,16 @@ Expenses{% endblock title%} {% block content %}
                 <tr>
                   <td>
                     <div class="d-flex px-2 py-1">
-                      <h6 class="mb-0 text-sm text-center">{{row.date}}</h6>
+                      <p class="mb-0 text-sm text-center">{{row.date}}</p>
                     </div>
                   </td>
                   <td>
-                    <p class="text-xs font-weight-bold mb-0 text-center">
+                    <p class="text-xs font-weight-bold mb-0">
                       Rs.{{row.exp_amount}}/-
                     </p>
                   </td>
                   <td>
-                    <p class="text-xs font-weight-bold mb-0 text-center">
+                    <p class="text-xs font-weight-bold mb-0">
                       {{row.exp_catgry_name}}
                     </p>
                   </td>
@@ -306,8 +311,10 @@ Expenses{% endblock title%} {% block content %}
                     <span class="badge badge-sm bg-danger"> No </span>
                     {% endif %}
                   </td>
-                  <td class="align-middle text-center text-sm">
-                    {{row.payment_mode}}
+                  <td>
+                    <p class="text-xs font-weight-bold mb-0">
+                      {{row.payment_mode}}
+                    </p>
                   </td>
                   <td>
                     <p class="text-xs font-weight-bold mb-0 text-center">
@@ -332,7 +339,6 @@ Expenses{% endblock title%} {% block content %}
                   </td> -->
                 </tr>
 
-               
                 {% endfor %}
               </tbody>
             </table>
@@ -358,22 +364,22 @@ Expenses{% endblock title%} {% block content %}
 </script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      // Get the select element
-      var selectElement = document.getElementById("input-category");
-  
-      // Get the hidden input element
-      var selectedCategoryIdInput = document.getElementById("selectedCategoryId");
-  
-      // Add an event listener for the change event
-      selectElement.addEventListener("change", function () {
-        // Get the selected option
-        var selectedOption = selectElement.options[selectElement.selectedIndex];
-  
-        // Update the hidden input with the selected category's catid
-        selectedCategoryIdInput.value = selectedOption.getAttribute("data-catid");
-      });
+  document.addEventListener("DOMContentLoaded", function () {
+    // Get the select element
+    var selectElement = document.getElementById("input-category");
+
+    // Get the hidden input element
+    var selectedCategoryIdInput = document.getElementById("selectedCategoryId");
+
+    // Add an event listener for the change event
+    selectElement.addEventListener("change", function () {
+      // Get the selected option
+      var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+      // Update the hidden input with the selected category's catid
+      selectedCategoryIdInput.value = selectedOption.getAttribute("data-catid");
     });
-  </script>
-  
+  });
+</script>
+
 {% endblock %}
