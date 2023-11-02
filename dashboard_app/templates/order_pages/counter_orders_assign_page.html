@@ -87,7 +87,7 @@
                             </div>
                         </form>
                         <div id="suggestion-container">
-                            <ul id="suggestion-list"></ul>
+                            <ul class="navbar-nav" id="suggestion-list"></ul>
                         </div>
                         <input
                             class="form-control form-control-alternative"
@@ -458,7 +458,7 @@
     
                     if (suggestions.length > 0) {
                         suggestions.forEach(function(suggestion) {
-                            const suggestionItem = $('<li>').text(suggestion.customer_name);
+                            const suggestionItem = $('<li class="nav-item">').text(suggestion.customer_name);
                             suggestionItem.on('click', function() {
                                 // When a suggestion is clicked, set the value in the input field
                                 inputField.val(suggestion.customer_name);
