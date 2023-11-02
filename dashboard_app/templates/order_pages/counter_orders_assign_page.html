@@ -419,7 +419,7 @@
       const inputText = inputField.val();
 
       if (inputText.length > 0) {
-        $.get('/search_customer_to_assign_order/${inputText}/', function(data) {
+        $.get(`/search_customer_to_assign_order/${inputText}/`, function(data) {
           const suggestions = data.suggestions;
           suggestionContainer.empty();
 
