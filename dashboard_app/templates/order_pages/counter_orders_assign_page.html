@@ -69,7 +69,7 @@
             <div class="row d-flex justify-content-end">
               <div class="col-8 d-flex align-items-center">
                 
-                
+                <div class="row">
                     <form method="get">
                         {% csrf_token %}
                         <div class="form-group">
@@ -81,13 +81,15 @@
                                 placeholder="Search customer"
                                 value=""
                                 required
-                                data-bs-toggle="popover"
-                                data-bs-placement="right" 
-                                data-bs-html="true"
-                                data-bs-content=""
+                                data-toggle="popover"
+                                data-placement="bottom" 
+                                
                             />
                         </div>
                     </form>
+                    <div id="suggestion-container" style="display: none;">
+                        <ul id="suggestion-list"></ul>
+                    </div>
                     <input
                         class="form-control form-control-alternative"
                         type="hidden"
@@ -96,7 +98,7 @@
                         value=""
                     />
                     
-                
+                </div>
 
               </div>
               <div class="col-4 d-flex justify-content-end">
@@ -386,60 +388,18 @@
 </main>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- brad  -->
 <script>
     $(document).ready(function() {
         const inputField = $('#customer-name');
-        const selectedCustomerIdInput = $('#selected-customer-id');
-      
-        // Initialize the popover
-        inputField.popover({
-          html: true,
-          container: 'body',
-          trigger: 'focus', // Show popover on focus
-          content: function() {
-            // Get the search results from the backend
-            const searchResults = $.get(`/admin_dashboard/search_customer_to_assign_order/${inputText}/`).done(function(data) {
-              return data.suggestions;
-            });
-      
-            // Create a list of suggestion items
-            const suggestionItems = searchResults.map(function(suggestion) {
-              return `<div class="suggestion-item" data-consmrid="${suggestion.consmrid}">${suggestion.customer_name}</div>`;
-            }).join('');
-      
-            // Return the suggestion items list
-            return suggestionItems;
-          }
-        });
-      
-        inputField.on('input', function() {
-          const inputText = inputField.val();
-      
-          if (inputText.length > 0) {
-            // Show the popover
-            inputField.popover('show');
-          } else {
-            // Hide the popover
-            inputField.popover('hide');
-          }
-        });
-      });
-      
-</script>
-<!-- <script>
-    $(document).ready(function() {
-        const inputField = $('#customer-name');
+        const suggestionContainer = $('#suggestion-container');
+        const suggestionList = $('#suggestion-list');
         const selectedCustomerIdInput = $('#selected-customer-id');
     
         // Initialize the popover
         inputField.popover({
             html: true,
-            container: 'body',
-            trigger: 'focus', // Show popover on focus
-            content: function() {
-                return $('#suggestion-container').html();
-            }
+            content: suggestionContainer.html(),
+            container: 'body'
         });
     
         inputField.on('input', function() {
@@ -448,43 +408,43 @@
             if (inputText.length > 0) {
                 $.get(`/admin_dashboard/search_customer_to_assign_order/${inputText}/`, function(data) {
                     const suggestions = data.suggestions;
+                    suggestionList.empty();
     
                     if (suggestions.length > 0) {
-                        const suggestionContent = suggestions.map(function(suggestion) {
-                            console.log('suggestions::'+suggestion.customer_name)
-                            return `<div class="suggestion-item" data-consmrid="${suggestion.consmrid}">${suggestion.customer_name}</div>`;
-                        }).join('');
+                        suggestions.forEach(function(suggestion) {
+                            const suggestionItem = $('<li>').text(suggestion.customer_name);
+                            suggestionItem.on('click', function() {
+                                // When a suggestion is clicked, set the value in the input field
+                                inputField.val(suggestion.customer_name);
     
-                        // Update the popover content
-                        inputField.attr('data-content', suggestionContent);
+                                // Set the selected customer_id in the hidden input
+                                selectedCustomerIdInput.val(suggestion.consmrid);
     
-                        // Attach click event to the suggestion items
-                        $('.suggestion-item').on('click', function() {
-                            const selectedSuggestion = $(this);
-                            const customerName = selectedSuggestion.text();
-                            const customerId = selectedSuggestion.data('consmrid');
-    
-                            // Set the value in the input field
-                            inputField.val(customerName);
-    
-                            // Set the selected customer_id in the hidden input
-                            selectedCustomerIdInput.val(customerId);
-    
-                            // Hide the popover
-                            inputField.popover('hide');
+                                // Hide the popover
+                                inputField.popover('hide');
+                            });
+                            suggestionList.append(suggestionItem);
                         });
                     } else {
-                        inputField.attr('data-content', ''); // Clear the popover content
+                        suggestionList.empty();
                     }
+    
+                    // Update the popover content
+                    inputField.attr('data-content', suggestionContainer.html());
                 });
             } else {
+                suggestionList.empty();
                 inputField.attr('data-content', ''); // Clear the popover content
             }
         });
+    
+        inputField.focusout(function() {
+            // Hide the popover when the input field loses focus
+            inputField.popover('hide');
+        });
     });
     
-    
-</script> -->
+</script>
 <!-- <script>
   $(document).ready(function() {
     const inputField = $('#customer-name');
