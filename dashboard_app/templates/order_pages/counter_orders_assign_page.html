@@ -528,7 +528,7 @@
             console.log('CatID::'+cat_id)
             var subCategorySelect = $('#input-section');
         
-            $.get(`/counter_orders_screen/${cat_id}`, function(data) {
+            $.get(`/admin_dashboard/load_sub_categories/${cat_id}`, function(data) {
                 subCategorySelect.empty();
                 subCategorySelect.append('<option disabled selected>Choose Section</option>');
         
