@@ -62,7 +62,7 @@
                             <select
                               class="form-control form-control-alternative"
                               id="input-section"
-                              name="section_type"
+                              name="section_type_main"
                               required
                               onchange="loadSubCategoriesBySection(this)"
                             >
@@ -73,7 +73,7 @@
                               {% for section in section_data %}
                               <option
                                   value="{{ section.section_name }}"
-                                  data-sectionid="{{ section.sectionid }}"
+                                  data-section_id="{{ section.sectionid }}"
                               >
                                   {{ section.section_name }}
                               </option>
