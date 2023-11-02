@@ -2189,6 +2189,32 @@ def counter_orders_screen(request):
     
     return render(request, 'order_pages/counter_orders_assign_page.html', context)
 
+def load_sub_categories(request,cat_id):
+    query = "select sub_cat_name,sub_cat_img,cost,type,section_type,subcatid from vff.laundry_sub_categorytbl where catid='"+str(cat_id)+"'"
+    
+    query_result = execute_raw_query(query)
+    
+    
+        
+    sub_category_data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            sub_category_data.append({
+                'sub_cat_name': row[0],
+                'sub_cat_img': row[1],
+                'cost': row[2],
+                'type': row[3],
+                'section_type': row[4],
+                'subcatid': row[5],
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+        return JsonResponse({'error_msg':error_msg});
+        
+    context = {'sub_categories':sub_category_data}
+    return JsonResponse(context)
+    
 
 #Daily Reports Screen
 def daily_report(request):

@@ -28,6 +28,7 @@
                               id="input-category"
                               name="main_category"
                               required
+                              onchange="loadSubCategories(this)"
                             >
                               <option disabled selected>
                                 Choose Expense Category
@@ -35,7 +36,7 @@
                               {% for category in category_data %}
                               <option
                                 value="{{ category.categoryname }}"
-                                data-catids="{{ category.catids }}"
+                                data-catids="{{ category.catid }}"
                               >
                                 {{ category.categoryname }}
                               </option>
@@ -56,7 +57,7 @@
                             <label
                               class="form-control-label"
                               for="input-section"
-                              >Sub Category</label
+                              >Sub Section</label
                             >
                             <select
                               class="form-control form-control-alternative"
@@ -67,9 +68,7 @@
                               <option disabled selected>
                                 Choose Section
                               </option>
-                              <option >
-                                Choose Section
-                              </option>
+                              
 
                               <!-- {% for category in data_all_categories %}
                               <option
@@ -519,44 +518,28 @@
   </div>
 </main>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const form = document.querySelector('form');
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            const mobileNumber = document.getElementById('customer-name').value;
-    
-            fetch(`/search_customer_to_assign_order/mobno=${mobileNumber}`)
-                .then(response => response.json())
-                .then(data => {
-                    const resultContainer = document.getElementById('result-container');
-                    resultContainer.innerHTML = ''; // Clear previous results
-    
-                    if (data.results.length > 0) {
-                        // Customer(s) found, display details
-                        data.results.forEach(customer => {
-                            resultContainer.innerHTML += `
-                                <div class="customer-details">
-                                    <p>Customer ID: ${customer.consmrid}</p>
-                                    <p>Name: ${customer.customer_name}</p>
-                                    <p>Company: ${customer.company_name}</p>
-                                    <p>GST Number: ${customer.gstno}</p>
-                                    <p>IGST Number: ${customer.igstno}</p>
-                                    <p>Mobile Number: ${customer.mobile_no}</p>
-                                </div>
-                            `;
-                        });
-                    } else if (data.error_msg) {
-                        // Customer not found, display toast message
-                        resultContainer.innerHTML = `<p class="error-toast">${data.error_msg}</p>`;
-                    }
-                })
-                .catch(error => console.error(error));
-        });
-    });
-    </script> -->
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        function loadSubCategories(categorySelect) {
+            var selectedCategory = $(categorySelect).val();
+            var cat_id = $(categorySelect).find(":selected").data("catids");
+            var subCategorySelect = $('#input-section');
+        
+            $.get(`/counter_orders_screen/${cat_id}`, function(data) {
+                subCategorySelect.empty();
+                subCategorySelect.append('<option disabled selected>Choose Section</option>');
+        
+                $.each(data.sub_categories, function(index, subCategory) {
+                    subCategorySelect.append($('<option>', {
+                        value: subCategory.subcatid,
+                        text: subCategory.sub_cat_name
+                    }));
+                });
+            });
+        }
+    </script>
 <script>
     $(document).ready(function() {
         const inputField = $('#customer-name');
