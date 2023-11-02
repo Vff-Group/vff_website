@@ -69,7 +69,7 @@
             <div class="row d-flex justify-content-end">
               <div class="col-8 d-flex align-items-center">
                 
-                <div class="row">
+                
                     <form method="get">
                         {% csrf_token %}
                         <div class="form-group">
@@ -96,7 +96,7 @@
                         value=""
                     />
                     
-                </div>
+                
 
               </div>
               <div class="col-4 d-flex justify-content-end">
@@ -386,7 +386,48 @@
 </main>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- brad  -->
 <script>
+    $(document).ready(function() {
+        const inputField = $('#customer-name');
+        const selectedCustomerIdInput = $('#selected-customer-id');
+      
+        // Initialize the popover
+        inputField.popover({
+          html: true,
+          container: 'body',
+          trigger: 'focus', // Show popover on focus
+          content: function() {
+            // Get the search results from the backend
+            const searchResults = $.get(`/admin_dashboard/search_customer_to_assign_order/${inputText}/`).done(function(data) {
+              return data.suggestions;
+            });
+      
+            // Create a list of suggestion items
+            const suggestionItems = searchResults.map(function(suggestion) {
+              return `<div class="suggestion-item" data-consmrid="${suggestion.consmrid}">${suggestion.customer_name}</div>`;
+            }).join('');
+      
+            // Return the suggestion items list
+            return suggestionItems;
+          }
+        });
+      
+        inputField.on('input', function() {
+          const inputText = inputField.val();
+      
+          if (inputText.length > 0) {
+            // Show the popover
+            inputField.popover('show');
+          } else {
+            // Hide the popover
+            inputField.popover('hide');
+          }
+        });
+      });
+      
+</script>
+<!-- <script>
     $(document).ready(function() {
         const inputField = $('#customer-name');
         const selectedCustomerIdInput = $('#selected-customer-id');
@@ -443,7 +484,7 @@
     });
     
     
-</script>
+</script> -->
 <!-- <script>
   $(document).ready(function() {
     const inputField = $('#customer-name');

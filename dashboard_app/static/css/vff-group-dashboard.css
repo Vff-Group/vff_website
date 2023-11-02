@@ -25481,3 +25481,17 @@ pre[class*="language-"] {
 .search-suggestions li:hover {
   background-color: #ccc;
 }
+
+.popover {
+  max-width: 300px;
+  width: 100%;
+}
+
+.suggestion-item {
+  cursor: pointer;
+  padding: 10px;
+}
+
+.suggestion-item:hover {
+  background-color: #ccc;
+}
