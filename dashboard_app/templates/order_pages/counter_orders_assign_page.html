@@ -549,7 +549,7 @@
                 section_column.hide();
             $.get(`/admin_dashboard/load_section_type_sub_categories/All`, function(data) {
                 subCategorySelect.empty();
-                subCategorySelect.append('<option disabled selected>Choose Section</option>');
+                subCategorySelect.append('<option disabled selected>Choose Sub Category</option>');
         
                 $.each(data.sub_categories, function(index, subCategory) {
                     subCategorySelect.append($('<option>', {
