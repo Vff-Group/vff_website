@@ -10,10 +10,11 @@
           <div class="col-12">
             <div class="card mb-4">
               <div class="card-header pb-0">
+                <form method="get">
+                    {% csrf_token %}
                 <div class="row">
                     <!-- category start  -->
-<form method="get">
-    {% csrf_token %}
+
                     <div class="col-lg-4">
                     <pre>{{category_data}}</pre>
                         <div class="form-group">
@@ -115,9 +116,11 @@
                         
                       </div>
                       <!-- End sub category  -->
-                    </form>
+                    
 
                 </div>
+            </form>
+            
                 <div class="row">
                   <div class="col-lg-6">
                     
