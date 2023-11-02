@@ -82,6 +82,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Search</button>
             </form>
+            <div id="result-container"></div>
               </div>
               <div class="col-4 d-flex justify-content-end">
                 <button class="btn btn-primary">Add</button>
@@ -185,51 +186,41 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    const input = document.getElementById('customer-name');
-const suggestions = document.querySelector('.search-suggestions');
-
-input.addEventListener('input', function() {
-  // Get the search term and mobno.
-  const searchTerm = input.value;
-  const mobno = document.querySelector('input[name="mobno"]').value;
-
-  // Make an AJAX request to the backend to get the search suggestions.
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', '/search_customer_to_assign_order/?mobno=' + mobno + '&searchTerm=' + searchTerm);
-  xhr.onload = function() {
-    if (xhr.status === 200) {
-      // Parse the JSON response.
-      const response = JSON.parse(xhr.responseText);
-
-      // Clear the existing search suggestions.
-      suggestions.innerHTML = '';
-
-      // Create a new search suggestion for each result.
-      for (const result of response.results) {
-        const li = document.createElement('li');
-        li.textContent = result.customer_name;
-        suggestions.appendChild(li);
-      }
-
-      // Show the search suggestions.
-      suggestions.style.display = 'block';
-    }
-  };
-  xhr.send();
-});
-
-// Handle the click event on the search suggestions.
-suggestions.addEventListener('click', function(event) {
-  // Get the clicked search suggestion.
-  const suggestion = event.target;
-
-  // Set the input value to the clicked search suggestion.
-  input.value = suggestion.textContent;
-
-  // Hide the search suggestions.
-  suggestions.style.display = 'none';
-});
-
-</script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const mobileNumber = document.getElementById('customer-name').value;
+    
+            fetch(`/search_customer_to_assign_order/?mobno=${mobileNumber}`)
+                .then(response => response.json())
+                .then(data => {
+                    const resultContainer = document.getElementById('result-container');
+                    resultContainer.innerHTML = ''; // Clear previous results
+    
+                    if (data.results.length > 0) {
+                        // Customer(s) found, display details
+                        data.results.forEach(customer => {
+                            resultContainer.innerHTML += `
+                                <div class="customer-details">
+                                    <p>Customer ID: ${customer.consmrid}</p>
+                                    <p>Name: ${customer.customer_name}</p>
+                                    <p>Company: ${customer.company_name}</p>
+                                    <p>GST Number: ${customer.gstno}</p>
+                                    <p>IGST Number: ${customer.igstno}</p>
+                                    <p>Mobile Number: ${customer.mobile_no}</p>
+                                </div>
+                            `;
+                        });
+                    } else if (data.error_msg) {
+                        // Customer not found, display toast message
+                        resultContainer.innerHTML = `<p class="error-toast">${data.error_msg}</p>`;
+                    }
+                })
+                .catch(error => console.error(error));
+        });
+    });
+    </script>
+    
 {% endblock  %}
 

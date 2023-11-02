@@ -2236,25 +2236,21 @@ def search_customer_to_assign_order(request,mobno):
     query = "select consmrid,customer_name,company_name,gstno,igstno,mobile_no from vff.usertbl,vff.laundry_customertbl where laundry_customertbl.usrid=usertbl.usrid and mobile_no ILIKE '"+str(mobno)+"%'"
     query_result = execute_raw_query(query)
                
-    data = []    
-    if not query_result == 500:
+    
+
+    data = []
+    if query_result == 500:
+        return JsonResponse({'error_msg': 'Something Went Wrong'}, status=500)
+    elif query_result:
         for row in query_result:
-           
-             data.append({
-                 'consmrid': row[0],
-                 'customer_name': row[1],
-                 'company_name': row[2],
-                 'gstno': row[3],
-                 'igstno': row[4],
-                 'mobile_no': row[5],
-                 
-              
-             })
-    else:
-         error_msg = 'Something Went Wrong'
-    current_url = request.get_full_path()
-     
-    context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+            data.append({
+                'consmrid': row[0],
+                'customer_name': row[1],
+                'company_name': row[2],
+                'gstno': row[3],
+                'igstno': row[4],
+                'mobile_no': row[5],
+            })
     
     return JsonResponse({'results': data})
 #Orders Reports Screen
