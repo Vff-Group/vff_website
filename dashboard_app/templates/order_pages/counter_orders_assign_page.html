@@ -532,7 +532,7 @@
             console.log('selectedCategory::'+selectedCategory)
             if (selectedCategory == "DRY CLEAN"){
                 //Load Sections Here 
-                $.get(`/admin_dashboard/load_sub_categories/`, function(data) {
+                $.get(`/admin_dashboard/load_sub_categories/${cat_id}`, function(data) {
                     sectionSelect.empty();
                     sectionSelect.append('<option disabled selected>Choose Section</option>');
             
