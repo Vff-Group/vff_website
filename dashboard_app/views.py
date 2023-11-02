@@ -2242,7 +2242,7 @@ def search_customer_to_assign_order(request):
 
     data = []
     if query_result == 500:
-        return JsonResponse({'error_msg': 'Something Went Wrong'}, status=500)
+        return redirect('dashboard_app:counter_orders_screen')
     elif query_result:
         for row in query_result:
             data.append({
@@ -2255,7 +2255,7 @@ def search_customer_to_assign_order(request):
             })
     current_url = request.get_full_path()
     
-    context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    context = {'query_result': data,'current_url': current_url}
     
     return render(request, 'order_pages/counter_orders_assign_page.html', context)
     
