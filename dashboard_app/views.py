@@ -2166,17 +2166,25 @@ def counter_orders_screen(request):
     category_data = []    
     if not query_result == 500:
         for row in query_result:
-            
+            regular_prize = row[3]
+            regular_prize_type = row[4]
+            express_prize= row[5]
+            express_prize_type=row[6]
+            offer_prize=row[7]
+            offer_prize_type= row[8]
+            regularPrice = str(regular_prize + [regular_prize_type])
+            expressPrice = str(express_prize + [express_prize_type])
+            if offer_prize != 0.0 and offer_prize_type != 'NA':
+                offerPrice = str(offer_prize + [offer_prize_type])
+            else:
+                offerPrice = "No Offers"
             category_data.append({
                 'catid': row[0],
                 'categoryname': row[1],
                 'cat_img': row[2],
-                'regular_prize': row[3],
-                'regular_prize_type': row[4],
-                'express_prize': row[5],
-                'express_prize_type': row[6],
-                'offer_prize': row[7],
-                'offer_prize_type': row[8],
+                'regular': regularPrice,
+                'express': expressPrice,
+                'offer': offerPrice,
                 'description': row[9],
                 'min_hours': row[9],
                
