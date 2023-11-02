@@ -563,7 +563,7 @@
         }
     
         function loadSubCategoriesBySection(sectionSelect) {
-            var selectedSection = $(sectionSelect).val();
+            var section_type = $(sectionSelect).val();
             var section_id = $(sectionSelect).find(":selected").data("section_id");
             console.log('section_id::'+section_id)
             var sectionSelect = $('#input-section');
