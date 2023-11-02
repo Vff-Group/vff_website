@@ -82,14 +82,12 @@
                                 value=""
                                 required
                                 data-toggle="popover"
-                                data-placement="bottom"  <!-- Adjust the placement as needed -->
+                                data-placement="bottom" 
+                                data-html="true"
                                 data-content=""
                             />
                         </div>
                     </form>
-                    <div id="suggestion-container" style="display: none;">
-                        <ul id="suggestion-list"></ul>
-                    </div>
                     <input
                         class="form-control form-control-alternative"
                         type="hidden"
@@ -391,15 +389,16 @@
 <script>
     $(document).ready(function() {
         const inputField = $('#customer-name');
-        const suggestionContainer = $('#suggestion-container');
-        const suggestionList = $('#suggestion-list');
         const selectedCustomerIdInput = $('#selected-customer-id');
     
         // Initialize the popover
         inputField.popover({
             html: true,
-            content: suggestionContainer.html(),
-            container: 'body'
+            container: 'body',
+            trigger: 'focus', // Show popover on focus
+            content: function() {
+                return $('#suggestion-container').html();
+            }
         });
     
         inputField.on('input', function() {
@@ -408,41 +407,40 @@
             if (inputText.length > 0) {
                 $.get(`/admin_dashboard/search_customer_to_assign_order/${inputText}/`, function(data) {
                     const suggestions = data.suggestions;
-                    suggestionList.empty();
     
                     if (suggestions.length > 0) {
-                        suggestions.forEach(function(suggestion) {
-                            const suggestionItem = $('<li>').text(suggestion.customer_name);
-                            suggestionItem.on('click', function() {
-                                // When a suggestion is clicked, set the value in the input field
-                                inputField.val(suggestion.customer_name);
+                        const suggestionContent = suggestions.map(function(suggestion) {
+                            return `<div class="suggestion-item" data-consmrid="${suggestion.consmrid}">${suggestion.customer_name}</div>`;
+                        }).join('');
     
-                                // Set the selected customer_id in the hidden input
-                                selectedCustomerIdInput.val(suggestion.consmrid);
+                        // Update the popover content
+                        inputField.attr('data-content', suggestionContent);
     
-                                // Hide the popover
-                                inputField.popover('hide');
-                            });
-                            suggestionList.append(suggestionItem);
+                        // Attach click event to the suggestion items
+                        $('.suggestion-item').on('click', function() {
+                            const selectedSuggestion = $(this);
+                            const customerName = selectedSuggestion.text();
+                            const customerId = selectedSuggestion.data('consmrid');
+    
+                            // Set the value in the input field
+                            inputField.val(customerName);
+    
+                            // Set the selected customer_id in the hidden input
+                            selectedCustomerIdInput.val(customerId);
+    
+                            // Hide the popover
+                            inputField.popover('hide');
                         });
                     } else {
-                        suggestionList.empty();
+                        inputField.attr('data-content', ''); // Clear the popover content
                     }
-    
-                    // Update the popover content
-                    inputField.attr('data-content', suggestionContainer.html());
                 });
             } else {
-                suggestionList.empty();
                 inputField.attr('data-content', ''); // Clear the popover content
             }
         });
-    
-        inputField.focusout(function() {
-            // Hide the popover when the input field loses focus
-            inputField.popover('hide');
-        });
     });
+    
     
 </script>
 <!-- <script>
