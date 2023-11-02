@@ -525,6 +525,7 @@
         function loadSubCategories(categorySelect) {
             var selectedCategory = $(categorySelect).val();
             var cat_id = $(categorySelect).find(":selected").data("catids");
+            console.log('CatID::'+cat_id)
             var subCategorySelect = $('#input-section');
         
             $.get(`/counter_orders_screen/${cat_id}`, function(data) {
