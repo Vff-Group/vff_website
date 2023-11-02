@@ -420,17 +420,16 @@
 
       if (inputText.length > 0) {
         $.get(`/admin_dashboard/search_customer_to_assign_order/${inputText}/`, function(data) {
-          const suggestions = data.suggestions;
-          suggestionContainer.empty();
-
-          if (suggestions.length > 0) {
-            const suggestionList = $('<ul>');
-            suggestions.forEach(function(suggestion) {
-                const suggestionss = data.suggestions; 
-              suggestionList.append($('<li>').text(suggestionss));
-            });
-            suggestionContainer.append(suggestionList);
-          }
+            const suggestions = data.suggestions; 
+            suggestionContainer.empty();
+        
+            if (suggestions.length > 0) {
+                const suggestionList = $('<ul>');
+                suggestions.forEach(function(suggestion) {
+                    suggestionList.append($('<li>').text(suggestion)); // Use 'suggestion' here
+                });
+                suggestionContainer.append(suggestionList);
+            }
         });
       } else {
         suggestionContainer.empty();
