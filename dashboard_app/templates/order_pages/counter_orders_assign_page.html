@@ -468,6 +468,9 @@
                                 selectedMobileNoInput.val(suggestion.mobile_no);
                                 selectedCustomerNameInput.val(suggestion.customer_name);
     
+                                // Hide the suggestions list (ul)
+                                suggestionContainer.hide();
+    
                                 // Hide the popover
                                 inputField.popover('hide');
                             });
@@ -478,6 +481,11 @@
             } else {
                 suggestionList.empty();
             }
+        });
+    
+        inputField.focus(function() {
+            // Display the suggestions container when the input field is focused
+            suggestionContainer.show();
         });
     
         inputField.focusout(function() {

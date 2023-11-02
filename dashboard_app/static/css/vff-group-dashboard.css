@@ -25495,3 +25495,7 @@ pre[class*="language-"] {
 .suggestion-item:hover {
   background-color: #ccc;
 }
+
+#suggestion-list li {
+  cursor: pointer;
+}
