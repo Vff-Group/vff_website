@@ -426,7 +426,8 @@
           if (suggestions.length > 0) {
             const suggestionList = $('<ul>');
             suggestions.forEach(function(suggestion) {
-              suggestionList.append($('<li>').text(suggestion));
+                const suggestionss = data.suggestions; 
+              suggestionList.append($('<li>').text(suggestionss));
             });
             suggestionContainer.append(suggestionList);
           }
