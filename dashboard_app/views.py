@@ -2194,7 +2194,16 @@ def load_sub_categories(request,cat_id):
     
     query_result = execute_raw_query(query)
     
+    query2 = "select sectionid,section_name from vff.laundry_sub_category_sectiontbl"
+    query2_result = execute_raw_query(query2)
     
+    section_data = []
+    if not query2_result == 500:
+        for row in query2_result:
+            section_data.append({
+                'sectionid':row[0],
+                'section_name':row[1]
+            })
         
     sub_category_data = []    
     if not query_result == 500:
@@ -2212,9 +2221,35 @@ def load_sub_categories(request,cat_id):
         error_msg = 'Something Went Wrong'
         return JsonResponse({'error_msg':error_msg});
         
-    context = {'sub_categories':sub_category_data}
+    context = {'sub_categories':sub_category_data,'section_data':section_data}
     return JsonResponse(context)
     
+def load_section_type_sub_categories(request,section_type):
+    query = "select sub_cat_name,sub_cat_img,cost,type,subcatid from vff.laundry_sub_categorytbl where section_type='"+str(section_type)+"'"
+    
+    query_result = execute_raw_query(query)
+    
+    
+        
+    sub_category_data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            sub_category_data.append({
+                'sub_cat_name': row[0],
+                'sub_cat_img': row[1],
+                'cost': row[2],
+                'type': row[3],
+                'subcatid': row[4],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+        return JsonResponse({'error_msg':error_msg});
+        
+    context = {'sub_categories':sub_category_data}
+    return JsonResponse(context)
+
 
 #Daily Reports Screen
 def daily_report(request):
