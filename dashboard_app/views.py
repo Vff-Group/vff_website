@@ -2185,7 +2185,7 @@ def counter_orders_screen(request):
         error_msg = 'Something Went Wrong'
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
-    context = {'query_result': category_data,'current_url': current_url,'error_msg':error_msg}
+    context = {'category_data': category_data,'current_url': current_url,'error_msg':error_msg}
     
     return render(request, 'order_pages/counter_orders_assign_page.html', context)
 

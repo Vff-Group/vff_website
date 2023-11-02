@@ -11,7 +11,113 @@
             <div class="card mb-4">
               <div class="card-header pb-0">
                 <div class="row">
+                    <!-- category start  -->
+                    <div class="col-lg-4">
+                    
+                        <div class="form-group">
+                            <label
+                              class="form-control-label"
+                              for="input-category"
+                              >Category</label
+                            >
+                            <select
+                              class="form-control form-control-alternative"
+                              id="input-category"
+                              name="main_category"
+                              required
+                            >
+                              <option disabled selected>
+                                Choose Expense Category
+                              </option>
+                              {% for category in category_data %}
+                              <option
+                                value="{{ category.categoryname }}"
+                                data-catid="{{ category.catid }}"
+                              >
+                                {{ category.category_name }}
+                              </option>
+                              {% endfor %}
+
+                              <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
+                            </select>
+                          </div>
+                        
+                      </div>
+                    <!-- end category  -->
+                      
+
+                       <!-- Sections category  -->
+                       <div class="col-lg-4">
+                    
+                        <div class="form-group">
+                            <label
+                              class="form-control-label"
+                              for="input-section"
+                              >Sub Category</label
+                            >
+                            <select
+                              class="form-control form-control-alternative"
+                              id="input-section"
+                              name="section_type"
+                              required
+                            >
+                              <option disabled selected>
+                                Choose Section
+                              </option>
+                              <!-- {% for category in data_all_categories %}
+                              <option
+                                value="{{ category.category_name }}"
+                                data-catid="{{ category.expcatid }}"
+                              >
+                                {{ category.category_name }}
+                              </option>
+                              {% endfor %} -->
+
+                              <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
+                            </select>
+                          </div>
+                        
+                      </div>
+                      <!-- End Sections  -->
+
+                      <!-- sub category  -->
+                      <div class="col-lg-4">
+                    
+                        <div class="form-group">
+                            <label
+                              class="form-control-label"
+                              for="input-subcategory"
+                              >Sub Category</label
+                            >
+                            <select
+                              class="form-control form-control-alternative"
+                              id="input-subcategory"
+                              name="subcategory"
+                              required
+                            >
+                              <option disabled selected>
+                                Choose Sub Category
+                              </option>
+                              <!-- {% for category in data_all_categories %}
+                              <option
+                                value="{{ category.category_name }}"
+                                data-catid="{{ category.expcatid }}"
+                              >
+                                {{ category.category_name }}
+                              </option>
+                              {% endfor %} -->
+
+                              <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
+                            </select>
+                          </div>
+                        
+                      </div>
+                      <!-- End sub category  -->
+
+                </div>
+                <div class="row">
                   <div class="col-lg-6">
+                    
                     <div class="form-group">
                       <label
                         for="date-of-expense"
@@ -28,7 +134,9 @@
                         required
                       />
                     </div>
+
                   </div>
+                  
                 </div>
               </div>
               <!-- Action Buttons  -->
@@ -79,7 +187,7 @@
                                     type="search"
                                     id="customer-name"
                                     name="mobno"
-                                    placeholder="Search customer"
+                                    placeholder="Search customer phone"
                                     value=""
                                     autocomplete="off"
                                     
