@@ -73,7 +73,7 @@
                               {% for section in section_data %}
                               <option
                                   value="{{ section.section_name }}"
-                                  data-sectionid="{{ section.section_id }}"
+                                  data-sectionid="{{ section.sectionid }}"
                               >
                                   {{ section.section_name }}
                               </option>
@@ -562,9 +562,9 @@
         }
         }
     
-        function loadSubCategoriesBySection(sectionSelect) {
-            var section_type = $(sectionSelect).val();
-            var section_id = $(sectionSelect).find(":selected").data("section_id");
+        function loadSubCategoriesBySection(sectionTypeSelect) {
+            var section_type = $(sectionTypeSelect).val();
+            var section_id = $(sectionTypeSelect).find(":selected").data("section_id");
             console.log('section_id::'+section_id)
             console.log('section_type::'+section_type)
             var sectionSelect = $('#input-section');
