@@ -51,7 +51,7 @@
                       
 
                        <!-- Sections category  -->
-                       <div class="col-lg-4">
+                       <div class="col-lg-4" id="section_col">
                     
                         <div class="form-group">
                             <label
@@ -64,21 +64,20 @@
                               id="input-section"
                               name="section_type"
                               required
-                              
+                              onchange="loadSubCategoriesBySection(this)"
                             >
                               <option disabled selected>
                                 Choose Section
                               </option>
                               
-
-                              <!-- {% for category in data_all_categories %}
+                              {% for section in section_data %}
                               <option
-                                value="{{ category.category_name }}"
-                                data-catid="{{ category.expcatid }}"
+                                  value="{{ section.section_name }}"
+                                  data-sectionid="{{ section.section_id }}"
                               >
-                                {{ category.category_name }}
+                                  {{ section.section_name }}
                               </option>
-                              {% endfor %} -->
+                              {% endfor %}
 
                               <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
                             </select>
@@ -528,10 +527,12 @@
             var cat_id = $(categorySelect).find(":selected").data("catids");
             console.log('CatID::'+cat_id)
             var sectionSelect = $('#input-section');
+            var section_column = $('#section_col');
             var subCategorySelect = $('#input-subcategory');
             console.log('selectedCategory::'+selectedCategory)
             if (selectedCategory == "DRY CLEAN"){
                 //Load Sections Here 
+                section_column.show();
                 $.get(`/admin_dashboard/load_sub_categories/${cat_id}`, function(data) {
                     sectionSelect.empty();
                     sectionSelect.append('<option disabled selected>Choose Section</option>');
@@ -545,7 +546,7 @@
                 });
           
             }else{
-                sectionSelect.hide();
+                section_column.hide();
             $.get(`/admin_dashboard/load_section_type_sub_categories/All`, function(data) {
                 subCategorySelect.empty();
                 subCategorySelect.append('<option disabled selected>Choose Section</option>');
@@ -562,30 +563,16 @@
         }
     
         function loadSectionSubCategories(sectionSelect) {
-            var section = $(sectionSelect).val();
+            var selectedSection = $(sectionSelect).val();
             var section_id = $(sectionSelect).find(":selected").data("section_id");
             console.log('section_id::'+section_id)
             var sectionSelect = $('#input-section');
             var subCategorySelect = $('#input-subcategory');
             
-            if (selectedCategory === "Dry Clean"){
-                //Load Sections Here 
-                $.get(`/admin_dashboard/load_sub_categories/`, function(data) {
-                    sectionSelect.empty();
-                    sectionSelect.append('<option disabled selected>Choose Section</option>');
             
-                    $.each(data.section_data, function(index, subSection) {
-                        sectionSelect.append($('<option>', {
-                            value: subSection.sectionid,
-                            text: subSection.section_name
-                        }));
-                    });
-                });
-          
-            }else{
-            $.get(`/admin_dashboard/load_section_type_sub_categories/All`, function(data) {
+            $.get(`/admin_dashboard/load_section_type_sub_categories/${section_type}`, function(data) {
                 subCategorySelect.empty();
-                subCategorySelect.append('<option disabled selected>Choose Section</option>');
+                subCategorySelect.append('<option disabled selected>Choose Sub Category</option>');
         
                 $.each(data.sub_categories, function(index, subCategory) {
                     subCategorySelect.append($('<option>', {
@@ -595,7 +582,7 @@
                 });
             });
       
-        }
+        
         }
     
     </script>
