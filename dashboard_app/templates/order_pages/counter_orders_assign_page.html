@@ -552,8 +552,12 @@
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc0/dist/js/select2.min.js"></script>
+    
     <script>
+        $(document).ready(function() {
+            $('#input-section').select2();
+          });
         function loadSubCategories(categorySelect) {
             var selectedCategory = $(categorySelect).val();
             var cat_id = $(categorySelect).find(":selected").data("catids");

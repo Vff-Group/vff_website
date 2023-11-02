@@ -2165,6 +2165,7 @@ def counter_orders_screen(request):
         
     category_data = []    
     if not query_result == 500:
+        #TODO:Need to look into this for price section when [Use another query to load prices]
         for row in query_result:
             regular_prize = row[3]
             regular_prize_type = row[4]
