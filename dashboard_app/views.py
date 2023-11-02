@@ -2231,8 +2231,10 @@ def daily_report(request):
     
     return render(request, 'reports/daily_report.html', {'current_url': current_url})
 
-def search_customer_to_assign_order(request,mobno):
-    #
+def search_customer_to_assign_order(request):
+    
+    mobno = request.GET.get('mobno', '')
+    print(f'Mobile No::{mobno}')
     query = "select consmrid,customer_name,company_name,gstno,igstno,mobile_no from vff.usertbl,vff.laundry_customertbl where laundry_customertbl.usrid=usertbl.usrid and mobile_no ILIKE '"+str(mobno)+"%'"
     query_result = execute_raw_query(query)
                
@@ -2251,8 +2253,12 @@ def search_customer_to_assign_order(request,mobno):
                 'igstno': row[4],
                 'mobile_no': row[5],
             })
+    current_url = request.get_full_path()
     
-    return JsonResponse({'results': data})
+    context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    
+    return render(request, 'order_pages/counter_orders_assign_page.html', context)
+    
 #Orders Reports Screen
 def order_report(request):
     isLogin = is_loggedin(request)

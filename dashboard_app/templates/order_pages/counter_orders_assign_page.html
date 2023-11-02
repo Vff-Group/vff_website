@@ -68,7 +68,7 @@
           <div class="card-header pb-0 p-3">
             <div class="row d-flex justify-content-end">
               <div class="col-8 d-flex align-items-center">
-                <form action="/search_customer_to_assign_order/" method="get">
+                <form action="{% url 'dashboard_app:search_customer_to_assign_order' %}" method="get">
                     {% csrf_token %}
                 <div class="form-group">
                   <input
@@ -76,6 +76,7 @@
                     type="search"
                     id="customer-name"
                     name="customername"
+                    data-filter="mobno"
                     placeholder="Search customer"
                     value=""
                     required
@@ -186,7 +187,7 @@
 </main>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
+<!-- <script>
     document.addEventListener('DOMContentLoaded', function () {
         const form = document.querySelector('form');
         form.addEventListener('submit', function (e) {
@@ -221,7 +222,7 @@
                 .catch(error => console.error(error));
         });
     });
-    </script>
+    </script> -->
     
 {% endblock  %}
 
