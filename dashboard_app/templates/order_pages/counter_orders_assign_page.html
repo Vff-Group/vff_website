@@ -82,7 +82,7 @@
                     required
                   />
                 </div>
-                <button type="submit" class="btn btn-primary">Search</button>
+               
             </form>
             <div id="suggestion-container"></div>
               </div>
@@ -426,7 +426,7 @@
             if (suggestions.length > 0) {
                 const suggestionList = $('<ul>');
                 suggestions.forEach(function(suggestion) {
-                    suggestionList.append($('<li>').text(suggestion.mobile_no)); // Use 'suggestion' here
+                    suggestionList.append($('<li>').text(suggestion.customer_name)); // Use 'suggestion' here
                 });
                 suggestionContainer.append(suggestionList);
             }
