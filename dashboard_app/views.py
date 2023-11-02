@@ -2190,11 +2190,11 @@ def counter_orders_screen(request):
     return render(request, 'order_pages/counter_orders_assign_page.html', context)
 
 def load_sub_categories(request,cat_id):
-    query = "select sub_cat_name,sub_cat_img,cost,type,section_type,subcatid from vff.laundry_sub_categorytbl where catid='"+str(cat_id)+"'"
+    query = "select sub_cat_name,sub_cat_img,cost,type,section_type,subcatid from vff.laundry_sub_categorytbl where catid='"+str(cat_id)+"' order by sub_cat_name"
     
     query_result = execute_raw_query(query)
     
-    query2 = "select sectionid,section_name from vff.laundry_sub_category_sectiontbl"
+    query2 = "select sectionid,section_name from vff.laundry_sub_category_sectiontbl order by section_name"
     query2_result = execute_raw_query(query2)
     
     section_data = []
@@ -2225,7 +2225,7 @@ def load_sub_categories(request,cat_id):
     return JsonResponse(context)
     
 def load_section_type_sub_categories(request,section_type):
-    query = "select sub_cat_name,sub_cat_img,cost,type,subcatid from vff.laundry_sub_categorytbl where section_type='"+str(section_type)+"'"
+    query = "select sub_cat_name,sub_cat_img,cost,type,subcatid from vff.laundry_sub_categorytbl where section_type='"+str(section_type)+"' order by sub_cat_name"
     
     query_result = execute_raw_query(query)
     
