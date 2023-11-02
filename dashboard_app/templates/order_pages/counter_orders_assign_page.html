@@ -529,8 +529,8 @@
             console.log('CatID::'+cat_id)
             var sectionSelect = $('#input-section');
             var subCategorySelect = $('#input-subcategory');
-            console.log('categorySelect::'+categorySelect)
-            if (categorySelect == "DRY CLEAN"){
+            console.log('selectedCategory::'+selectedCategory)
+            if (selectedCategory == "DRY CLEAN"){
                 //Load Sections Here 
                 $.get(`/admin_dashboard/load_sub_categories/`, function(data) {
                     sectionSelect.empty();
