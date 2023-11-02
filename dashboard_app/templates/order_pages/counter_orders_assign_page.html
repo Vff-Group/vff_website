@@ -545,6 +545,7 @@
                 });
           
             }else{
+                sectionSelect.hide();
             $.get(`/admin_dashboard/load_section_type_sub_categories/All`, function(data) {
                 subCategorySelect.empty();
                 subCategorySelect.append('<option disabled selected>Choose Section</option>');
