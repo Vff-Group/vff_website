@@ -530,7 +530,7 @@
             var sectionSelect = $('#input-section');
             var subCategorySelect = $('#input-subcategory');
             
-            if (selectedCategory === "DRY CLEAN"){
+            if (categorySelect === "DRY CLEAN"){
                 //Load Sections Here 
                 $.get(`/admin_dashboard/load_sub_categories/`, function(data) {
                     sectionSelect.empty();
