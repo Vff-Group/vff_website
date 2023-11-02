@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      width: 300px; /* Adjust the width as needed */
+      margin: 0 auto;
+    }
+
+    .bill {
+      border: 1px solid #000;
+      padding: 10px;
+      text-align: center; /* Center align the content within the bill div */
+    }
+
+    .header {
+      text-align: center;
+      font-size: 10px; /* Set the font size for headings to 10px */
+    }
+
+    .brand-logo {
+      margin-bottom: 10px;
+    }
+
+    .store-info {
+      text-align: left;
+      border-bottom: 1px dashed #000; /* Add a dotted divider after company details */
+      padding-bottom: 10px;
+      font-size: 8px; /* Set the font size for items to 8px */
+    }
+
+    .receipt-info {
+      text-align: left;
+      border-bottom: 1px dashed #000; /* Add a dotted divider after receipt details */
+      padding-bottom: 10px;
+      font-size: 8px; /* Set the font size for items to 8px */
+    }
+
+    .item-list {
+      margin-top: 10px;
+    }
+
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+      background-color: #f2f2f2; /* Background color for the table header */
+      font-weight: bold; /* Make the header text bold */
+      font-size: 10px; /* Set the font size for headings to 10px */
+      border-bottom: 1px solid #000; /* Add a solid border below the header */
+    }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 8px; /* Set the font size for items to 8px */
+      padding: 5px 0;
+    }
+
+    .item-name {
+      width: 80px; /* Set a fixed width for the "Item" column */
+      display: flex;
+      justify-content: center; /* Align the item name to the center */
+    }
+
+    .total {
+      text-align: right;
+      font-size: 10px; /* Set the font size for headings to 10px */
+    }
+
+    .payment-info {
+      text-align: left;
+      margin-top: 10px;
+      border-top: 1px dashed #000; /* Add a dotted divider above payment details */
+      padding-top: 10px;
+      font-size: 8px; /* Set the font size for items to 8px */
+    }
+
+    /* Add a small dotted line after every table row */
+    .item-list .item {
+      border-bottom: 1px dotted #000;
+    }
+
+    .terms-and-conditions {
+      font-size: 8px; /* Set the font size for terms and conditions to 8px */
+      margin-top: 10px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="bill">
+    <div class="brand-logo">
+      <img src="https://vff-group.com/static/images/logo.png" alt="Logo" width="50">
+    </div>
+
+    <div class="header">
+      <h1 style="font-size: 10px;">Ve7vet Wash</h1>
+      <p>123 Main Street</p>
+      <p>City, State, ZIP</p>
+      <p>Phone: (123) 456-7890</p>
+      <p>Website: <a href="https://vff-group.com/">www.vff-group.com/</a></p>
+    </div>
+
+    <!-- <div class "store-info">
+      <p>Company: XYZ Corporation</p>
+      <p>Contact: John Doe</p>
+      <p>Email: john.doe@example.com</p>
+    </div> -->
+
+    <div class="receipt-info">
+      <p>Receipt #: 12345</p>
+      <p>Date: 2023-11-02 15:30:00</p>
+      <p>Cashier: Shaheed</p>
+      <p>Register: 6</p>
+    </div>
+
+    <div class="receipt-info">
+        <p>Customer: Rizwan</p>
+        <p>Phone: +91-8297867654</p>
+      </div>
+
+    <div class="item-list">
+      <div class="table-header">
+        <span class="item-name">Item</span>
+        <span class="item-name">Quantity</span>
+        <span class="item-name">Price</span>
+        <span class="item-name">Total</span>
+      </div>
+
+      <div class="item">
+        <span class="item-name">Dry Clean</span>
+        <span class="item-name">2</span>
+        <span class="item-name">$2.50</span>
+        <span class="item-name">$5.00</span>
+      </div>
+      <div class="item">
+        <span class="item-name">Wash & Fold</span>
+        <span class="item-name">4</span>
+        <span class="item-name">$2.50</span>
+        <span class="item-name">$6.00</span>
+      </div>
+      <!-- Add more items here with long item names that will wrap automatically -->
+    </div>
+
+    <div class="total">
+      <p>Subtotal: $15.00</p>
+      <p>Tax (7%): $1.05</p>
+      <p>Total: $16.05</p>
+    </div>
+
+    <div class="payment-info">
+      <p>Payment Method: Credit Card</p>
+      <p>Card Type: Visa</p>
+      <p>Card Number: **** **** **** 1234</p>
+    </div>
+
+    <div class="terms-and-conditions">
+      <p>Terms and Conditions:</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+      <!-- Add your terms and conditions text here -->
+    </div>
+  </div>
+</body>
+</html>

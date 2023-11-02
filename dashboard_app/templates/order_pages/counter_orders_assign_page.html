@@ -68,7 +68,7 @@
           <div class="card-header pb-0 p-3">
             <div class="row d-flex justify-content-end">
               <div class="col-8 d-flex align-items-center">
-                <form action="{% url 'dashboard_app:search_customer_to_assign_order' %}" method="get">
+                <form method="get">
                     {% csrf_token %}
                 <div class="form-group">
                   <input
@@ -186,213 +186,152 @@
 
       <!-- Add Expenses  -->
       <div class="col-md-4">
-        <div class="modal fade"
+        <div
+          class="modal fade"
           id="modal-default1"
           tabindex="-1"
           role="dialog"
           aria-labelledby="modal-default"
-          aria-hidden="true">
+          aria-hidden="true"
+        >
           <div
             class="modal-dialog modal- modal-dialog-centered modal-"
             role="document"
           >
             <div class="modal-content">
-              
-              <form
-                method="post"
-                action=""
-              >
+              <form method="post" action="">
                 {% csrf_token %}
                 <div class="modal-body">
-                  <h6 class="heading-small text-muted mb-4">Order Details</h6>
+                  <h6 class="heading-small text-muted mb-4">
+                    Order Details
+                  </h6>
                   <div class="pl-lg-4">
                     <div class="row">
                       <div class="col">
+                        <hr />
                         <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label
-                                      for="date-of-expense"
-                                      class="form-control-label"
-                                      >Delivery Date *</label
-                                    >
-                                    <input
-                                      class="form-control form-control-alternative"
-                                      type="date"
-                                      id="date-of-expense"
-                                      name="dateofexpense"
-                                      value="{{ data.dateofexpense|date:'Y-m-d' }}"
-                                      required
-                                    />
-                                  </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label
+                                for="date-of-expense"
+                                class="form-control-label"
+                                >Delivery Date *</label
+                              >
+                              <input
+                                class="form-control form-control-alternative"
+                                type="date"
+                                id="date-of-expense"
+                                name="dateofexpense"
+                                value="{{ data.dateofexpense|date:'Y-m-d' }}"
+                                required
+                              />
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label
-                                      for="discount-label"
-                                      class="form-control-label"
-                                      >Delivery Date *</label
-                                    >
-                                    <input
-                                      class="form-control form-control-alternative"
-                                      type="text"
-                                      id="discount-label"
-                                      name="dateofexpense"
-                                      value=""
-                                      placeholder="Enter if any discount"
-                                      required
-                                    />
-                                  </div>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-<div class="col-lg-6">
-    Sub Total:
-    
-    Addon:
-    
-    Discount:
-    
-    Tax (5%):
-    
-    
-</div>
-<div class="col-lg-6 d-flex justify-content-end">
-    AED 0.00
-    AED 25.00
-    AED 0.00
-    10%
-    AED 1.25
-    
-</div>
-
-                        </div>
-
-                        <div class="form-group">
-                          <label
-                            class="form-control-label"
-                            for="input-category"
-                            >Expense Category</label
-                          >
-                          <select
-                            class="form-control form-control-alternative"
-                            id="input-category"
-                            name="exp_category"
-                            required
-                          >
-                            <option disabled selected>
-                              Choose Expense Category
-                            </option>
-                            {% for category in data_all_categories %}
-                            <option
-                              value="{{ category.category_name }}"
-                              data-catid="{{ category.expcatid }}"
-                            >
-                              {{ category.category_name }}
-                            </option>
-                            {% endfor %}
-
-                            <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
-                          </select>
-                        </div>
-
-                        <input
-                          type="hidden"
-                          id="selectedCategoryId"
-                          name="selectedCategoryId"
-                          value=""
-                        />
-
-                        <div class="form-group">
-                          <label
-                            class="form-control-label"
-                            for="input-country"
-                            >Expense Amount</label
-                          >
-                          <input
-                            type="number"
-                            id="input-postal-code"
-                            class="form-control form-control-alternative"
-                            placeholder="Enter Expense Amount"
-                            name="exp_amount"
-                            value="{{ data.pincode|default:'' }}"
-                            required
-                          />
-                        </div>
-
-                        <div class="form-group">
-                          <label
-                            class="form-control-label"
-                            for="input-category"
-                            >Payment Mode</label
-                          >
-                          <select
-                            class="form-control form-control-alternative"
-                            id="input-category"
-                            name="payment_mode"
-                            required
-                          >
-                            <option disabled selected>
-                              Choose Payment Mode
-                            </option>
-                            <option value="Cash">Cash</option>
-                            <option value="UPI">UPI</option>
-                            <option value="Card">Card</option>
-                            <option value="Cheque">Cheque</option>
-                            <option value="Bank Transfer">
-                              Bank Transfer
-                            </option>
-                            <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
-                          </select>
-                        </div>
-
-                        <h5 class="modal-title" id="taxModalLabel">
-                          Tax Included?
-                        </h5>
-                        <div class="form-group">
-                          <label for="taxIncluded">Select an option:</label>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="radio"
-                              name="taxIncluded"
-                              id="taxNo"
-                              value="no"
-                              checked
-                            />
-                            <label class="form-check-label" for="taxNo">
-                              NO
-                            </label>
                           </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="radio"
-                              name="taxIncluded"
-                              id="taxYes"
-                              value="yes"
-                            />
-                            <label class="form-check-label" for="taxYes">
-                              YES
-                            </label>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label
+                                for="discount-label"
+                                class="form-control-label"
+                                >Delivery Date *</label
+                              >
+                              <input
+                                class="form-control form-control-alternative"
+                                type="text"
+                                id="discount-label"
+                                name="dateofexpense"
+                                value=""
+                                placeholder="Enter if any discount"
+                                required
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <p class="mb-0"><small>Sub Total:</small></p>
+                            <p class="mb-0"><small>Addon:</small></p>
+                            <p class="mb-0"><small>Discount:</small></p>
+                            <p class="mb-0"><small>Tax(5%):</small></p>
+                          </div>
+                          <div
+                            class="col-lg-6 d-flex flex-column align-items-end"
+                          >
+                            <p class="mb-0"><small>Rs.00/-</small></p>
+                            <p class="mb-0"><small>Rs.00/-</small></p>
+                            <p class="mb-0"><small>Rs.00/-</small></p>
+                            <p class="mb-0"><small>Rs.00/-</small></p>
+                          </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                          <div class="col-lg-6"><h6>Gross Total</h6></div>
+                          <div
+                            class="col-lg-6 d-flex flex-column align-items-end"
+                          >
+                            <h6>Rs 00</h6>
                           </div>
                         </div>
 
-                        <div
-                          class="form-group"
-                          id="taxPercentageInput"
-                          style="display: none"
-                        >
-                          <label for="taxPercentage">Tax Percentage:</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="taxPercentage"
-                            placeholder="Example 5% "
-                            name="taxPercentage"
-                          />
+                        <hr />
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label
+                                class="form-control-label"
+                                for="input-country"
+                                >Paid Amount</label
+                              >
+                              <input
+                                type="number"
+                                id="input-postal-code"
+                                class="form-control form-control-alternative"
+                                placeholder="Enter Expense Amount"
+                                name="exp_amount"
+                                value="{{ data.pincode|default:'' }}"
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label
+                                class="form-control-label"
+                                for="input-category"
+                                >Payment Mode</label
+                              >
+                              <select
+                                class="form-control form-control-alternative"
+                                id="input-category"
+                                name="payment_mode"
+                                required
+                              >
+                                <option disabled selected>
+                                  Choose Payment Mode
+                                </option>
+                                <option value="Cash">Cash</option>
+                                <option value="UPI">UPI</option>
+                                <option value="Card">Card</option>
+                                <option value="Cheque">Cheque</option>
+                                <option value="Bank Transfer">
+                                  Bank Transfer
+                                </option>
+                                <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
+                              </select>
+                            </div>
+                          </div>
                         </div>
+
+                        <hr />
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <h6>Balance Amount</h6>
+                          </div>
+                          <div class="col-lg-6 d-flex justify-content-end">
+                            <h6>Rs.0/-</h6>
+                          </div>
+                        </div>
+                        <hr />
 
                         <div class="pl-lg-4">
                           <div class="form-group">
@@ -411,7 +350,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="submit" class="btn bg-gradient-success">
-                    Save
+                    Save & Print
                   </button>
 
                   <button
@@ -470,6 +409,39 @@
         });
     });
     </script> -->
-    
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    const inputField = $('#customer-name');
+    const suggestionContainer = $('#suggestion-container');
+
+    inputField.on('input', function() {
+      const inputText = inputField.val();
+
+      if (inputText.length > 0) {
+        $.get('/search_suggestions/', { mobno: inputText }, function(data) {
+          const suggestions = data.suggestions;
+          suggestionContainer.empty();
+
+          if (suggestions.length > 0) {
+            const suggestionList = $('<ul>');
+            suggestions.forEach(function(suggestion) {
+              suggestionList.append($('<li>').text(suggestion));
+            });
+            suggestionContainer.append(suggestionList);
+          }
+        });
+      } else {
+        suggestionContainer.empty();
+      }
+    });
+
+    inputField.focusout(function() {
+      // Clear suggestions when the input field loses focus.
+      suggestionContainer.empty();
+    });
+  });
+</script>
+
 {% endblock  %}
 
