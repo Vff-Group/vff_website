@@ -69,6 +69,7 @@
             <div class="row d-flex justify-content-end">
               <div class="col-8 d-flex align-items-center">
                 <form action="/search_customer_to_assign_order/" method="get">
+                    {% csrf_token %}
                 <div class="form-group">
                   <input
                     class="form-control form-control-alternative"
