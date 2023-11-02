@@ -2231,9 +2231,9 @@ def daily_report(request):
     
     return render(request, 'reports/daily_report.html', {'current_url': current_url})
 
-def search_customer_to_assign_order(request):
+def search_customer_to_assign_order(request,mobno):
     
-    mobno = request.GET.get('mobno', '')
+    # mobno = request.GET.get('mobno', '')
     print(f'Mobile No::{mobno}')
     query = "select consmrid,customer_name,company_name,gstno,igstno,mobile_no from vff.usertbl,vff.laundry_customertbl where laundry_customertbl.usrid=usertbl.usrid and mobile_no ILIKE '"+str(mobno)+"%'"
     query_result = execute_raw_query(query)
