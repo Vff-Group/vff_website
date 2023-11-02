@@ -348,7 +348,7 @@ def add_customer(request,usrid=None):
     if usrid:
         try:
             with connection.cursor() as cursor:
-                cursor.execute("select usrname,mobile_no,usertbl.address,age,gender,consmrid,landmark,date_of_birth,pincode,query,profile_img,branchid,gstno,company_name,igstno"
+                cursor.execute("select usrname,mobile_no,usertbl.address,age,gender,consmrid,landmark,date_of_birth,pincode,query,profile_img,laundry_customertbl.branchid,gstno,company_name,igstno"
                                " from vff.laundry_customertbl,vff.usertbl where laundry_customertbl.usrid=usertbl.usrid and laundry_customertbl.usrid='"+str(usrid)+"'")
                 row = cursor.fetchone()
                 print(f'fetching the single user data::{row}')
