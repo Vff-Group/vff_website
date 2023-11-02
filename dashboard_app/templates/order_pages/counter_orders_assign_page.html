@@ -49,6 +49,41 @@
                       </div>
                     <!-- end category  -->
                       
+                    <!-- Other Service Prices   -->
+                    <div class="col-lg-4" id="price_col">
+                    
+                        <div class="form-group">
+                            <label
+                              class="form-control-label"
+                              for="input-price"
+                              >Prices</label
+                            >
+                            <select
+                              class="form-control form-control-alternative"
+                              id="input-price"
+                              name="price_section"
+                              required
+                              
+                            >
+                              <option disabled selected>
+                                Choose Section
+                              </option>
+                              
+                              {% for category in category_data %}
+                              <option
+                                  value="{{ category.regular_prize }} [{{ category.regular_prize_type}}]"
+                                  data-section_id="{{ section.sectionid }}"
+                              >
+                              {{ category.regular_prize }} [{{ category.regular_prize_type}}]
+                              </option>
+                              {% endfor %}
+
+                              <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
+                            </select>
+                          </div>
+                        
+                      </div>
+                      <!-- End Other Service Prices  -->
 
                        <!-- Sections category  -->
                        <div class="col-lg-4" id="section_col">
@@ -125,7 +160,7 @@
             </form>
 
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-lg-6" id="only-dry-clean">
                     
                     <div class="form-group">
                       <label
@@ -146,6 +181,27 @@
 
                   </div>
                   
+                  <div class="col-lg-6" id="other-then-dry-clean">
+                    
+                    <div class="form-group">
+                      <label
+                        for="date-of-expense"
+                        class="form-control-label text-secondary"
+                        >Add Item Quantity in Kgs</label
+                      >
+                      <input
+                        class="form-control form-control-alternative"
+                        type="number"
+                        id="date-of-expense"
+                        name="dateofexpense"
+                        placeholder="Add Item Quantity"
+                        value=""
+                        required
+                      />
+                    </div>
+
+                  </div>
+
                 </div>
               </div>
               <!-- Action Buttons  -->
