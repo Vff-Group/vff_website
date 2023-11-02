@@ -2255,7 +2255,7 @@ def search_customer_to_assign_order(request):
             })
     current_url = request.get_full_path()
     
-    context = {'query_result': data,'current_url': current_url}
+    context = {'customer_result': data,'current_url': current_url}
     
     return render(request, 'order_pages/counter_orders_assign_page.html', context)
     
