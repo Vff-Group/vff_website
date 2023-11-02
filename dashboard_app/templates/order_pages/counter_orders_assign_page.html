@@ -192,7 +192,7 @@
             e.preventDefault();
             const mobileNumber = document.getElementById('customer-name').value;
     
-            fetch(`/search_customer_to_assign_order/?mobno=${mobileNumber}`)
+            fetch(`/search_customer_to_assign_order/mobno=${mobileNumber}`)
                 .then(response => response.json())
                 .then(data => {
                     const resultContainer = document.getElementById('result-container');
