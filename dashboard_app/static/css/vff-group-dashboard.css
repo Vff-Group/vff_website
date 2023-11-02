@@ -25464,4 +25464,20 @@ pre[class*="language-"] {
           -o-transition:.6s;
           transition:.6s}}
 
-          
+.search-suggestions {
+  position: absolute;
+  background-color: white;
+  border: 1px solid black;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1;
+}
+
+.search-suggestions li {
+  cursor: pointer;
+  padding: 10px;
+}
+
+.search-suggestions li:hover {
+  background-color: #ccc;
+}

@@ -72,8 +72,8 @@
                   <input
                     class="form-control form-control-alternative"
                     type="search"
-                    id="date-of-expense"
-                    name="dateofexpense"
+                    id="customer-name"
+                    name="customername"
                     placeholder="Search customer"
                     value=""
                     required
@@ -92,7 +92,7 @@
                   <input
                     class="form-control form-control-alternative"
                     type="text"
-                    id="date-of-expense"
+                    id="search_customer"
                     name="dateofexpense"
                     placeholder="Search customer"
                     value="ORD-ID 4500"
@@ -179,5 +179,54 @@
    
   </div>
 </main>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    const input = document.getElementById('customer-name');
+const suggestions = document.querySelector('.search-suggestions');
+
+input.addEventListener('input', function() {
+  // Get the search term and mobno.
+  const searchTerm = input.value;
+  const mobno = document.querySelector('input[name="mobno"]').value;
+
+  // Make an AJAX request to the backend to get the search suggestions.
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', '/search_customer_to_assign_order/?mobno=' + mobno + '&searchTerm=' + searchTerm);
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      // Parse the JSON response.
+      const response = JSON.parse(xhr.responseText);
+
+      // Clear the existing search suggestions.
+      suggestions.innerHTML = '';
+
+      // Create a new search suggestion for each result.
+      for (const result of response.results) {
+        const li = document.createElement('li');
+        li.textContent = result.customer_name;
+        suggestions.appendChild(li);
+      }
+
+      // Show the search suggestions.
+      suggestions.style.display = 'block';
+    }
+  };
+  xhr.send();
+});
+
+// Handle the click event on the search suggestions.
+suggestions.addEventListener('click', function(event) {
+  // Get the clicked search suggestion.
+  const suggestion = event.target;
+
+  // Set the input value to the clicked search suggestion.
+  input.value = suggestion.textContent;
+
+  // Hide the search suggestions.
+  suggestions.style.display = 'none';
+});
+
+</script>
 {% endblock  %}
 

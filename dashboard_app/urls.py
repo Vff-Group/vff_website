@@ -59,6 +59,7 @@ urlpatterns = [
     #Order Screens
     path('order_status_screen/',views.order_status_screen,name='order_status_screen'),
     path('counter_orders_screen/',views.counter_orders_screen,name='counter_orders_screen'),
+    path('search_customer_to_assign_order/<int:mobno>',views.search_customer_to_assign_order,name='search_customer_to_assign_order'),
     
     #Reports Screen
     path('daily_report/',views.daily_report,name='daily_report'),

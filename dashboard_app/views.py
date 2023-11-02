@@ -2150,39 +2150,44 @@ def counter_orders_screen(request):
         return redirect('dashboard_app:login')
     error_msg = "No Categories Found"
     branch_id = request.session.get('branchid')
-    # filter = ''
-    # if branch_id :
-    #     filter = " and laundry_delivery_boytbl.branchid='"+str(branch_id)+"'"
-    # query = "select catid,category_name,cat_img,regular_price,regular_price_type,express_price,express_price_type,offer_price,offer_price_type,description from vff.laundry_categorytbl order by catid desc"
+    filter = ''
+   #CategoryWise Details
+   #select category_name,regular_price,regular_price_type,express_price_type,express_price,offer_price,offer_price_type,cat_img from vff.laundry_categorytbl where catid='"+str(cat_id)+"'
+   
+   #Sub Categorywise Details
+   #select sub_cat_name,sub_cat_img,cost,type,section_type,subcatid from vff.laundry_sub_categorytbl where catid='"+str(cat_id)+"'
+   
+    query = "select catid,category_name,cat_img,regular_price,regular_price_type,express_price,express_price_type,offer_price,offer_price_type,description,min_hours from vff.laundry_categorytbl order by category_name "
     
-    # query_result = execute_raw_query(query)
+    query_result = execute_raw_query(query)
     
     
         
-    # data = []    
-    # if not query_result == 500:
-    #     for row in query_result:
+    category_data = []    
+    if not query_result == 500:
+        for row in query_result:
             
-    #         data.append({
-    #             'catid': row[0],
-    #             'categoryname': row[1],
-    #             'categoryimg': row[2],
-    #             'regular_prize': row[3],
-    #             'regular_prize_type': row[4],
-    #             'express_prize': row[5],
-    #             'express_prize_type': row[6],
-    #             'offer_prize': row[7],
-    #             'offer_prize_type': row[8],
-    #             'description': row[9],
+            category_data.append({
+                'catid': row[0],
+                'categoryname': row[1],
+                'cat_img': row[2],
+                'regular_prize': row[3],
+                'regular_prize_type': row[4],
+                'express_prize': row[5],
+                'express_prize_type': row[6],
+                'offer_prize': row[7],
+                'offer_prize_type': row[8],
+                'description': row[9],
+                'min_hours': row[9],
                
-    #         })
-    # else:
-    #     error_msg = 'Something Went Wrong'
+            })
+    else:
+        error_msg = 'Something Went Wrong'
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
-    # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    context = {'query_result': category_data,'current_url': current_url,'error_msg':error_msg}
     
-    return render(request, 'order_pages/counter_orders_assign_page.html', {'current_url': current_url})
+    return render(request, 'order_pages/counter_orders_assign_page.html', context)
 
 
 #Daily Reports Screen
@@ -2226,6 +2231,32 @@ def daily_report(request):
     
     return render(request, 'reports/daily_report.html', {'current_url': current_url})
 
+def search_customer_to_assign_order(request,mobno):
+    #
+    query = "select consmrid,customer_name,company_name,gstno,igstno,mobile_no from vff.usertbl,vff.laundry_customertbl where laundry_customertbl.usrid=usertbl.usrid and mobile_no ILIKE '"+str(mobno)+"%'"
+    query_result = execute_raw_query(query)
+               
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+           
+             data.append({
+                 'consmrid': row[0],
+                 'customer_name': row[1],
+                 'company_name': row[2],
+                 'gstno': row[3],
+                 'igstno': row[4],
+                 'mobile_no': row[5],
+                 
+              
+             })
+    else:
+         error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+     
+    context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    
+    return JsonResponse({'results': data})
 #Orders Reports Screen
 def order_report(request):
     isLogin = is_loggedin(request)
