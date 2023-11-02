@@ -70,35 +70,33 @@
               <div class="col-8 d-flex align-items-center">
                 
                 <div class="row">
-                    <form method="get">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <input
-                                class="form-control form-control-alternative"
-                                type="search"
-                                id="customer-name"
-                                name="mobno"
-                                placeholder="Search customer"
-                                value=""
-                                required
-                                data-toggle="popover"
-                                data-placement="bottom" 
-                                data-content=""
-                                autocomplete="off"
-                            />
+                    <div class="col-lg-6">
+                        <form method="get">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input
+                                    class="form-control form-control-alternative"
+                                    type="search"
+                                    id="customer-name"
+                                    name="mobno"
+                                    placeholder="Search customer"
+                                    value=""
+                                    required
+                                />
+                            </div>
+                        </form>
+                        <div id="suggestion-container">
+                            <ul id="suggestion-list"></ul>
                         </div>
-                    </form>
-                    <div id="suggestion-container" style="display: none;">
-                        <ul id="suggestion-list"></ul>
+                        <input
+                            class="form-control form-control-alternative"
+                            type="hidden"
+                            id="selected-customer-id"
+                            name="selected_customer_id"
+                            value=""
+                        />
+                        
                     </div>
-                    <input
-                        class="form-control form-control-alternative"
-                        type="hidden"
-                        id="selected-customer-id"
-                        name="selected_customer_id"
-                        value=""
-                    />
-                    
                 </div>
 
               </div>
@@ -389,19 +387,49 @@
 </main>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const mobileNumber = document.getElementById('customer-name').value;
+    
+            fetch(`/search_customer_to_assign_order/mobno=${mobileNumber}`)
+                .then(response => response.json())
+                .then(data => {
+                    const resultContainer = document.getElementById('result-container');
+                    resultContainer.innerHTML = ''; // Clear previous results
+    
+                    if (data.results.length > 0) {
+                        // Customer(s) found, display details
+                        data.results.forEach(customer => {
+                            resultContainer.innerHTML += `
+                                <div class="customer-details">
+                                    <p>Customer ID: ${customer.consmrid}</p>
+                                    <p>Name: ${customer.customer_name}</p>
+                                    <p>Company: ${customer.company_name}</p>
+                                    <p>GST Number: ${customer.gstno}</p>
+                                    <p>IGST Number: ${customer.igstno}</p>
+                                    <p>Mobile Number: ${customer.mobile_no}</p>
+                                </div>
+                            `;
+                        });
+                    } else if (data.error_msg) {
+                        // Customer not found, display toast message
+                        resultContainer.innerHTML = `<p class="error-toast">${data.error_msg}</p>`;
+                    }
+                })
+                .catch(error => console.error(error));
+        });
+    });
+    </script> -->
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
         const inputField = $('#customer-name');
         const suggestionContainer = $('#suggestion-container');
         const suggestionList = $('#suggestion-list');
         const selectedCustomerIdInput = $('#selected-customer-id');
-    
-        // Initialize the popover
-        inputField.popover({
-            html: true,
-            content: suggestionContainer.html(),
-            container: 'body'
-        });
     
         inputField.on('input', function() {
             const inputText = inputField.val();
@@ -421,27 +449,20 @@
                                 // Set the selected customer_id in the hidden input
                                 selectedCustomerIdInput.val(suggestion.consmrid);
     
-                                // Hide the popover
-                                inputField.popover('hide');
+                                suggestionList.empty(); // Clear the suggestion list
                             });
                             suggestionList.append(suggestionItem);
                         });
-                    } else {
-                        suggestionList.empty();
                     }
-    
-                    // Update the popover content
-                    inputField.attr('data-content', suggestionContainer.html());
                 });
             } else {
                 suggestionList.empty();
-                inputField.attr('data-content', ''); // Clear the popover content
             }
         });
     
         inputField.focusout(function() {
-            // Hide the popover when the input field loses focus
-            inputField.popover('hide');
+            // Clear suggestions when the input field loses focus.
+            suggestionList.empty();
         });
     });
     
