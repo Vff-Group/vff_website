@@ -96,6 +96,20 @@
                             name="selected_customer_id"
                             value=""
                         />
+                        <input
+                            class="form-control form-control-alternative"
+                            type="hidden"
+                            id="selected-mobile-no"
+                            name="selected-mobile-no"
+                            value=""
+                        />
+                        <input
+                            class="form-control form-control-alternative"
+                            type="hidden"
+                            id="selected-customer-name"
+                            name="selected-customer-name"
+                            value=""
+                        />
                         
                     </div>
                 </div>
@@ -431,6 +445,8 @@
         const suggestionContainer = $('#suggestion-container');
         const suggestionList = $('#suggestion-list');
         const selectedCustomerIdInput = $('#selected-customer-id');
+        const selectedMobileNoInput = $('#selected-mobile-no');
+        const selectedCustomerNameInput = $('#selected-customer-name');
     
         inputField.on('input', function() {
             const inputText = inputField.val();
@@ -447,10 +463,13 @@
                                 // When a suggestion is clicked, set the value in the input field
                                 inputField.val(suggestion.customer_name);
     
-                                // Set the selected customer_id in the hidden input
+                                // Set the selected customer details in hidden inputs
                                 selectedCustomerIdInput.val(suggestion.consmrid);
+                                selectedMobileNoInput.val(suggestion.mobile_no);
+                                selectedCustomerNameInput.val(suggestion.customer_name);
     
-                                suggestionList.empty(); // Clear the suggestion list
+                                // Hide the popover
+                                inputField.popover('hide');
                             });
                             suggestionList.append(suggestionItem);
                         });
@@ -462,8 +481,8 @@
         });
     
         inputField.focusout(function() {
-            // Clear suggestions when the input field loses focus.
-            suggestionList.empty();
+            // Hide the popover when the input field loses focus
+            inputField.popover('hide');
         });
     });
     
