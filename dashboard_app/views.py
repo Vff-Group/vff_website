@@ -348,7 +348,7 @@ def add_customer(request,usrid=None):
     if usrid:
         try:
             with connection.cursor() as cursor:
-                cursor.execute("select usrname,mobile_no,usertbl.address,age,gender,consmrid,landmark,date_of_birth,pincode,query,profile_img,branchid"
+                cursor.execute("select usrname,mobile_no,usertbl.address,age,gender,consmrid,landmark,date_of_birth,pincode,query,profile_img,branchid,gstno,company_name,igstno"
                                " from vff.laundry_customertbl,vff.usertbl where laundry_customertbl.usrid=usertbl.usrid and laundry_customertbl.usrid='"+str(usrid)+"'")
                 row = cursor.fetchone()
                 print(f'fetching the single user data::{row}')
@@ -368,6 +368,9 @@ def add_customer(request,usrid=None):
                         'questions': row[9],
                         'profile_img': image_url,
                         'branch_id': row[11],
+                        'gstno': row[12],
+                        'company_name': row[13],
+                        'igstno': row[14],
                         
                     }
         except Exception as e:
@@ -383,6 +386,9 @@ def add_customer(request,usrid=None):
         land_mark = request.POST.get('landmark')
         date_of_birth = request.POST.get('dateofbirth')
         queries = request.POST.get('questions')
+        gstno = request.POST.get('gstno')
+        igstno = request.POST.get('igstno')
+        company_name = request.POST.get('company_name')
         uploaded_image = request.FILES.get('profile-image1')
 
         
@@ -404,6 +410,12 @@ def add_customer(request,usrid=None):
         
         if not queries:
             queries = 'No queries'
+        if not gstno:
+            gstno = "-1"
+        if not igstno:
+            igstno = "-1"
+        if not company_name:
+            company_name = "NA"
         errors = []
         if not date_of_birth:
             today_date = timezone.now().date() 
@@ -431,7 +443,7 @@ def add_customer(request,usrid=None):
                     cursor.execute(update_query)
                     
                     update_customer = (
-                        "update vff.laundry_customertbl set customer_name='"+str(uname)+"', query='"+str(queries)+"' where usrid='"+str(usrid)+"'"
+                        "update vff.laundry_customertbl set customer_name='"+str(uname)+"', query='"+str(queries)+"', gstno='"+str(gstno)+"', company_name='"+str(company_name)+"',igstno='"+str(igstno)+"' where usrid='"+str(usrid)+"'"
                     )
                     print(f"update customer details::{update_customer}")
                     cursor.execute(update_customer)
@@ -442,8 +454,8 @@ def add_customer(request,usrid=None):
                     usrid = cursor.fetchone()[0]  # Retrieve the returned usrid
 
                     insert_query = (
-                        "insert into vff.laundry_customertbl (usrid,branchid,customer_name,query) values "
-                        "('"+str(usrid)+"','"+str(branch_id)+"','"+str(uname)+"','"+str(queries)+"')"
+                        "insert into vff.laundry_customertbl (usrid,branchid,customer_name,query,gstno,company_name,igstno) values "
+                        "('"+str(usrid)+"','"+str(branch_id)+"','"+str(uname)+"','"+str(queries)+"','"+str(gstno)+"','"+str(company_name)+"','"+str(igstno)+"')"
                         
                     )
                     print(f"Create New user details::{insert_query}")
@@ -458,6 +470,137 @@ def add_customer(request,usrid=None):
     
     
     return render(request,'customer_pages/add_customer.html',{'data':data})
+
+
+#Add New Staff Page
+def add_staff(request,usrid=None):
+    
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    # If usrid is provided, retrieve the data for the selected Customer
+    data = {}
+    print(usrid)
+    if usrid:
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute("select usrname,mobile_no,usertbl.address,age,gender,emplyid,landmark,date_of_birth,pincode,query,profile_img,branchid,designation,aadharno from vff.usertbl,vff.laundry_employeetbl where usertbl.usrid=laundry_employeetbl.usrid and laundry_employeetbl.usrid='"+str(usrid)+"'")
+                row = cursor.fetchone()
+                print(f'fetching the single user data::{row}')
+                if row:
+                    image_url = row[10]
+                    data = {
+                        'usrid': usrid,
+                        'fullname': row[0],
+                        'primaryno': row[1],
+                        'fulladdress': row[2],
+                        'age': row[3],
+                        'gender': row[4],
+                        'customerid': row[5],
+                        'landmark': row[6],
+                        'dateofbirth': row[7],
+                        'pincode': row[8],
+                        'questions': row[9],
+                        'profile_img': image_url,
+                        'branch_id': row[11],
+                        'designation': row[12],
+                        'aadharno': row[13],
+                        
+                        
+                    }
+        except Exception as e:
+            print(f"Error loading data: {e}") 
+       
+    if request.method == "POST":
+        uname = request.POST.get('fullname')
+        primary_mobno = request.POST.get('primaryno')
+        age = request.POST.get('age')
+        gender = request.POST.get('gender')
+        address = request.POST.get('fulladdress')
+        pincode = request.POST.get('pincode')
+        land_mark = request.POST.get('landmark')
+        date_of_birth = request.POST.get('dateofbirth')
+        queries = request.POST.get('questions')
+        aadharno = request.POST.get('aadharno')
+        designation = request.POST.get('designation')
+        uploaded_image = request.FILES.get('profile-image1')
+
+        
+        if uploaded_image:
+            image_url = upload_images2(uploaded_image)
+        elif data.get('profile_img'):
+            image_url = data.get('profile_img')
+        else:
+            # Handle the case where there's no uploaded image and no previous image
+            image_url = 'NA'  # Set it to a default value or handle accordingly
+            
+        # image_url = 'NA'
+        # if request.FILES.get('profile-image1'):
+        #         uploaded_image = request.FILES['profile-image1']
+        #         image_url = upload_images2(uploaded_image)
+            
+
+        
+        
+        if not queries:
+            queries = 'No queries'
+        
+        
+        errors = []
+        if not date_of_birth:
+            today_date = timezone.now().date() 
+            formatted_date = today_date.strftime('%Y-%m-%d')
+            date_of_birth = formatted_date
+        if not age:
+            age = '-1'
+        if not land_mark:
+            land_mark = 'NA'
+        branch_id = request.session.get('branchid')
+        print(f'branch_id:{branch_id}')
+        if not branch_id:
+            # If there are validation errors, render the form with error messages
+            errors = "Please select Branch ID to add new customer"
+            return render(request,'customer_pages/add_customer.html',{'data':data,'error':errors})
+        
+        try:
+            with connection.cursor() as cursor:
+                if usrid:
+                    # Update an existing employee
+                    update_query = (
+                        "update vff.usertbl set usrname='"+str(uname)+"',mobile_no='"+str(primary_mobno)+"',address='"+str(address)+"',age='"+str(age)+"',gender='"+str(gender)+"',date_of_birth='"+str(date_of_birth)+"',pincode='"+str(pincode)+"',landmark='"+str(land_mark)+"',profile_img='"+str(image_url)+"' where usrid='"+str(usrid)+"'"
+                    )
+                    print(f"update user details::{update_query}")
+                    cursor.execute(update_query)
+                    
+                    update_customer = (
+                        "update vff.laundry_customertbl set customer_name='"+str(uname)+"', query='"+str(queries)+"', designation='"+str(designation)+"', aadharno='"+str(aadharno)+"' where usrid='"+str(usrid)+"'"
+                    )
+                    print(f"update customer details::{update_customer}")
+                    cursor.execute(update_customer)
+                else:
+                    # Insert a new employee
+                    usertbl_query = "insert into vff.usertbl (usrname,mobile_no,address,age,gender,date_of_birth,pincode,landmark,profile_img,branchid) VALUES ('"+str(uname)+"', '"+str(primary_mobno)+"', '"+str(address)+"','"+str(age)+"','"+str(gender)+"','"+str(date_of_birth)+"','"+str(pincode)+"','"+str(land_mark)+"','"+str(image_url)+"','"+str(branch_id)+"') RETURNING usrid"
+                    cursor.execute(usertbl_query)
+                    usrid = cursor.fetchone()[0]  # Retrieve the returned usrid
+
+                    insert_query = (
+                        "insert into vff.laundry_employeetbl (usrid,branchid,employee_name,query,designation,aadharno) values "
+                        "('"+str(usrid)+"','"+str(branch_id)+"','"+str(uname)+"','"+str(queries)+"','"+str(designation)+"','"+str(aadharno)+"')"
+                        
+                    )
+                    print(f"Create New user details::{insert_query}")
+                    cursor.execute(insert_query)
+                connection.commit()
+
+                print("Employee Added/Updated Successfully.")
+                return redirect('dashboard_app:customers')
+        except Exception as e:
+            print(f"Error loading data: {e}")
+
+    
+    
+    return render(request,'customer_pages/add_customer.html',{'data':data})
+
 
 #Delete Customers
 def delete_customer(request, usrid):

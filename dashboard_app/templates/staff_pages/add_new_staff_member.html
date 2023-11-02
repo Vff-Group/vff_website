@@ -2,9 +2,9 @@
 {% load static %}
 {% block title%}
 {% if data %}
-Update Customer Details
+Update Staff Details
 {% else %}
-Add New Customer Details
+Add New Staff Details
 {% endif %}
 {% endblock title %}
 {% block content %}
@@ -19,7 +19,7 @@ Add New Customer Details
         <div class="card-body">
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-      <h6 class="heading-small text-muted mb-4">Customer Information</h6>
+      <h6 class="heading-small text-muted mb-4">Staff Information</h6>
       <div class="pl-lg-4">
         <div class="row">
 
@@ -95,26 +95,21 @@ Add New Customer Details
         </div>
       </div>
       <hr class="my-4" />
-      <!-- Company Information -->
-      <h6 class="heading-small text-muted mb-4">Company Details</h6>
+      <!-- Identity Information -->
+      <h6 class="heading-small text-muted mb-4">Identity Details</h6>
       <div class="pl-lg-4">
         <div class="row">
-          <div class="col-lg-4">
+          <div class="col-lg-6">
             <div class="form-group">
-              <label class="form-control-label" for="input-gstno">GST No</label>
-              <input id="input-gstno" class="form-control form-control-alternative" placeholder="Enter GST Number if applicable"  type="text" name="gstno" value="{{ data.gstno|default:'' }}"  >
+              <label class="form-control-label" for="input-aadharno">Aadhar Number</label>
+              <input id="input-aadharno" class="form-control form-control-alternative" placeholder="Enter provide employee aadhar number"  type="text" name="aadharno" value="{{ data.aadharno|default:'' }}"  required>
             </div>
           </div>
-          <div class="col-lg-4">
+
+          <div class="col-lg-6">
             <div class="form-group">
-              <label class="form-control-label" for="input-igstno">IGST No</label>
-              <input id="input-igstno" class="form-control form-control-alternative" placeholder="Enter IGST Number if applicable"  type="text" name="igstno" value="{{ data.igstno|default:'' }}"  >
-            </div>
-          </div>
-          <div class="col-lg-4">
-            <div class="form-group">
-              <label class="form-control-label" for="input-company_name">Company Name</label>
-              <input type="text" id="input-company_name" class="form-control form-control-alternative" placeholder="Company Name" name="company_name" value="{{ data.company_name|default:'' }}"  >
+              <label class="form-control-label" for="input-designation">Designation</label>
+              <input id="input-designation" class="form-control form-control-alternative" placeholder="Enter employee Desgination [Employee,Manager,etc]"  type="text" name="designation" value="{{ data.designation|default:'' }}"  required>
             </div>
           </div>
 

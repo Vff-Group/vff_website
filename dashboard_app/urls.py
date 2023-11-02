@@ -36,6 +36,12 @@ urlpatterns = [
     path('sub_categories/add_sub_category/<int:catid>/<str:catname>',views.add_sub_category,name='add_sub_category'),
     path('sub_categories/update_sub_category_details/<int:catid>/<int:subcatid>/<str:catname>',views.update_sub_category,name='update_sub_category'),
     
+    #Staff Laundry
+    path('staff/add_staff/',views.add_staff,name='add_staff'),
+    path('staff/update_staff/<int:usrid>',views.add_staff,name='update_staff'),
+    
+    
+    
     #Expenses Laundry
     path('all_expenses/',views.all_expenses,name='all_expenses'),
     path('all_expenses/add_expense_new_item/',views.add_expense_new_item,name='add_expense_new_item'),
