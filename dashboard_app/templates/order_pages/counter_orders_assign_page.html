@@ -84,7 +84,15 @@
                 </div>
                
             </form>
-            <div id="suggestion-container"></div>
+            <div id="suggestion-container">
+                <input
+        class="form-control form-control-alternative"
+        type="text"
+        id="selected-customer"
+        name="selected_customer"
+        disabled
+    />
+            </div>
               </div>
               <div class="col-4 d-flex justify-content-end">
                 <button class="btn btn-primary">Add</button>
@@ -414,6 +422,7 @@
   $(document).ready(function() {
     const inputField = $('#customer-name');
     const suggestionContainer = $('#suggestion-container');
+    const selectedCustomerInput = $('#selected-customer');
 
     inputField.on('input', function() {
       const inputText = inputField.val();
@@ -426,7 +435,12 @@
             if (suggestions.length > 0) {
                 const suggestionList = $('<ul>');
                 suggestions.forEach(function(suggestion) {
-                    suggestionList.append($('<li>').text(suggestion.customer_name)); // Use 'suggestion' here
+                    const suggestionItem = $('<li>').text(suggestion.customer_name);
+                    suggestionItem.on('click', function() {
+                        // When a suggestion is clicked, set the value in the input field
+                        selectedCustomerInput.val(suggestion.customer_name);
+                    });
+                    suggestionList.append(suggestionItem);
                 });
                 suggestionContainer.append(suggestionList);
             }
