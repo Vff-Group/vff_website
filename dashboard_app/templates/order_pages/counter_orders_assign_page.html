@@ -66,15 +66,15 @@
                               
                             >
                               <option disabled selected>
-                                Choose Section
+                                Choose Service Type
                               </option>
                               
                               {% for category in category_data %}
                               <option
-                                  value="{{ category.regular_prize }} [{{ category.regular_prize_type}}]"
-                                  data-section_id="{{ section.sectionid }}"
+                                  value=" Regular [{{ category.regular_prize }}/{{ category.regular_prize_type}}]"
+                                  
                               >
-                              {{ category.regular_prize }} [{{ category.regular_prize_type}}]
+                              Regular [{{ category.regular_prize }}/{{ category.regular_prize_type}}]
                               </option>
                               {% endfor %}
 
