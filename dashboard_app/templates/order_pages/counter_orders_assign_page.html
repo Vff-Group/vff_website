@@ -426,7 +426,7 @@
             if (suggestions.length > 0) {
                 const suggestionList = $('<ul>');
                 suggestions.forEach(function(suggestion) {
-                    suggestionList.append($('<li>').text(suggestion)); // Use 'suggestion' here
+                    suggestionList.append($('<li>').text(suggestion.mobile_no)); // Use 'suggestion' here
                 });
                 suggestionContainer.append(suggestionList);
             }
