@@ -407,9 +407,10 @@
             if (inputText.length > 0) {
                 $.get(`/admin_dashboard/search_customer_to_assign_order/${inputText}/`, function(data) {
                     const suggestions = data.suggestions;
-    console.log('suggestions::'+suggestions)
+    
                     if (suggestions.length > 0) {
                         const suggestionContent = suggestions.map(function(suggestion) {
+                            console.log('suggestions::'+suggestions.customer_name)
                             return `<div class="suggestion-item" data-consmrid="${suggestion.consmrid}">${suggestion.customer_name}</div>`;
                         }).join('');
     
