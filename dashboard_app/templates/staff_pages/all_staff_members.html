@@ -29,8 +29,7 @@
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Address</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Joined</th>
-                    
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Gender</th>
                     <th class="text-secondary opacity-7"></th>
                   </tr>
                 </thead>
@@ -66,20 +65,20 @@
                         {% comment %} <p class="text-xs text-secondary mb-0 text-center">{{row.creation_time}}</p> {% endcomment %}
                       </td>
                     
-                    <td class="align-middle text-center">
+                    <!-- <td class="align-middle text-center">
                       <span class="text-secondary text-xs font-weight-bold">
                         {% comment %} {{row.last_service}} {% endcomment %}
                         Need to add
                       </span>
-                    </td>
+                    </td> -->
                     <td class="align-middle text-center text-sm">
-                      {% if row.is_online == 1 %}
+                      {% if row.gender == "Male" %}
                         <span class="badge badge-sm bg-success">
-                            Online
+                            Male
                         </span>
                       {% else %}
                           <span class="badge badge-sm bg-warning">
-                          Offline
+                          Female
                           </span>
                       {% endif %}
                         
@@ -87,15 +86,15 @@
                     <td class="align-middle">
                         <div class="row">
                             <div class="col">
-                                <a href="{% url 'dashboard_app:update_customer' row.usrid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                <a href="{% url 'dashboard_app:update_staff' row.usrid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                     Edit
                                   </a>
                             </div>
-                            <div class="col">
+                            <!-- <div class="col">
                                 <a href="" class="text-danger font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.usrid}}">
                                     Delete
                                   </a>
-                            </div>
+                            </div> -->
                         </div>
                       
                       

@@ -2,9 +2,9 @@
 {% load static %}
 {% block title%}
 {% if data %}
-Update Staff Details
+Update Branch Details
 {% else %}
-Add New Staff Details
+Add New Branch Details
 {% endif %}
 {% endblock title %}
 {% block content %}
@@ -19,7 +19,7 @@ Add New Staff Details
         <div class="card-body">
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-      <h6 class="heading-small text-muted mb-4">Staff Information</h6>
+      <h6 class="heading-small text-muted mb-4">Branch Information</h6>
       <div class="pl-lg-4">
         <div class="row">
 
@@ -53,14 +53,14 @@ Add New Staff Details
           </div>
           <div class="col-lg-7">
             <div class="form-group">
-              <label class="form-control-label" for="input-fullname">Full Name</label>
-              <input type="text" id="input-fullname" class="form-control form-control-alternative" placeholder="Enter full name" name="fullname" autocomplete="off" value="{{ data.fullname|default:'' }}"  required>
+              <label class="form-control-label" for="input-fullname">Owner Full Name</label>
+              <input type="text" id="input-fullname" class="form-control form-control-alternative" placeholder="Enter full name" name="fullname" autocomplete="off" value="{{ data.owner_name|default:'' }}"  required>
             </div>
           </div>
 
           <div class="col-lg-4">
             <div class="form-group">
-              <label class="form-control-label" for="input-primary-contact">Primary Contact Number</label>
+              <label class="form-control-label" for="input-primary-contact">Owner Contact Number</label>
               <input type="number" id="input-primary-contact" class="form-control form-control-alternative" placeholder="Enter primary contact number" name="primaryno" value="{{ data.primaryno|default:'' }}"  required>
             </div>
           </div>
@@ -94,34 +94,10 @@ Add New Staff Details
 
         </div>
       </div>
-      <hr class="my-4" />
-      <!-- Identity Information -->
-      <h6 class="heading-small text-muted mb-4">Identity Details</h6>
-      <div class="pl-lg-4">
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label class="form-control-label" for="input-aadharno">Aadhar Number</label>
-              <input id="input-aadharno" class="form-control form-control-alternative" placeholder="Enter provide employee aadhar number"  type="text" name="aadharno" value="{{ data.aadharno|default:'' }}"  required>
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label class="form-control-label" for="input-designation">Designation</label>
-              <input id="input-designation" class="form-control form-control-alternative" placeholder="Enter employee Desgination [Employee,Manager,etc]"  type="text" name="designation" value="{{ data.designation|default:'' }}"  required>
-            </div>
-          </div>
-
-          
-        </div>
-        
-       
-          
-      </div>
+     
       <hr class="my-4" />
       <!-- Address -->
-      <h6 class="heading-small text-muted mb-4">Contact information</h6>
+      <h6 class="heading-small text-muted mb-4">Owner Contact information</h6>
       <div class="pl-lg-4">
         <div class="row">
           <div class="col-lg-6">
@@ -149,26 +125,99 @@ Add New Staff Details
           
       </div>
       <hr class="my-4" />
+      
+      <!-- Branch Information -->
+      <h6 class="heading-small text-muted mb-4">Branch Details</h6>
+      <div class="pl-lg-4">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label" for="input-gstno">GST No</label>
+              <input id="input-gstno" class="form-control form-control-alternative" placeholder="Enter GST Number "  type="text" name="gstno" value="{{ data.gstno|default:'' }}"  required>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label" for="input-igstno">IGST No</label>
+              <input id="input-igstno" class="form-control form-control-alternative" placeholder="Enter IGST Number if applicable"  type="text" name="igstno" value="{{ data.igstno|default:'' }}"  >
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label" for="input-company_name">Branch Name</label>
+              <input type="text" id="input-company_name" class="form-control form-control-alternative" placeholder="Company Name" name="company_name" value="{{ data.company_name|default:'' }}"  required>
+            </div>
+          </div>
+
+          
+        </div>
+        
+       
+          
+      </div>
+
+      <hr class="my-4" />
+      <!-- Address -->
+      <h6 class="heading-small text-muted mb-4">Branch Contact information</h6>
+      <div class="pl-lg-4">
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="form-group">
+              <label class="form-control-label" for="input-address">Address</label>
+              <input id="input-address" class="form-control form-control-alternative" placeholder="Full Address"  type="text" name="fulladdress" value="{{ data.fulladdress|default:'' }}"  required>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-group">
+              <label class="form-control-label" for="input-state">State</label>
+              <input id="input-state" class="form-control form-control-alternative" placeholder="State Name"  type="text" name="fulladdress" value="{{ data.state|default:'' }}"  required>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-group">
+              <label class="form-control-label" for="input-city">City</label>
+              <input id="input-city" class="form-control form-control-alternative" placeholder="City Name"  type="text" name="fulladdress" value="{{ data.city|default:'' }}"  required>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-group">
+              <label class="form-control-label" for="input-country">Postal code</label>
+              <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="Postal code" name="pincode" value="{{ data.pincode|default:'' }}"  required>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-landmark">Nearest Landmark</label>
+              <input id="input-landmark" class="form-control form-control-alternative" placeholder="Nearest landmark like car showroom,etc"  type="text" name="landmark" value="{{ data.landmark|default:'' }}"  required>
+            </div>
+          </div>
+        </div>
+        
+       
+          
+      </div>
+      <hr class="my-4" />
       <!-- Display the uploaded image -->
 <div id="uploaded-image-container">
     <img src="#" id="uploaded-image" alt="Uploaded Image" style="display: none;">
     <p id="image-url" style="display: none;"></p>
 </div>
       <!-- Description -->
-      <h6 class="heading-small text-muted mb-4">Any Query</h6>
+      {% comment %} <h6 class="heading-small text-muted mb-4">Any Query</h6>
       <div class="pl-lg-4">
         <div class="form-group">
           <label>Questions ?</label>
           <textarea rows="4" class="form-control form-control-alternative" placeholder="write a few words if required ..." name="questions" >{{ data.questions|default:'' }}</textarea>
         </div>
-      </div>
+      </div> {% endcomment %}
 
       <div class="row justify-content-end p-4 mt--1">
         <div class="col-lg-2">
         {% if data %}
-        <button type="submit" class="btn btn-primary my-4">Update Employee</button>
+        <button type="submit" class="btn btn-primary my-4">Update Branch</button>
         {% else %}
-        <button type="submit" class="btn btn-primary my-4">Add New Employee</button>
+        <button type="submit" class="btn btn-primary my-4">Add New Branch</button>
         {% endif %}
     </div>
       </div>

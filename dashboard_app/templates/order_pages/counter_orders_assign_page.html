@@ -1,0 +1,183 @@
+{% extends "common/base.html" %}
+{% load static %}
+{% block title %}Orders Assign{% endblock title%}
+{% block content %}
+
+<div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-lg-7">
+        <div class="row">
+          <div class="col-12">
+            <div class="card mb-4">
+              <div class="card-header pb-0">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label
+                        for="date-of-expense"
+                        class="form-control-label text-secondary"
+                        >Search Item</label
+                      >
+                      <input
+                        class="form-control form-control-alternative"
+                        type="search"
+                        id="date-of-expense"
+                        name="dateofexpense"
+                        placeholder="Search items here"
+                        value=""
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Action Buttons  -->
+
+              <!-- Action Buttons End  -->
+              <div class="card-body px-2 pt-0 pb-2 mt-2">
+                <div class="container m-1">
+                  <div class="row">
+                    <div class="col-lg-3 mb-4 ms-1">
+                      <div
+                        class="card shadow-none align-items-center"
+                        style="
+                          width: 8rem;
+                          border: 1.5px dotted black;
+                          height: 8rem;
+                        "
+                      >
+                        <img
+                          src="../assets/img/marie.jpg"
+                          class="card-img w-50 h-50 mt-1"
+                          alt="Card Image"
+                        />
+                        <div class="card-body text-center">
+                          <h6 class="card-title">Card Title</h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="card">
+          <div class="card-header pb-0 p-3">
+            <div class="row d-flex justify-content-end">
+              <div class="col-8 d-flex align-items-center">
+                <div class="form-group">
+                  <input
+                    class="form-control form-control-alternative"
+                    type="search"
+                    id="date-of-expense"
+                    name="dateofexpense"
+                    placeholder="Search customer"
+                    value=""
+                    required
+                  />
+                </div>
+              </div>
+              <div class="col-4 d-flex justify-content-end">
+                <button class="btn btn-primary">Add</button>
+              </div>
+            </div>
+          </div>
+        <div class="card-body p-3 pb-0">
+            <div class="row d-flex justify-content-end">
+              <div class="col-6 d-flex align-items-center">
+                <div class="form-group">
+                  <input
+                    class="form-control form-control-alternative"
+                    type="text"
+                    id="date-of-expense"
+                    name="dateofexpense"
+                    placeholder="Search customer"
+                    value="ORD-ID 4500"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="col-6 d-flex justify-content-end">
+                <div class="form-group">
+                  <input
+                    class="form-control form-control-alternative"
+                    type="date"
+                    id="date-of-expense"
+                    name="dateofexpense"
+                    placeholder="Search customer"
+                    value=""
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- Table start  -->
+            <div class="row">
+                <div class="table table-responsive">
+                    <table>
+                        <thead>
+                            <th class="text-start text-xs">Service Name</th>
+                            <th class="text-start text-xs">Service Type</th>
+                            <th class="text-start text-xs">Cost</th>
+                            <th class="text-start text-xs">Qty</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <img src="" alt="alt">
+                                        <small>T-Shirt</small>
+                                        <p>[Dry Clean]</p>
+                                    </div> 
+                                </td>
+                                <td>
+                                    <small>Dry Cleaning</small>
+                                </td>
+                                <td>Rs.400/</td>
+                                <td>5</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Table end  -->
+          </div>
+          <hr />
+          <div class="card-footer px-4 pt-0 pb-2 mt-2">
+            <div class="row">
+              <div class="col-lg-4">
+                <h6 class="mb-0">Gross Total:</h6>
+                <small class="mb-2 text-success">Rs.$000/</small>
+                
+              </div>
+              <div class="col-lg-8">
+                <div class="row">
+                    <div class="col">
+
+                        <button class="btn btn-danger text-xxs">Clear </button>
+                    </div>
+                    <div class="col-lg-7">
+
+                        <button class="btn btn-facebook text-xxs">Save & Continue</button>
+                    </div>
+                </div>
+                
+                
+               
+              </div>
+            </div>
+            
+            <hr />
+            
+          </div>
+        </div>
+      </div>
+    </div>
+   
+  </div>
+</main>
+{% endblock  %}
+

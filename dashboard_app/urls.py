@@ -39,6 +39,7 @@ urlpatterns = [
     #Staff Laundry
     path('staff/add_staff/',views.add_staff,name='add_staff'),
     path('staff/update_staff/<int:usrid>',views.add_staff,name='update_staff'),
+    path('staff/',views.all_staff,name='all_staff'),
     
     
     
@@ -50,8 +51,14 @@ urlpatterns = [
     path('expense_category/',views.expense_category,name='expense_category'),
     path('expense_category/add_expense_category/',views.add_expense_category,name='add_expense_category'),
     
+    #Branch details Routes
+    path('all_branches/',views.all_main_branches,name='all_main_branches'),
+    path('all_branches/add_branch_details/',views.add_new_branch,name='add_branch_details'),
+    path('all_branches/update_branch_details/<int:branch_id>',views.add_new_branch,name='update_branch_details'),
+    
     #Order Screens
     path('order_status_screen/',views.order_status_screen,name='order_status_screen'),
+    path('counter_orders_screen/',views.counter_orders_screen,name='counter_orders_screen'),
     
     #Reports Screen
     path('daily_report/',views.daily_report,name='daily_report'),

@@ -282,6 +282,58 @@ def dashboard(request):
         'total_orders_delivered':total_orders_delivered
     }
     return render(request, 'admin_pages/dashboard.html', context)
+
+#All STaff Employee Details Page
+def all_staff(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    error_msg = "No Employees Created Yet"
+    branch_id = request.session.get('branchid')
+    filter = ''
+    if branch_id :
+        filter = " and laundry_employeetbl.branchid='"+str(branch_id)+"'"
+    query = " select laundry_employeetbl.usrid,usrname,mobile_no,usertbl.address,lat,lng,age,gender,laundry_employeetbl.branchid,consmrid,laundry_employeetbl.status,is_online,usertbl.epoch,profile_img from vff.laundry_employeetbl,vff.usertbl where laundry_employeetbl.usrid=usertbl.usrid "+filter+"  order by usrname desc"
+    
+    query_result = execute_raw_query(query)
+    
+    
+        
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            epoch_time = row[12]
+            print(f'Epoch_time::{epoch_time}')
+            datetime_obj = datetime.utcfromtimestamp(epoch_time)
+            print(f'datetime_obj::{datetime_obj}')
+            gmt_plus_0530 = pytz.timezone('Asia/Kolkata')
+            datetime_obj_gmt_plus_0530 = datetime_obj.replace(tzinfo=pytz.utc).astimezone(gmt_plus_0530)
+            formatted_datetime = datetime_obj_gmt_plus_0530.strftime('%Y-%m-%d %I:%M:%S %p')
+            data.append({
+                'usrid': row[0],
+                'usrname': row[1],
+                'mobno': row[2],
+                'address': row[3],
+                'lat': row[4],
+                'lng': row[5],
+                'age': row[6],
+                'gender': row[7],
+                'branchid': row[8],
+                'customerid': row[9],
+                'active_status': row[10],
+                'is_online': row[11],
+                'branch_name': row[12],
+                'creation_date_time':formatted_datetime,
+                'profile_img': row[13],
+               
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    
+    return render(request, 'customer_pages/all_customers.html',context)
     
     
 #All Customers Page
@@ -335,6 +387,7 @@ def all_customers(request):
     context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
     
     return render(request, 'customer_pages/all_customers.html',context)
+
 
 #Add New Customer Page
 def add_customer(request,usrid=None):
@@ -575,11 +628,11 @@ def add_staff(request,usrid=None):
                     update_customer = (
                         "update vff.laundry_customertbl set customer_name='"+str(uname)+"', query='"+str(queries)+"', designation='"+str(designation)+"', aadharno='"+str(aadharno)+"' where usrid='"+str(usrid)+"'"
                     )
-                    print(f"update customer details::{update_customer}")
+                    print(f"update employee details::{update_customer}")
                     cursor.execute(update_customer)
                 else:
                     # Insert a new employee
-                    usertbl_query = "insert into vff.usertbl (usrname,mobile_no,address,age,gender,date_of_birth,pincode,landmark,profile_img,branchid) VALUES ('"+str(uname)+"', '"+str(primary_mobno)+"', '"+str(address)+"','"+str(age)+"','"+str(gender)+"','"+str(date_of_birth)+"','"+str(pincode)+"','"+str(land_mark)+"','"+str(image_url)+"','"+str(branch_id)+"') RETURNING usrid"
+                    usertbl_query = "insert into vff.usertbl (usrname,mobile_no,address,age,gender,date_of_birth,pincode,landmark,profile_img) VALUES ('"+str(uname)+"', '"+str(primary_mobno)+"', '"+str(address)+"','"+str(age)+"','"+str(gender)+"','"+str(date_of_birth)+"','"+str(pincode)+"','"+str(land_mark)+"','"+str(image_url)+"') RETURNING usrid"
                     cursor.execute(usertbl_query)
                     usrid = cursor.fetchone()[0]  # Retrieve the returned usrid
 
@@ -1692,6 +1745,197 @@ def fit_to_thermal_printer_paper(bill_content):
 
 # Print or store the formatted_bill_content string as needed.
 
+#All Main Branches Details
+def all_main_branches(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    error_msg = "No Branches Created Till Now"
+    branch_id = request.session.get('branchid')
+    owner_id = request.session.get('userid')
+    filter = ''
+    if branch_id:
+        filter = "and branchtbl.owner_id='"+str(owner_id)+"'"
+    
+    query = "select branchid,branch_name,owner_name,branchtbl.address,branch_type,creation_date,branchtbl.epoch,status,branchtbl.city,branchtbl.state,mobile_no,usertbl.address,usertbl.city,usertbl.pincode,branchtbl.pincode,profile_img,device_token from vff.usertbl,vff.branchtbl where branchtbl.owner_id=usertbl.usrid "+filter+""
+    
+    query_result = execute_raw_query(query)
+    
+    
+        
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            data.append({
+                'branchid': row[0],
+                'branch_name': row[1],
+                'owner_name': row[2],
+                'branch_address': row[3],
+                'branch_type': row[4],
+                'branch_creation_date': row[5],
+                'branch_epoch': row[6],
+                'branch_status': row[7],
+                'branch_city': row[8],
+                'branch_state': row[9],
+                'mobile_no': row[10],
+                'address': row[11],
+                'city': row[12],
+                'pincode': row[13],
+                'branch_pincode': row[14],
+                'profile_img': row[15],
+                'device_token': row[16],
+                
+               
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    
+    return render(request, 'branch_pages/all_branches.html', context)
+
+#Add New Branch
+def add_new_branch(request,branch_id=None):
+    
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    # If usrid is provided, retrieve the data for the selected Branch Table
+    data = {}
+    print(usrid)
+    if usrid:
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute("select branchid,branch_name,owner_name,branchtbl.address,branch_type,branchtbl.city,branchtbl.state,mobile_no,usertbl.address,usertbl.city,usertbl.pincode,branchtbl.pincode,profile_img,owner_id,aadhar_no,houseno,usertbl.landmark,date_of_birth from vff.usertbl,vff.branchtbl where branchtbl.owner_id=usertbl.usrid and branchid='"+str(branch_id)+"'")
+                row = cursor.fetchone()
+                print(f'fetching the single user data::{row}')
+                if row:
+                    image_url = row[11]
+                    data = {
+                        'branchid': branch_id,
+                        'branch_name': row[0],
+                        'owner_name': row[1],
+                        'branch_address': row[2],
+                        'branch_type': row[3],
+                        'branch_city': row[4],
+                        'branch_state': row[5],
+                        'mobileno': row[6],
+                        'fulladdress': row[7],
+                        'city': row[8],
+                        'pincode': row[9],
+                        'branch_pincode': row[10],
+                        'profile_img': image_url,
+                        'owner_id': row[11],
+                        'aadhar_no': row[12],
+                        'houseno': row[13],
+                        'landmark': row[14],
+                        'dateofbirth': row[15],
+                        
+                        
+                        
+                    }
+        except Exception as e:
+            print(f"Error loading data: {e}") 
+       
+    if request.method == "POST":
+        uname = request.POST.get('fullname')
+        primary_mobno = request.POST.get('primaryno')
+        age = request.POST.get('age')
+        gender = request.POST.get('gender')
+        address = request.POST.get('fulladdress')
+        pincode = request.POST.get('pincode')
+        land_mark = request.POST.get('landmark')
+        date_of_birth = request.POST.get('dateofbirth')
+        queries = request.POST.get('questions')
+        gstno = request.POST.get('gstno')
+        igstno = request.POST.get('igstno')
+        company_name = request.POST.get('company_name')
+        uploaded_image = request.FILES.get('profile-image1')
+
+        
+        if uploaded_image:
+            image_url = upload_images2(uploaded_image)
+        elif data.get('profile_img'):
+            image_url = data.get('profile_img')
+        else:
+            # Handle the case where there's no uploaded image and no previous image
+            image_url = 'NA'  # Set it to a default value or handle accordingly
+            
+        # image_url = 'NA'
+        # if request.FILES.get('profile-image1'):
+        #         uploaded_image = request.FILES['profile-image1']
+        #         image_url = upload_images2(uploaded_image)
+            
+
+        
+        
+        if not queries:
+            queries = 'No queries'
+        if not gstno:
+            gstno = "-1"
+        if not igstno:
+            igstno = "-1"
+        if not company_name:
+            company_name = "NA"
+        errors = []
+        if not date_of_birth:
+            today_date = timezone.now().date() 
+            formatted_date = today_date.strftime('%Y-%m-%d')
+            date_of_birth = formatted_date
+        if not age:
+            age = '-1'
+        if not land_mark:
+            land_mark = 'NA'
+        branch_id = request.session.get('branchid')
+        print(f'branch_id:{branch_id}')
+        if not branch_id:
+            # If there are validation errors, render the form with error messages
+            errors = "Please select Branch ID to add new customer"
+            return render(request,'customer_pages/add_customer.html',{'data':data,'error':errors})
+        
+        try:
+            with connection.cursor() as cursor:
+                if usrid:
+                    # Update an existing customers
+                    update_query = (
+                        "update vff.usertbl set usrname='"+str(uname)+"',mobile_no='"+str(primary_mobno)+"',address='"+str(address)+"',age='"+str(age)+"',gender='"+str(gender)+"',date_of_birth='"+str(date_of_birth)+"',pincode='"+str(pincode)+"',landmark='"+str(land_mark)+"',profile_img='"+str(image_url)+"' where usrid='"+str(usrid)+"'"
+                    )
+                    print(f"update user details::{update_query}")
+                    cursor.execute(update_query)
+                    
+                    update_customer = (
+                        "update vff.laundry_customertbl set customer_name='"+str(uname)+"', query='"+str(queries)+"', gstno='"+str(gstno)+"', company_name='"+str(company_name)+"',igstno='"+str(igstno)+"' where usrid='"+str(usrid)+"'"
+                    )
+                    print(f"update customer details::{update_customer}")
+                    cursor.execute(update_customer)
+                else:
+                    # Insert a new customers
+                    usertbl_query = "insert into vff.usertbl (usrname,mobile_no,address,age,gender,date_of_birth,pincode,landmark,profile_img) VALUES ('"+str(uname)+"', '"+str(primary_mobno)+"', '"+str(address)+"','"+str(age)+"','"+str(gender)+"','"+str(date_of_birth)+"','"+str(pincode)+"','"+str(land_mark)+"','"+str(image_url)+"') RETURNING usrid"
+                    cursor.execute(usertbl_query)
+                    usrid = cursor.fetchone()[0]  # Retrieve the returned usrid
+
+                    insert_query = (
+                        "insert into vff.laundry_customertbl (usrid,branchid,customer_name,query,gstno,company_name,igstno) values "
+                        "('"+str(usrid)+"','"+str(branch_id)+"','"+str(uname)+"','"+str(queries)+"','"+str(gstno)+"','"+str(company_name)+"','"+str(igstno)+"')"
+                        
+                    )
+                    print(f"Create New user details::{insert_query}")
+                    cursor.execute(insert_query)
+                connection.commit()
+
+                print("Branch Details Added/Updated Successfully.")
+                return redirect('dashboard_app:customers')
+        except Exception as e:
+            print(f"Error loading data: {e}")
+
+    
+    
+    return render(request,'customer_pages/add_customer.html',{'data':data})
+
+
+
 #All Expenses
 def all_expenses(request):
     isLogin = is_loggedin(request)
@@ -1898,6 +2142,48 @@ def order_status_screen(request):
     # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
     
     return render(request, 'order_pages/orders_status_screen.html', {'current_url': current_url})
+
+#Counter Orders Assign
+def counter_orders_screen(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    error_msg = "No Categories Found"
+    branch_id = request.session.get('branchid')
+    # filter = ''
+    # if branch_id :
+    #     filter = " and laundry_delivery_boytbl.branchid='"+str(branch_id)+"'"
+    # query = "select catid,category_name,cat_img,regular_price,regular_price_type,express_price,express_price_type,offer_price,offer_price_type,description from vff.laundry_categorytbl order by catid desc"
+    
+    # query_result = execute_raw_query(query)
+    
+    
+        
+    # data = []    
+    # if not query_result == 500:
+    #     for row in query_result:
+            
+    #         data.append({
+    #             'catid': row[0],
+    #             'categoryname': row[1],
+    #             'categoryimg': row[2],
+    #             'regular_prize': row[3],
+    #             'regular_prize_type': row[4],
+    #             'express_prize': row[5],
+    #             'express_prize_type': row[6],
+    #             'offer_prize': row[7],
+    #             'offer_prize_type': row[8],
+    #             'description': row[9],
+               
+    #         })
+    # else:
+    #     error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    
+    return render(request, 'order_pages/counter_orders_assign_page.html', {'current_url': current_url})
+
 
 #Daily Reports Screen
 def daily_report(request):
