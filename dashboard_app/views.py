@@ -2205,8 +2205,8 @@ def load_other_category_wise_details(request,cat_id):
                 'express_price_type': row[3],
                 'express_price': row[4],
                 'offer_price': row[5],
-                'offer_price_type': row[5],
-                'cat_img':row[6],
+                'offer_price_type': row[6],
+                'cat_img':row[7],
                 'catid':cat_id,
                     }
     except Exception as e:

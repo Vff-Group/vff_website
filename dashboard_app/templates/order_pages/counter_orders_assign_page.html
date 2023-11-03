@@ -603,6 +603,7 @@
             });
             console.log('While Loading CatID::'+cat_id)
             $.get(`/admin_dashboard/load_other_category_wise_details/${cat_id}`, function(priceCategory) {
+                console.log("priceCategory::"+priceCategory);
                 priceSelect.empty();
                 priceSelect.append('<option disabled selected>Choose Service Type</option>');
         
