@@ -69,14 +69,14 @@
                                 Choose Service Type
                               </option>
                               
-                              {% for category in category_data %}
+                              <!-- {% for category in category_data %}
                               <option
                                   value="{{ category.regular_prize }}"
                                   
                               >
                               {{ category.regular_prize }}
                               </option>
-                              {% endfor %}
+                              {% endfor %} -->
 
                               <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
                             </select>
@@ -565,12 +565,16 @@
             console.log('CatID::'+cat_id)
             var sectionSelect = $('#input-section');
             var section_column = $('#section_col');
+            var price_column = $('#price_col');
             var subCategorySelect = $('#input-subcategory');
             var priceSelect = $('#input-price');
             console.log('selectedCategory::'+selectedCategory)
             if (selectedCategory == "DRY CLEAN"){
                 //Load Sections Here 
                 section_column.show();
+                price_column.hide();
+                subCategorySelect.empty();
+                subCategorySelect.append('<option disabled selected>Choose Sub Category</option>');
                 $.get(`/admin_dashboard/load_sub_categories/${cat_id}`, function(data) {
                     sectionSelect.empty();
                     sectionSelect.append('<option disabled selected>Choose Section</option>');
@@ -585,6 +589,7 @@
           
             }else{
                 section_column.hide();
+                price_column.show();
             $.get(`/admin_dashboard/load_section_type_sub_categories/All`, function(data) {
                 subCategorySelect.empty();
                 subCategorySelect.append('<option disabled selected>Choose Sub Category</option>');

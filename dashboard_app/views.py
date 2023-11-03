@@ -2190,6 +2190,7 @@ def counter_orders_screen(request):
     return render(request, 'order_pages/counter_orders_assign_page.html', context)
 
 def load_other_category_wise_details(cat_id):
+    print(f'other service cat_id ::{cat_id}')
     query = "select category_name,regular_price,regular_price_type,express_price_type,express_price,offer_price,offer_price_type,cat_img from vff.laundry_categorytbl where catid='"+str(cat_id)+"'"
     
     query_result = execute_raw_query(query)
