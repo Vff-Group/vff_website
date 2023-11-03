@@ -655,7 +655,7 @@ searchInput.on('input', function() {
                 $.get(`/admin_dashboard/load_sub_categories/${cat_id}`, function(data) {
                    sectionSelect.empty();
                     sectionSelect.append('<option disabled selected>Choose Section</option>');
-            
+            console.log('sectionSelect::'+sectionSelect)
                     $.each(data.section_data, function(index, subSection) {
                         sectionSelect.append($('<option>', {
                             value: subSection.section_name,
