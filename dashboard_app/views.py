@@ -2213,7 +2213,7 @@ def load_other_category_wise_details(request,cat_id):
     except Exception as e:
             print(f"Error loading data: {e}")
     
-    print(f'other_category_data::{other_category_data}')
+    
     context = {'other_category_data':other_category_data}
     return JsonResponse(context)
     
