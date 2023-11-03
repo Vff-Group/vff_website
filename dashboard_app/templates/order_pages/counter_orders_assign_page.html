@@ -655,8 +655,8 @@
                 section_column.show();
                 price_column.hide();
                 only_dry_clean_column.hide(); //to not show KGS Add Quantity
-                subCategorySelect.empty();
-                subCategorySelect.append('<option disabled selected>Choose Sub Category</option>');
+               // subCategorySelect.empty();
+                //subCategorySelect.append('<option disabled selected>Choose Sub Category</option>');
                 $.get(`/admin_dashboard/load_sub_categories/${cat_id}`, function(data) {
                    sectionSelect.empty();
                     sectionSelect.append('<option disabled selected>Choose Section</option>');
