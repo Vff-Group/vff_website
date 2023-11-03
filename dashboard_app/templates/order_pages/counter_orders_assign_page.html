@@ -755,8 +755,10 @@ $.each(data.sub_categories, function(index, subCategory) {
     // Add event listeners to handle both increment and decrement
 $("#subCategoryTable").on("click", ".increment, .decrement", function() {
     var row = $(this).closest("tr");
-    var subcatid = row.data("subcatid"); // Assuming you have set data-subcatid attribute
-    var subCategory = row.data("subcategory");
+    //var subcatid = row.data("subcatid"); // Assuming you have set data-subcatid attribute
+    //var subCategory = row.data("subcategory");
+    var h6Value = $('#subCategoryTable tr:eq(2) td:first h6').text();
+    console.log('h6Value::'+h6Value)
 
     // Access the properties of subCategory
     var sub_cat_name = subCategory.sub_cat_name;
