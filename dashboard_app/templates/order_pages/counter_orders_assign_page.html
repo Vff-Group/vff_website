@@ -637,12 +637,68 @@ $("#subCategoryTable").on("click", ".decrement", function() {
 // Add an event listener to handle increment
 var selectedItems = [];
 
-
-
-
-    // Add event listeners to handle both increment and decrement
-    // Add event listeners to handle both increment and decrement
+// Add an event listener to handle both increment and decrement
 $("#subCategoryTable").on("click", ".increment, .decrement", function() {
+    var row = $(this).closest("tr");
+    var subcatid = row.data("subcatid"); // Assuming you have set data-subcatid attribute
+    var subCategory = row.data("subcategory");
+    console.log("subcatid::"+subcatid)
+    // Access the properties of subCategory
+    var sub_cat_name = subCategory.sub_cat_name;
+    var sub_cat_img = subCategory.sub_cat_img;
+    var cost = subCategory.cost;
+    var type = subCategory.type;
+    var section_type = subCategory.section_type;
+
+    var quantityInput = row.find(".quantity");
+    var currentQuantity = parseInt(quantityInput.text());
+
+    if ($(this).hasClass("increment")) {
+        // Handle increment logic
+        quantityInput.text(currentQuantity + 1);
+    } else if ($(this).hasClass("decrement") && currentQuantity > 0) {
+        // Handle decrement logic
+        quantityInput.text(currentQuantity - 1);
+    }
+
+    // Update the selectedItems array based on the quantity
+    var selectedItemIndex = selectedItems.findIndex(item => item.subcatid === subcatid);
+
+    if (selectedItemIndex !== -1) {
+        if (currentQuantity > 0) {
+            // Update the existing item
+            selectedItems[selectedItemIndex].item_quantity = currentQuantity;
+            selectedItems[selectedItemIndex].cost = cost * currentQuantity;
+        } else {
+            // If the item count is zero, remove the item
+            selectedItems.splice(selectedItemIndex, 1);
+        }
+    } else {
+        if (currentQuantity > 0) {
+            // Add the new item
+            selectedItems.push({
+                subCategoryName: sub_cat_name,
+                item_quantity: currentQuantity,
+                sub_cat_name: sub_cat_name,
+                actual_cost: cost,
+                cost: cost * currentQuantity,
+                type_of: type,
+                sub_cat_id: subcatid,
+                sub_cat_img: sub_cat_img,
+                section_type: section_type
+            });
+        }
+    }
+
+    // You can now use the updated 'selectedItems' array as needed.
+});
+
+
+
+
+    // Add event listeners to handle both increment and decrement
+    // Add event listeners to handle both increment and decrement
+/*$("#subCategoryTable").on("click", ".increment, .decrement", function() {
     var row = $(this).closest("tr");
     
     var subcatid = row.data("subcatid"); // Assuming you have set data-subcatid attribute
@@ -677,7 +733,7 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
         }
     }
 });
-
+*/
 
         function loadSubCategories(categorySelect) {
             var selectedCategory = $(categorySelect).val();
