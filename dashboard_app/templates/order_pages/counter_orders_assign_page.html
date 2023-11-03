@@ -641,45 +641,42 @@ var selectedItems = [];
 
 
     // Add event listeners to handle both increment and decrement
-    $("#subCategoryTable").on("click", ".increment, .decrement", function() {
-        var row = $(this).closest("tr");
-        //var subcatid = row.data("subcatid"); // Assuming you have set data-subcatid attribute
-        //var subCategory = row.data("subcategory");
-        var h6Value = $('#subCategoryTable tr:eq(2) td:first h6').text();
-        console.log('h6Value::'+h6Value)
-    
-        // Access the properties of subCategory
-       // var sub_cat_name = subCategory.sub_cat_name;
-       // var sub_cat_img = subCategory.sub_cat_img;
-       // var cost = subCategory.cost;
-       // var type = subCategory.type;
-       // var section_type = subCategory.section_type;
-    
-        var quantityInput = row.find(".quantity");
-        var currentQuantity = parseInt(quantityInput.text());
-    
-        if ($(this).hasClass("increment")) {
-            // Handle increment logic
-            quantityInput.text(currentQuantity + 1);
-        } else if ($(this).hasClass("decrement") && currentQuantity > 0) {
-            // Handle decrement logic
-            quantityInput.text(currentQuantity - 1);
+    // Add event listeners to handle both increment and decrement
+$("#subCategoryTable").on("click", ".increment, .decrement", function() {
+    var row = $(this).closest("tr");
+    var subcatid = row.data("subcatid"); // Assuming you have set data-subcatid attribute
+    var subCategory = row.data("subcategory");
+
+    // Access the properties of subCategory
+    var sub_cat_name = subCategory.sub_cat_name;
+    var sub_cat_img = subCategory.sub_cat_img;
+    var cost = subCategory.cost;
+    var type = subCategory.type;
+    var section_type = subCategory.section_type;
+
+    var quantityInput = row.find(".quantity");
+    var currentQuantity = parseInt(quantityInput.text());
+
+    if ($(this).hasClass("increment")) {
+        // Handle increment logic
+        quantityInput.text(currentQuantity + 1);
+    } else if ($(this).hasClass("decrement") && currentQuantity > 0) {
+        // Handle decrement logic
+        quantityInput.text(currentQuantity - 1);
+    }
+
+    // Update the selectedItems array based on the quantity
+    var selectedItemIndex = selectedItems.findIndex(item => item.subcatid === subcatid);
+    if (selectedItemIndex !== -1) {
+        selectedItems[selectedItemIndex].quantity = currentQuantity;
+
+        // Remove the item if the quantity reaches 0
+        if (currentQuantity === 0) {
+            selectedItems.splice(selectedItemIndex, 1);
         }
-    
-        // Update the selectedItems array based on the quantity
-        var selectedItemIndex = selectedItems.findIndex(item => item.subcatid === subcatid);
-        if (selectedItemIndex !== -1) {
-            selectedItems[selectedItemIndex].quantity = currentQuantity;
-    
-            // Remove the item if the quantity reaches 0
-            if (currentQuantity === 0) {
-                selectedItems.splice(selectedItemIndex, 1);
-            }
-        }
-        var jsonSelectedItems = JSON.stringify(selectedItems);
-        console.log("jsonSelectedItems::"+jsonSelectedItems)
-    });
-    
+    }
+});
+
 
         function loadSubCategories(categorySelect) {
             var selectedCategory = $(categorySelect).val();
