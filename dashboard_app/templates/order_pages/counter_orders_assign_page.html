@@ -712,7 +712,7 @@ $("#subCategoryTable").on("click", ".decrement", function() {
 
 var selectedItems = [];
 // Add event listeners to handle both increment and decrement
-$("#subCategoryTable").on("click", ".increment, .decrement", function() {
+/*$("#subCategoryTable").on("click", ".increment, .decrement", function() {
     var row = $(this).closest("tr");
     var sub_cat_name = $(this).closest("tr").find("#sub_cat_name").text();
     var subcatid = $(this).closest("tr").find("#sub_catid").text();
@@ -764,6 +764,56 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
 
    
 });
+*/
+
+$("#subCategoryTable").on("click", ".increment, .decrement", function() {
+    var row = $(this).closest("tr");
+    var sub_cat_name = row.find(".sub_cat_name").text();
+    var subcatid = row.find(".sub_catid").text();
+    
+    var quantityInput = row.find(".quantity");
+    var currentQuantity = parseInt(quantityInput.text());
+
+    // Find the existing item in the selectedItems list with the same subcatid
+    var selectedItemIndex = selectedItems.findIndex(item => item.subcatid === subcatid);
+
+    if ($(this).hasClass("increment")) {
+        // Handle increment logic
+        quantityInput.text(currentQuantity + 1);
+
+        if (selectedItemIndex !== -1) {
+            // Update the quantity in the selected item
+            selectedItems[selectedItemIndex].quantity = currentQuantity + 1;
+        } else {
+            // Create a new object and push it to the list
+            var newItem = {
+                sub_cat_name: sub_cat_name,
+                subcatid: subcatid,
+                quantity: currentQuantity + 1
+            };
+            selectedItems.push(newItem);
+        }
+    } else if ($(this).hasClass("decrement") && currentQuantity > 0) {
+        // Handle decrement logic
+        quantityInput.text(currentQuantity - 1);
+
+        if (selectedItemIndex !== -1) {
+            // Update the quantity in the selected item
+            selectedItems[selectedItemIndex].quantity = currentQuantity - 1;
+            // Remove the item from the list if the quantity is 0
+            if (currentQuantity - 1 === 0) {
+                selectedItems.splice(selectedItemIndex, 1);
+            }
+        }
+    }
+
+    // Log the selected item
+    console.log('----------------');
+    console.log('selectedItem::' + selectedItems[selectedItemIndex].quantity + "-" + selectedItems[selectedItemIndex].sub_cat_name);
+    console.log('----------------');
+    console.log("selectedItems:" + JSON.stringify(selectedItems));
+});
+
 
 
 
