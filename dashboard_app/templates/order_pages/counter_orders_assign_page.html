@@ -573,7 +573,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
-    <script>
+    <!-- <script>
         // Define a reference to the input field and the table rows to search items
 var searchInput = $('#searchInput');
 var subCategoryTable = $('#subCategoryTable');
@@ -585,7 +585,7 @@ searchInput.on('input', function() {
     console.log('query::'+query)
     // Iterate through the table rows and hide/show based on the query
     subCategoryRows.each(function() {
-        var subCategoryName = $(this).find('h6.mb-0 text-sm').text().toLowerCase();
+        var subCategoryName = $(this).find('h6.mb-0').text().toLowerCase();
         console.log('subCategoryName::'+subCategoryName)
         if (subCategoryName.includes(query)) {
             $(this).show();
@@ -595,7 +595,7 @@ searchInput.on('input', function() {
     });
 });
 
-    </script>
+    </script> -->
     <script>
         $(document).on("click", ".increment", function() {
             var input = $(this).closest("tr").find("input[type='number']");
