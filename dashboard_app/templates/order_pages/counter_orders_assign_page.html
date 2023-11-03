@@ -774,7 +774,6 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
     var quantityInput = row.find(".quantity");
     var currentQuantity = parseInt(quantityInput.text());
 
-    
     // Find the existing item in the selectedItems list with the same subcatid
     var selectedItemIndex = selectedItems.findIndex(item => item.subcatid === subcatid);
 
@@ -782,7 +781,7 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
         // Handle increment logic
         quantityInput.text(currentQuantity + 1);
 
-        if (selectedItemIndex !== 0) {
+        if (selectedItemIndex !== -1) {
             // Update the quantity in the selected item
             selectedItems[selectedItemIndex].quantity = currentQuantity + 1;
         } else {
