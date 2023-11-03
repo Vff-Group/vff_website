@@ -743,7 +743,7 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
     // Update the selectedItems array based on the quantity
     var selectedItemIndex = selectedItems.findIndex(item => item.subcatid === subcatid);
     if (selectedItemIndex !== -1) {
-        selectedItems[selectedItemIndex].quantity = currentQuantity;
+        //selectedItems[selectedItemIndex].quantity = currentQuantity;
     updateSelectedItems(selectedItemIndex,currentQuantity,subCategory)
     }
   /*  if (selectedItemIndex !== -1) {
@@ -774,6 +774,7 @@ function updateSelectedItems(index, itemCount,sub_categories) {
   
     if (existingIndex !== -1) {
       if (itemCount > 0) {
+        console.log('coming here everytine');
         selectedItems[existingIndex].item_quantity = itemCount;
         selectedItems[existingIndex].cost = subCategory.cost * itemCount;
       } else {
