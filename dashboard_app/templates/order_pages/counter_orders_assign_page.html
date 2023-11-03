@@ -189,9 +189,9 @@
                 
 
                 <!-- Table start  -->
-                <div class="card-body px-0 pt-0 pb-2">
+                <div class="card-body px-0 pt-0 pb-2" style="height: 400px; overflow-y: scroll;">
                 <div class="table-responsive p-0">
-                    <table class="table align-items-center mb-0" id="subCategoryTable">
+                    <table class="table align-items-center mb-0" id="subCategoryTable" style="width: 100%;">
                       <thead>
                         <tr>
                           <th
@@ -644,6 +644,7 @@ var selectedItems = [];
     // Add event listeners to handle both increment and decrement
 $("#subCategoryTable").on("click", ".increment, .decrement", function() {
     var row = $(this).closest("tr");
+    
     var subcatid = row.data("subcatid"); // Assuming you have set data-subcatid attribute
     var subCategory = row.data("subcategory");
 
