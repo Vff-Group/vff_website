@@ -605,6 +605,9 @@
             $.get(`/admin_dashboard/load_other_category_wise_details/${cat_id}`, function(data) {
                 console.log("priceCategory::"+data.other_category_data);
                 priceCategory = data.other_category_data;
+
+                priceSelect.empty();
+                priceSelect.append('<option disabled selected>Choose Service Type</option>');
                 // Access and use the properties of the priceCategory object here
                 // Regular Price
     priceSelect.append($('<optgroup>', {
@@ -633,8 +636,7 @@
         text: `[${priceCategory.offer_price_type}] ${priceCategory.offer_price}`,
     }));
 
-                priceSelect.empty();
-                priceSelect.append('<option disabled selected>Choose Service Type</option>');
+               
         
        
                 
