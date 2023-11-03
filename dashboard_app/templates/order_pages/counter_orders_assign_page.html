@@ -741,16 +741,16 @@ var selectedItems = [];
 
 
 $("#subCategoryTable").on("click", ".increment, .decrement", function() {
-    
+    var row = $(this).closest("tr");
     var subCategory = dataCat;
-    console.log("subcatid::"+subCategory)
+    
     // Access the properties of subCategory
     var sub_cat_name = subCategory.sub_cat_name;
     var sub_cat_img = subCategory.sub_cat_img;
     var cost = subCategory.cost;
     var type = subCategory.type;
     var section_type = subCategory.section_type;
-
+    console.log("sub_cat_name::"+sub_cat_name)
     var quantityInput = row.find(".quantity");
     var currentQuantity = parseInt(quantityInput.text());
 
