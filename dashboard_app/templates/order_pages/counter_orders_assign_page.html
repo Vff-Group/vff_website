@@ -624,12 +624,13 @@
             var only_dry_clean_column = $('#other-then-dry-clean');
             var price_column = $('#price_col');
             //var subCategorySelect = $('#input-subcategory');
+            var subCategoryTable = $('#subCategoryTable tbody');
             var priceSelect = $('#input-price');
             console.log('selectedCategory::'+selectedCategory)
             if (selectedCategory == "DRY CLEAN"){
                 //Load Sections Here 
                 var costTh = $("<th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2'>Cost</th>");
-        $("#your-table-id").find("thead tr").append(costTh);
+        $("#subCategoryTable").find("thead tr").append(costTh);
                 section_column.show();
                 price_column.hide();
                 only_dry_clean_column.hide(); //to not show KGS Add Quantity
@@ -663,7 +664,7 @@
                     }));
                 });*/
 
-                var subCategoryTable = $('#subCategoryTable tbody');
+                
 
 subCategoryTable.empty(); // Clear any existing rows
 
