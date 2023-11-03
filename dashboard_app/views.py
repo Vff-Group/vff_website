@@ -2197,6 +2197,7 @@ def load_other_category_wise_details(request,cat_id):
                 query = "select category_name,regular_price,regular_price_type,express_price_type,express_price,offer_price,offer_price_type,cat_img from vff.laundry_categorytbl where catid='"+str(cat_id)+"'"
                 cursor.execute(query)
                 row = cursor.fetchone()
+                print(f'response_query::{row}')
                 if row:
                     other_category_data = {
                         'category_name': row[0],
