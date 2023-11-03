@@ -658,7 +658,7 @@
                 subCategorySelect.empty();
                 subCategorySelect.append('<option disabled selected>Choose Sub Category</option>');
                 $.get(`/admin_dashboard/load_sub_categories/${cat_id}`, function(data) {
-                   /* sectionSelect.empty();
+                   sectionSelect.empty();
                     sectionSelect.append('<option disabled selected>Choose Section</option>');
             
                     $.each(data.section_data, function(index, subSection) {
@@ -668,23 +668,6 @@
                         }));
                     });
                     
-*/
-
-var subCategoryTable = $('#subCategoryTable tbody');
-
-subCategoryTable.empty(); // Clear any existing rows
-
-$.each(data.sub_categories, function(index, subCategory) {
-    var newRow = $("<tr>");
-    newRow.append("<td>" + subCategory.sub_cat_name + "</td>");
-    newRow.append("<td>" + subCategory.cost + "</td>");
-    newRow.append("<td>" + subCategory.type + "</td>");
-    newRow.append("<td>" + subCategory.section_type + "</td>");
-    newRow.append("<td><input type='number' value='1' min='1'></td>");
-    newRow.append("<td><button class='increment'>+</button><button class='decrement'>-</button></td>");
-
-    subCategoryTable.append(newRow);
-});
                 });
           
             }else{
@@ -775,7 +758,22 @@ $.each(data.sub_categories, function(index, subCategory) {
             
             
             $.get(`/admin_dashboard/load_section_type_sub_categories/${section_type}`, function(data) {
-                subCategorySelect.empty();
+                var subCategoryTable = $('#subCategoryTable tbody');
+
+subCategoryTable.empty(); // Clear any existing rows
+
+$.each(data.sub_categories, function(index, subCategory) {
+    var newRow = $("<tr>");
+    newRow.append("<td>" + subCategory.sub_cat_name + "</td>");
+    newRow.append("<td>" + subCategory.cost + "</td>");
+    newRow.append("<td>" + subCategory.type + "</td>");
+    newRow.append("<td>" + subCategory.section_type + "</td>");
+    newRow.append("<td><input type='number' value='1' min='1'></td>");
+    newRow.append("<td><button class='increment'>+</button><button class='decrement'>-</button></td>");
+
+    subCategoryTable.append(newRow);
+});
+                /*subCategorySelect.empty();
                 subCategorySelect.append('<option disabled selected>Choose Sub Category</option>');
         
                 $.each(data.sub_categories, function(index, subCategory) {
@@ -783,7 +781,8 @@ $.each(data.sub_categories, function(index, subCategory) {
                         value: subCategory.subcatid,
                         text: subCategory.sub_cat_name
                     }));
-                });
+                });*/
+
             });
       
         
