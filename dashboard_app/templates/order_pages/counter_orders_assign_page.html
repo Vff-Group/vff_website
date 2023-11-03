@@ -765,7 +765,7 @@ subCategoryTable.empty(); // Clear any existing rows
 
 $.each(data.sub_categories, function(index, subCategory) {
     console.log('subCategory.sub_cat_name:::'+subCategory.sub_cat_name)
-    console.log('subCategoryTable::'+subCategoryTable)
+    console.log('subCategoryTable::'+subCategoryTable[0].outerHTML)
     var newRow = $("<tr>");
     newRow.append("<td>" + subCategory.sub_cat_name + "</td>");
     newRow.append("<td>" + subCategory.cost + "</td>");
