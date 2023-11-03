@@ -820,8 +820,6 @@ $.each(data.sub_categories, function(index, subCategory) {
     newRow.append("<td style=\"vertical-align: middle; \">  <div class=\"btn-group btn-group-sm mt-2\" style=\"width: 5px; display: flex; align-items: center;\" role=\"group\" aria-label=\"Basic mixed styles example\"> <button type=\"button\" class=\"btn btn-danger btn-sm decrement\" style=\"width: 10px;\" >-</button><button type=\"button\" class=\"btn btn-sm quantity\" style=\"width: 10px;\" >0</button><button type=\"button\" class=\"btn btn-success btn-sm increment\" style=\"width: 10px;\" >+</button> </td>")
 
     subCategoryTable.append(newRow);
-    newRow.data("subcatid", subCategory.sub_cat_id); // Assuming 'sub_cat_id' is the unique identifier
-    newRow.data("subcategory", subCategory);
 
 });
 
