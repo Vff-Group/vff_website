@@ -608,32 +608,19 @@
                 priceSelect.append('<option disabled selected>Choose Service Type</option>');
         
                 
-                    // Regular Price
-    priceSelect.append($('<optgroup>', {
-        label: 'Regular Price',
-    }));
-    priceSelect.append($('<option>', {
-        value: priceCategory.regular_price,
-        text: `[${priceCategory.regular_price_type}] ${priceCategory.regular_price}`,
-    }));
+                  // Access JSON properties using dot notation
+    var regularPrice = priceCategory.regular_price;
+    var regularPriceType = priceCategory.regular_price_type;
 
-    // Express Price
-    priceSelect.append($('<optgroup>', {
-        label: 'Express Price',
-    }));
-    priceSelect.append($('<option>', {
-        value: priceCategory.express_price,
-        text: `[${priceCategory.express_price_type}] ${priceCategory.express_price}`,
-    }));
+    // Or using bracket notation
+    var expressPrice = priceCategory['express_price'];
+    var expressPriceType = priceCategory['express_price_type'];
 
-    // Offer Price
-    priceSelect.append($('<optgroup>', {
-        label: 'Offer Price',
-    }));
-    priceSelect.append($('<option>', {
-        value: priceCategory.offer_price,
-        text: `[${priceCategory.offer_price_type}] ${priceCategory.offer_price}`,
-    }));
+    // Log the values to the console
+    console.log('Regular Price:', regularPrice);
+    console.log('Regular Price Type:', regularPriceType);
+    console.log('Express Price:', expressPrice);
+    console.log('Express Price Type:', expressPriceType);
                 
             
             });
