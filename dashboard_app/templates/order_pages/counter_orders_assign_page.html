@@ -638,7 +638,7 @@ $("#subCategoryTable").on("click", ".decrement", function() {
 var selectedItems = [];
 
 // Add an event listener to handle both increment and decrement
-$("#subCategoryTable").on("click", ".increment, .decrement", function() {
+/*$("#subCategoryTable").on("click", ".increment, .decrement", function() {
     var row = $(this).closest("tr");
     const h6Element = row.find(".mb-0 text-sm");
     console.log("h6Element::"+h6Element.text());
@@ -696,7 +696,7 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
 
     // You can now use the updated 'selectedItems' array as needed.
 });
-
+*/
 
 
 
@@ -738,6 +738,92 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
     }
 });
 */
+
+
+$("#subCategoryTable").on("click", ".increment, .decrement", function() {
+    
+    var subCategory = dataCat;
+    console.log("subcatid::"+subCategory)
+    // Access the properties of subCategory
+    var sub_cat_name = subCategory.sub_cat_name;
+    var sub_cat_img = subCategory.sub_cat_img;
+    var cost = subCategory.cost;
+    var type = subCategory.type;
+    var section_type = subCategory.section_type;
+
+    var quantityInput = row.find(".quantity");
+    var currentQuantity = parseInt(quantityInput.text());
+
+    if ($(this).hasClass("increment")) {
+        // Handle increment logic
+        quantityInput.text(currentQuantity + 1);
+    } else if ($(this).hasClass("decrement") && currentQuantity > 0) {
+        // Handle decrement logic
+        quantityInput.text(currentQuantity - 1);
+    }
+
+    // Update the selectedItems array based on the quantity
+    var selectedItemIndex = selectedItems.findIndex(item => item.subcatid === subcatid);
+
+    if (selectedItemIndex !== -1) {
+        if (currentQuantity > 0) {
+            // Update the existing item
+            selectedItems[selectedItemIndex].item_quantity = currentQuantity;
+            selectedItems[selectedItemIndex].cost = cost * currentQuantity;
+        } else {
+            // If the item count is zero, remove the item
+            selectedItems.splice(selectedItemIndex, 1);
+        }
+    } else {
+        if (currentQuantity > 0) {
+            // Add the new item
+            selectedItems.push({
+                subCategoryName: sub_cat_name,
+                item_quantity: currentQuantity,
+                sub_cat_name: sub_cat_name,
+                actual_cost: cost,
+                cost: cost * currentQuantity,
+                type_of: type,
+                sub_cat_id: subcatid,
+                sub_cat_img: sub_cat_img,
+                section_type: section_type
+            });
+        }
+    }
+
+    console.log("selectedItems::"+selectedItems)
+
+    // You can now use the updated 'selectedItems' array as needed.
+});
+
+function updateSelectedItems(index, itemCount) {
+    const subCategory = dataCat.sub_categories[index];
+  
+    const existingIndex = selectedItems.findIndex((selectedItem) =>
+      selectedItem.sub_cat_name === subCategory.sub_cat_name
+    );
+  
+    if (existingIndex !== -1) {
+      if (itemCount > 0) {
+        selectedItems[existingIndex].item_quantity = itemCount;
+        selectedItems[existingIndex].cost = subCategory.cost * itemCount;
+      } else {
+        selectedItems.splice(existingIndex, 1);
+      }
+    } else {
+      if (itemCount > 0) {
+        selectedItems.push({
+          sub_cat_name: subCategory.sub_cat_name,
+          item_quantity: itemCount,
+          cost: subCategory.cost * itemCount,
+        });
+      }
+    }
+  
+    // You can do further processing or updating of the selected items here.
+  }
+
+  var dataCat = {}
 
         function loadSubCategories(categorySelect) {
             var selectedCategory = $(categorySelect).val();
@@ -807,7 +893,9 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
 
 subCategoryTable.empty(); // Clear any existing rows
 console.log('subCategoryTable:'+subCategoryTable);
+dataCat = data.sub_categories
 $.each(data.sub_categories, function(index, subCategory) {
+    
     console.log('subCategory.sub_cat_img::'+subCategory.sub_cat_img);
    
     var newRow = $("<tr>");
