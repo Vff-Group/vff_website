@@ -71,10 +71,10 @@
                               
                               {% for category in category_data %}
                               <option
-                                  value=""
+                                  value="{{ category.regular_prize }}"
                                   
                               >
-                              {{ category.regular }}
+                              {{ category.regular_prize }}
                               </option>
                               {% endfor %}
 
