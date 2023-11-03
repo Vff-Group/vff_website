@@ -634,6 +634,38 @@ $("#subCategoryTable").on("click", ".decrement", function() {
     }
 });
 
+// Add an event listener to handle increment
+var selectedItems = [];
+$("#subCategoryTable").on("click", ".increment", function() {
+    var row = $(this).closest("tr");
+    var subcatid = row.data("subcatid"); // Assuming you have set data-subcatid attribute
+    var sub_cat_name = row.data("sub_cat_name");
+    var sub_cat_img = row.data("sub_cat_img");
+    var cost = row.data("cost");
+    var type = row.data("type");
+    var section_type = row.data("section_type");
+
+    var quantityInput = row.find(".quantity");
+    var currentQuantity = parseInt(quantityInput.text());
+
+    if (currentQuantity > 0) {
+        var selectedItem = {
+            subcatid: subcatid,
+            sub_cat_name: sub_cat_name,
+            sub_cat_img: sub_cat_img,
+            cost: cost,
+            type: type,
+            section_type: section_type,
+            quantity: currentQuantity
+        };
+        selectedItems.push(selectedItem);
+
+        // You can also update the UI to reflect the selected quantity if needed
+        var jsonSelectedItems = JSON.stringify(selectedItems);
+        console.log("jsonSelectedItems::"+jsonSelectedItems)
+    }
+});
+
 
         function loadSubCategories(categorySelect) {
             var selectedCategory = $(categorySelect).val();
