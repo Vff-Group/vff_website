@@ -721,7 +721,8 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
     
     console.log("Selected_sub_cat_name::"+sub_cat_name);
     console.log("Selected_sub_catid::"+sub_catid);
-    console.log("subCategory::"+subCategory);
+    var subCategoryJSON = JSON.stringify(subCategory);
+    console.log('subCategoryJSOn::' + JSON.stringify(subCategory));
 
     // Access the properties of subCategory
     var sub_cat_name = subCategory.sub_cat_name;
