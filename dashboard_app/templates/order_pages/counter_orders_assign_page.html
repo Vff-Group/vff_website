@@ -225,11 +225,7 @@
                           >
                             Type
                           </th>
-                          <th
-                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-                          >
-                            Section Type
-                          </th>
+                          
                          
                           
                           <th class="text-secondary opacity-7"></th>
@@ -678,7 +674,6 @@ $.each(data.sub_categories, function(index, subCategory) {
     newRow.append("<td> <p class=\"text-xs font-weight-bold mb-0\">" + subCategory.sub_cat_name + "</p></td>");
     newRow.append("<td>  <div class=\"d-flex px-2 py-1\"> <p class=\"mb-0 text-xxs text-center\"> " + subCategory.cost + " </p></div></td>");
     newRow.append("<td>  <p class=\"text-xxs font-weight-bold mb-0\">" + subCategory.type + "</p></td>");
-    newRow.append("<td>  <p class=\"text-xxs font-weight-bold mb-0\">" + subCategory.section_type + "</p></td>");
     newRow.append("<td><input type='number' value='0' min='0'></td>");
     newRow.append("<td><button class='btn btn-danger increment'>+</button><button class='btn btn-success decrement'>-</button></td>");
 
@@ -752,7 +747,6 @@ $.each(data.sub_categories, function(index, subCategory) {
     newRow.append("<td> <p class=\"text-xs font-weight-bold mb-0\">" + subCategory.sub_cat_name + "</p></td>");
     newRow.append("<td>  <div class=\"d-flex px-2 py-1\"> <p class=\"mb-0 text-xxs text-center\"> " + subCategory.cost + " </p></div></td>");
     newRow.append("<td>  <p class=\"text-xxs font-weight-bold mb-0\">" + subCategory.type + "</p></td>");
-    newRow.append("<td>  <p class=\"text-xxs font-weight-bold mb-0\">" + subCategory.section_type + "</p></td>");
     newRow.append("<td><input type='number' value='0' min='0'></td>");
     newRow.append("<td><button class='btn btn-danger increment'>+</button><button class='btn btn-success decrement'>-</button></td>");
 
