@@ -2189,7 +2189,7 @@ def counter_orders_screen(request):
     
     return render(request, 'order_pages/counter_orders_assign_page.html', context)
 
-def load_other_category_wise_details(cat_id):
+def load_other_category_wise_details(request,cat_id):
     print(f'other service cat_id ::{cat_id}')
     try:
         other_category_data = [] 
