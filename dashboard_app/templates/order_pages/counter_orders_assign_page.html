@@ -675,7 +675,7 @@ subCategoryTable.empty(); // Clear any existing rows
 
 $.each(data.sub_categories, function(index, subCategory) {
     var newRow = $("<tr>");
-    newRow.append("<td> <p class=\"text-xxs font-weight-bold mb-0\">" + subCategory.sub_cat_name + "</p></td>");
+    newRow.append("<td> <p class=\"text-xxs mb-0\">" + subCategory.sub_cat_name + "</p></td>");
     newRow.append("<td>  <div class=\"d-flex px-2 py-1\"> <p class=\"mb-0 text-xxs text-center\"> " + subCategory.cost + " </p></div></td>");
     newRow.append("<td>  <p class=\"text-xxs font-weight-bold mb-0\">" + subCategory.type + "</p></td>");
     newRow.append("<td>  <p class=\"text-xxs font-weight-bold mb-0\">" + subCategory.section_type + "</p></td>");
