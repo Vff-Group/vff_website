@@ -742,8 +742,11 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
 
     // Update the selectedItems array based on the quantity
     var selectedItemIndex = selectedItems.findIndex(item => item.subcatid === subcatid);
-    updateSelectedItems(selectedItemIndex,currentQuantity,subCategory)
     if (selectedItemIndex !== -1) {
+        selectedItems[selectedItemIndex].quantity = currentQuantity;
+    updateSelectedItems(selectedItemIndex,currentQuantity,subCategory)
+    }
+  /*  if (selectedItemIndex !== -1) {
         selectedItems[selectedItemIndex].quantity = currentQuantity;
 
         // Remove the item if the quantity reaches 0
@@ -751,6 +754,7 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
             selectedItems.splice(selectedItemIndex, 1);
         }
     }
+*/
 });
 
 
