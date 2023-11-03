@@ -770,16 +770,16 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
     var row = $(this).closest("tr");
     var sub_cat_name = row.find(".sub_cat_name").text();
     var subcatid = row.find(".sub_catid").text();
-    
+
     var quantityInput = row.find(".quantity");
-    var currentQuantity = parseInt(quantityInput.text());
+    var currentQuantity = parseInt(quantityInput.val()); // Use .val() to access input field value
 
     // Find the existing item in the selectedItems list with the same subcatid
     var selectedItemIndex = selectedItems.findIndex(item => item.subcatid === subcatid);
 
     if ($(this).hasClass("increment")) {
         // Handle increment logic
-        quantityInput.text(currentQuantity + 1);
+        quantityInput.val(currentQuantity + 1); // Use .val() to update the input field value
 
         if (selectedItemIndex !== -1) {
             // Update the quantity in the selected item
@@ -795,7 +795,7 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
         }
     } else if ($(this).hasClass("decrement") && currentQuantity > 0) {
         // Handle decrement logic
-        quantityInput.text(currentQuantity - 1);
+        quantityInput.val(currentQuantity - 1); // Use .val() to update the input field value
 
         if (selectedItemIndex !== -1) {
             // Update the quantity in the selected item
@@ -809,7 +809,9 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
 
     // Log the selected item
     console.log('----------------');
-    console.log('selectedItem::' + selectedItems[selectedItemIndex].currentQuantity + "-" + selectedItems[selectedItemIndex].sub_cat_name);
+    if (selectedItemIndex !== -1) {
+        console.log('selectedItem::' + selectedItems[selectedItemIndex].quantity + "-" + selectedItems[selectedItemIndex].sub_cat_name);
+    }
     console.log('----------------');
     console.log("selectedItems:" + JSON.stringify(selectedItems));
 });
