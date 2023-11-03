@@ -614,7 +614,7 @@
             console.log('selectedCategory::'+selectedCategory)
             if (selectedCategory == "DRY CLEAN"){
                 //Load Sections Here 
-                
+                $("#subCategoryTable").find("thead tr").remove(costTh);
                 $("#subCategoryTable").find("thead tr").append(costTh);
                 $("#subCategoryTable").find("thead tr").append(emptyTh);
 
