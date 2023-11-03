@@ -2191,18 +2191,15 @@ def counter_orders_screen(request):
 
 def load_other_category_wise_details(cat_id):
     print(f'other service cat_id ::{cat_id}')
-    query = "select category_name,regular_price,regular_price_type,express_price_type,express_price,offer_price,offer_price_type,cat_img from vff.laundry_categorytbl where catid='"+str(cat_id)+"'"
-    
-    query_result = execute_raw_query(query)
-    
-    
-        
-    other_category_data = []    
-    if not query_result == 500:
-        for row in query_result:
-            
-            other_category_data.append({
-                'category_name': row[0],
+    try:
+        other_category_data = [] 
+        with connection.cursor() as cursor:
+                query = "select category_name,regular_price,regular_price_type,express_price_type,express_price,offer_price,offer_price_type,cat_img from vff.laundry_categorytbl where catid='"+str(cat_id)+"'"
+                cursor.execute(query)
+                row = cursor.fetchone()
+                if row:
+                    other_category_data = {
+                        'category_name': row[0],
                 'regular_price': row[1],
                 'regular_price_type': row[2],
                 'express_price_type': row[3],
@@ -2211,10 +2208,10 @@ def load_other_category_wise_details(cat_id):
                 'offer_price_type': row[5],
                 'cat_img':row[6],
                 'catid':cat_id,
-            })
-    else:
-        error_msg = 'Something Went Wrong'
-        return JsonResponse({'error_msg':error_msg});
+                    }
+    except Exception as e:
+            print(f"Error loading data: {e}")
+    
         
     context = {'other_category_data':other_category_data}
     return JsonResponse(context)
