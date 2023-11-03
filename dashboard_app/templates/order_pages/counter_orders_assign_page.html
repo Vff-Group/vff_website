@@ -767,7 +767,9 @@ function updateSelectedItems(index, itemCount,sub_categories) {
     const subCategory = sub_categories[index];
   
     const existingIndex = selectedItems.findIndex((selectedItem) =>
-      selectedItem.sub_cat_name === subCategory.sub_cat_name
+      selectedItem.sub_cat_name === subCategory.sub_cat_name,
+      console.log("selectedItem.sub_cat_name::"+selectedItem.sub_cat_name),
+      console.log("subCategory.sub_cat_name::"+subCategory.sub_cat_name)
     );
   
     if (existingIndex !== -1) {
