@@ -205,6 +205,7 @@
                 </div>
 
                 <!-- Table start  -->
+                <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">
                     <table class="table align-items-center mb-0" id="subCategoryTable">
                       <thead>
@@ -238,12 +239,13 @@
                      
                       <tbody>
                        <tr>
-                        <td>h</td>
+                        
                        </tr>
                       </tbody>
                       
                     </table>
                   </div>
+                </div>
                 <!-- Table End  -->
 
               </div>
@@ -674,7 +676,7 @@ subCategoryTable.empty(); // Clear any existing rows
 $.each(data.sub_categories, function(index, subCategory) {
     var newRow = $("<tr>");
     newRow.append("<td>" + subCategory.sub_cat_name + "</td>");
-    newRow.append("<td>" + subCategory.cost + "</td>");
+    newRow.append("<td>  <div class=\"d-flex px-2 py-1\"> <p class=\"mb-0 text-xs text-center\"> " + subCategory.cost + " </p></div></td>");
     newRow.append("<td>" + subCategory.type + "</td>");
     newRow.append("<td>" + subCategory.section_type + "</td>");
     newRow.append("<td><input type='number' value='1' min='1'></td>");
