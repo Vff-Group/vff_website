@@ -606,26 +606,32 @@
                 console.log("priceCategory::"+data.other_category_data);
                 priceCategory = data.other_category_data;
                 // Access and use the properties of the priceCategory object here
-    var category_name = priceCategory.category_name;
-    var regular_price = priceCategory.regular_price;
-    var regular_price_type = priceCategory.regular_price_type;
-    var express_price = priceCategory.express_price;
-    var express_price_type = priceCategory.express_price_type;
-    var offer_price = priceCategory.offer_price;
-    var offer_price_type = priceCategory.offer_price_type;
-    var cat_img = priceCategory.cat_img;
-    var catid = priceCategory.catid;
+                // Regular Price
+    priceSelect.append($('<optgroup>', {
+        label: 'Regular Price',
+    }));
+    priceSelect.append($('<option>', {
+        value: priceCategory.regular_price,
+        text: `[${priceCategory.regular_price_type}] ${priceCategory.regular_price}`,
+    }));
 
-    // Now you can use these properties as needed in your code
-    console.log('Category Name:', category_name);
-    console.log('Regular Price:', regular_price);
-    console.log('Regular Price Type:', regular_price_type);
-    console.log('Express Price:', express_price);
-    console.log('Express Price Type:', express_price_type);
-    console.log('Offer Price:', offer_price);
-    console.log('Offer Price Type:', offer_price_type);
-    console.log('Cat Image:', cat_img);
-    console.log('Cat ID:', catid);
+    // Express Price
+    priceSelect.append($('<optgroup>', {
+        label: 'Express Price',
+    }));
+    priceSelect.append($('<option>', {
+        value: priceCategory.express_price,
+        text: `[${priceCategory.express_price_type}] ${priceCategory.express_price}`,
+    }));
+
+    // Offer Price
+    priceSelect.append($('<optgroup>', {
+        label: 'Offer Price',
+    }));
+    priceSelect.append($('<option>', {
+        value: priceCategory.offer_price,
+        text: `[${priceCategory.offer_price_type}] ${priceCategory.offer_price}`,
+    }));
 
                 priceSelect.empty();
                 priceSelect.append('<option disabled selected>Choose Service Type</option>');
