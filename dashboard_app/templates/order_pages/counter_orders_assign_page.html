@@ -671,6 +671,8 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
             selectedItems.splice(selectedItemIndex, 1);
         }
     }
+    var jsonSelectedItems = JSON.stringify(selectedItems);
+    console.log("jsonSelectedItems::"+jsonSelectedItems)
 });
 
 
