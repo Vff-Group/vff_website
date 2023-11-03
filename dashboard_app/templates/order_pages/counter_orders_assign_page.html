@@ -640,6 +640,8 @@ var selectedItems = [];
 // Add an event listener to handle both increment and decrement
 $("#subCategoryTable").on("click", ".increment, .decrement", function() {
     var row = $(this).closest("tr");
+    const h6Element = row.find(".mb-0 text-sm");
+    console.log("h6Element::"+h6Element.text());
     var subcatid = row.data("subcatid"); // Assuming you have set data-subcatid attribute
     var subCategory = row.data("subcategory");
     console.log("subcatid::"+subcatid)
