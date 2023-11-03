@@ -718,7 +718,7 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
     var sub_cat_name = $(this).closest("tr").find("#sub_cat_name").text();
     var subcatid = $(this).closest("tr").find("#sub_catid").text();
     var subCategory = $(this).closest("tr").find("#subCategory").text();
-    var subCategory = $(this).closest("tr").find("#subCategory").text();
+    
     console.log("Selected_sub_cat_name::"+sub_cat_name);
     console.log("Selected_sub_catid::"+sub_catid);
 
@@ -742,7 +742,7 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
 
     // Update the selectedItems array based on the quantity
     var selectedItemIndex = selectedItems.findIndex(item => item.subcatid === subcatid);
-    updateSelectedItems(selectedItemIndex,currentQuantity)
+    updateSelectedItems(selectedItemIndex,currentQuantity,subCategory)
     if (selectedItemIndex !== -1) {
         selectedItems[selectedItemIndex].quantity = currentQuantity;
 
@@ -759,8 +759,8 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
   
 
 
-function updateSelectedItems(index, itemCount) {
-    const subCategory = dataCat.sub_categories[index];
+function updateSelectedItems(index, itemCount,sub_categories) {
+    const subCategory = sub_categories[index];
   
     const existingIndex = selectedItems.findIndex((selectedItem) =>
       selectedItem.sub_cat_name === subCategory.sub_cat_name
