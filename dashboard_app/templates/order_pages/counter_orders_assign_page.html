@@ -185,6 +185,9 @@
 
                 </div>
 
+                <hr>
+                <input type="text" id="searchInput" placeholder="Search by Sub Category Name">
+
                 <!-- Table start  -->
                 <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">
@@ -570,6 +573,27 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
+    <script>
+        // Define a reference to the input field and the table rows to search items
+var searchInput = $('#searchInput');
+var subCategoryRows = subCategoryTable.find('tr');
+
+// Add an event listener to the search input
+searchInput.on('input', function() {
+    var query = searchInput.val().toLowerCase();
+
+    // Iterate through the table rows and hide/show based on the query
+    subCategoryRows.each(function() {
+        var subCategoryName = $(this).find('h6.text-sm').text().toLowerCase();
+        if (subCategoryName.includes(query)) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+    });
+});
+
+    </script>
     <script>
         $(document).on("click", ".increment", function() {
             var input = $(this).closest("tr").find("input[type='number']");
