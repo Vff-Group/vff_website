@@ -602,11 +602,11 @@
                 });
             });
             console.log('While Loading CatID::'+cat_id)
-            $.get(`/admin_dashboard/load_other_category_wise_details/${cat_id}`, function(data) {
+            $.get(`/admin_dashboard/load_other_category_wise_details/${cat_id}`, function(priceCategory) {
                 priceSelect.empty();
                 priceSelect.append('<option disabled selected>Choose Service Type</option>');
         
-                $.each(data.other_category_data, function(index, priceCategory) {
+                
                     // Regular Price
     priceSelect.append($('<optgroup>', {
         label: 'Regular Price',
@@ -633,7 +633,8 @@
         value: priceCategory.offer_price,
         text: `[${priceCategory.offer_price_type}] ${priceCategory.offer_price}`,
     }));
-                });
+                
+            
             });
 
       
