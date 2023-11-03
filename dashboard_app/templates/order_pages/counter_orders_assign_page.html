@@ -614,8 +614,8 @@
         label: 'Regular Price',
     }));
     priceSelect.append($('<option>', {
-        value: priceCategory.regular_price,
-        text: `[${priceCategory.regular_price_type}] ${priceCategory.regular_price}`,
+        value: `${priceCategory.regular_price} [${priceCategory.regular_price_type}] `,
+        text: `${priceCategory.regular_price} [${priceCategory.regular_price_type}] `,
     }));
 
     // Express Price
@@ -623,8 +623,8 @@
         label: 'Express Price',
     }));
     priceSelect.append($('<option>', {
-        value: priceCategory.express_price,
-        text: `[${priceCategory.express_price_type}] ${priceCategory.express_price}`,
+        value: `${priceCategory.express_price} [${priceCategory.express_price_type}] `,
+        text: `${priceCategory.express_price} [${priceCategory.express_price_type}] `,
     }));
 
     // Offer Price
@@ -632,8 +632,8 @@
         label: 'Offer Price',
     }));
     priceSelect.append($('<option>', {
-        value: priceCategory.offer_price,
-        text: `[${priceCategory.offer_price_type}] ${priceCategory.offer_price}`,
+        value: `${priceCategory.offer_price} [${priceCategory.offer_price_type}] `,
+        text: `${priceCategory.offer_price} [${priceCategory.offer_price_type}] `,
     }));
 
                
