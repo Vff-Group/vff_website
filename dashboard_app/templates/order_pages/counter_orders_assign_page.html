@@ -621,6 +621,8 @@ searchInput.on('input', function() {
           // Add an event listener to handle increment
           $("#subCategoryTable").on("click", ".increment", function() {
     var quantityInput = $(this).closest("tr").find(".quantity");
+    var subcatid = $(this).closest("tr").find("#sub_cat_name").text();
+    console.log("Selected_subcatid::"+subcatid);
     var currentQuantity = parseInt(quantityInput.text());
     quantityInput.text(currentQuantity + 1);
 });
@@ -628,8 +630,7 @@ searchInput.on('input', function() {
 // Add an event listener to handle decrement
 $("#subCategoryTable").on("click", ".decrement", function() {
     var quantityInput = $(this).closest("tr").find(".quantity");
-    var subcatid = $(this).closest("tr").find("#sub_cat_name").val();
-    console.log("Selected_subcatid::"+subcatid);
+    
     var currentQuantity = parseInt(quantityInput.text());
     if (currentQuantity > 0) {
         quantityInput.text(currentQuantity - 1);
