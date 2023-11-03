@@ -566,6 +566,7 @@
             var sectionSelect = $('#input-section');
             var section_column = $('#section_col');
             var subCategorySelect = $('#input-subcategory');
+            var priceSelect = $('#input-price');
             console.log('selectedCategory::'+selectedCategory)
             if (selectedCategory == "DRY CLEAN"){
                 //Load Sections Here 
@@ -595,6 +596,41 @@
                     }));
                 });
             });
+
+            $.get(`/admin_dashboard/load_other_category_wise_details/${cat_id}`, function(data) {
+                priceSelect.empty();
+                priceSelect.append('<option disabled selected>Choose Service Type</option>');
+        
+                $.each(data.other_category_data, function(index, priceCategory) {
+                    // Regular Price
+    priceSelect.append($('<optgroup>', {
+        label: 'Regular Price',
+    }));
+    priceSelect.append($('<option>', {
+        value: priceCategory.regular_price,
+        text: `[${priceCategory.regular_price_type}] ${priceCategory.regular_price}`,
+    }));
+
+    // Express Price
+    priceSelect.append($('<optgroup>', {
+        label: 'Express Price',
+    }));
+    priceSelect.append($('<option>', {
+        value: priceCategory.express_price,
+        text: `[${priceCategory.express_price_type}] ${priceCategory.express_price}`,
+    }));
+
+    // Offer Price
+    priceSelect.append($('<optgroup>', {
+        label: 'Offer Price',
+    }));
+    priceSelect.append($('<option>', {
+        value: priceCategory.offer_price,
+        text: `[${priceCategory.offer_price_type}] ${priceCategory.offer_price}`,
+    }));
+                });
+            });
+
       
         }
         }

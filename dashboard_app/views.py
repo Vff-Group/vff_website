@@ -2189,6 +2189,35 @@ def counter_orders_screen(request):
     
     return render(request, 'order_pages/counter_orders_assign_page.html', context)
 
+def load_other_category_wise_details(cat_id):
+    query = "select category_name,regular_price,regular_price_type,express_price_type,express_price,offer_price,offer_price_type,cat_img from vff.laundry_categorytbl where catid='"+str(cat_id)+"'"
+    
+    query_result = execute_raw_query(query)
+    
+    
+        
+    other_category_data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            other_category_data.append({
+                'category_name': row[0],
+                'regular_price': row[1],
+                'regular_price_type': row[2],
+                'express_price_type': row[3],
+                'express_price': row[4],
+                'offer_price': row[5],
+                'offer_price_type': row[5],
+                'cat_img':row[6],
+                'catid':cat_id,
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+        return JsonResponse({'error_msg':error_msg});
+        
+    context = {'other_category_data':other_category_data}
+    return JsonResponse(context)
+    
 def load_sub_categories(request,cat_id):
     query = "select sub_cat_name,sub_cat_img,cost,type,section_type,subcatid from vff.laundry_sub_categorytbl where catid='"+str(cat_id)+"' order by sub_cat_name"
     
