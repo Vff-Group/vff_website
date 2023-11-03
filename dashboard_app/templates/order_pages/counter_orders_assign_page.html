@@ -746,12 +746,10 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
         quantityInput.text(currentQuantity - 1);
           // Update the quantity in the selected item
           selectedItem.quantity = currentQuantity - 1;
-        if (quantity <= 0) {
-            // Find and remove the item from the selectedItems list
-            var indexToRemove = selectedItems.findIndex(item => item.subcatid === subcatid);
-            if (indexToRemove !== -1) {
-                selectedItems.splice(indexToRemove, 1);
-            }
+        // Find and remove the item from the selectedItems list
+        var indexToRemove = selectedItems.findIndex(item => item.subcatid === subcatid);
+        if (indexToRemove !== -1) {
+            selectedItems.splice(indexToRemove, 1);
         }
     }
 
@@ -759,7 +757,7 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
     console.log("Selected_sub_cat_name::" + sub_cat_name);
     console.log("Selected_subcatid::" + subcatid);
     console.log("Selected_subCategory::" + subCategory);
-    console.log("Selected_quantity::" + quantity);
+    console.log("Selected_quantity::" + currentQuantity);
    
 });
 
