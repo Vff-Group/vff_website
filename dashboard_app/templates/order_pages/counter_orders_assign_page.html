@@ -754,11 +754,12 @@ $.each(data.sub_categories, function(index, subCategory) {
             console.log('section_id::'+section_id)
             console.log('section_type::'+section_type)
             var sectionSelect = $('#input-section');
-            var subCategorySelect = $('#input-subcategory');
+            var subCategoryTable = $('#subCategoryTable tbody');
+            //var subCategorySelect = $('#input-subcategory');
             
             
             $.get(`/admin_dashboard/load_section_type_sub_categories/${section_type}`, function(data) {
-                var subCategoryTable = $('#subCategoryTable tbody');
+                
 
 subCategoryTable.empty(); // Clear any existing rows
 
