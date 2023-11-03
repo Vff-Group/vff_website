@@ -585,7 +585,7 @@ searchInput.on('input', function() {
     console.log('query::'+query)
     // Iterate through the table rows and hide/show based on the query
     subCategoryRows.each(function() {
-        var subCategoryName = $(this).find('h6.text-sm').text().toLowerCase();
+        var subCategoryName = $(this).find('h6').text().toLowerCase();
         console.log('subCategoryName::'+subCategoryName)
         if (subCategoryName.includes(query)) {
             $(this).show();
