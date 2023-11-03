@@ -768,8 +768,8 @@ var selectedItems = [];
 
 $("#subCategoryTable").on("click", ".increment, .decrement", function() {
     var row = $(this).closest("tr");
-    var sub_cat_name = row.find(".sub_cat_name").text();
-    var subcatid = row.find(".sub_catid").text();
+    var sub_cat_name = $(this).closest("tr").find("#sub_cat_name").text();
+    var subcatid = $(this).closest("tr").find("#sub_catid").text();
     
     var quantityInput = row.find(".quantity");
     var currentQuantity = parseInt(quantityInput.text());
