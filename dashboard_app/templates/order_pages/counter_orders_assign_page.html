@@ -122,7 +122,7 @@
                       <!-- End Sections  -->
 
                       <!-- sub category  -->
-                      <div class="col-lg-4">
+                      <!-- <div class="col-lg-4">
                     
                         <div class="form-group">
                             <label
@@ -139,26 +139,26 @@
                               <option disabled selected>
                                 Choose Sub Category
                               </option>
-                              <!-- {% for category in data_all_categories %}
+                              {% for category in data_all_categories %}
                               <option
                                 value="{{ category.category_name }}"
                                 data-catid="{{ category.expcatid }}"
                               >
                                 {{ category.category_name }}
                               </option>
-                              {% endfor %} -->
+                              {% endfor %} 
 
-                              <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
+                             
                             </select>
                           </div>
                         
-                      </div>
+                      </div> -->
                       <!-- End sub category  -->
                     
 
                 </div>
             </form>
-
+<hr>
                 <div class="row">
                   <div class="col-lg-3" id="only-dry-clean">
                     
@@ -203,6 +203,66 @@
                   </div>
 
                 </div>
+
+                <!-- Table start  -->
+                <div class="table-responsive p-0">
+                    <table class="table align-items-center mb-0" id="subCategoryTable">
+                      <thead>
+                        <tr>
+                          <th
+                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                          >
+                            Sub Category Name
+                          </th>
+                          <th
+                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                          >
+                            Cost
+                          </th>
+                          <th
+                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                          >
+                            Type
+                          </th>
+                          <th
+                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                          >
+                            Section Type
+                          </th>
+                         
+                          
+                          <th class="text-secondary opacity-7"></th>
+                          <th class="text-secondary opacity-7"></th>
+                        </tr>
+                      </thead>
+                      {% if not query_result%}
+                      <div
+                        class="alert alert-info alert-dismissible m-4 fade show"
+                        role="alert"
+                      >
+                        <span class="alert-icon text-white"
+                          ><i class="ni ni-like-2"></i
+                        ></span>
+                        <span class="alert-text text-white"
+                          ><strong>Info!</strong> {{error_msg}}!</span
+                        >
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="alert"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      {% else %}
+                      <tbody>
+                       
+                      </tbody>
+                    </table>
+                  </div>
+                <!-- Table End  -->
+
               </div>
               <!-- Action Buttons  -->
 
@@ -553,8 +613,23 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
-    
     <script>
+        $(document).on("click", ".increment", function() {
+            var input = $(this).closest("tr").find("input[type='number']");
+            input.val(parseInt(input.val()) + 1);
+        });
+        
+        $(document).on("click", ".decrement", function() {
+            var input = $(this).closest("tr").find("input[type='number']");
+            var newValue = parseInt(input.val()) - 1;
+            if (newValue >= 1) {
+                input.val(newValue);
+            }
+        });
+    </script>
+    <script>
+
+
         $(document).ready(function() {
             $('#input-section').select2();
           });
@@ -571,7 +646,7 @@
             var only_dry_clean_column = $('#only-dry-clean');
             var only_dry_clean_column = $('#other-then-dry-clean');
             var price_column = $('#price_col');
-            var subCategorySelect = $('#input-subcategory');
+            //var subCategorySelect = $('#input-subcategory');
             var priceSelect = $('#input-price');
             console.log('selectedCategory::'+selectedCategory)
             if (selectedCategory == "DRY CLEAN"){
@@ -582,7 +657,7 @@
                 subCategorySelect.empty();
                 subCategorySelect.append('<option disabled selected>Choose Sub Category</option>');
                 $.get(`/admin_dashboard/load_sub_categories/${cat_id}`, function(data) {
-                    sectionSelect.empty();
+                   /* sectionSelect.empty();
                     sectionSelect.append('<option disabled selected>Choose Section</option>');
             
                     $.each(data.section_data, function(index, subSection) {
@@ -591,6 +666,24 @@
                             text: subSection.section_name
                         }));
                     });
+                    
+*/
+
+var subCategoryTable = $('#subCategoryTable tbody');
+
+subCategoryTable.empty(); // Clear any existing rows
+
+$.each(data.sub_categories, function(index, subCategory) {
+    var newRow = $("<tr>");
+    newRow.append("<td>" + subCategory.sub_cat_name + "</td>");
+    newRow.append("<td>" + subCategory.cost + "</td>");
+    newRow.append("<td>" + subCategory.type + "</td>");
+    newRow.append("<td>" + subCategory.section_type + "</td>");
+    newRow.append("<td><input type='number' value='1' min='1'></td>");
+    newRow.append("<td><button class='increment'>+</button><button class='decrement'>-</button></td>");
+
+    subCategoryTable.append(newRow);
+});
                 });
           
             }else{
@@ -598,7 +691,7 @@
                 only_dry_clean_column.show();
                 price_column.show();
             $.get(`/admin_dashboard/load_section_type_sub_categories/All`, function(data) {
-                subCategorySelect.empty();
+                /*subCategorySelect.empty();
                 subCategorySelect.append('<option disabled selected>Choose Sub Category</option>');
         
                 $.each(data.sub_categories, function(index, subCategory) {
@@ -606,7 +699,24 @@
                         value: subCategory.subcatid,
                         text: subCategory.sub_cat_name
                     }));
-                });
+                });*/
+
+                var subCategoryTable = $('#subCategoryTable tbody');
+
+subCategoryTable.empty(); // Clear any existing rows
+
+$.each(data.sub_categories, function(index, subCategory) {
+    var newRow = $("<tr>");
+    newRow.append("<td>" + subCategory.sub_cat_name + "</td>");
+    newRow.append("<td>" + subCategory.cost + "</td>");
+    newRow.append("<td>" + subCategory.type + "</td>");
+    newRow.append("<td>" + subCategory.section_type + "</td>");
+    newRow.append("<td><input type='number' value='1' min='1'></td>");
+    newRow.append("<td><button class='increment'>+</button><button class='decrement'>-</button></td>");
+
+    subCategoryTable.append(newRow);
+});
+
             });
             console.log('While Loading CatID::'+cat_id)
             $.get(`/admin_dashboard/load_other_category_wise_details/${cat_id}`, function(data) {
