@@ -619,14 +619,14 @@ searchInput.on('input', function() {
           */
 
           // Add an event listener to handle increment
-$(document).on("click", ".increment", function() {
+          $("#subCategoryTable").on("click", ".increment", function() {
     var quantityInput = $(this).closest("tr").find(".quantity");
     var currentQuantity = parseInt(quantityInput.text());
     quantityInput.text(currentQuantity + 1);
 });
 
 // Add an event listener to handle decrement
-$(document).on("click", ".decrement", function() {
+$("#subCategoryTable").on("click", ".decrement", function() {
     var quantityInput = $(this).closest("tr").find(".quantity");
     var currentQuantity = parseInt(quantityInput.text());
     if (currentQuantity > 0) {
