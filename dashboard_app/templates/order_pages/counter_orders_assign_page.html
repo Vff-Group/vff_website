@@ -173,7 +173,7 @@
                         type="number"
                         id="date-of-expense"
                         name="dateofexpense"
-                        placeholder="Add Item Quantity"
+                        placeholder="Enter Number of Items [1,10]"
                         value=""
                         required
                       />
@@ -194,7 +194,7 @@
                         type="number"
                         id="date-of-expense"
                         name="dateofexpense"
-                        placeholder="Add Item Quantity"
+                        placeholder="Add Item Quantity in Kgs [5,10]"
                         value=""
                         required
                       />
@@ -566,6 +566,11 @@
             var sectionSelect = $('#input-section');
             var section_column = $('#section_col');
             var price_column = $('#price_col');
+            
+            //To Hide and 
+            var only_dry_clean_column = $('#only-dry-clean');
+            var only_dry_clean_column = $('#other-then-dry-clean');
+            var price_column = $('#price_col');
             var subCategorySelect = $('#input-subcategory');
             var priceSelect = $('#input-price');
             console.log('selectedCategory::'+selectedCategory)
@@ -573,6 +578,7 @@
                 //Load Sections Here 
                 section_column.show();
                 price_column.hide();
+                only_dry_clean_column.hide(); //to not show KGS Add Quantity
                 subCategorySelect.empty();
                 subCategorySelect.append('<option disabled selected>Choose Sub Category</option>');
                 $.get(`/admin_dashboard/load_sub_categories/${cat_id}`, function(data) {
@@ -589,6 +595,7 @@
           
             }else{
                 section_column.hide();
+                only_dry_clean_column.show();
                 price_column.show();
             $.get(`/admin_dashboard/load_section_type_sub_categories/All`, function(data) {
                 subCategorySelect.empty();
