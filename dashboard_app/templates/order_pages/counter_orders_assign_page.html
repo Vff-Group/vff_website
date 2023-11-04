@@ -786,10 +786,21 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
             selectedItems[selectedItemIndex].quantity = currentQuantity + 1;
         } else {
             // Create a new object and push it to the list
-            var newItem = {
+            /*var newItem = {
                 sub_cat_name: sub_cat_name,
                 subcatid: subcatid,
                 quantity: currentQuantity + 1
+            };*/
+            var newItem = {
+                subCategoryName: sub_cat_name,
+                item_quantity: currentQuantity + 1,
+                sub_cat_name: sub_cat_name,
+                actual_cost: 45, // Replace 'item.cost' with the actual value
+                cost: 45 * (currentQuantity + 1),
+                type_of: 'Kgs', // Replace 'item.typeOf' with the actual value
+                sub_cat_id: subcatid,
+                sub_cat_img: 'NA', // Replace 'item.subCategoryImage' with the actual value
+                section_type: 'All'
             };
             selectedItems.push(newItem);
         }
