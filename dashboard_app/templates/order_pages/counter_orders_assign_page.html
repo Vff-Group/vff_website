@@ -834,6 +834,10 @@ $("#add_to_cart").on("click",function(){
     
 
     jsonItems = JSON.stringify(selectedItems);
+    if (jsonItems === null || jsonItems === ""){
+        showToast('Alert','Please select the laundry items before adding to cart')
+        return;
+    }
     console.log("Item Details::"+jsonItems)
     })
 
