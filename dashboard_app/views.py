@@ -1992,20 +1992,21 @@ def add_items_to_cart(request):
             print(f'all_data::{all_data}')
             
             try:
-                for item in all_data:
-                    print(f'itemss--->{item}')
-                    sub_cat_name = item['sub_cat_name']
-                    print(f'sub_cat_name::{sub_cat_name}')
-                    item_quantity = item['item_quantity']
-                    actual_cost = item['actual_cost']
-                    cost = item['cost']
-                    type_of = item['type_of']
-                    sub_cat_id = item['sub_cat_id']
-                    sub_cat_img = item['sub_cat_img']
-                    section_type = item['section_type']
-                    query_dry = "insert into vff.laundry_cart_items(catid,subcatid,customer_id,booking_id,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type) values ('"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(customer_id)+"','"+str(booking_id)+"','"+str(booking_type)+"','"+str(cost)+"','"+str(item_quantity)+"','"+str(type_of)+"','"+str(cat_img)+"','"+str(cat_name)+"','"+str(sub_cat_name)+"','"+str(sub_cat_img)+"','"+str(actual_cost)+"','"+str(section_type)+"')"
-                    cursor.execute(query_dry)
-                connection.commit();
+                with connection.cursor() as cursor:
+                    for item in all_data:
+                        print(f'itemss--->{item}')
+                        sub_cat_name = item['sub_cat_name']
+                        print(f'sub_cat_name::{sub_cat_name}')
+                        item_quantity = item['item_quantity']
+                        actual_cost = item['actual_cost']
+                        cost = item['cost']
+                        type_of = item['type_of']
+                        sub_cat_id = item['sub_cat_id']
+                        sub_cat_img = item['sub_cat_img']
+                        section_type = item['section_type']
+                        query_dry = "insert into vff.laundry_cart_items(catid,subcatid,customer_id,booking_id,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type) values ('"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(customer_id)+"','"+str(booking_id)+"','"+str(booking_type)+"','"+str(cost)+"','"+str(item_quantity)+"','"+str(type_of)+"','"+str(cat_img)+"','"+str(cat_name)+"','"+str(sub_cat_name)+"','"+str(sub_cat_img)+"','"+str(actual_cost)+"','"+str(section_type)+"')"
+                        cursor.execute(query_dry)
+                        connection.commit();
             except Exception as e:
                 print('---------Error Inserting Dry Clean Records--------')
                 print(e)
