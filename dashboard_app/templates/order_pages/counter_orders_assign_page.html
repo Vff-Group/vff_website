@@ -783,13 +783,19 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
 
         if (selectedItemIndex !== -1) {
             // Update the quantity in the selected item
-            selectedItems[selectedItemIndex].quantity = currentQuantity + 1;
+            selectedItems[selectedItemIndex].item_quantity = currentQuantity + 1;
         } else {
             // Create a new object and push it to the list
             var newItem = {
                 sub_cat_name: sub_cat_name,
                 subcatid: subcatid,
-                quantity: currentQuantity + 1
+                quantity: currentQuantity + 1,
+                actual_cost: 45,
+                cost: 45 * (currentQuantity + 1),
+                type_of: 'Kgs', 
+                sub_cat_id: subcatid,
+                sub_cat_img: 'NA', 
+                section_type: 'All'
             };
            /* var newItem = {
                 subCategoryName: sub_cat_name,
@@ -810,7 +816,7 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
 
         if (selectedItemIndex !== -1) {
             // Update the quantity in the selected item
-            selectedItems[selectedItemIndex].quantity = currentQuantity - 1;
+            selectedItems[selectedItemIndex].item_quantity = currentQuantity - 1;
             //selectedItems[selectedItemIndex].item_quantity = currentQuantity - 1;
             //selectedItems[selectedItemIndex].cost = selectedItems[selectedItemIndex].actual_cost * (currentQuantity - 1);
             // Remove the item from the list if the quantity is 0
