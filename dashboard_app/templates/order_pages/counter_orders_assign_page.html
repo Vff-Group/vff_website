@@ -182,7 +182,9 @@
                     </div>
 
                   </div>
-
+                  <div class="col-lg-4">
+                    <button class="btn btn-facebook btn-sm" type="submit" id="add_to_cart">Add to cart</button>
+                  </div>
                 </div>
 
 
@@ -766,10 +768,20 @@ var selectedItems = [];
 });
 */
 
+//Add To Cart Button
+$("#add_to_cart").on("click",function(){
+    jsonItems = JSON.stringify(selectedItems);
+    console.log("Item Details::"+jsonItems)
+})
+
 $("#subCategoryTable").on("click", ".increment, .decrement", function() {
     var row = $(this).closest("tr");
     var sub_cat_name = $(this).closest("tr").find("#sub_cat_name").text();
     var subcatid = $(this).closest("tr").find("#sub_catid").text();
+    var sub_cat_img = $(this).closest("tr").find("#sub_cat_img").text();
+    var actual_cost = $(this).closest("tr").find("#cost").text();
+    var type = $(this).closest("tr").find("#type").text();
+    
     
     var quantityInput = row.find(".quantity");
     var currentQuantity = parseInt(quantityInput.text());
@@ -790,11 +802,11 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
                 sub_cat_name: sub_cat_name,
                 subcatid: subcatid,
                 item_quantity: currentQuantity + 1,
-                actual_cost: 45,
+                actual_cost: actual_cost,
                 cost: 45 * (currentQuantity + 1),
-                type_of: 'Kgs', 
+                type_of: type, 
                 sub_cat_id: subcatid,
-                sub_cat_img: 'NA', 
+                sub_cat_img: sub_cat_img, 
                 section_type: 'All'
             };
            /* var newItem = {
@@ -954,7 +966,11 @@ $.each(data.sub_categories, function(index, subCategory) {
     
    
     var newRow = $("<tr>");
-        newRow.append("<td> <div class='d-flex px-2 py-1'> <div> <div id='sub_catid' style='display:none;'>"+subCategory.subcatid+"</div> <div id='selectedCategory' style='display:none;'>"+selectedCategory+"</div> <div id='subCategory' style='display:none;'>"+subCategory+"</div> <img src="+subCategory.sub_cat_img+" class='avatar avatar-sm me-3' alt='user1'> </div> <div class='d-flex flex-column justify-content-center'> <h6 class='mb-0 text-sm' id='sub_cat_name'>"+subCategory.sub_cat_name +"</h6> </div> </div> </td>")
+        newRow.append("<td> <div class='d-flex px-2 py-1'> <div> <div id='sub_catid' style='display:none;'>"+subCategory.subcatid+"</div>"+
+        "<td> <div class='d-flex px-2 py-1'> <div> <div id='sub_cat_img' style='display:none;'>"+subCategory.sub_cat_img+"</div>"+
+        "<td> <div class='d-flex px-2 py-1'> <div> <div id='cost' style='display:none;'>"+subCategory.cost+"</div>"+
+        "<td> <div class='d-flex px-2 py-1'> <div> <div id='type' style='display:none;'>"+subCategory.type+"</div>"+
+            " <div id='selectedCategory' style='display:none;'>"+selectedCategory+"</div> <div id='subCategory' style='display:none;'>"+subCategory+"</div> <img src="+subCategory.sub_cat_img+" class='avatar avatar-sm me-3' alt='user1'> </div> <div class='d-flex flex-column justify-content-center'> <h6 class='mb-0 text-sm' id='sub_cat_name'>"+subCategory.sub_cat_name +"</h6> </div> </div> </td>")
     //newRow.append("<td> <p class=\"text-xs font-weight-bold mb-0\">" + subCategory.sub_cat_name + "</p></td>");
     /* newRow.append("<td><input type='number' value='0' min='0'></td>"); 
     newRow.append("<td>  <div class=\"d-flex px-2 py-1\"> <p class=\"mb-0 text-xxs text-center\"> " + subCategory.cost +'/ '+subCategory.type + " </p></div></td>");
