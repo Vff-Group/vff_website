@@ -1985,7 +1985,6 @@ def add_items_to_cart(request):
             
             try:
                 with connection.cursor() as cursor:
-                    
                     add_items_cart_query = "insert into vff.laundry_cart_items(catid,subcatid,customer_id,booking_id,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type) values ('"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(customer_id)+"','"+str(booking_id)+"','"+str(booking_type)+"','"+str(cost)+"','"+str(item_quantity)+"','"+str(type_of)+"','"+str(cat_img)+"','"+str(cat_name)+"','"+str(sub_cat_name)+"','"+str(sub_cat_img)+"','"+str(actual_cost)+"','"+str(section_type)+"')"
                     print(f'add_items_cart Query::{add_items_cart_query}')
                     cursor.execute(add_items_cart_query)
@@ -2018,8 +2017,8 @@ def add_items_to_cart(request):
                     sub_cat_id = item['sub_cat_id']
                     sub_cat_img = item['sub_cat_img']
                     section_type = item['section_type']
-                    query = "insert into vff.laundry_cart_items(catid,subcatid,customer_id,booking_id,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type) values ('"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(customer_id)+"','"+str(booking_id)+"','"+str(booking_type)+"','"+str(cost)+"','"+str(item_quantity)+"','"+str(type_of)+"','"+str(cat_img)+"','"+str(cat_name)+"','"+str(sub_cat_name)+"','"+str(sub_cat_img)+"','"+str(actual_cost)+"','"+str(section_type)+"')
-                    cursor.execute(query)
+                    query_dry = "insert into vff.laundry_cart_items(catid,subcatid,customer_id,booking_id,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type) values ('"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(customer_id)+"','"+str(booking_id)+"','"+str(booking_type)+"','"+str(cost)+"','"+str(item_quantity)+"','"+str(type_of)+"','"+str(cat_img)+"','"+str(cat_name)+"','"+str(sub_cat_name)+"','"+str(sub_cat_img)+"','"+str(actual_cost)+"','"+str(section_type)+"')"
+                    cursor.execute(query_dry)
                     connection.commit();
             except Exception as e:
                 print('---------Error Inserting Dry Clean Records--------')
