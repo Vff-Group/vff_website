@@ -4,18 +4,17 @@
 {% block content %}
 
 <div class="container-fluid py-4">
-    <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
+    <button type="button" class="btn btn-primary" id="liveToastBtn" style="display: none;"></button>
 
 <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
   <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
-      <img src="..." class="rounded me-2" alt="...">
-      <strong class="me-auto">Bootstrap</strong>
-      <small>11 mins ago</small>
+      <img src="{% static 'img/logos/logo.png' %}" class="rounded me-2" alt="...">
+      <strong class="me-auto">VFF Group</strong>
       <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
     <div class="toast-body">
-      Hello, world! This is a toast message.
+      
     </div>
   </div>
 </div>
@@ -799,7 +798,7 @@ $("#add_to_cart").on("click",function(){
     // Perform validation
     if (!selectedCategory || !selectedServiceType || !selectedSubSection) {
         // Show a toast message for validation failure
-        showToast("Please select Category, Service Type, and Sub Section.");
+        showToast("Validation Error", "Please select Category, Service Type, and Sub Section.");
         return; // Stop further execution
     }
 
@@ -887,19 +886,18 @@ var type = $(this).closest("tr").find("#type").text();
 
 
 // Function to show a toast message
-function showToast(message) {
+function showToast(message, bodyContent) {
     // Get the toast element and its content
     var toastElement = document.getElementById("liveToast");
     var toastBody = toastElement.querySelector(".toast-body");
 
-    // Update the toast content with the provided message
-    toastBody.textContent = message;
+    // Update the toast content with the provided message and body content
+    toastBody.textContent = bodyContent;
 
     // Show the toast
     var toast = new bootstrap.Toast(toastElement);
     toast.show();
 }
-
 
 
 
