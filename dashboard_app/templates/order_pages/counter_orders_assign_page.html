@@ -1035,9 +1035,47 @@ else{
                 row.append("<td><p class='text-xs text-secondary mb-0'>"+item.booking_type+"</p></td>");
                 row.append("<td><p class='text-xs text-secondary mb-0'> Rs."+item.item_cost+"/-</p></td>");
                 row.append("<td><p class='text-xs text-secondary mb-0'> "+item.item_quantity+" "+item.type+"</p></td>");
+
+                // Add a delete icon and attach a click event to trigger the delete
+        const deleteIcon = $("<td><i class='fas fa-trash-alt delete-icon' data-item-id='" + item.itemid + "'></i></td>");
+        row.append(deleteIcon);
+
                 cartItemsTable.append(row);
             });
+
+            // Add a click event handler for the delete icons
+    $(".delete-icon").click(function () {
+        const itemId = $(this).data("item-id");
+        // Perform the delete operation using AJAX, passing itemId to your delete API endpoint.
+        // You can use the itemId to identify the item you want to delete.
+        // Make an AJAX call to delete the item and then refresh the table.
+        deleteCartItem(itemId);
+    });
         }
+
+
+        // Function to delete a cart item using AJAX
+function deleteCartItem(itemId) {
+    const csrfToken = getCSRFToken();
+    $.ajax({
+        type: 'POST',
+        url: '/your-delete-cart-item-endpoint/' + itemId, // Adjust the URL as needed
+        headers: {
+            'X-CSRFToken': csrfToken
+        },
+        success: function (response) {
+            console.log(response.message);
+            // Handle success response
+            // After successfully deleting the item, you can refresh the table
+            // to reflect the updated data.
+            // Reload your data and call populateCartItemsTable() again.
+        },
+        error: function (error) {
+            console.error(error.responseJSON.message);
+            // Handle error response
+        }
+    });
+}
 
         populateCartItemsTable(cartItemsData);
                     
