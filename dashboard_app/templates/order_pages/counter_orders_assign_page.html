@@ -1007,7 +1007,11 @@ else{
         },
         contentType: 'application/json',
         success: function (response) {
+            
+            //Empty the cart items
             selectedItems = [];
+            $("#subCategoryTable .quantity").text("0");
+    
             console.log(response.message);
             // Handle success response
             const cartItemsData = response.cart_items_data;
@@ -1203,6 +1207,7 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
     
     var quantityInput = row.find(".quantity");
     var currentQuantity = parseInt(quantityInput.text());
+
     var total_cost = 0.0;
     // Find the existing item in the selectedItems list with the same subcatid
     var selectedItemIndex = selectedItems.findIndex(item => item.subcatid === subcatid);
