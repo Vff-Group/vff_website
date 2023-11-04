@@ -931,11 +931,11 @@ $("#add_to_cart").on("click",function(){
 else{
     
     
-      dictMap['cat_id'] = cat_id;
+      dictMap['cat_id'] = selectedCategoryId;
       dictMap['customer_id'] = customer_id;
       dictMap['booking_type'] = "Dry Cleaning";
-      dictMap['cat_img'] = cat_img;
-      dictMap['cat_name'] = cat_name;
+      dictMap['cat_img'] = selectedCategoryImage;
+      dictMap['cat_name'] = selectedCategoryName;
       dictMap['key'] = 1;
       dictMap['all_items'] = jsonItems;
 }
@@ -954,6 +954,10 @@ else{
         success: function (response) {
             console.log(response.message);
             // Handle success response
+            const cartItemsData = response.cart_items_data;
+
+                    // Now you can access the cartItemsData as a JavaScript object
+                    console.log(cartItemsData);
         },
         error: function (error) {
             console.error(error.responseJSON.message);
