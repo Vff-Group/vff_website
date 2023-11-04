@@ -52,6 +52,8 @@
                               <option
                                 value="{{ category.categoryname }}"
                                 data-catids="{{ category.catid }}"
+                                data-cat_img="{{ category.cat_img }}"
+                                data-cat_name="{{ category.categoryname }}"
                               >
                                 {{ category.categoryname }}
                               </option>
@@ -794,9 +796,33 @@ $("#add_to_cart").on("click",function(){
     var selectedCategory = $("#input-category").val();
     var selectedServiceType = $("#input-price").val();
     var selectedSubSection = $("#input-section").val();
-
     var inputElement = document.getElementById("item-quantity");
     var kgs_quantity = inputElement.value.trim();
+
+    // Perform validation
+    if (!selectedCategory ) {
+        // Show a toast message for validation failure
+        showToast("Validation Error", "Please Select Category");
+        return; // Stop further execution
+    }
+
+    // Perform validation
+    if (!selectedServiceType && selectedCategory !="DRY CLEAN") {
+        // Show a toast message for validation failure
+        showToast("Validation Error", "Please Price Type");
+        return; // Stop further execution
+    }
+
+    // Perform validation
+    if (!selectedSubSection && selectedCategory === "DRY CLEAN") {
+        // Show a toast message for validation failure
+        showToast("Validation Error", "Sub Section.");
+        return; // Stop further execution
+    }
+
+    //TO Check if Quantity is added or not
+    if (selectedCategory != "DRY CLEAN"){
+    
     if (kgs_quantity === "") {
         inputElement.classList.remove("is-valid");
         inputElement.classList.add("is-invalid");
@@ -810,13 +836,12 @@ $("#add_to_cart").on("click",function(){
         inputElement.classList.remove("is-invalid");
         inputElement.classList.add("is-valid");
     }
-
-    // Perform validation
-    if (!selectedCategory || !selectedServiceType || !selectedSubSection) {
-        // Show a toast message for validation failure
-        showToast("Validation Error", "Please select Category, Service Type, and Sub Section.");
-        return; // Stop further execution
     }
+    
+    console.log('SelectedCategory::'+selectedCategory);
+    console.log('selectedSubSection::'+selectedSubSection);
+    console.log('selectedServiceType::'+selectedServiceType);
+    
 
     jsonItems = JSON.stringify(selectedItems);
     console.log("Item Details::"+jsonItems)
@@ -957,7 +982,11 @@ function updateSelectedItems(index, itemCount,sub_categories) {
         function loadSubCategories(categorySelect) {
             var selectedCategory = $(categorySelect).val();
             var cat_id = $(categorySelect).find(":selected").data("catids");
+            var cat_img = $(categorySelect).find(":selected").data("cat_img");
+            var cat_name = $(categorySelect).find(":selected").data("cat_name");
             console.log('CatID::'+cat_id)
+            console.log('CatIMG::'+cat_img)
+            console.log('CatName::'+cat_name)
             var sectionSelect = $('#input-section');
             var section_column = $('#section_col');
             var price_column = $('#price_col');
@@ -1032,6 +1061,9 @@ $.each(data.sub_categories, function(index, subCategory) {
         "<div class='d-flex px-2 py-1'> <div> <div id='sub_cat_img' style='display:none;'>"+subCategory.sub_cat_img+"</div>"+
         "<div class='d-flex px-2 py-1'> <div> <div id='cost' style='display:none;'>"+subCategory.cost+"</div>"+
         "<div class='d-flex px-2 py-1'> <div> <div id='type' style='display:none;'>"+subCategory.type+"</div>"+
+        "<div class='d-flex px-2 py-1'> <div> <div id='cat_id' style='display:none;'>"+cat_id+"</div>"+
+        "<div class='d-flex px-2 py-1'> <div> <div id='cat_img' style='display:none;'>"+cat_img+"</div>"+
+        "<div class='d-flex px-2 py-1'> <div> <div id='cat_name' style='display:none;'>"+cat_name+"</div>"+
             " <div id='selectedCategory' style='display:none;'>"+selectedCategory+"</div> <div id='subCategory' style='display:none;'>"+subCategory+"</div> <img src="+subCategory.sub_cat_img+" class='avatar avatar-sm me-3' alt='user1'> </div> <div class='d-flex flex-column justify-content-center'> <h6 class='mb-0 text-sm' id='sub_cat_name'>"+subCategory.sub_cat_name +"</h6> </div> </div> </td>")
     //newRow.append("<td> <p class=\"text-xs font-weight-bold mb-0\">" + subCategory.sub_cat_name + "</p></td>");
     /* newRow.append("<td><input type='number' value='0' min='0'></td>"); 
@@ -1093,9 +1125,19 @@ $.each(data.sub_categories, function(index, subCategory) {
     
         function loadSubCategoriesBySection(sectionTypeSelect) {
             var section_type = $(sectionTypeSelect).val();
+            var selectedCategory = $(categorySelect).val();
+            var cat_id = $(categorySelect).find(":selected").data("catids");
             var section_id = $(sectionTypeSelect).find(":selected").data("section_id");
+            var cat_img = $(categorySelect).find(":selected").data("cat_img");
+            var cat_name = $(categorySelect).find(":selected").data("cat_name");
+            
+            console.log('CatID::'+cat_id)
+            console.log('CatIMG::'+cat_img)
+            console.log('CatName::'+cat_name)
+
             console.log('section_id::'+section_id)
             console.log('section_type::'+section_type)
+
             var sectionSelect = $('#input-section');
             var subCategoryTable = $('#subCategoryTable tbody');
             //var subCategorySelect = $('#input-subcategory');
@@ -1108,7 +1150,15 @@ subCategoryTable.empty(); // Clear any existing rows
 
 $.each(data.sub_categories, function(index, subCategory) {
     var newRow = $("<tr>");
-        newRow.append("<td> <div class='d-flex px-2 py-1'> <div> <img src="+subCategory.sub_cat_img+" class='avatar avatar-sm me-3' alt='user1'> </div> <div class='d-flex flex-column justify-content-center'> <h6 class='mb-0 text-sm'>"+subCategory.sub_cat_name+"</h6> <p class='text-xs text-secondary mb-0'>"+subCategory.cost +'/ '+subCategory.type+"</p> </div> </div> </td>")
+        newRow.append("<td> <div class='d-flex px-2 py-1'> <div> <div id='sub_catid' style='display:none;'>"+subCategory.subcatid+"</div>"+
+            "<div class='d-flex px-2 py-1'> <div> <div id='sub_cat_img' style='display:none;'>"+subCategory.sub_cat_img+"</div>"+
+            "<div class='d-flex px-2 py-1'> <div> <div id='cost' style='display:none;'>"+subCategory.cost+"</div>"+
+            "<div class='d-flex px-2 py-1'> <div> <div id='type' style='display:none;'>"+subCategory.type+"</div>"+
+            "<div class='d-flex px-2 py-1'> <div> <div id='cat_id' style='display:none;'>"+cat_id+"</div>"+
+            "<div class='d-flex px-2 py-1'> <div> <div id='cat_img' style='display:none;'>"+cat_img+"</div>"+
+            "<div class='d-flex px-2 py-1'> <div> <div id='cat_name' style='display:none;'>"+cat_name+"</div>"+
+            "<div class='d-flex px-2 py-1'> <div> <div id='section_type' style='display:none;'>"+section_type+"</div>"+
+            "<div class='d-flex px-2 py-1'> <div> <img src="+subCategory.sub_cat_img+" class='avatar avatar-sm me-3' alt='user1'> </div> <div class='d-flex flex-column justify-content-center'> <h6 class='mb-0 text-sm'>"+subCategory.sub_cat_name+"</h6> <p class='text-xs text-secondary mb-0'>"+subCategory.cost +'/ '+subCategory.type+"</p> </div> </div> </td>")
    
     //newRow.append("<td>  <div class=\"d-flex px-2 py-1\"> <p class=\"mb-0 text-xxs text-center\"> " + subCategory.cost +'/ '+subCategory.type + " </p></div></td>");
     /* newRow.append("<td><input type='number' value='0' min='0'></td>"); 

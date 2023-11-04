@@ -1,28 +1,52 @@
-#github password key: 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
+#Adding items to cart[cart_item tbl] and [active Order Table]
+def add_laundry_items_to_cart(obj):
+    val = obj.pkt[6:] 
+    jdict=json.loads(val)
+    cat_id = jdict['cat_id']
+    customer_id = jdict['customer_id']
+    booking_id = jdict['booking_id']
+    booking_type = jdict['booking_type']
+    cat_img = jdict['cat_img']
+    cat_name = jdict['cat_name']
+    key = jdict['key']
+    if key == 1:
+    
+        all_data = jdict['all_items']
+        try:
+            for item in all_data:
+                print(f'itemss--->{item}')
+                sub_cat_name = item['sub_cat_name']
+                print(f'sub_cat_name::{sub_cat_name}')
+                item_quantity = item['item_quantity']
+                actual_cost = item['actual_cost']
+                cost = item['cost']
+                type_of = item['type_of']
+                sub_cat_id = item['sub_cat_id']
+                sub_cat_img = item['sub_cat_img']
+                section_type = item['section_type']
+                query = "insert into vff.laundry_cart_items(catid,subcatid,customer_id,booking_id,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type) values ('"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(customer_id)+"','"+str(booking_id)+"','"+str(booking_type)+"','"+str(cost)+"','"+str(item_quantity)+"','"+str(type_of)+"','"+str(cat_img)+"','"+str(cat_name)+"','"+str(sub_cat_name)+"','"+str(sub_cat_img)+"','"+str(actual_cost)+"','"+str(section_type)+"')"
 
-
-create schema vff;
-
-#Admin Table 
-    create table vff.admintbl (adminid bigserial,username text not null,password text not null,usrid bigint not null,type text default 'NA',branchid bigint default '-1',status integer default '1');
-
-#User Table 
-    create table vff.usertbl (usrid bigserial,usrname text not null,mobile_no text default '-1',address text default 'NA',lat double precision DEFAULT 0,lng double precision DEFAULT 0,token text default 'vff_abcd',created_date DATE DEFAULT CURRENT_DATE,epoch DOUBLE PRECISION DEFAULT EXTRACT(EPOCH FROM NOW()),status integer default '1',age integer default '-1',gender text default 'NA', date_of_birth date not null default CURRENT_DATE,pincode integer default '-1',landmark text default 'NA',aadhar_no bigint default '-1',profile_img bytea DEFAULT E'\\x');
-
-#Customer Table
-    create table vff.laundry_customertbl(consmrid bigserial,usrid bigint not null,status integer default '1',column is_online integer default '0',query text default 'NA');
-
-#Delivery Boy Table
-    create table vff.laundry_delivery_boytbl(delivery_boy_id bigserial,usrid bigint not null default '-1',name text default 'NA',is_online integer default '0',is_active integer default '1',branchid bigint default '-1')
-
-#Branch Table
-    create table vff.branchtbl (branchid bigserial,branch_name text default 'NA',owner_name text default 'NA',owner_id bigint default '-1',address text default 'NA',branch_type text default 'NA', branchtype_id bigint default '-1', status integer default '1',creation_date DATE DEFAULT CURRENT_DATE,epoch DOUBLE PRECISION DEFAULT EXTRACT(EPOCH FROM NOW()));
-
-#Branch Type Table
-    create table vff.branch_type(branch_type_id bigserial,branch_type text default 'NA',status integer default '1')
-
-#Category Table
-    create table vff.laundry_categorytbl(catid bigserial,category_name text default 'NA',cat_img text default 'NA',branch_id bigint default '-1',regular_price double precision default '0',regular_price_type text default 'NA',express_price_type text default 'NA',express_price double precision default '0',offer_price double precision default '0',offer_price_type text default 'NA',priority bigint default '-1',description text default 'NA');
-
-#Sub-Category Table
-    create table vff.laundry_sub_categorytbl(subcatid bigserial,catid bigint default '-1',sub_cat_name text default 'NA',sub_cat_img text default 'NA',adult_cost double precision default '0',adult_type text default 'NA',kids_cost double precision default '0',kids_type text default 'NA');
+                obj.cur.execute(query)
+                obj.conn.commit()
+                obj.reply_data="ErrorCode#0"
+        except Exception as e:
+            print(e)
+            obj.reply_data ="ErrorCode#8"
+    else:
+        sub_cat_name = jdict['sub_cat_name']
+        item_quantity = jdict['item_quantity']
+        actual_cost = jdict['actual_cost']
+        cost = jdict['cost']
+        type_of = jdict['type_of']
+        sub_cat_id = jdict['sub_cat_id']
+        sub_cat_img = jdict['sub_cat_img']
+        section_type = jdict['section_type']
+        query2 = "insert into vff.laundry_cart_items(catid,subcatid,customer_id,booking_id,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type) values ('"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(customer_id)+"','"+str(booking_id)+"','"+str(booking_type)+"','"+str(cost)+"','"+str(item_quantity)+"','"+str(type_of)+"','"+str(cat_img)+"','"+str(cat_name)+"','"+str(sub_cat_name)+"','"+str(sub_cat_img)+"','"+str(actual_cost)+"','"+str(section_type)+"')"
+        print(f'Insert Query::{query2}')
+        try:    
+            obj.cur.execute(query2)
+            obj.conn.commit()
+            obj.reply_data="ErrorCode#0"
+        except Exception as e:
+            print(e)
+            obj.reply_data ="ErrorCode#8"
