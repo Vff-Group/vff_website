@@ -66,7 +66,12 @@ urlpatterns = [
     
     #Add Items TO Cart
     path('add_items_to_cart/',views.add_items_to_cart,name='add_items_to_cart'),
+    #Generate Booking ID
     path('generate_booking_id/',views.generate_booking_id,name='generate_booking_id'),
+    #Delete Cart Item
+    path('delete_cart_item/',views.delete_cart_item,name='delete_cart_item'),
+    #Reload Cart Item
+    path('load_cart_items_after_deletion/',views.load_cart_items_after_deletion,name='load_cart_items_after_deletion'),
     
     #Reports Screen
     path('daily_report/',views.daily_report,name='daily_report'),

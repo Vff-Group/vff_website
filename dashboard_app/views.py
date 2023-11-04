@@ -2045,6 +2045,68 @@ def add_items_to_cart(request):
     
     return JsonResponse({'error_msg':error_msg})
 
+
+#Delete Items in Cart
+def delete_cart_item(request):
+    
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    
+    
+    msg = "Success"
+    if request.method == "POST":
+        jdict = json.loads(request.body)
+        item_id=jdict['item_id']
+        
+        try:
+            with connection.cursor() as cursor:
+                delete_query = "delete from vff.laundry_cart_items where itemid='"+str(item_id)+"'"
+                print(f'delete_query_items_cart Query::{delete_query}')
+                cursor.execute(delete_query)
+                connection.commit()
+                
+        except Exception as e:
+            print(f"Error loading data: {e}")
+            msg = f"Error:{e}"
+    
+    
+    return JsonResponse({'msg':msg})
+
+
+#ReLoad All Added Cart Items
+def load_cart_items_after_deletion(request):
+    #Load Cart Items
+    jdict = json.loads(request.body)
+    customer_id = jdict['customer_id']
+    booking_id = jdict['booking_id']
+    cart_items_query = "select itemid,catid,subcatid,booking_id,dt,time,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type from vff.laundry_cart_items where customer_id='"+str(customer_id)+"' and booking_id='"+str(booking_id)+"'"
+    query_result = execute_raw_query(cart_items_query)
+        
+    cart_items_data = []    
+    if not query_result == 500:
+        for row in query_result:
+            cart_items_data.append({
+                'itemid': row[0],
+                'catid': row[1],
+                'subcatid': row[2],
+                'booking_id': row[3],
+                'dt': row[4],
+                'time': row[5],
+                'booking_type': row[6],
+                'item_cost': row[7],
+                'item_quantity': row[8],
+                'type': row[9],
+                'cat_img': row[10],
+                'cat_name': row[11],
+                'sub_cat_name': row[12],
+                'sub_cat_img': row[13],
+                'actual_cost': row[14],
+                'section_type': row[15],
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    return JsonResponse({'cart_items_data':cart_items_data})
 #Generate Booking ID
 def generate_booking_id(request):
     

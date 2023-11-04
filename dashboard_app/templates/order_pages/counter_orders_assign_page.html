@@ -1010,7 +1010,7 @@ else{
             console.log(response.message);
             // Handle success response
             const cartItemsData = response.cart_items_data;
-// Now you can access the cartItemsData as a JavaScript object
+        // Now you can access the cartItemsData as a JavaScript object
                     console.log(cartItemsData);
             // Function to populate the table with data
         function populateCartItemsTable(data) {
@@ -1049,33 +1049,11 @@ else{
         // Perform the delete operation using AJAX, passing itemId to your delete API endpoint.
         // You can use the itemId to identify the item you want to delete.
         // Make an AJAX call to delete the item and then refresh the table.
-        deleteCartItem(itemId);
+        deleteCartItem(itemId,customer_id,booking_id);
     });
         }
 
 
-        // Function to delete a cart item using AJAX
-function deleteCartItem(itemId) {
-    const csrfToken = getCSRFToken();
-    $.ajax({
-        type: 'POST',
-        url: '/your-delete-cart-item-endpoint/' + itemId, // Adjust the URL as needed
-        headers: {
-            'X-CSRFToken': csrfToken
-        },
-        success: function (response) {
-            console.log(response.message);
-            // Handle success response
-            // After successfully deleting the item, you can refresh the table
-            // to reflect the updated data.
-            // Reload your data and call populateCartItemsTable() again.
-        },
-        error: function (error) {
-            console.error(error.responseJSON.message);
-            // Handle error response
-        }
-    });
-}
 
         populateCartItemsTable(cartItemsData);
                     
@@ -1089,6 +1067,111 @@ function deleteCartItem(itemId) {
     });
 
     })
+
+            // Function to delete a cart item using AJAX
+function deleteCartItem(itemId,customer_id,booking_id) {
+    const csrfToken = getCSRFToken();
+
+    const dictMap = {
+        'item_id':itemId
+    };
+    $.ajax({
+        type: 'POST',
+        url: '/admin_dashboard/delete_cart_item/', // Adjust the URL as needed
+        data:JSON.stringify(dictMap),
+        headers: {
+            'X-CSRFToken': csrfToken
+        },
+        contentType: 'application/json',
+        success: function (response) {
+            console.log(response.message);
+            // Handle success response
+            // After successfully deleting the item, you can refresh the table
+            // to reflect the updated data.
+            // Reload your data and call populateCartItemsTable() again.
+            reloadCartItem(itemId,customer_id,booking_id);
+        },
+        error: function (error) {
+            console.error(error.responseJSON.message);
+            // Handle error response
+        }
+    });
+}
+
+function reloadCartItem(itemId,customer_id,booking_id) {
+    const csrfToken = getCSRFToken();
+    const dictMap = {
+        'customer_id':customer_id,
+        'booking_id':booking_id
+    };
+    $.ajax({
+        type: 'POST',
+        url: '/admin_dashboard/load_cart_items_after_deletion/',
+
+        data: JSON.stringify(dictMap),
+        headers: {
+            'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+        },
+        contentType: 'application/json',
+        success: function (response) {
+            console.log(response.message);
+            // Handle success response
+            const cartItemsData = response.cart_items_data;
+        // Now you can access the cartItemsData as a JavaScript object
+                    console.log(cartItemsData);
+            // Function to populate the table with data
+        function populateCartItemsTable(data) {
+            const cartItemsTable = $('#cartItemsTable tbody');
+            cartItemsTable.empty(); // Clear existing data in the table
+
+            data.forEach(function (item) {
+                const row = $("<tr>");
+                var type = item.type;
+                var itemName = "",itemImage = "",itemsName = "";
+
+                if(type === "Kgs"){
+                    itemName = item.cat_name;
+                    itemImage = item.cat_img;
+                    itemsName = item.sub_cat_name;
+                }else{
+                    itemName = item.sub_cat_name;
+                    itemImage = item.sub_cat_img;
+                    itemsName = item.section_type;
+                }
+                row.append("<td><div class='d-flex px-2 py-1'> <div class='d-flex px-2 py-1'><img src="+itemImage+" class='avatar avatar-sm me-3' alt='user1'> </div> <div class='d-flex flex-column justify-content-center'> <h6 class='mb-0 text-sm' id='sub_cat_name'>"+itemName+"</h6> <p class='text-xs text-secondary mb-0'>["+itemsName+"]</p> </div></div> </div> </td>");
+                row.append("<td><p class='text-xs text-secondary mb-0'>"+item.booking_type+"</p></td>");
+                row.append("<td><p class='text-xs text-secondary mb-0'> Rs."+item.item_cost+"/-</p></td>");
+                row.append("<td><p class='text-xs text-secondary mb-0'> "+item.item_quantity+" "+item.type+"</p></td>");
+
+                // Add a delete icon and attach a click event to trigger the delete
+        const deleteIcon = $("<td><i class='fas fa-trash-alt delete-icon' data-item-id='" + item.itemid + "'></i></td>");
+        row.append(deleteIcon);
+
+                cartItemsTable.append(row);
+            });
+
+            // Add a click event handler for the delete icons
+    $(".delete-icon").click(function () {
+        const itemId = $(this).data("item-id");
+        // Perform the delete operation using AJAX, passing itemId to your delete API endpoint.
+        // You can use the itemId to identify the item you want to delete.
+        // Make an AJAX call to delete the item and then refresh the table.
+        deleteCartItem(itemId,customer_id,booking_id);
+    });
+        }
+
+
+
+        populateCartItemsTable(cartItemsData);
+            
+        },
+        error: function (error) {
+            console.error(error.responseJSON.message);
+            // Handle error response
+        }
+    });
+}
+
 
     function get_prize(inputString){
         const parts = inputString.split(' ');
