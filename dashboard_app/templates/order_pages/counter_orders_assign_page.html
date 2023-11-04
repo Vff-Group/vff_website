@@ -796,13 +796,15 @@ $("#add_to_cart").on("click",function(){
     var selectedSubSection = $("#input-section").val();
 
     var inputElement = document.getElementById("item-quantity");
-    
-    if (inputElement.value.trim() === "") {
+    var kgs_quantity = inputElement.value.trim();
+    if (kgs_quantity === "") {
         inputElement.classList.remove("is-valid");
         inputElement.classList.add("is-invalid");
-    } else if(inputElement.value.trim() !== "" && inputElement.value.trim() < 5){
+    } else if(kgs_quantity !== "" && kgs_quantity < 5){
         inputElement.classList.remove("is-valid");
         inputElement.classList.add("is-invalid");
+        showToast('We accept only order above 5 Kgs')
+        return;
     }
     else {
         inputElement.classList.remove("is-invalid");
