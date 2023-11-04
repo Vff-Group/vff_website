@@ -1952,7 +1952,6 @@ def add_items_to_cart(request):
         booking_type = jdict['booking_type']
         cat_img = jdict['cat_img']
         cat_name = jdict['cat_name']
-        booking_status = "Accepted"
         print(f'given_cat_id:::{cat_id}')
         fetch_customer_records = "select address,city,pincode,landmark,branchid from  vff.usertbl,vff.laundry_customertbl where laundry_customertbl.usrid=usertbl.usrid and consmrid='"+str(customer_id)+"'"
         try:
@@ -2071,14 +2070,10 @@ def generate_booking_id(request):
     error_msg = "Something Went Wrong"
     if request.method == "POST":
         jdict = json.loads(request.body)
-        key_pair=jdict['key']
-        cat_id = jdict['cat_id']
         customer_id = jdict['customer_id']
-        booking_type = jdict['booking_type']
-        cat_img = jdict['cat_img']
-        cat_name = jdict['cat_name']
+        
         booking_status = "Accepted"
-        print(f'given_cat_id:::{cat_id}')
+        print(f'customer_id_given:::{customer_id}')
         fetch_customer_records = "select address,city,pincode,landmark,branchid from  vff.usertbl,vff.laundry_customertbl where laundry_customertbl.usrid=usertbl.usrid and consmrid='"+str(customer_id)+"'"
         try:
             with connection.cursor() as cursor:    
@@ -2096,7 +2091,7 @@ def generate_booking_id(request):
         except Exception as e:
                 print(f"Error loading data: {e}")
                 
-        print(f"key_pair::{key_pair}")
+        
         
             
         try:

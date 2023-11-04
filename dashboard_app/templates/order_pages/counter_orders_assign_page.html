@@ -803,7 +803,9 @@ $("#generate-booking-id").on("click",function(){
         showToast('Alert','Please Search customer before adding any items');
         return;
     }
-
+    const dictMap = {
+        'customer_id':customer_id
+    }
     const csrfToken = getCSRFToken();
     $.ajax({
         type: 'POST',
@@ -820,7 +822,11 @@ $("#generate-booking-id").on("click",function(){
 // Now you can access the cartItemsData as a JavaScript object
                     console.log(bookingIDData);
                 //TODO:Need to save the booking ID 
-                    
+                    /*
+                    var booking_id_input = document.getElementById("selected-booking-id");
+                    booking_id_input.value = bookingIDData; // Set the value in the hidden input
+            $("#generate-booking-id").text("Booking ID: " + bookingIDData); // Update the button text
+                    */
                    
 
         },
@@ -840,6 +846,7 @@ $("#add_to_cart").on("click",function(){
     var selectedCategory = $("#input-category").val();
     var selectedServiceType = $("#input-price").val();
     var selectedSubSection = $("#input-section").val();
+    
     var inputElement = document.getElementById("item-quantity");
     
     
@@ -849,12 +856,19 @@ $("#add_to_cart").on("click",function(){
     //customer-name,selected-customer-id,selected-mobile-no,selected-customer-name
     var selected_customer_id = document.getElementById("selected-customer-id");
     var customer_name_input = document.getElementById("customer-name");
+    var booking_id_input = document.getElementById("selected-booking-id");
     
     var customer_id = selected_customer_id.value.trim()
     var customer_name = customer_name_input.value.trim()
+    var booking_id = booking_id_input.value.trim()
 
     if(customer_id === ""){
         showToast('Alert','Please Search customer before adding any items');
+        return;
+    }
+
+    if(booking_id === ""){
+        showToast('Alert','Please generate Booking ID Before adding any items to cart');
         return;
     }
 
@@ -949,6 +963,7 @@ $("#add_to_cart").on("click",function(){
 
     dictMap['cat_id'] = selectedCategoryId;
       dictMap['customer_id'] = customer_id;
+      dictMap['booking_id'] = booking_id;
       dictMap['key'] = 2;
       dictMap['booking_type'] = selectedServiceType;
       dictMap['cat_img'] = selectedCategoryImage;
@@ -972,6 +987,7 @@ else{
     
     
       dictMap['cat_id'] = selectedCategoryId;
+      dictMap['booking_id'] = booking_id;
       dictMap['customer_id'] = customer_id;
       dictMap['booking_type'] = "Dry Cleaning";
       dictMap['cat_img'] = selectedCategoryImage;
