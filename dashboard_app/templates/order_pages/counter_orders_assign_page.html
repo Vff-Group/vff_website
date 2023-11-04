@@ -13,7 +13,7 @@
       <strong class="me-auto">VFF Group</strong>
       <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
-    <div class="toast-body bg-secondary text-white">
+    <div class="toast-body bg-gradient-green text-white">
       
     </div>
   </div>
@@ -803,7 +803,7 @@ $("#add_to_cart").on("click",function(){
     } else if(kgs_quantity !== "" && kgs_quantity < 5){
         inputElement.classList.remove("is-valid");
         inputElement.classList.add("is-invalid");
-        showToast('We accept only order above 5 Kgs')
+        showToast('Alert','We accept only order above 5 Kgs')
         return;
     }
     else {
