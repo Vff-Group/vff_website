@@ -835,6 +835,8 @@ $("#add_to_cart").on("click",function(){
         return; // Stop further execution
     }
 
+    const dictMap = {};
+    
     //TO Check if Quantity is added or not
     if (selectedCategory !== "DRY CLEAN"){
     
@@ -874,6 +876,7 @@ $("#add_to_cart").on("click",function(){
     console.log('subCategoryNameList::'+subCategoryNameList);
     console.log('subCategoryIDList::'+subCategoryIDList);
     console.log('subCategoryImageList::'+subCategoryImageList);
+    console.log('customer_id::'+customer_id);
 
     var subCategoryNames = makeCommaSeparatedList(subCategoryNameList);
     var subCategoryID = makeCommaSeparatedList(subCategoryIDList);
@@ -896,7 +899,7 @@ $("#add_to_cart").on("click",function(){
         totalCost = (parseFloat(offer_price) * parseFloat(kgs_quantity));
         actualCost = parseFloat(offer_price);
     }
-    const dictMap = {};
+    dictMap = {};
 
     dictMap['cat_id'] = cat_id;
       dictMap['customer_id'] = customer_id;
@@ -916,6 +919,22 @@ $("#add_to_cart").on("click",function(){
 
       console.log('ActualCost::'+actualCost);
       console.log('TotalCost::'+totalCost);
+
+}
+//End of Other Laundry Services Add Item to Cart
+else{
+    
+      dictMap = {};
+      dictMap['cat_id'] = cat_id;
+      dictMap['customer_id'] = customer_id;
+      dictMap['booking_type'] = "Dry Cleaning";
+      dictMap['cat_img'] = cat_img;
+      dictMap['cat_name'] = cat_name;
+      dictMap['key'] = 1;
+      dictMap['all_items'] = jsonItems;
+}
+
+
     // Get the CSRF token
     const csrfToken = getCSRFToken();
     $.ajax({
@@ -935,9 +954,6 @@ $("#add_to_cart").on("click",function(){
             // Handle error response
         }
     });
-return;
-}
-//End of Other Laundry Services Add Item to Cart
 
     })
 
