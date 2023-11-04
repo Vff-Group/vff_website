@@ -913,6 +913,8 @@ $("#add_to_cart").on("click",function(){
       dictMap['sub_cat_img'] = subCategoryImage;
       dictMap['section_type'] = "All";
 
+      console.log('ActualCost::'+actualCost);
+      console.log('TotalCost::'+totalCost);
     // Get the CSRF token
     const csrfToken = getCSRFToken();
     $.ajax({
