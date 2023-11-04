@@ -800,7 +800,14 @@ $("#add_to_cart").on("click",function(){
     var selectedSubSection = $("#input-section").val();
     var inputElement = document.getElementById("item-quantity");
     
+    //Category Information
+    
+    var cat_id = $(categorySelect).find(":selected").data("catids");
+    var cat_img = $(categorySelect).find(":selected").data("cat_img");
+    var cat_name = $(categorySelect).find(":selected").data("cat_name");
 
+    console.log('While inserting cat_id::'+cat_id);
+    console.log('While inserting cat_img::'+cat_img);
     //customer-name,selected-customer-id,selected-mobile-no,selected-customer-name
     var selected_customer_id = document.getElementById("selected-customer-id");
     var customer_name_input = document.getElementById("customer-name");
