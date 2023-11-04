@@ -1087,7 +1087,8 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
                 var section_type = $(this).closest("tr").find("#section_type").text();
                 section_type_selected = section_type;
             }
-            var total_cost = (parseFloat(actual_cost) * (currentQuantity + 1));
+            var total_cost = (parseFloat(actual_cost) * (parseFloat(currentQuantity) + 1));
+            console.log('total_cost_added::'+total_cost);
             var newItem = {
                 sub_cat_name: sub_cat_name,
                 subcatid: subcatid,
