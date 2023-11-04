@@ -987,6 +987,8 @@ function updateSelectedItems(index, itemCount,sub_categories) {
             console.log('CatID::'+cat_id)
             console.log('CatIMG::'+cat_img)
             console.log('CatName::'+cat_name)
+            
+            selectedItems = [];
             var sectionSelect = $('#input-section');
             var section_column = $('#section_col');
             var price_column = $('#price_col');
@@ -1131,7 +1133,7 @@ $.each(data.sub_categories, function(index, subCategory) {
             var section_id = $(sectionTypeSelect).find(":selected").data("section_id");
             var cat_img = $(categorySelect).find(":selected").data("cat_img");
             var cat_name = $(categorySelect).find(":selected").data("cat_name");
-            
+            selectedItems = [];
             console.log('CatID::'+cat_id)
             console.log('CatIMG::'+cat_img)
             console.log('CatName::'+cat_name)
