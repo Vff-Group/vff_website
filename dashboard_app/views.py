@@ -2006,12 +2006,13 @@ def add_items_to_cart(request):
             cat_img = jdict['cat_img']
             cat_name = jdict['cat_name']  
             all_data = jdict['all_items']
-            
+            print(f'all_data::{all_data}')
             try:
                 with connection.cursor() as cursor:
                     create_new_booking = "insert into vff.laundry_order_bookingtbl(customerid,address,city,pincode,landmark,branch_id,booking_status,booking_taken_on) values ('"+str(customer_id)+"','"+str(streetAddress)+"','"+str(cityName)+"','"+str(zipCode)+"','"+str(landMark)+"','"+str(branch_id)+"','"+str(booking_status)+"','OnCounterBooking') returning bookingid" 
                     cursor.execute(create_new_booking)
                     booking_id = cursor.fetchone()[0]
+                    print(f'returning Booking ID for Dry Clean:{booking_id}')
                     try:
                         for item in all_data:
                             print(f'itemss--->{item}')
