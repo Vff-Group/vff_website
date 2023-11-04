@@ -943,7 +943,7 @@ else{
             // Handle success response
             const cartItemsData = response.cart_items_data;
 // Now you can access the cartItemsData as a JavaScript object
-console.log(cartItemsData);
+                    console.log(cartItemsData);
             // Function to populate the table with data
         function populateCartItemsTable(data) {
             const cartItemsTable = $('#cartItemsTable tbody');
@@ -951,9 +951,10 @@ console.log(cartItemsData);
 
             data.forEach(function (item) {
                 const row = $("<tr>");
-                row.append($("<td>").text(item.sub_cat_name));
+                row.append($("<td>").text(item.cat_name));
+                row.append($("<td>").text(item.booking_type));
+                row.append($("<td>").text(item.item_cost));
                 row.append($("<td>").text(item.item_quantity));
-                row.append($("<td>").text(item.cost));
                 cartItemsTable.append(row);
             });
         }
