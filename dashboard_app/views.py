@@ -2054,12 +2054,12 @@ def add_items_to_cart(request):
                     'item_cost': row[7],
                     'item_quantity': row[8],
                     'type': row[9],
-                    'cat_img': row[9],
-                    'cat_name': row[9],
-                    'sub_cat_name': row[9],
-                    'sub_cat_img': row[9],
-                    'actual_cost': row[9],
-                    'section_type': row[9],
+                    'cat_img': row[10],
+                    'cat_name': row[11],
+                    'sub_cat_name': row[12],
+                    'sub_cat_img': row[13],
+                    'actual_cost': row[14],
+                    'section_type': row[15],
                 })
         else:
             error_msg = 'Something Went Wrong'
