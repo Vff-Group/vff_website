@@ -941,16 +941,16 @@ return;
 
     })
 
-    function get_prize(selectedServiceType){
-        let numericValue = null;
-for (const part of selectedServiceType) {
-    const parsedNumber = parseFloat(part);
-    if (!isNaN(parsedNumber)) {
-        numericValue = parsedNumber;
-        break;
-    }
-}
-return numericValue;
+    function get_prize(inputString){
+        const parts = inputString.split(' ');
+        if (parts.length >= 3) {
+            const valueAtIndex2 = parts[2];
+            console.log(valueAtIndex2); // Output: "125"
+            return valueAtIndex2
+        } else {
+            console.log("Not enough parts in the input string.");
+        }
+return 0;
     }
 
     function makeCommaSeparatedList(subCategoryNameList) {
