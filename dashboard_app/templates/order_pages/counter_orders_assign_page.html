@@ -853,7 +853,7 @@ $("#add_to_cart").on("click",function(){
         return;
     }
 
-    const subCategoryNameList = selectedItems.map(item => `${item.subCategoryName} (${item.item_quantity})`);
+    const subCategoryNameList = selectedItems.map(item => `${item.sub_cat_name} (${item.item_quantity})`);
     console.log('subCategoryNameList::'+subCategoryNameList);
     console.log("Item Details::"+jsonItems)
     })
