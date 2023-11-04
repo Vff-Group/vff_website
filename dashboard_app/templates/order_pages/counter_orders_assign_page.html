@@ -1007,6 +1007,7 @@ else{
         },
         contentType: 'application/json',
         success: function (response) {
+            selectedItems = [];
             console.log(response.message);
             // Handle success response
             const cartItemsData = response.cart_items_data;
