@@ -791,7 +791,7 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
                 subcatid: subcatid,
                 quantity: currentQuantity + 1
             };*/
-            var newItem = {
+           /* var newItem = {
                 subCategoryName: sub_cat_name,
                 item_quantity: currentQuantity + 1,
                 sub_cat_name: sub_cat_name,
@@ -801,7 +801,7 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
                 sub_cat_id: subcatid,
                 sub_cat_img: 'NA', // Replace 'item.subCategoryImage' with the actual value
                 section_type: 'All'
-            };
+            };*/
             selectedItems.push(newItem);
         }
     } else if ($(this).hasClass("decrement") && currentQuantity > 0) {
@@ -812,7 +812,7 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
             // Update the quantity in the selected item
             //selectedItems[selectedItemIndex].quantity = currentQuantity - 1;
             selectedItems[selectedItemIndex].item_quantity = currentQuantity - 1;
-            selectedItems[selectedItemIndex].cost = selectedItems[selectedItemIndex].actual_cost * (currentQuantity - 1);
+            //selectedItems[selectedItemIndex].cost = selectedItems[selectedItemIndex].actual_cost * (currentQuantity - 1);
             // Remove the item from the list if the quantity is 0
             if (currentQuantity - 1 === 0) {
                 selectedItems.splice(selectedItemIndex, 1);
@@ -820,7 +820,8 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
         }
     }
 
-    
+    // Remove the item from the JSON object if it's not in the selectedItems list
+    jsonItems = selectedItems.filter(item => item.item_quantity > 0);
 
     // Log the selected item
     console.log('----------------');
@@ -829,6 +830,8 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
     }
     console.log('----------------');
     console.log("selectedItems: " + JSON.stringify(selectedItems));
+    console.log('----------------');
+    console.log('jsonItems: ' + JSON.stringify(jsonItems));
     
 });
 
