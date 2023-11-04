@@ -818,7 +818,7 @@ $("#generate-booking-id").on("click",function(){
         success: function (response) {
             console.log(response.message);
             // Handle success response
-            const bookingIDData = response.cart_items_data;
+            const bookingIDData = response.booking_id;
 // Now you can access the cartItemsData as a JavaScript object
                     console.log(bookingIDData);
                 //TODO:Need to save the booking ID 
