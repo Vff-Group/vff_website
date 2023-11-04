@@ -1951,6 +1951,7 @@ def add_items_to_cart(request):
         booking_type = jdict['booking_type']
         cat_img = jdict['cat_img']
         cat_name = jdict['cat_name']
+        booking_status = "Accepted"
         
         fetch_customer_records = "select address,city,pincode,landmark,branchid from  vff.usertbl,vff.laundry_customertbl where laundry_customertbl.usrid=usertbl.usrid and consmrid='"+str(customer_id)+"'"
         try:
