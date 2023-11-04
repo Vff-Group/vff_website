@@ -982,6 +982,7 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
 var sub_cat_img = $(this).closest("tr").find("#sub_cat_img").text();
 var actual_cost = $(this).closest("tr").find("#cost").text();
 var type = $(this).closest("tr").find("#type").text();
+var cat_name = $(this).closest("tr").find("#cat_name").text();
 
     
     var quantityInput = row.find(".quantity");
@@ -1000,7 +1001,7 @@ var type = $(this).closest("tr").find("#type").text();
         } else {
             // Create a new object and push it to the list
             section_type_selected = 'All'
-            if(sub_cat_name == "DRY CLEAN"){
+            if(cat_name == "DRY CLEAN"){
                 var section_type = $(this).closest("tr").find("#section_type").text();
                 section_type_selected = section_type;
             }
