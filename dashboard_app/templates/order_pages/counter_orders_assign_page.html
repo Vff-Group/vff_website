@@ -177,7 +177,7 @@
                 <div class="row">
              
                   
-                  <div class="col-lg-4" id="other-then-dry-clean">
+                  <div class="col-lg-6" id="other-then-dry-clean">
                     
                     <div class="form-group">
                       <label
@@ -800,7 +800,11 @@ $("#add_to_cart").on("click",function(){
     if (inputElement.value.trim() === "") {
         inputElement.classList.remove("is-valid");
         inputElement.classList.add("is-invalid");
-    } else {
+    } else if(inputElement.value.trim() !== "" && inputElement.value.trim() < 5){
+        inputElement.classList.remove("is-valid");
+        inputElement.classList.add("is-invalid");
+    }
+    else {
         inputElement.classList.remove("is-invalid");
         inputElement.classList.add("is-valid");
     }
