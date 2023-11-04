@@ -810,8 +810,8 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
 
         if (selectedItemIndex !== -1) {
             // Update the quantity in the selected item
-            //selectedItems[selectedItemIndex].quantity = currentQuantity - 1;
-            selectedItems[selectedItemIndex].item_quantity = currentQuantity - 1;
+            selectedItems[selectedItemIndex].quantity = currentQuantity - 1;
+            //selectedItems[selectedItemIndex].item_quantity = currentQuantity - 1;
             //selectedItems[selectedItemIndex].cost = selectedItems[selectedItemIndex].actual_cost * (currentQuantity - 1);
             // Remove the item from the list if the quantity is 0
             if (currentQuantity - 1 === 0) {
