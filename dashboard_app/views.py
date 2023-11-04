@@ -1942,7 +1942,7 @@ def add_items_to_cart(request):
         return redirect('dashboard_app:login')
     
     
-     
+    error_msg = "Something Went Wrong"
     if request.method == "POST":
         jdict = json.loads(request.body)
         key_pair=jdict['key']
@@ -2066,7 +2066,7 @@ def add_items_to_cart(request):
         return JsonResponse({'cart_items_data':cart_items_data})
     
     
-    return render(request,'customer_pages/add_customer.html')
+    return JsonResponse({'error_msg':error_msg})
 
 
 #All Expenses
