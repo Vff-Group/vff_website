@@ -802,9 +802,9 @@ $("#add_to_cart").on("click",function(){
     
     //Category Information
     
-    var cat_id = $(categorySelect).find(":selected").data("catids");
-    var cat_img = $(categorySelect).find(":selected").data("cat_img");
-    var cat_name = $(categorySelect).find(":selected").data("cat_name");
+    var cat_id = $(selectedCategory).find(":selected").data("catids");
+    var cat_img = $(selectedCategory).find(":selected").data("cat_img");
+    var cat_name = $(selectedCategory).find(":selected").data("cat_name");
 
     console.log('While inserting cat_id::'+cat_id);
     console.log('While inserting cat_img::'+cat_img);
