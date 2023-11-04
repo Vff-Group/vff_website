@@ -277,7 +277,7 @@
                                 />
                             </div>
                         </form>
-                        <div id="suggestion-container" style="height: 100px; overflow-y:scroll;">
+                        <div id="suggestion-container" style="height: 100px; overflow-y:scroll; display:none;">
                             <ul class="navbar-nav" id="suggestion-list"></ul>
                         </div>
                         <input
@@ -1188,7 +1188,7 @@ $.each(data.sub_categories, function(index, subCategory) {
     
         inputField.on('input', function() {
             const inputText = inputField.val();
-    
+            suggestionContainer.show();
             if (inputText.length > 0) {
                 $.get(`/admin_dashboard/search_customer_to_assign_order/${inputText}/`, function(data) {
                     const suggestions = data.suggestions;
