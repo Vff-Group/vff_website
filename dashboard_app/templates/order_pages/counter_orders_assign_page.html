@@ -225,7 +225,7 @@
                           <th class='text-secondary opacity-7'></th>
                           <th class='text-secondary opacity-7'>
                             <div class="col-lg-4">
-                                <button class="btn btn-facebook btn-sm" id="add_to_cart" data-bs-toggle="tooltip" data-bs-placement="top" title="Please load the category items first">Add To Cart</button>
+                                <button class="btn btn-facebook btn-sm" id="add_to_cart" data-bs-toggle="tooltip" data-bs-placement="top" title="Add items">Add To Cart</button>
                             </div>
                           </th>
                          
@@ -794,6 +794,16 @@ $("#add_to_cart").on("click",function(){
     var selectedCategory = $("#input-category").val();
     var selectedServiceType = $("#input-price").val();
     var selectedSubSection = $("#input-section").val();
+
+    var inputElement = document.getElementById("item-quantity");
+    
+    if (inputElement.value.trim() === "") {
+        inputElement.classList.remove("is-valid");
+        inputElement.classList.add("is-invalid");
+    } else {
+        inputElement.classList.remove("is-invalid");
+        inputElement.classList.add("is-valid");
+    }
 
     // Perform validation
     if (!selectedCategory || !selectedServiceType || !selectedSubSection) {
