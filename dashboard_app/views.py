@@ -1934,6 +1934,57 @@ def add_new_branch(request,branch_id=None):
     
     return render(request,'customer_pages/add_customer.html',{'data':data})
 
+#Add Items to Cart
+def add_items_to_cart(request):
+    
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    
+    
+     
+    if request.method == "POST":
+        jdict = json.loads(request.body)
+        key_pair=jdict['key']
+        print(f"key_pair::{key_pair}")
+        # try:
+        #     with connection.cursor() as cursor:
+        #         if usrid:
+        #             # Update an existing customers
+        #             update_query = (
+        #                 "update vff.usertbl set usrname='"+str(uname)+"',mobile_no='"+str(primary_mobno)+"',address='"+str(address)+"',age='"+str(age)+"',gender='"+str(gender)+"',date_of_birth='"+str(date_of_birth)+"',pincode='"+str(pincode)+"',landmark='"+str(land_mark)+"',profile_img='"+str(image_url)+"' where usrid='"+str(usrid)+"'"
+        #             )
+        #             print(f"update user details::{update_query}")
+        #             cursor.execute(update_query)
+                    
+        #             update_customer = (
+        #                 "update vff.laundry_customertbl set customer_name='"+str(uname)+"', query='"+str(queries)+"', gstno='"+str(gstno)+"', company_name='"+str(company_name)+"',igstno='"+str(igstno)+"' where usrid='"+str(usrid)+"'"
+        #             )
+        #             print(f"update customer details::{update_customer}")
+        #             cursor.execute(update_customer)
+        #         else:
+        #             # Insert a new customers
+        #             usertbl_query = "insert into vff.usertbl (usrname,mobile_no,address,age,gender,date_of_birth,pincode,landmark,profile_img) VALUES ('"+str(uname)+"', '"+str(primary_mobno)+"', '"+str(address)+"','"+str(age)+"','"+str(gender)+"','"+str(date_of_birth)+"','"+str(pincode)+"','"+str(land_mark)+"','"+str(image_url)+"') RETURNING usrid"
+        #             cursor.execute(usertbl_query)
+        #             usrid = cursor.fetchone()[0]  # Retrieve the returned usrid
+
+        #             insert_query = (
+        #                 "insert into vff.laundry_customertbl (usrid,branchid,customer_name,query,gstno,company_name,igstno) values "
+        #                 "('"+str(usrid)+"','"+str(branch_id)+"','"+str(uname)+"','"+str(queries)+"','"+str(gstno)+"','"+str(company_name)+"','"+str(igstno)+"')"
+                        
+        #             )
+        #             print(f"Create New user details::{insert_query}")
+        #             cursor.execute(insert_query)
+        #         connection.commit()
+
+        #         print("Branch Details Added/Updated Successfully.")
+        #         return redirect('dashboard_app:customers')
+        # except Exception as e:
+        #     print(f"Error loading data: {e}")
+        return JsonResponse({'hi':'hi'})
+    
+    
+    return render(request,'customer_pages/add_customer.html')
 
 
 #All Expenses

@@ -852,12 +852,90 @@ $("#add_to_cart").on("click",function(){
         showToast('Alert','Please select the laundry items before adding to cart')
         return;
     }
-
+    
+    if(selectedCategory !== "DRY CLEAN"){
     const subCategoryNameList = selectedItems.map(item => `${item.sub_cat_name} (${item.item_quantity})`);
+    const subCategoryIDList = selectedItems.map(item => `${item.sub_cat_id}`);
+    const subCategoryImageList = selectedItems.map(item => `${item.sub_cat_img}`);
+
     console.log('subCategoryNameList::'+subCategoryNameList);
+    console.log('subCategoryIDList::'+subCategoryIDList);
+    console.log('subCategoryImageList::'+subCategoryImageList);
+
+    var subCategoryNames = makeCommaSeparatedList(subCategoryNameList);
+    var subCategoryID = makeCommaSeparatedList(subCategoryIDList);
+    var subCategoryImage = makeCommaSeparatedList(subCategoryImageList);
+    
     console.log("Item Details::"+jsonItems)
+    var totalCost = 0.0;
+    var actualCost = 0.0;
+    var regular_price = get_prize(selectedServiceType);
+    var express_price = get_prize(selectedServiceType);
+    var offer_price = get_prize(selectedServiceType);
+    if(selectedServiceType.toLowerCase().includes('Regular')){
+        totalCost = (parseFloat(regular_price) * kgs_quantity);
+        actualCost = parseFloat(regular_price);
+    }else if(selectedServiceType.toLowerCase().includes('Express')){
+        totalCost = (parseFloat(express_price) * kgs_quantity);
+        actualCost = parseFloat(express_price);
+    }else{
+        totalCost = (parseFloat(offer_price) * kgs_quantity);
+        actualCost = parseFloat(offer_price);
+    }
+    const dictMap = [];
+
+    dictMap['cat_id'] = cat_id;
+      dictMap['customer_id'] = customer_id;
+      dictMap['key'] = 2;
+      dictMap['booking_type'] = selectedServiceType;
+      dictMap['cat_img'] = cat_img;
+      dictMap['cat_name'] = cat_name;
+
+      dictMap['sub_cat_name'] = subCategoryName;
+      dictMap['item_quantity'] = totalQuantity;
+      dictMap['actual_cost'] = actualCost;
+      dictMap['cost'] = totalCost;
+      dictMap['type_of'] = typeOf; //Kgs
+      dictMap['sub_cat_id'] = subCategoryID;
+      dictMap['sub_cat_img'] = subCategoryImage;
+      dictMap['section_type'] = "All";
+
+    // Get the CSRF token
+    const csrfToken = getCSRFToken();
+    $.ajax({
+        type: 'POST',
+        url: '/admin_dashboard/add_items_to_cart/',  // Adjust the URL as needed
+        data: JSON.stringify(dictMap),
+        headers: {
+            'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+        },
+        contentType: 'application/json',
+        success: function (response) {
+            console.log(response.message);
+            // Handle success response
+        },
+        error: function (error) {
+            console.error(error.responseJSON.message);
+            // Handle error response
+        }
+    });
+return;
+}
+//End of Other Laundry Services Add Item to Cart
+
     })
 
+    function get_prize(selectedServiceType){
+        let numericValue = null;
+for (const part of parts) {
+    const parsedNumber = parseFloat(part);
+    if (!isNaN(parsedNumber)) {
+        numericValue = parsedNumber;
+        break;
+    }
+}
+return numericValue;
+    }
 
     function makeCommaSeparatedList(subCategoryNameList) {
         return subCategoryNameList.join(', ');
@@ -892,7 +970,7 @@ var type = $(this).closest("tr").find("#type").text();
                 subcatid: subcatid,
                 item_quantity: currentQuantity + 1,
                 actual_cost: actual_cost,
-                cost: actual_cost * (currentQuantity + 1),
+                cost: (parseFloat(actual_cost) * (currentQuantity + 1)),
                 type_of: type, 
                 sub_cat_id: subcatid,
                 sub_cat_img: sub_cat_img, 
@@ -1078,30 +1156,26 @@ $.each(data.sub_categories, function(index, subCategory) {
                 priceSelect.append('<option disabled selected>Choose Service Type</option>');
                 // Access and use the properties of the priceCategory object here
                 // Regular Price
-    priceSelect.append($('<optgroup>', {
-        label: 'Regular Price',
-    }));
+    
     priceSelect.append($('<option>', {
-        value: `${priceCategory.regular_price} [${priceCategory.regular_price_type}] `,
-        text: `${priceCategory.regular_price} [${priceCategory.regular_price_type}] `,
+        value: `Regular Price ${priceCategory.regular_price} [${priceCategory.regular_price_type}] `,
+        text: `Regular Price ${priceCategory.regular_price} [${priceCategory.regular_price_type}] `,
     }));
 
     // Express Price
-    priceSelect.append($('<optgroup>', {
+   /* priceSelect.append($('<optgroup>', {
         label: 'Express Price',
     }));
+    */
     priceSelect.append($('<option>', {
-        value: `${priceCategory.express_price} [${priceCategory.express_price_type}] `,
-        text: `${priceCategory.express_price} [${priceCategory.express_price_type}] `,
+        value: `Express Price ${priceCategory.express_price} [${priceCategory.express_price_type}] `,
+        text: `Express Price ${priceCategory.express_price} [${priceCategory.express_price_type}] `,
     }));
 
     // Offer Price
-    priceSelect.append($('<optgroup>', {
-        label: 'Offer Price',
-    }));
     priceSelect.append($('<option>', {
-        value: `${priceCategory.offer_price} [${priceCategory.offer_price_type}] `,
-        text: `${priceCategory.offer_price} [${priceCategory.offer_price_type}] `,
+        value: `Offer Price ${priceCategory.offer_price} [${priceCategory.offer_price_type}] `,
+        text: `Offer Price ${priceCategory.offer_price} [${priceCategory.offer_price_type}] `,
     }));
 
                

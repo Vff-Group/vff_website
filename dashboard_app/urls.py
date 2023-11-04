@@ -64,6 +64,9 @@ urlpatterns = [
     path('load_section_type_sub_categories/<str:section_type>',views.load_section_type_sub_categories,name='load_section_type_sub_categories'),
     path('search_customer_to_assign_order/<str:mobno>/',views.search_customer_to_assign_order,name='search_customer_to_assign_order'),
     
+    #Add Items TO Cart
+    path('add_items_to_cart/',views.add_items_to_cart,name='add_items_to_cart'),
+    
     #Reports Screen
     path('daily_report/',views.daily_report,name='daily_report'),
     path('order_report/',views.order_report,name='order_report'),
