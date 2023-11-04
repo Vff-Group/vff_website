@@ -1953,22 +1953,8 @@ def add_items_to_cart(request):
         cat_img = jdict['cat_img']
         cat_name = jdict['cat_name']
         print(f'given_cat_id:::{cat_id}')
-        fetch_customer_records = "select address,city,pincode,landmark,branchid from  vff.usertbl,vff.laundry_customertbl where laundry_customertbl.usrid=usertbl.usrid and consmrid='"+str(customer_id)+"'"
-        try:
-            with connection.cursor() as cursor:    
-                cursor.execute(fetch_customer_records)
-                row = cursor.fetchone()
-                print(f'fetch_customer_records_query::{row}')
-                if row:
-                    streetAddress= row[0]
-                    cityName = row[1]
-                    zipCode = row[2]
-                    landMark = row[3]
-                    branch_id = row[4]
-                        
-                        
-        except Exception as e:
-                print(f"Error loading data: {e}")
+        print(f'booking_id_add_cart:::{booking_id}')
+        
                 
         print(f"key_pair::{key_pair}")
         if key_pair == 2:
@@ -2019,7 +2005,7 @@ def add_items_to_cart(request):
                     section_type = item['section_type']
                     query_dry = "insert into vff.laundry_cart_items(catid,subcatid,customer_id,booking_id,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type) values ('"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(customer_id)+"','"+str(booking_id)+"','"+str(booking_type)+"','"+str(cost)+"','"+str(item_quantity)+"','"+str(type_of)+"','"+str(cat_img)+"','"+str(cat_name)+"','"+str(sub_cat_name)+"','"+str(sub_cat_img)+"','"+str(actual_cost)+"','"+str(section_type)+"')"
                     cursor.execute(query_dry)
-                    connection.commit();
+                connection.commit();
             except Exception as e:
                 print('---------Error Inserting Dry Clean Records--------')
                 print(e)
