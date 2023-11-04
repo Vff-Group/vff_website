@@ -2106,7 +2106,7 @@ def generate_booking_id(request):
             #order_accept_tbl = "insert into vff.laundry_delivery_accept_tbl(delivery_boy_id,status,booking_id,branch_id) values ('"+str(delivery_boy_id)+"','"+str(status)+"','"+str(booking_id)+"','"+str(branch_id)+"')"
             ##Order Assignment
             #query5="insert into vff.laundry_order_assignmenttbl(booking_id,delivery_boy_id,type_of_order) values ('"+str(booking_id)+"','"+str(delivery_boy_id)+"','Pickup')"//"Accepted"
-            return JsonResponse({'booking_id':booking_id})
+        return JsonResponse({'booking_id':booking_id})
             
 
     
