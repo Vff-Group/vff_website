@@ -1078,8 +1078,7 @@ var actual_cost = $(this).closest("tr").find("#cost").text();
 var type = $(this).closest("tr").find("#type").text();
 var cat_name = $(this).closest("tr").find("#cat_name").text();
 
-    console.log("cat_name------>"+cat_name);
-    console.log("cat_name------>"+cat_name);
+    
     var quantityInput = row.find(".quantity");
     var currentQuantity = parseInt(quantityInput.text());
     var total_cost = 0.0;
@@ -1099,7 +1098,7 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
         } else {
             // Create a new object and push it to the list
             section_type_selected = 'All'
-            if(cat_name == "DRY CLEAN"){
+            if(selectedCategoryName == "DRY CLEAN"){
                 var section_type = $(this).closest("tr").find("#section_type").text();
                 section_type_selected = section_type;
             }
