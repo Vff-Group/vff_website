@@ -807,11 +807,27 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
         }
     }
 
+     // Create a JSON object with the desired values
+     var jsonObject = {
+        subCategoryName: sub_cat_name,
+        item_quantity: currentQuantity,
+        sub_cat_name: sub_cat_name,
+        actual_cost: 45, // Replace 'item.cost' with the actual value
+        cost: 45 * currentQuantity,
+        type_of: 'Kgs', // Replace 'item.typeOf' with the actual value
+        sub_cat_id: subcatid,
+        sub_cat_img: 'Image Url', // Replace 'item.subCategoryImage' with the actual value
+        section_type: 'All'
+    };
+
     // Log the selected item
     console.log('----------------');
-    console.log('selectedItem::' + selectedItems[selectedItemIndex].currentQuantity + "-" + selectedItems[selectedItemIndex].sub_cat_name);
+   if (selectedItemIndex !== -1) {
+        console.log('selectedItem::' + selectedItems[selectedItemIndex].currentQuantity + "-" + selectedItems[selectedItemIndex].sub_cat_name);
+    }
     console.log('----------------');
-    console.log("selectedItems:" + JSON.stringify(selectedItems));
+    console.log("selectedItems: " + JSON.stringify(selectedItems));
+    console.log("JSON Object: " + JSON.stringify(jsonObject));
 });
 
 
