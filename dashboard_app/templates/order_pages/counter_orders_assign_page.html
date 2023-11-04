@@ -820,7 +820,7 @@ $("#generate-booking-id").on("click",function(){
             // Handle success response
             const bookingIDData = response.booking_id;
 // Now you can access the cartItemsData as a JavaScript object
-                    console.log(bookingIDData);
+                   // console.log(bookingIDData);
                 //TODO:Need to save the booking ID 
                     
                     var booking_id_input = document.getElementById("selected-booking-id");
@@ -916,9 +916,9 @@ $("#add_to_cart").on("click",function(){
     }
     }
     
-    console.log('SelectedCategory::'+selectedCategory);
-    console.log('selectedSubSection::'+selectedSubSection);
-    console.log('selectedServiceType::'+selectedServiceType);
+   // console.log('SelectedCategory::'+selectedCategory);
+    //console.log('selectedSubSection::'+selectedSubSection);
+    //console.log('selectedServiceType::'+selectedServiceType);
     
 
     jsonItems = JSON.stringify(selectedItems);
@@ -932,20 +932,20 @@ $("#add_to_cart").on("click",function(){
     const subCategoryIDList = selectedItems.map(item => `${item.sub_cat_id}`);
     const subCategoryImageList = selectedItems.map(item => `${item.sub_cat_img}`);
 
-    console.log('subCategoryNameList::'+subCategoryNameList);
-    console.log('subCategoryIDList::'+subCategoryIDList);
-    console.log('subCategoryImageList::'+subCategoryImageList);
-    console.log('customer_id::'+customer_id);
+   // console.log('subCategoryNameList::'+subCategoryNameList);
+    //console.log('subCategoryIDList::'+subCategoryIDList);
+    //console.log('subCategoryImageList::'+subCategoryImageList);
+    //console.log('customer_id::'+customer_id);
 
     var subCategoryNames = makeCommaSeparatedList(subCategoryNameList);
     var subCategoryID = makeCommaSeparatedList(subCategoryIDList);
     var subCategoryImage = makeCommaSeparatedList(subCategoryImageList);
     
-    console.log("Item Details::"+jsonItems)
+   // console.log("Item Details::"+jsonItems)
     var totalCost = 0.0;
     var actualCost = 0.0;
     var regular_price = get_prize(selectedServiceType);
-    console.log('regular_price::'+regular_price);
+    //console.log('regular_price::'+regular_price);
     var express_price = get_prize(selectedServiceType);
     var offer_price = get_prize(selectedServiceType);
     if(selectedServiceType.toLowerCase().includes('Regular')){
@@ -977,8 +977,8 @@ $("#add_to_cart").on("click",function(){
       dictMap['sub_cat_img'] = subCategoryImage;
       dictMap['section_type'] = "All";
 
-      console.log('ActualCost::'+actualCost);
-      console.log('TotalCost::'+totalCost);
+      //console.log('ActualCost::'+actualCost);
+      //console.log('TotalCost::'+totalCost);
 
 }
 //End of Other Laundry Services Add Item to Cart
@@ -1087,12 +1087,13 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
                 var section_type = $(this).closest("tr").find("#section_type").text();
                 section_type_selected = section_type;
             }
+            var total_cost = (parseFloat(actual_cost) * (currentQuantity + 1));
             var newItem = {
                 sub_cat_name: sub_cat_name,
                 subcatid: subcatid,
                 item_quantity: currentQuantity + 1,
                 actual_cost: actual_cost,
-                cost: (parseFloat(actual_cost) * (currentQuantity + 1)),
+                cost: total_cost,
                 type_of: type, 
                 sub_cat_id: subcatid,
                 sub_cat_img: sub_cat_img, 
