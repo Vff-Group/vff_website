@@ -1952,7 +1952,7 @@ def add_items_to_cart(request):
         cat_img = jdict['cat_img']
         cat_name = jdict['cat_name']
         booking_status = "Accepted"
-        
+        print(f'given_cat_id:::{cat_id}')
         fetch_customer_records = "select address,city,pincode,landmark,branchid from  vff.usertbl,vff.laundry_customertbl where laundry_customertbl.usrid=usertbl.usrid and consmrid='"+str(customer_id)+"'"
         try:
             with connection.cursor() as cursor:    
@@ -1988,6 +1988,7 @@ def add_items_to_cart(request):
                     create_new_booking = "insert into vff.laundry_order_bookingtbl(customerid,address,city,pincode,landmark,branch_id,booking_status,booking_taken_on) values ('"+str(customer_id)+"','"+str(streetAddress)+"','"+str(cityName)+"','"+str(zipCode)+"','"+str(landMark)+"','"+str(branch_id)+"','"+str(booking_status)+"','OnCounterBooking') returning bookingid" 
                     cursor.execute(create_new_booking)
                     booking_id = cursor.fetchone()[0]
+                    print(f'Retuning BOOKING ID-------->{booking_id}')
                     add_items_cart_query = "insert into vff.laundry_cart_items(catid,subcatid,customer_id,booking_id,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type) values ('"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(customer_id)+"','"+str(booking_id)+"','"+str(booking_type)+"','"+str(cost)+"','"+str(item_quantity)+"','"+str(type_of)+"','"+str(cat_img)+"','"+str(cat_name)+"','"+str(sub_cat_name)+"','"+str(sub_cat_img)+"','"+str(actual_cost)+"','"+str(section_type)+"')"
                     print(f'add_items_cart Query::{add_items_cart_query}')
                     cursor.execute(add_items_cart_query)
