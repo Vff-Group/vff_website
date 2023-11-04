@@ -883,16 +883,17 @@ $("#add_to_cart").on("click",function(){
     var totalCost = 0.0;
     var actualCost = 0.0;
     var regular_price = get_prize(selectedServiceType);
+    console.log('regular_price::'+regular_price);
     var express_price = get_prize(selectedServiceType);
     var offer_price = get_prize(selectedServiceType);
     if(selectedServiceType.toLowerCase().includes('Regular')){
-        totalCost = (parseFloat(regular_price) * kgs_quantity);
+        totalCost = (parseFloat(regular_price) * parseFloat(kgs_quantity));
         actualCost = parseFloat(regular_price);
     }else if(selectedServiceType.toLowerCase().includes('Express')){
-        totalCost = (parseFloat(express_price) * kgs_quantity);
+        totalCost = (parseFloat(express_price) * parseFloat(kgs_quantity));
         actualCost = parseFloat(express_price);
     }else{
-        totalCost = (parseFloat(offer_price) * kgs_quantity);
+        totalCost = (parseFloat(offer_price) * parseFloat(kgs_quantity));
         actualCost = parseFloat(offer_price);
     }
     const dictMap = {};
