@@ -1125,7 +1125,7 @@ $.each(data.sub_categories, function(index, subCategory) {
     
         function loadSubCategoriesBySection(sectionTypeSelect) {
             var section_type = $(sectionTypeSelect).val();
-            var selectedCategory = $(categorySelect).val();
+            var categorySelect = $("#input-category").val();
             var cat_id = $(categorySelect).find(":selected").data("catids");
             var section_id = $(sectionTypeSelect).find(":selected").data("section_id");
             var cat_img = $(categorySelect).find(":selected").data("cat_img");
