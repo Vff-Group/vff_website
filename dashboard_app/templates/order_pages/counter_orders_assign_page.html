@@ -964,35 +964,7 @@ function showToast(message, bodyContent) {
   
 
 
-function updateSelectedItems(index, itemCount,sub_categories) {
-    const subCategory = sub_categories[index];
-  
-    const existingIndex = selectedItems.findIndex((selectedItem) =>
-      selectedItem.sub_cat_name === subCategory.sub_cat_name,
-      console.log("selectedItem.sub_cat_name::"+selectedItem.sub_cat_name),
-      console.log("subCategory.sub_cat_name::"+subCategory.sub_cat_name)
-    );
-  
-    if (existingIndex !== -1) {
-      if (itemCount > 0) {
-        console.log('coming here everytine');
-        selectedItems[existingIndex].item_quantity = itemCount;
-        selectedItems[existingIndex].cost = subCategory.cost * itemCount;
-      } else {
-        selectedItems.splice(existingIndex, 1);
-      }
-    } else {
-      if (itemCount > 0) {
-        selectedItems.push({
-          sub_cat_name: subCategory.sub_cat_name,
-          item_quantity: itemCount,
-          cost: subCategory.cost * itemCount,
-        });
-      }
-    }
-  console.log("selectedItems::"+selectedItems);
-    // You can do further processing or updating of the selected items here.
-  }
+
 
   var dataCat = {}
 
@@ -1084,7 +1056,7 @@ $.each(data.sub_categories, function(index, subCategory) {
         "<div id='cat_img' style='display:none;'>"+cat_img+"</div>"+
         "<div id='cat_name' style='display:none;'>"+cat_name+"</div>"+
         "<div id='selectedCategory' style='display:none;'>"+selectedCategory+"</div> <div id='subCategory' style='display:none;'>"+subCategory+"</div>"+
-        "<div class='d-flex px-2 py-1'> <div class='d-flex px-2 py-1'><img src="+subCategory.sub_cat_img+" class='avatar avatar-sm me-3' alt='user1'> </div> <div class='d-flex flex-column justify-content-center'> <h6 class='mb-0 text-sm'>"+subCategory.sub_cat_name+"</h6></div></div> </div> </td>")
+        "<div class='d-flex px-2 py-1'> <div class='d-flex px-2 py-1'><img src="+subCategory.sub_cat_img+" class='avatar avatar-sm me-3' alt='user1'> </div> <div class='d-flex flex-column justify-content-center'> <h6 class='mb-0 text-sm' id='sub_cat_name'>"+subCategory.sub_cat_name+"</h6></div></div> </div> </td>")
     //newRow.append("<td> <p class=\"text-xs font-weight-bold mb-0\">" + subCategory.sub_cat_name + "</p></td>");
     /* newRow.append("<td><input type='number' value='0' min='0'></td>"); 
     newRow.append("<td>  <div class=\"d-flex px-2 py-1\"> <p class=\"mb-0 text-xxs text-center\"> " + subCategory.cost +'/ '+subCategory.type + " </p></div></td>");
@@ -1178,7 +1150,7 @@ $.each(data.sub_categories, function(index, subCategory) {
             "<div id='cat_img' style='display:none;'>"+cat_img+"</div>"+
             "<div id='cat_name' style='display:none;'>"+cat_name+"</div>"+
             "<div id='section_type' style='display:none;'>"+section_type+"</div>"+
-            "<div class='d-flex px-2 py-1'> <div class='d-flex px-2 py-1'><img src="+subCategory.sub_cat_img+" class='avatar avatar-sm me-3' alt='user1'> </div> <div class='d-flex flex-column justify-content-center'> <h6 class='mb-0 text-sm'>"+subCategory.sub_cat_name+"</h6> <p class='text-xs text-secondary mb-0'>"+subCategory.cost +'/ '+subCategory.type+"</p> </div></div> </div> </td>")
+            "<div class='d-flex px-2 py-1'> <div class='d-flex px-2 py-1'><img src="+subCategory.sub_cat_img+" class='avatar avatar-sm me-3' alt='user1'> </div> <div class='d-flex flex-column justify-content-center'> <h6 class='mb-0 text-sm' id='sub_cat_name'>"+subCategory.sub_cat_name+"</h6> <p class='text-xs text-secondary mb-0'>"+subCategory.cost +'/ '+subCategory.type+"</p> </div></div> </div> </td>")
    
     //newRow.append("<td>  <div class=\"d-flex px-2 py-1\"> <p class=\"mb-0 text-xxs text-center\"> " + subCategory.cost +'/ '+subCategory.type + " </p></div></td>");
     /* newRow.append("<td><input type='number' value='0' min='0'></td>"); 
