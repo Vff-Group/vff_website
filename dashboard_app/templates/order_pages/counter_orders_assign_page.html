@@ -4,22 +4,20 @@
 {% block content %}
 
 <div class="container-fluid py-4">
-    <div class="toast-container">
-        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <img src="..." class="rounded me-2" alt="...">
-                <strong class="me-auto">VFF Group </strong>
-                <small class="text-muted">just now</small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                See? Just like this.
-            </div>
-        </div>
+    <button type="button" class="btn btn-primary" id="liveToastBtn" style="display: none;"></button>
+
+<div class="position-fixed top-0 end-10 p-3" style="z-index: 11">
+  <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="{% static 'img/logos/logo.png' %}" class="rounded me-2" style="width: 50px; height:50px;" alt="...">
+      <strong class="me-auto">VFF Group</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
-    
-    <button id="showCustomToastButton" style="display: none;">Show Custom Toast</button>
-    
+    <div class="toast-body">
+      
+    </div>
+  </div>
+</div>
 
     <div class="row">
       <div class="col-lg-7">
@@ -800,7 +798,7 @@ $("#add_to_cart").on("click",function(){
     // Perform validation
     if (!selectedCategory || !selectedServiceType || !selectedSubSection) {
         // Show a toast message for validation failure
-        showCustomToast("Please select Category, Service Type, and Sub Section.","Just Now");
+        showToast("Validation Error", "Please select Category, Service Type, and Sub Section.");
         return; // Stop further execution
     }
 
@@ -888,27 +886,18 @@ var type = $(this).closest("tr").find("#type").text();
 
 
 // Function to show a toast message
-function showCustomToast(message, timestamp) {
-    // Clone the template toast element
-    var toastContainer = document.querySelector(".toast-container");
-    var templateToast = toastContainer.querySelector(".toast").cloneNode(true);
+function showToast(message, bodyContent) {
+    // Get the toast element and its content
+    var toastElement = document.getElementById("liveToast");
+    var toastBody = toastElement.querySelector(".toast-body");
 
-    // Update the content with the provided message and timestamp
-    var toastBody = templateToast.querySelector(".toast-body");
-    var toastTimestamp = templateToast.querySelector(".text-muted");
-    toastBody.textContent = message;
-    toastTimestamp.textContent = timestamp;
-
-    // Append the custom toast to the container and show it
-    toastContainer.appendChild(templateToast);
+    // Update the toast content with the provided message and body content
+    toastBody.textContent = bodyContent;
 
     // Show the toast
-    var customToast = new bootstrap.Toast(templateToast);
-    customToast.show();
+    var toast = new bootstrap.Toast(toastElement);
+    toast.show();
 }
-
-
-
 
 
 
