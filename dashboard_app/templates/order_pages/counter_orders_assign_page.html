@@ -899,7 +899,7 @@ $("#add_to_cart").on("click",function(){
         totalCost = (parseFloat(offer_price) * parseFloat(kgs_quantity));
         actualCost = parseFloat(offer_price);
     }
-    dictMap = {};
+    
 
     dictMap['cat_id'] = cat_id;
       dictMap['customer_id'] = customer_id;
@@ -924,7 +924,7 @@ $("#add_to_cart").on("click",function(){
 //End of Other Laundry Services Add Item to Cart
 else{
     
-      dictMap = {};
+    
       dictMap['cat_id'] = cat_id;
       dictMap['customer_id'] = customer_id;
       dictMap['booking_type'] = "Dry Cleaning";
