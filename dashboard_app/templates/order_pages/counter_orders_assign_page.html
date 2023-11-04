@@ -1019,10 +1019,22 @@ else{
 
             data.forEach(function (item) {
                 const row = $("<tr>");
-                row.append($("<td>").text(item.cat_name));
-                row.append($("<td>").text(item.booking_type));
-                row.append($("<td>").text(item.item_cost));
-                row.append($("<td>").text(item.item_quantity));
+                var type = item.type;
+                var itemName = "",itemImage = "",itemsName = "";
+
+                if(type === "Kgs"){
+                    itemName = item.cat_name;
+                    itemImage = item.cat_img;
+                    itemsName = item.sub_cat_name;
+                }else{
+                    itemName = item.sub_cat_name;
+                    itemImage = item.sub_cat_img;
+                    itemsName = item.section_type;
+                }
+                row.append("<td><div class='d-flex px-2 py-1'> <div class='d-flex px-2 py-1'><img src="+itemImage+" class='avatar avatar-sm me-3' alt='user1'> </div> <div class='d-flex flex-column justify-content-center'> <h6 class='mb-0 text-sm' id='sub_cat_name'>"+itemName+"</h6> <p class='text-xs text-secondary mb-0'>"+subCategory.cost +'/ '+subCategory.type+"</p> </div></div> </div> </td>")
+                row.append("<td><p class='text-xs text-secondary mb-0'>"+item.booking_type+"</p></td>")
+                row.append("<td><p class='text-xs text-secondary mb-0'> Rs."+item.item_cost+"/-</p></td>")
+                row.append("<td><p class='text-xs text-secondary mb-0'> "+item.item_quantity+"/"+item.type+"</p></td>")
                 cartItemsTable.append(row);
             });
         }
@@ -1135,14 +1147,14 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
     jsonItems = selectedItems.filter(item => item.item_quantity > 0);
 
     // Log the selected item
-    console.log('----------------');
+   // console.log('----------------');
    if (selectedItemIndex !== -1) {
-        console.log('selectedItem::' + selectedItems[selectedItemIndex].currentQuantity + "-" + selectedItems[selectedItemIndex].sub_cat_name);
+     //   console.log('selectedItem::' + selectedItems[selectedItemIndex].currentQuantity + "-" + selectedItems[selectedItemIndex].sub_cat_name);
     }
-    console.log('----------------');
-    console.log("selectedItems: " + JSON.stringify(selectedItems));
-    console.log('----------------');
-    console.log('jsonItems: ' + JSON.stringify(jsonItems));
+    //console.log('----------------');
+    //console.log("selectedItems: " + JSON.stringify(selectedItems));
+    //console.log('----------------');
+    //console.log('jsonItems: ' + JSON.stringify(jsonItems));
     
 });
 
