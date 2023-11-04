@@ -799,6 +799,7 @@ $("#add_to_cart").on("click",function(){
     var selectedServiceType = $("#input-price").val();
     var selectedSubSection = $("#input-section").val();
     var inputElement = document.getElementById("item-quantity");
+    
 
     //customer-name,selected-customer-id,selected-mobile-no,selected-customer-name
     var selected_customer_id = document.getElementById("selected-customer-id");
@@ -981,6 +982,7 @@ $("#subCategoryTable").on("click", ".increment, .decrement", function() {
 var sub_cat_img = $(this).closest("tr").find("#sub_cat_img").text();
 var actual_cost = $(this).closest("tr").find("#cost").text();
 var type = $(this).closest("tr").find("#type").text();
+
     
     var quantityInput = row.find(".quantity");
     var currentQuantity = parseInt(quantityInput.text());
@@ -997,6 +999,11 @@ var type = $(this).closest("tr").find("#type").text();
             selectedItems[selectedItemIndex].item_quantity = currentQuantity + 1;
         } else {
             // Create a new object and push it to the list
+            section_type_selected = 'All'
+            if(selectedCategory == "DRY CLEAN"){
+                var section_type = $(this).closest("tr").find("#section_type").text();
+                section_type_selected = section_type;
+            }
             var newItem = {
                 sub_cat_name: sub_cat_name,
                 subcatid: subcatid,
@@ -1006,7 +1013,7 @@ var type = $(this).closest("tr").find("#type").text();
                 type_of: type, 
                 sub_cat_id: subcatid,
                 sub_cat_img: sub_cat_img, 
-                section_type: 'All'
+                section_type: section_type_selected
             };
            /* var newItem = {
                 subCategoryName: sub_cat_name,
