@@ -6,17 +6,20 @@
 <div class="container-fluid py-4">
     <button type="button" class="btn btn-primary" id="liveToastBtn" style="display: none;"></button>
 
-<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-  <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      <img src="{% static 'img/logos/logo.png' %}" class="rounded me-2" alt="...">
-      <strong class="me-auto">VFF Group</strong>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+<div class="position-fixed top-0 end-10 p-3" style="z-index: 11">
+    <div class="toast-container">
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-header">
+            <img src="..." class="rounded me-2" alt="...">
+            <strong class="me-auto">VFF Group</strong>
+            <small class="text-muted">just now</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body">
+            
+          </div>
+        </div>
     </div>
-    <div class="toast-body">
-      
-    </div>
-  </div>
 </div>
 
     <div class="row">
