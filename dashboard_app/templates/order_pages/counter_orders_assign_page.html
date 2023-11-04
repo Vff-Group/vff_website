@@ -46,7 +46,7 @@
                               onchange="loadSubCategories(this)"
                             >
                               <option disabled selected>
-                                Choose Expense Category
+                                Choose Laundry Category
                               </option>
                               {% for category in category_data %}
                               <option
@@ -790,7 +790,9 @@ function getCSRFToken() {
 }
 
 var selectedItems = [];
-
+let selectedCategoryId = null;
+let selectedCategoryName = null;
+let selectedCategoryImage = null;
 //Add To Cart Button
 $("#add_to_cart").on("click",function(){
 
@@ -800,11 +802,7 @@ $("#add_to_cart").on("click",function(){
     var selectedSubSection = $("#input-section").val();
     var inputElement = document.getElementById("item-quantity");
     
-    //Category Information
     
-    var cat_id = $(selectedCategory).find(":selected").data("catids");
-    var cat_img = $(selectedCategory).find(":selected").data("cat_img");
-    var cat_name = $(selectedCategory).find(":selected").data("cat_name");
 
     console.log('While inserting cat_id::'+cat_id);
     console.log('While inserting cat_img::'+cat_img);
@@ -909,12 +907,12 @@ $("#add_to_cart").on("click",function(){
     }
     
 
-    dictMap['cat_id'] = cat_id;
+    dictMap['cat_id'] = selectedCategoryId;
       dictMap['customer_id'] = customer_id;
       dictMap['key'] = 2;
       dictMap['booking_type'] = selectedServiceType;
-      dictMap['cat_img'] = cat_img;
-      dictMap['cat_name'] = cat_name;
+      dictMap['cat_img'] = selectedCategoryImage;
+      dictMap['cat_name'] = selectedCategoryName;
 
       dictMap['sub_cat_name'] = subCategoryNames;
       dictMap['item_quantity'] = kgs_quantity;
@@ -1101,6 +1099,10 @@ function showToast(message, bodyContent) {
             console.log('CatID::'+cat_id)
             console.log('CatIMG::'+cat_img)
             console.log('CatName::'+cat_name)
+
+            selectedCategoryId = cat_id;
+            selectedCategoryImage = cat_img;
+            selectedCategoryName = cat_name;
             
             selectedItems = [];
             var sectionSelect = $('#input-section');
