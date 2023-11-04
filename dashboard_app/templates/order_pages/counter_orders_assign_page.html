@@ -1223,7 +1223,7 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
                 var section_type = $(this).closest("tr").find("#section_type").text();
                 section_type_selected = section_type;
             }
-            
+            total_cost = (parseFloat(actual_cost) * (parseFloat(currentQuantity) + 1));
             var newItem = {
                 sub_cat_name: sub_cat_name,
                 subcatid: subcatid,
