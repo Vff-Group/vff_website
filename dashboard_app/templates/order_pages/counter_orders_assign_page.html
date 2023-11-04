@@ -287,6 +287,7 @@
                             name="selected_customer_id"
                             value=""
                         />
+                        
                         <input
                             class="form-control form-control-alternative"
                             type="hidden"
@@ -785,6 +786,19 @@ $("#add_to_cart").on("click",function(){
     var selectedServiceType = $("#input-price").val();
     var selectedSubSection = $("#input-section").val();
     var inputElement = document.getElementById("item-quantity");
+
+    //customer-name,selected-customer-id,selected-mobile-no,selected-customer-name
+    var selected_customer_id = document.getElementById("selected-customer-id");
+    var customer_name_input = document.getElementById("customer-name");
+    
+    var customer_id = selected_customer_id.value.trim()
+    var customer_name = customer_name_input.value.trim()
+
+    if(customer_id === ""){
+        showToast('Alert','Please Search customer before adding any items');
+        return;
+    }
+
     var kgs_quantity = inputElement.value.trim();
 
     // Perform validation
@@ -838,9 +852,18 @@ $("#add_to_cart").on("click",function(){
         showToast('Alert','Please select the laundry items before adding to cart')
         return;
     }
+
+    const subCategoryNameList = selectedItems.map(item => `${item.subCategoryName} (${item.item_quantity})`);
+    console.log('subCategoryNameList::'+subCategoryNameList);
     console.log("Item Details::"+jsonItems)
     })
 
+
+    function makeCommaSeparatedList(subCategoryNameList) {
+        return subCategoryNameList.join(', ');
+    }
+    
+    
 $("#subCategoryTable").on("click", ".increment, .decrement", function() {
     var row = $(this).closest("tr");
     var sub_cat_name = $(this).closest("tr").find("#sub_cat_name").text();
