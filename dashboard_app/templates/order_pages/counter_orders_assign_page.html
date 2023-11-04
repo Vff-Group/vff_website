@@ -774,6 +774,19 @@ $("#subCategoryTable").on("click", ".decrement", function() {
 var selectedItems = [];
 //Add To Cart Button
 $("#add_to_cart").on("click",function(){
+
+    // Get the selected values for Category, Service Type, and Sub Section
+    var selectedCategory = $("#input-category").val();
+    var selectedServiceType = $("#input-price").val();
+    var selectedSubSection = $("#input-section").val();
+
+    // Perform validation
+    if (!selectedCategory || !selectedServiceType || !selectedSubSection) {
+        // Show a toast message for validation failure
+        showToast("Please select Category, Service Type, and Sub Section.");
+        return; // Stop further execution
+    }
+
     jsonItems = JSON.stringify(selectedItems);
     console.log("Item Details::"+jsonItems)
     })
@@ -855,6 +868,15 @@ var type = $(this).closest("tr").find("#type").text();
     console.log('jsonItems: ' + JSON.stringify(jsonItems));
     
 });
+
+
+// Function to show a toast message
+function showToast(message) {
+    // Create and display a toast message
+    // You can use a library like Toastr or create your own notification element
+    // For example, with Toastr:
+    toastr.info(message, "Validation Error", { positionClass: "toast-top-right" });
+}
 
 
 
