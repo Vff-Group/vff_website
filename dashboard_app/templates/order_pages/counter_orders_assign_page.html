@@ -315,7 +315,7 @@
         <div class="card-body p-3 pb-0">
             <div class="row d-flex justify-content-end">
                 <div class="col-6 d-flex justify-content-end">
-                    <button type="submit" id="generate_booking_id" class="btn btn-primary btn-sm">Generate Booking ID</button>
+                    <a class="btn btn-facebook text-xxs" id="generate-booking-id">Generate Booking ID</a>
                     <input
                             class="form-control form-control-alternative"
                             type="hidden"
@@ -789,6 +789,50 @@ var selectedItems = [];
 let selectedCategoryId = null;
 let selectedCategoryName = null;
 let selectedCategoryImage = null;
+let selectedCategoryBookingID = null;
+
+//Create booking ID Before adding items to cart
+$("#generate-booking-id").on("click",function(){
+    var selected_customer_id = document.getElementById("selected-customer-id");
+    var customer_name_input = document.getElementById("customer-name");
+    
+    var customer_id = selected_customer_id.value.trim()
+    var customer_name = customer_name_input.value.trim()
+
+    if(customer_id === ""){
+        showToast('Alert','Please Search customer before adding any items');
+        return;
+    }
+
+    const csrfToken = getCSRFToken();
+    $.ajax({
+        type: 'POST',
+        url: '/admin_dashboard/generate_booking_id/',  // Adjust the URL as needed
+        data: JSON.stringify(dictMap),
+        headers: {
+            'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+        },
+        contentType: 'application/json',
+        success: function (response) {
+            console.log(response.message);
+            // Handle success response
+            const bookingIDData = response.cart_items_data;
+// Now you can access the cartItemsData as a JavaScript object
+                    console.log(bookingIDData);
+                //TODO:Need to save the booking ID 
+                    
+                   
+
+        },
+        error: function (error) {
+            console.error(error.responseJSON.message);
+            // Handle error response
+        }
+    });
+
+
+});
+
 //Add To Cart Button
 $("#add_to_cart").on("click",function(){
 

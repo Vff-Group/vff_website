@@ -1948,6 +1948,7 @@ def add_items_to_cart(request):
         key_pair=jdict['key']
         cat_id = jdict['cat_id']
         customer_id = jdict['customer_id']
+        booking_id = jdict['booking_id']
         booking_type = jdict['booking_type']
         cat_img = jdict['cat_img']
         cat_name = jdict['cat_name']
@@ -1985,10 +1986,7 @@ def add_items_to_cart(request):
             
             try:
                 with connection.cursor() as cursor:
-                    create_new_booking = "insert into vff.laundry_order_bookingtbl(customerid,address,city,pincode,landmark,branch_id,booking_status,booking_taken_on) values ('"+str(customer_id)+"','"+str(streetAddress)+"','"+str(cityName)+"','"+str(zipCode)+"','"+str(landMark)+"','"+str(branch_id)+"','"+str(booking_status)+"','OnCounterBooking') returning bookingid" 
-                    cursor.execute(create_new_booking)
-                    booking_id = cursor.fetchone()[0]
-                    print(f'Retuning BOOKING ID-------->{booking_id}')
+                    
                     add_items_cart_query = "insert into vff.laundry_cart_items(catid,subcatid,customer_id,booking_id,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type) values ('"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(customer_id)+"','"+str(booking_id)+"','"+str(booking_type)+"','"+str(cost)+"','"+str(item_quantity)+"','"+str(type_of)+"','"+str(cat_img)+"','"+str(cat_name)+"','"+str(sub_cat_name)+"','"+str(sub_cat_img)+"','"+str(actual_cost)+"','"+str(section_type)+"')"
                     print(f'add_items_cart Query::{add_items_cart_query}')
                     cursor.execute(add_items_cart_query)
@@ -2002,39 +2000,33 @@ def add_items_to_cart(request):
         else:
             cat_id = jdict['cat_id']
             customer_id = jdict['customer_id']
+            
             booking_type = jdict['booking_type']
             cat_img = jdict['cat_img']
             cat_name = jdict['cat_name']  
             all_data = jdict['all_items']
             print(f'all_data::{all_data}')
+            
             try:
-                with connection.cursor() as cursor:
-                    create_new_booking = "insert into vff.laundry_order_bookingtbl(customerid,address,city,pincode,landmark,branch_id,booking_status,booking_taken_on) values ('"+str(customer_id)+"','"+str(streetAddress)+"','"+str(cityName)+"','"+str(zipCode)+"','"+str(landMark)+"','"+str(branch_id)+"','"+str(booking_status)+"','OnCounterBooking') returning bookingid" 
-                    cursor.execute(create_new_booking)
-                    booking_id = cursor.fetchone()[0]
-                    print(f'returning Booking ID for Dry Clean:{booking_id}')
-                    try:
-                        for item in all_data:
-                            print(f'itemss--->{item}')
-                            sub_cat_name = item['sub_cat_name']
-                            print(f'sub_cat_name::{sub_cat_name}')
-                            item_quantity = item['item_quantity']
-                            actual_cost = item['actual_cost']
-                            cost = item['cost']
-                            type_of = item['type_of']
-                            sub_cat_id = item['sub_cat_id']
-                            sub_cat_img = item['sub_cat_img']
-                            section_type = item['section_type']
-                            query = "insert into vff.laundry_cart_items(catid,subcatid,customer_id,booking_id,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type) values ('"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(customer_id)+"','"+str(booking_id)+"','"+str(booking_type)+"','"+str(cost)+"','"+str(item_quantity)+"','"+str(type_of)+"','"+str(cat_img)+"','"+str(cat_name)+"','"+str(sub_cat_name)+"','"+str(sub_cat_img)+"','"+str(actual_cost)+"','"+str(section_type)+"')"
-
-                            cursor.execute(query)
-                            connection.commit();
-                    except Exception as e:
-                        print('---------Error Inserting Dry Clean Records--------')
-                        print(e)
-                    
+                for item in all_data:
+                    print(f'itemss--->{item}')
+                    sub_cat_name = item['sub_cat_name']
+                    print(f'sub_cat_name::{sub_cat_name}')
+                    item_quantity = item['item_quantity']
+                    actual_cost = item['actual_cost']
+                    cost = item['cost']
+                    type_of = item['type_of']
+                    sub_cat_id = item['sub_cat_id']
+                    sub_cat_img = item['sub_cat_img']
+                    section_type = item['section_type']
+                    query = "insert into vff.laundry_cart_items(catid,subcatid,customer_id,booking_id,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type) values ('"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(customer_id)+"','"+str(booking_id)+"','"+str(booking_type)+"','"+str(cost)+"','"+str(item_quantity)+"','"+str(type_of)+"','"+str(cat_img)+"','"+str(cat_name)+"','"+str(sub_cat_name)+"','"+str(sub_cat_img)+"','"+str(actual_cost)+"','"+str(section_type)+"')
+                    cursor.execute(query)
+                    connection.commit();
             except Exception as e:
-                print(f"Error loading data: {e}")  
+                print('---------Error Inserting Dry Clean Records--------')
+                print(e)
+                    
+            
 
         #Load Cart Items
         cart_items_query = "select itemid,catid,subcatid,booking_id,dt,time,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type from vff.laundry_cart_items where customer_id='"+str(customer_id)+"' and booking_id='"+str(booking_id)+"'"
@@ -2064,6 +2056,65 @@ def add_items_to_cart(request):
         else:
             error_msg = 'Something Went Wrong'
         return JsonResponse({'cart_items_data':cart_items_data})
+    
+    
+    return JsonResponse({'error_msg':error_msg})
+
+#Generate Booking ID
+def generate_booking_id(request):
+    
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    
+    
+    error_msg = "Something Went Wrong"
+    if request.method == "POST":
+        jdict = json.loads(request.body)
+        key_pair=jdict['key']
+        cat_id = jdict['cat_id']
+        customer_id = jdict['customer_id']
+        booking_type = jdict['booking_type']
+        cat_img = jdict['cat_img']
+        cat_name = jdict['cat_name']
+        booking_status = "Accepted"
+        print(f'given_cat_id:::{cat_id}')
+        fetch_customer_records = "select address,city,pincode,landmark,branchid from  vff.usertbl,vff.laundry_customertbl where laundry_customertbl.usrid=usertbl.usrid and consmrid='"+str(customer_id)+"'"
+        try:
+            with connection.cursor() as cursor:    
+                cursor.execute(fetch_customer_records)
+                row = cursor.fetchone()
+                print(f'fetch_customer_records_query::{row}')
+                if row:
+                    streetAddress= row[0]
+                    cityName = row[1]
+                    zipCode = row[2]
+                    landMark = row[3]
+                    branch_id = row[4]
+                        
+                        
+        except Exception as e:
+                print(f"Error loading data: {e}")
+                
+        print(f"key_pair::{key_pair}")
+        
+            
+        try:
+            with connection.cursor() as cursor:
+                create_new_booking = "insert into vff.laundry_order_bookingtbl(customerid,address,city,pincode,landmark,branch_id,booking_status,booking_taken_on) values ('"+str(customer_id)+"','"+str(streetAddress)+"','"+str(cityName)+"','"+str(zipCode)+"','"+str(landMark)+"','"+str(branch_id)+"','"+str(booking_status)+"','OnCounterBooking') returning bookingid" 
+                cursor.execute(create_new_booking)
+                booking_id = cursor.fetchone()[0]
+                print(f'Retuning BOOKING ID-------->{booking_id}')
+                connection.commit()
+                
+        except Exception as e:
+            print(f"Error loading data: {e}")
+            #order_accept_tbl = "insert into vff.laundry_delivery_accept_tbl(delivery_boy_id,status,booking_id,branch_id) values ('"+str(delivery_boy_id)+"','"+str(status)+"','"+str(booking_id)+"','"+str(branch_id)+"')"
+            ##Order Assignment
+            #query5="insert into vff.laundry_order_assignmenttbl(booking_id,delivery_boy_id,type_of_order) values ('"+str(booking_id)+"','"+str(delivery_boy_id)+"','Pickup')"//"Accepted"
+            return JsonResponse({'booking_id':booking_id})
+            
+
     
     
     return JsonResponse({'error_msg':error_msg})

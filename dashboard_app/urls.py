@@ -66,6 +66,7 @@ urlpatterns = [
     
     #Add Items TO Cart
     path('add_items_to_cart/',views.add_items_to_cart,name='add_items_to_cart'),
+    path('generate_booking_id/',views.generate_booking_id,name='generate_booking_id'),
     
     #Reports Screen
     path('daily_report/',views.daily_report,name='daily_report'),
