@@ -876,11 +876,7 @@ $(document).ready(function() {
                 
                         // Update the grossTotal display (if you have a display element)
                         // For example: $('#grossTotal').text(grossTotal);
-                        if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-                        $('#gross-total').text('Rs.'+discountedAmount+'/-');
-                        }else{
-                            $('#gross-total').text('Rs.'+grossTotal+'/-');
-                        }
+                        
                     });
                 
                     checkboxContainer.append(checkbox);
