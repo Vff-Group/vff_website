@@ -1039,7 +1039,11 @@ $(document).ready(function() {
 
                 $('#gross-total').text('Rs.'+grossTotal+'/-');
             }
-            console.log('Before_Gross_total::'+grossTotal);
+            
+            
+            document.getElementById('pay-button').onclick = function(e){
+
+                console.log('Before_Gross_total::'+grossTotal);
             console.log('Before_delivery_charges::'+delivery_charges);
             console.log('Before_addOnsTotal::'+addOnsTotal);
             if(discountedAmount !== 0 && !isNaN(discountedAmount)){
@@ -1049,7 +1053,6 @@ $(document).ready(function() {
                 totalPayment = grossTotal;
             }
             
-            document.getElementById('pay-button').onclick = function(e){
                 payment_show(totalPayment);
                 rzp1.open();
                 e.preventDefault();
