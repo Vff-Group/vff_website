@@ -418,7 +418,7 @@
                         </div>
                         
                         <div id="delivery-charges-container">
-                            
+                            <hr />
                             <!-- This is where the checkbox will be added -->
                         </div>
                         <hr />
@@ -850,14 +850,14 @@ $(document).ready(function() {
     // Function to add the delivery charge checkbox to the container
     function addDeliveryChargeCheckbox() {
         var deliveryChargesContainer = $("#delivery-charges-container");
-
+        console.log('delivery_range::'+delivery_range);
         if (grossTotal < delivery_range) {
             // Only add the delivery charge checkbox if gross total is below Rs 500
             var charge = delivery_data[0];
             var checkbox = createDeliveryCheckbox(charge);
             deliveryChargesContainer.append(checkbox);
             // Add a label for the delivery charges condition
-        var conditionLabel = $("<div class='container mt-2'><p class='text-muted'>Delivery charges are applicable only if the gross total is below Rs 500.</p></div>");
+        var conditionLabel = $("<div class='container mt-2'><p class='text-muted'>Delivery charges are applicable only if the gross total is below Rs "+delivery_range+".</p></div>");
         deliveryChargesContainer.append(conditionLabel);
         }else {
             // Remove the container if the gross total is above the delivery range
