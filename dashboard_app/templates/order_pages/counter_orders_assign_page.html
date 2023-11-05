@@ -813,9 +813,7 @@ $(document).ready(function() {
     var discountedAmount = 0;
     var delivery_price =0;
     var delivery_range = 0;
-    var deliveryChargesContainer = $("#delivery-charges-container");
-    // Remove the container if the gross total is above the delivery range
-    deliveryChargesContainer.remove();
+    
     if(!isNaN(addOnsTotal)){
         $('#addons-total').text('Rs.'+addOnsTotal+'/-');
         }
@@ -851,7 +849,7 @@ $(document).ready(function() {
     function addDeliveryChargeCheckbox() {
         var deliveryChargesContainer = $("#delivery-charges-container");
 
-        if (grossTotal < 500) {
+        if (grossTotal < delivery_range) {
             // Only add the delivery charge checkbox if gross total is below Rs 500
             var charge = delivery_data[0];
             var checkbox = createDeliveryCheckbox(charge);
