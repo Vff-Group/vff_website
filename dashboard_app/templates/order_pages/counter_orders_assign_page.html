@@ -1068,7 +1068,8 @@ $(document).ready(function() {
             // Convert the selectedItems object to JSON
     var selectedItemsJSON = JSON.stringify(extraItems);
     console.log('Selected Extra Items JSON: ' + selectedItemsJSON);
-                payment_show(totalPayment);
+                var razor_pay_id = payment_show(totalPayment);
+                console.log('razor_pay_id::'+razor_pay_id);
                 
                 e.preventDefault();
             }
