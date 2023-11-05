@@ -853,8 +853,8 @@ $(document).ready(function() {
                     // Update the gross total amount
                     discountedAmount = grossTotal - (grossTotal * (discount / 100));
                     console.log("discountAmount::"+(grossTotal * (discount / 100)));
-                    if(discountAmount !== 0){
-                    grossTotal = discountAmount;
+                    if(discountedAmount !== 0){
+                    grossTotal = discountedAmount;
                     }
                     
                     $('#gross-total').text('Rs.'+grossTotal+'/-');
@@ -878,11 +878,11 @@ $(document).ready(function() {
 
             // Calculate the discounted amount
             discountedAmount = grossTotal - (grossTotal * (discount / 100));
-
+            console.log("discountAmount::"+(grossTotal * (discount / 100)));
             // Update the discounted amount
             $('#discount-amount').text(discountAmount);
-            if(discountAmount !== 0){
-                grossTotal = discountAmount;
+            if(discountedAmount !== 0){
+                grossTotal = discountedAmount;
                 }
                 
                 $('#gross-total').text('Rs.'+grossTotal+'/-');
