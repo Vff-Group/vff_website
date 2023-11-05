@@ -929,6 +929,7 @@ $(document).ready(function() {
             // Only add the delivery charge checkbox if gross total is below Rs 500
             var charge = delivery_data[0];
             var checkbox = createDeliveryCheckbox(charge);
+            deliveryChargesContainer.empty(); 
             deliveryChargesContainer.append(checkbox);
 
             //UPDATE GROSS_TOTAL
