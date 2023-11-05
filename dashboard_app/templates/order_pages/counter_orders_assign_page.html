@@ -791,6 +791,7 @@ $(document).ready(function() {
     var addOnsTotal = 0;
     var deliveryTotal = 0;
     var discountAmount = 0;
+    var discountedAmount = 0;
 
     // Attach an event listener to the modal when it is shown
     $('#modal-default1').on('show.bs.modal', function () {
@@ -850,17 +851,25 @@ $(document).ready(function() {
                     }
                     console.log('addOnsTotal::'+addOnsTotal);
                     // Update the gross total amount
+                    discountedAmount = grossTotal - (grossTotal * (discount / 100));
+                    console.log("discountAmount::"+(grossTotal * (discount / 100)));
+                    if(discountAmount !== 0){
+                    grossTotal = discountAmount;
+                    }
+                    
                     $('#gross-total').text('Rs.'+grossTotal+'/-');
+                    
                     $('#addons-total').text('Rs.'+addOnsTotal+'/-');
                     //<p class="mb-0"><small id="sub-total">Rs.00/-</small></p>
                     //        <p class="mb-0"><small id="addons-total">Rs.00/-</small></p>
                     //        <p class="mb-0"><small id="discount-total">Rs.00/-</small></p>
                     //        <p class="mb-0"><small id="tax-total">Rs.00/-</small></p>
                      // Calculate the discounted amount
-            discountedAmount = grossTotal - (grossTotal * (discount / 100));
+            
 
             // Update the discounted amount
-            $('#discount-amount').text(discountedAmount);
+            $('#discount-amount').text(discountAmount);
+
                 });
 
                 // Attach an event listener to the discount input
@@ -871,7 +880,12 @@ $(document).ready(function() {
             discountedAmount = grossTotal - (grossTotal * (discount / 100));
 
             // Update the discounted amount
-            $('#discount-amount').text(discountedAmount);
+            $('#discount-amount').text(discountAmount);
+            if(discountAmount !== 0){
+                grossTotal = discountAmount;
+                }
+                
+                $('#gross-total').text('Rs.'+grossTotal+'/-');
         });
 
             },
