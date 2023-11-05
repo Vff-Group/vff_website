@@ -812,6 +812,10 @@ $(document).ready(function() {
     var discountedAmount = 0;
     var delivery_price =0;
     var delivery_range = 0;
+    var deliveryChargesContainer = $("#delivery-charges-container");
+    // Remove the container if the gross total is above the delivery range
+    deliveryChargesContainer.remove();
+    
                 // Handle the data you received from the server
                 console.log('datata:'+JSON.stringify(data));
                 //Gets Extra Items Details
@@ -849,11 +853,15 @@ $(document).ready(function() {
             var charge = delivery_data[0];
             var checkbox = createDeliveryCheckbox(charge);
             deliveryChargesContainer.append(checkbox);
-        }
-
-        // Add a label for the delivery charges condition
+            // Add a label for the delivery charges condition
         var conditionLabel = $("<div class='container mt-2'><p class='text-muted'>Delivery charges are applicable only if the gross total is below Rs 500.</p></div>");
         deliveryChargesContainer.append(conditionLabel);
+        }else {
+            // Remove the container if the gross total is above the delivery range
+            deliveryChargesContainer.remove();
+        }
+
+        
     }
 
     // Call the function to add the delivery charge checkbox to the container
