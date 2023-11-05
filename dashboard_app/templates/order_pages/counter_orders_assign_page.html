@@ -1004,7 +1004,7 @@ $(document).ready(function() {
                     
             // Update the discounted amount
             if(!isNaN(discountAmount)){
-            $('#discount-amount').text('Rs.'+discountAmount.toFixed(0)+'/-');
+            $('#discount-amount').text('Rs.'+discountAmount+'/-');
             }
 
                 });
@@ -1016,27 +1016,27 @@ $(document).ready(function() {
             // Calculate the discounted amount
             discountedAmount = grossTotal - (grossTotal * (discount / 100)).toFixed(0);
             
-            discountAmount = (grossTotal * (discount / 100)).toFixed(0);
-            discountAmount = discountAmount.toFixed(0);
+            discountAmount = (grossTotal * (discount / 100)).toFixed(2);
+            discountAmount = discountAmount;
 
             console.log("discountAmount::"+(grossTotal * (discount / 100)));
             // Update the discounted amount
-            discountedAmount = discountedAmount.toFixed(0);
+            discountedAmount = discountedAmount;
             if(discount === "" || isNaN(discount)){
                 discountAmount = 0;
-                $('#discount-amount').text('Rs.'+discountAmount.toFixed(0)+'/-');
+                $('#discount-amount').text('Rs.'+discountAmount+'/-');
                 
             }
             if(!isNaN(discountAmount)){
-                $('#discount-amount').text('Rs.'+discountAmount.toFixed(0)+'/-');
+                $('#discount-amount').text('Rs.'+discountAmount+'/-');
                 }
 
             if(discountedAmount !== 0 && !isNaN(discountedAmount)){
 
-                $('#gross-total').text('Rs.'+discountedAmount.toFixed(0)+'/-');
+                $('#gross-total').text('Rs.'+discountedAmount+'/-');
                 }else{
 
-                    $('#gross-total').text('Rs.'+grossTotal.toFixed(0)+'/-');
+                    $('#gross-total').text('Rs.'+grossTotal+'/-');
                 }
         });
 
@@ -1049,7 +1049,7 @@ $(document).ready(function() {
                 $('#gross-total').text('Rs.'+grossTotal+'/-');
             }
             
-            //Pay Now Button
+            
             document.getElementById('pay-button').onclick = function(e){
 
                 console.log('Before_Gross_total::'+grossTotal);
