@@ -867,8 +867,8 @@ $(document).ready(function() {
             deliveryChargesContainer.append(checkbox);
 
             //UPDATE GROSS_TOTAL
-            checkbox.on("change", function() {
-                if ($(this).is(":checked")) {
+            checkbox.change(function() {
+                if (this.checked) {
                     // Checkbox is checked
                     console.log('CheckBox is Checked::' + charge.delivery_price);
                     if (discountedAmount !== 0 && !isNaN(discountedAmount)) {
@@ -890,6 +890,7 @@ $(document).ready(function() {
                     }
                 }
             });
+            
             
 
             // Add a label for the delivery charges condition
