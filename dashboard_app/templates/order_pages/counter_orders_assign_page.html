@@ -815,7 +815,9 @@ $(document).ready(function() {
     var deliveryChargesContainer = $("#delivery-charges-container");
     // Remove the container if the gross total is above the delivery range
     deliveryChargesContainer.remove();
-    
+    if(!isNaN(addOnsTotal)){
+        $('#addons-total').text('Rs.'+addOnsTotal+'/-');
+        }
                 // Handle the data you received from the server
                 console.log('datata:'+JSON.stringify(data));
                 //Gets Extra Items Details
