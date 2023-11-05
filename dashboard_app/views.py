@@ -2107,6 +2107,59 @@ def load_cart_items_after_deletion(request):
     else:
         error_msg = 'Something Went Wrong'
     return JsonResponse({'cart_items_data':cart_items_data})
+
+
+#Load extra add ons items
+def load_extra_items(request):
+    #Load Cart Items
+    jdict = json.loads(request.body)
+    
+    booking_id = jdict['booking_id']
+    query="select extra_item_id,extra_item_name,price from vff.laundry_extra_items_tbl"
+    query_result = execute_raw_query(query)
+    
+    extra_items_data = []    
+    
+    if not query_result == 500:
+        for row in query_result:
+            extra_items_data.append({
+                'extra_item_id':row[0],
+                'extra_item_name': row[1],
+                'price' :row[2],
+            })
+                
+    else:
+        error_msg = 'Something Went Wrong'
+        return JsonResponse({'error':error_msg})
+    
+    query2="select sum(item_cost) as total_price,sum(item_quantity) as total_quantity from vff.laundry_cart_items where booking_id='"+str(booking_id)+"'"
+    query2_result = execute_raw_query(query2)
+    
+    sum_data = []
+    if not query2_result == 500:
+        for row in query2:
+            sum_data.append({
+                'total_cost':row[0],
+                'total_quantity':row[1],
+            })
+    
+    #To get delivery charges for delivery
+    query3="select dcharge_id,price,range from vff.laundry_delivery_chargetbl"
+    query3_result = execute_raw_query(query3)
+    
+    delivery_charges_data = []
+    if not query3_result == 500:
+        for row in query2:
+            delivery_charges_data.append({
+                'dcharge_id':row[0],
+                'delivery_price':row[1],
+                'delivery_range':row[2],
+            })
+    
+    
+    return JsonResponse({'extra_items_data':extra_items_data,'sum_data':sum_data,'delivery_charges_data':delivery_charges_data})
+
+
 #Generate Booking ID
 def generate_booking_id(request):
     

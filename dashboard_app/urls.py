@@ -72,6 +72,8 @@ urlpatterns = [
     path('delete_cart_item/',views.delete_cart_item,name='delete_cart_item'),
     #Reload Cart Item
     path('load_cart_items_after_deletion/',views.load_cart_items_after_deletion,name='load_cart_items_after_deletion'),
+    #Load extra Add ons
+    path('load_extra_items/',views.load_extra_items,name='load_extra_items'),
     
     #Reports Screen
     path('daily_report/',views.daily_report,name='daily_report'),

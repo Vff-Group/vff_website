@@ -414,6 +414,13 @@
                     <div class="row">
                       <div class="col">
                         <hr />
+                        <p class="text-small">Add Ons:</p>
+                        <div class="row">
+                            <div class="col">
+                                <div id="checkboxes"></div>
+                            </div>
+                        </div>
+                        <hr />
                         <div class="row">
                           <div class="col-lg-6">
                             <div class="form-group">
@@ -474,7 +481,7 @@
                           <div
                             class="col-lg-6 d-flex flex-column align-items-end"
                           >
-                            <h6>Rs 00</h6>
+                            <h6 id="gross-total">Rs 0</h6>
                           </div>
                         </div>
 
@@ -773,6 +780,73 @@ $("#subCategoryTable").on("click", ".decrement", function() {
 });
 */
 
+//MOdal Class is triggered to show Add Ons
+$(document).ready(function() {
+    var selectedItems = {}; // Object to keep track of selected items and their prices
+    var grossTotal = 0; // Total amount
+    
+
+    // Attach an event listener to the modal when it is shown
+    $('#modal-default1').on('show.bs.modal', function () {
+        
+        const dictMap = {
+            'booking_id':generated_booking_id
+        }
+        const csrfToken = getCSRFToken();
+        $.ajax({
+            type: 'GET',
+            url: '/admin_dashboard/load_extra_items/', 
+            data: JSON.stringify(dictMap),
+        headers: {
+            'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+        },
+        contentType: 'application/json',
+            success: function (data) {
+                // Handle the data you received from the server
+                //Gets Extra Items Details
+                var extra_items_data = data.extra_items_data;
+                //TOtal Cost and Quantity
+                var sum_data = data.sum_data;
+
+                grossTotal = sum_data.total_cost;
+                grossQuantity = sum_data.total_quantity;
+
+                var checkboxesHTML = '';
+                extra_items_data.forEach(function(item) {
+                    checkboxesHTML += '<div class="form-check">';
+                        checkboxesHTML += '<label class="form-check-label" for="checkbox-' + item.extra_item_id + '">'+item.extra_item_name+' [Rs.'+item.price+'/-]</label>';
+                    checkboxesHTML += '<input class="form-check-input" type="checkbox" id="checkbox-' + item.extra_item_id + '" data-item-id="' + item.extra_item_id + '" data-item-name="' + item.extra_item_name + '" " data-item-price="' + item.price + '">';
+                    checkboxesHTML += '</div>';
+                });
+                $('#checkboxes').html(checkboxesHTML);
+
+                // Attach an event listener to the checkboxes
+                $('input[type="checkbox"]').change(function() {
+                    var itemId = $(this).data('item-id');
+                    var itemPrice = parseFloat($(this).data('item-price'));
+                    var itemName = parseFloat($(this).data('item-name'));
+
+                    if (this.checked) {
+                        // Checkbox is checked
+                        selectedItems[itemId] = itemPrice;
+                        grossTotal += itemPrice;
+                    } else {
+                        // Checkbox is unchecked
+                        delete selectedItems[itemId];
+                        grossTotal -= itemPrice;
+                    }
+
+                    // Update the gross total amount
+                    $('#gross-total').text('Rs.'+grossTotal+'/-');
+                });
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+});
+
 // Get the CSRF token from the cookie
 function getCSRFToken() {
     const cookies = document.cookie.split(';');
@@ -790,6 +864,7 @@ let selectedCategoryId = null;
 let selectedCategoryName = null;
 let selectedCategoryImage = null;
 let selectedCategoryBookingID = null;
+let generated_booking_id = "";
 
 //Create booking ID Before adding items to cart
 $("#generate-booking-id").on("click",function(){
@@ -825,6 +900,7 @@ $("#generate-booking-id").on("click",function(){
                     
                     var booking_id_input = document.getElementById("selected-booking-id");
                     booking_id_input.value = bookingIDData; // Set the value in the hidden input
+                    generated_booking_id = bookingIDData;
             $("#generate-booking-id").text("Booking ID: " + bookingIDData); // Update the button text
                     
                    
