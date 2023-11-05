@@ -855,10 +855,9 @@ $(document).ready(function() {
                     console.log("discountAmount::"+(grossTotal * (discount / 100)));
                     discountedAmount = discountedAmount.toFixed(2);
             $('#discount-amount').text(discountAmount);
-            if(discountedAmount !== 0){
+            if(discountedAmount !== 0 && !isNaN(discountedAmount)){
                 $('#gross-total').text('Rs.'+discountedAmount+'/-');
                 }else{
-
                     $('#gross-total').text('Rs.'+grossTotal+'/-');
                 }
  
@@ -885,7 +884,7 @@ $(document).ready(function() {
             // Update the discounted amount
             discountedAmount = discountedAmount.toFixed(2);
             $('#discount-amount').text(discountAmount);
-            if(discountedAmount !== 0){
+            if(discountedAmount !== 0 && !isNaN(discountedAmount)){
                 $('#gross-total').text('Rs.'+discountedAmount+'/-');
                 }else{
 
@@ -893,7 +892,7 @@ $(document).ready(function() {
                 }
         });
 
-        if(discountedAmount !== 0){
+        if(discountedAmount !== 0 && !isNaN(discountedAmount)){
             $('#gross-total').text('Rs.'+discountedAmount+'/-');
             }else{
 
