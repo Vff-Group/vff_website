@@ -893,8 +893,8 @@ $(document).ready(function() {
                                 }else if(!isNaN(grossTotal)){
                                     console.log("Remove BgrossTotal---->"+grossTotal);
                                     console.log("charge.delivery_price===>"+charge.delivery_price);
-                                    var sum = (discountedAmount -= charge.delivery_price);
-                                    console.log('remove_delivery::'+sum);
+                                    var sum = (grossTotal -= charge.delivery_price);
+                                    console.log('remove_delivery::'+(grossTotal -= charge.delivery_price));
                                     delivery_charges = 0;
                                     
                                     grossTotal = sum;
