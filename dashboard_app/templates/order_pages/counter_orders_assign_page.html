@@ -417,12 +417,8 @@
                             </div>
                         </div>
                         <hr />
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="delivery-1" data-delivery-price="30">
-                            <label class="form-check-label" for="delivery-1">Delivery Charge 1 - $30</label>
-                        </div>
-                        <div class="container mt-2">
-                            <p class="text-muted">Delivery charges are applicable only if the gross total is below Rs 500.</p>
+                        <div id="delivery-charges-container">
+                            <!-- This is where the checkbox will be added -->
                         </div>
                         <hr />
                         <div class="row">
@@ -784,6 +780,9 @@ $("#subCategoryTable").on("click", ".decrement", function() {
 });
 */
 
+
+//To Add delivery charges box
+
 //MOdal Class is triggered to show Add Ons
 $(document).ready(function() {
     var selectedItems = {}; // Object to keep track of selected items and their prices
@@ -791,11 +790,7 @@ $(document).ready(function() {
 
     // Attach an event listener to the modal when it is shown
     $('#modal-default1').on('show.bs.modal', function () {
-        var grossTotal = 0; // Total amount
-    var addOnsTotal = 0;
-    var deliveryTotal = 0;
-    var discountAmount = 0;
-    var discountedAmount = 0;
+        
         
         const dictMap = {
             'booking_id':generated_booking_id
@@ -810,15 +805,61 @@ $(document).ready(function() {
         },
         contentType: 'application/json',
             success: function (data) {
+                var grossTotal = 0; // Total amount
+    var addOnsTotal = 0;
+    var deliveryTotal = 0;
+    var discountAmount = 0;
+    var discountedAmount = 0;
+    var delivery_price =0;
+    var delivery_range = 0;
                 // Handle the data you received from the server
                 console.log('datata:'+JSON.stringify(data));
                 //Gets Extra Items Details
                 var extra_items_data = data.extra_items_data;
                 //TOtal Cost and Quantity
                 var sum_data = data.sum_data;
-                
+                var delivery_data = data.delivery_charges_data;
 
                 grossTotal = sum_data[0].total_cost;
+                delivery_price = delivery_data[0].delivery_price;
+                delivery_range = delivery_data[0].delivery_range;
+
+                //To Create delivery charges checkbox
+                // Function to create a checkbox element for the delivery charge
+    function createDeliveryCheckbox(charge) {
+        var checkboxId = "delivery-" + charge.dcharge_id;
+        var checkboxLabel = "Delivery Charge - $" + charge.delivery_price;
+
+        var checkboxContainer = $("<div class='form-check'></div>");
+        var checkbox = $("<input class='form-check-input' type='checkbox' id='" + checkboxId + "' data-delivery-price='" + charge.delivery_price + "'>");
+        var label = $("<label class='form-check-label' for='" + checkboxId + "'>" + checkboxLabel + "</label>");
+
+        checkboxContainer.append(checkbox);
+        checkboxContainer.append(label);
+
+        return checkboxContainer;
+    }
+
+    // Function to add the delivery charge checkbox to the container
+    function addDeliveryChargeCheckbox() {
+        var deliveryChargesContainer = $("#delivery-charges-container");
+
+        if (grossTotal < 500) {
+            // Only add the delivery charge checkbox if gross total is below Rs 500
+            var charge = delivery_data[0];
+            var checkbox = createDeliveryCheckbox(charge);
+            deliveryChargesContainer.append(checkbox);
+        }
+
+        // Add a label for the delivery charges condition
+        var conditionLabel = $("<div class='container mt-2'><p class='text-muted'>Delivery charges are applicable only if the gross total is below Rs 500.</p></div>");
+        deliveryChargesContainer.append(conditionLabel);
+    }
+
+    // Call the function to add the delivery charge checkbox to the container
+    addDeliveryChargeCheckbox();
+
+
                 var subTotal = grossTotal;
                 $('#sub-total').text('Rs.'+subTotal+'/-');
                 $('#gross-total').text('Rs.'+grossTotal+'/-');
