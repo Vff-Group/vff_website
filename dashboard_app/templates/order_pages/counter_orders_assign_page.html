@@ -1014,14 +1014,14 @@ $(document).ready(function() {
             discount = parseFloat($(this).val());
 
             // Calculate the discounted amount
-            discountedAmount = grossTotal - (grossTotal * (discount / 100));
+            discountedAmount = grossTotal - (grossTotal * (discount / 100)).toFixed(0);
             
-            discountAmount = (grossTotal * (discount / 100));
-            discountAmount = discountAmount.toFixed(2);
+            discountAmount = (grossTotal * (discount / 100)).toFixed(0);
+            discountAmount = discountAmount.toFixed(0);
 
             console.log("discountAmount::"+(grossTotal * (discount / 100)));
             // Update the discounted amount
-            discountedAmount = discountedAmount.toFixed(2);
+            discountedAmount = discountedAmount.toFixed(0);
             if(discount === "" || isNaN(discount)){
                 discountAmount = 0;
                 $('#discount-amount').text('Rs.'+discountAmount.toFixed(0)+'/-');
