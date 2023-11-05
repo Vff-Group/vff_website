@@ -855,8 +855,8 @@ $(document).ready(function() {
                             if(discountedAmount !== 0 && !isNaN(discountedAmount)){
                                 console.log("Add BdiscountedAmount---->"+discountedAmount);
                                 delivery_charges = charge.delivery_price;
-                                var sum = (discountedAmount += charge.delivery_price).toFixed(0);
-                                discountedAmount = sum;
+                                var sum = (discountedAmount += charge.delivery_price);
+                                discountedAmount = sum.toFixed(0);
                                 
                                 $('#gross-total').text('Rs.'+discountedAmount+'/-');
                                 $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
@@ -864,10 +864,10 @@ $(document).ready(function() {
                             }else if(!isNaN(grossTotal)){
                                 console.log("Add BgrossTotal---->"+grossTotal);
                                 console.log("charge.delivery_price===>"+charge.delivery_price);
-                                var sum = (grossTotal += charge.delivery_price).toFixed(0);
+                                var sum = (grossTotal += charge.delivery_price);
                                 console.log('sumss::'+sum);
                                 delivery_charges = charge.delivery_price;
-                                grossTotal = sum;
+                                grossTotal = sum.toFixed(0);
                                 
                                 console.log("Add AgrossTotal---->"+grossTotal);
                                 $('#gross-total').text('Rs.'+grossTotal+'/-');
@@ -882,19 +882,19 @@ $(document).ready(function() {
                                     delivery_charges = 0;
                                     delivery_charges = charge.delivery_price;
                                     
-                                    var sum = (discountedAmount -= charge.delivery_price).toFixed(0);
-                                    discountedAmount = sum;
+                                    var sum = (discountedAmount -= charge.delivery_price);
+                                    discountedAmount = sum.toFixed(0);
                                     
                                     $('#gross-total').text('Rs.'+discountedAmount+'/-');
                                     $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
                                     checkState = false;
                                 }else if(!isNaN(grossTotal)){
                                     
-                                    var sum = (grossTotal -= charge.delivery_price).toFixed(0);
+                                    var sum = (grossTotal -= charge.delivery_price);
                                     
                                     delivery_charges = 0;
                                     
-                                    grossTotal = sum;
+                                    grossTotal = sum.toFixed(0);
                                     
                                     
                                     $('#gross-total').text('Rs.'+grossTotal+'/-');
