@@ -848,6 +848,7 @@ $(document).ready(function() {
                     var checkboxId = "delivery-" + charge.dcharge_id;
                     var checkboxLabel = "Delivery Charge - Rs." + charge.delivery_price+"/-";
                 
+                    var divider = $("<hr />");
                     var checkboxContainer = $("<div class='form-check'></div>");
                     var checkbox = $("<input class='form-check-input' type='checkbox' id='" + checkboxId + "' data-delivery-price='" + charge.delivery_price + "'>");
                     var label = $("<label class='form-check-label' for='" + checkboxId + "'>" + checkboxLabel + "</label>");
@@ -911,7 +912,7 @@ $(document).ready(function() {
                         // For example: $('#grossTotal').text(grossTotal);
                         
                     });
-                
+                    checkboxContainer.append(divider);
                     checkboxContainer.append(checkbox);
                     checkboxContainer.append(label);
                     console.log("checkboxContainer::"+checkboxContainer);
@@ -930,6 +931,7 @@ $(document).ready(function() {
             var charge = delivery_data[0];
             var checkbox = createDeliveryCheckbox(charge);
             deliveryChargesContainer.empty(); 
+
             deliveryChargesContainer.append(checkbox);
 
             //UPDATE GROSS_TOTAL
