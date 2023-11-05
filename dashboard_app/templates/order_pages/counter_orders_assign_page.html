@@ -871,10 +871,10 @@ $(document).ready(function() {
                     // Add the delivery charge to the gross total when the checkbox is checked
                 // Update the gross total display
                 if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-                    discountedAmount += delivery_price;
+                    discountedAmount += charge.delivery_price;
                     $('#gross-total').text('Rs.'+discountedAmount+'/-');
                     }else{
-                        grossTotal += delivery_price;
+                        grossTotal += charge.delivery_price;
                         $('#gross-total').text('Rs.'+grossTotal+'/-');
                     }
                 } else {
@@ -882,10 +882,10 @@ $(document).ready(function() {
                     
                     // Update the gross total display
                 if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-                    discountedAmount -= delivery_price;
+                    discountedAmount -= charge.delivery_price;
                     $('#gross-total').text('Rs.'+discountedAmount+'/-');
                     }else{
-                        grossTotal -= delivery_price;
+                        grossTotal -= charge.delivery_price;
                         $('#gross-total').text('Rs.'+grossTotal+'/-');
                     }
                 }
