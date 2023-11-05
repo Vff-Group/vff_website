@@ -863,11 +863,12 @@ $(document).ready(function() {
                                 $('#gross-total').text('Rs.'+discountedAmount+'/-');
                                 $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
                             }else if(!isNaN(grossTotal)){
-                                console.log("grossTotal---->"+grossTotal);
+                                console.log("Add BgrossTotal---->"+grossTotal);
                                 console.log("charge.delivery_price===>"+charge.delivery_price);
                                 console.log('sumss::'+(grossTotal += charge.delivery_price));
                                 delivery_charges = charge.delivery_price;
                                 grossTotal += charge.delivery_price;
+                                console.log("Add AgrossTotal---->"+grossTotal);
                                 $('#gross-total').text('Rs.'+grossTotal+'/-');
                                 $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
                                 checkState = false;
@@ -883,11 +884,12 @@ $(document).ready(function() {
                                     $('#gross-total').text('Rs.'+discountedAmount+'/-');
                                     $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
                                 }else if(!isNaN(grossTotal)){
-                                    console.log("grossTotal---->"+grossTotal);
+                                    console.log("Remove BgrossTotal---->"+grossTotal);
                                     console.log("charge.delivery_price===>"+charge.delivery_price);
                                     console.log('remove_delivery::'+(grossTotal -= charge.delivery_price));
                                     delivery_charges = 0;
                                     grossTotal -= charge.delivery_price;
+                                    console.log("Remove AgrossTotal---->"+grossTotal);
                                     $('#gross-total').text('Rs.'+grossTotal+'/-');
                                     $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
                                     checkState = false;
