@@ -361,12 +361,8 @@
           <hr />
           <div class="card-footer px-4 pt-0 pb-2 mt-2">
             <div class="row">
-              <div class="col-lg-4">
-                <h6 class="mb-0">Sub Total:</h6>
-                <small class="mb-2 text-success" id="cart-sub-total">Rs./</small>
-                
-              </div>
-              <div class="col-lg-8">
+              
+              <div class="col-lg-12">
                 <div class="row justify-content-end align-items-end">
                     <!-- <div class="col">
 
@@ -1099,7 +1095,7 @@ else{
         function populateCartItemsTable(data) {
             const cartItemsTable = $('#cartItemsTable tbody');
             cartItemsTable.empty(); // Clear existing data in the table
-            var subTotal = 0;
+            
             
             data.forEach(function (item) {
                 const row = $("<tr>");
@@ -1110,12 +1106,12 @@ else{
                     itemName = item.cat_name;
                     itemImage = item.cat_img;
                     itemsName = item.sub_cat_name;
-                    subTotal += (item.item_cost * (item.item_quantity));
+                    
                 }else{
                     itemName = item.sub_cat_name;
                     itemImage = item.sub_cat_img;
                     itemsName = item.section_type;
-                    subTotal += (item.item_cost * (item.item_quantity));
+                    
                 }
                 
                 
@@ -1130,8 +1126,7 @@ else{
 
                 cartItemsTable.append(row);
             });
-    //cart-sub-total
-    $('#cart-sub-total').text('Rs.'+subTotal+'/-');
+    
             // Add a click event handler for the delete icons
     $(".delete-icon").click(function () {
         const itemId = $(this).data("item-id");
@@ -1212,7 +1207,7 @@ function reloadCartItem(itemId,customer_id,booking_id) {
         function populateCartItemsTable(data) {
             const cartItemsTable = $('#cartItemsTable tbody');
             cartItemsTable.empty(); // Clear existing data in the table
-            var subTotal = 0;
+            
             data.forEach(function (item) {
                 const row = $("<tr>");
                 var type = item.type;
@@ -1222,12 +1217,12 @@ function reloadCartItem(itemId,customer_id,booking_id) {
                     itemName = item.cat_name;
                     itemImage = item.cat_img;
                     itemsName = item.sub_cat_name;
-                    subTotal += (item.item_cost * (item.item_quantity));
+                    
                 }else{
                     itemName = item.sub_cat_name;
                     itemImage = item.sub_cat_img;
                     itemsName = item.section_type;
-                    subTotal += (item.item_cost * (item.item_quantity));
+                    
                 }
                 row.append("<td><div class='d-flex px-2 py-1'> <div class='d-flex px-2 py-1'><img src="+itemImage+" class='avatar avatar-sm me-3' alt='user1'> </div> <div class='d-flex flex-column justify-content-center'> <h6 class='mb-0 text-sm' id='sub_cat_name'>"+itemName+"</h6> <p class='text-xs text-secondary mb-0'>["+itemsName+"]</p> </div></div> </div> </td>");
                 row.append("<td><p class='text-xs text-secondary mb-0'>"+item.booking_type+"</p></td>");
@@ -1241,7 +1236,7 @@ function reloadCartItem(itemId,customer_id,booking_id) {
                 cartItemsTable.append(row);
             });
 //cart-sub-total
-$('#cart-sub-total').text('Rs.'+subTotal+'/-');
+
             // Add a click event handler for the delete icons
     $(".delete-icon").click(function () {
         const itemId = $(this).data("item-id");
