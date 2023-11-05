@@ -1034,9 +1034,9 @@ $(document).ready(function() {
             }
             var totalPayment = 0
             if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-                totalPayment = discountedAmount + delivery_charges + addOnsTotal;
+                totalPayment = (discountedAmount + delivery_charges + addOnsTotal);
             }else{
-                totalPayment = grossTotal + delivery_charges + addOnsTotal;
+                totalPayment = (grossTotal + delivery_charges + addOnsTotal);
             }
             //Payment Start
             var options = {
