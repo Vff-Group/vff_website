@@ -368,10 +368,10 @@
               </div>
               <div class="col-lg-8">
                 <div class="row">
-                    <div class="col">
+                    <!-- <div class="col">
 
                         <button class="btn btn-danger text-xxs">Clear </button>
-                    </div>
+                    </div> -->
                     <div class="col-lg-7">
 
                         <a class="btn btn-facebook text-xxs" data-bs-toggle="modal" data-bs-target="#modal-default1">Save & Continue</a>
@@ -1099,7 +1099,7 @@ else{
         function populateCartItemsTable(data) {
             const cartItemsTable = $('#cartItemsTable tbody');
             cartItemsTable.empty(); // Clear existing data in the table
-
+            var subTotal = 0;
             data.forEach(function (item) {
                 const row = $("<tr>");
                 var type = item.type;
@@ -1114,6 +1114,7 @@ else{
                     itemImage = item.sub_cat_img;
                     itemsName = item.section_type;
                 }
+                subTotal += (item.item_cost * (item.item_quantity));
                 row.append("<td><div class='d-flex px-2 py-1'> <div class='d-flex px-2 py-1'><img src="+itemImage+" class='avatar avatar-sm me-3' alt='user1'> </div> <div class='d-flex flex-column justify-content-center'> <h6 class='mb-0 text-sm' id='sub_cat_name'>"+itemName+"</h6> <p class='text-xs text-secondary mb-0'>["+itemsName+"]</p> </div></div> </div> </td>");
                 row.append("<td><p class='text-xs text-secondary mb-0'>"+item.booking_type+"</p></td>");
                 row.append("<td><p class='text-xs text-secondary mb-0'> Rs."+item.item_cost+"/-</p></td>");
@@ -1125,7 +1126,8 @@ else{
 
                 cartItemsTable.append(row);
             });
-
+    //cart-sub-total
+    $('#cart-sub-total').text('Rs.'+subTotal+'/-');
             // Add a click event handler for the delete icons
     $(".delete-icon").click(function () {
         const itemId = $(this).data("item-id");
