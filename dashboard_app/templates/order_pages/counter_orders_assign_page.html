@@ -809,7 +809,7 @@ $(document).ready(function() {
                 var delivery_range = 0;
                 var delivery_charges = 0;
                 var totalPayment = 0;
-                var rzp1 = new Razorpay(options);
+                
     if(!isNaN(addOnsTotal)){
         $('#addons-total').text('Rs.'+addOnsTotal+'/-');
         }
@@ -1052,9 +1052,9 @@ $(document).ready(function() {
                 
                 totalPayment = grossTotal;
             }
-            
+
                 payment_show(totalPayment);
-                rzp1.open();
+                
                 e.preventDefault();
             }
 
@@ -1093,7 +1093,7 @@ function payment_show(totalPayment){
             "color": "#3399cc"
         }
     };
-    //var rzp1 = new Razorpay(options);
+    var rzp1 = new Razorpay(options);
     rzp1.on('payment.failed', function (response){
             alert(response.error.code);
             alert(response.error.description);
@@ -1103,6 +1103,7 @@ function payment_show(totalPayment){
            // alert(response.error.metadata.order_id);
             alert(response.error.metadata.payment_id);
     });
+    rzp1.open();
     /*document.getElementById('pay-button').onclick = function(e){
         rzp1.open();
         e.preventDefault();
