@@ -464,6 +464,7 @@
                           <div class="col-lg-6">
                             <p class="mb-0"><small>Sub Total:</small></p>
                             <p class="mb-0"><small>Addon:</small></p>
+                            <p class="mb-0"><small>Addon:</small></p>
                             <p class="mb-0"><small>Discount:</small></p>
                             <p class="mb-0"><small>Tax(18%):</small></p>
                           </div>
@@ -472,6 +473,7 @@
                           >
                             <p class="mb-0"><small id="sub-total">Rs.0/-</small></p>
                             <p class="mb-0"><small id="addons-total">Rs.0/-</small></p>
+                            <p class="mb-0"><small id="delivery-charges">Rs.0/-</small></p>
                             <p class="mb-0"><small id="discount-amount">Rs.0/-</small></p>
                             <p class="mb-0"><small id="tax-total">Rs.0/-</small></p>
                           </div>
@@ -813,6 +815,7 @@ $(document).ready(function() {
     var discountedAmount = 0;
     var delivery_price =0;
     var delivery_range = 0;
+    var delivery_charges = 0;
     
     if(!isNaN(addOnsTotal)){
         $('#addons-total').text('Rs.'+addOnsTotal+'/-');
@@ -855,23 +858,37 @@ $(document).ready(function() {
                         if (checkbox.is(':checked')) {
                             console.log('checked no');
                             if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+                                delivery_charges = charge.delivery_price;
                                 discountedAmount += charge.delivery_price;
                                 $('#gross-total').text('Rs.'+discountedAmount+'/-');
+                                $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
                             }else if(!isNaN(grossTotal)){
                                 console.log("grossTotal---->"+grossTotal);
                                 console.log("charge.delivery_price===>"+charge.delivery_price);
                                 console.log('sumss::'+(grossTotal += charge.delivery_price));
+                                delivery_charges = charge.delivery_price;
                                 grossTotal += charge.delivery_price;
                                 $('#gross-total').text('Rs.'+grossTotal+'/-');
+                                $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
                             }
                             checkState = true;
                         } else {
                             console.log('checked off');
                             if(checkState === true){
                                 if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+                                    delivery_charges = 0;
+                                    delivery_charges = charge.delivery_price;
                                     discountedAmount -= charge.delivery_price;
+                                    $('#gross-total').text('Rs.'+discountedAmount+'/-');
+                                    $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
                                 }else if(!isNaN(grossTotal)){
+                                    console.log("grossTotal---->"+grossTotal);
+                                    console.log("charge.delivery_price===>"+charge.delivery_price);
+                                    console.log('remove_delivery::'+(grossTotal -= charge.delivery_price));
+                                    delivery_charges = 0;
                                     grossTotal -= charge.delivery_price;
+                                    $('#gross-total').text('Rs.'+grossTotal+'/-');
+                                    $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
                                 }
                             }
                         }
