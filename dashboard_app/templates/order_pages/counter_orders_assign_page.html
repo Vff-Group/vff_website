@@ -867,9 +867,10 @@ $(document).ready(function() {
                             }else if(!isNaN(grossTotal)){
                                 console.log("Add BgrossTotal---->"+grossTotal);
                                 console.log("charge.delivery_price===>"+charge.delivery_price);
-                                console.log('sumss::'+(grossTotal += charge.delivery_price));
+                                var sum = (grossTotal += charge.delivery_price)
+                                console.log('sumss::'+sum);
                                 delivery_charges = charge.delivery_price;
-                                grossTotal = grossTotal + charge.delivery_price;
+                                grossTotal = sum;
                                 console.log("Add AgrossTotal---->"+grossTotal);
                                 $('#gross-total').text('Rs.'+grossTotal+'/-');
                                 $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
