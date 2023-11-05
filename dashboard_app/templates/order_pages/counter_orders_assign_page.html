@@ -854,6 +854,7 @@ $(document).ready(function() {
                     // Update the gross total amount
                     discountedAmount = grossTotal - (grossTotal * (discount / 100));
                     discountAmount = (grossTotal * (discount / 100));
+                    discountAmount = discountAmount.toFixed(2);
                     console.log("discountAmount::"+(grossTotal * (discount / 100)));
                     discountedAmount = discountedAmount.toFixed(2);
 
@@ -881,6 +882,7 @@ $(document).ready(function() {
             // Calculate the discounted amount
             discountedAmount = grossTotal - (grossTotal * (discount / 100));
             discountAmount = (grossTotal * (discount / 100));
+            discountAmount = discountAmount.toFixed(2);
             console.log("discountAmount::"+(grossTotal * (discount / 100)));
             // Update the discounted amount
             discountedAmount = discountedAmount.toFixed(2);
