@@ -868,35 +868,29 @@ $(document).ready(function() {
 
             //UPDATE GROSS_TOTAL
             checkbox.on("change", function() {
-                
-               
-                if (checkbox.checked) {
-                   
-                    // Add the delivery charge to the gross total when the checkbox is checked
-                // Update the gross total display
-               console.log('CheckBox is Checked::'+charge.delivery_price);
-                if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-                    discountedAmount += charge.delivery_price;
-                    $('#gross-total').text('Rs.'+discountedAmount+'/-');
-                    }else{
+                if ($(this).is(":checked")) {
+                    // Checkbox is checked
+                    console.log('CheckBox is Checked::' + charge.delivery_price);
+                    if (discountedAmount !== 0 && !isNaN(discountedAmount)) {
+                        discountedAmount += charge.delivery_price;
+                        $('#gross-total').text('Rs.' + discountedAmount.toFixed(2) + '/-');
+                    } else {
                         grossTotal += charge.delivery_price;
-                        $('#gross-total').text('Rs.'+grossTotal+'/-');
+                        $('#gross-total').text('Rs.' + grossTotal.toFixed(2) + '/-');
                     }
                 } else {
-                    // Subtract the delivery charge from the gross total when the checkbox is unchecked
-                    console.log("charge.delivery_price::"+charge.delivery_price);
-                    // Update the gross total display
-                if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-                    discountedAmount -= charge.delivery_price;
-                    $('#gross-total').text('Rs.'+discountedAmount+'/-');
-                    }else{
+                    // Checkbox is unchecked
+                    console.log("charge.delivery_price::" + charge.delivery_price);
+                    if (discountedAmount !== 0 && !isNaN(discountedAmount)) {
+                        discountedAmount -= charge.delivery_price;
+                        $('#gross-total').text('Rs.' + discountedAmount.toFixed(2) + '/-');
+                    } else {
                         grossTotal -= charge.delivery_price;
-                        $('#gross-total').text('Rs.'+grossTotal+'/-');
+                        $('#gross-total').text('Rs.' + grossTotal.toFixed(2) + '/-');
                     }
                 }
-
-                
             });
+            
 
             // Add a label for the delivery charges condition
         var conditionLabel = $("<div class='container mt-2'><p class='text-muted'>Delivery charges are applicable only if the gross total is below Rs "+delivery_range+".</p></div>");
