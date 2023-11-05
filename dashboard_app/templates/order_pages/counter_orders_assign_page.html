@@ -598,6 +598,8 @@
             "currency": "INR",
             "name": "VFF Group", //your business name
             "description": "Test Transaction",
+            "image": "https://vff-group.com/static/images/logo.png",
+            "order_id": "order_id#123", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
             "handler": function (response){
                 alert(response.razorpay_payment_id);
                 alert(response.razorpay_order_id);
