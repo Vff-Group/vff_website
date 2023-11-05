@@ -889,7 +889,7 @@ $(document).ready(function() {
                                     discountedAmount = sum;
                                     $('#gross-total').text('Rs.'+discountedAmount+'/-');
                                     $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
-                                    
+                                    checkState = false;
                                 }else if(!isNaN(grossTotal)){
                                     console.log("Remove BgrossTotal---->"+grossTotal);
                                     console.log("charge.delivery_price===>"+charge.delivery_price);
@@ -901,6 +901,7 @@ $(document).ready(function() {
                                     console.log("Remove AgrossTotal---->"+grossTotal);
                                     $('#gross-total').text('Rs.'+grossTotal+'/-');
                                     $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+                                    checkState = false;
                                     
                                 }
                             }
