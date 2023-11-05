@@ -813,9 +813,7 @@ $(document).ready(function() {
     var discountedAmount = 0;
     var delivery_price =0;
     var delivery_range = 0;
-    var deliveryChargesContainer = $("#delivery-charges-container");
-    // Remove the container if the gross total is above the delivery range
-    deliveryChargesContainer.remove();
+    
     if(!isNaN(addOnsTotal)){
         $('#addons-total').text('Rs.'+addOnsTotal+'/-');
         }
