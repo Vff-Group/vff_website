@@ -868,10 +868,9 @@ $(document).ready(function() {
 
             //UPDATE GROSS_TOTAL
             checkbox.on("change", function() {
-                var deliveryPrice = $(this).data('data-delivery-price');
-                console.log("deliveryPrice::"+deliveryPrice);
-                console.log("charge.delivery_price::"+charge.delivery_price);
-                if (checkbox.is(":checked")) {
+                
+               
+                if (checkbox.checked) {
                    
                     // Add the delivery charge to the gross total when the checkbox is checked
                 // Update the gross total display
@@ -885,7 +884,7 @@ $(document).ready(function() {
                     }
                 } else {
                     // Subtract the delivery charge from the gross total when the checkbox is unchecked
-                    
+                    console.log("charge.delivery_price::"+charge.delivery_price);
                     // Update the gross total display
                 if(discountedAmount !== 0 && !isNaN(discountedAmount)){
                     discountedAmount -= charge.delivery_price;
