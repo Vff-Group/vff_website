@@ -776,12 +776,7 @@ $("#subCategoryTable").on("click", ".decrement", function() {
 */
 
 
-
-
-//MOdal Class is triggered to show Add Ons
-$(document).ready(function() {
-    var selectedItems = {}; // Object to keep track of selected items and their prices
-    var grossTotal = 0; // Total amount
+var grossTotal = 0; // Total amount
     var addOnsTotal = 0;
     var deliveryTotal = 0;
     var discountAmount = 0;
@@ -790,6 +785,11 @@ $(document).ready(function() {
     var delivery_range = 0;
     var delivery_charges = 0;
     var totalPayment = 0;    
+
+//MOdal Class is triggered to show Add Ons
+$(document).ready(function() {
+    var selectedItems = {}; // Object to keep track of selected items and their prices
+    
 
     // Attach an event listener to the modal when it is shown
     $('#modal-default1').on('show.bs.modal', function () {
