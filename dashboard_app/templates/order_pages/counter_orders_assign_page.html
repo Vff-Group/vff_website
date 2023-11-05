@@ -906,7 +906,7 @@ $(document).ready(function() {
                 
                         // Update the grossTotal display (if you have a display element)
                         // For example: $('#grossTotal').text(grossTotal);
-                        
+                        console.log('Delivery_totalPayment::'+totalPayment);
                     });
                     checkboxContainer.append(divider);
                     checkboxContainer.append(checkbox);
@@ -979,6 +979,7 @@ $(document).ready(function() {
                         totalPayment -= itemPrice;
                     }
                     console.log('addOnsTotal::'+addOnsTotal);
+                    console.log('totalPayment::'+totalPayment);
                     // Update the gross total amount
                     
 
