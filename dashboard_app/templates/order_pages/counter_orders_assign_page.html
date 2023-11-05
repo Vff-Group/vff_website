@@ -864,6 +864,27 @@ $(document).ready(function() {
             var charge = delivery_data[0];
             var checkbox = createDeliveryCheckbox(charge);
             deliveryChargesContainer.append(checkbox);
+
+            //UPDATE GROSS_TOTAL
+            checkbox.on("change", function() {
+                if (checkbox.is(":checked")) {
+                    // Add the delivery charge to the gross total when the checkbox is checked
+                    addDeliveryCharge(charge);
+                } else {
+                    // Subtract the delivery charge from the gross total when the checkbox is unchecked
+                    grossTotal -= charge.delivery_price;
+                }
+
+                // Update the gross total display
+                if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+                    discountedAmount += charge.delivery_price;
+                    $('#gross-total').text('Rs.'+discountedAmount+'/-');
+                    }else{
+                        grossTotal += charge.delivery_price;
+                        $('#gross-total').text('Rs.'+grossTotal+'/-');
+                    }
+            });
+
             // Add a label for the delivery charges condition
         var conditionLabel = $("<div class='container mt-2'><p class='text-muted'>Delivery charges are applicable only if the gross total is below Rs "+delivery_range+".</p></div>");
         deliveryChargesContainer.append(conditionLabel);
