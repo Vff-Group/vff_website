@@ -822,6 +822,7 @@ $(document).ready(function() {
                 $('#sub-total').text('Rs.'+subTotal+'/-');
                 $('#gross-total').text('Rs.'+grossTotal+'/-');
                 grossQuantity = sum_data[0].total_quantity;
+
                 console.log('grossTotalDB::'+grossTotal);
                 var checkboxesHTML = '';
                 extra_items_data.forEach(function(item) {
@@ -852,25 +853,24 @@ $(document).ready(function() {
                     console.log('addOnsTotal::'+addOnsTotal);
                     // Update the gross total amount
                     discountedAmount = grossTotal - (grossTotal * (discount / 100));
+                    discountAmount = (grossTotal * (discount / 100));
                     console.log("discountAmount::"+(grossTotal * (discount / 100)));
                     discountedAmount = discountedAmount.toFixed(2);
-            $('#discount-amount').text(discountAmount);
-            if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+
+                $('#discount-amount').text(discountAmount);
+                if(discountedAmount !== 0 && !isNaN(discountedAmount)){
                 $('#gross-total').text('Rs.'+discountedAmount+'/-');
                 }else{
                     $('#gross-total').text('Rs.'+grossTotal+'/-');
                 }
- 
+                    if(!NaN(addOnsTotal)){
                     $('#addons-total').text('Rs.'+addOnsTotal+'/-');
-                    //<p class="mb-0"><small id="sub-total">Rs.00/-</small></p>
-                    //        <p class="mb-0"><small id="addons-total">Rs.00/-</small></p>
-                    //        <p class="mb-0"><small id="discount-total">Rs.00/-</small></p>
-                    //        <p class="mb-0"><small id="tax-total">Rs.00/-</small></p>
-                     // Calculate the discounted amount
-            
-
+                    }
+                    
             // Update the discounted amount
+            if(!NaN(discountAmount)){
             $('#discount-amount').text(discountAmount);
+            }
 
                 });
 
@@ -880,6 +880,7 @@ $(document).ready(function() {
 
             // Calculate the discounted amount
             discountedAmount = grossTotal - (grossTotal * (discount / 100));
+            discountAmount = (grossTotal * (discount / 100));
             console.log("discountAmount::"+(grossTotal * (discount / 100)));
             // Update the discounted amount
             discountedAmount = discountedAmount.toFixed(2);
