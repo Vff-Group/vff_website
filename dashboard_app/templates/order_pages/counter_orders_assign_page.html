@@ -803,10 +803,12 @@ $(document).ready(function() {
         contentType: 'application/json',
             success: function (data) {
                 // Handle the data you received from the server
+                console.log('datata:'+data);
                 //Gets Extra Items Details
                 var extra_items_data = data.extra_items_data;
                 //TOtal Cost and Quantity
                 var sum_data = data.sum_data;
+
 
                 grossTotal = sum_data.total_cost;
                 grossQuantity = sum_data.total_quantity;
