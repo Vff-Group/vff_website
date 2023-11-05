@@ -417,20 +417,28 @@
                             </div>
                         </div>
                         <hr />
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="delivery-1" data-delivery-price="30">
+                            <label class="form-check-label" for="delivery-1">Delivery Charge 1 - $30</label>
+                        </div>
+                        <div class="container mt-2">
+                            <p class="text-muted">Delivery charges are applicable only if the gross total is below Rs 500.</p>
+                        </div>
+                        <hr />
                         <div class="row">
                           <div class="col-lg-6">
                             <div class="form-group">
                               <label
-                                for="date-of-expense"
+                                for="date-of-delivery"
                                 class="form-control-label"
-                                >Delivery Date *</label
+                                >Estimated Delivery Date *</label
                               >
                               <input
                                 class="form-control form-control-alternative"
                                 type="date"
-                                id="date-of-expense"
-                                name="dateofexpense"
-                                value="{{ data.dateofexpense|date:'Y-m-d' }}"
+                                id="date-of-delivery"
+                                name="dateofdelivery"
+                                value=""
                                 required
                               />
                             </div>
@@ -440,13 +448,13 @@
                               <label
                                 for="discount-label"
                                 class="form-control-label"
-                                >Delivery Date *</label
+                                >Discounts *</label
                               >
                               <input
                                 class="form-control form-control-alternative"
                                 type="text"
                                 id="discount-label"
-                                name="dateofexpense"
+                                name="discount-value"
                                 value=""
                                 placeholder="Enter if any discount"
                                 required
@@ -460,15 +468,15 @@
                             <p class="mb-0"><small>Sub Total:</small></p>
                             <p class="mb-0"><small>Addon:</small></p>
                             <p class="mb-0"><small>Discount:</small></p>
-                            <p class="mb-0"><small>Tax(5%):</small></p>
+                            <p class="mb-0"><small>Tax(18%):</small></p>
                           </div>
                           <div
                             class="col-lg-6 d-flex flex-column align-items-end"
                           >
-                            <p class="mb-0"><small>Rs.00/-</small></p>
-                            <p class="mb-0"><small>Rs.00/-</small></p>
-                            <p class="mb-0"><small>Rs.00/-</small></p>
-                            <p class="mb-0"><small>Rs.00/-</small></p>
+                            <p class="mb-0"><small id="sub-total">Rs.00/-</small></p>
+                            <p class="mb-0"><small id="addons-total">Rs.00/-</small></p>
+                            <p class="mb-0"><small id="discount-total">Rs.00/-</small></p>
+                            <p class="mb-0"><small id="tax-total">Rs.00/-</small></p>
                           </div>
                         </div>
                         <hr />
@@ -487,16 +495,16 @@
                             <div class="form-group">
                               <label
                                 class="form-control-label"
-                                for="input-country"
-                                >Paid Amount</label
+                                for="input-upi-id"
+                                >UPI ID/Mobile No</label
                               >
                               <input
                                 type="number"
-                                id="input-postal-code"
+                                id="input-upi-id"
                                 class="form-control form-control-alternative"
-                                placeholder="Enter Expense Amount"
-                                name="exp_amount"
-                                value="{{ data.pincode|default:'' }}"
+                                placeholder="Enter UPI ID/Mobile No"
+                                name="upi-id-mobno"
+                                value=""
                                 required
                               />
                             </div>
@@ -530,7 +538,7 @@
                           </div>
                         </div>
 
-                        <hr />
+                        <!-- <hr />
                         <div class="row">
                           <div class="col-lg-6">
                             <h6>Balance Amount</h6>
@@ -538,7 +546,7 @@
                           <div class="col-lg-6 d-flex justify-content-end">
                             <h6>Rs.0/-</h6>
                           </div>
-                        </div>
+                        </div> -->
                         <hr />
 
                         <div class="pl-lg-4">
@@ -780,7 +788,8 @@ $("#subCategoryTable").on("click", ".decrement", function() {
 $(document).ready(function() {
     var selectedItems = {}; // Object to keep track of selected items and their prices
     var grossTotal = 0; // Total amount
-    
+    var addOnsTotal = 0;
+    var deliveryTotal = 0;
 
     // Attach an event listener to the modal when it is shown
     $('#modal-default1').on('show.bs.modal', function () {
@@ -807,6 +816,9 @@ $(document).ready(function() {
                 
 
                 grossTotal = sum_data[0].total_cost;
+                var subTotal = grossTotal;
+                $('#sub-total').text('Rs.'+subTotal+'/-');
+                $('#gross-total').text('Rs.'+grossTotal+'/-');
                 grossQuantity = sum_data[0].total_quantity;
                 console.log('grossTotalDB::'+grossTotal);
                 var checkboxesHTML = '';
@@ -828,14 +840,21 @@ $(document).ready(function() {
                         // Checkbox is checked
                         selectedItems[itemId] = itemPrice;
                         grossTotal += itemPrice;
+                        addOnsTotal += itemPrice;
                     } else {
                         // Checkbox is unchecked
                         delete selectedItems[itemId];
                         grossTotal -= itemPrice;
+                        addOnsTotal -= itemPrice;
                     }
 
                     // Update the gross total amount
                     $('#gross-total').text('Rs.'+grossTotal+'/-');
+                    $('#addons-total').text('Rs.'+addOnsTotal+'/-');
+                    //<p class="mb-0"><small id="sub-total">Rs.00/-</small></p>
+                    //        <p class="mb-0"><small id="addons-total">Rs.00/-</small></p>
+                    //        <p class="mb-0"><small id="discount-total">Rs.00/-</small></p>
+                    //        <p class="mb-0"><small id="tax-total">Rs.00/-</small></p>
                 });
             },
             error: function (error) {
