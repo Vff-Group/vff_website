@@ -856,13 +856,11 @@ $(document).ready(function() {
                             console.log('checked no');
                             if(discountedAmount !== 0 && !isNaN(discountedAmount)){
                                 discountedAmount += charge.delivery_price;
-                                $('#gross-total').text('Rs.'+discountedAmount+'/-');
                             }else if(!isNaN(grossTotal)){
                                 console.log("grossTotal---->"+grossTotal);
                                 console.log("charge.delivery_price===>"+charge.delivery_price);
                                 console.log('sumss::'+(grossTotal += charge.delivery_price));
                                 grossTotal += charge.delivery_price;
-                                $('#gross-total').text('Rs.'+grossTotal+'/-');
                             }
                             checkState = true;
                         } else {
@@ -870,16 +868,19 @@ $(document).ready(function() {
                             if(checkState === true){
                                 if(discountedAmount !== 0 && !isNaN(discountedAmount)){
                                     discountedAmount -= charge.delivery_price;
-                                    $('#gross-total').text('Rs.'+discountedAmount+'/-');
                                 }else if(!isNaN(grossTotal)){
                                     grossTotal -= charge.delivery_price;
-                                    $('#gross-total').text('Rs.'+grossTotal+'/-');
                                 }
                             }
                         }
                 
                         // Update the grossTotal display (if you have a display element)
                         // For example: $('#grossTotal').text(grossTotal);
+                        if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+                        $('#gross-total').text('Rs.'+discountedAmount+'/-');
+                        }else{
+                            $('#gross-total').text('Rs.'+grossTotal+'/-');
+                        }
                     });
                 
                     checkboxContainer.append(checkbox);
