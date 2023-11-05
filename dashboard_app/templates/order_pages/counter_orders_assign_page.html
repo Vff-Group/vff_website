@@ -1056,15 +1056,15 @@ $(document).ready(function() {
             console.log('Before_delivery_charges::'+delivery_charges);
             console.log('Before_addOnsTotal::'+addOnsTotal);
             if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-                totalPayment = (discountedAmount + delivery_charges + addOnsTotal);
+                totalPayment = discountedAmount.toFixed(2);
             }else{
                 
-                totalPayment = grossTotal;
+                totalPayment = grossTotal.toFixed(2);
             }
             // Convert the selectedItems object to JSON
     var selectedItemsJSON = JSON.stringify(extraItems);
     console.log('Selected Extra Items JSON: ' + selectedItemsJSON);
-                payment_show(totalPayment.toFixed(2));
+                payment_show(totalPayment);
                 
                 e.preventDefault();
             }
@@ -1077,6 +1077,7 @@ $(document).ready(function() {
         });
     });
 });
+
 
 function payment_show(totalPayment){
     console.log('PaytotalPayment::'+totalPayment);
