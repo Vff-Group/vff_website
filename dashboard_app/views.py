@@ -2137,7 +2137,7 @@ def load_extra_items(request):
     
     sum_data = []
     if not query2_result == 500:
-        for row in query2:
+        for row in query2_result:
             sum_data.append({
                 'total_cost':row[0],
                 'total_quantity':row[1],
@@ -2149,7 +2149,7 @@ def load_extra_items(request):
     
     delivery_charges_data = []
     if not query3_result == 500:
-        for row in query2:
+        for row in query3_result:
             delivery_charges_data.append({
                 'dcharge_id':row[0],
                 'delivery_price':row[1],
