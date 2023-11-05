@@ -464,8 +464,8 @@
                           <div class="col-lg-6">
                             <p class="mb-0"><small>Sub Total:</small></p>
                             <p class="mb-0"><small>Addon:</small></p>
-                            <p class="mb-0"><small>Addon:</small></p>
-                            <p class="mb-0"><small>Discount:</small></p>
+                            <p class="mb-0"><small>Delivery Charges:</small></p>
+                            <p class="mb-0"><small>Discount (%):</small></p>
                             <!-- <p class="mb-0"><small>Tax(18%):</small></p> -->
                           </div>
                           <div
@@ -495,12 +495,12 @@
                             <div class="form-group">
                               <label
                                 class="form-control-label"
-                                for="input-category"
+                                for="input-paymentmode"
                                 >Payment Mode</label
                               >
                               <select
                                 class="form-control form-control-alternative"
-                                id="input-category"
+                                id="input-paymentmode"
                                 name="payment_mode"
                                 required
                               >
@@ -580,46 +580,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-    <script>
-        var options = {
-            "key": "rzp_test_qtHIWapeUEAAZO", // Enter the Key ID generated from the Dashboard
-            "amount": "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-            "currency": "INR",
-            "name": "VFF Group", //your business name
-            "description": "Laundry Service Charges",
-            "image": "https://vff-group.com/static/images/logo.png",
-            "handler": function (response){
-                alert(response.razorpay_payment_id);
-                alert(response.razorpay_order_id);
-                alert(response.razorpay_signature)
-            },
-            "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
-                "name": "Shaheed Maniyar", //your customer's name
-                "email": "shahidmaniyar888@gmail.com", 
-                "contact": "8296565587"  //Provide the customer's phone number for better conversion rates 
-            },
-            "notes": {
-                "address": "Tilakwadi"
-            },
-            "theme": {
-                "color": "#3399cc"
-            }
-        };
-        var rzp1 = new Razorpay(options);
-        rzp1.on('payment.failed', function (response){
-                alert(response.error.code);
-                alert(response.error.description);
-                alert(response.error.source);
-                alert(response.error.step);
-                alert(response.error.reason);
-                alert(response.error.metadata.order_id);
-                alert(response.error.metadata.payment_id);
-        });
-        document.getElementById('pay-button').onclick = function(e){
-            rzp1.open();
-            e.preventDefault();
-        }
-        </script>
+    
 
     <!-- <script>
         // Define a reference to the input field and the table rows to search items
@@ -1071,6 +1032,53 @@ $(document).ready(function() {
 
                 $('#gross-total').text('Rs.'+grossTotal+'/-');
             }
+            var totalPayment = 0
+            if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+                totalPayment = discountedAmount;
+            }else{
+                totalPayment = grossTotal;
+            }
+            //Payment Start
+            var options = {
+                "key": "rzp_test_qtHIWapeUEAAZO", // Enter the Key ID generated from the Dashboard
+                "amount": (totalPayment * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                "currency": "INR",
+                "name": "VFF Group", //your business name
+                "description": "Laundry Service Charges",
+                "image": "https://vff-group.com/static/images/logo.png",
+                "handler": function (response){
+                    alert(response.razorpay_payment_id);
+                    //alert(response.razorpay_order_id);
+                    //alert(response.razorpay_signature)
+                },
+                "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
+                    "name": "Shaheed Maniyar", //your customer's name
+                    "email": "shahidmaniyar888@gmail.com", 
+                    "contact": "8296565587"  //Provide the customer's phone number for better conversion rates 
+                },
+                "notes": {
+                    "address": "Tilakwadi"
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.on('payment.failed', function (response){
+                    alert(response.error.code);
+                    alert(response.error.description);
+                    alert(response.error.source);
+                    alert(response.error.step);
+                    alert(response.error.reason);
+                   // alert(response.error.metadata.order_id);
+                    alert(response.error.metadata.payment_id);
+            });
+            document.getElementById('pay-button').onclick = function(e){
+                rzp1.open();
+                e.preventDefault();
+            }
+            //Payment End
+
 
             },
             error: function (error) {
@@ -1079,6 +1087,47 @@ $(document).ready(function() {
         });
     });
 });
+
+function payment_show(totalPayment){
+    var options = {
+        "key": "rzp_test_qtHIWapeUEAAZO", // Enter the Key ID generated from the Dashboard
+        "amount": (totalPayment * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "currency": "INR",
+        "name": "VFF Group", //your business name
+        "description": "Laundry Service Charges",
+        "image": "https://vff-group.com/static/images/logo.png",
+        "handler": function (response){
+            alert(response.razorpay_payment_id);
+            //alert(response.razorpay_order_id);
+            //alert(response.razorpay_signature)
+        },
+        "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
+            "name": "Shaheed Maniyar", //your customer's name
+            "email": "shahidmaniyar888@gmail.com", 
+            "contact": "8296565587"  //Provide the customer's phone number for better conversion rates 
+        },
+        "notes": {
+            "address": "Tilakwadi"
+        },
+        "theme": {
+            "color": "#3399cc"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.on('payment.failed', function (response){
+            alert(response.error.code);
+            alert(response.error.description);
+            alert(response.error.source);
+            alert(response.error.step);
+            alert(response.error.reason);
+           // alert(response.error.metadata.order_id);
+            alert(response.error.metadata.payment_id);
+    });
+    document.getElementById('pay-button').onclick = function(e){
+        rzp1.open();
+        e.preventDefault();
+    }
+}
 
 // Get the CSRF token from the cookie
 function getCSRFToken() {
