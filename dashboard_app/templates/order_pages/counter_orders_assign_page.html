@@ -794,7 +794,7 @@ $(document).ready(function() {
         }
         const csrfToken = getCSRFToken();
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url: '/admin_dashboard/load_extra_items/', 
             data: JSON.stringify(dictMap),
         headers: {
