@@ -490,24 +490,7 @@
 
                         <hr />
                         <div class="row">
-                          <div class="col-lg-6">
-                            <div class="form-group">
-                              <label
-                                class="form-control-label"
-                                for="input-upi-id"
-                                >UPI ID/Mobile No</label
-                              >
-                              <input
-                                type="number"
-                                id="input-upi-id"
-                                class="form-control form-control-alternative"
-                                placeholder="Enter UPI ID/Mobile No"
-                                name="upi-id-mobno"
-                                value=""
-                                required
-                              />
-                            </div>
-                          </div>
+                          
                           <div class="col-lg-6">
                             <div class="form-group">
                               <label
@@ -533,6 +516,12 @@
                                 </option>
                                 <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
                               </select>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                                <button type="submit" id="pay-button" class="btn btn-primary my-4">Pay Now</button>
                             </div>
                           </div>
                         </div>
@@ -564,8 +553,8 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="submit" class="btn bg-gradient-success" id="pay-button">
-                    Pay Now
+                  <button type="submit" class="btn bg-gradient-success" >
+                    Save & Print
                   </button>
 
                   <button
