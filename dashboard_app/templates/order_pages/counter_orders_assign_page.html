@@ -1033,13 +1033,9 @@ $(document).ready(function() {
                 $('#gross-total').text('Rs.'+grossTotal+'/-');
             }
             var totalPayment = 0
-            if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-                totalPayment = (discountedAmount + delivery_charges + addOnsTotal);
-            }else{
-                var sum = (grossTotal + delivery_charges + addOnsTotal);
-                console.log('TotalPayment:'+sum);
-                totalPayment = sum;
-            }
+            var price = parseFloat(grossTotalText.replace(/[^0-9.-]+/g,""));
+
+            console.log("totalPrice::"+price);
             //Payment Start
             var options = {
                 "key": "rzp_test_qtHIWapeUEAAZO", // Enter the Key ID generated from the Dashboard
