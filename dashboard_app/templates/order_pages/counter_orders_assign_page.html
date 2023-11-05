@@ -800,6 +800,7 @@ $(document).ready(function() {
         },
         contentType: 'application/json',
             success: function (data) {
+                var extraItems = {};
                 var grossTotal = 0; // Total amount
                 var addOnsTotal = 0;
                 var deliveryTotal = 0;
@@ -970,10 +971,20 @@ $(document).ready(function() {
                         selectedItems[itemId] = itemPrice;
                         grossTotal += itemPrice;
                         addOnsTotal += itemPrice;
+
+                        //Saving to Json
+                        extraItems[itemId] = {
+                            name: itemName,
+                            price: itemPrice
+                        };
                         
                     } else {
                         // Checkbox is unchecked
                         delete selectedItems[itemId];
+
+                        //Deleting from Json
+                        delete extraItems[itemId];
+
                         grossTotal -= itemPrice;
                         addOnsTotal -= itemPrice;
                         
@@ -1052,7 +1063,9 @@ $(document).ready(function() {
                 
                 totalPayment = grossTotal;
             }
-
+            // Convert the selectedItems object to JSON
+    var selectedItemsJSON = JSON.stringify(extraItems);
+    console.log('Selected Extra Items JSON: ' + selectedItemsJSON);
                 payment_show(totalPayment);
                 
                 e.preventDefault();
