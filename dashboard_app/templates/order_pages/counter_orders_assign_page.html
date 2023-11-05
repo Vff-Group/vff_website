@@ -841,49 +841,50 @@ $(document).ready(function() {
 
                   //To Create delivery charges checkbox
                 // Function to create a checkbox element for the delivery charge
-    function createDeliveryCheckbox(charge) {
-        var checkboxId = "delivery-" + charge.dcharge_id;
-        var checkboxLabel = "Delivery Charge - Rs." + charge.delivery_price+"/-";
-
-        var checkboxContainer = $("<div class='form-check'></div>");
-        var checkbox = $("<input class='form-check-input' type='checkbox' id='" + checkboxId + "' data-delivery-price='" + charge.delivery_price + "'>");
-        var label = $("<label class='form-check-label' for='" + checkboxId + "'>" + checkboxLabel + "</label>");
-
-        // Attach an event handler to update grossTotal when the checkbox state changes
-        checkState = false;
-    checkbox.on('change', function() {
-        if (checkbox.is(':checked')) {
-    console.log('checked no');
-    if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-        discountedAmount += charge.delivery_price;
-        $('#gross-total').text('Rs.'+discountedAmount+'/-');
-        }else{
-            grossTotal += charge.delivery_price;
-            $('#gross-total').text('Rs.'+grossTotal+'/-');
-        }
-            checkState = true;
-        } else {
-            console.log('checked off');
-            if(checkState === true){
-            if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-                discountedAmount -= charge.delivery_price;
-                $('#gross-total').text('Rs.'+discountedAmount+'/-');
-                }else{
-                    grossTotal -= charge.delivery_price;
-                    $('#gross-total').text('Rs.'+grossTotal+'/-');
+                function createDeliveryCheckbox(charge) {
+                    var checkboxId = "delivery-" + charge.dcharge_id;
+                    var checkboxLabel = "Delivery Charge - Rs." + charge.delivery_price+"/-";
+                
+                    var checkboxContainer = $("<div class='form-check'></div>");
+                    var checkbox = $("<input class='form-check-input' type='checkbox' id='" + checkboxId + "' data-delivery-price='" + charge.delivery_price + "'>");
+                    var label = $("<label class='form-check-label' for='" + checkboxId + "'>" + checkboxLabel + "</label>");
+                
+                    // Attach an event handler to update grossTotal when the checkbox state changes
+                    checkState = false;
+                    checkbox.on('change', function() {
+                        if (checkbox.is(':checked')) {
+                            console.log('checked no');
+                            if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+                                discountedAmount += charge.delivery_price;
+                                $('#gross-total').text('Rs.'+discountedAmount+'/-');
+                            }else if(!isNaN(grossTotal)){
+                                grossTotal += charge.delivery_price;
+                                $('#gross-total').text('Rs.'+grossTotal+'/-');
+                            }
+                            checkState = true;
+                        } else {
+                            console.log('checked off');
+                            if(checkState === true){
+                                if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+                                    discountedAmount -= charge.delivery_price;
+                                    $('#gross-total').text('Rs.'+discountedAmount+'/-');
+                                }else if(!isNaN(grossTotal)){
+                                    grossTotal -= charge.delivery_price;
+                                    $('#gross-total').text('Rs.'+grossTotal+'/-');
+                                }
+                            }
+                        }
+                
+                        // Update the grossTotal display (if you have a display element)
+                        // For example: $('#grossTotal').text(grossTotal);
+                    });
+                
+                    checkboxContainer.append(checkbox);
+                    checkboxContainer.append(label);
+                    console.log("checkboxContainer::"+checkboxContainer);
+                    return checkboxContainer;
                 }
-            }
-        }
-        // Update the grossTotal display (if you have a display element)
-        // For example: $('#grossTotal').text(grossTotal);
-    });
-
-
-        checkboxContainer.append(checkbox);
-        checkboxContainer.append(label);
-        console.log("checkboxContainer::"+checkboxContainer);
-        return checkboxContainer;
-    }
+                
 
     // Function to add the delivery charge checkbox to the container
     function addDeliveryChargeCheckbox() {
