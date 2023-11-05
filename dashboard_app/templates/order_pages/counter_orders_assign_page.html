@@ -860,6 +860,7 @@ $(document).ready(function() {
                             }else if(!isNaN(grossTotal)){
                                 console.log("grossTotal---->"+grossTotal);
                                 console.log("charge.delivery_price===>"+charge.delivery_price);
+                                console.log('sumss::'+(grossTotal += charge.delivery_price));
                                 grossTotal += charge.delivery_price;
                                 $('#gross-total').text('Rs.'+grossTotal+'/-');
                             }
