@@ -803,7 +803,7 @@ $(document).ready(function() {
         contentType: 'application/json',
             success: function (data) {
                 // Handle the data you received from the server
-                console.log('datata:'+data);
+                console.log('datata:'+JSON.stringify(data));
                 //Gets Extra Items Details
                 var extra_items_data = data.extra_items_data;
                 //TOtal Cost and Quantity
