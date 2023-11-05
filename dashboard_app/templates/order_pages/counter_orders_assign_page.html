@@ -1033,6 +1033,7 @@ $(document).ready(function() {
                 $('#gross-total').text('Rs.'+grossTotal+'/-');
             }
             var totalPayment = 0
+            var grossTotalText = $('#gross-total').text();
             var price = parseFloat(grossTotalText.replace(/[^0-9.-]+/g,""));
 
             console.log("totalPrice::"+price);
