@@ -860,6 +860,7 @@ $(document).ready(function() {
         var deliveryChargesContainer = $("#delivery-charges-container");
         console.log('delivery_range::'+delivery_range);
         console.log('delivery_price::'+delivery_price);
+        deliveryChargesContainer.remove();
         if (grossTotal < delivery_range) {
             // Only add the delivery charge checkbox if gross total is below Rs 500
             var charge = delivery_data[0];
