@@ -1064,7 +1064,7 @@ $(document).ready(function() {
             // Convert the selectedItems object to JSON
     var selectedItemsJSON = JSON.stringify(extraItems);
     console.log('Selected Extra Items JSON: ' + selectedItemsJSON);
-                payment_show(totalPayment);
+                payment_show(totalPayment.toFixed(2));
                 
                 e.preventDefault();
             }
