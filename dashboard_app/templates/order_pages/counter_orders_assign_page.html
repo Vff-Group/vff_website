@@ -867,7 +867,7 @@ $(document).ready(function() {
                     
             // Update the discounted amount
             if(!isNaN(discountAmount)){
-            $('#discount-amount').text(discountAmount);
+            $('#discount-amount').text('Rs.'+discountAmount+'/-');
             }
 
                 });
@@ -887,7 +887,7 @@ $(document).ready(function() {
             discountedAmount = discountedAmount.toFixed(2);
 
             if(!isNaN(discountAmount)){
-                $('#discount-amount').text(discountAmount);
+                $('#discount-amount').text('Rs.'+discountAmount+'/-');
                 }
 
             if(discountedAmount !== 0 && !isNaN(discountedAmount)){
