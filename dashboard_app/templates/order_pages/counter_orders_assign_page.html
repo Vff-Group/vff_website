@@ -870,6 +870,7 @@ $(document).ready(function() {
                                 grossTotal += charge.delivery_price;
                                 $('#gross-total').text('Rs.'+grossTotal+'/-');
                                 $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+                                checkState = false;
                             }
                             checkState = true;
                         } else {
@@ -889,6 +890,7 @@ $(document).ready(function() {
                                     grossTotal -= charge.delivery_price;
                                     $('#gross-total').text('Rs.'+grossTotal+'/-');
                                     $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+                                    checkState = false;
                                 }
                             }
                         }
