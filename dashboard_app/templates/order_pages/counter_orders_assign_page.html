@@ -808,6 +808,7 @@ $(document).ready(function() {
     var delivery_price =0;
     var delivery_range = 0;
     var delivery_charges = 0;
+    var totalPayment = 0
     
     if(!isNaN(addOnsTotal)){
         $('#addons-total').text('Rs.'+addOnsTotal+'/-');
@@ -855,6 +856,7 @@ $(document).ready(function() {
                                 delivery_charges = charge.delivery_price;
                                 var sum = (discountedAmount += charge.delivery_price).toFixed(2);
                                 discountedAmount = sum;
+                                totalPayment = discountedAmount;
                                 $('#gross-total').text('Rs.'+discountedAmount+'/-');
                                 $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
                                 checkState = true;
@@ -865,6 +867,7 @@ $(document).ready(function() {
                                 console.log('sumss::'+sum);
                                 delivery_charges = charge.delivery_price;
                                 grossTotal = sum;
+                                totalPayment = grossTotal;
                                 console.log("Add AgrossTotal---->"+grossTotal);
                                 $('#gross-total').text('Rs.'+grossTotal+'/-');
                                 $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
@@ -880,6 +883,7 @@ $(document).ready(function() {
                                     
                                     var sum = (discountedAmount -= charge.delivery_price).toFixed(2);
                                     discountedAmount = sum;
+                                    totalPayment = discountedAmount;
                                     $('#gross-total').text('Rs.'+discountedAmount+'/-');
                                     $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
                                     checkState = false;
@@ -890,7 +894,7 @@ $(document).ready(function() {
                                     delivery_charges = 0;
                                     
                                     grossTotal = sum;
-                                    
+                                    totalPayment = grossTotal;
                                     
                                     $('#gross-total').text('Rs.'+grossTotal+'/-');
                                     $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
@@ -966,11 +970,13 @@ $(document).ready(function() {
                         selectedItems[itemId] = itemPrice;
                         grossTotal += itemPrice;
                         addOnsTotal += itemPrice;
+                        totalPayment += itemPrice;
                     } else {
                         // Checkbox is unchecked
                         delete selectedItems[itemId];
                         grossTotal -= itemPrice;
                         addOnsTotal -= itemPrice;
+                        totalPayment -= itemPrice;
                     }
                     console.log('addOnsTotal::'+addOnsTotal);
                     // Update the gross total amount
@@ -1032,11 +1038,13 @@ $(document).ready(function() {
 
                 $('#gross-total').text('Rs.'+grossTotal+'/-');
             }
-            var totalPayment = 0
-            var grossTotalText = $('#gross-total').text();
-            var price = parseFloat(grossTotalText.replace(/[^0-9.-]+/g,""));
-
-            console.log("totalPrice::"+price);
+            
+            /*if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+                totalPayment = (discountedAmount + delivery_charges + addOnsTotal);
+            }else{
+                
+                totalPayment = grossTotal;
+            }*/
             //Payment Start
             var options = {
                 "key": "rzp_test_qtHIWapeUEAAZO", // Enter the Key ID generated from the Dashboard
