@@ -893,6 +893,13 @@ $(document).ready(function() {
                 }
         });
 
+        if(discountedAmount !== 0){
+            $('#gross-total').text('Rs.'+discountedAmount+'/-');
+            }else{
+
+                $('#gross-total').text('Rs.'+grossTotal+'/-');
+            }
+
             },
             error: function (error) {
                 console.error('Error:', error);
