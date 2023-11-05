@@ -964,7 +964,7 @@ $(document).ready(function() {
                     console.log('triggering here also');
                     var itemId = $(this).data('item-id');
                     var itemPrice = parseFloat($(this).data('item-price'));
-                    var itemName = parseFloat($(this).data('item-name'));
+                    var itemName = $(this).data('item-name');
                     console.log('itemPrice::'+itemPrice);
                     if (this.checked) {
                         // Checkbox is checked
@@ -973,17 +973,15 @@ $(document).ready(function() {
                         addOnsTotal += itemPrice;
 
                         //Saving to Json
-                        extraItems[itemId] = {
-                            name: itemName,
-                            price: itemPrice
-                        };
+                        extraItems.push({ name: itemName, price: itemPrice,id:itemId });
                         
                     } else {
                         // Checkbox is unchecked
                         delete selectedItems[itemId];
 
                         //Deleting from Json
-                        delete extraItems[itemId];
+                        // Find and remove the item from the selectedItems array
+                        extraItems = extraItems.filter(item => item.name !== itemName);
 
                         grossTotal -= itemPrice;
                         addOnsTotal -= itemPrice;
