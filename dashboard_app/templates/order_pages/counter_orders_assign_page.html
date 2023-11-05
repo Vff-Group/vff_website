@@ -781,7 +781,15 @@ $("#subCategoryTable").on("click", ".decrement", function() {
 //MOdal Class is triggered to show Add Ons
 $(document).ready(function() {
     var selectedItems = {}; // Object to keep track of selected items and their prices
-    
+    var grossTotal = 0; // Total amount
+    var addOnsTotal = 0;
+    var deliveryTotal = 0;
+    var discountAmount = 0;
+    var discountedAmount = 0;
+    var delivery_price =0;
+    var delivery_range = 0;
+    var delivery_charges = 0;
+    var totalPayment = 0;    
 
     // Attach an event listener to the modal when it is shown
     $('#modal-default1').on('show.bs.modal', function () {
@@ -800,15 +808,7 @@ $(document).ready(function() {
         },
         contentType: 'application/json',
             success: function (data) {
-                var grossTotal = 0; // Total amount
-    var addOnsTotal = 0;
-    var deliveryTotal = 0;
-    var discountAmount = 0;
-    var discountedAmount = 0;
-    var delivery_price =0;
-    var delivery_range = 0;
-    var delivery_charges = 0;
-    var totalPayment = 0;
+    
     
     if(!isNaN(addOnsTotal)){
         $('#addons-total').text('Rs.'+addOnsTotal+'/-');
