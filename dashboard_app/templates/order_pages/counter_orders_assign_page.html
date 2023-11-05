@@ -776,15 +776,7 @@ $("#subCategoryTable").on("click", ".decrement", function() {
 */
 
 
-var grossTotal = 0; // Total amount
-    var addOnsTotal = 0;
-    var deliveryTotal = 0;
-    var discountAmount = 0;
-    var discountedAmount = 0;
-    var delivery_price =0;
-    var delivery_range = 0;
-    var delivery_charges = 0;
-    var totalPayment = 0;    
+    
 
 //MOdal Class is triggered to show Add Ons
 $(document).ready(function() {
@@ -808,8 +800,16 @@ $(document).ready(function() {
         },
         contentType: 'application/json',
             success: function (data) {
-    
-    
+                var grossTotal = 0; // Total amount
+                var addOnsTotal = 0;
+                var deliveryTotal = 0;
+                var discountAmount = 0;
+                var discountedAmount = 0;
+                var delivery_price =0;
+                var delivery_range = 0;
+                var delivery_charges = 0;
+                var totalPayment = 0;
+                var rzp1 = new Razorpay(options);
     if(!isNaN(addOnsTotal)){
         $('#addons-total').text('Rs.'+addOnsTotal+'/-');
         }
@@ -1048,46 +1048,12 @@ $(document).ready(function() {
                 
                 totalPayment = grossTotal;
             }
-            //Payment Start
-            var options = {
-                "key": "rzp_test_qtHIWapeUEAAZO", // Enter the Key ID generated from the Dashboard
-                "amount": (totalPayment * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-                "currency": "INR",
-                "name": "VFF Group", //your business name
-                "description": "Laundry Service Charges",
-                "image": "https://vff-group.com/static/images/logo.png",
-                "handler": function (response){
-                    alert(response.razorpay_payment_id);
-                    //alert(response.razorpay_order_id);
-                    //alert(response.razorpay_signature)
-                },
-                "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
-                    "name": "Shaheed Maniyar", //your customer's name
-                    "email": "shahidmaniyar888@gmail.com", 
-                    "contact": "8296565587"  //Provide the customer's phone number for better conversion rates 
-                },
-                "notes": {
-                    "address": "Tilakwadi"
-                },
-                "theme": {
-                    "color": "#3399cc"
-                }
-            };
-            var rzp1 = new Razorpay(options);
-            rzp1.on('payment.failed', function (response){
-                    alert(response.error.code);
-                    alert(response.error.description);
-                    alert(response.error.source);
-                    alert(response.error.step);
-                    alert(response.error.reason);
-                   // alert(response.error.metadata.order_id);
-                    alert(response.error.metadata.payment_id);
-            });
+            
             document.getElementById('pay-button').onclick = function(e){
+                payment_show(totalPayment);
                 rzp1.open();
                 e.preventDefault();
             }
-            //Payment End
 
 
             },
@@ -1099,6 +1065,7 @@ $(document).ready(function() {
 });
 
 function payment_show(totalPayment){
+    console.log('PaytotalPayment::'+totalPayment);
     var options = {
         "key": "rzp_test_qtHIWapeUEAAZO", // Enter the Key ID generated from the Dashboard
         "amount": (totalPayment * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -1123,7 +1090,7 @@ function payment_show(totalPayment){
             "color": "#3399cc"
         }
     };
-    var rzp1 = new Razorpay(options);
+    //var rzp1 = new Razorpay(options);
     rzp1.on('payment.failed', function (response){
             alert(response.error.code);
             alert(response.error.description);
@@ -1133,10 +1100,10 @@ function payment_show(totalPayment){
            // alert(response.error.metadata.order_id);
             alert(response.error.metadata.payment_id);
     });
-    document.getElementById('pay-button').onclick = function(e){
+    /*document.getElementById('pay-button').onclick = function(e){
         rzp1.open();
         e.preventDefault();
-    }
+    }*/
 }
 
 // Get the CSRF token from the cookie
