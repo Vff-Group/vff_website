@@ -853,11 +853,16 @@ $(document).ready(function() {
                     // Update the gross total amount
                     discountedAmount = grossTotal - (grossTotal * (discount / 100));
                     console.log("discountAmount::"+(grossTotal * (discount / 100)));
-                    if(discountedAmount !== 0){
-                    grossTotal = discountedAmount;
-                    }
-                    
+                    discountedAmount = discountedAmount.toFixed(2);
+            $('#discount-amount').text(discountAmount);
+            if(discountedAmount !== 0){
+                $('#gross-total').text('Rs.'+discountedAmount+'/-');
+                }else{
+
                     $('#gross-total').text('Rs.'+grossTotal+'/-');
+                }
+                    
+                    
                     
                     $('#addons-total').text('Rs.'+addOnsTotal+'/-');
                     //<p class="mb-0"><small id="sub-total">Rs.00/-</small></p>
@@ -880,12 +885,14 @@ $(document).ready(function() {
             discountedAmount = grossTotal - (grossTotal * (discount / 100));
             console.log("discountAmount::"+(grossTotal * (discount / 100)));
             // Update the discounted amount
+            discountedAmount = discountedAmount.toFixed(2);
             $('#discount-amount').text(discountAmount);
             if(discountedAmount !== 0){
-                grossTotal = discountedAmount;
+                $('#gross-total').text('Rs.'+discountedAmount+'/-');
+                }else{
+
+                    $('#gross-total').text('Rs.'+grossTotal+'/-');
                 }
-                
-                $('#gross-total').text('Rs.'+grossTotal+'/-');
         });
 
             },
