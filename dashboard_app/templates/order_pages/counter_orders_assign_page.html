@@ -473,10 +473,10 @@
                           <div
                             class="col-lg-6 d-flex flex-column align-items-end"
                           >
-                            <p class="mb-0"><small id="sub-total">Rs.00/-</small></p>
-                            <p class="mb-0"><small id="addons-total">Rs.00/-</small></p>
-                            <p class="mb-0"><small id="discount-total">Rs.00/-</small></p>
-                            <p class="mb-0"><small id="tax-total">Rs.00/-</small></p>
+                            <p class="mb-0"><small id="sub-total">Rs.0/-</small></p>
+                            <p class="mb-0"><small id="addons-total">Rs.0/-</small></p>
+                            <p class="mb-0"><small id="discount-amount">Rs.0/-</small></p>
+                            <p class="mb-0"><small id="tax-total">Rs.0/-</small></p>
                           </div>
                         </div>
                         <hr />
@@ -790,6 +790,7 @@ $(document).ready(function() {
     var grossTotal = 0; // Total amount
     var addOnsTotal = 0;
     var deliveryTotal = 0;
+    var discountAmount = 0;
 
     // Attach an event listener to the modal when it is shown
     $('#modal-default1').on('show.bs.modal', function () {
@@ -855,7 +856,24 @@ $(document).ready(function() {
                     //        <p class="mb-0"><small id="addons-total">Rs.00/-</small></p>
                     //        <p class="mb-0"><small id="discount-total">Rs.00/-</small></p>
                     //        <p class="mb-0"><small id="tax-total">Rs.00/-</small></p>
+                     // Calculate the discounted amount
+            discountedAmount = grossTotal - (grossTotal * (discount / 100));
+
+            // Update the discounted amount
+            $('#discounted-amount').text(discountedAmount);
                 });
+
+                // Attach an event listener to the discount input
+        $('#discount').on('input', function() {
+            discount = parseFloat($(this).val());
+
+            // Calculate the discounted amount
+            discountedAmount = grossTotal - (grossTotal * (discount / 100));
+
+            // Update the discounted amount
+            $('#discounted-amount').text(discountedAmount);
+        });
+
             },
             error: function (error) {
                 console.error('Error:', error);
