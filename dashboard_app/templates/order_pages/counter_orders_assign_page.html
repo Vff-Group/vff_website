@@ -859,6 +859,7 @@ $(document).ready(function() {
     function addDeliveryChargeCheckbox() {
         var deliveryChargesContainer = $("#delivery-charges-container");
         console.log('delivery_range::'+delivery_range);
+        console.log('delivery_price::'+delivery_price);
         if (grossTotal < delivery_range) {
             // Only add the delivery charge checkbox if gross total is below Rs 500
             var charge = delivery_data[0];
@@ -870,12 +871,12 @@ $(document).ready(function() {
                 if (checkbox.is(":checked")) {
                     // Add the delivery charge to the gross total when the checkbox is checked
                 // Update the gross total display
-                console.log("charge.delivery_price::"+delivery_price);
+                console.log("charge.delivery_price::"+charge.delivery_price);
                 if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-                    discountedAmount += delivery_price;
+                    discountedAmount += charge.delivery_price;
                     $('#gross-total').text('Rs.'+discountedAmount+'/-');
                     }else{
-                        grossTotal += delivery_price;
+                        grossTotal += charge.delivery_price;
                         $('#gross-total').text('Rs.'+grossTotal+'/-');
                     }
                 } else {
@@ -883,10 +884,10 @@ $(document).ready(function() {
                     
                     // Update the gross total display
                 if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-                    discountedAmount -= delivery_price;
+                    discountedAmount -= charge.delivery_price;
                     $('#gross-total').text('Rs.'+discountedAmount+'/-');
                     }else{
-                        grossTotal -= delivery_price;
+                        grossTotal -= charge.delivery_price;
                         $('#gross-total').text('Rs.'+grossTotal+'/-');
                     }
                 }
