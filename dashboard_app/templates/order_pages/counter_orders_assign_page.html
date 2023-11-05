@@ -850,11 +850,29 @@ $(document).ready(function() {
         var label = $("<label class='form-check-label' for='" + checkboxId + "'>" + checkboxLabel + "</label>");
 
         // Attach an event handler to update grossTotal when the checkbox state changes
+        checkState = false;
     checkbox.on('change', function() {
         if (checkbox.is(':checked')) {
     console.log('checked no');
+    if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+        discountedAmount += charge.delivery_price;
+        $('#gross-total').text('Rs.'+discountedAmount+'/-');
+        }else{
+            grossTotal += charge.delivery_price;
+            $('#gross-total').text('Rs.'+grossTotal+'/-');
+        }
+            checkState = true;
         } else {
             console.log('checked off');
+            if(checkState === true){
+            if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+                discountedAmount -= charge.delivery_price;
+                $('#gross-total').text('Rs.'+discountedAmount+'/-');
+                }else{
+                    grossTotal -= charge.delivery_price;
+                    $('#gross-total').text('Rs.'+grossTotal+'/-');
+                }
+            }
         }
         // Update the grossTotal display (if you have a display element)
         // For example: $('#grossTotal').text(grossTotal);
@@ -881,7 +899,7 @@ $(document).ready(function() {
 
             //UPDATE GROSS_TOTAL
            // Update grossTotal here as well
-        grossTotal += charge.delivery_price;
+        
 
             // Add a label for the delivery charges condition
         var conditionLabel = $("<div class='container mt-2'><p class='text-muted'>Delivery charges are applicable only if the gross total is below Rs "+delivery_range+".</p></div>");
