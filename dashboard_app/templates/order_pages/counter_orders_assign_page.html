@@ -858,6 +858,7 @@ $(document).ready(function() {
                         if (checkbox.is(':checked')) {
                             console.log('checked no');
                             if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+                                console.log("Add BdiscountedAmount---->"+discountedAmount);
                                 delivery_charges = charge.delivery_price;
                                 discountedAmount += charge.delivery_price;
                                 $('#gross-total').text('Rs.'+discountedAmount+'/-');
@@ -868,7 +869,7 @@ $(document).ready(function() {
                                 console.log("charge.delivery_price===>"+charge.delivery_price);
                                 console.log('sumss::'+(grossTotal += charge.delivery_price));
                                 delivery_charges = charge.delivery_price;
-                                grossTotal += charge.delivery_price;
+                                grossTotal = grossTotal + charge.delivery_price;
                                 console.log("Add AgrossTotal---->"+grossTotal);
                                 $('#gross-total').text('Rs.'+grossTotal+'/-');
                                 $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
