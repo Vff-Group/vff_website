@@ -927,7 +927,7 @@ $(document).ready(function() {
                 $('#checkboxes').html(checkboxesHTML);
 
                 // Attach an event listener to the checkboxes
-                $('input[data-item-id="' + item.extra_item_id + '"]').change(function() {
+                $('input[data-item-id]').change(function() {
                     var itemId = $(this).data('item-id');
                     var itemPrice = parseFloat($(this).data('item-price'));
                     var itemName = parseFloat($(this).data('item-name'));
