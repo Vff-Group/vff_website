@@ -787,14 +787,15 @@ $("#subCategoryTable").on("click", ".decrement", function() {
 //MOdal Class is triggered to show Add Ons
 $(document).ready(function() {
     var selectedItems = {}; // Object to keep track of selected items and their prices
-    var grossTotal = 0; // Total amount
+    
+
+    // Attach an event listener to the modal when it is shown
+    $('#modal-default1').on('show.bs.modal', function () {
+        var grossTotal = 0; // Total amount
     var addOnsTotal = 0;
     var deliveryTotal = 0;
     var discountAmount = 0;
     var discountedAmount = 0;
-
-    // Attach an event listener to the modal when it is shown
-    $('#modal-default1').on('show.bs.modal', function () {
         
         const dictMap = {
             'booking_id':generated_booking_id
@@ -886,7 +887,11 @@ $(document).ready(function() {
             console.log("discountAmount::"+(grossTotal * (discount / 100)));
             // Update the discounted amount
             discountedAmount = discountedAmount.toFixed(2);
-            $('#discount-amount').text(discountAmount);
+
+            if(!NaN(discountAmount)){
+                $('#discount-amount').text(discountAmount);
+                }
+
             if(discountedAmount !== 0 && !isNaN(discountedAmount)){
                 $('#gross-total').text('Rs.'+discountedAmount+'/-');
                 }else{
