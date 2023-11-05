@@ -810,8 +810,8 @@ $(document).ready(function() {
                 var sum_data = data.sum_data;
                 
 
-                grossTotal = sum_data.total_cost;
-                grossQuantity = sum_data.total_quantity;
+                grossTotal = sum_data[0].total_cost;
+                grossQuantity = sum_data[0].total_quantity;
                 console.log('grossTotalDB::'+grossTotal);
                 var checkboxesHTML = '';
                 extra_items_data.forEach(function(item) {
