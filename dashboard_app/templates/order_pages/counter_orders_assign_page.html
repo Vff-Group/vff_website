@@ -453,7 +453,7 @@
                               <input
                                 class="form-control form-control-alternative"
                                 type="text"
-                                id="discount-label"
+                                id="discounted-input"
                                 name="discount-value"
                                 value=""
                                 placeholder="Enter if any discount"
@@ -860,18 +860,18 @@ $(document).ready(function() {
             discountedAmount = grossTotal - (grossTotal * (discount / 100));
 
             // Update the discounted amount
-            $('#discounted-amount').text(discountedAmount);
+            $('#discount-amount').text(discountedAmount);
                 });
 
                 // Attach an event listener to the discount input
-        $('#discount').on('input', function() {
+        $('#discounted-input').on('input', function() {
             discount = parseFloat($(this).val());
 
             // Calculate the discounted amount
             discountedAmount = grossTotal - (grossTotal * (discount / 100));
 
             // Update the discounted amount
-            $('#discounted-amount').text(discountedAmount);
+            $('#discount-amount').text(discountedAmount);
         });
 
             },
