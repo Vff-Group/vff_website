@@ -874,7 +874,7 @@ $(document).ready(function() {
                    
                     // Add the delivery charge to the gross total when the checkbox is checked
                 // Update the gross total display
-               
+               console.log('CheckBox is Checked::'+charge.delivery_price);
                 if(discountedAmount !== 0 && !isNaN(discountedAmount)){
                     discountedAmount += charge.delivery_price;
                     $('#gross-total').text('Rs.'+discountedAmount+'/-');
