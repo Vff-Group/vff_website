@@ -814,6 +814,10 @@ $(document).ready(function() {
     if(!isNaN(addOnsTotal)){
         $('#addons-total').text('Rs.'+addOnsTotal+'/-');
         }
+
+        if(!isNaN(delivery_charges)){
+            $('#delivery-charges').text('Rs.0/-');
+        }
                 // Handle the data you received from the server
                 console.log('datata:'+JSON.stringify(data));
                 //Gets Extra Items Details
