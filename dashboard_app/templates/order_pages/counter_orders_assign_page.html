@@ -831,7 +831,17 @@ $(document).ready(function() {
                 delivery_price = delivery_data[0].delivery_price;
                 delivery_range = delivery_data[0].delivery_range;
 
-                //To Create delivery charges checkbox
+              
+
+
+                var subTotal = grossTotal;
+                $('#sub-total').text('Rs.'+subTotal+'/-');
+                $('#gross-total').text('Rs.'+grossTotal+'/-');
+                grossQuantity = sum_data[0].total_quantity;
+
+                console.log('grossTotalDB::'+grossTotal);
+
+                  //To Create delivery charges checkbox
                 // Function to create a checkbox element for the delivery charge
     function createDeliveryCheckbox(charge) {
         var checkboxId = "delivery-" + charge.dcharge_id;
@@ -843,7 +853,7 @@ $(document).ready(function() {
 
         checkboxContainer.append(checkbox);
         checkboxContainer.append(label);
-
+        console.log("checkboxContainer::"+checkboxContainer);
         return checkboxContainer;
     }
 
@@ -870,13 +880,7 @@ $(document).ready(function() {
     // Call the function to add the delivery charge checkbox to the container
     addDeliveryChargeCheckbox();
 
-
-                var subTotal = grossTotal;
-                $('#sub-total').text('Rs.'+subTotal+'/-');
-                $('#gross-total').text('Rs.'+grossTotal+'/-');
-                grossQuantity = sum_data[0].total_quantity;
-
-                console.log('grossTotalDB::'+grossTotal);
+                //Add Ons CheckBoxes
                 var checkboxesHTML = '';
                 extra_items_data.forEach(function(item) {
                     checkboxesHTML += '<div class="form-check">';
