@@ -869,6 +869,8 @@ $(document).ready(function() {
             //UPDATE GROSS_TOTAL
             checkbox.on("change", function() {
                 if (checkbox.is(":checked")) {
+                    var deliveryPrice = $(this).data('data-delivery-price');
+                    console.log("deliveryPrice::"+deliveryPrice);
                     // Add the delivery charge to the gross total when the checkbox is checked
                 // Update the gross total display
                 console.log("charge.delivery_price::"+charge.delivery_price);
