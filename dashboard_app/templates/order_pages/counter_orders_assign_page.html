@@ -862,6 +862,7 @@ $(document).ready(function() {
                                 discountedAmount += charge.delivery_price;
                                 $('#gross-total').text('Rs.'+discountedAmount+'/-');
                                 $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+                                checkState = true;
                             }else if(!isNaN(grossTotal)){
                                 console.log("Add BgrossTotal---->"+grossTotal);
                                 console.log("charge.delivery_price===>"+charge.delivery_price);
@@ -871,9 +872,9 @@ $(document).ready(function() {
                                 console.log("Add AgrossTotal---->"+grossTotal);
                                 $('#gross-total').text('Rs.'+grossTotal+'/-');
                                 $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
-                                checkState = false;
+                                checkState = true;
                             }
-                            checkState = true;
+                            
                         } else {
                             console.log('checked off');
                             if(checkState === true){
@@ -883,6 +884,7 @@ $(document).ready(function() {
                                     discountedAmount -= charge.delivery_price;
                                     $('#gross-total').text('Rs.'+discountedAmount+'/-');
                                     $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+                                    checkState = false;
                                 }else if(!isNaN(grossTotal)){
                                     console.log("Remove BgrossTotal---->"+grossTotal);
                                     console.log("charge.delivery_price===>"+charge.delivery_price);
@@ -951,6 +953,7 @@ $(document).ready(function() {
 
                 // Attach an event listener to the checkboxes
                 $('input[data-item-id]').change(function() {
+                    console.log('triggering here also');
                     var itemId = $(this).data('item-id');
                     var itemPrice = parseFloat($(this).data('item-price'));
                     var itemName = parseFloat($(this).data('item-name'));
