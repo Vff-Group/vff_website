@@ -679,7 +679,7 @@ $('#order-form').validate({
     submitHandler: function(form) {
         // When the form is valid, handle the form submission here
         // Create a JSON object with the form data
-        var jsonData = {
+        const dictMap = {
             'booking_id': booking_id,
             'delivery_price': delivery_charges,
             'discount_price': discountAmount,
@@ -697,24 +697,26 @@ $('#order-form').validate({
         console.log('jsonData::'+jsonData);
         return;
         // Perform an AJAX POST request
+        
+        const csrfToken = getCSRFToken();
         $.ajax({
-            url: '/admin_dashboard/place_new_order/', 
             type: 'POST',
-            dataType: 'json',
-            data: JSON.stringify(jsonData),
-            contentType: 'application/json',
-            success: function(response) {
-                // Handle the success response from the server
-                // You can open a new tab with the response data for printing
-                // For example, open a new tab with the response HTML
-                var newTab = window.open();
-                newTab.document.write(response.html);
+            url: '/admin_dashboard/place_new_order/', 
+            data: JSON.stringify(dictMap),
+        headers: {
+            'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+        },
+        contentType: 'application/json',
+            success: function (data) {
+               
+
+
             },
-            error: function(xhr, status, error) {
-                // Handle any errors from the server
-                console.log(error);
+            error: function (error) {
+                console.error('Error:', error);
             }
         });
+    
         // Prevent the default form submission
         return false;
     }
@@ -1062,6 +1064,7 @@ $(document).ready(function() {
                 console.error('Error:', error);
             }
         });
+    
     });
 });
 
