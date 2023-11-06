@@ -307,8 +307,8 @@
                 </div>
 
               </div>
-              <div class="col-4 d-flex justify-content-end">
-                <button class="btn btn-primary">Add</button>
+              <div class="col-lg-6 d-flex justify-content-end" id="add-customer">
+                <a class="btn btn-primary" href="{% url 'dashboard_app:add_customer' %}">Add New Customer</a>
               </div>
             </div>
           </div>
@@ -370,7 +370,7 @@
                     </div> -->
                     <div class="col-lg-7 align-items-end">
 
-                        <a class="btn btn-facebook text-xxs" data-bs-toggle="modal" data-bs-target="#modal-default1" id="save_btn">Save & Continue</a>
+                        <a class="btn btn-facebook text-xxs" data-bs-toggle="modal" data-bs-target="#modal-default1" id="save_btn" style="display: none;">Save & Continue</a>
                     </div>
                 </div>
                 
@@ -1940,6 +1940,7 @@ $.each(data.sub_categories, function(index, subCategory) {
 <script>
     $(document).ready(function() {
         const inputField = $('#customer-name');
+        const add_customer_btn = $('#add-customer');
         const suggestionContainer = $('#suggestion-container');
         const suggestionList = $('#suggestion-list');
         const selectedCustomerIdInput = $('#selected-customer-id');
@@ -1953,7 +1954,7 @@ $.each(data.sub_categories, function(index, subCategory) {
                 $.get(`/admin_dashboard/search_customer_to_assign_order/${inputText}/`, function(data) {
                     const suggestions = data.suggestions;
                     suggestionList.empty();
-    
+                    add_customer_btn.hide();
                     if (suggestions.length > 0) {
                         suggestions.forEach(function(suggestion) {
                             const suggestionItem = $('<li class="nav-item">').text(suggestion.customer_name);
@@ -1968,7 +1969,7 @@ $.each(data.sub_categories, function(index, subCategory) {
     
                                 // Hide the suggestions list (ul)
                                 suggestionContainer.hide();
-    
+                                add_customer_btn.show();
                                 // Hide the popover
                                 inputField.popover('hide');
                             });
@@ -1984,11 +1985,13 @@ $.each(data.sub_categories, function(index, subCategory) {
         inputField.focus(function() {
             // Display the suggestions container when the input field is focused
             suggestionContainer.show();
+            add_customer_btn.hide();
         });
     
         inputField.focusout(function() {
             // Hide the popover when the input field loses focus
             inputField.popover('hide');
+            add_customer_btn.show();
         });
     });
     
