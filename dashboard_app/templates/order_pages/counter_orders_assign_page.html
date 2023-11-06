@@ -1,6 +1,6 @@
 {% extends "common/base.html" %}
 {% load static %}
-{% block title %}Orders Assign{% endblock title%}
+{% block title %}On Counter Order{% endblock title%}
 {% block content %}
 
 <div class="container-fluid py-4">
@@ -370,7 +370,7 @@
                     </div> -->
                     <div class="col-lg-7 align-items-end">
 
-                        <a class="btn btn-facebook text-xxs" data-bs-toggle="modal" data-bs-target="#modal-default1" >Save & Continue</a>
+                        <a class="btn btn-facebook text-xxs" data-bs-toggle="modal" data-bs-target="#modal-default1" id="save_btn">Save & Continue</a>
                     </div>
                 </div>
                 
@@ -1192,6 +1192,7 @@ let selectedCategoryName = null;
 let selectedCategoryImage = null;
 let selectedCategoryBookingID = null;
 let generated_booking_id = "";
+var save_btn = $("#save_btn");
 
 //Create booking ID Before adding items to cart
 $("#generate-booking-id").on("click",function(){
@@ -1249,6 +1250,7 @@ $("#add_to_cart").on("click",function(){
     var selectedCategory = $("#input-category").val();
     var selectedServiceType = $("#input-price").val();
     var selectedSubSection = $("#input-section").val();
+    
     
     var inputElement = document.getElementById("item-quantity");
     
@@ -1410,7 +1412,7 @@ else{
         },
         contentType: 'application/json',
         success: function (response) {
-            
+            save_btn.show();
             //Empty the cart items
             selectedItems = [];
             $("#subCategoryTable .quantity").text("0");
@@ -1532,6 +1534,11 @@ function reloadCartItem(itemId,customer_id,booking_id) {
             const cartItemsData = response.cart_items_data;
         // Now you can access the cartItemsData as a JavaScript object
                     console.log(cartItemsData);
+                    if(cartItemsData.length === 0){
+                        save_btn.hide();
+                    }else{
+                        save_btn.show();
+                    }
             // Function to populate the table with data
         function populateCartItemsTable(data) {
             const cartItemsTable = $('#cartItemsTable tbody');

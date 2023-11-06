@@ -2168,6 +2168,7 @@ def load_cart_items_after_deletion(request):
             })
     else:
         error_msg = 'Something Went Wrong'
+        return JsonResponse({'error':error_msg})
     return JsonResponse({'cart_items_data':cart_items_data})
 
 
