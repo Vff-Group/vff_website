@@ -626,7 +626,7 @@ def add_staff(request,usrid=None):
                     cursor.execute(update_query)
                     
                     update_customer = (
-                        "update vff.laundry_customertbl set customer_name='"+str(uname)+"', query='"+str(queries)+"', designation='"+str(designation)+"', aadharno='"+str(aadharno)+"' where usrid='"+str(usrid)+"'"
+                        "update vff.laundry_employeetbl set employee_name='"+str(uname)+"', query='"+str(queries)+"', designation='"+str(designation)+"', aadharno='"+str(aadharno)+"' where usrid='"+str(usrid)+"'"
                     )
                     print(f"update employee details::{update_customer}")
                     cursor.execute(update_customer)
@@ -963,6 +963,68 @@ def all_unassigned_bookings(request):
      # using the 'current_url' variable to determine the active card.
     context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
     return render (request, 'bookings_pages/all_unassigned_bookings.html', context)
+
+#All On Counter Orders
+def all_counter_orders(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    error_msg = "No Orders Data Found"
+    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch from vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid  and order_status !='NA' and laundry_ordertbl.delivery_boyid='-1'  order by orderid desc"
+    query_result = execute_raw_query(query)
+    
+    
+        
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            depoch = row[25]#delivery epoch
+            oepoch = row[22]#order taken epoch
+            orderStatus = row[20]
+            deliveryEpoch = epochToDateTime(depoch)
+            orderTakenEpoch = epochToDateTime(oepoch)
+            if orderStatus != "Completed":
+                deliveryEpoch = "Not Delivered Yet"
+            
+            data.append({
+                'consmrid': row[0],
+                'usrid': row[1],
+                'customer_name': row[2],
+                'mobile_no': row[3],
+                'houseno': row[4],
+                'address': row[5],
+                'city': row[6],
+                'pincode': row[7],
+                'landmark': row[8],
+                'profile_img': row[9],
+                'device_token': row[10],
+                'orderid': row[11],
+                'delivery_boyid': row[12],
+                'quantity':row[13],
+                'price': row[14],
+                'pickup_dt': row[15],
+                'delivery_dt': row[16],
+                'clat': row[17],
+                'clng': row[18],
+                'order_completed': row[19],
+                'order_status': orderStatus,
+                'additional_instruction': row[21],
+                'order_taken_epoch': orderTakenEpoch,
+                'cancel_reason': row[23],
+                'feedback': row[24],
+                'delivery_epoch': deliveryEpoch,
+                
+                
+                
+               
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+     # using the 'current_url' variable to determine the active card.
+    context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    return render (request, 'order_pages/all_counter_orders_page.html', context)
+
 
 #All Orders
 def all_orders(request):
@@ -1794,7 +1856,7 @@ def all_main_branches(request):
     # using the 'current_url' variable to determine the active card.
     context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
     
-    return render(request, 'branch_pages/all_branches.html', context)
+    return render(request, 'branch_pages/all_main_branches.html', context)
 
 #Add New Branch
 def add_new_branch(request,branch_id=None):
@@ -1932,7 +1994,7 @@ def add_new_branch(request,branch_id=None):
 
     
     
-    return render(request,'customer_pages/add_customer.html',{'data':data})
+    return render(request,'customer_pages/add_new_branch.html',{'data':data})
 
 #Add Items to Cart
 def add_items_to_cart(request):

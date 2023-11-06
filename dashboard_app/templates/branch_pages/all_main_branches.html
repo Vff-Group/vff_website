@@ -6,7 +6,7 @@ endblock title%} {% block content %}
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header pb-0 d-flex justify-content-between">
-          <h6>Branches</h6>
+          <h6>Main Branches</h6>
           <div class="row justify-content-center align-items-center p-1">
             <a href="{% url 'dashboard_app:add_branch_details' %}">
               <span class="badge badge-sm bg-gradient-success">
@@ -113,7 +113,7 @@ endblock title%} {% block content %}
                           Edit
                         </a>
                       </div>
-                      <div class="col">
+                      {% comment %} <div class="col">
                         <a
                           href=""
                           class="text-danger font-weight-bold text-xs"
@@ -122,7 +122,7 @@ endblock title%} {% block content %}
                         >
                           Delete
                         </a>
-                      </div>
+                      </div> {% endcomment %}
                     </div>
                   </td>
                 </tr>

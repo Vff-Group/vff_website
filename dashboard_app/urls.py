@@ -52,9 +52,9 @@ urlpatterns = [
     path('expense_category/add_expense_category/',views.add_expense_category,name='add_expense_category'),
     
     #Branch details Routes
-    path('all_branches/',views.all_main_branches,name='all_main_branches'),
-    path('all_branches/add_branch_details/',views.add_new_branch,name='add_branch_details'),
-    path('all_branches/update_branch_details/<int:branch_id>',views.add_new_branch,name='update_branch_details'),
+    path('all_main_branches/',views.all_main_branches,name='all_main_branches'),
+    path('all_main_branches/add_branch_details/',views.add_new_branch,name='add_branch_details'),
+    path('all_main_branches/update_branch_details/<int:branch_id>',views.add_new_branch,name='update_branch_details'),
     
     #Order Screens
     path('order_status_screen/',views.order_status_screen,name='order_status_screen'),
@@ -76,6 +76,8 @@ urlpatterns = [
     path('load_extra_items/',views.load_extra_items,name='load_extra_items'),
     #Place Order
     path('place_new_order/',views.place_new_order,name='place_new_order'),
+    #All OnCounter Orders
+    path('all_counter_orders/',views.all_counter_orders,name='all_counter_orders'),
     
     #Reports Screen
     path('daily_report/',views.daily_report,name='daily_report'),
