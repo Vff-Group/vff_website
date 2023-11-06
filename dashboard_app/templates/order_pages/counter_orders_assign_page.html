@@ -608,7 +608,7 @@
 
 
     <script>
-
+        $(document).ready(function() {
         // When "Pay Now" button is clicked
     $("#pay-button").click(function(e) {
         // Check if payment mode is not selected
@@ -624,6 +624,7 @@
                 // If a valid selection is made, add the "is-valid" class
                 $("#input-paymentmode").removeClass("is-invalid").addClass("is-valid");
             }
+    });
     });
 // Initialize form validation for your form
 $('#order-form').validate({
