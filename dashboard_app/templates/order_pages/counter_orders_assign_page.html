@@ -694,7 +694,8 @@ $('#order-form').validate({
             paymentmode: $('#input-paymentmode').val(),
             // Add other form fields to the JSON object
         };
-
+        console.log('jsonData::'+jsonData);
+        return;
         // Perform an AJAX POST request
         $.ajax({
             url: '/admin_dashboard/place_new_order/', 
