@@ -683,7 +683,12 @@ $('#order-form').validate({
 
         var selected_customer_id = document.getElementById("selected-customer-id");
     var customer_name_input = document.getElementById("customer-name");
-    
+    var date_of_delivery = $('#dateofdelivery').val();
+    var add_information = $("#additional_info").val();
+
+    if(add_information === ""){
+        add_information = 'NA';
+    }
     var customer_id = selected_customer_id.value.trim()
     var customer_name = customer_name_input.value.trim()
 
@@ -704,8 +709,8 @@ $('#order-form').validate({
             'payment_status': "Success",
             'payment_type': paymentType,
             'extra_items': extraItems,
-            'additional_instruction': $("#additional_info").val(),
-            'dateofdelivery': $('#dateofdelivery').val(),
+            'additional_instruction': add_information,
+            'dateofdelivery': date_of_delivery,
             // Add other form fields to the JSON object
         };
         console.log('dictMap::'+JSON.stringify(dictMap));
