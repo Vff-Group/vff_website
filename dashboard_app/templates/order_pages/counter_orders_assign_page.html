@@ -614,6 +614,7 @@
                 var grossTotal = 0; // Total amount
                 var grossQuantity = 0; // Total Quantity
                 var addOnsTotal = 0;
+                var booking_id = -1;
                 var deliveryTotal = 0;
                 var discountAmount = 0;
                 var discountedAmount = 0;
@@ -681,7 +682,7 @@ $('#order-form').validate({
         event.preventDefault();
         // Create a JSON object with the form data
         const dictMap = {
-            'booking_id': booking_id,
+            'booking_id': generated_booking_id,
             'delivery_price': delivery_charges,
             'discount_price': discountAmount,
             'total_price': totalPayment,
