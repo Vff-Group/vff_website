@@ -547,10 +547,11 @@
 
                         <div class="pl-lg-4">
                           <div class="form-group">
-                            <label>Notes</label>
+                            <label>Additional Instructions</label>
                             <textarea
                               rows="4"
                               class="form-control form-control-alternative"
+                              id="additional_info"
                               placeholder="Enter Notes"
                               name="notes"
                             ></textarea>
@@ -608,6 +609,21 @@
 
 
     <script>
+
+        var extraItems = [];
+                var grossTotal = 0; // Total amount
+                var grossQuantity = 0; // Total Quantity
+                var addOnsTotal = 0;
+                var deliveryTotal = 0;
+                var discountAmount = 0;
+                var discountedAmount = 0;
+                var delivery_price =0;
+                var delivery_range = 0;
+                var delivery_charges = 0;
+                var totalPayment = 0;
+                var payment_id = "";
+                var paymentType = "";
+
         $(document).ready(function() {
         // When "Pay Now" button is clicked
     $("#pay-button").click(function(e) {
@@ -660,6 +676,45 @@ $('#order-form').validate({
         // Remove invalid class and add valid class
         $(element).removeClass(errorClass).addClass(validClass);
     },
+    submitHandler: function(form) {
+        // When the form is valid, handle the form submission here
+        // Create a JSON object with the form data
+        var jsonData = {
+            'booking_id': booking_id,
+            'delivery_price': delivery_charges,
+            'discount_price': discountAmount,
+            'total_price': totalPayment,
+            'total_items': grossQuantity,
+            'razor_pay_id': payment_id,
+            'payment_status': "Success",
+            'payment_type': paymentType,
+            'extra_items': extraItems,
+            'additional_instruction': $("#additional_info").val(),
+            dateofdelivery: $('#dateofdelivery').val(),
+            paymentmode: $('#input-paymentmode').val(),
+            // Add other form fields to the JSON object
+        };
+
+        // Perform an AJAX POST request
+        $.ajax({
+            url: '/admin_dashboard/place_new_order/', 
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(jsonData),
+            contentType: 'application/json',
+            success: function(response) {
+                // Handle the success response from the server
+                // You can open a new tab with the response data for printing
+                // For example, open a new tab with the response HTML
+                var newTab = window.open();
+                newTab.document.write(response.html);
+            },
+            error: function(xhr, status, error) {
+                // Handle any errors from the server
+                console.log(error);
+            }
+        });
+    }
 });
 
 
@@ -668,7 +723,7 @@ $('#order-form').validate({
 $('#input-paymentmode').change(function() {
     var paymentMode = $(this).val();
     var paymentIdContainer = $('#payment-id-container');
-
+    paymentType = paymentMode;
     // Check if the payment mode is 'Cash' and hide the 'Pay Now' button
     if (paymentMode === 'Cash') {
         $('#pay-button').hide();
@@ -721,17 +776,18 @@ $(document).ready(function() {
         },
         contentType: 'application/json',
             success: function (data) {
-                var extraItems = [];
-                var grossTotal = 0; // Total amount
-                var addOnsTotal = 0;
-                var deliveryTotal = 0;
-                var discountAmount = 0;
-                var discountedAmount = 0;
-                var delivery_price =0;
-                var delivery_range = 0;
-                var delivery_charges = 0;
-                var totalPayment = 0;
-                var payment_id = "";
+                extraItems = [];
+                grossTotal = 0; // Total amount
+                grossQuantity = 0;
+                addOnsTotal = 0;
+                deliveryTotal = 0;
+                discountAmount = 0;
+                discountedAmount = 0;
+                delivery_price =0;
+                delivery_range = 0;
+                delivery_charges = 0;
+                totalPayment = 0;
+                payment_id = "";
                 
     if(!isNaN(addOnsTotal)){
         $('#addons-total').text('Rs.'+addOnsTotal+'/-');
@@ -899,7 +955,7 @@ $(document).ready(function() {
                         addOnsTotal += itemPrice;
 
                         //Saving to Json
-                        extraItems.push({ name: itemName, price: itemPrice,id:itemId });
+                        extraItems.push({ extra_item_name: itemName, extra_item_price: itemPrice,extra_item_id:itemId });
                         
                     } else {
                         // Checkbox is unchecked
@@ -907,7 +963,7 @@ $(document).ready(function() {
 
                         //Deleting from Json
                         // Find and remove the item from the selectedItems array
-                        extraItems = extraItems.filter(item => item.name !== itemName);
+                        extraItems = extraItems.filter(item => item.extra_item_name !== itemName);
 
                         grossTotal -= itemPrice;
                         addOnsTotal -= itemPrice;

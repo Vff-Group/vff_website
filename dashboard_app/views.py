@@ -2215,7 +2215,96 @@ def generate_booking_id(request):
     
     return JsonResponse({'error_msg':error_msg})
 
+#Place Order
+def place_new_order(request):
+    
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    
+    
+    error_msg = "Something Went Wrong"
+    if request.method == "POST":
+        jdict = json.loads(request.body)
+        booking_id = jdict['booking_id']
+        delivery_price = jdict['delivery_price']
+        discount_price = jdict['discount_price']
+        customer_id = jdict['customer_id']
+        total_price = jdict['total_price']
+        total_items = jdict['total_items']
+        order_status = "Payment Done"
+        razor_pay_id = jdict['razor_pay_id']
+        payment_status = jdict['payment_status']
+        payment_type = jdict['payment_type']
+        extra_item_dict = jdict['extra_items']
+        additional_instruction = jdict['additional_instruction']
 
+        branch_id = request.session.get('branchid')
+        
+        try:
+            with connection.cursor() as cursor:
+                #Insert Record into Order Table First to Generate Order ID
+                query_order = "insert into vff.laundry_ordertbl(customerid,quantity,price,order_status,additional_instruction,booking_id,delivery_price,discount_price) values ('"+str(customer_id)+"','"+str(total_items)+"','"+str(total_price)+"','"+str(order_status)+"','"+str(additional_instruction)+"','"+str(booking_id)+"','"+str(delivery_price)+"','"+str(discount_price)+"') returning orderid"
+                cursor.execute(query_order)
+                order_id = cursor.fetchone()[0]
+                print(f'Retuning BOOKING ID-------->{order_id}')
+                connection.commit()
+
+                #Insert record in payment table with razorpay_payment_id
+                query_payment = "insert into vff.laundry_payment_tbl(order_id,razor_pay_payment_id,status,payment_type,branch_id) values ('"+str(order_id)+"','"+str(razor_pay_id)+"','"+str(payment_status)+"','"+str(payment_type)+"','"+str(branch_id)+"')"
+                print(f'insert payment::{query_payment}')
+                cursor.execute(query_payment)
+                connection.commit()
+                
+                #Adding all cart items into active order table 
+                query_active_orders="insert into vff.laundry_active_orders_tbl(order_id,booking_id,categoryid,subcategoryid,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type) select "+str(order_id)+" as order_id,booking_id,catid,subcatid,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type from vff.laundry_cart_items where customer_id='"+str(customer_id)+"' and booking_id='"+str(booking_id)+"'"
+                print(f'query_active_orders::{query_active_orders}')
+                cursor.execute(query_active_orders)
+                connection.commit()
+                
+                #insert extra items selected by customer while checking out
+                print(f'extra_item_dict::{extra_item_dict}')
+                try:
+                    for item in extra_item_dict:
+                        print('--------------------Trying to add----------------')
+                        extra_id = item['extra_item_id']
+                        print(f'extra_item_id:::{extra_id}')
+                        extra_item_price = item['extra_item_price']
+                        extra_name = item['extra_item_name']
+                        query3="insert into vff.laundry_cart_extra_items_tbl(extra_item_id,price,extra_item_name,order_id) values ('"+str(extra_id)+"','"+str(extra_item_price)+"','"+str(extra_name)+"','"+str(order_id)+"')"
+                        print(f"Qeury3:::{query3}")
+                        cursor.execute(query_active_orders)
+                        connection.commit()
+                  #  obj.reply_data="ErrorCode#0"
+                except Exception as e:
+                    print(e)
+                    
+                #Update Order status
+                update_order_status(request,order_id,order_status)
+                    
+
+                
+        except Exception as e:
+            print(f"Error Placing New Order: {e}")
+            error_msg = 'Something went wrong'
+            return JsonResponse({'error':error_msg})
+        
+            
+
+    
+    return JsonResponse({'html':'html'})
+    #return redirect('dashboard_app:all_orders')
+
+def update_order_status(request,order_id,status):
+    try:
+        with connection.cursor() as cursor:
+            query="insert into vff.laundry_order_historytbl(order_id,order_stages) values ('"+str(order_id)+"','"+str(status)+"')"
+            cursor.execute(query)
+            connection.commit()
+            print(f'Order status updated to {status} for order ID::{order_id}')
+    except Exception as e:
+            print(f"Error Updating Order Status: {e}")
+    
 #All Expenses
 def all_expenses(request):
     isLogin = is_loggedin(request)
