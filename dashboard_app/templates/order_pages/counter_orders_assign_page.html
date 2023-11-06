@@ -810,6 +810,7 @@ $(document).ready(function() {
                 var delivery_range = 0;
                 var delivery_charges = 0;
                 var totalPayment = 0;
+                var payment_id = "";
                 
     if(!isNaN(addOnsTotal)){
         $('#addons-total').text('Rs.'+addOnsTotal+'/-');
@@ -1068,8 +1069,9 @@ $(document).ready(function() {
             // Convert the selectedItems object to JSON
     var selectedItemsJSON = JSON.stringify(extraItems);
     console.log('Selected Extra Items JSON: ' + selectedItemsJSON);
-                var razor_pay_id = payment_show(totalPayment);
-                console.log('razor_pay_id::'+razor_pay_id);
+                payment_show(totalPayment);
+                //TODO:Need to save Razor Pay Payment ID.
+                console.log('razor_pay_id::'+payment_id);
                 
                 e.preventDefault();
             }
@@ -1094,8 +1096,8 @@ function payment_show(totalPayment){
         "description": "Laundry Service Charges",
         "image": "https://vff-group.com/static/images/logo.png",
         "handler": function (response){
-            return response.razorpay_payment_id;
-            alert(response.razorpay_payment_id);
+            payment_id =  response.razorpay_payment_id;
+            //alert(response.razorpay_payment_id);
             //alert(response.razorpay_order_id);
             //alert(response.razorpay_signature)
         },
