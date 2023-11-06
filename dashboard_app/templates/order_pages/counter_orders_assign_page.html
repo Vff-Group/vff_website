@@ -606,7 +606,36 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     
+<script>
+    // When "Cancel" button in the main modal is clicked
+$('#modal-default1').on('show.bs.modal', function (e) {
+    var $modal = $(this);
+    var $confirmationModal = $('#confirmation-modal');
 
+    // Show the confirmation modal
+    $confirmationModal.modal('show');
+
+    // When "Yes" button in the confirmation modal is clicked
+    $('#confirm-cancel-button').click(function() {
+        // Close both modals
+        $modal.modal('hide');
+        $confirmationModal.modal('hide');
+    });
+
+    // When "No" button in the confirmation modal is clicked
+    $confirmationModal.on('hidden.bs.modal', function (e) {
+        // Close only the confirmation modal
+        $confirmationModal.modal('hide');
+    });
+});
+
+// When the main modal is hidden
+$('#modal-default1').on('hidden.bs.modal', function (e) {
+    // Reset the confirmation modal if needed
+    $('#confirmation-modal').modal('hide');
+});
+
+</script>
 
     <script>
 
@@ -729,7 +758,18 @@ $('#order-form').validate({
             success: function (data) {
                console.log('Success:'+JSON.stringify(data.html))
 
+               // Redirect to the "all orders" URL
+               window.location.replace('/admin_dashboard/all_counter_orders');
 
+    // Open a new tab for printing
+    var newTab = window.open();
+    newTab.document.write(data.html);
+
+    // Listen for the beforeunload event to close the tab if canceled
+    newTab.onbeforeunload = function (e) {
+        // Close the tab when the user tries to close it
+        newTab.close();
+    };
             },
             error: function (error) {
                 console.error('Error:', error);
