@@ -680,9 +680,22 @@ $('#order-form').validate({
     submitHandler: function(form) {
         // When the form is valid, handle the form submission here
         event.preventDefault();
+
+        var selected_customer_id = document.getElementById("selected-customer-id");
+    var customer_name_input = document.getElementById("customer-name");
+    
+    var customer_id = selected_customer_id.value.trim()
+    var customer_name = customer_name_input.value.trim()
+
+    if(customer_id === ""){
+        showToast('Alert','Please Search customer before adding any items');
+        return;
+    }
+
         // Create a JSON object with the form data
         const dictMap = {
             'booking_id': generated_booking_id,
+            'customer_id' : customer_id,
             'delivery_price': delivery_charges,
             'discount_price': discountAmount,
             'total_price': totalPayment,
