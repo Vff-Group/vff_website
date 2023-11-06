@@ -664,6 +664,18 @@ $('#input-paymentmode').change(function() {
     }
 });
 
+// Function to disable elements
+function disableElements() {
+    // Disable "Pay Now" button
+    $("#pay-button").prop("disabled", true);
+
+    // Disable payment mode select dropdown
+    $("#input-paymentmode").prop("disabled", true);
+
+    // Disable all checkboxes
+    $('input[type="checkbox"]').prop("disabled", true);
+}
+
 //MOdal Class is triggered to show Add Ons
 $(document).ready(function() {
     var selectedItems = {}; // Object to keep track of selected items and their prices
@@ -985,6 +997,7 @@ function payment_show(totalPayment){
             payment_id =  response.razorpay_payment_id;
             // Update the payment ID input
             $('#input-paymentid').val(payment_id);
+            disableElements() ;
             //alert(response.razorpay_payment_id);
             //alert(response.razorpay_order_id);
             //alert(response.razorpay_signature)
