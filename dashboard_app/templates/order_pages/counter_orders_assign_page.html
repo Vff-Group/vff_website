@@ -370,7 +370,7 @@
                     </div> -->
                     <div class="col-lg-7 align-items-end">
 
-                        <a class="btn btn-facebook text-xxs" data-bs-toggle="modal" data-bs-target="#modal-default1">Save & Continue</a>
+                        <a class="btn btn-facebook text-xxs" data-bs-toggle="modal" data-bs-target="#modal-default1" >Save & Continue</a>
                     </div>
                 </div>
                 
@@ -394,6 +394,7 @@
           role="dialog"
           aria-labelledby="modal-default"
           aria-hidden="true"
+          data-backdrop="static"
         >
           <div
             class="modal-dialog modal- modal-dialog-centered modal-"
@@ -572,6 +573,21 @@
                     Cancel
                   </button>
                 </div>
+
+                <!-- Confirmation Modal -->
+<div class="modal" id="confirmation-modal" tabindex="-1" role="dialog" aria-labelledby="confirmation-modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Do you want to cancel this order details?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" id="confirm-cancel-button">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
               </form>
             </div>
           </div>
@@ -598,14 +614,14 @@ $('#order-form').validate({
     rules: {
         // Define validation rules for your form fields
         'dateofdelivery': 'required',
-        'discount-value': 'required',
+       // 'discount-value': 'required',
         'input-paymentmode': 'required',
         // Add rules for other form fields
     },
     messages: {
         // Define custom error messages if needed
         'dateofdelivery': 'Please select a delivery date',
-        'discount-value': 'Please enter a discount value',
+        //'discount-value': 'Please enter a discount value',
         'input-paymentmode': 'Please select a payment mode',
         // Add custom error messages for other fields
     },
@@ -629,33 +645,7 @@ $('#order-form').validate({
     },
 });
 
-// Event listener for form submission
-$('#order-form').submit(function(event) {
-    event.preventDefault();
 
-    // Check if the form is valid
-    if ($(this).valid()) {
-        // Create an object to store form values
-        var formData = {};
-
-        // Iterate through form fields one by one
-        $(this).find('input, select, textarea').each(function() {
-            var fieldName = $(this).attr('name');
-            var fieldValue = $(this).val();
-
-            // Add the field and its value to the formData object
-            formData[fieldName] = fieldValue;
-        });
-
-        // Convert the formData object to JSON
-        var formDataJSON = JSON.stringify(formData);
-
-        // Debug: Display the JSON in the console
-        console.log(formDataJSON);
-
-        // Perform AJAX request here and use formDataJSON as needed
-    }
-});
 
 // Event listener for the payment mode selection
 $('#input-paymentmode').change(function() {
