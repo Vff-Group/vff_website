@@ -650,6 +650,18 @@ $('#order-form').submit(function(event) {
     }
 });
 
+// Event listener for the payment mode selection
+$('#input-paymentmode').change(function() {
+    var paymentMode = $(this).val();
+
+    // Check if the payment mode is 'Cash' and hide the 'Pay Now' button
+    if (paymentMode === 'Cash') {
+        $('#pay-button').hide();
+    } else {
+        $('#pay-button').show();
+    }
+});
+
 //MOdal Class is triggered to show Add Ons
 $(document).ready(function() {
     var selectedItems = {}; // Object to keep track of selected items and their prices
