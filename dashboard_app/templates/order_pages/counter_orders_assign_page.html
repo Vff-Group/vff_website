@@ -437,7 +437,7 @@
                                 id="date-of-delivery"
                                 name="dateofdelivery"
                                 value=""
-                                required
+                                
                               />
                             </div>
                           </div>
@@ -455,7 +455,7 @@
                                 name="discount-value"
                                 value=""
                                 placeholder="Enter if any discount"
-                                required
+                                
                               />
                             </div>
                           </div>
@@ -674,6 +674,12 @@ function disableElements() {
 
     // Disable all checkboxes
     $('input[type="checkbox"]').prop("disabled", true);
+
+     // Disable delivery date input box
+     $("#date-of-delivery").prop("disabled", true);
+
+     // Disable discount input box
+     $("#discounted-input").prop("disabled", true);
 }
 
 //MOdal Class is triggered to show Add Ons
