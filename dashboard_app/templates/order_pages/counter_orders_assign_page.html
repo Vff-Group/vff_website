@@ -692,12 +692,11 @@ $('#order-form').validate({
             'payment_type': paymentType,
             'extra_items': extraItems,
             'additional_instruction': $("#additional_info").val(),
-            dateofdelivery: $('#dateofdelivery').val(),
-            paymentmode: $('#input-paymentmode').val(),
+            'dateofdelivery': $('#dateofdelivery').val(),
             // Add other form fields to the JSON object
         };
         console.log('dictMap::'+JSON.stringify(dictMap));
-        return;
+        
         // Perform an AJAX POST request
         
         const csrfToken = getCSRFToken();
@@ -710,7 +709,7 @@ $('#order-form').validate({
         },
         contentType: 'application/json',
             success: function (data) {
-               
+               console.log('Success:'+JSON.stringify(data.html))
 
 
             },
