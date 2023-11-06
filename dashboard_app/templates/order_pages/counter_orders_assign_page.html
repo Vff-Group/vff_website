@@ -525,7 +525,14 @@
                             </div>
                           </div>
                         </div>
-
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group" id="payment-id-container" style="display: none;">
+                                    <label class="form-control-label" for="input-paymentid">Payment ID</label>
+                                    <input class="form-control form-control-alternative" type="text" id="input-paymentid" name="payment-id" disabled>
+                                </div>
+                            </div>
+                        </div>
                         <!-- <hr />
                         <div class="row">
                           <div class="col-lg-6">
@@ -653,12 +660,17 @@ $('#order-form').submit(function(event) {
 // Event listener for the payment mode selection
 $('#input-paymentmode').change(function() {
     var paymentMode = $(this).val();
+    var paymentIdContainer = $('#payment-id-container');
 
     // Check if the payment mode is 'Cash' and hide the 'Pay Now' button
     if (paymentMode === 'Cash') {
         $('#pay-button').hide();
+         // If the payment mode is "Cash," hiding the payment ID container
+         paymentIdContainer.hide();
     } else {
         $('#pay-button').show();
+        // If the payment mode is not "Cash," show the payment ID container
+        paymentIdContainer.show();
     }
 });
 
@@ -981,6 +993,8 @@ function payment_show(totalPayment){
         "image": "https://vff-group.com/static/images/logo.png",
         "handler": function (response){
             payment_id =  response.razorpay_payment_id;
+            // Update the payment ID input
+            $('#input-paymentid').val(payment_id);
             //alert(response.razorpay_payment_id);
             //alert(response.razorpay_order_id);
             //alert(response.razorpay_signature)
