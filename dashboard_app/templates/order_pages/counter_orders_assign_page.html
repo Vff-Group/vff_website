@@ -678,6 +678,7 @@ $('#order-form').validate({
     },
     submitHandler: function(form) {
         // When the form is valid, handle the form submission here
+        event.preventDefault();
         // Create a JSON object with the form data
         const dictMap = {
             'booking_id': booking_id,
@@ -717,8 +718,7 @@ $('#order-form').validate({
             }
         });
     
-        // Prevent the default form submission
-        return false;
+        
     }
 });
 
