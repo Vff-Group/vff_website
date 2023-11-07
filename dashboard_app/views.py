@@ -1869,7 +1869,7 @@ def add_new_branch(request,branch_id=None):
         branch_landmark = request.POST.get('branch_landmark')
         uploaded_image = request.FILES.get('profile-image1')
 
-        
+        print(f'branch_name--->{branch_name}')
         if uploaded_image:
             image_url = upload_images2(uploaded_image)
         elif data.get('profile_img'):
