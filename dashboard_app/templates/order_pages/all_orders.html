@@ -213,16 +213,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-  // Get the current date in the format "YYYY-MM-DD"
-  const today = new Date().toISOString().substr(0, 10);
-
-  // Set the default value of the date input to today's date
-  document.getElementById("date-of-order").value = today;
-
- 
     $(document).ready(function () {
-
-        
         // Add an event listener to the search input field
         $('#order-id-search').on('input', function () {
             applyFilters();
@@ -237,7 +228,6 @@
         $('#date-of-order').on('input', function () {
             applyFilters();
         });
-        
 
         function applyFilters() {
             // Get the user's search input
@@ -268,5 +258,6 @@
         }
     });
 </script>
+
 
 {% endblock  %}
