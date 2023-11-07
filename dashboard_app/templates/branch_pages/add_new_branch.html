@@ -17,6 +17,7 @@ Add New Branch Details
        
         <div class="card card-profile shadow mb-4">
         <div class="card-body">
+          <input type="text" value="{{}}">
     <form  id="branch-form"  method="post" enctype="multipart/form-data">
         {% csrf_token %}
       <h6 class="heading-small text-muted mb-4">Branch Information</h6>
@@ -221,7 +222,7 @@ Add New Branch Details
 <script>
   $(document).ready(function () {
     $('form').on('submit', function (e) {
-      //e.preventDefault();
+      e.preventDefault();
       console.log('Started');
       // Perform form validation
       var isValid = true;
@@ -281,28 +282,10 @@ Add New Branch Details
             submitHandler: function(form) {
               // When the form is valid, handle the form submission here
               console.log('Success');
-              //event.preventDefault();
-              if (isValid) {
-                // Form is valid, make the POST request
-                var formData = new FormData(this);
-                var url = $(this).attr('action');
-                
-                $.ajax({
-                  type: 'POST',
-                  url: url,
-                  data: formData,
-                  processData: false,
-                  contentType: false,
-                  success: function (response) {
-                    // Handle the success response
-                    console.log(response);
-                  },
-                  error: function (error) {
-                    // Handle the error response
-                    console.error(error);
-                  },
-                });
-              }
+              event.preventDefault();
+              var redirectUrl = '/all_main_branches/update_branch_details/' + branchId;
+              window.location.href = redirectUrl;
+              return false; // Prevent the form from submitting normally
             }
             
           });

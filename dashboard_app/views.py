@@ -1907,6 +1907,7 @@ def add_new_branch(request,branch_id=None):
         try:
             with connection.cursor() as cursor:
                 if branch_id:
+                    print(f'branch_id--->::{branch_id}')
                     # Update an existing branchid
                     update_query = (
                         "update vff.usertbl set usrname='"+str(uname)+"',mobile_no='"+str(primary_mobno)+"',address='"+str(address)+"',age='"+str(age)+"',gender='"+str(gender)+"',date_of_birth='"+str(date_of_birth)+"',pincode='"+str(pincode)+"',landmark='"+str(land_mark)+"',profile_img='"+str(image_url)+"' where usrid='"+str(usrid)+"'"
