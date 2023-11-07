@@ -1810,8 +1810,11 @@ def add_new_branch(request,branch_id=None):
     if branch_id:
         try:
             with connection.cursor() as cursor:
-                cursor.execute("select branchid,branch_name,owner_name,branchtbl.address,branch_type,branchtbl.city,branchtbl.state,mobile_no,usertbl.address,usertbl.city,usertbl.pincode,branchtbl.pincode,profile_img,owner_id,aadhar_no,houseno,usertbl.landmark,date_of_birth from vff.usertbl,vff.branchtbl where branchtbl.owner_id=usertbl.usrid and branchid='"+str(branch_id)+"'")
+                query = "select branchid,branch_name,owner_name,branchtbl.address,branch_type,branchtbl.city,branchtbl.state,mobile_no,usertbl.address,usertbl.city,usertbl.pincode,branchtbl.pincode,profile_img,owner_id,aadhar_no,houseno,usertbl.landmark,date_of_birth from vff.usertbl,vff.branchtbl where branchtbl.owner_id=usertbl.usrid and branchid='"+str(branch_id)+"'"
+                cursor.execute(query)
+                print(f'Query Branch Edit ::{query}')
                 row = cursor.fetchone()
+                
                 print(f'fetching the single user data::{row}')
                 if row:
                     image_url = row[11]
