@@ -246,9 +246,10 @@
                 var orderDate = $(this).find('td:nth-child(5) span').text();
                 // Convert the displayed date to a JavaScript Date object
                 var displayedDate = new Date(orderDate);
-
+                console.log('displayedDate::'+displayedDate);
                // Format the displayed date for comparison
                 var formattedDate = displayedDate.toLocaleString();
+                console.log('formattedDate::'+formattedDate);
                 if (
                    (orderId.includes(orderIdSearch) || orderIdSearch === '') &&
                    (orderType === orderTypeFilter || orderTypeFilter === 'All Orders') &&
