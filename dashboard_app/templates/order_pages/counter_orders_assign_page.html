@@ -589,6 +589,7 @@
                   <button
                     type="button"
                     class="btn btn-link ml-auto"
+                    id="cancel-btn"
                     data-bs-dismiss="modal"
                   >
                     Cancel
@@ -865,6 +866,9 @@ function disableElements() {
 
      // Disable discount input box
      $("#discounted-input").prop("disabled", true);
+     
+     // Disable discount input box
+     $("#cancel-btn").prop("disabled", true);
 }
 
 //MOdal Class is triggered to show Add Ons
