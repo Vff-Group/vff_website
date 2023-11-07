@@ -1805,7 +1805,7 @@ function showToast(message, bodyContent) {
             var subCategoryTable = $('#subCategoryTable tbody');
             var priceSelect = $('#input-price');
             var showSearchLayout = $('#show-search');
-
+            showSearchLayout.hide();
             //Extra Headers
            // var costTh = $("<th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-25'>Cost</th>");
             //var emptyTh = $("<th class='text-secondary opacity-7'></th>");
@@ -1943,6 +1943,7 @@ if (subCategoryTable.find('tr').length > 0) {
             var cat_img = $(categorySelect).find(":selected").data("cat_img");
             var cat_name = $(categorySelect).find(":selected").data("cat_name");
             var showSearchLayout = $('#show-search');
+            showSearchLayout.hide();
             selectedItems = [];
             console.log('CatID::'+cat_id)
             console.log('CatIMG::'+cat_img)
