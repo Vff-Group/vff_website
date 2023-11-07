@@ -54,7 +54,7 @@ Add New Branch Details
           <div class="col-lg-7">
             <div class="form-group">
               <label class="form-control-label" for="input-fullname">Owner Full Name</label>
-              <input type="text" id="input-fullname" class="form-control form-control-alternative" placeholder="Enter full name" name="fullname" autocomplete="off" value="{{ data.owner_name|default:'' }}"  required>
+              <input type="text" id="input-fullname" class="form-control form-control-alternative" placeholder="Enter Owner Full name" name="fullname" autocomplete="off" value="{{ data.owner_name|default:'' }}"  required>
             </div>
           </div>
 
@@ -145,7 +145,7 @@ Add New Branch Details
           <div class="col-lg-4">
             <div class="form-group">
               <label class="form-control-label" for="input-company_name">Branch Name</label>
-              <input type="text" id="input-company_name" class="form-control form-control-alternative" placeholder="Company Name" name="company_name" value="{{ data.company_name|default:'' }}"  required>
+              <input type="text" id="input-company_name" class="form-control form-control-alternative" placeholder="Company Name" name="branch_name" value="{{ data.branch_name|default:'' }}"  required>
             </div>
           </div>
 
@@ -164,32 +164,32 @@ Add New Branch Details
           <div class="col-lg-3">
             <div class="form-group">
               <label class="form-control-label" for="input-address">Address</label>
-              <input id="input-address" class="form-control form-control-alternative" placeholder="Full Address"  type="text" name="fulladdress" value="{{ data.fulladdress|default:'' }}"  required>
+              <input id="input-address" class="form-control form-control-alternative" placeholder="Full Address"  type="text" name="branch_address" value="{{ data.branch_address|default:'' }}"  required>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="form-group">
               <label class="form-control-label" for="input-state">State</label>
-              <input id="input-state" class="form-control form-control-alternative" placeholder="State Name"  type="text" name="fulladdress" value="{{ data.state|default:'' }}"  required>
+              <input id="input-state" class="form-control form-control-alternative" placeholder="State Name"  type="text" name="branch_state" value="{{ data.branch_state|default:'' }}"  required>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="form-group">
               <label class="form-control-label" for="input-city">City</label>
-              <input id="input-city" class="form-control form-control-alternative" placeholder="City Name"  type="text" name="fulladdress" value="{{ data.city|default:'' }}"  required>
+              <input id="input-city" class="form-control form-control-alternative" placeholder="City Name"  type="text" name="branch_city" value="{{ data.branch_city|default:'' }}"  required>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="form-group">
               <label class="form-control-label" for="input-country">Postal code</label>
-              <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="Postal code" name="pincode" value="{{ data.pincode|default:'' }}"  required>
+              <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="Postal code" name="branch_pincode" value="{{ data.branch_pincode|default:'' }}"  required>
             </div>
           </div>
 
           <div class="col-lg-6">
             <div class="form-group">
               <label class="form-control-label" for="input-landmark">Nearest Landmark</label>
-              <input id="input-landmark" class="form-control form-control-alternative" placeholder="Nearest landmark like car showroom,etc"  type="text" name="landmark" value="{{ data.landmark|default:'' }}"  required>
+              <input id="input-landmark" class="form-control form-control-alternative" placeholder="Nearest landmark like car showroom,etc"  type="text" name="branch_landmark" value="{{ data.branch_landmark|default:'' }}"  required>
             </div>
           </div>
         </div>

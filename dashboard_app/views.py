@@ -1810,7 +1810,7 @@ def add_new_branch(request,branch_id=None):
     if branch_id:
         try:
             with connection.cursor() as cursor:
-                query = "select branchid,branch_name,owner_name,branchtbl.address,branch_type,branchtbl.city,branchtbl.state,mobile_no,usertbl.address,usertbl.city,usertbl.pincode,branchtbl.pincode,profile_img,owner_id,aadhar_no,houseno,usertbl.landmark,date_of_birth from vff.usertbl,vff.branchtbl where branchtbl.owner_id=usertbl.usrid and branchid='"+str(branch_id)+"'"
+                query = "select branchid,branch_name,owner_name,branchtbl.address,branch_type,branchtbl.city,branchtbl.state,mobile_no,usertbl.address,usertbl.city,usertbl.pincode,branchtbl.pincode,profile_img,owner_id,aadhar_no,houseno,usertbl.landmark,date_of_birth,age,gender,gstno,igstno,branchtbl.landmark from vff.usertbl,vff.branchtbl where branchtbl.owner_id=usertbl.usrid and branchid='"+str(branch_id)+"'"
                 cursor.execute(query)
                 print(f'Query Branch Edit ::{query}')
                 row = cursor.fetchone()
@@ -1826,7 +1826,7 @@ def add_new_branch(request,branch_id=None):
                         'branch_type': row[3],
                         'branch_city': row[4],
                         'branch_state': row[5],
-                        'mobileno': row[6],
+                        'primaryno': row[6],
                         'fulladdress': row[7],
                         'city': row[8],
                         'pincode': row[9],
@@ -1837,6 +1837,11 @@ def add_new_branch(request,branch_id=None):
                         'houseno': row[13],
                         'landmark': row[14],
                         'dateofbirth': row[15],
+                        'age': row[16],
+                        'gender': row[17],
+                        'gstno': row[18],
+                        'igstno': row[19],
+                        'branch_landmark': row[20],
                         
                         
                         
@@ -1898,7 +1903,7 @@ def add_new_branch(request,branch_id=None):
         try:
             with connection.cursor() as cursor:
                 if branch_id:
-                    # Update an existing customers
+                    # Update an existing branchid
                     update_query = (
                         "update vff.usertbl set usrname='"+str(uname)+"',mobile_no='"+str(primary_mobno)+"',address='"+str(address)+"',age='"+str(age)+"',gender='"+str(gender)+"',date_of_birth='"+str(date_of_birth)+"',pincode='"+str(pincode)+"',landmark='"+str(land_mark)+"',profile_img='"+str(image_url)+"' where usrid='"+str(usrid)+"'"
                     )
@@ -1906,22 +1911,19 @@ def add_new_branch(request,branch_id=None):
                     cursor.execute(update_query)
                     
                     update_customer = (
-                        "update vff.laundry_customertbl set customer_name='"+str(uname)+"', query='"+str(queries)+"', gstno='"+str(gstno)+"', company_name='"+str(company_name)+"',igstno='"+str(igstno)+"' where usrid='"+str(usrid)+"'"
+                        "update vff.branchtbl set branch_name='"+str(uname)+"', owner_name='"+str(queries)+"', address='"+str(gstno)+"', city='"+str(company_name)+"',state='"+str()+"',pincode='"+str()+"',igstno='"+str(igstno)+"',igstno='"+str()+"',landmark='"+str()+"' where branchid='"+str(branch_id)+"'"
                     )
                     print(f"update customer details::{update_customer}")
                     cursor.execute(update_customer)
                 else:
-                    # Insert a new customers
+                    # Insert a new Branch Owner
                     usertbl_query = "insert into vff.usertbl (usrname,mobile_no,address,age,gender,date_of_birth,pincode,landmark,profile_img) VALUES ('"+str(uname)+"', '"+str(primary_mobno)+"', '"+str(address)+"','"+str(age)+"','"+str(gender)+"','"+str(date_of_birth)+"','"+str(pincode)+"','"+str(land_mark)+"','"+str(image_url)+"') RETURNING usrid"
                     cursor.execute(usertbl_query)
                     usrid = cursor.fetchone()[0]  # Retrieve the returned usrid
-
-                    insert_query = (
-                        "insert into vff.laundry_customertbl (usrid,branchid,customer_name,query,gstno,company_name,igstno) values "
-                        "('"+str(usrid)+"','"+str(branch_id)+"','"+str(uname)+"','"+str(queries)+"','"+str(gstno)+"','"+str(company_name)+"','"+str(igstno)+"')"
-                        
-                    )
-                    print(f"Create New user details::{insert_query}")
+                    
+                    #Insert Branch Owner + Branch details
+                    insert_query = "insert into vff.branchtbl(branch_name,owner_name,owner_id,address,branch_type,city,state,pincode,gstno,igstno,landmark) values ()"
+                    print(f"Create New Branch details::{insert_query}")
                     cursor.execute(insert_query)
                 connection.commit()
 
