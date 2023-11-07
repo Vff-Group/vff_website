@@ -244,12 +244,16 @@
                 var orderId = $(this).find('td:first h6').text().toLowerCase();
                 var orderType = $(this).find('td:nth-child(7) .badge').text();
                 var orderDate = $(this).find('td:nth-child(5) span').text();
-                
+                // Convert the displayed date to a JavaScript Date object
+                var displayedDate = new Date(orderDate);
+
+               // Format the displayed date for comparison
+                var formattedDate = displayedDate.toLocaleString();
                 if (
-                    (orderId.includes(orderIdSearch) || orderIdSearch === '') &&
-                    (orderType === orderTypeFilter || orderTypeFilter === 'All Orders') &&
-                    (orderDate === dateOfOrder || dateOfOrder === '')
-                ) {
+                   (orderId.includes(orderIdSearch) || orderIdSearch === '') &&
+                   (orderType === orderTypeFilter || orderTypeFilter === 'All Orders') &&
+                   (formattedDate === dateOfOrder || dateOfOrder === '')
+               ) {
                     $(this).show();
                 } else {
                     $(this).hide();
