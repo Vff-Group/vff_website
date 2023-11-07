@@ -17,7 +17,7 @@ Add New Branch Details
        
         <div class="card card-profile shadow mb-4">
         <div class="card-body">
-    <form method="post" enctype="multipart/form-data">
+    <form  id="branch-form"  method="post" enctype="multipart/form-data">
         {% csrf_token %}
       <h6 class="heading-small text-muted mb-4">Branch Information</h6>
       <div class="pl-lg-4">
@@ -215,7 +215,7 @@ Add New Branch Details
 </div>
 </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
 <script>
   $(document).ready(function () {
     $('form').on('submit', function (e) {
@@ -224,40 +224,88 @@ Add New Branch Details
       // Perform form validation
       var isValid = true;
 
-      // Validate each form input field
-      $('form :input[required]').each(function () {
-        var input = $(this);
-        if (!input.val()) {
-          isValid = false;
-          input.addClass('is-invalid');
-          input.removeClass('is-valid');
-        } else {
-          input.removeClass('is-invalid');
-          input.addClass('is-valid');
-        }
-      });
-
-      if (isValid) {
-        // Form is valid, make the POST request
-        var formData = new FormData(this);
-        var url = $(this).attr('action');
+      
         
-        $.ajax({
-          type: 'POST',
-          url: url,
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: function (response) {
-            // Handle the success response
-            console.log(response);
-          },
-          error: function (error) {
-            // Handle the error response
-            console.error(error);
-          },
-        });
-      }
+          $('#branch-form').validate({
+            rules: {
+              'fullname': 'required',
+              'primaryno': 'required',
+              'dateofbirth': 'required',
+              'age': 'required',
+              'gender': 'required',
+              'fulladdress': 'required',
+              'pincode': 'required',
+              'landmark': 'required',
+              'gstno': 'required',
+              'branch_name': 'required',
+              'branch_address': 'required',
+              'branch_state': 'required',
+              'branch_city': 'required',
+              'branch_pincode': 'required',
+              'branch_landmark': 'required',
+            },
+            messages: {
+              'fullname': 'Please enter owner full name',
+              'primaryno': 'Please enter primary contact number',
+              'dateofbirth': 'Please select a date of birth',
+              'age': 'Please enter age',
+              'gender': 'Please select a gender',
+              'fulladdress': 'Please enter home address',
+              'pincode': 'Please enter a postal code',
+              'landmark': 'Please enter a landmark',
+              'gstno': 'Please enter a GST number',
+              'branch_name': 'Please enter branch name',
+              'branch_address': 'Please enter branch address',
+              'branch_state': 'Please enter branch state',
+              'branch_city': 'Please enter branch city',
+              'branch_pincode': 'Please enter branch postal code',
+              'branch_landmark': 'Please enter a branch landmark',
+            },
+            errorClass: 'is-invalid',
+            validClass: 'is-valid',
+            errorElement: 'div',
+            errorPlacement: function(error, element) {
+              // Handle error placement as needed
+              error.appendTo(element.parent());
+            },
+            highlight: function(element, errorClass, validClass) {
+              $(element).removeClass(validClass).addClass(errorClass);
+              isValid = false;
+            },
+            unhighlight: function(element, errorClass, validClass) {
+              $(element).removeClass(errorClass).addClass(validClass);
+              isValid = true;
+            },
+            submitHandler: function(form) {
+              // When the form is valid, handle the form submission here
+              event.preventDefault();
+              if (isValid) {
+                // Form is valid, make the POST request
+                var formData = new FormData(this);
+                var url = $(this).attr('action');
+                
+                $.ajax({
+                  type: 'POST',
+                  url: url,
+                  data: formData,
+                  processData: false,
+                  contentType: false,
+                  success: function (response) {
+                    // Handle the success response
+                    console.log(response);
+                  },
+                  error: function (error) {
+                    // Handle the error response
+                    console.error(error);
+                  },
+                });
+              }
+            }
+            
+          });
+        
+
+    
     });
   });
 </script>
