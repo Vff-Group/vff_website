@@ -221,8 +221,8 @@ Add New Branch Details
 <script>
   $(document).ready(function () {
     $('form').on('submit', function (e) {
-      e.preventDefault();
-
+      //e.preventDefault();
+      console.log('Started');
       // Perform form validation
       var isValid = true;
 
@@ -280,7 +280,8 @@ Add New Branch Details
             },
             submitHandler: function(form) {
               // When the form is valid, handle the form submission here
-              event.preventDefault();
+              console.log('Success');
+              //event.preventDefault();
               if (isValid) {
                 // Form is valid, make the POST request
                 var formData = new FormData(this);
