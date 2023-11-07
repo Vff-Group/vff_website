@@ -1152,6 +1152,8 @@ def view_order_detail(request,orderid):
             payment_id = pay_result[0]
             payment_type = pay_result[4]
         
+        if payment_id == -1 or payment_id == '-1':
+            payment_id = '-1'
         #extra_cart_item like softner
         extra_error = "No Extra Items added"
         extra_query = "select extra_item_name,price from vff.laundry_cart_extra_items_tbl where order_id='"+str(orderid)+"'"
