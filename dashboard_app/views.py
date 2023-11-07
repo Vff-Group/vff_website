@@ -1748,7 +1748,7 @@ def generate_bill(request, orderid):
     # Print or store 'bill_content' as needed
     formatted_bill_content = fit_to_thermal_printer_paper(bill_content)
     # return HttpResponse(formatted_bill_content)
-    return render(request,'invoice_pages/print_bill.html')
+    return render(request,'invoice_pages/receipt_bill.html')
 
 import textwrap
 
