@@ -90,10 +90,18 @@ Branches
                     </p>
                   </td>
                   <td>
-                    <p class="text-xs font-weight-bold mb-0">
-                      {{row.owner_name}}
-                    </p>
+                    <div class="d-flex px-2 py-1">
+                      <div>
+                        <img src="{{row.profile_img}}" class="avatar avatar-sm me-3" alt="user1">
+                      </div>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-sm">{{row.owner_name}}</h6>
+                        <p class="text-xs text-secondary mb-0">  {{row.address}}
+                          {{row.city}}-{{row.pincode}}</p>
+                      </div>
+                    </div>
                   </td>
+                  
 
                   <td class="align-middle text-center text-sm">
                     {% if row.branch_status == 1 %}
