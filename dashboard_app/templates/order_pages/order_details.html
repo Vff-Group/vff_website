@@ -194,7 +194,7 @@
                           <small class="text-primary">₹ {{ extra_item_sum}}/-</small>
                         </div>
                       </div>
-                      {% if not payment_type =="Cash" %}
+                      {% if payment_type != "Cash" %}
                       <div class="row mb-0">
                         <div class="col-lg-6">
                           <p class="text-xs mb-0 p-1">Tax (18%) </p>
