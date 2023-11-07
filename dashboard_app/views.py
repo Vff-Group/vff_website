@@ -538,7 +538,7 @@ def add_staff(request,usrid=None):
     if usrid:
         try:
             with connection.cursor() as cursor:
-                cursor.execute("select usrname,mobile_no,usertbl.address,age,gender,emplyid,landmark,date_of_birth,pincode,query,profile_img,branchid,designation,aadharno from vff.usertbl,vff.laundry_employeetbl where usertbl.usrid=laundry_employeetbl.usrid and laundry_employeetbl.usrid='"+str(usrid)+"'")
+                cursor.execute("select usrname,mobile_no,usertbl.address,age,gender,emplyid,landmark,date_of_birth,pincode,query,profile_img,branchid,designation,aadharno,dateofjoin from vff.usertbl,vff.laundry_employeetbl where usertbl.usrid=laundry_employeetbl.usrid and laundry_employeetbl.usrid='"+str(usrid)+"'")
                 row = cursor.fetchone()
                 print(f'fetching the single user data::{row}')
                 if row:
@@ -559,6 +559,7 @@ def add_staff(request,usrid=None):
                         'branch_id': row[11],
                         'designation': row[12],
                         'aadharno': row[13],
+                        'dateofjoin': row[14],
                         
                         
                     }
@@ -577,6 +578,7 @@ def add_staff(request,usrid=None):
         queries = request.POST.get('questions')
         aadharno = request.POST.get('aadharno')
         designation = request.POST.get('designation')
+        dateofjoin = request.POST.get('dateofjoin')
         uploaded_image = request.FILES.get('profile-image1')
 
         
@@ -627,7 +629,7 @@ def add_staff(request,usrid=None):
                     cursor.execute(update_query)
                     
                     update_customer = (
-                        "update vff.laundry_employeetbl set employee_name='"+str(uname)+"', query='"+str(queries)+"', designation='"+str(designation)+"', aadharno='"+str(aadharno)+"' where usrid='"+str(usrid)+"'"
+                        "update vff.laundry_employeetbl set employee_name='"+str(uname)+"', query='"+str(queries)+"', designation='"+str(designation)+"', aadharno='"+str(aadharno)+"',dateofjoin='"+str(dateofjoin)+"' where usrid='"+str(usrid)+"'"
                     )
                     print(f"update employee details::{update_customer}")
                     cursor.execute(update_customer)
@@ -638,8 +640,8 @@ def add_staff(request,usrid=None):
                     usrid = cursor.fetchone()[0]  # Retrieve the returned usrid
 
                     insert_query = (
-                        "insert into vff.laundry_employeetbl (usrid,branchid,employee_name,query,designation,aadharno) values "
-                        "('"+str(usrid)+"','"+str(branch_id)+"','"+str(uname)+"','"+str(queries)+"','"+str(designation)+"','"+str(aadharno)+"')"
+                        "insert into vff.laundry_employeetbl (usrid,branchid,employee_name,query,designation,aadharno,dateofjoin) values "
+                        "('"+str(usrid)+"','"+str(branch_id)+"','"+str(uname)+"','"+str(queries)+"','"+str(designation)+"','"+str(aadharno)+"','"+str(dateofjoin)+"')"
                         
                     )
                     print(f"Create New user details::{insert_query}")

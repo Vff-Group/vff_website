@@ -67,19 +67,25 @@ Add New Staff Details
           
         </div>
         <div class="row">
-          <div class="col-lg-4">
+          <div class="col-lg-3">
             <div class="form-group">
                 <label for="date-of-birth" class="form-control-label">Date of Birth</label>
                 <input class="form-control form-control-alternative" type="date"  id="date-of-birth" name="dateofbirth" value="{{ data.dateofbirth|date:'Y-m-d' }}" required>
             </div>
           </div>
-          <div class="col-lg-4">
+          <div class="col-lg-3">
             <div class="form-group">
               <label class="form-control-label" for="input-age">Age</label>
               <input type="number" id="input-age" class="form-control form-control-alternative" placeholder="Enter Age Here" name="age" value="{{ data.age|default:'' }}" >
             </div>
           </div>
-          <div class="col-lg-4">
+          <div class="col-lg-3">
+            <div class="form-group">
+                <label for="date-of-join" class="form-control-label">Date of Joining</label>
+                <input class="form-control form-control-alternative" type="date"  id="date-of-join" name="dateofjoin" value="{{ data.dateofjoin|date:'Y-m-d' }}" required>
+            </div>
+          </div>
+          <div class="col-lg-3">
             <div class="form-group">
               <label class="form-control-label" for="input-gender">Gender</label>
               <select class="form-control form-control-alternative" id="input-gender" name="gender">
