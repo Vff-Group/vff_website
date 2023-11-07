@@ -31,19 +31,17 @@
                 <div class="card-header pb-0">
                   <div class="row">
                     <div class="col-6">
-                      <h6 class="mb-2">{{customer_name}}</h6>
+                      <h6 class="mb-2">{{branch_name}}</h6>
                       <div class="col">
-                        <small>{{houseno}}</small>
+                        <small>{{branch_address}}</small>
                       </div>
                       <div class="col">
-                        <small>{{address}}</small>
+                        <small>+91-{{branch_contactno}}</small>
                       </div>
                       <div class="col">
-                        <small>{{city}} - {{pincode}}</small>
+                        <small>{{branch_city}},{{branch_state}} - {{branch_pincode}}</small>
                       </div>
-                      <div class="col">
-                        <small>Transaction ID - {{payment_id}}</small>
-                      </div>
+                     
                       
                     </div>
                     <div class="col-6 d-flex flex-column justify-content-end align-items-end">
@@ -51,9 +49,19 @@
                       <div class="col">
                         <small>Order Date:{{order_date}}</small>
                       </div>
+                      {% if payment_id == '-1' or payment_id == -1 %}
+                      <div class="col mt-1">
+                        
+                        <small>Transaction ID - {{payment_id}}</small>
+                        {% else %}
+                        <small>Transaction Type - {{payment_type}}</small>
+                        
+                      </div>
+                      {% endif %}
                       <div class="col">
                           <small>Delivery Date:{{delivery_date}}</small>
                       </div>
+
                       <div class="col mt-1">
                         <p class="">Order: {{order_completed_status}}</p>
                         
