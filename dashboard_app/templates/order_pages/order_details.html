@@ -42,7 +42,7 @@
                         <small>{{branch_city}},{{branch_state}} - {{branch_pincode}}</small>
                       </div>
                      <div class="col">
-                      
+
                      </div>
                       
                     </div>
@@ -51,15 +51,15 @@
                       <div class="col">
                         <small>Order Date:{{order_date}}</small>
                       </div>
-                      {% if payment_id == '-1' or payment_id == -1 %}
+                      
                       <div class="col mt-1">
-                        
+                        {% if payment_id == '-1' or payment_id == -1 %}  
                         <small>Transaction ID - {{payment_id}}</small>
                         {% else %}
                         <small>Transaction Type - {{payment_type}}</small>
-                        
+                        {% endif %}  
                       </div>
-                      {% endif %}
+                      
                       <div class="col">
                           <small>Delivery Date:{{delivery_date}}</small>
                       </div>
