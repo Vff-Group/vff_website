@@ -22,6 +22,48 @@
           
           <!-- Action Buttons End  -->
           <div class="card-body px-0 pt-0 pb-2">
+            <div class="row">
+              <div class="col-lg-6">
+                <form method="get">
+                  {% csrf_token %}
+                  <div class="form-group">
+                      <input
+                          class="form-control form-control-alternative"
+                          type="search"
+                          id="order-id-search"
+                          name="orderid-search"
+                          placeholder="Search Order ID"
+                          value=""
+                          autocomplete="off"
+                          
+                      />
+                  </div>
+              </form>
+              </div>
+
+              <div class="col-lg-3">
+                <div class="form-group">
+                  
+                  <select class="form-control form-control-alternative" id="input-order_type" name="order_type" required>
+                    <option value="All Orders"  >All Orders</option>
+                    <option value="Pending" >Pending</option>
+                    <option value="Processing" >Processing</option>
+                    <option value="Payment Done" >Payment Done</option>
+                    <option value="Completed" >Completed</option>
+                    <option value="Others" >Others</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-lg-3">
+                <div class="col-lg-2">
+                  <div class="form-group">
+                      <label for="date-of-order" class="form-control-label text-secondary ">Date *</label>
+                      <input class="form-control form-control-alternative" type="date"  id="date-of-order" name="dateoforder" value="" >
+                  </div>
+              </div>
+              </div>
+            </div>
             <div class="table-responsive p-0">
               <table class="table align-items-center mb-0">
                 <thead>
@@ -165,4 +207,54 @@
     </div>
 </div>
 </main>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Add an event listener to the search input field
+        $('#order-id-search').on('input', function () {
+            applyFilters();
+        });
+
+        // Add an event listener to the select field for order type
+        $('#input-order_type').change(function () {
+            applyFilters();
+        });
+
+        // Add an event listener to the date input field
+        $('#date-of-order').on('input', function () {
+            applyFilters();
+        });
+
+        function applyFilters() {
+            // Get the user's search input
+            var orderIdSearch = $('#order-id-search').val().toLowerCase();
+
+            // Get the selected order type filter
+            var orderTypeFilter = $('#input-order_type').val();
+
+            // Get the selected date filter
+            var dateOfOrder = $('#date-of-order').val();
+
+            // Loop through the table rows and hide/show them based on the filters
+            $('.table tbody tr').each(function () {
+                var orderId = $(this).find('td:first h6').text().toLowerCase();
+                var orderType = $(this).find('td:nth-child(7) .badge').text();
+                var orderDate = $(this).find('td:nth-child(5) span').text();
+                
+                if (
+                    (orderId.includes(orderIdSearch) || orderIdSearch === '') &&
+                    (orderType === orderTypeFilter || orderTypeFilter === 'All Orders') &&
+                    (orderDate === dateOfOrder || dateOfOrder === '')
+                ) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+    });
+</script>
+
 {% endblock  %}
