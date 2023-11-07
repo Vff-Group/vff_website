@@ -157,7 +157,7 @@
                   <div class="row">
                     <div class="col-lg-8">
                       <h6 class="mb-0">Invoice To:</h6>
-                      <small class="mb-2">Shaheed Maniyar</small>
+                      <small class="mb-2">{{customer_name}}</small>
                       <p class="text-xs mb-0 p-1">+918267676887</p>
                       <p class="text-xs mb-0 p-1">shahidmaniyar@gmail.com</p>
                       <p class="text-xs mb-0 p-1">New Vaibhav Nagar Belgaum </p>
@@ -169,8 +169,14 @@
                     <div class="col-lg-4">
                       <h6 class="mb-0">Payment Details:</h6>
                       <div class="row">
-                        <p class="text-xs mb-0 p-1">Sub TOtal </p>
-                        <!-- <small class="text-primary">₹00/-</small> -->
+                        <div class="col-lg-6">
+
+                          <p class="text-xs mb-0 p-1">Sub TOtal </p>
+                        </div>
+                        <div class="col-lg-6">
+
+                          <small class="text-primary">₹00/-</small>
+                        </div>
                       </div>
                       
                       <p class="text-xs mb-0 p-1">Addon </p>
@@ -343,7 +349,7 @@
   document.getElementById('printButton').addEventListener('click', function() {
       // Create a new tab for printing
       var printWindow = window.open('', '', 'width=300,height=300');
-      printWindow.location.href = '/admin_dashboard/invoice.html';
+      printWindow.location.href = '/admin_dashboard/invoice';
       // Write the invoice content to the new tab
       //printWindow.document.write('<html><head><title>Print Invoice</title></head><body>');
       //printWindow.document.write('<h1>Your Invoice Content</h1>');
