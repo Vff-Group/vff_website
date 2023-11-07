@@ -334,7 +334,7 @@ def all_staff(request):
     # using the 'current_url' variable to determine the active card.
     context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
     
-    return render(request, 'customer_pages/all_customers.html',context)
+    return render(request, 'staff_pages/all_staff_members.html',context)
     
     
 #All Customers Page
