@@ -759,18 +759,18 @@ $('#order-form').validate({
             success: function (data) {
                console.log('Success:'+JSON.stringify(data.html))
 
-               // Redirect to the "all orders" URL
-             //  window.location.replace('/admin_dashboard/all_counter_orders');
+               // Redirect to the "all counter orders" URL
+              window.location.replace('/admin_dashboard/all_counter_orders');
 
     // Open a new tab for printing
-    var newTab = window.open();
-    newTab.document.write(data.html);
+    //var newTab = window.open();
+    //newTab.document.write(data.html);
 
     // Listen for the beforeunload event to close the tab if canceled
-    newTab.onbeforeunload = function (e) {
+    //newTab.onbeforeunload = function (e) {
         // Close the tab when the user tries to close it
-        newTab.close();
-    };
+      //  newTab.close();
+    //};
             },
             error: function (error) {
                 console.error('Error:', error);

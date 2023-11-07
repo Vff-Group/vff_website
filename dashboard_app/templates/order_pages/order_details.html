@@ -340,6 +340,41 @@
   </div>
 </main>
 <script>
+  document.getElementById('printButton').addEventListener('click', function() {
+      // Create a new tab for printing
+      var printWindow = window.open('', '', 'width=300,height=300');
+      printWindow.location.href = '/admin_dashboard/invoice.html';
+      // Write the invoice content to the new tab
+      //printWindow.document.write('<html><head><title>Print Invoice</title></head><body>');
+      //printWindow.document.write('<h1>Your Invoice Content</h1>');
+      // Add your invoice content here
+
+      // Close the body and HTML tags
+      //printWindow.document.write('</body></html>');
+      //printWindow.document.close();
+
+// Close the tab when the print dialog is closed
+      printWindow.onafterprint = function(event) {
+// Close the print window
+event.target.close();
+};
+
+// Attach the onbeforeprint event handler
+printWindow.onbeforeprint = function(event) {
+// If the user cancels printing, close the print window
+if (event.defaultPrevented) {
+printWindow.close();
+}
+};
+
+
+      // Print the content
+      printWindow.print();
+
+    
+  });
+</script>
+<script>
     //document.getElementById('printButton').addEventListener('click', function () {
       //  window.print();
     //});
