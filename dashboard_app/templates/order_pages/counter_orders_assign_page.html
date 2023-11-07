@@ -635,20 +635,21 @@
           });
   
           function applyItemNameFilter() {
-              // Get the user's search input
-              var itemNameSearch = $('#item-name-search').val().toLowerCase();
-  
-              // Loop through the table rows and hide/show them based on the filters
-              $('#cartItemsTable tbody tr').each(function () {
-                  var itemName = $(this).find('#sub_cat_name').text().toLowerCase();
-  
-                  if (itemName.includes(itemNameSearch) || itemNameSearch === '') {
-                      $(this).show();
-                  } else {
-                      $(this).hide();
-                  }
-              });
-          }
+            // Get the user's search input
+            var itemNameSearch = $('#item-name-search').val().toLowerCase();
+
+            // Loop through the table rows and hide/show them based on the filters
+            $('#cartItemsTable tbody tr').each(function () {
+                var itemName = $(this).find('#sub_cat_name').text().toLowerCase();
+
+                if (itemName.includes(itemNameSearch) || itemNameSearch === '') {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+      
       });
   </script>
   
