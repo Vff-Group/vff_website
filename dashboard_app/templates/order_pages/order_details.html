@@ -79,172 +79,173 @@
                 </div>
                 <!-- Action Buttons  -->
 
-                  <!-- Action Buttons End  -->
-                  <div class="card-body px-0 pt-0 pb-2 mt-2">
-                    <div class="table-responsive p-0">
-                      <table class="table align-items-center mb-0">
-                        <thead>
-                          <tr>
-                            
-                            <th
-                              class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-                            >
-                              Service Name
-                            </th>
-                            <th
-                              class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-                            >
-                              Rate
-                            </th>
-                            <th
-                              class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-                            >
-                              Quantity
-                            </th>
-                            <th
-                              class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-                            >
-                              Total
-                            </th>
-                            
-                          </tr>
-                        </thead>
-                        {% if not query_result%}
-                  <div class="alert alert-info alert-dismissible m-4 fade show" role="alert">
-                    <span class="alert-icon text-white"><i class="ni ni-like-2"></i></span>
-                    <span class="alert-text text-white"><strong>Info!</strong> {{error_msg}}!</span>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                {% else %}
-                        <tbody>
-                          {% for row in query_result %}
-                    <tr>
-                      
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                          {% if row.type_of == "Kgs" %}
-                            <img src="{{row.cat_img}}" class="avatar avatar-sm me-3" alt="">
-                            {% else %}
-                            <img src="{{row.sub_cat_img}}" class="avatar avatar-sm me-3" alt="">
-                            {% endif %}
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                              {% if row.type_of == "Kgs" %}
-                            <h6 class="mb-0 text-sm">{{row.cat_name}}</h6>
-                            <small class="text-secondary">{{sub_items}}</small>
-                            {% else %}
-                            
-                            <h6 class="mb-0 text-sm">{{row.sub_cat_name}}</h6>
-                            <p class="text-xs text-blue mb-0">[ {{row.section_type}} ]</p>
-                            {% endif %}
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                          <p class="text-xs font-weight-bold mb-0">₹ {{row.actual_cost}} /  {{row.type_of}}</p>
-                          <small>{{row.ordertype}}</small>
-                        </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">{{row.item_quantity}} {{row.type_of}}</p>
-                      </td>
-                      <td>
-                          <h6 class="text-xs font-weight-bold mb-0 text-center">₹ {{row.item_cost}}</h6>
+                <!-- Action Buttons End  -->
+                <div class="card-body px-0 pt-0 pb-2 mt-2">
+                  <div class="table-responsive p-0">
+                    <table class="table align-items-center mb-0">
+                      <thead>
+                        <tr>
                           
-                        </td>
+                          <th
+                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                          >
+                            Service Name
+                          </th>
+                          <th
+                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                          >
+                            Rate
+                          </th>
+                          <th
+                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                          >
+                            Quantity
+                          </th>
+                          <th
+                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                          >
+                            Total
+                          </th>
+                          
+                        </tr>
+                      </thead>
+                      {% if not query_result%}
+                <div class="alert alert-info alert-dismissible m-4 fade show" role="alert">
+                  <span class="alert-icon text-white"><i class="ni ni-like-2"></i></span>
+                  <span class="alert-text text-white"><strong>Info!</strong> {{error_msg}}!</span>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              {% else %}
+                      <tbody>
+                        {% for row in query_result %}
+                  <tr>
+                    
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div>
+                        {% if row.type_of == "Kgs" %}
+                          <img src="{{row.cat_img}}" class="avatar avatar-sm me-3" alt="">
+                          {% else %}
+                          <img src="{{row.sub_cat_img}}" class="avatar avatar-sm me-3" alt="">
+                          {% endif %}
+                        </div>
+                        <div class="d-flex flex-column justify-content-center">
+                            {% if row.type_of == "Kgs" %}
+                          <h6 class="mb-0 text-sm">{{row.cat_name}}</h6>
+                          <small class="text-secondary">{{sub_items}}</small>
+                          {% else %}
+                          
+                          <h6 class="mb-0 text-sm">{{row.sub_cat_name}}</h6>
+                          <p class="text-xs text-blue mb-0">[ {{row.section_type}} ]</p>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                        <p class="text-xs font-weight-bold mb-0">₹ {{row.actual_cost}} /  {{row.type_of}}</p>
+                        <small>{{row.ordertype}}</small>
+                      </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">{{row.item_quantity}} {{row.type_of}}</p>
+                    </td>
+                    <td>
+                        <h6 class="text-xs font-weight-bold mb-0 text-center">₹ {{row.item_cost}}</h6>
+                        
+                      </td>
+                    
+                   
+                  </tr>
+                  {% endfor %}
+                      </tbody>
+                      {% endif %}
+                    </table>
+                  </div>
+                </div>
+                <div class="card-footer px-4 pt-0 pb-2 mt-2">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <h6 class="mb-0">Invoice To:</h6>
+                      <small class="mb-2">{{customer_name}}</small>
+                      <p class="text-xs mb-0 p-1">+91{{mobile_no}}</p>
+                      <p class="text-xs mb-0 p-1">{{houseno}}{{address}}{{city}}{{pincode}}-INDIA</p>
                       
-                     
-                    </tr>
-                    {% endfor %}
-                        </tbody>
-                        {% endif %}
-                      </table>
+                      
+                      
+                      
+                    </div>
+                    <div class="col-lg-6">
+                      <h6 class="mb-0">Payment Details:</h6>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <p class="text-xs mb-0 p-1">Sub TOtal </p>
+                        </div>
+                        <div class="col-lg-6 d-flex align-items-end">
+                          <small class="text-primary">₹{{sub_total}}/-</small>
+                        </div>
+                      </div>
+                      
+                      <div class="row mb-0">
+                        <div class="col-lg-6">
+                          <p class="text-xs mb-0 p-1">Addon </p>
+                        </div>
+                        <div class="col-lg-6  d-flex align-items-end">
+                          <small class="text-primary">₹ {{ extra_item_sum}}/-</small>
+                        </div>
+                      </div>
+                      {% if payment_type != "Cash" %}
+                      <div class="row mb-0">
+                        <div class="col-lg-6">
+                          <p class="text-xs mb-0 p-1">Tax (18%) </p>
+                        </div>
+                        <div class="col-lg-6  d-flex align-items-end">
+                          <small class="text-primary">₹{{gst_amount}}/-</small>
+                        </div>
+                      </div>
+                      {% endif %}
+
+                      <div class="row mb-0">
+                        <div class="col-lg-6">
+                          <p class="text-xs mb-0 p-1">Discount </p>
+                        </div>
+                        <div class="col-lg-6  d-flex align-items-end">
+                          <small class="text-primary">₹{{discount_amount}}/-</small>
+                        </div>
+                      </div>
+                      <div class="row mb-0">
+                        <div class="col-lg-6">
+                          <p class="text-xs mb-0 p-1">Delivery Charges </p>
+                         
+                        </div>
+                        <div class="col-lg-6  d-flex align-items-end">
+                          <small class="text-primary">₹ {{delivery_price}}/-</small>
+                        </div>
+                      </div>
+                      <div class="row mb-0">
+                        <p class="mb-2 text-xxs">You will only be charge if your total amount is less then ₹ {{range_price}}</p>
+                      </div>
+                      <hr>
+                      <div class="row mb-4">
+                        <div class="col-lg-6">
+                          <h6 class="mb-0">Gross Total </h6>
+                        </div>
+                        <div class="col-lg-6">
+                          <small class="text-primary">₹ {{total_cost}}/-</small>
+                        </div>
+                      </div>
+                      
+                      
                     </div>
                   </div>
-                  <div class="card-footer px-4 pt-0 pb-2 mt-2">
-                    <div class="row">
-                      <div class="col-lg-6">
-                        <h6 class="mb-0">Invoice To:</h6>
-                        <small class="mb-2">{{customer_name}}</small>
-                        <p class="text-xs mb-0 p-1">+91{{mobile_no}}</p>
-                        <p class="text-xs mb-0 p-1">{{houseno}}{{address}}{{city}}{{pincode}}-INDIA</p>
-                        
-                        
-                        
-                        
-                      </div>
-                      <div class="col-lg-6">
-                        <h6 class="mb-0">Payment Details:</h6>
-                        <div class="row">
-                          <div class="col-lg-6">
-                            <p class="text-xs mb-0 p-1">Sub TOtal </p>
-                          </div>
-                          <div class="col-lg-6 d-flex align-items-end">
-                            <small class="text-primary">₹{{sub_total}}/-</small>
-                          </div>
-                        </div>
-                        
-                        <div class="row mb-0">
-                          <div class="col-lg-6">
-                            <p class="text-xs mb-0 p-1">Addon </p>
-                          </div>
-                          <div class="col-lg-6  d-flex align-items-end">
-                            <small class="text-primary">₹ {{ extra_item_sum}}/-</small>
-                          </div>
-                        </div>
-                        {% if payment_type != "Cash" %}
-                        <div class="row mb-0">
-                          <div class="col-lg-6">
-                            <p class="text-xs mb-0 p-1">Tax (18%) </p>
-                          </div>
-                          <div class="col-lg-6  d-flex align-items-end">
-                            <small class="text-primary">₹{{gst_amount}}/-</small>
-                          </div>
-                        </div>
-                        {% endif %}
-  
-                        <div class="row mb-0">
-                          <div class="col-lg-6">
-                            <p class="text-xs mb-0 p-1">Discount </p>
-                          </div>
-                          <div class="col-lg-6  d-flex align-items-end">
-                            <small class="text-primary">₹{{discount_amount}}/-</small>
-                          </div>
-                        </div>
-                        <div class="row mb-0">
-                          <div class="col-lg-6">
-                            <p class="text-xs mb-0 p-1">Delivery Charges </p>
-                           
-                          </div>
-                          <div class="col-lg-6  d-flex align-items-end">
-                            <small class="text-primary">₹ {{delivery_price}}/-</small>
-                          </div>
-                        </div>
-                        <div class="row mb-0">
-                          <p class="mb-2 text-xxs">You will only be charge if your total amount is less then ₹ {{range_price}}</p>
-                        </div>
-                        <hr>
-                        <div class="row mb-4">
-                          <div class="col-lg-6">
-                            <h6 class="mb-0">Gross Total </h6>
-                          </div>
-                          <div class="col-lg-6">
-                            <small class="text-primary">₹ {{total_cost}}/-</small>
-                          </div>
-                        </div>
-                        
-                        
-                      </div>
-                    </div>
-                     
-                </div>
-  
-                </div>
+                   
               </div>
-            
-          
+
+              </div>
+            </div>
+          </div>
+        </div>
+        
         <div class="col-lg-4">
           <div class="card ">
             <div class="card-header pb-0 p-3">
