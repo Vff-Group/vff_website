@@ -182,7 +182,7 @@ def all_branches(request):
     usrid = request.session.get('userid')
     request.session['branchid'] = ''
     print(f'Admin Usrid ::{usrid}')
-    query = "select branchtbl.branchid,branch_name,address,branch_type,creation_date,branchtbl.status from vff.branchtbl,vff.admintbl where admintbl.branchid=branchtbl.branchid and branchtbl.owner_id=admintbl.usrid and branchtbl.owner_id='"+str(usrid)+"'"
+    query = "select branchtbl.branchid,branch_name,address,branch_type,creation_date,branchtbl.status,gstno,igstno,city,state,pincode from vff.branchtbl,vff.admintbl where admintbl.branchid=branchtbl.branchid and branchtbl.owner_id=admintbl.usrid and branchtbl.owner_id='"+str(usrid)+"'"
     rows = execute_raw_query(query)
     data = []    
     if not rows == 500:
@@ -194,6 +194,11 @@ def all_branches(request):
                 'branch_type': row[3],
                 'creation_date': row[4],
                 'status': row[5],
+                'gstno': row[6],
+                'igstno': row[7],
+                'city': row[8],
+                'state': row[9],
+                'pincode': row[10],
                 
             })
     else:
@@ -206,10 +211,24 @@ def save_selected_branch(request):
     if request.method == 'POST':
         branchid = request.POST.get('branchid')
         branch_name = request.POST.get('branch_name')
-        print(branch_name,branchid)
+        branch_address = request.POST.get('branch_address')
+        branch_gstno = request.POST.get('branch_gstno')
+        branch_igstno = request.POST.get('branch_igstno')
+        branch_city = request.POST.get('branch_city')
+        branch_state = request.POST.get('branch_state')
+        branch_pincode = request.POST.get('branch_pincode')
+        branch_contactno = request.POST.get('branch_contactno')
+        print(branch_name,branchid,branch_address)
         # Save the selected branchid and brandname to the session
         request.session['branchid'] = branchid
         request.session['branch_name'] = branch_name
+        request.session['branch_address'] = branch_address
+        request.session['branch_gstno'] = branch_gstno
+        request.session['branch_igstno'] = branch_igstno
+        request.session['branch_city'] = branch_city
+        request.session['branch_state'] = branch_state
+        request.session['branch_pincode'] = branch_pincode
+        request.session['branch_contactno'] = branch_contactno
         request.session['branch_selected'] = True
         request.session.save()  # Save the session to persist the changes
 
@@ -1127,10 +1146,11 @@ def view_order_detail(request,orderid):
         
         #Payment Details
         payment_id = 'Payment Not Done'
-        query_payment = "select razor_pay_payment_id,status,time,dt from vff.laundry_payment_tbl where order_id='"+str(orderid)+"'"
+        query_payment = "select razor_pay_payment_id,status,time,dt,payment_type from vff.laundry_payment_tbl where order_id='"+str(orderid)+"'"
         pay_result = execute_raw_query_fetch_one(query_payment)
         if pay_result:   
             payment_id = pay_result[0]
+            payment_type = pay_result[4]
         
         #extra_cart_item like softner
         extra_error = "No Extra Items added"
@@ -1167,10 +1187,28 @@ def view_order_detail(request,orderid):
             else:
                 delivery_price = 0
         
+        #request.session['branchid'] = branchid
+        branch_name = request.session.get('branch_name') 
+        branch_address = request.session.get('branch_address') 
+        branch_gstno = request.session.get('branch_gstno')
+        branch_igstno = request.session.get('branch_igstno')
+        branch_city = request.session.get('branch_city')
+        branch_state = request.session.get('branch_state')
+        branch_pincode = request.session.get('branch_pincode')
+        branch_contactno = request.session.get('branch_contactno')
+        
+        
         total_cost = total_laundry_cost + extra_item_sum
         print(f'total_cost::{total_cost}')
+        totalGST = (total_cost * 18) / 100
+        print(f'totalGST::{totalGST}')
+        gst_amount = totalGST
+        sub_total = total_laundry_cost
+        
         first_order_id = data[0]['orderid'] if data else ''
+        discount_amount = data[0]['discount_price'] if data else ''
         booking_id = data[0]['booking_id'] if data else ''
+        mobile_no = data[0]['mobile_no'] if data else ''
         customer_name = data[0]['customer_name'] if data else ''
         address = data[0]['address'] if data else ''
         houseno = data[0]['houseno'] if data else ''
@@ -1197,7 +1235,7 @@ def view_order_detail(request,orderid):
         error_msg = 'Something Went Wrong'
     
     context ={'query_result':data,'extra_data':extra_data,'error_msg':error_msg,'payment_id':payment_id,'order_id':first_order_id,'customer_name':customer_name
-              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range,'alert_delivery_boy':alert_delivery_boy,'sub_items':sub_items,'booking_id':booking_id}
+              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range,'alert_delivery_boy':alert_delivery_boy,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total}
     
     return render(request,'order_pages/order_details.html',context)
 

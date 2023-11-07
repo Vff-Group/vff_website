@@ -31,23 +31,33 @@
                 <div class="card-header pb-0">
                   <div class="row">
                     <div class="col-6">
-                      <h6 class="mb-2">{{customer_name}}</h6>
+                      <h6 class="mb-2">{{branch_name}}</h6>
                       <div class="col">
-                        <small>{{houseno}}</small>
+                        <small>{{branch_address}}</small>
+                      </div>
+                      <div class="col">
+                        <small>+91-{{branch_contactno}}</small>
                       </div>
                       <div class="col">
                         <small>{{address}}</small>
                       </div>
                       <div class="col">
-                        <small>{{city}} - {{pincode}}</small>
+                        <small>{{branch_city}},{{branch_state}} - {{branch_pincode}}</small>
                       </div>
-                      <div class="col">
-                        <small>Transaction ID - {{payment_id}}</small>
-                      </div>
+                      
                       
                     </div>
                     <div class="col-6 d-flex flex-column justify-content-end align-items-end">
                       <h6 class="mb-2">Order ID:#{{order_id}}</h6>
+                      {% if payment_id == '-1' or payment_id == -1 %}
+                      <div class="col">
+                        
+                        <small>Transaction ID - {{payment_id}}</small>
+                        {% else %}
+                        <small>Transaction Type - {{payment_type}}</small>
+                        
+                      </div>
+                      {% endif %}
                       <div class="col">
                         <small>Order Date:{{order_date}}</small>
                       </div>
@@ -158,9 +168,8 @@
                     <div class="col-lg-6">
                       <h6 class="mb-0">Invoice To:</h6>
                       <small class="mb-2">{{customer_name}}</small>
-                      <p class="text-xs mb-0 p-1">+918267676887</p>
-                      <p class="text-xs mb-0 p-1">shahidmaniyar@gmail.com</p>
-                      <p class="text-xs mb-0 p-1">New Vaibhav Nagar Belgaum </p>
+                      <p class="text-xs mb-0 p-1">+91{{mobile_no}}</p>
+                      <p class="text-xs mb-0 p-1">{{houseno}}{{address}}{{city}}{{pincode}}-INDIA</p>
                       
                       
                       
@@ -172,8 +181,8 @@
                         <div class="col-lg-6">
                           <p class="text-xs mb-0 p-1">Sub TOtal </p>
                         </div>
-                        <div class="col-lg-6">
-                          <small class="text-primary">₹00/-</small>
+                        <div class="col-lg-6 d-flex align-items-end">
+                          <small class="text-primary">₹{{sub_total}}/-</small>
                         </div>
                       </div>
                       
@@ -181,24 +190,27 @@
                         <div class="col-lg-6">
                           <p class="text-xs mb-0 p-1">Addon </p>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-6  d-flex align-items-end">
                           <small class="text-primary">₹ {{ extra_item_sum}}/-</small>
                         </div>
                       </div>
+                      {% if not payment_type =="Cash" %}
                       <div class="row mb-0">
                         <div class="col-lg-6">
                           <p class="text-xs mb-0 p-1">Tax (18%) </p>
                         </div>
-                        <div class="col-lg-6">
-                          <small class="text-primary">₹00/-</small>
+                        <div class="col-lg-6  d-flex align-items-end">
+                          <small class="text-primary">₹{{gst_amount}}/-</small>
                         </div>
                       </div>
+                      {% endif %}
+
                       <div class="row mb-0">
                         <div class="col-lg-6">
                           <p class="text-xs mb-0 p-1">Discount </p>
                         </div>
-                        <div class="col-lg-6">
-                          <small class="text-primary">₹00/-</small>
+                        <div class="col-lg-6  d-flex align-items-end">
+                          <small class="text-primary">₹{{discount_amount}}/-</small>
                         </div>
                       </div>
                       <div class="row mb-0">
@@ -206,15 +218,15 @@
                           <p class="text-xs mb-0 p-1">Delivery Charges </p>
                          
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-6  d-flex align-items-end">
                           <small class="text-primary">₹ {{delivery_price}}/-</small>
                         </div>
                       </div>
-                      <div class="row">
+                      <div class="row mb-0">
                         <p class="mb-2 text-xxs">You will only be charge if your total amount is less then ₹ {{range_price}}</p>
                       </div>
                       <hr>
-                      <div class="row">
+                      <div class="row mb-4">
                         <div class="col-lg-6">
                           <h6 class="mb-0">Gross Total </h6>
                         </div>
