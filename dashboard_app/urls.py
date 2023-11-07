@@ -76,8 +76,7 @@ urlpatterns = [
     path('load_extra_items/',views.load_extra_items,name='load_extra_items'),
     #Place Order
     path('place_new_order/',views.place_new_order,name='place_new_order'),
-    #All OnCounter Orders
-    path('all_counter_orders/',views.all_counter_orders,name='all_counter_orders'),
+    
     
     #Reports Screen
     path('daily_report/',views.daily_report,name='daily_report'),
