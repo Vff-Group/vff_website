@@ -22,6 +22,26 @@
           
           <!-- Action Buttons End  -->
           <div class="card-body px-0 pt-0 pb-2">
+            <div class="row ms-2">
+              <div class="col-lg-8">
+                <form method="get">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    
+                      <input
+                          class="form-control form-control-alternative"
+                          type="search"
+                          id="employee-name-search"
+                          name="employeename-search"
+                          placeholder="Search Employee by name"
+                          value=""
+                          autocomplete="off"
+                          
+                      />
+                  </div>
+              </form>
+              </div>
+            </div>
             <div class="table-responsive p-0">
               <table class="table align-items-center mb-0">
                 <thead>
@@ -142,4 +162,42 @@
     </div>
 </div>
 </main>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Add an event listener to the search input field
+        $('#employee-name-search').on('input', function () {
+            applyFilters();
+        });
+
+       
+        function applyFilters() {
+            // Get the user's search input
+            var userSearch = $('#employee-name-search').val().toLowerCase();
+
+           
+
+            // Extract the date part from the displayed date in the table
+           function extractDatePart(dateString) {
+            return dateString.split(' ')[0];
+        }
+            // Loop through the table rows and hide/show them based on the filters
+            $('.table tbody tr').each(function () {
+                var userName = $(this).find('td:first h6').text().toLowerCase();
+               
+                
+         
+            if (
+              userName.includes(userSearch) || userSearch === ''
+          )  {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+    });
+</script>
 {% endblock  %}
