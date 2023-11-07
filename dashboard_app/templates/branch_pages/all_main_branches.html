@@ -114,7 +114,7 @@ Branches
                     <div class="row">
                       <div class="col">
                         <a
-                          href="{% url 'dashboard_app:update_branch_details' row.branchid%}"
+                          href="{% url 'dashboard_app:update_branch_details' row.branchid row.owner_id%}"
                           class="text-secondary font-weight-bold text-xs"
                           data-toggle="tooltip"
                           data-original-title="Edit user"

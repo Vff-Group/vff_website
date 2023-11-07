@@ -1759,7 +1759,7 @@ def all_main_branches(request):
     if branch_id:
         filter = "and branchtbl.owner_id='"+str(owner_id)+"'"
     
-    query = "select branchid,branch_name,owner_name,branchtbl.address,branch_type,creation_date,branchtbl.epoch,status,branchtbl.city,branchtbl.state,mobile_no,usertbl.address,usertbl.city,usertbl.pincode,branchtbl.pincode,profile_img,device_token from vff.usertbl,vff.branchtbl where branchtbl.owner_id=usertbl.usrid "+filter+""
+    query = "select branchid,branch_name,owner_name,branchtbl.address,branch_type,creation_date,branchtbl.epoch,status,branchtbl.city,branchtbl.state,mobile_no,usertbl.address,usertbl.city,usertbl.pincode,branchtbl.pincode,profile_img,device_token,owner_id from vff.usertbl,vff.branchtbl where branchtbl.owner_id=usertbl.usrid "+filter+""
     
     query_result = execute_raw_query(query)
     
@@ -1787,6 +1787,7 @@ def all_main_branches(request):
                 'branch_pincode': row[14],
                 'profile_img': row[15],
                 'device_token': row[16],
+                'owner_id': row[17],
                 
                
             })
@@ -1799,7 +1800,7 @@ def all_main_branches(request):
     return render(request, 'branch_pages/all_main_branches.html', context)
 
 #Add New Branch
-def add_new_branch(request,branch_id=None):
+def add_new_branch(request,branch_id=None,usr_id=None):
     
     isLogin = is_loggedin(request)
     if isLogin == False:
@@ -1910,7 +1911,7 @@ def add_new_branch(request,branch_id=None):
                     print(f'branch_id--->::{branch_id}')
                     # Update an existing branchid
                     update_query = (
-                        "update vff.usertbl set usrname='"+str(uname)+"',mobile_no='"+str(primary_mobno)+"',address='"+str(address)+"',age='"+str(age)+"',gender='"+str(gender)+"',date_of_birth='"+str(date_of_birth)+"',pincode='"+str(pincode)+"',landmark='"+str(land_mark)+"',profile_img='"+str(image_url)+"' where usrid='"+str(usrid)+"'"
+                        "update vff.usertbl set usrname='"+str(uname)+"',mobile_no='"+str(primary_mobno)+"',address='"+str(address)+"',age='"+str(age)+"',gender='"+str(gender)+"',date_of_birth='"+str(date_of_birth)+"',pincode='"+str(pincode)+"',landmark='"+str(land_mark)+"',profile_img='"+str(image_url)+"' where usrid='"+str(usr_id)+"'"
                     )
                     print(f"update user details::{update_query}")
                     cursor.execute(update_query)

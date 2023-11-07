@@ -54,7 +54,7 @@ urlpatterns = [
     #Branch details Routes
     path('all_main_branches/',views.all_main_branches,name='all_main_branches'),
     path('all_main_branches/add_branch_details/',views.add_new_branch,name='add_branch_details'),
-    path('all_main_branches/update_branch_details/<int:branch_id>',views.add_new_branch,name='update_branch_details'),
+    path('all_main_branches/update_branch_details/<int:branch_id>/<int:usr_id>/',views.add_new_branch,name='update_branch_details'),
     
     #Order Screens
     path('order_status_screen/',views.order_status_screen,name='order_status_screen'),
