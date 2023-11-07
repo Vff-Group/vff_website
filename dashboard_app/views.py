@@ -1892,8 +1892,7 @@ def add_new_branch(request,branch_id=None):
             gstno = "-1"
         if not igstno:
             igstno = "-1"
-        if not company_name:
-            company_name = "NA"
+        
         errors = []
         if not date_of_birth:
             today_date = timezone.now().date() 
@@ -1916,7 +1915,7 @@ def add_new_branch(request,branch_id=None):
                     cursor.execute(update_query)
                     
                     update_customer = (
-                        "update vff.branchtbl set branch_name='"+str(uname)+"', owner_name='"+str(queries)+"', address='"+str(gstno)+"', city='"+str(company_name)+"',state='"+str()+"',pincode='"+str()+"',igstno='"+str(igstno)+"',igstno='"+str()+"',landmark='"+str()+"' where branchid='"+str(branch_id)+"'"
+                        "update vff.branchtbl set branch_name='"+str(branch_name)+"', owner_name='"+str(uname)+"', address='"+str(branch_address)+"', city='"+str(branch_city)+"',state='"+str(branch_state)+"',pincode='"+str(branch_pincode)+"',gstno='"+str(gstno)+"',igstno='"+str(igstno)+"',landmark='"+str(branch_landmark)+"' where branchid='"+str(branch_id)+"'"
                     )
                     print(f"update customer details::{update_customer}")
                     cursor.execute(update_customer)
@@ -1927,7 +1926,7 @@ def add_new_branch(request,branch_id=None):
                     usrid = cursor.fetchone()[0]  # Retrieve the returned usrid
                     
                     #Insert Branch Owner + Branch details
-                    insert_query = "insert into vff.branchtbl(branch_name,owner_name,owner_id,address,branch_type,city,state,pincode,gstno,igstno,landmark) values ()"
+                    insert_query = "insert into vff.branchtbl(branch_name,owner_name,owner_id,address,branch_type,city,state,pincode,gstno,igstno,landmark) values ('"+str(branch_name)+"','"+str(uname)+"','"+str(usrid)+"','"+str(branch_address)+"','Franchise','"+str(branch_city)+"','"+str(branch_state)+"','"+str(branch_pincode)+"','"+str(gstno)+"','"+str(igstno)+"','"+str(branch_landmark)+"')"
                     print(f"Create New Branch details::{insert_query}")
                     cursor.execute(insert_query)
                 connection.commit()
