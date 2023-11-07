@@ -53,7 +53,7 @@
                       </div>
                       
                       <div class="col mt-1">
-                        {% if payment_id == '-1' or payment_id == -1 %}  
+                        {% if payment_type != 'CASH' %}  
                         <small>Transaction ID - {{payment_id}}</small>
                         {% else %}
                         <small>Transaction Type - {{payment_type}}</small>
