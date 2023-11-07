@@ -2295,7 +2295,7 @@ def place_new_order(request):
                     print(e)
                     
                 #Update Order status
-                update_order_status(request,order_id,order_status)
+                update_order_status_while_placing_order(request,order_id,order_status)
                     
 
                 
@@ -2310,7 +2310,7 @@ def place_new_order(request):
     return JsonResponse({'html':'html'})
     #return redirect('dashboard_app:all_orders')
 
-def update_order_status(request,order_id,status):
+def update_order_status_while_placing_order(request,order_id,status):
     try:
         with connection.cursor() as cursor:
             query="insert into vff.laundry_order_historytbl(order_id,order_stages) values ('"+str(order_id)+"','"+str(status)+"')"
