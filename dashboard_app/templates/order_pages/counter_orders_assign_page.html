@@ -202,9 +202,9 @@
 
                 </div>
 
-
-                <div class="row ms-2">
-
+                
+                <div class="row" id="show-search">
+                  <hr>
                   <div class="col-lg-6">
                     <form method="get">
                       {% csrf_token %}
@@ -1803,6 +1803,7 @@ function showToast(message, bodyContent) {
             //var subCategorySelect = $('#input-subcategory');
             var subCategoryTable = $('#subCategoryTable tbody');
             var priceSelect = $('#input-price');
+            var showSearchLayout = $('#show-search');
 
             //Extra Headers
            // var costTh = $("<th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-25'>Cost</th>");
@@ -1858,7 +1859,7 @@ subCategoryTable.empty(); // Clear any existing rows
 console.log('subCategoryTable:'+subCategoryTable);
 dataCat = data.sub_categories
 $.each(data.sub_categories, function(index, subCategory) {
-    
+  
     
    
     var newRow = $("<tr>");
@@ -1881,6 +1882,14 @@ $.each(data.sub_categories, function(index, subCategory) {
     subCategoryTable.append(newRow);
 
 });
+// Check if the subCategoryTable contains any rows
+if (subCategoryTable.find('tr').length > 0) {
+  // Show the searchLayout
+  showSearchLayout.show();
+} else {
+  // Hide the searchLayout
+  showSearchLayout.hide();
+}
 
             });
             console.log('While Loading CatID::'+cat_id)
@@ -1932,6 +1941,7 @@ $.each(data.sub_categories, function(index, subCategory) {
             var section_id = $(sectionTypeSelect).find(":selected").data("section_id");
             var cat_img = $(categorySelect).find(":selected").data("cat_img");
             var cat_name = $(categorySelect).find(":selected").data("cat_name");
+            var showSearchLayout = $('#show-search');
             selectedItems = [];
             console.log('CatID::'+cat_id)
             console.log('CatIMG::'+cat_img)
@@ -1970,6 +1980,15 @@ $.each(data.sub_categories, function(index, subCategory) {
 
     subCategoryTable.append(newRow);
 });
+
+// Check if the subCategoryTable contains any rows
+if (subCategoryTable.find('tr').length > 0) {
+  // Show the searchLayout
+  showSearchLayout.show();
+} else {
+  // Hide the searchLayout
+  showSearchLayout.hide();
+}
                 /*subCategorySelect.empty();
                 subCategorySelect.append('<option disabled selected>Choose Sub Category</option>');
         
