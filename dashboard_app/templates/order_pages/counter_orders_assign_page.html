@@ -203,7 +203,28 @@
                 </div>
 
 
+                <div class="row ms-2">
+
+                  <div class="col-lg-6">
+                    <form method="get">
+                      {% csrf_token %}
+                      <div class="form-group">
+                          <input
+                              class="form-control form-control-alternative"
+                              type="search"
+                              id="item-name-search"
+                              name="itemname-search"
+                              placeholder="Search Laundry Item by name"
+                              value=""
+                              autocomplete="off"
+                              
+                          />
+                      </div>
+                  </form>
+                  </div>
+    
                 
+                </div>
 
                 <!-- Table start  -->
                 <div class="card-body px-0 pt-0 pb-2" style="height: 400px; overflow-y: scroll;">
@@ -606,6 +627,31 @@
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
+    <script>
+      $(document).ready(function () {
+          // Add an event listener to the search input field
+          $('#item-name-search').on('input', function () {
+              applyItemNameFilter();
+          });
+  
+          function applyItemNameFilter() {
+              // Get the user's search input
+              var itemNameSearch = $('#item-name-search').val().toLowerCase();
+  
+              // Loop through the table rows and hide/show them based on the filters
+              $('#cartItemsTable tbody tr').each(function () {
+                  var itemName = $(this).find('#sub_cat_name').text().toLowerCase();
+  
+                  if (itemName.includes(itemNameSearch) || itemNameSearch === '') {
+                      $(this).show();
+                  } else {
+                      $(this).hide();
+                  }
+              });
+          }
+      });
+  </script>
+  
     
 <script>
     // When "Cancel" button in the main modal is clicked
