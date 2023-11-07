@@ -2477,7 +2477,7 @@ def place_new_order(request):
                 order_id = cursor.fetchone()[0]
                 print(f'Retuning BOOKING ID-------->{order_id}')
                 connection.commit()
-
+                
                 #Insert record in payment table with razorpay_payment_id
                 query_payment = "insert into vff.laundry_payment_tbl(order_id,razor_pay_payment_id,status,payment_type,branch_id) values ('"+str(order_id)+"','"+str(razor_pay_id)+"','"+str(payment_status)+"','"+str(payment_type)+"','"+str(branch_id)+"')"
                 print(f'insert payment::{query_payment}')
@@ -2501,7 +2501,7 @@ def place_new_order(request):
                         extra_name = item['extra_item_name']
                         query3="insert into vff.laundry_cart_extra_items_tbl(extra_item_id,price,extra_item_name,order_id) values ('"+str(extra_id)+"','"+str(extra_item_price)+"','"+str(extra_name)+"','"+str(order_id)+"')"
                         print(f"Qeury3:::{query3}")
-                        cursor.execute(query_active_orders)
+                        cursor.execute(query3)
                         connection.commit()
                   #  obj.reply_data="ErrorCode#0"
                 except Exception as e:
