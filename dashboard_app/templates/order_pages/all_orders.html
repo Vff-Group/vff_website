@@ -22,7 +22,8 @@
           
           <!-- Action Buttons End  -->
           <div class="card-body px-0 pt-0 pb-2">
-            <div class="row px-0 pt-0 pb-2">
+            <div class="row ms-3">
+
               <div class="col-lg-6">
                 <form method="get">
                   {% csrf_token %}
@@ -41,7 +42,7 @@
               </form>
               </div>
 
-              <div class="col-lg-2">
+              <div class="col-lg-3">
                 <div class="form-group">
                   
                   <select class="form-control form-control-alternative" id="input-order_type" name="order_type" required>
@@ -58,7 +59,7 @@
               <div class="col-lg-3">
                 <div class="col-lg-2">
                   <div class="form-group">
-                      <label for="date-of-order" class="form-control-label text-secondary ">Date *</label>
+                      
                       <input class="form-control form-control-alternative" type="date"  id="date-of-order" name="dateoforder" value="" >
                   </div>
               </div>
