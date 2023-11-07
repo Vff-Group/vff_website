@@ -239,6 +239,10 @@
             // Get the selected date filter
             var dateOfOrder = $('#date-of-order').val();
 
+            // Extract the date part from the displayed date in the table
+           function extractDatePart(dateString) {
+            return dateString.split(' ')[0];
+        }
             // Loop through the table rows and hide/show them based on the filters
             $('.table tbody tr').each(function () {
                 var orderId = $(this).find('td:first h6').text().toLowerCase();
@@ -249,21 +253,14 @@
                 console.log('displayedDate::'+displayedDate);
                // Format the displayed date for comparison
                 // Format the displayed date to include the date and time with AM/PM
-               var formattedDate = displayedDate.toLocaleString('en-US', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: true,
-            });
+               // Extract the date part of the orderDate
+               var orderDatePart = extractDatePart(orderDate);
             console.log("formattedDate::"+formattedDate);
             if (
-                (orderId.includes(orderIdSearch) || orderIdSearch === '') &&
-                (orderType === orderTypeFilter || orderTypeFilter === 'All Orders') &&
-                (formattedDate === dateOfOrder || dateOfOrder === '')
-            ) {
+              (orderId.includes(orderIdSearch) || orderIdSearch === '') &&
+              (orderType === orderTypeFilter || orderTypeFilter === 'All Orders') &&
+              (orderDatePart === dateOfOrder || dateOfOrder === '')
+          )  {
                     $(this).show();
                 } else {
                     $(this).hide();
