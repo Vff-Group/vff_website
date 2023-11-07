@@ -1890,12 +1890,7 @@ def add_new_branch(request,branch_id=None):
             age = '-1'
         if not land_mark:
             land_mark = 'NA'
-        branch_id = request.session.get('branchid')
-        print(f'branch_id:{branch_id}')
-        if not branch_id:
-            # If there are validation errors, render the form with error messages
-            errors = "Please select Branch ID to add new customer"
-            return render(request,'customer_pages/add_customer.html',{'data':data,'error':errors})
+        
         
         try:
             with connection.cursor() as cursor:
@@ -1928,13 +1923,13 @@ def add_new_branch(request,branch_id=None):
                 connection.commit()
 
                 print("Branch Details Added/Updated Successfully.")
-                return redirect('dashboard_app:customers')
+                return redirect('dashboard_app:all_main_branches')
         except Exception as e:
             print(f"Error loading data: {e}")
 
     
     
-    return render(request,'customer_pages/add_new_branch.html',{'data':data})
+    return render(request,'branch_pages/add_new_branch.html',{'data':data})
 
 #Add Items to Cart
 def add_items_to_cart(request):
