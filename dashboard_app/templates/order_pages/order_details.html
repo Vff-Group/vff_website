@@ -170,67 +170,60 @@
                       <h6 class="mb-0">Payment Details:</h6>
                       <div class="row">
                         <div class="col-lg-6">
-
                           <p class="text-xs mb-0 p-1">Sub TOtal </p>
                         </div>
                         <div class="col-lg-6">
-
                           <small class="text-primary">₹00/-</small>
                         </div>
                       </div>
                       
-                      <p class="text-xs mb-0 p-1">Addon </p>
-                      <p class="text-xs mb-0 p-1">Discount </p>
-                      <p class="text-xs mb-1 p-1">Tax(5%) </p>
-                      <h6 class="mb-0">Gross Total </h6>
-                      <small class="text-primary">₹00/-</small>
-                    </div>
-                  </div>
-                    <div class="row">
-                        <div class="col-6">
-                          <small class="mb-2">Extra addons:</small>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <p class="text-xs mb-0 p-1">Addon </p>
                         </div>
-                        <div
-                          class="col-6 d-flex flex-column justify-content-end align-items-end"
-                        >
-                          
+                        <div class="col-lg-6">
                           <small class="text-primary">₹ {{ extra_item_sum}}/-</small>
                         </div>
                       </div>
-                      <hr />
                       <div class="row">
-                        <div class="col-6">
-                          <small class="mb-2">Delivery charges:</small>
-                         
-                            <small class="mb-2">You will only be charge if your total amount is less then ₹ {{range_price}}</small>
-                         
-                          
+                        <div class="col-lg-6">
+                          <p class="text-xs mb-0 p-1">Tax (18%) </p>
                         </div>
-                        <div
-                          class="col-6 d-flex flex-column justify-content-end align-items-end"
-                        >
+                        <div class="col-lg-6">
+                          <small class="text-primary">₹00/-</small>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <p class="text-xs mb-0 p-1">Discount </p>
+                        </div>
+                        <div class="col-lg-6">
+                          <small class="text-primary">₹00/-</small>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <p class="text-xs mb-0 p-1">Delivery Charges </p>
+                          <small class="mb-2">You will only be charge if your total amount is less then ₹ {{range_price}}</small>
+                        </div>
+                        <div class="col-lg-6">
                           <small class="text-primary">₹ {{delivery_price}}/-</small>
                         </div>
                       </div>
-                      <hr />
-                  <div class="row">
-                      <div class="col-6">
-                        <h6 class="mb-2">Invoice To:</h6>
-                        <div class="col">
-                          <small>{{customer_name}}</small>
+                      <hr>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <h6 class="mb-0">Gross Total </h6>
                         </div>
-                        
-                      </div>
-                      <div class="col-6 d-flex flex-column justify-content-end align-items-end">
-                        <h6 class="mb-2">Payment Details</h6>
-                        <div class="col d-flex flex-column align-items-center">
-                          <small>Total: </small><h6 class="text-primary"> ₹ {{total_cost}}/-</h6>
+                        <div class="col-lg-6">
+                          <small class="text-primary">₹ {{total_cost}}/-</small>
                         </div>
-                        
-                        
                       </div>
                       
+                      
                     </div>
+                  </div>
+                    
               </div>
               </div>
             </div>
