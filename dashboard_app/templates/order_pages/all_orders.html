@@ -22,7 +22,7 @@
           
           <!-- Action Buttons End  -->
           <div class="card-body px-0 pt-0 pb-2">
-            <div class="row">
+            <div class="row px-0 pt-0 pb-2">
               <div class="col-lg-6">
                 <form method="get">
                   {% csrf_token %}
@@ -41,7 +41,7 @@
               </form>
               </div>
 
-              <div class="col-lg-3">
+              <div class="col-lg-2">
                 <div class="form-group">
                   
                   <select class="form-control form-control-alternative" id="input-order_type" name="order_type" required>
@@ -211,14 +211,22 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
+ 
     $(document).ready(function () {
+
+        // Get the current date in the format "YYYY-MM-DD"
+        const today = new Date().toISOString().substr(0, 10);
+
+      // Set the default value of the date input to today's date
+      document.getElementById("date-of-order").value = today;
+
         // Add an event listener to the search input field
         $('#order-id-search').on('input', function () {
             applyFilters();
         });
 
         // Add an event listener to the select field for order type
-        $('#input-order_type').change(function () {
+        /*$('#input-order_type').change(function () {
             applyFilters();
         });
 
@@ -226,6 +234,7 @@
         $('#date-of-order').on('input', function () {
             applyFilters();
         });
+        */
 
         function applyFilters() {
             // Get the user's search input
