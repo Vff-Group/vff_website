@@ -22,52 +22,53 @@
           
           <!-- Action Buttons End  -->
           <div class="card-body px-0 pt-0 pb-2">
-            <div class="row ms-3">
-
-              <div class="col-lg-6">
-                <form method="get">
-                  {% csrf_token %}
-                  <div class="form-group">
-                      <input
-                          class="form-control form-control-alternative"
-                          type="search"
-                          id="order-id-search"
-                          name="orderid-search"
-                          placeholder="Search Order ID"
-                          value=""
-                          autocomplete="off"
-                          
-                      />
-                  </div>
-              </form>
-              </div>
-
-              <div class="col-lg-3">
-                <div class="form-group">
-                  
-                  <select class="form-control form-control-alternative" id="input-order_type" name="order_type" required>
-                    <option value="All Orders"  >All Orders</option>
-                    <option value="Pending" >Pending</option>
-                    <option value="Processing" >Processing</option>
-                    <option value="Payment Done" >Payment Done</option>
-                    <option value="Completed" >Completed</option>
-                    <option value="Others" >Others</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-lg-3">
-                <div class="col-lg-2">
-                  <div class="form-group">
-                      
-                      <input class="form-control form-control-alternative" type="date"  id="date-of-order" name="dateoforder" value="" >
-                  </div>
-              </div>
-              </div>
-            </div>
+            
             <div class="table-responsive p-0">
               <table class="table align-items-center mb-0">
                 <thead>
+                  <div class="row ms-2">
+
+                    <div class="col-lg-6">
+                      <form method="get">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input
+                                class="form-control form-control-alternative"
+                                type="search"
+                                id="order-id-search"
+                                name="orderid-search"
+                                placeholder="Search Order ID"
+                                value=""
+                                autocomplete="off"
+                                
+                            />
+                        </div>
+                    </form>
+                    </div>
+      
+                    <div class="col-lg-3">
+                      <div class="form-group">
+                        
+                        <select class="form-control form-control-alternative" id="input-order_type" name="order_type" required>
+                          <option value="All Orders"  >All Orders</option>
+                          <option value="Pending" >Pending</option>
+                          <option value="Processing" >Processing</option>
+                          <option value="Payment Done" >Payment Done</option>
+                          <option value="Completed" >Completed</option>
+                          <option value="Others" >Others</option>
+                        </select>
+                      </div>
+                    </div>
+      
+                    <div class="col-lg-3">
+                      <div class="col-lg-2">
+                        <div class="form-group">
+                            
+                            <input class="form-control form-control-alternative" type="date"  id="date-of-order" name="dateoforder" value="" >
+                        </div>
+                    </div>
+                    </div>
+                  </div>
                   <tr>
                     
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Order ID #</th>
@@ -212,22 +213,23 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
+  // Get the current date in the format "YYYY-MM-DD"
+  const today = new Date().toISOString().substr(0, 10);
+
+  // Set the default value of the date input to today's date
+  document.getElementById("date-of-order").value = today;
+
  
     $(document).ready(function () {
 
-        // Get the current date in the format "YYYY-MM-DD"
-        const today = new Date().toISOString().substr(0, 10);
-
-      // Set the default value of the date input to today's date
-      document.getElementById("date-of-order").value = today;
-
+        
         // Add an event listener to the search input field
         $('#order-id-search').on('input', function () {
             applyFilters();
         });
 
         // Add an event listener to the select field for order type
-        /*$('#input-order_type').change(function () {
+        $('#input-order_type').change(function () {
             applyFilters();
         });
 
@@ -235,7 +237,7 @@
         $('#date-of-order').on('input', function () {
             applyFilters();
         });
-        */
+        
 
         function applyFilters() {
             // Get the user's search input
