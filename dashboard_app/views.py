@@ -1866,8 +1866,8 @@ def add_new_branch(request,branch_id=None):
         return redirect('dashboard_app:login')
     # If usrid is provided, retrieve the data for the selected Branch Table
     data = {}
-    print(usrid)
-    if usrid:
+    print(branch_id)
+    if branch_id:
         try:
             with connection.cursor() as cursor:
                 cursor.execute("select branchid,branch_name,owner_name,branchtbl.address,branch_type,branchtbl.city,branchtbl.state,mobile_no,usertbl.address,usertbl.city,usertbl.pincode,branchtbl.pincode,profile_img,owner_id,aadhar_no,houseno,usertbl.landmark,date_of_birth from vff.usertbl,vff.branchtbl where branchtbl.owner_id=usertbl.usrid and branchid='"+str(branch_id)+"'")
@@ -1959,7 +1959,7 @@ def add_new_branch(request,branch_id=None):
         
         try:
             with connection.cursor() as cursor:
-                if usrid:
+                if branch_id:
                     # Update an existing customers
                     update_query = (
                         "update vff.usertbl set usrname='"+str(uname)+"',mobile_no='"+str(primary_mobno)+"',address='"+str(address)+"',age='"+str(age)+"',gender='"+str(gender)+"',date_of_birth='"+str(date_of_birth)+"',pincode='"+str(pincode)+"',landmark='"+str(land_mark)+"',profile_img='"+str(image_url)+"' where usrid='"+str(usrid)+"'"
