@@ -35,21 +35,15 @@ Branches
                   <th
                     class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
                   >
-                    Branch Name
+                    Branch Details
                   </th>
                   <th
                     class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
                   >
-                    Address
+                  Owner Details
                   </th>
                   <th
-                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-                  >
-                    Owner Details
-                  </th>
-                  <th
-                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-                  >
+                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                     Status
                   </th>
 
@@ -88,17 +82,21 @@ Branches
 
                   <td>
                     <p class="text-xs font-weight-bold mb-0">
-                      {{row.category_name}}
+                      {{row.branch_name}}
+                    </p>
+                    <p class="text-xs font-weight-bold mb-0">
+                      {{row.branch_address}}
+                      {{row.branch_city}}
                     </p>
                   </td>
                   <td>
                     <p class="text-xs font-weight-bold mb-0">
-                      {{row.category_type}}
+                      {{row.owner_name}}
                     </p>
                   </td>
 
                   <td class="align-middle text-center text-sm">
-                    {% if row.status == 1 %}
+                    {% if row.branch_status == 1 %}
                     <span class="badge badge-sm bg-success"> Active </span>
                     {% else %}
                     <span class="badge badge-sm bg-danger"> InActive </span>

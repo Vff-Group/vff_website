@@ -549,7 +549,7 @@ def add_staff(request,usrid=None):
                         'fulladdress': row[2],
                         'age': row[3],
                         'gender': row[4],
-                        'customerid': row[5],
+                        'emplyid': row[5],
                         'landmark': row[6],
                         'dateofbirth': row[7],
                         'pincode': row[8],
@@ -646,13 +646,13 @@ def add_staff(request,usrid=None):
                 connection.commit()
 
                 print("Employee Added/Updated Successfully.")
-                return redirect('dashboard_app:customers')
+                return redirect('dashboard_app:all_staff')
         except Exception as e:
             print(f"Error loading data: {e}")
 
     
     
-    return render(request,'customer_pages/add_customer.html',{'data':data})
+    return render(request,'staff_pages/add_new_staff_member.html',{'data':data})
 
 
 #Delete Customers
