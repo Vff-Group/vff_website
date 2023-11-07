@@ -1861,7 +1861,12 @@ def add_new_branch(request,branch_id=None):
         queries = request.POST.get('questions')
         gstno = request.POST.get('gstno')
         igstno = request.POST.get('igstno')
-        company_name = request.POST.get('company_name')
+        branch_name = request.POST.get('branch_name')
+        branch_address = request.POST.get('branch_address')
+        branch_state = request.POST.get('branch_state')
+        branch_city = request.POST.get('branch_city')
+        branch_pincode = request.POST.get('branch_pincode')
+        branch_landmark = request.POST.get('branch_landmark')
         uploaded_image = request.FILES.get('profile-image1')
 
         

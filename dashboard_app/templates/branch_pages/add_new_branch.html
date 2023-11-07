@@ -145,7 +145,7 @@ Add New Branch Details
           <div class="col-lg-4">
             <div class="form-group">
               <label class="form-control-label" for="input-company_name">Branch Name</label>
-              <input type="text" id="input-company_name" class="form-control form-control-alternative" placeholder="Company Name" name="branch_name" value="{{ data.branch_name|default:'' }}"  required>
+              <input type="text" id="input-company_name" class="form-control form-control-alternative" placeholder="Branch Name" name="branch_name" value="{{ data.branch_name|default:'' }}"  required>
             </div>
           </div>
 
@@ -199,18 +199,7 @@ Add New Branch Details
       </div>
       <hr class="my-4" />
       <!-- Display the uploaded image -->
-<div id="uploaded-image-container">
-    <img src="#" id="uploaded-image" alt="Uploaded Image" style="display: none;">
-    <p id="image-url" style="display: none;"></p>
-</div>
-      <!-- Description -->
-      {% comment %} <h6 class="heading-small text-muted mb-4">Any Query</h6>
-      <div class="pl-lg-4">
-        <div class="form-group">
-          <label>Questions ?</label>
-          <textarea rows="4" class="form-control form-control-alternative" placeholder="write a few words if required ..." name="questions" >{{ data.questions|default:'' }}</textarea>
-        </div>
-      </div> {% endcomment %}
+
 
       <div class="row justify-content-end p-4 mt--1">
         <div class="col-lg-2">
@@ -227,6 +216,51 @@ Add New Branch Details
 </div>
 </div>
 
+<script>
+  $(document).ready(function () {
+    $('form').on('submit', function (e) {
+      e.preventDefault();
+
+      // Perform form validation
+      var isValid = true;
+
+      // Validate each form input field
+      $('form :input[required]').each(function () {
+        var input = $(this);
+        if (!input.val()) {
+          isValid = false;
+          input.addClass('is-invalid');
+          input.removeClass('is-valid');
+        } else {
+          input.removeClass('is-invalid');
+          input.addClass('is-valid');
+        }
+      });
+
+      if (isValid) {
+        // Form is valid, make the POST request
+        var formData = new FormData(this);
+        var url = $(this).attr('action');
+        
+        $.ajax({
+          type: 'POST',
+          url: url,
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function (response) {
+            // Handle the success response
+            console.log(response);
+          },
+          error: function (error) {
+            // Handle the error response
+            console.error(error);
+          },
+        });
+      }
+    });
+  });
+</script>
 
 <script>
     //Calculate Age when dob is selected
