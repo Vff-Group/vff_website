@@ -180,6 +180,7 @@ def all_branches(request):
     print("All Branches")
     error_msg = "No Vendors Data Found"
     usrid = request.session.get('userid')
+    request.session['branchid'] = ''
     print(f'Admin Usrid ::{usrid}')
     query = "select branchtbl.branchid,branch_name,address,branch_type,creation_date,branchtbl.status from vff.branchtbl,vff.admintbl where admintbl.branchid=branchtbl.branchid and branchtbl.owner_id=admintbl.usrid and branchtbl.owner_id='"+str(usrid)+"'"
     rows = execute_raw_query(query)
