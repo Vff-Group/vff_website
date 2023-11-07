@@ -1152,6 +1152,8 @@ def view_order_detail(request,orderid):
             payment_id = pay_result[0]
             payment_type = pay_result[4]
         
+        if payment_id.strip() == '-1':
+            payment_id = '-1'
         if payment_id == -1 or payment_id == '-1':
             payment_id = '-1'
         #extra_cart_item like softner
