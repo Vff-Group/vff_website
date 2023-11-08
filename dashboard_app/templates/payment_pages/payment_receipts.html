@@ -109,10 +109,10 @@
               <div class="card-footer px-4 pt-0 pb-2 mt-2">
                 <div class="row">
                   <div class="col-4">
-                    <small class="mb-2 text-dark">Total Amount: Rs./-</small>
+                    <small class="mb-2 text-dark" id="total-amount">Total Amount: Rs./-</small>
                   </div>
                   <div class="col-4">
-                    <small class="text-dark">Total Tax Amount: Rs./-</small>
+                    <small class="text-dark" id="total-tax">Total Tax Amount: Rs./-</small>
                   </div>
                   <div class="col-4">
                     <button id="download-report" class="btn btn-success">Download Report</button>
@@ -222,6 +222,23 @@ function generatePDF() {
                 success: function (data) {
                     // Clear existing table rows
                     console.log(JSON.stringify(data.data));
+                    var total_amount = parseFloat(data.total_amount);
+                    var total_gst = parseFloat(data.total_gst);
+                    var total_igst = parseFloat(data.total_igst);
+                    var totalTax = 0
+                    if(total_igst > 0){
+                      totalTax = total_igst;
+                    }else{
+                      totalTax = total_gst;
+                    }
+                    //Total Amount
+                    var amountLabel = document.querySelector('#total-amount');
+                    amountLabel.textContent = 'Total Amount: Rs. ' + total_amount.toFixed(2)+'/-';
+                    
+                    //Total Tax Amount
+                    var amountLabel = document.querySelector('#total-tax');
+                    amountLabel.textContent = 'Total Amount: Rs. ' + totalTax.toFixed(2)+'/-';
+    
                     $('#table-body').empty();
 
                     // Iterate through the JSON data and add rows to the table

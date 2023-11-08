@@ -3028,9 +3028,14 @@ def load_payment_receipt(request, start_date, end_date):
     
         
     data = []    
+    total_amount = 0
+    total_gst = 0
+    total_igst = 0
     if not query_result == 500:
         for row in query_result:
-            
+            total_amount += float(row[3])
+            total_gst += float(row[7])
+            total_igst += float(row[8])
             data.append({
                 'date': row[0],
                 'order_id': row[1],
@@ -3049,7 +3054,7 @@ def load_payment_receipt(request, start_date, end_date):
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
     # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
-    return JsonResponse({'data':data})
+    return JsonResponse({'data':data,'total_amount':total_amount,'total_gst':total_gst,'total_igst':total_igst})
     return render(request, 'payment_pages/payment_receipts.html', {'current_url': current_url,'data':data})
 
 
