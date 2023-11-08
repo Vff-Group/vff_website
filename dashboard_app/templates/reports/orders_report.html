@@ -54,19 +54,15 @@
                   <div class="col-4">
                     <div class="col-lg-10">
                       <div class="form-group">
-                        <label
-                          for="date-of-expense"
-                          class="form-control-label text-secondary"
-                          >Status</label
-                        >
-                        <input
-                          class="form-control form-control-alternative"
-                          type="date"
-                          id="date-of-expense"
-                          name="dateofexpense"
-                          value="{{ data.dateofexpense|date:'Y-m-d' }}"
-                          required
-                        />
+                        
+                        <select class="form-control form-control-alternative" id="input-order_type" name="order_type" required>
+                          <option value="All Orders"  >All Orders</option>
+                          <option value="Processing" >Processing</option>
+                          <option value="Payment Done" >Payment Done</option>
+                          <option value="Payment Done" >Out for Delivery</option>
+                          <option value="Completed" >Completed</option>
+                          <option value="Others" >Others</option>
+                        </select>
                       </div>
                     </div>
                   </div>
