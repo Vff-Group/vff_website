@@ -282,7 +282,7 @@ def dashboard(request):
     if branchid:
         filter = "where branch_id='"+str(branchid)+"'"
         delivery_filter = "where branchid='"+str(branchid)+"'"
-        order_filter = " and branchid='"+str(branchid)+"'"
+        order_filter = " and branch_id='"+str(branchid)+"'"
     #Total Amount
     query_amount = "select sum(price) as total_cost from vff.laundry_ordertbl "+filter+""
     result = execute_raw_query_fetch_one(query_amount)
