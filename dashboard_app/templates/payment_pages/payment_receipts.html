@@ -129,13 +129,50 @@
 </main>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.3/xlsx.full.min.js"></script>
+
 
 
 <script>
 // Add a click event handler for the "Download Report" button
 $('#download-report').on('click', function () {
-  generatePDF();
+  generateExcel();
 });
+
+function generateExcel() {
+  var table = document.getElementById('table-body');
+
+  var headers = [];
+  var rows = [];
+
+  // Extract table headers
+  var headerRow = table.querySelector('tr');
+  headerRow.querySelectorAll('td').forEach(function (cell) {
+      headers.push(cell.textContent);
+  });
+
+  // Extract table data rows
+  table.querySelectorAll('tr').forEach(function (row, rowIndex) {
+      if (rowIndex !== 0) { // Skip the first row (header row)
+          var rowData = [];
+          row.querySelectorAll('td').forEach(function (cell) {
+              rowData.push(cell.textContent);
+          });
+          rows.push(rowData);
+      }
+  });
+
+  // Create a worksheet with headers and data
+  var worksheet = XLSX.utils.json_to_sheet([headers, ...rows]);
+
+  // Create a workbook and add the worksheet
+  var workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Payment Receipt');
+
+  // Generate and download the Excel file
+  XLSX.writeFile(workbook, 'payment_receipt.xlsx');
+}
+
 
 function generatePDF() {
   var doc = new jsPDF();
