@@ -49,7 +49,7 @@
                   </div>
 
                   <div class="col-4">
-                    <a id="load-data" class="btn btn-primary btn-sm text-xxs">Load Data</a>
+                    <button id="load-data" class="btn btn-primary btn-sm text-xxs">Load Data</button>
                   </div>
                   
                 
@@ -115,7 +115,7 @@
                     <small class="text-dark">Total Tax Amount: Rs./-</small>
                   </div>
                   <div class="col-4">
-                    <button class="btn btn-success">Download Report</button>
+                    <button id="download-report" class="btn btn-success">Download Report</button>
                     <button class="btn btn-warning">Print Report</button>
                   </div>
                 </div>
@@ -128,7 +128,31 @@
   </div>
 </main>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
 <script>
+
+// Add a click event handler for the "Download Report" button
+$('#download-report').on('click', function () {
+  generatePDF();
+});
+
+function generatePDF() {
+  var doc = new jsPDF();
+  doc.autoTable({ html: '#table-body' }); // Convert the HTML table to PDF
+
+  // Get the order_id and customer name from the first row in the table
+  var firstOrderId = $('#table-body tr:first td:nth-child(3)').text();
+  var firstCustomer = $('#table-body tr:first td:nth-child(4)').text();
+
+  // Create a file name that includes both order_id and customer name
+  var fileName = 'payment_receipt_#' + firstOrderId + '_' + firstCustomer + '.pdf';
+
+  // Save the PDF with the custom file name
+  doc.save(fileName);
+}
+
+
     $(document).ready(function () {
         $('#load-data').on('click', function () {
             var startDate = $('#start-date').val();
