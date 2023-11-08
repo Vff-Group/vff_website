@@ -244,13 +244,13 @@ function generatePDF() {
                     // Iterate through the JSON data and add rows to the table
                     $.each(data.data, function (index, item) {
                         var newRow = '<tr>' +
-                            '<td>' + (index + 1) + '</td>' +
-                            '<td>' + item.date + '</td>' +
-                            '<td>' + item.order_id + '</td>' +
-                            '<td>' + item.customer + '</td>' +
-                            '<td class="text-center">' + item.amount + '</td>' +
-                            '<td class="text-center">' + item.payment_type + '</td>' +
-                            '<td class="text-center">' + item.note + '</td>' +
+                            '<td> <p class="text-xs text-secondary mb-0">' + (index + 1) + '</p> </td>' +
+                            '<td> <p class="text-xs text-secondary mb-0">' + item.date + '</p> </td>' +
+                            '<td> <p class="text-xs text-secondary mb-0">' + item.order_id + '</p> </td>' +
+                            '<td> <p class="text-xs text-secondary mb-0">' + item.customer + '</p> </td>' +
+                            '<td> <p class="text-xs text-secondary mb-0">' + item.amount + '</p> </td>' +
+                            '<td> <p class="text-xs text-secondary mb-0">' + item.payment_type + '</p> </td>' +
+                            '<td> <p class="text-xs text-secondary mb-0">' + item.note + '</p> </td>' +
                             '</tr>';
                         $('#table-body').append(newRow);
                     });
