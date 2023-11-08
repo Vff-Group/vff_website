@@ -193,7 +193,7 @@ function generateExcel() {
 // Add an event listener to the "Print Receipts" button
 var printButton = document.querySelector('#print-report');
 printButton.addEventListener('click', function () {
-    generateHTMLTemplate();
+  printableContent = generateHTMLTemplate();
 
     // Open a new window and write the printable content
     var printWindow = window.open('', '', 'width=800,height=600');
@@ -273,6 +273,7 @@ function generateHTMLTemplate() {
   var printableContent = '<div style="margin-top: 30px; max-width: 210mm;">' + htmlTemplate + '</div>';
 
   // You can now use the 'printableContent' as needed, such as inserting it into a specific element or displaying it.
+  return printableContent;
 }
 
 
