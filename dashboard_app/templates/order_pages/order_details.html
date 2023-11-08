@@ -294,7 +294,7 @@
                 </div>
               </div>
               {% endif %}
-              <form action="{% url 'dashboard_app:generate_bill' order_id%}" method="post">
+              <form action="{% url 'dashboard_app:generate_bill' order_id%}" method="post" target="_blank">
                 {% csrf_token %}
                 <button id="printButton" type="submit" class="btn btn-primary my-4">Print Bill</button>
               </form>
