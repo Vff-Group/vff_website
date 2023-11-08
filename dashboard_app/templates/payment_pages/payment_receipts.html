@@ -147,27 +147,29 @@ function generateExcel() {
   var headers = [];
   var headerRow = table.closest('table').querySelector('thead').querySelector('tr');
   headerRow.querySelectorAll('th').forEach(function (cell) {
-      headers.push(cell.textContent);
+    headers.push(cell.textContent);
   });
 
   // Extract table data rows and store them in the 'rows' array
   var rows = [];
   table.querySelectorAll('tr').forEach(function (row) {
-      var rowData = [];
-      row.querySelectorAll('td').forEach(function (cell) {
-          rowData.push(cell.textContent);
-      });
-      rows.push(rowData);
+    var rowData = [];
+    row.querySelectorAll('td').forEach(function (cell) {
+      rowData.push(cell.textContent);
+    });
+    rows.push(rowData);
   });
 
   // Extract footer data
   var totalAmount = footerData.querySelector('.col-4:nth-child(1)').textContent.trim();
   var totalTaxAmount = footerData.querySelector('.col-4:nth-child(2)').textContent.trim();
 
-  // Add the footer data to the last two columns of each data row
-  rows.forEach(function (rowData) {
-      rowData.push(totalAmount, totalTaxAmount);
-  });
+  // Add the footer data to the last row of the table
+  var footerRow = [];
+  footerRow.length = headers.length;
+  footerRow[headers.length - 2] = totalAmount; // Add totalAmount to the second last column
+  footerRow[headers.length - 1] = totalTaxAmount; // Add totalTaxAmount to the last column
+  rows.push(footerRow);
 
   // Create a worksheet with headers and data
   var worksheet = XLSX.utils.json_to_sheet([headers, ...rows]);
@@ -177,8 +179,8 @@ function generateExcel() {
   XLSX.utils.book_append_sheet(workbook, worksheet, 'Payment Receipt');
 
   // Get the customer name and order id from the first data row
-  var customerName = rows.length > 0 ? rows[0][3] : 'UnknownCustomer';
-  var orderId = rows.length > 0 ? rows[0][2] : 'UnknownOrderID';
+  var customerName = rows.length > 1 ? rows[1][3] : 'UnknownCustomer';
+  var orderId = rows.length > 1 ? rows[1][2] : 'UnknownOrderID';
 
   // Generate the Excel file name with customer name and order id
   var fileName = 'payment_receipt_' + customerName + '_' + orderId + '.xlsx';
