@@ -2999,7 +2999,7 @@ def tax_report(request):
 
 
 #Payment Receipt Screen
-def payment_receipt(request, start_date, end_date):
+def payment_receipt(request, start_date=None, end_date=None):
     isLogin = is_loggedin(request)
     if isLogin == False:
         return redirect('dashboard_app:login')
