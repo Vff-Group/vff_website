@@ -232,8 +232,8 @@ function generateHTMLTemplate() {
   var totalAmount = footerData.querySelector('.col-4:nth-child(1)').textContent.trim();
   var totalTaxAmount = footerData.querySelector('.col-4:nth-child(2)').textContent.trim();
 
-  // Create an HTML table with Bootstrap styling
-  var htmlTable = '<table class="table table-dark">' +
+  // Create an HTML table with Bootstrap styling and borders
+  var htmlTable = '<table class="table table-bordered table-dark">' +
                   '<thead>' +
                   '<tr>';
   headers.forEach(function (header) {
