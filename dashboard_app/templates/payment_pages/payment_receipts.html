@@ -100,7 +100,9 @@
                         </th>
                       </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody>
+                      <tr></tr>
+                    </tbody>
                   </table>
                 </div>
               </div>
@@ -142,6 +144,7 @@
                 method: 'GET',
                 success: function (data) {
                     // Clear existing table rows
+                    console.log(JSON.stringify(data.data));
                     $('#table-body').empty();
 
                     // Iterate through the JSON data and add rows to the table
