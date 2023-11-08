@@ -274,26 +274,30 @@ def dashboard(request):
     isLogin = is_loggedin(request)
     if isLogin == False:
         return redirect('dashboard_app:login')
+    
+    branchid = request.session.get('branchid')
+    if branchid:
+        filter = "where branch_id='"+str(branchid)+"'"
     #Total Amount
-    query_amount = "select sum(price) as total_cost from vff.laundry_ordertbl"
+    query_amount = "select sum(price) as total_cost from vff.laundry_ordertbl "+filter+""
     result = execute_raw_query_fetch_one(query_amount)
     if result:  
         total_money = result[0] 
     
     #Total Customers
-    query_customers = "select count(*) from vff.laundry_customertbl"
+    query_customers = "select count(*) from vff.laundry_customertbl  "+filter+""
     c_result = execute_raw_query_fetch_one(query_customers)
     if c_result:  
         total_customers = c_result[0] 
         
     #Total Delivery Boys
-    query_delivery = "select count(*) from vff.laundry_delivery_boytbl"
+    query_delivery = "select count(*) from vff.laundry_delivery_boytbl  "+filter+""
     d_result = execute_raw_query_fetch_one(query_delivery)
     if d_result:  
         total_delivery_boys = d_result[0] 
     
     #Total Orders Delivered
-    query_orders = "select count(*) from vff.laundry_ordertbl where order_completed='1'"
+    query_orders = "select count(*) from vff.laundry_ordertbl where order_completed='1' "+filter+""
     d_result = execute_raw_query_fetch_one(query_orders)
     if d_result:  
         total_orders_delivered = d_result[0] 
