@@ -182,7 +182,7 @@ def all_branches(request):
     usrid = request.session.get('userid')
     request.session['branchid'] = ''
     print(f'Admin Usrid ::{usrid}')
-    query = "select branchtbl.branchid,branch_name,address,branch_type,creation_date,branchtbl.status,gstno,igstno,city,state,pincode from vff.branchtbl,vff.admintbl where admintbl.branchid=branchtbl.branchid and branchtbl.owner_id=admintbl.usrid and branchtbl.owner_id='"+str(usrid)+"'"
+    query = "select branchtbl.branchid,branch_name,branchtbl.address,branch_type,creation_date,branchtbl.status,gstno,igstno,branchtbl.city,state,branchtbl.pincode,usrname,admintbl.usrid from vff.usertbl,vff.branchtbl,vff.admintbl where admintbl.branchid=branchtbl.branchid and usertbl.usrid=admintbl.usrid and branchtbl.owner_id='"+str(usrid)+"'"
     rows = execute_raw_query(query)
     data = []    
     if not rows == 500:
@@ -199,6 +199,8 @@ def all_branches(request):
                 'city': row[8],
                 'state': row[9],
                 'pincode': row[10],
+                'admin_name': row[11],
+                'admin_id': row[12],
                 
             })
     else:
@@ -218,8 +220,11 @@ def save_selected_branch(request):
         branch_state = request.POST.get('branch_state')
         branch_pincode = request.POST.get('branch_pincode')
         branch_contactno = request.POST.get('branch_contactno')
+        branch_admin_name = request.POST.get('branch_admin_name')
+        branch_admin_id = request.POST.get('branch_admin_id')
         print(branch_name,branchid,branch_address)
         # Save the selected branchid and brandname to the session
+        
         request.session['branchid'] = branchid
         request.session['branch_name'] = branch_name
         request.session['branch_address'] = branch_address
@@ -229,6 +234,8 @@ def save_selected_branch(request):
         request.session['branch_state'] = branch_state
         request.session['branch_pincode'] = branch_pincode
         request.session['branch_contactno'] = branch_contactno
+        request.session['branch_admin_name'] = branch_admin_name
+        request.session['branch_admin_id'] = branch_admin_id
         request.session['branch_selected'] = True
         request.session.save()  # Save the session to persist the changes
 
@@ -364,9 +371,9 @@ def all_customers(request):
     error_msg = "No Customers Data Found"
     branch_id = request.session.get('branchid')
     filter = ''
-    if branch_id :
-        filter = " and laundry_customertbl.branchid='"+str(branch_id)+"'"
-    query = " select laundry_customertbl.usrid,usrname,mobile_no,usertbl.address,lat,lng,age,gender,laundry_customertbl.branchid,consmrid,laundry_customertbl.status,is_online,usertbl.epoch,profile_img from vff.laundry_customertbl,vff.usertbl where laundry_customertbl.usrid=usertbl.usrid "+filter+"  order by usrname desc"
+    # if branch_id :
+    #     filter = " and laundry_customertbl.branchid='"+str(branch_id)+"'"
+    query = " select laundry_customertbl.usrid,usrname,mobile_no,usertbl.address,lat,lng,age,gender,laundry_customertbl.branchid,consmrid,laundry_customertbl.status,is_online,usertbl.epoch,profile_img from vff.laundry_customertbl,vff.usertbl where laundry_customertbl.usrid=usertbl.usrid "+filter+"  order by usertbl.usrid desc"
     
     query_result = execute_raw_query(query)
     
@@ -500,10 +507,10 @@ def add_customer(request,usrid=None):
             land_mark = 'NA'
         branch_id = request.session.get('branchid')
         print(f'branch_id:{branch_id}')
-        if not branch_id:
-            # If there are validation errors, render the form with error messages
-            errors = "Please select Branch ID to add new customer"
-            return render(request,'customer_pages/add_customer.html',{'data':data,'error':errors})
+        # if not branch_id:
+        #     # If there are validation errors, render the form with error messages
+        #     errors = "Please select Branch ID to add new customer"
+        #     return render(request,'customer_pages/add_customer.html',{'data':data,'error':errors})
         
         try:
             with connection.cursor() as cursor:
@@ -527,8 +534,8 @@ def add_customer(request,usrid=None):
                     usrid = cursor.fetchone()[0]  # Retrieve the returned usrid
 
                     insert_query = (
-                        "insert into vff.laundry_customertbl (usrid,branchid,customer_name,query,gstno,company_name,igstno) values "
-                        "('"+str(usrid)+"','"+str(branch_id)+"','"+str(uname)+"','"+str(queries)+"','"+str(gstno)+"','"+str(company_name)+"','"+str(igstno)+"')"
+                        "insert into vff.laundry_customertbl (usrid,customer_name,query,gstno,company_name,igstno) values "
+                        "('"+str(usrid)+"','"+str(uname)+"','"+str(queries)+"','"+str(gstno)+"','"+str(company_name)+"','"+str(igstno)+"')"
                         
                     )
                     print(f"Create New user details::{insert_query}")
@@ -1701,6 +1708,9 @@ def generate_bill(request, orderid):
         branch_state = request.session.get('branch_state')
         branch_pincode = request.session.get('branch_pincode')
         branch_contactno = request.session.get('branch_contactno')
+        branch_admin_name = request.session.get('branch_admin_name')
+        branch_admin_id = request.session.get('branch_admin_id')
+        branchid = request.session.get('branchid')
         
         
         total_cost = total_laundry_cost + extra_item_sum
@@ -1735,12 +1745,51 @@ def generate_bill(request, orderid):
             
         print(f'OrderID::{first_order_id}')
         print(f'sub_items:::{sub_items}')
+        receiptID = ''
+        receiptName = ''
+        branchID = ''
+        #Insert Record in Receipt Table
+        receipt_query = "select receiptid,receipt_name,branch_id  from vff.laundry_receipt_invoice_tbl where order_id='"+str(first_order_id)+"'"
+        receipt_result = execute_raw_query_fetch_one(receipt_query)
+        if receipt_result:   
+            receiptID = receipt_result[0]
+            receiptName = receipt_result[1]
+            branchID = receipt_result[2]
+            
+        else:
+            try:
+                with connection.cursor() as cursor:
+                    insert_receipt="insert into vff.laundry_receipt_invoice_tbl (order_id,receipt_name,receipt_id,branch_id) values ('"+str(first_order_id)+"','"+str(branch_admin_name)+"','"+str(branch_admin_id)+"','"+str(branchid)+"')  returning receiptid"
+                    cursor.execute(insert_receipt)
+                    print(f'Insert receipt record:{insert_receipt}')
+                    receipt_id = cursor.fetchone()[0]  
+                    receiptID = receipt_id
+                    receipt_query = "select receiptid,receipt_name,branch_id  from vff.laundry_receipt_invoice_tbl where order_id='"+str(first_order_id)+"'"
+                    receipt_result = execute_raw_query_fetch_one(receipt_query)
+                    if receipt_result:   
+                        receiptID = receipt_result[0]
+                        receiptName = receipt_result[1]
+                        branchID = receipt_result[2]
+        
+            except Exception as e:
+                print(e)
+                receipt_query = "select receiptid,receipt_name,branch_id  from vff.laundry_receipt_invoice_tbl where order_id='"+str(first_order_id)+"'"
+                receipt_result = execute_raw_query_fetch_one(receipt_query)
+                if receipt_result:   
+                    receiptID = receipt_result[0]
+                    receiptName = receipt_result[1]
+                    branchID = receipt_result[2]
+            
+            
+                
+            
+        
         
     else:
         error_msg = 'Something Went Wrong'
     
     context ={'query_result':data,'extra_data':extra_data,'payment_id':payment_id,'order_id':first_order_id,'customer_name':customer_name
-              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total}
+              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total,'receipt_id':receiptID,'branch_id':branchID,'receiptName':receiptName}
     
     # return HttpResponse(formatted_bill_content)
     return render(request,'invoice_pages/receipt_bill.html',context)
