@@ -1748,13 +1748,15 @@ def generate_bill(request, orderid):
         receiptID = ''
         receiptName = ''
         branchID = ''
+        receiptDate = ''
         #Insert Record in Receipt Table
-        receipt_query = "select receiptid,receipt_name,branch_id  from vff.laundry_receipt_invoice_tbl where order_id='"+str(first_order_id)+"'"
+        receipt_query = "select receiptid,receipt_name,branch_id,date  from vff.laundry_receipt_invoice_tbl where order_id='"+str(first_order_id)+"'"
         receipt_result = execute_raw_query_fetch_one(receipt_query)
         if receipt_result:   
             receiptID = receipt_result[0]
             receiptName = receipt_result[1]
             branchID = receipt_result[2]
+            receiptDate = receipt_result[3]
             
         else:
             try:
@@ -1764,21 +1766,23 @@ def generate_bill(request, orderid):
                     print(f'Insert receipt record:{insert_receipt}')
                     receipt_id = cursor.fetchone()[0]  
                     receiptID = receipt_id
-                    receipt_query = "select receiptid,receipt_name,branch_id  from vff.laundry_receipt_invoice_tbl where order_id='"+str(first_order_id)+"'"
+                    receipt_query = "select receiptid,receipt_name,branch_id,date  from vff.laundry_receipt_invoice_tbl where order_id='"+str(first_order_id)+"'"
                     receipt_result = execute_raw_query_fetch_one(receipt_query)
                     if receipt_result:   
                         receiptID = receipt_result[0]
                         receiptName = receipt_result[1]
                         branchID = receipt_result[2]
+                        receiptDate = receipt_result[3]
         
             except Exception as e:
                 print(e)
-                receipt_query = "select receiptid,receipt_name,branch_id  from vff.laundry_receipt_invoice_tbl where order_id='"+str(first_order_id)+"'"
+                receipt_query = "select receiptid,receipt_name,branch_id,date  from vff.laundry_receipt_invoice_tbl where order_id='"+str(first_order_id)+"'"
                 receipt_result = execute_raw_query_fetch_one(receipt_query)
                 if receipt_result:   
                     receiptID = receipt_result[0]
                     receiptName = receipt_result[1]
                     branchID = receipt_result[2]
+                    receiptDate = receipt_result[3]
             
             
                 
@@ -1789,7 +1793,7 @@ def generate_bill(request, orderid):
         error_msg = 'Something Went Wrong'
     
     context ={'query_result':data,'extra_data':extra_data,'payment_id':payment_id,'order_id':first_order_id,'customer_name':customer_name
-              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total,'receipt_id':receiptID,'branch_id':branchID,'receiptName':receiptName}
+              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total,'receipt_id':receiptID,'branch_id':branchID,'receiptName':receiptName,'receiptDate':receiptDate}
     
     # return HttpResponse(formatted_bill_content)
     return render(request,'invoice_pages/receipt_bill.html',context)

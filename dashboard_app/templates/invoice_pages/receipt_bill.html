@@ -107,10 +107,11 @@
     </div>
 
     <div class="receipt-info">
+      <p>GST No : {{branch_gstno}}</p>
       <p>Receipt : #{{receipt_id}}</p>
-      <p>Date: 2023-11-02 15:30:00</p>
-      <p>Cashier: Sattappa</p>
-      <p>Branch ID: #</p>
+      <p>Date: {{receiptDate}}</p>
+      <p>Cashier: {{receiptName}}</p>
+      <p>Branch ID: #{{branch_id}}</p>
     </div>
 
     <div class="receipt-info">
@@ -180,7 +181,7 @@
     <div class="terms-and-conditions">
       <p>Terms and Conditions:</p>
       <p>1. The Amount can't be refunded once payment has been made.</p>
-      <!-- Add your terms and conditions text here -->
+      <!-- Add more terms and conditions text here -->
     </div>
   </div>
 </body>
