@@ -141,6 +141,7 @@ $('#download-report').on('click', function () {
 
 function generateExcel() {
   var table = document.getElementById('table-body');
+  var footerData = document.querySelector('.card-footer');
 
   // Extract table headers from the <thead>
   var headers = [];
@@ -151,7 +152,7 @@ function generateExcel() {
 
   // Extract table data rows and store them in the 'rows' array
   var rows = [];
-  table.querySelectorAll('tr').forEach(function (row, rowIndex) {
+  table.querySelectorAll('tr').forEach(function (row) {
       var rowData = [];
       row.querySelectorAll('td').forEach(function (cell) {
           rowData.push(cell.textContent);
@@ -159,8 +160,12 @@ function generateExcel() {
       rows.push(rowData);
   });
 
-  // Create a worksheet with headers and data
-  var worksheet = XLSX.utils.json_to_sheet([headers, ...rows]);
+  // Extract footer data
+  var totalAmount = footerData.querySelector('.col-4:nth-child(1)').textContent.trim();
+  var totalTaxAmount = footerData.querySelector('.col-4:nth-child(2)').textContent.trim();
+
+  // Create a worksheet with headers, data, and footer information
+  var worksheet = XLSX.utils.json_to_sheet([headers, ...rows, [totalAmount, totalTaxAmount]]);
 
   // Create a workbook and add the worksheet
   var workbook = XLSX.utils.book_new();
