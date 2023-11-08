@@ -1739,7 +1739,7 @@ def generate_bill(request, orderid):
     else:
         error_msg = 'Something Went Wrong'
     
-    context ={'query_result':data,'extra_data':extra_data,'error_msg':error_msg,'payment_id':payment_id,'order_id':first_order_id,'customer_name':customer_name
+    context ={'query_result':data,'extra_data':extra_data,'payment_id':payment_id,'order_id':first_order_id,'customer_name':customer_name
               ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range,'alert_delivery_boy':alert_delivery_boy,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total}
     
     # return HttpResponse(formatted_bill_content)
