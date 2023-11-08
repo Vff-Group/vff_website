@@ -243,14 +243,17 @@ function generatePDF() {
 
                     // Iterate through the JSON data and add rows to the table
                     $.each(data.data, function (index, item) {
+                      if(item.note === 'NA'){
+                        item.note = '-'
+                      }
                         var newRow = '<tr>' +
-                            '<td> <p class="text-xs text-secondary mb-0">' + (index + 1) + '</p> </td>' +
+                            '<td  class="text-center"> <p class="text-xs text-secondary mb-0">' + (index + 1) + '</p> </td>' +
                             '<td> <p class="text-xs text-secondary mb-0">' + item.date + '</p> </td>' +
-                            '<td> <p class="text-xs text-secondary mb-0">' + item.order_id + '</p> </td>' +
+                            '<td  class="text-center"> <p class="text-xs text-secondary mb-0"> ORD#' + item.order_id + '</p> </td>' +
                             '<td> <p class="text-xs text-secondary mb-0">' + item.customer + '</p> </td>' +
-                            '<td> <p class="text-xs text-secondary mb-0">' + item.amount + '</p> </td>' +
-                            '<td> <p class="text-xs text-secondary mb-0">' + item.payment_type + '</p> </td>' +
-                            '<td> <p class="text-xs text-secondary mb-0">' + item.note + '</p> </td>' +
+                            '<td  class="text-center"> <p class="text-xs text-secondary mb-0">' + item.amount + '</p> </td>' +
+                            '<td class="text-center"> <p class="text-xs text-secondary mb-0">' + item.payment_type + '</p> </td>' +
+                            '<td class="text-center"> <p class="text-xs text-secondary mb-0">' + item.note + '</p> </td>' +
                             '</tr>';
                         $('#table-body').append(newRow);
                     });
