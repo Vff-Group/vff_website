@@ -286,10 +286,19 @@
                 
               </ul>
               {% endif %}
+              {% if additional_instruction != 'NA' %}
+              <div class="col mb-1">
+                <div class="form-group">
+                  <label>Additional Instructions ?</label>
+                  <textarea rows="4" class="form-control form-control-alternative" disabled>{{ additional_instruction }}</textarea>
+                </div>
+              </div>
+              {% endif %}
               <form action="{% url 'dashboard_app:generate_bill' order_id%}" method="post">
                 {% csrf_token %}
                 <button id="printButton" type="submit" class="btn btn-primary my-4">Print Invoice</button>
               </form>
+              {% if order_status != 'Completed' %}
               <div class="col">
                 <form method="post" action="{% url 'dashboard_app:update_order_status' order_id booking_id%}">
                     {% csrf_token %}
@@ -318,7 +327,7 @@
                     </div>
                 </form>
               </div>
-
+              {% endif %}
               <!-- modal code  -->
 <!-- <div class="col-md-4">
                     

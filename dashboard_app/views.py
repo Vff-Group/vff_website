@@ -1236,6 +1236,7 @@ def view_order_detail(request,orderid):
         order_completed = data[0]['order_completed'] if data else ''
         order_date = data[0]['order_taken_epoch'] if data else ''
         delivery_date = data[0]['delivery_epoch'] if data else ''
+        additional_instruction = data[0]['additional_instruction'] if data else ''
         request.session['order_id'] = first_order_id
         order_completed_status = ""
         if order_completed == 0:
@@ -1252,7 +1253,7 @@ def view_order_detail(request,orderid):
         error_msg = 'Something Went Wrong'
     
     context ={'query_result':data,'extra_data':extra_data,'error_msg':error_msg,'payment_id':payment_id,'order_id':first_order_id,'customer_name':customer_name
-              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range,'alert_delivery_boy':alert_delivery_boy,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total}
+              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range,'alert_delivery_boy':alert_delivery_boy,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total,'additional_instruction':additional_instruction}
     
     return render(request,'order_pages/order_details.html',context)
 
