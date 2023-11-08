@@ -115,8 +115,8 @@
                     <small class="text-dark" id="total-tax">Total Tax Amount: Rs./-</small>
                   </div>
                   <div class="col-4">
-                    <button id="download-report" class="btn btn-success">Download Report</button>
-                    <button class="btn btn-warning">Print Report</button>
+                    <button id="download-report" class="btn btn-success">Download Receipts</button>
+                    <button id="print-report" class="btn btn-warning ms-1">Print Receipts</button>
                   </div>
                 </div>
               </div>
@@ -187,6 +187,79 @@ function generateExcel() {
 
   // Generate and download the Excel file
   XLSX.writeFile(workbook, fileName);
+}
+
+// Add a click event handler for the "Download Report" button
+$('#print-report').on('click', function () {
+  generateHTMLTemplate();
+});
+
+function generateHTMLTemplate() {
+  var table = document.getElementById('table-body');
+  var footerData = document.querySelector('.card-footer');
+
+  // Extract table headers from the <thead>
+  var headers = [];
+  var headerRow = table.closest('table').querySelector('thead').querySelector('tr');
+  headerRow.querySelectorAll('th').forEach(function (cell) {
+      headers.push(cell.textContent);
+  });
+
+  // Extract table data rows and store them in the 'rows' array
+  var rows = [];
+  table.querySelectorAll('tr').forEach(function (row) {
+      var rowData = [];
+      row.querySelectorAll('td').forEach(function (cell) {
+          rowData.push(cell.textContent);
+      });
+      rows.push(rowData);
+  });
+
+  // Extract footer data
+  var totalAmount = footerData.querySelector('.col-4:nth-child(1)').textContent.trim();
+  var totalTaxAmount = footerData.querySelector('.col-4:nth-child(2)').textContent.trim();
+
+  // Create an HTML table
+  var htmlTable = '<table>' +
+                  '<thead>' +
+                  '<tr>';
+  headers.forEach(function (header) {
+      htmlTable += '<th>' + header + '</th>';
+  });
+  htmlTable += '</tr>' +
+              '</thead>' +
+              '<tbody>';
+
+  rows.forEach(function (rowData) {
+      htmlTable += '<tr>';
+      rowData.forEach(function (cell) {
+          htmlTable += '<td>' + cell + '</td>';
+      });
+      htmlTable += '</tr>';
+  });
+
+  htmlTable += '</tbody>' +
+              '</table>';
+
+  // Create a div for the footer data
+  var footerDiv = '<div class="card-footer px-4 pt-0 pb-2 mt-2">' +
+                  '<div class="row">' +
+                  '<div class="col-4">' +
+                  '<small class="mb-2 text-dark">Total Amount: ' + totalAmount + '</small>' +
+                  '</div>' +
+                  '<div class="col-4">' +
+                  '<small class="text-dark">Total Tax Amount: ' + totalTaxAmount + '</small>' +
+                  '</div>' +
+                  '</div>' +
+                  '</div>';
+
+  // Combine the table and footer data
+  var htmlTemplate = htmlTable + footerDiv;
+
+  // Add top margin and align to fit A4 size
+  var printableContent = '<div style="margin-top: 30px; max-width: 210mm;">' + htmlTemplate + '</div>';
+
+  // You can now use the 'printableContent' as needed, such as inserting it into a specific element or displaying it.
 }
 
 
