@@ -1165,7 +1165,16 @@ $(document).ready(function() {
             // Convert the selectedItems object to JSON
     var selectedItemsJSON = JSON.stringify(extraItems);
     console.log('Selected Extra Items JSON: ' + selectedItemsJSON);
-                payment_show(totalPayment);
+               //customer-name,selected-customer-id,selected-mobile-no,selected-customer-name
+    var selected_customer_id = document.getElementById("selected-customer-id");
+    var customer_name_input = document.getElementById("selected-customer-name");
+    var customer_mobno_input = document.getElementById("selected-mobile-no");
+    
+    
+    var customer_id = selected_customer_id.value.trim()
+    var customer_name = customer_name_input.value.trim()
+    var customer_mobile_no = customer_mobno_input.value.trim()
+                payment_show(totalPayment,customer_name,customer_mobile_no);
                 //TODO:Need to save Razor Pay Payment ID.
                 console.log('razor_pay_id::'+payment_id);
                 
@@ -1183,7 +1192,7 @@ $(document).ready(function() {
 });
 
 
-function payment_show(totalPayment){
+function payment_show(totalPayment,customerName,customerMobno){
     console.log('PaytotalPayment::'+totalPayment);
     var options = {
         "key": "rzp_test_qtHIWapeUEAAZO", // Enter the Key ID generated from the Dashboard
@@ -1203,9 +1212,9 @@ function payment_show(totalPayment){
             //alert(response.razorpay_signature)
         },
         "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
-            "name": "Shaheed Maniyar", //your customer's name
-            "email": "shahidmaniyar888@gmail.com", 
-            "contact": "8296565587"  //Provide the customer's phone number for better conversion rates 
+            "name": customerName, //your customer's name
+            //"email": "shahidmaniyar888@gmail.com", 
+            "contact": "+91"+customerMobno  //Provide the customer's phone number for better conversion rates 
         },
         "notes": {
             "address": "Tilakwadi"
