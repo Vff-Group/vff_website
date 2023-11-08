@@ -2341,6 +2341,7 @@ def place_new_order(request):
         booking_id = jdict['booking_id']
         delivery_price = jdict['delivery_price']
         discount_price = jdict['discount_price']
+        gstamount = jdict['gstamount']
         customer_id = jdict['customer_id']
         total_price = jdict['total_price']
         total_items = jdict['total_items']
@@ -2358,7 +2359,7 @@ def place_new_order(request):
             with connection.cursor() as cursor:
                 #Insert Record into Order Table First to Generate Order ID
                 #Adding delivery_boyid = 1 for counter orders only
-                query_order = "insert into vff.laundry_ordertbl(customerid,quantity,price,order_status,additional_instruction,booking_id,delivery_price,discount_price,delivery,delivery_boyid) values ('"+str(customer_id)+"','"+str(total_items)+"','"+str(total_price)+"','"+str(order_status)+"','"+str(additional_instruction)+"','"+str(booking_id)+"','"+str(delivery_price)+"','"+str(discount_price)+"','"+str(dateofdelivery)+"','1') returning orderid"
+                query_order = "insert into vff.laundry_ordertbl(customerid,quantity,price,order_status,additional_instruction,booking_id,delivery_price,discount_price,delivery,delivery_boyid,gstamount) values ('"+str(customer_id)+"','"+str(total_items)+"','"+str(total_price)+"','"+str(order_status)+"','"+str(additional_instruction)+"','"+str(booking_id)+"','"+str(delivery_price)+"','"+str(discount_price)+"','"+str(dateofdelivery)+"','1','"+str(gstamount)+"') returning orderid"
                 cursor.execute(query_order)
                 order_id = cursor.fetchone()[0]
                 print(f'Retuning BOOKING ID-------->{order_id}')
@@ -3003,34 +3004,34 @@ def payment_receipt(request):
         return redirect('dashboard_app:login')
     error_msg = ""
     branch_id = request.session.get('branchid')
-    # filter = ''
-    # if branch_id :
-    #     filter = " and laundry_delivery_boytbl.branchid='"+str(branch_id)+"'"
-    # query = "select catid,category_name,cat_img,regular_price,regular_price_type,express_price,express_price_type,offer_price,offer_price_type,description from vff.laundry_categorytbl order by catid desc"
+    filter = ''
+    if branch_id :
+        filter = " and  laundry_ordertbl.branch_id='"+str(branch_id)+"'"
+    query = "select laundry_receipt_invoice_tbl.date,orderid,customer_name,price,payment_type,additional_instruction,payment_id,gstamount,igstamount from vff.laundry_ordertbl,vff.laundry_receipt_invoice_tbl,vff.laundry_customertbl,vff.laundry_payment_tbl where laundry_ordertbl.orderid=laundry_receipt_invoice_tbl.order_id and laundry_ordertbl.orderid=laundry_payment_tbl.order_id and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.pickup_dt>='"+str(startDate)+"' and laundry_ordertbl.pickup_dt<='"+str(endDate)+"' "+filter+" order by orderid desc"
     
-    # query_result = execute_raw_query(query)
+    query_result = execute_raw_query(query)
     
     
         
-    # data = []    
-    # if not query_result == 500:
-    #     for row in query_result:
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
             
-    #         data.append({
-    #             'catid': row[0],
-    #             'categoryname': row[1],
-    #             'categoryimg': row[2],
-    #             'regular_prize': row[3],
-    #             'regular_prize_type': row[4],
-    #             'express_prize': row[5],
-    #             'express_prize_type': row[6],
-    #             'offer_prize': row[7],
-    #             'offer_prize_type': row[8],
-    #             'description': row[9],
+            data.append({
+                'catid': row[0],
+                'categoryname': row[1],
+                'categoryimg': row[2],
+                'regular_prize': row[3],
+                'regular_prize_type': row[4],
+                'express_prize': row[5],
+                'express_prize_type': row[6],
+                'offer_prize': row[7],
+                'offer_prize_type': row[8],
+                'description': row[9],
                
-    #         })
-    # else:
-    #     error_msg = 'Something Went Wrong'
+            })
+    else:
+        error_msg = 'Something Went Wrong'
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
     # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}

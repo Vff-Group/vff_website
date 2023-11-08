@@ -693,6 +693,7 @@ $('#modal-default1').on('hidden.bs.modal', function (e) {
         var extraItems = [];
                 var grossTotal = 0; // Total amount
                 var grossQuantity = 0; // Total Quantity
+                var GSTamount = 0; // Total Quantity
                 var addOnsTotal = 0;
                 var booking_id = -1;
                 var deliveryTotal = 0;
@@ -785,6 +786,7 @@ $('#order-form').validate({
             'discount_price': discountAmount,
             'total_price': totalPayment,
             'total_items': grossQuantity,
+            'gstamount': GSTamount,
             'razor_pay_id': payment_id,
             'payment_status': "Success",
             'payment_type': paymentType,
@@ -1192,6 +1194,7 @@ function payment_show(totalPayment){
         "image": "https://vff-group.com/static/images/logo.png",
         "handler": function (response){
             payment_id =  response.razorpay_payment_id;
+            GSTamount = ((totalPayment * 18)/100);
             // Update the payment ID input
             $('#input-paymentid').val(payment_id);
             disableElements() ;
