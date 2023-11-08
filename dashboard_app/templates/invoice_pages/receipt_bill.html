@@ -99,22 +99,22 @@
 
     <div class="header">
       <h1 style="font-size: 10px;">Ve7vet Wash</h1>
-      <p>123 Main Street</p>
-      <p>City, State, ZIP</p>
-      <p>Phone: (123) 456-7890</p>
+      <p>{{branch_name}}</p>
+      <p>{{branch_address}}{{branch_city}},{{branch_state}} - {{branch_pincode}}</p>
+      <p>Phone: (+91) {{branch_contactno}}</p>
       <p>Website: <a href="https://vff-group.com/">www.vff-group.com/</a></p>
     </div>
 
     <div class="receipt-info">
       <p>Receipt #: 12345</p>
       <p>Date: 2023-11-02 15:30:00</p>
-      <p>Cashier: Shaheed</p>
-      <p>Register: 6</p>
+      <p>Cashier: Sattappa</p>
+      <p>Branch ID: #</p>
     </div>
 
     <div class="receipt-info">
-      <p>Customer: Rizwan</p>
-      <p>Phone: +91-8297867654</p>
+      <p>Customer: {{customer_name}}</p>
+      <p>Phone: +91-{{mobile_no}}</p>
     </div>
 
     <div class="item-list">
@@ -124,32 +124,52 @@
         <span class="item-name">Price</span>
         <span class="item-name">Total</span>
       </div>
-
+      {% for row in query_result %}
       <div class="item">
-        <span class="item-name">Dry Clean [jeans(8),tshirt(9),hoodies(10)]</span>
-        <span class="item-name">2</span>
-        <span class="item-name">$2.50</span>
-        <span class="item-name">$5.00</span>
+        <span class="item-name">
+          {% if row.type_of == "Kgs" %}
+          {{row.cat_name}}
+          {{sub_items}}
+          {% else %}
+          {{row.sub_cat_name}}
+          [ {{row.section_type}} ]
+          {% endif %}
+        </span>
+        <span class="item-name">
+          {{row.item_quantity}} {{row.type_of}}
+        </span>
+        <span class="item-name">
+          ₹ {{row.actual_cost}} /  {{row.type_of}}
+        </span>
+        <span class="item-name">
+          ₹ {{row.item_cost}}
+        </span>
       </div>
-      <div class="item">
+      {% endfor %}
+      <!-- <div class="item">
         <span class="item-name">Wash & Fold</span>
         <span class="item-name">4</span>
         <span class="item-name">$2.50</span>
         <span class="item-name">$6.00</span>
-      </div>
-      <!-- Add more items here with long item names that will wrap automatically -->
+      </div> -->
+      
     </div>
 
     <div class="total">
-      <p>Subtotal: $15.00</p>
-      <p>Tax (7%): $1.05</p>
-      <p>Total: $16.05</p>
+      <p>Subtotal: ₹{{sub_total}}/-</p>
+      {% if payment_type != "Cash" %}
+      <p>Tax (18%): ₹{{gst_amount}}/-</p>
+      {% endif %}
+      <p>Discount: ₹{{discount_amount}}/-</p>
+      <p>Delivery Charges: ₹{{delivery_price}}/-</p>
+      <h1>Total: ₹ {{total_cost}}/-</h1>
+      
     </div>
 
     <div class="payment-info">
-      <p>Payment Method: Credit Card</p>
-      <p>Card Type: Visa</p>
-      <p>Card Number: **** **** **** 1234</p>
+      <p>Payment Method: {{payment_type}}</p>
+      <!-- <p>Card Type: Visa</p>
+      <p>Card Number: **** **** **** 1234</p> -->
     </div>
 
     <div class="terms-and-conditions">

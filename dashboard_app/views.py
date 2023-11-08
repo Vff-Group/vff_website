@@ -1577,7 +1577,7 @@ def update_order_status(request,order_id,booking_id):
         
 #Thermal Printer size
 def generate_bill(request, orderid):
-    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name,categoryid,subcategoryid,booking_type,dt,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,time,item_cost,item_quantity,type,section_type from vff.laundry_active_orders_tbl,vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and laundry_active_orders_tbl.order_id=laundry_ordertbl.orderid and orderid='"+str(orderid)+"' order by orderid desc;"
+    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name,categoryid,subcategoryid,booking_type,dt,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,time,item_cost,item_quantity,type,section_type,laundry_ordertbl.booking_id,gstamount,igstamount,discount_price from vff.laundry_active_orders_tbl,vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and laundry_active_orders_tbl.order_id=laundry_ordertbl.orderid and orderid='"+str(orderid)+"' order by orderid desc;"
     
     query_result = execute_raw_query(query)
     print(f'query_result:::{query_result}')
@@ -1639,6 +1639,10 @@ def generate_bill(request, orderid):
                 'item_quantity': row[38],
                 'type_of': row[39],
                 'section_type': row[40],
+                'booking_id': row[41],
+                'gstamount': row[42],
+                'igstamount': row[43],
+                'discount_price': row[44],
                 
                 
                
@@ -1646,10 +1650,12 @@ def generate_bill(request, orderid):
         
         #Payment Details
         payment_id = 'Payment Not Done'
-        query_payment = "select razor_pay_payment_id,status,time,dt from vff.laundry_payment_tbl where order_id='"+str(orderid)+"'"
+        query_payment = "select razor_pay_payment_id,status,time,dt,payment_type from vff.laundry_payment_tbl where order_id='"+str(orderid)+"'"
         pay_result = execute_raw_query_fetch_one(query_payment)
         if pay_result:   
             payment_id = pay_result[0]
+            payment_type = pay_result[4]
+        
         
         #extra_cart_item like softner
         extra_error = "No Extra Items added"
@@ -1686,9 +1692,28 @@ def generate_bill(request, orderid):
             else:
                 delivery_price = 0
         
+        #request.session['branchid'] = branchid
+        branch_name = request.session.get('branch_name') 
+        branch_address = request.session.get('branch_address') 
+        branch_gstno = request.session.get('branch_gstno')
+        branch_igstno = request.session.get('branch_igstno')
+        branch_city = request.session.get('branch_city')
+        branch_state = request.session.get('branch_state')
+        branch_pincode = request.session.get('branch_pincode')
+        branch_contactno = request.session.get('branch_contactno')
+        
+        
         total_cost = total_laundry_cost + extra_item_sum
         print(f'total_cost::{total_cost}')
+        totalGST = (total_cost * 18) / 100
+        print(f'totalGST::{totalGST}')
+        gst_amount = totalGST
+        sub_total = total_laundry_cost
+        
         first_order_id = data[0]['orderid'] if data else ''
+        discount_amount = data[0]['discount_price'] if data else ''
+        booking_id = data[0]['booking_id'] if data else ''
+        mobile_no = data[0]['mobile_no'] if data else ''
         customer_name = data[0]['customer_name'] if data else ''
         address = data[0]['address'] if data else ''
         houseno = data[0]['houseno'] if data else ''
@@ -1713,42 +1738,12 @@ def generate_bill(request, orderid):
         
     else:
         error_msg = 'Something Went Wrong'
-
-    # Create a plain text bill content
-    bill_content = "VFF Group\n"
-    bill_content += f"Order Date: {order_date}\n"
-    bill_content += f"Delivery Date: {delivery_date}\n"
-    bill_content += f"Customer: {customer_name}\n"
-    bill_content += "-" * 40 + "\n"  # Separator line
-
-    # Table header
-    bill_content += "{:<20} {:<10} {:<10} {:<10}\n".format("Product", "Price", "Quantity", "Total")
-    bill_content += "-" * 40 + "\n"
-
-    # Loop through order items
-    # for item in order.orderproduct_set.all():
-    #     product_name = item.product.name[:20].ljust(20)  # Left-justify and pad with spaces to 20 characters
-    #     product_price = item.product.price
-    #     quantity = item.quantity
-    #     item_total = quantity * product_price
-    #     bill_content += "{:<20} {:<10} {:<10} {:<10}\n".format(product_name, product_price, quantity, item_total)
-
-    bill_content += "-" * 40 + "\n"
-
-    # Highlight the "Total Amount" with larger font size
-    bill_content += "\x1B\x21\x10"  # Set text size to double-height and double-width
-    bill_content += f"Total Amount: {total_cost}\n"
-    bill_content += "\x1B\x21\x00"  # Reset text size to normal
-
-# Display Terms and Conditions in a smaller font
-    bill_content += "\x1B\x21\x01"  # Set text size to small
-    bill_content += "Terms and Conditions:\n"
-    bill_content += "These terms and conditions are subject to change without notice...\n"
-    bill_content += "\x1B\x21\x00"  # Reset text size to normal
-    # Print or store 'bill_content' as needed
-    formatted_bill_content = fit_to_thermal_printer_paper(bill_content)
+    
+    context ={'query_result':data,'extra_data':extra_data,'error_msg':error_msg,'payment_id':payment_id,'order_id':first_order_id,'customer_name':customer_name
+              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range,'alert_delivery_boy':alert_delivery_boy,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total}
+    
     # return HttpResponse(formatted_bill_content)
-    return render(request,'invoice_pages/receipt_bill.html')
+    return render(request,'invoice_pages/receipt_bill.html',context)
 
 import textwrap
 
