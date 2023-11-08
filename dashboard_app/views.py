@@ -2359,7 +2359,7 @@ def place_new_order(request):
             with connection.cursor() as cursor:
                 #Insert Record into Order Table First to Generate Order ID
                 #Adding delivery_boyid = 1 for counter orders only
-                query_order = "insert into vff.laundry_ordertbl(customerid,quantity,price,order_status,additional_instruction,booking_id,delivery_price,discount_price,delivery,delivery_boyid,gstamount) values ('"+str(customer_id)+"','"+str(total_items)+"','"+str(total_price)+"','"+str(order_status)+"','"+str(additional_instruction)+"','"+str(booking_id)+"','"+str(delivery_price)+"','"+str(discount_price)+"','"+str(dateofdelivery)+"','1','"+str(gstamount)+"') returning orderid"
+                query_order = "insert into vff.laundry_ordertbl(customerid,quantity,price,order_status,additional_instruction,booking_id,delivery_price,discount_price,delivery,delivery_boyid,gstamount,branch_id) values ('"+str(customer_id)+"','"+str(total_items)+"','"+str(total_price)+"','"+str(order_status)+"','"+str(additional_instruction)+"','"+str(booking_id)+"','"+str(delivery_price)+"','"+str(discount_price)+"','"+str(dateofdelivery)+"','1','"+str(gstamount)+"','"+str(branch_id)+"') returning orderid"
                 cursor.execute(query_order)
                 order_id = cursor.fetchone()[0]
                 print(f'Retuning BOOKING ID-------->{order_id}')
