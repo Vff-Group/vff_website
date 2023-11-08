@@ -296,7 +296,7 @@
               {% endif %}
               <form action="{% url 'dashboard_app:generate_bill' order_id%}" method="post">
                 {% csrf_token %}
-                <button id="printButton" type="submit" class="btn btn-primary my-4">Print Invoice</button>
+                <button id="printButton" type="submit" class="btn btn-primary my-4">Print Bill</button>
               </form>
               {% if order_status != 'Completed' %}
               <div class="col">
