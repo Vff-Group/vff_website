@@ -276,9 +276,13 @@ def dashboard(request):
         return redirect('dashboard_app:login')
     
     branchid = request.session.get('branchid')
+    filter=''
+    delivery_filter=''
+    order_filter=''
     if branchid:
         filter = "where branch_id='"+str(branchid)+"'"
         delivery_filter = "where branchid='"+str(branchid)+"'"
+        order_filter = " and branchid='"+str(branchid)+"'"
     #Total Amount
     query_amount = "select sum(price) as total_cost from vff.laundry_ordertbl "+filter+""
     result = execute_raw_query_fetch_one(query_amount)
@@ -298,7 +302,7 @@ def dashboard(request):
         total_delivery_boys = d_result[0] 
     
     #Total Orders Delivered
-    query_orders = "select count(*) from vff.laundry_ordertbl where order_completed='1' "+filter+""
+    query_orders = "select count(*) from vff.laundry_ordertbl where order_completed='1' "+order_filter+""
     d_result = execute_raw_query_fetch_one(query_orders)
     if d_result:  
         total_orders_delivered = d_result[0] 
