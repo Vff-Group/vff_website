@@ -156,18 +156,22 @@
     </div>
 
     <div class="total">
-      <p>Subtotal: ₹{{sub_total}}/-</p>
+      <p>Subtotal: ₹ {{sub_total}}/-</p>
       {% if payment_type != "Cash" %}
-      <p>Tax (18%): ₹{{gst_amount}}/-</p>
+      <p>Tax (18%): ₹ {{gst_amount}}/-</p>
       {% endif %}
-      <p>Discount: ₹{{discount_amount}}/-</p>
-      <p>Delivery Charges: ₹{{delivery_price}}/-</p>
+      <p>Discount: ₹ {{discount_amount}}/-</p>
+      <p>Delivery Charges: ₹ {{delivery_price}}/-</p>
       <h1>Total: ₹ {{total_cost}}/-</h1>
       
     </div>
 
     <div class="payment-info">
       <p>Payment Method: {{payment_type}}</p>
+      {% if payment_type != 'Cash' %}  
+      <p>Transaction ID: {{payment_id}}</p>
+      {% endif %}
+
       <!-- <p>Card Type: Visa</p>
       <p>Card Number: **** **** **** 1234</p> -->
     </div>
