@@ -142,24 +142,21 @@ $('#download-report').on('click', function () {
 function generateExcel() {
   var table = document.getElementById('table-body');
 
+  // Extract table headers from the <thead>
   var headers = [];
-  var rows = [];
-
-  // Extract table headers
-  var headerRow = table.querySelector('tr');
-  headerRow.querySelectorAll('td').forEach(function (cell) {
+  var headerRow = table.closest('table').querySelector('thead').querySelector('tr');
+  headerRow.querySelectorAll('th').forEach(function (cell) {
       headers.push(cell.textContent);
   });
 
-  // Extract table data rows
+  // Extract table data rows and store them in the 'rows' array
+  var rows = [];
   table.querySelectorAll('tr').forEach(function (row, rowIndex) {
-      if (rowIndex !== 0) { // Skip the first row (header row)
-          var rowData = [];
-          row.querySelectorAll('td').forEach(function (cell) {
-              rowData.push(cell.textContent);
-          });
-          rows.push(rowData);
-      }
+      var rowData = [];
+      row.querySelectorAll('td').forEach(function (cell) {
+          rowData.push(cell.textContent);
+      });
+      rows.push(rowData);
   });
 
   // Create a worksheet with headers and data
@@ -169,8 +166,15 @@ function generateExcel() {
   var workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, 'Payment Receipt');
 
+  // Get the customer name and order id from the first data row
+  var customerName = rows.length > 0 ? rows[0][3] : 'UnknownCustomer';
+  var orderId = rows.length > 0 ? rows[0][2] : 'UnknownOrderID';
+
+  // Generate the Excel file name with customer name and order id
+  var fileName = 'payment_receipt_' + customerName + '_' + orderId + '.xlsx';
+
   // Generate and download the Excel file
-  XLSX.writeFile(workbook, 'payment_receipt.xlsx');
+  XLSX.writeFile(workbook, fileName);
 }
 
 
