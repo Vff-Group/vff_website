@@ -278,6 +278,7 @@ def dashboard(request):
     branchid = request.session.get('branchid')
     if branchid:
         filter = "where branch_id='"+str(branchid)+"'"
+        delivery_filter = "where branchid='"+str(branchid)+"'"
     #Total Amount
     query_amount = "select sum(price) as total_cost from vff.laundry_ordertbl "+filter+""
     result = execute_raw_query_fetch_one(query_amount)
@@ -291,7 +292,7 @@ def dashboard(request):
         total_customers = c_result[0] 
         
     #Total Delivery Boys
-    query_delivery = "select count(*) from vff.laundry_delivery_boytbl  "+filter+""
+    query_delivery = "select count(*) from vff.laundry_delivery_boytbl  "+delivery_filter+""
     d_result = execute_raw_query_fetch_one(query_delivery)
     if d_result:  
         total_delivery_boys = d_result[0] 
