@@ -1284,6 +1284,7 @@ $("#generate-booking-id").on("click",function(){
                     booking_id_input.value = bookingIDData; // Set the value in the hidden input
                     generated_booking_id = bookingIDData;
             $("#generate-booking-id").text("Booking ID: " + bookingIDData); // Update the button text
+            $("#generate-booking-id").prop("disabled", true);
                     
                    
 
