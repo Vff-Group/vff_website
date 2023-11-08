@@ -309,7 +309,7 @@ function generatePDF() {
                     // Clear existing table rows
                     console.log(JSON.stringify(data.data));
 
-                    if(data.data.length == 0){
+                    if(data.data.length === 0){
                                   // Show the buttons once data is loaded
         $('#download-report, #print-report').css('display', 'none');
                     }
