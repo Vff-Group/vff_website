@@ -164,8 +164,13 @@ function generateExcel() {
   var totalAmount = footerData.querySelector('.col-4:nth-child(1)').textContent.trim();
   var totalTaxAmount = footerData.querySelector('.col-4:nth-child(2)').textContent.trim();
 
-  // Create a worksheet with headers, data, and footer information
-  var worksheet = XLSX.utils.json_to_sheet([headers, ...rows, [totalAmount, totalTaxAmount]]);
+  // Add the footer data to the last two columns of each data row
+  rows.forEach(function (rowData) {
+      rowData.push(totalAmount, totalTaxAmount);
+  });
+
+  // Create a worksheet with headers and data
+  var worksheet = XLSX.utils.json_to_sheet([headers, ...rows]);
 
   // Create a workbook and add the worksheet
   var workbook = XLSX.utils.book_new();
