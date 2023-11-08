@@ -86,7 +86,7 @@ urlpatterns = [
     path('tax_report/',views.tax_report,name='tax_report'),
     
     #Payments Screen
-    path('payment_receipt/',views.payment_receipt,name='payment_receipt'),
+    path('payment_receipt/<str:start_date>/<str:end_date>',views.payment_receipt,name='payment_receipt'),
     
 ]
 

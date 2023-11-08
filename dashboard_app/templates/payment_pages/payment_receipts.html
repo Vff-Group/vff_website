@@ -51,6 +51,10 @@
                     </div>
                   </div>
 
+                  <div class="col-4">
+                    <a id="load-data" class="btn btn-primary btn-sm text-xxs">Load Data</a>
+                  </div>
+                  
                 
                 </div>
               </div>
@@ -106,10 +110,10 @@
               <div class="card-footer px-4 pt-0 pb-2 mt-2">
                 <div class="row">
                   <div class="col-4">
-                    <small class="mb-2 text-dark">Total Amount: Rs.3000.48/-</small>
+                    <small class="mb-2 text-dark">Total Amount: Rs./-</small>
                   </div>
                   <div class="col-4">
-                    <small class="text-dark">Total Tax Amount: Rs.1240.48/-</small>
+                    <small class="text-dark">Total Tax Amount: Rs./-</small>
                   </div>
                   <div class="col-4">
                     <button class="btn btn-success">Download Report</button>
@@ -124,4 +128,45 @@
     </div>
   </div>
 </main>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#load-data').on('click', function () {
+            var startDate = $('#start-date').val();
+            var endDate = $('#end-date').val();
+
+            if (startDate > endDate) {
+                alert('Start date cannot be greater than end date');
+                return;
+            }
+
+            $.ajax({
+                url: '/admin_dashboard/payment_receipt/' + startDate + '/' + endDate + '/',
+                method: 'GET',
+                success: function (data) {
+                    // Clear existing table rows
+                    $('#table-body').empty();
+
+                    // Iterate through the JSON data and add rows to the table
+                    $.each(data.data, function (index, item) {
+                        var newRow = '<tr>' +
+                            '<td>' + (index + 1) + '</td>' +
+                            '<td>' + item.date + '</td>' +
+                            '<td>' + item.order_id + '</td>' +
+                            '<td>' + item.customer + '</td>' +
+                            '<td class="text-center">' + item.amount + '</td>' +
+                            '<td class="text-center">' + item.payment_type + '</td>' +
+                            '<td class="text-center">' + item.note + '</td>' +
+                            '</tr>';
+                        $('#table-body').append(newRow);
+                    });
+                },
+                error: function () {
+                    alert('An error occurred while loading data.');
+                }
+            });
+        });
+    });
+</script>
+
 {% endblock  %}

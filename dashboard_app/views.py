@@ -2999,7 +2999,7 @@ def tax_report(request):
 
 
 #Payment Receipt Screen
-def payment_receipt(request):
+def payment_receipt(request, start_date, end_date):
     isLogin = is_loggedin(request)
     if isLogin == False:
         return redirect('dashboard_app:login')
@@ -3008,7 +3008,7 @@ def payment_receipt(request):
     filter = ''
     if branch_id :
         filter = " and  laundry_ordertbl.branch_id='"+str(branch_id)+"'"
-    query = "select laundry_receipt_invoice_tbl.date,orderid,customer_name,price,payment_type,additional_instruction,payment_id,gstamount,igstamount from vff.laundry_ordertbl,vff.laundry_receipt_invoice_tbl,vff.laundry_customertbl,vff.laundry_payment_tbl where laundry_ordertbl.orderid=laundry_receipt_invoice_tbl.order_id and laundry_ordertbl.orderid=laundry_payment_tbl.order_id and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.pickup_dt>='"+str(startDate)+"' and laundry_ordertbl.pickup_dt<='"+str(endDate)+"' "+filter+" order by orderid desc"
+    query = "select laundry_receipt_invoice_tbl.date,orderid,customer_name,price,payment_type,additional_instruction,payment_id,gstamount,igstamount from vff.laundry_ordertbl,vff.laundry_receipt_invoice_tbl,vff.laundry_customertbl,vff.laundry_payment_tbl where laundry_ordertbl.orderid=laundry_receipt_invoice_tbl.order_id and laundry_ordertbl.orderid=laundry_payment_tbl.order_id and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.pickup_dt>='"+str(start_date)+"' and laundry_ordertbl.pickup_dt<='"+str(end_date)+"' "+filter+" order by orderid desc"
     
     query_result = execute_raw_query(query)
     
@@ -3019,16 +3019,16 @@ def payment_receipt(request):
         for row in query_result:
             
             data.append({
-                'catid': row[0],
-                'categoryname': row[1],
-                'categoryimg': row[2],
-                'regular_prize': row[3],
-                'regular_prize_type': row[4],
-                'express_prize': row[5],
-                'express_prize_type': row[6],
-                'offer_prize': row[7],
-                'offer_prize_type': row[8],
-                'description': row[9],
+                'date': row[0],
+                'order_id': row[1],
+                'customer': row[2],
+                'amount': row[3],
+                'payment_type': row[4],
+                'note': row[5],
+                'payment_id': row[6],
+                'gstamount': row[7],
+                'igstamount': row[8],
+                
                
             })
     else:
@@ -3037,7 +3037,7 @@ def payment_receipt(request):
     # using the 'current_url' variable to determine the active card.
     # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
     
-    return render(request, 'payment_pages/payment_receipts.html', {'current_url': current_url})
+    return render(request, 'payment_pages/payment_receipts.html', {'current_url': current_url,'data':data})
 
 
 
