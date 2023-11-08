@@ -285,7 +285,7 @@ def dashboard(request):
         total_money = result[0] 
     
     #Total Customers
-    query_customers = "select count(*) from vff.laundry_customertbl  "+filter+""
+    query_customers = "select count(*) from vff.laundry_customertbl "
     c_result = execute_raw_query_fetch_one(query_customers)
     if c_result:  
         total_customers = c_result[0] 
