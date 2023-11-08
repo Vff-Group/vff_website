@@ -85,6 +85,7 @@
     }
 
     .terms-and-conditions {
+      border-top: 1px dashed #000; 
       font-size: 8px; /* Set the font size for terms and conditions to 8px */
       margin-top: 10px;
       text-align: left;
@@ -156,13 +157,13 @@
     </div>
 
     <div class="total">
-      <p>Subtotal: ₹ {{sub_total}}/-</p>
+      <p>Subtotal : ₹{{sub_total}}/-</p>
       {% if payment_type != "Cash" %}
-      <p>Tax (18%): ₹ {{gst_amount}}/-</p>
+      <p>Tax (18%) : ₹{{gst_amount}}/-</p>
       {% endif %}
-      <p>Discount: ₹ {{discount_amount}}/-</p>
-      <p>Delivery Charges: ₹ {{delivery_price}}/-</p>
-      <h1>Total: ₹ {{total_cost}}/-</h1>
+      <p>Discount : ₹{{discount_amount}}/-</p>
+      <p>Delivery Charges : ₹{{delivery_price}}/-</p>
+      <h1>Total : ₹{{total_cost}}/-</h1>
       
     </div>
 
