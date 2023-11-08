@@ -2999,7 +2999,20 @@ def tax_report(request):
 
 
 #Payment Receipt Screen
-def payment_receipt(request, start_date=None, end_date=None):
+def payment_receipt(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    error_msg = ""
+    
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    
+    return render(request, 'payment_pages/payment_receipts.html', {'current_url': current_url})
+
+#Payment Receipt Screen
+def load_payment_receipt(request, start_date, end_date):
     isLogin = is_loggedin(request)
     if isLogin == False:
         return redirect('dashboard_app:login')
@@ -3038,7 +3051,6 @@ def payment_receipt(request, start_date=None, end_date=None):
     # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
     
     return render(request, 'payment_pages/payment_receipts.html', {'current_url': current_url,'data':data})
-
 
 
 #All Categories

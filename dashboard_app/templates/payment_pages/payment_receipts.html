@@ -141,7 +141,7 @@
             }
 
             $.ajax({
-                url: '/admin_dashboard/payment_receipt/' + startDate + '/' + endDate + '/',
+                url: '/admin_dashboard/load_payment_receipt/' + startDate + '/' + endDate + '/',
                 method: 'GET',
                 success: function (data) {
                     // Clear existing table rows
