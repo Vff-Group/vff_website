@@ -306,22 +306,22 @@
                         <div class="col">
                             <div class="form-group">
                                 <label class="form-control-label" for="input-order-status">Change Order Status</label>
-                                <input type="text" name="order_taken_on" value="{{order_taken_on}}">
+                                <input type="hidden" name="order_taken_on" value="{{order_taken_on}}">
                                 <input type="hidden" name="delivery_price" value="{{delivery_price}}">
                                 <select class="form-control form-control-alternative" id="input-order-status" name="order-status">
-                                   {% comment %} {% if order_taken_on == 'OnCounter' %}
+                                  {% if order_taken_on == 'OnCounter' %}
 
                                   
                                   <option value="Processing" {% if order_status == 'Processing' %}selected{% endif %}>Processing</option>
                                   
                                   <option value="Completed" {% if order_status == 'Completed' %}selected{% endif %}>Completed</option>
                                   
-                                  {% elif order_taken_on == 'OnCounter' and delivery_price !='0'  %}
+                                  {% elif order_taken_on == 'OnCounter' && delivery_price != '0'  %}
                                   <option value="Processing" {% if order_status == 'Processing' %}selected{% endif %}>Processing</option>
                                   <option value="Out for Delivery" {% if order_status == 'Out for Delivery' %}selected{% endif %}>Out for Delivery</option>
                                   <option value="Completed" {% if order_status == 'Completed' %}selected{% endif %}>Completed</option>
                                   
-                                  {% else %}  {% endcomment %}
+                                  {% else %}
                                   <option value="Accepted"  {% if order_status == 'Accepted' %}selected{% endif %}>Accepted</option>
                                   <option value="Payment Done" {% if order_status == 'Payment Done' %}selected{% endif %}>Payment Done</option>
                                   <option value="Pick Up Done" {% if order_status == 'Pick Up Done' %}selected{% endif %}>Pick Up Done</option>
@@ -330,7 +330,7 @@
                                   <option value="Out for Delivery" {% if order_status == 'Out for Delivery' %}selected{% endif %}>Out for Delivery</option>
                                   <option value="Completed" {% if order_status == 'Completed' %}selected{% endif %}>Completed</option>
                                   <option value="Cancelled" {% if order_status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
-                                  {% comment %} <!-- {% endif %} --> {% endcomment %}
+                                  {% endif %}
                                 </select>
                               </div>
                         </div>
