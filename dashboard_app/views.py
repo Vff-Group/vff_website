@@ -1572,9 +1572,10 @@ def update_order_status(request,order_id,booking_id):
                 cursor.execute(query2)
                 connection.commit()
                 #Insert Delivery Boy Record
-                if order_status != "Processing":
+                if order_status != "Processing" :
                     insert_notify="insert into vff.laundry_notificationtbl(title,body,reciever_id,sender_id,order_id) values ('"+str(title)+"','"+str(msg)+"','"+str(delivery_boy_id)+"','"+str(userid)+"','"+str(order_id)+"')"
                     cursor.execute(insert_notify)
+                    print(f'Notification inserted for Delivery Boy::{insert_notify}')
                     connection.commit()
                 #Insert Customers Record
                 cinsert_notify="insert into vff.laundry_notificationtbl(title,body,reciever_id,sender_id,order_id) values ('"+str(title)+"','"+str(msg)+"','"+str(customerid)+"','"+str(userid)+"','"+str(order_id)+"')"
