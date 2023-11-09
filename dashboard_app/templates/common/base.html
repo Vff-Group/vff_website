@@ -144,13 +144,13 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
       requestPermission();
       console.log(firebaseConfig);
       // Initialize Firebase
-      //const app = initializeApp(firebaseConfig);
-      //const analytics = getAnalytics(app);
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
       // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
+      //firebase.initializeApp(firebaseConfig);
 
       // Initialize Firebase Cloud Messaging and get a reference to the service
-      const messaging = firebase.messaging();
+      const messaging = app.messaging();
 
       messaging
         .getToken({
