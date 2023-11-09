@@ -306,10 +306,10 @@
                         <div class="col">
                             <div class="form-group">
                                 <label class="form-control-label" for="input-order-status">Change Order Status</label>
-                                <input type="hidden" name="order_taken_on" value="{{order_taken_on}}">
+                                <input type="text" name="order_taken_on" value="{{order_taken_on}}">
                                 <input type="hidden" name="delivery_price" value="{{delivery_price}}">
                                 <select class="form-control form-control-alternative" id="input-order-status" name="order-status">
-                                  {% if order_taken_on == 'OnCounter' %}
+                                  {% if true %}
 
                                   
                                   <option value="Processing" {% if order_status == 'Processing' %}selected{% endif %}>Processing</option>
