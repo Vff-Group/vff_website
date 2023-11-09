@@ -777,7 +777,13 @@ $('#order-form').validate({
         showToast('Alert','Please Search customer before adding any items');
         return;
     }
-    if(totalPayment == 0.0){
+    if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+      totalPayment = parseFloat(discountedAmount).toFixed(0);
+  }else{
+      
+      totalPayment = parseFloat(grossTotal).toFixed(0);
+  }
+    if(totalPayment == 0){
       showToast('Alert','Total is 0');
         return;
     }
