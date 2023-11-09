@@ -1491,6 +1491,11 @@ def update_order_status(request,order_id,booking_id):
                             print(f'Inserting Assing to Drop::{query_assign}')
                             cursor.execute(query_assign)
                             connection.commit()
+                            
+                            #Make Him In Busy Mode
+                            query3="update vff.laundry_delivery_boytbl set status='Busy' where delivery_boy_id='"+str(deliveryBoyID)+"'"
+                            cursor.execute(query3)
+                            connection.commit()
                     except Exception as e:
                         print(e)
                 else:
