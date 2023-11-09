@@ -1411,34 +1411,37 @@ def update_order_status(request,order_id,booking_id):
             order_completed = "1"
         elif order_status == "Cancelled":
             order_completed = "2"
-            
-            #To Check if Order is Already Assigned to Someone or what
-            if (order_status == "Out for Delivery" and order_taken_on == 'App') or (delivery_price != 0.0 and order_taken_on == 'OnCounter'):
-                query_check = "select delivery_boy_id,orderid from vff.laundry_order_assignmenttbl,vff.laundry_ordertbl where laundry_ordertbl.orderid=laundry_order_assignmenttbl.order_id and laundry_ordertbl.booking_id=laundry_order_assignmenttbl.booking_id and type_of_order='Drop' and laundry_order_assignmenttbl.order_id='"+str(order_id)+"'"
-                cresult = execute_raw_query_fetch_one(query_check)
-                if cresult:
-                    alert_delivery_boy = "Delivery boy Already Assigned To this Order."
-                    redirect_url = reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id})
-                    redirect_url += f'?no_delivery={alert_delivery_boy}'
-                    return HttpResponseRedirect(redirect_url)
-            #Sending Notification to Delivery Boy who is free to take orders
-            query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
-            result = execute_raw_query_fetch_one(query_token)
-            if result:  
-                usrname = result[0] 
-                delivery_boy_id = result[3]
-                device_token = result[2]
-                try:
-                    with connection.cursor() as cursor:
-                        update_free = "update vff.laundry_delivery_boytbl set status='Free' where delivery_boy_id='"+str(delivery_boy_id)+"'"
-                        cursor.execute(update_free)
-                        connection.commit()
-                    
-                except Exception as e:
-                    print(f"Error loading data: {e}")
         else:
             order_completed = "0"
         print(f'Currentorder_status::{order_status}')
+        print(f'Current_order_taken_on::{order_taken_on}')
+        print(f'Current_delivery_price::{delivery_price}')
+        
+        #To Check if Order is Already Assigned to Someone or what
+        if (order_status == "Out for Delivery" and order_taken_on == 'App') or (delivery_price != 0.0 and order_taken_on == 'OnCounter'):
+            query_check = "select delivery_boy_id,orderid from vff.laundry_order_assignmenttbl,vff.laundry_ordertbl where laundry_ordertbl.orderid=laundry_order_assignmenttbl.order_id and laundry_ordertbl.booking_id=laundry_order_assignmenttbl.booking_id and type_of_order='Drop' and laundry_order_assignmenttbl.order_id='"+str(order_id)+"'"
+            cresult = execute_raw_query_fetch_one(query_check)
+            if cresult:
+                alert_delivery_boy = "Delivery boy Already Assigned To this Order."
+                redirect_url = reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id})
+                redirect_url += f'?no_delivery={alert_delivery_boy}'
+                return HttpResponseRedirect(redirect_url)
+        #Sending Notification to Delivery Boy who is free to take orders
+        query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
+        result = execute_raw_query_fetch_one(query_token)
+        if result:  
+            usrname = result[0] 
+            delivery_boy_id = result[3]
+            device_token = result[2]
+            try:
+                with connection.cursor() as cursor:
+                    update_free = "update vff.laundry_delivery_boytbl set status='Free' where delivery_boy_id='"+str(delivery_boy_id)+"'"
+                    cursor.execute(update_free)
+                    connection.commit()
+                
+            except Exception as e:
+                print(f"Error loading data: {e}")
+                    
         if ((order_status == "Out for Delivery" and order_taken_on == 'App') or (delivery_price != 0.0 and order_taken_on == 'OnCounter' and order_status == "Out for Delivery")) or ((order_status == "Completed" and order_taken_on == 'App') or (delivery_price != 0.0 and order_taken_on == 'OnCounter' and order_status == "Completed")) or order_status == "Processing" or order_status == "Pick Up Done" or order_status== "Reached Store":
             
             
