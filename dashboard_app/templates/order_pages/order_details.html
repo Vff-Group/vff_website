@@ -316,7 +316,7 @@
                                   
                                   <option value="Completed" {% if order_status == 'Completed' %}selected{% endif %}>Completed</option>
                                   
-                                  {% elif order_taken_on == 'OnCounter' && delivery_price != '0'  %}
+                                  {% elif (order_taken_on == 'OnCounter' and delivery_price != '0')  %}
                                   <option value="Processing" {% if order_status == 'Processing' %}selected{% endif %}>Processing</option>
                                   <option value="Out for Delivery" {% if order_status == 'Out for Delivery' %}selected{% endif %}>Out for Delivery</option>
                                   <option value="Completed" {% if order_status == 'Completed' %}selected{% endif %}>Completed</option>
