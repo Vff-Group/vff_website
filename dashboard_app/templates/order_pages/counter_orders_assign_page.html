@@ -777,6 +777,10 @@ $('#order-form').validate({
         showToast('Alert','Please Search customer before adding any items');
         return;
     }
+    if(totalPayment == 0.0){
+      showToast('Alert','Total is 0');
+        return;
+    }
 
         // Create a JSON object with the form data
         const dictMap = {
