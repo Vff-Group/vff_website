@@ -1413,7 +1413,7 @@ def update_order_status(request,order_id,booking_id):
             order_completed = "2"
             
             #To Check if Order is Already Assigned to Someone or what
-            if (order_status == "Out for Delivery" and order_taken_on == 'App') or (delivery_price != '0' and order_taken_on == 'OnCounter'):
+            if (order_status == "Out for Delivery" and order_taken_on == 'App') or (delivery_price != 0.0 and order_taken_on == 'OnCounter'):
                 query_check = "select delivery_boy_id,orderid from vff.laundry_order_assignmenttbl,vff.laundry_ordertbl where laundry_ordertbl.orderid=laundry_order_assignmenttbl.order_id and laundry_ordertbl.booking_id=laundry_order_assignmenttbl.booking_id and type_of_order='Drop' and laundry_order_assignmenttbl.order_id='"+str(order_id)+"'"
                 cresult = execute_raw_query_fetch_one(query_check)
                 if cresult:
@@ -1439,7 +1439,7 @@ def update_order_status(request,order_id,booking_id):
         else:
             order_completed = "0"
         print(f'Currentorder_status::{order_status}')
-        if ((order_status == "Out for Delivery" and order_taken_on == 'App') or (delivery_price != '0' and order_taken_on == 'OnCounter' and order_status == "Out for Delivery")) or ((order_status == "Completed" and order_taken_on == 'App') or (delivery_price != '0' and order_taken_on == 'OnCounter' and order_status == "Completed")) or order_status == "Processing" or order_status == "Pick Up Done" or order_status== "Reached Store":
+        if ((order_status == "Out for Delivery" and order_taken_on == 'App') or (delivery_price != 0.0 and order_taken_on == 'OnCounter' and order_status == "Out for Delivery")) or ((order_status == "Completed" and order_taken_on == 'App') or (delivery_price != 0.0 and order_taken_on == 'OnCounter' and order_status == "Completed")) or order_status == "Processing" or order_status == "Pick Up Done" or order_status== "Reached Store":
             
             
             #To Send for Delivery Boy
