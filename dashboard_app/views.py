@@ -1527,59 +1527,59 @@ def update_order_status(request,order_id,booking_id):
                         print(f"Error loading data: {e}")
                 
             
-            #To send to customer
-            title = "VFF Group"
-            if order_status == "Completed":
-                title = "Order Completed"
-                msg = "Laundry Package Delivery Successfully for Order ID : #"+str(order_id)+" . Keep Ordering with Velvet Wash"
-            elif order_status == "Processing":
-                title = "Processing Status"
-                msg = "Processing has been started for your Order ID : #"+str(order_id)+""
-            elif order_status == "Pick Up Done":
-                title = "Pick Up Done"
-                msg = "Laundry PickUp Done for Order ID : #"+str(order_id)+""
-            elif order_status == "Reached Store":
-                title = "Reached Store"
-                msg = "Your Laundry has arrived at Store for Order ID : #"+str(order_id)+".\nWe will ping you once the processing has been started Thank you."
-            else:
-                msg = "Your Laundry Package is on its way to deliver for Order ID : #"+str(order_id)+""
-            data = {
-                 'intent':'MainRoute',
-                 }
-            notifyCustomer,customerid = send_notification_customer(order_id,title,msg,data)
-            
-            
-            try:
-                with connection.cursor() as cursor:
-                    filter = ""
-                    if order_status == "Completed":
-                        current_timestamp = time.time()
-                        current_datetime = datetime.now().strftime("%Y-%m-%d")
-                        filter = ",delivery='"+str(current_datetime)+"',delivery_epoch='"+str(current_timestamp)+"'"
-                    if order_status == "Out for Delivery" and deliveryBoyID != '-1':
-                        filter = ",delivery_boyid='"+str(delivery_boy_id)+"'"
-                    query = "update vff.laundry_ordertbl set order_status='"+str(order_status)+"',order_completed='"+str(order_completed)+"'"+filter+" where orderid='"+str(order_id)+"'"
-                    print(f'----------------------------------- Updating Order ID with delivery Epoch ----------------')
-                    print(f'query_update::{query}')
-                    cursor.execute(query)
+        #To send to customer
+        title = "VFF Group"
+        if order_status == "Completed":
+            title = "Order Completed"
+            msg = "Laundry Package Delivery Successfully for Order ID : #"+str(order_id)+" . Keep Ordering with Velvet Wash"
+        elif order_status == "Processing":
+            title = "Processing Status"
+            msg = "Processing has been started for your Order ID : #"+str(order_id)+""
+        elif order_status == "Pick Up Done":
+            title = "Pick Up Done"
+            msg = "Laundry PickUp Done for Order ID : #"+str(order_id)+""
+        elif order_status == "Reached Store":
+            title = "Reached Store"
+            msg = "Your Laundry has arrived at Store for Order ID : #"+str(order_id)+".\nWe will ping you once the processing has been started Thank you."
+        else:
+            msg = "Your Laundry Package is on its way to deliver for Order ID : #"+str(order_id)+""
+        data = {
+             'intent':'MainRoute',
+             }
+        notifyCustomer,customerid = send_notification_customer(order_id,title,msg,data)
+        
+        
+        try:
+            with connection.cursor() as cursor:
+                filter = ""
+                if order_status == "Completed":
+                    current_timestamp = time.time()
+                    current_datetime = datetime.now().strftime("%Y-%m-%d")
+                    filter = ",delivery='"+str(current_datetime)+"',delivery_epoch='"+str(current_timestamp)+"'"
+                if order_status == "Out for Delivery" and deliveryBoyID != '-1':
+                    filter = ",delivery_boyid='"+str(delivery_boy_id)+"'"
+                query = "update vff.laundry_ordertbl set order_status='"+str(order_status)+"',order_completed='"+str(order_completed)+"'"+filter+" where orderid='"+str(order_id)+"'"
+                print(f'----------------------------------- Updating Order ID with delivery Epoch ----------------')
+                print(f'query_update::{query}')
+                cursor.execute(query)
+                connection.commit()
+                query2 = "insert into vff.laundry_order_historytbl(order_id,order_stages) values ('"+str(order_id)+"','"+str(order_status)+"')"
+                cursor.execute(query2)
+                connection.commit()
+                #Insert Delivery Boy Record
+                if order_status != "Processing":
+                    insert_notify="insert into vff.laundry_notificationtbl(title,body,reciever_id,sender_id,order_id) values ('"+str(title)+"','"+str(msg)+"','"+str(delivery_boy_id)+"','"+str(userid)+"','"+str(order_id)+"')"
+                    cursor.execute(insert_notify)
                     connection.commit()
-                    query2 = "insert into vff.laundry_order_historytbl(order_id,order_stages) values ('"+str(order_id)+"','"+str(order_status)+"')"
-                    cursor.execute(query2)
-                    connection.commit()
-                    #Insert Delivery Boy Record
-                    if order_status != "Processing":
-                        insert_notify="insert into vff.laundry_notificationtbl(title,body,reciever_id,sender_id,order_id) values ('"+str(title)+"','"+str(msg)+"','"+str(delivery_boy_id)+"','"+str(userid)+"','"+str(order_id)+"')"
-                        cursor.execute(insert_notify)
-                        connection.commit()
-                    #Insert Customers Record
-                    cinsert_notify="insert into vff.laundry_notificationtbl(title,body,reciever_id,sender_id,order_id) values ('"+str(title)+"','"+str(msg)+"','"+str(customerid)+"','"+str(userid)+"','"+str(order_id)+"')"
-                    cursor.execute(cinsert_notify)
-                    connection.commit()
-                    print(f'Notification inserted for Customers::{cinsert_notify}')
-                    print("Order Status Updated Successfully")
-                    return redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id}))
-            except Exception as e:
-                    print(f"Error loading data: {e}")
+                #Insert Customers Record
+                cinsert_notify="insert into vff.laundry_notificationtbl(title,body,reciever_id,sender_id,order_id) values ('"+str(title)+"','"+str(msg)+"','"+str(customerid)+"','"+str(userid)+"','"+str(order_id)+"')"
+                cursor.execute(cinsert_notify)
+                connection.commit()
+                print(f'Notification inserted for Customers::{cinsert_notify}')
+                print("Order Status Updated Successfully")
+                return redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id}))
+        except Exception as e:
+                print(f"Error loading data: {e}")
             
                 
         else:
