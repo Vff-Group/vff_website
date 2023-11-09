@@ -2375,7 +2375,7 @@ def place_new_order(request):
         dateofdelivery = jdict['dateofdelivery']
 
         branch_id = request.session.get('branchid')
-        
+        print(f'total_price::{total_price}')
         try:
             with connection.cursor() as cursor:
                 #Insert Record into Order Table First to Generate Order ID
