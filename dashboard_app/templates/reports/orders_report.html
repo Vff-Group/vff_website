@@ -203,16 +203,17 @@ function getCSRFToken() {
       // Your logic to ensure end date is not less than start date
       var startDate = new Date($("#start-date").val());
       var endDate = new Date($("#end-date").val());
-      
+      console.log('endDate::'+endDate);
       if (startDate > endDate) {
         alert("End date must be greater than or equal to start date.");
         return;
       }
   
       // Fetch orders when any of the filters (start date, end date, order type) is changed
-      if (endDate !== ''){
-      fetchOrders();
-      }
+      // Only fetch orders if the end date is provided
+  if (endDate !== '') {
+    fetchOrders();
+  }
     }
   
     // Handle start date change
