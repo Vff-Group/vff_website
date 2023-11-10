@@ -713,11 +713,29 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
                   </li>
                 </ul>
               </li> -->
+              <li class="nav-item dropdown pe-2 d-flex align-items-center">
+                <a href="javascript:;" class="nav-link text-body p-0" id="notificationBell" data-bs-toggle="offcanvas" data-bs-target="#notificationsOffcanvas" aria-expanded="false">
+                  <i class="fa fa-bell cursor-pointer"></i>
+                </a>
+              </li>
+              
             </ul>
           </div>
         </div>
       </nav>
       <!-- End Navbar -->
+<!-- Offcanvas for Notifications -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="notificationsOffcanvas">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Notifications</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div id="notificationsContent"></div>
+  </div>
+</div>
+
+
       <div class="col-md-4">
         <div
           class="modal fade"
@@ -750,7 +768,7 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
                     <div class="col-lg-12">
                       <div class="form-group">
                         <label class="form-control-label" for="input-cost"
-                          >#Order ID/ Mobile Number</label
+                          >#Order ID </label
                         >
                         <input
                           type="number"
@@ -776,7 +794,7 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
                           required
                         >
                           <option value="Order ID">Order ID</option>
-                          <option value="Mobile Number">Mobile Number</option>
+                          <!-- <option value="Mobile Number">Mobile Number</option> -->
                         </select>
                       </div>
                     </div>
