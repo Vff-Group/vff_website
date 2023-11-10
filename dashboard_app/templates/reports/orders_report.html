@@ -181,6 +181,7 @@ function getCSRFToken() {
         contentType: 'application/json',
         success: function(data) {
           // Populate the table with the received data
+          var data = data.data;
           populateTable(data);
   
           // Calculate and display total orders and order amount
