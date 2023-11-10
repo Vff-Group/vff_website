@@ -2915,8 +2915,12 @@ def order_report(request):
         start_date = jdict['start_date']
         end_date = jdict['end_date']
         order_type = jdict['order_type']
-        
-        query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name from vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and order_status ='"+str(order_type)+"' and pickup_dt>='"+str(start_date)+"' and pickup_dt<='"+str(end_date)+"' and branch_id='"+str(branch_id)+"'  order by orderid desc"
+        filter = ''
+        if order_type == "All Order":
+            filter = "order_status !='NA' "
+        else:
+            filter = "order_status ='"+str(order_type)+"' "
+        query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name from vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and "+filter+" and pickup_dt>='"+str(start_date)+"' and pickup_dt<='"+str(end_date)+"' and branch_id='"+str(branch_id)+"'  order by orderid desc"
 
         query_result = execute_raw_query(query)
 
