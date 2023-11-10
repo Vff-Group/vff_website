@@ -2916,7 +2916,7 @@ def order_report(request):
         end_date = jdict['end_date']
         order_type = jdict['order_type']
         filter = ''
-        if order_type == "All Order":
+        if order_type == "All Orders":
             filter = "order_status !='NA' "
         else:
             filter = "order_status ='"+str(order_type)+"' "
