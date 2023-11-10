@@ -203,7 +203,7 @@ function getCSRFToken() {
       // Your logic to ensure end date is not less than start date
       var startDate = new Date($("#start-date").val());
       var endDate = new Date($("#end-date").val());
-  
+      
       if (startDate > endDate) {
         alert("End date must be greater than or equal to start date.");
         return;

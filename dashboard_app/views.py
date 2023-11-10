@@ -2973,7 +2973,7 @@ def order_report(request):
         else:
             error_msg = 'Something Went Wrong'
             
-        return JsonResponse({data})
+        return JsonResponse({'data':data})
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
     # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
