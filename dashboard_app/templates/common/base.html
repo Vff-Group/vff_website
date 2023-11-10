@@ -1070,7 +1070,7 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
       $.ajax({
         url: '/admin_dashboard/get_todays_notification',
         method: 'GET',
-        data: JSON.stringify(dictMap),
+        
         headers: {
             'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
         },
