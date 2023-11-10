@@ -2857,14 +2857,16 @@ def daily_report(request):
     earning_total = "select sum(price) from vff.laundry_ordertbl where pickup_dt='"+str(today_date)+"' and branch_id='"+str(branch_id)+"'";
     earning_total_result = execute_raw_query_fetch_one(earning_total)
     if earning_total_result != None:   
-        totalEarnings = earning_total_result[0]
+        if earning_total_result[0] != None:
+            totalEarnings = earning_total_result[0]
     
     #Total Expenses Today
     #select sum(exp_amount) from vff.laundry_expensestbl where date='2023-10-31' and branch_id='1';
     expense_total = "select sum(exp_amount) from vff.laundry_expensestbl where date='"+str(today_date)+"' and branch_id='"+str(branch_id)+"'"
     expense_total_result = execute_raw_query_fetch_one(expense_total)
     if expense_total_result != None:   
-        totalExpense = expense_total_result[0]
+        if expense_total_result[0] != None:
+            totalExpense = expense_total_result[0]
     
     
     current_url = request.get_full_path()
