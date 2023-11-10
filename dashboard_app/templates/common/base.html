@@ -1088,7 +1088,11 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
   function displayNotifications(notifications) {
     var notificationsContent = $('#notificationsContent');
     notificationsContent.empty();
-  
+    if (notifications.length === 0) {
+      // Display a label when there are no notifications
+      notificationsContent.html('<p class="text-center">No Notifications found for today</p>');
+      return;
+    }
     notifications.forEach(function (notification) {
       var timeAgo = calculateTimeAgo(notification.epoch);
       // <img src="${notification.ImageURL}" class="avatar avatar-sm me-3" />
