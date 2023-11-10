@@ -2833,39 +2833,44 @@ def daily_report(request):
         return redirect('dashboard_app:login')
     error_msg = "No Categories Found"
     branch_id = request.session.get('branchid')
-    # filter = ''
-    # if branch_id :
-    #     filter = " and laundry_delivery_boytbl.branchid='"+str(branch_id)+"'"
-    # query = "select catid,category_name,cat_img,regular_price,regular_price_type,express_price,express_price_type,offer_price,offer_price_type,description from vff.laundry_categorytbl order by catid desc"
-    
-    # query_result = execute_raw_query(query)
-    
-    
+    totalOrder = 0
+    totalEarnings = 0
+    totalExpense = 0
+    totalOrderDelievered = 0
+    today_date = datetime.now().strftime("%Y-%m-%d")
+    print(today_date)
+    todayDT = today_date
+    #Total Orders 
+    query_total_orders = "select count(*) from vff.laundry_ordertbl where pickup_dt='"+str(today_date)+"'  and branch_id='"+str(branch_id)+"'";
+    query_total_orders_result = execute_raw_query_fetch_one(query_total_orders)
+    if query_total_orders_result:   
+        totalOrder = query_total_orders_result[0]
         
-    # data = []    
-    # if not query_result == 500:
-    #     for row in query_result:
-            
-    #         data.append({
-    #             'catid': row[0],
-    #             'categoryname': row[1],
-    #             'categoryimg': row[2],
-    #             'regular_prize': row[3],
-    #             'regular_prize_type': row[4],
-    #             'express_prize': row[5],
-    #             'express_prize_type': row[6],
-    #             'offer_prize': row[7],
-    #             'offer_prize_type': row[8],
-    #             'description': row[9],
-               
-    #         })
-    # else:
-    #     error_msg = 'Something Went Wrong'
+    #No of Orders Delivered
+    query_total_orders_delievered = "select count(*) from vff.laundry_ordertbl where pickup_dt="+str(today_date)+"' and order_completed='1' and branch_id='"+str(branch_id)+"'";
+    query_total_orders_delievered_result = execute_raw_query_fetch_one(query_total_orders_delievered)
+    if query_total_orders_delievered_result:   
+        totalOrderDelievered = query_total_orders_delievered_result[0]
+    
+    #Total Earnings Today
+    earning_total = "select sum(price) from vff.laundry_ordertbl where pickup_dt="+str(today_date)+"' and branch_id='"+str(branch_id)+"'";
+    earning_total_result = execute_raw_query_fetch_one(earning_total)
+    if earning_total_result:   
+        totalEarnings = earning_total_result[0]
+    
+    #Total Expenses Today
+    #select sum(exp_amount) from vff.laundry_expensestbl where date='2023-10-31' and branch_id='1';
+    expense_total = "select sum(exp_amount) from vff.laundry_expensestbl where date='"+str(today_date)+"' and branch_id='"+str(branch_id)+"'"
+    expense_total_result = execute_raw_query_fetch_one(expense_total)
+    if expense_total_result:   
+        totalExpense = expense_total_result[0]
+    
+    
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
-    # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
+    context = {'todayDT':todayDT,'totalOrder': totalOrder,'totalOrderDelievered': totalOrderDelievered,'totalEarnings': totalEarnings,'totalExpense': totalExpense,'current_url': current_url,'error_msg':error_msg}
     
-    return render(request, 'reports/daily_report.html', {'current_url': current_url})
+    return render(request, 'reports/daily_report.html', context)
 
 def search_customer_to_assign_order(request,mobno):
     

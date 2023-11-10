@@ -31,7 +31,7 @@
                             <div class="col-lg-2">
                                 <div class="form-group">
                                     <label for="date-of-expense" class="form-control-label text-secondary ">Date *</label>
-                                    <input class="form-control form-control-alternative" type="date"  id="date-of-expense" name="dateofexpense" value="{{ data.dateofexpense|date:'Y-m-d' }}" required>
+                                    <input class="form-control form-control-alternative" type="date"  id="date-of-expense" name="dateofexpense" value="{{ todayDT|date:'Y-m-d' }}" disabled>
                                 </div>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                       </div>
                     </td>
                     <td>
-                      <h6 class="text-x font-weight-bold mb-0 text-primary">3</h6>
+                      <h6 class="text-x font-weight-bold mb-0 text-primary">{{totalOrder}}</h6>
                       
                     </td>
 
@@ -73,7 +73,7 @@
                         </div>
                       </td>
                       <td>
-                        <h6 class="text-x font-weight-bold mb-0 text-warning">10</h6>
+                        <h6 class="text-x font-weight-bold mb-0 text-warning">{{totalOrderDelievered}}</h6>
                       </td>
                   </tr>
 
@@ -88,11 +88,11 @@
                         </div>
                       </td>
                       <td>
-                        <h6 class="text-x font-weight-bold mb-0 text-info">$ 200</h6>
+                        <h6 class="text-x font-weight-bold mb-0 text-info">Rs.{{totalEarnings}}/-</h6>
                       </td>
                   </tr>
 
-                  <tr>
+                  <!-- <tr>
                     <td>
                         <div class="d-flex px-2 py-1">
                           
@@ -106,7 +106,7 @@
                         <h6 class="text-x font-weight-bold mb-0 text-success">$ 100</h6>
                         
                       </td>
-                  </tr>
+                  </tr> -->
 
                   <tr>
                     <td>
@@ -119,7 +119,7 @@
                         </div>
                       </td>
                       <td>
-                        <h6 class="text-x font-weight-bold mb-0 text-danger"> $30</h6>
+                        <h6 class="text-x font-weight-bold mb-0 text-danger"> Rs.{{totalExpense}}/-</h6>
                         
                       </td>
                   </tr>
