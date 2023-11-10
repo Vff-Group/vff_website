@@ -11,21 +11,23 @@
             <div class="card mb-4">
               <div class="card-header pb-0">
                 <h6>Order Report</h6>
+                <form action="get" id="orderReportForm">
+                  {% csrf_token %}
                 <div class="row">
                   <div class="col-4">
                     <div class="col-lg-10">
                       <div class="form-group">
                         <label
-                          for="date-of-expense"
+                          for="start-date"
                           class="form-control-label text-secondary"
                           >Start Date</label
                         >
                         <input
                           class="form-control form-control-alternative"
                           type="date"
-                          id="date-of-expense"
-                          name="dateofexpense"
-                          value="{{ data.dateofexpense|date:'Y-m-d' }}"
+                          id="start-date"
+                          name="startdate"
+                          value="{{date:'Y-m-d' }}"
                           required
                         />
                       </div>
@@ -35,16 +37,16 @@
                     <div class="col-lg-10">
                       <div class="form-group">
                         <label
-                          for="date-of-expense"
+                          for="end-date"
                           class="form-control-label text-secondary"
                           >End Date</label
                         >
                         <input
                           class="form-control form-control-alternative"
                           type="date"
-                          id="date-of-expense"
+                          id="end-date"
                           name="dateofexpense"
-                          value="{{ data.dateofexpense|date:'Y-m-d' }}"
+                          value="{{ date:'Y-m-d' }}"
                           required
                         />
                       </div>
@@ -71,13 +73,14 @@
                     </div>
                   </div>
                 </div>
+              </form>
               </div>
               <!-- Action Buttons  -->
 
               <!-- Action Buttons End  -->
               <div class="card-body px-0 pt-0 pb-2 mt-2">
                 <div class="table-responsive p-0">
-                  <table class="table align-items-center mb-0">
+                  <table class="table align-items-center mb-0"  id="orderTable" >
                     <thead>
                       <tr>
                         <th
@@ -107,17 +110,19 @@
                         </th>
                       </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody>
+                      <tr></tr>
+                    </tbody>
                   </table>
                 </div>
               </div>
               <div class="card-footer px-4 pt-0 pb-2 mt-2">
                 <div class="row">
                   <div class="col-4">
-                    <small class="mb-2 text-dark">Total Order: 3</small>
+                    <small class="mb-2 text-dark total-orders">Total Order: 0</small>
                   </div>
                   <div class="col-4">
-                    <small class="text-dark">Total Order Amount: Rs.4000/-</small>
+                    <small class="text-dark total-amount">Total Order Amount: Rs.0/-</small>
                   </div>
                   <div class="col-4">
                     <button class="btn btn-success">Download Report</button>
@@ -132,4 +137,135 @@
     </div>
   </div>
 </main>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+
+<!-- ... your existing HTML code ... -->
+
+<script>
+  // Get the CSRF token from the cookie
+function getCSRFToken() {
+  const cookies = document.cookie.split(';');
+  for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith("csrftoken=")) {
+          return cookie.substring("csrftoken=".length, cookie.length);
+      }
+  }
+  return null;
+}
+
+
+  $(document).ready(function() {
+    // Function to handle the AJAX request
+    function fetchOrders() {
+      //var formData = $("#orderReportForm").serialize();
+      var orderType = $("#input-order_type").val();
+    var startDate = $("#start-date").val();
+    var endDate = $("#end-date").val();
+      const jdict = {
+        'start_date': startDate,
+        'end_date': endDate,
+        'order_type': orderType,
+      }
+      const csrfToken = getCSRFToken();
+      $.ajax({
+        url: `/admin_dashboard/order_report/`,
+        type: "POST",
+        data: JSON.stringify(dictMap),
+        headers: {
+            'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+        },
+        contentType: 'application/json',
+        success: function(data) {
+          // Populate the table with the received data
+          populateTable(data);
+  
+          // Calculate and display total orders and order amount
+          var totalOrders = data.length;
+          var totalAmount = data.reduce(function (acc, order) {
+            return acc + order.price;
+          }, 0);
+  
+          $(".total-orders").text("Total Order: " + totalOrders);
+          $(".total-amount").text("Total Order Amount: Rs." + totalAmount + "/-");
+        },
+        error: function(error) {
+          console.error("Error fetching orders: ", error);
+        }
+      });
+    }
+  
+    // Function to handle date and order type changes
+    function handleFiltersChange() {
+      // Your logic to ensure end date is not less than start date
+      var startDate = new Date($("#start-date").val());
+      var endDate = new Date($("#end-date").val());
+  
+      if (startDate > endDate) {
+        alert("End date must be greater than or equal to start date.");
+        return;
+      }
+  
+      // Fetch orders when any of the filters (start date, end date, order type) is changed
+      fetchOrders();
+    }
+  
+    // Handle start date change
+    $("#start-date").change(handleFiltersChange);
+  
+    // Handle end date change
+    $("#end-date").change(handleFiltersChange);
+  
+    // Handle order type change
+    $("#input-order_type").change(handleFiltersChange);
+  
+    // Function to populate the table with data
+    function populateTable(data) {
+      var tableBody = $("#orderTable tbody");
+  
+      // Clear existing table rows
+      tableBody.empty();
+  
+      // Iterate through the data and append rows to the table
+      for (var i = 0; i < data.length; i++) {
+        var row = "<tr>" +
+                    "<td>" + data[i].pickup_dt + "</td>" +
+                    "<td>" + data[i].orderid + "</td>" +
+                    "<td>" + data[i].customer_name + "</td>" +
+                    "<td>" + data[i].price + "</td>" +
+                    "<td class='text-center'>" + data[i].order_status + "</td>" +
+                  "</tr>";
+  
+        tableBody.append(row);
+      }
+    }
+  
+    // Handle form submission
+    $("#orderReportForm").submit(function(e) {
+      e.preventDefault();
+      
+      // Fetch orders on form submission
+      fetchOrders();
+    });
+  
+    // Print button click event
+    $(".btn-print").click(function() {
+      printJS({ printable: 'orderTable', type: 'html', documentTitle: 'Order Report' });
+    });
+  
+    // Download button click event
+    $(".btn-download").click(function() {
+      // Convert table data to Excel
+      var ws = XLSX.utils.table_to_sheet(document.getElementById('orderTable'));
+      var wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Order Report');
+      XLSX.writeFile(wb, 'order_report.xlsx');
+    });
+  });
+  </script>
+  
+  <!-- ... your existing HTML code ... -->
+  
 {% endblock  %}

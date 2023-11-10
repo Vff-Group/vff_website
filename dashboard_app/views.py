@@ -2910,34 +2910,66 @@ def order_report(request):
         return redirect('dashboard_app:login')
     error_msg = ""
     branch_id = request.session.get('branchid')
-    # filter = ''
-    # if branch_id :
-    #     filter = " and laundry_delivery_boytbl.branchid='"+str(branch_id)+"'"
-    # query = "select catid,category_name,cat_img,regular_price,regular_price_type,express_price,express_price_type,offer_price,offer_price_type,description from vff.laundry_categorytbl order by catid desc"
-    
-    # query_result = execute_raw_query(query)
-    
-    
+    if request.method=="POST":
+        jdict = json.loads(request.body)
+        start_date = jdict['start_date']
+        end_date = jdict['end_date']
+        order_type = jdict['order_type']
         
-    # data = []    
-    # if not query_result == 500:
-    #     for row in query_result:
+        query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name from vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and order_status ='"+str(order_type)+"' and pickup_dt>='"+str(start_date)+"' and pickup_dt<='"+str(end_date)+"' and branch_id='"+str(branch_id)+"'  order by orderid desc"
+
+        query_result = execute_raw_query(query)
+
+
+
+        data = []    
+        if not query_result == 500:
+            for row in query_result:
+                depoch = row[25]#delivery epoch
+                oepoch = row[22]#order taken epoch
+                orderStatus = row[20]
+                deliveryEpoch = epochToDateTime(depoch)
+                orderTakenEpoch = epochToDateTime(oepoch)
+                if orderStatus != "Completed":
+                    deliveryEpoch = "Not Delivered Yet"
+
+                data.append({
+                    'consmrid': row[0],
+                    'usrid': row[1],
+                    'customer_name': row[2],
+                    'mobile_no': row[3],
+                    'houseno': row[4],
+                    'address': row[5],
+                    'city': row[6],
+                    'pincode': row[7],
+                    'landmark': row[8],
+                    'profile_img': row[9],
+                    'device_token': row[10],
+                    'orderid': row[11],
+                    'delivery_boyid': row[12],
+                    'quantity':row[13],
+                    'price': row[14],
+                    'pickup_dt': row[15],
+                    'delivery_dt': row[16],
+                    'clat': row[17],
+                    'clng': row[18],
+                    'order_completed': row[19],
+                    'order_status': orderStatus,
+                    'additional_instruction': row[21],
+                    'order_taken_epoch': orderTakenEpoch,
+                    'cancel_reason': row[23],
+                    'feedback': row[24],
+                    'delivery_epoch': deliveryEpoch,
+                    'delivery_boy_name': row[26],
+
+
+
+                })
             
-    #         data.append({
-    #             'catid': row[0],
-    #             'categoryname': row[1],
-    #             'categoryimg': row[2],
-    #             'regular_prize': row[3],
-    #             'regular_prize_type': row[4],
-    #             'express_prize': row[5],
-    #             'express_prize_type': row[6],
-    #             'offer_prize': row[7],
-    #             'offer_prize_type': row[8],
-    #             'description': row[9],
-               
-    #         })
-    # else:
-    #     error_msg = 'Something Went Wrong'
+        else:
+            error_msg = 'Something Went Wrong'
+            
+        return JsonResponse({data})
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
     # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
