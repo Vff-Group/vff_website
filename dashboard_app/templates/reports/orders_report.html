@@ -210,7 +210,9 @@ function getCSRFToken() {
       }
   
       // Fetch orders when any of the filters (start date, end date, order type) is changed
+      if (endDate !== ''){
       fetchOrders();
+      }
     }
   
     // Handle start date change
