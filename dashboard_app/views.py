@@ -2843,6 +2843,7 @@ def daily_report(request):
     #Total Orders 
     query_total_orders = "select count(*) from vff.laundry_ordertbl where pickup_dt='"+str(today_date)+"'  and branch_id='"+str(branch_id)+"'";
     query_total_orders_result = execute_raw_query_fetch_one(query_total_orders)
+    print(f'query_total_orders_result:{query_total_orders_result}')
     if query_total_orders_result:   
         totalOrder = query_total_orders_result[0]
         
