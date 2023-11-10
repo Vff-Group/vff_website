@@ -1612,6 +1612,41 @@ def update_order_status(request,order_id,booking_id):
                     print(f"Error loading data: {e}")
                    
     return redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id}))
+
+#Get New Notifications for today
+def get_todays_notification(request):
+    branch_id = request.session.get('branchid')
+    query = "select notification_id,title,body,date,epoch,order_id,booking_id,name as delivery_boy_name,customer_name from vff.laundry_customertbl,vff.laundry_delivery_boytbl,vff.laundry_notificationtbl where laundry_notificationtbl.sender_id=laundry_customertbl.usrid and laundry_delivery_boytbl.delivery_boy_id=laundry_notificationtbl.reciever_id and laundry_notificationtbl.date='2023-11-10' and laundry_notificationtbl.branch_id='"+str(branch_id)+"' and title='Pickup Request' order by notification_id desc"
+    
+    query_result = execute_raw_query(query)
+    print(f'query_result:::{query_result}')
+    
+        
+    data = []
+    sub_items = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            data.append({
+                'notification_id': row[0],
+                'title': row[1],
+                'body': row[2],
+                'date': row[3],
+                'epoch': row[4],
+                'order_id': row[5],
+                'booking_id': row[6],
+                'delivery_boy_name': row[7],
+                'customer_name': row[8],
+                
+               
+            })    
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    context ={'query_result':data}
+    
+    
+    return JsonResponse(context)
             
         
 #Thermal Printer size

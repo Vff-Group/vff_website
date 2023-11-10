@@ -88,7 +88,9 @@ urlpatterns = [
     #Payments Screen
     path('payment_receipt/',views.payment_receipt,name='payment_receipt'),
     path('load_payment_receipt/<str:start_date>/<str:end_date>/',views.load_payment_receipt,name='load_payment_receipt'),
-    
+ 
+    #Notification Screen   
+    path('get_todays_notification/',views.get_todays_notification,name='get_todays_notification'),
 ]
 
 if settings.DEBUG:

@@ -1039,5 +1039,100 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
     <script src="{% static 'js/vff-group-dashboard.min.js' %}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{% static 'js/main.js' %}"></script>
+
+
+    <!-- To Show Notifications  -->
+    <!-- Include jQuery and Bootstrap JS before this script -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oGsFzPfNsYkLCRi3BEs0s+WyQl3ByVylUk5l1RlW37E=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-qZqy51hpVr3PJSkt2W4tTwZrBEJpCgFf3KpBbqMvuv0PAjqHI8h11ABjKz5x0mu2" crossorigin="anonymous"></script>
+
+<script>
+  $(document).ready(function () {
+    $('#notificationBell').on('click', function () {
+
+      // Get the CSRF token from the cookie
+      function getCSRFToken() {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith("csrftoken=")) {
+                return cookie.substring("csrftoken=".length, cookie.length);
+            }
+        }
+        return null;
+      }
+
+
+      //CSRF TOken
+      const csrfToken = getCSRFToken();
+      // Make AJAX request to get notifications
+      $.ajax({
+        url: '/admin_dashboard/get_todays_notification',
+        method: 'GET',
+        data: JSON.stringify(dictMap),
+        headers: {
+            'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+        },
+        contentType: 'application/json',
+        success: function (data) {
+          displayNotifications(data.query_result);
+        },
+        error: function (error) {
+          console.error('Error fetching notifications:', error);
+        }
+      });
+    });
+  });
+
+  function displayNotifications(notifications) {
+    var notificationsContent = $('#notificationsContent');
+    notificationsContent.empty();
+  
+    notifications.forEach(function (notification) {
+      var timeAgo = calculateTimeAgo(notification.epoch);
+      // <img src="${notification.ImageURL}" class="avatar avatar-sm me-3" />
+      var notificationItem = `
+        <li class="mb-2">
+          <a class="dropdown-item border-radius-md" href="javascript:;">
+            <div class="d-flex py-1">
+              <div class="my-auto">
+                <img src="" class="avatar avatar-sm me-3" />
+              </div>
+              <div class="d-flex flex-column justify-content-center">
+                <h6 class="text-sm font-weight-normal mb-1">
+                  <span class="font-weight-bold">${notification.title}</span> from ${notification.customer_name}
+                </h6>
+                <p class="text-xs text-secondary mb-0">
+                  <i class="fa fa-clock me-1"></i>${timeAgo}
+                </p>
+              </div>
+            </div>
+          </a>
+        </li>`;
+  
+      notificationsContent.append(notificationItem);
+    });
+  }
+  
+  function calculateTimeAgo(epochTime) {
+    const currentTime = Math.floor(Date.now() / 1000); // Get current time in seconds
+    const secondsAgo = currentTime - epochTime;
+  
+    if (secondsAgo < 60) {
+      return 'Just now';
+    } else if (secondsAgo < 3600) {
+      const minutesAgo = Math.floor(secondsAgo / 60);
+      return `${minutesAgo} ${minutesAgo === 1 ? 'minute' : 'minutes'} ago`;
+    } else if (secondsAgo < 86400) {
+      const hoursAgo = Math.floor(secondsAgo / 3600);
+      return `${hoursAgo} ${hoursAgo === 1 ? 'hour' : 'hours'} ago`;
+    } else {
+      const daysAgo = Math.floor(secondsAgo / 86400);
+      return `${daysAgo} ${daysAgo === 1 ? 'day' : 'days'} ago`;
+    }
+  }
+  
+</script>
+
   </body>
 </html>
