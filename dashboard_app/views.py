@@ -1616,7 +1616,9 @@ def update_order_status(request,order_id,booking_id):
 #Get New Notifications for today
 def get_todays_notification(request):
     branch_id = request.session.get('branchid')
-    query = "select notification_id,title,body,date,epoch,order_id,booking_id,name as delivery_boy_name,customer_name from vff.laundry_customertbl,vff.laundry_delivery_boytbl,vff.laundry_notificationtbl where laundry_notificationtbl.sender_id=laundry_customertbl.usrid and laundry_delivery_boytbl.delivery_boy_id=laundry_notificationtbl.reciever_id and laundry_notificationtbl.date='2023-11-10' and laundry_notificationtbl.branch_id='"+str(branch_id)+"' and title='Pickup Request' order by notification_id desc"
+    today_date = datetime.now().strftime("%Y-%m-%d")
+    print(today_date)
+    query = "select notification_id,title,body,date,epoch,order_id,booking_id,name as delivery_boy_name,customer_name from vff.laundry_customertbl,vff.laundry_delivery_boytbl,vff.laundry_notificationtbl where laundry_notificationtbl.sender_id=laundry_customertbl.usrid and laundry_delivery_boytbl.delivery_boy_id=laundry_notificationtbl.reciever_id and laundry_notificationtbl.date='"+str(today_date)+"' and laundry_notificationtbl.branch_id='"+str(branch_id)+"' and title='Pickup Request' order by notification_id desc"
     
     query_result = execute_raw_query(query)
     print(f'query_result:::{query_result}')
