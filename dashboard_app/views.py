@@ -2847,13 +2847,13 @@ def daily_report(request):
         totalOrder = query_total_orders_result[0]
         
     #No of Orders Delivered
-    query_total_orders_delievered = "select count(*) from vff.laundry_ordertbl where pickup_dt="+str(today_date)+"' and order_completed='1' and branch_id='"+str(branch_id)+"'";
+    query_total_orders_delievered = "select count(*) from vff.laundry_ordertbl where pickup_dt='"+str(today_date)+"' and order_completed='1' and branch_id='"+str(branch_id)+"'";
     query_total_orders_delievered_result = execute_raw_query_fetch_one(query_total_orders_delievered)
     if query_total_orders_delievered_result:   
         totalOrderDelievered = query_total_orders_delievered_result[0]
     
     #Total Earnings Today
-    earning_total = "select sum(price) from vff.laundry_ordertbl where pickup_dt="+str(today_date)+"' and branch_id='"+str(branch_id)+"'";
+    earning_total = "select sum(price) from vff.laundry_ordertbl where pickup_dt='"+str(today_date)+"' and branch_id='"+str(branch_id)+"'";
     earning_total_result = execute_raw_query_fetch_one(earning_total)
     if earning_total_result:   
         totalEarnings = earning_total_result[0]
