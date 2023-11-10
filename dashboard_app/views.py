@@ -1645,6 +1645,8 @@ def get_todays_notification(request):
             })    
     else:
         error_msg = 'Something Went Wrong'
+        
+    #select notification_id,title,body,date,laundry_notificationtbl.epoch,order_id,booking_id,customer_name,profile_img from vff.laundry_customertbl,vff.laundry_notificationtbl,vff.usertbl where laundry_notificationtbl.sender_id=laundry_customertbl.usrid and laundry_notificationtbl.reciever_id='-1' and laundry_customertbl.usrid=usertbl.usrid and laundry_notificationtbl.date='2023-11-10' and laundry_notificationtbl.branch_id='1' order by notification_id desc
     
     context ={'query_result':data}
     
