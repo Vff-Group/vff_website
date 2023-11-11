@@ -275,7 +275,7 @@ function generateHTMLTemplate() {
    // Create a heading with center alignment
    var heading = '<h2 style="text-align: center; margin-bottom: 20px; color: #343a40;">Payment Receipts</h2>';
    // Display selected start date and end date
-  var dateInfo = '<div style="text-align: center; margin-top: 5px; margin-bottom:5px;">Selected Start Date: ' + selectedStartDate + ' | Selected End Date: ' + selectedEndDate + '</div>';
+  var dateInfo = '<div style="text-align: center; margin-top: 3px; margin-bottom:10px;"> [Selected Start Date: ' + selectedStartDate + '] || [Selected End Date: ' + selectedEndDate + ']</div>';
 
   // Combine the table and footer data
   var htmlTemplate = heading+dateInfo+htmlTable + footerDiv;
