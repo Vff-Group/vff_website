@@ -110,9 +110,10 @@
                         </th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="orderTableBody">
                       <tr></tr>
                     </tbody>
+                    
                   </table>
                 </div>
               </div>
@@ -284,7 +285,48 @@ function getCSRFToken() {
   
     // Print button click event
     $("#print").click(function() {
-      printJS({ printable: 'orderTable', type: 'html', documentTitle: 'Order Report' });
+      var tableContent = $("#orderTable").prop('outerHTML');
+      
+    var printContent = `
+      <html>
+        <head>
+          <style>
+            /* General styles */
+            body {
+              font-family: Arial, sans-serif;
+            }
+
+            /* Table styles */
+            table {
+              width: 100%;
+              border-collapse: collapse;
+              margin-bottom: 20px;
+            }
+            th, td {
+              border: 1px solid #ddd;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #343a40;
+              color: white;
+            }
+
+            /* Print styles */
+            @media print {
+              body {
+                width: 210mm;
+                height: 297mm;
+                margin: 0 auto;
+              }
+            }
+          </style>
+        </head>
+        <body>
+          ${tableContent}
+        </body>
+      </html>`;
+      printJS({ printable: printContent, type: 'html', documentTitle: 'Order Report' });
     });
   
     // Download button click event
