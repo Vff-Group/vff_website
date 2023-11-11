@@ -481,13 +481,35 @@
                           </div>
                         </div>
                         <hr />
+                        <div class="container" id="gst-container">
+                          <div class="row">
+                            <div class="col-lg-5">
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="includeGST" name="includeGST">
+                                <label class="form-check-label" for="includeGST">Include GST</label>
+                              </div>
+                            </div>
+                        
+                            <div class="col-lg-1 text-center">
+                              <span class="or-label">OR</span>
+                            </div>
+                        
+                            <div class="col-lg-5">
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="includeIGST" name="includeIGST">
+                                <label class="form-check-label" for="includeIGST">Include IGST</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <hr />
                         <div class="row">
                           <div class="col-lg-6">
                             <p class="mb-0"><small>Sub Total:</small></p>
                             <p class="mb-0"><small>Addon:</small></p>
                             <p class="mb-0"><small>Delivery Charges:</small></p>
                             <p class="mb-0"><small>Discount (%):</small></p>
-                            <!-- <p class="mb-0"><small>Tax(18%):</small></p> -->
+                            <p class="mb-0"><small>Tax(18%):</small></p>
                           </div>
                           <div
                             class="col-lg-6 d-flex flex-column align-items-end"
@@ -496,7 +518,7 @@
                             <p class="mb-0"><small id="addons-total">Rs.0/-</small></p>
                             <p class="mb-0"><small id="delivery-charges">Rs.0/-</small></p>
                             <p class="mb-0"><small id="discount-amount">Rs.0/-</small></p>
-                            <!-- <p class="mb-0"><small id="tax-total">Rs.0/-</small></p> -->
+                            <p class="mb-0"><small id="tax-total">Rs.0/-</small></p>
                           </div>
                         </div>
                         <hr />
@@ -843,20 +865,54 @@ $('#order-form').validate({
     }
 });
 
+// Event listener for GST checkbox
+$('#includeGST').change(function() {
+  updateTaxAmount();
+});
 
+// Event listener for IGST checkbox
+$('#includeIGST').change(function() {
+  updateTaxAmount();
+});
+
+// Function to update tax amount based on checkbox state
+function updateTaxAmount() {
+  if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+    totalPayment = parseFloat(discountedAmount).toFixed(0);
+}else{
+    
+    totalPayment = parseFloat(grossTotal).toFixed(0);
+}
+  var totalPayment = totalPayment;
+  var gstCheckbox = $('#includeGST');
+  var igstCheckbox = $('#includeIGST');
+  var gstAmountLabel = $('#tax-total');
+
+  // Check if either GST or IGST is selected
+  if (gstCheckbox.prop('checked') || igstCheckbox.prop('checked')) {
+      // Calculate GST amount
+      var GSTamount = (totalPayment * 18) / 100;
+      gstAmountLabel.text('Rs.' + GSTamount.toFixed(2) + '/-');
+  } else {
+      gstAmountLabel.text('Rs.0/-');
+  }
+}
 
 // Event listener for the payment mode selection
 $('#input-paymentmode').change(function() {
     var paymentMode = $(this).val();
     var paymentIdContainer = $('#payment-id-container');
+    var gstContainer = $('#gst-container');
     paymentType = paymentMode;
     // Check if the payment mode is 'Cash' and hide the 'Pay Now' button
     if (paymentMode === 'Cash') {
         $('#pay-button').hide();
+        gstContainer.show();
          // If the payment mode is "Cash," hiding the payment ID container
          paymentIdContainer.hide();
     } else {
         $('#pay-button').show();
+        gstContainer.hide();
         // If the payment mode is not "Cash," show the payment ID container
         paymentIdContainer.show();
     }
@@ -1216,7 +1272,7 @@ function payment_show(totalPayment,customerName,customerMobno){
             GSTamount = ((totalPayment * 18)/100);
             // Update the payment ID input
             $('#input-paymentid').val(payment_id);
-            disableElements() ;
+            disableElements();
             //alert(response.razorpay_payment_id);
             //alert(response.razorpay_order_id);
             //alert(response.razorpay_signature)
