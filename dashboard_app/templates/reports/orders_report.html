@@ -323,7 +323,7 @@ function getCSRFToken() {
           </style>
         </head>
         <body>
-          ${tableContent}
+          ${$("#orderTable").prop('outerHTML')}
         </body>
       </html>`;
       printJS({ printable: printContent, type: 'html', documentTitle: 'Order Report' });
