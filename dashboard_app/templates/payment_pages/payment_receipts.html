@@ -213,7 +213,7 @@ function generateHTMLTemplate() {
 
   // Extract table headers from the <thead>
   var headers = [];
-  var headerRow = table.querySelector('thead').querySelector('tr');
+  var headerRow = table.closest('table').querySelector('thead').querySelector('tr');
   headerRow.querySelectorAll('th').forEach(function (cell) {
     headers.push(cell.textContent);
   });
