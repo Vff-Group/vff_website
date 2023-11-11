@@ -104,20 +104,22 @@
                         </th>
                       </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody id="salesTableBody">
+                      <tr></tr>
+                    </tbody>
                   </table>
                 </div>
               </div>
               <div class="card-footer px-4 pt-0 pb-2 mt-2">
                 <div class="row">
                   <div class="col-3">
-                    <small class="mb-2 text-dark">Total Order: 3</small>
+                    <small class="mb-2 text-dark" id="total-orders">Total Order: 3</small>
                   </div>
                   <div class="col-3">
-                    <small class="text-dark">Total Sales: Rs.4000/-</small>
+                    <small class="text-dark" id="total-sales">Total Sales: Rs.4000/-</small>
                   </div>
                   <div class="col-3">
-                    <small class="text-dark">Total Tax Amount: Rs.1000/-</small>
+                    <small class="text-dark" id="total-tax-amount">Total Tax Amount: Rs.1000/-</small>
                   </div>
                   <div class="col-3">
                     <button class="btn btn-success">Download Report</button>
@@ -132,4 +134,110 @@
     </div>
   </div>
 </main>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+
+<script>
+    // Get the CSRF token from the cookie
+function getCSRFToken() {
+  const cookies = document.cookie.split(';');
+  for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith("csrftoken=")) {
+          return cookie.substring("csrftoken=".length, cookie.length);
+      }
+  }
+  return null;
+}
+
+  $(document).ready(function () {
+    // Add an event listener for the date inputs
+    $('#end_date').on('change', function () {
+        updateSalesTable();
+    });
+
+    // Function to fetch data and update the table
+    function updateSalesTable() {
+        var startDate = $('#start_date').val();
+        var endDate = $('#end_date').val();
+        const dictMap = {
+          'start_date': startDate,
+          'end_date': endDate,
+          
+        }
+
+        // Check if both start date and end date are provided, and end date is not less than start date
+        if (startDate && endDate && startDate <= endDate) {
+          const csrfToken = getCSRFToken();
+            $.ajax({
+                type: 'POST',
+                url: '/admin_dashboard/sales_report/',
+                data: JSON.stringify(dictMap),
+                headers: {
+                    'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+                },
+                contentType: 'application/json',
+                success: function (response) {
+                    // Clear existing rows
+                    $('#salesTableBody').empty();
+
+                    // Populate the table dynamically
+                    response.data.forEach(function (row) {
+                        // Append rows to the table
+                        // ...
+
+                        // Example:
+                        var newRow = '<tr>' +
+                            '<td>' + row.delivery_epoch + '</td>' +
+                            '<td>' + row.orderid + '</td>' +
+                            // Add other columns here
+                            '</tr>';
+                        $('#salesTableBody').append(newRow);
+                    });
+
+                    // Calculate and update total orders, total sales, total tax amount
+                    var totalOrders = response.data.length;
+                    var totalSales = calculateTotalSales(response.data);
+                    var totalTaxAmount = calculateTotalTaxAmount(response.data);
+
+                    // Update totals in the footer
+                    $('#total-orders').text('Total Order: ' + totalOrders);
+                    $('#total-sales').text('Total Sales: Rs.' + totalSales);
+                    $('#total-tax-amount').text('Total Tax Amount: Rs.' + totalTaxAmount);
+                },
+                error: function (error) {
+                    console.error('Error fetching data:', error);
+                }
+            });
+        } else {
+            // Handle the case where the start date, end date, or their relation is not valid
+            console.log('Invalid date range');
+        }
+    }
+
+    // Function to calculate total sales
+    function calculateTotalSales(data) {
+      var totalSales = 0;
+      data.forEach(function (row) {
+          totalSales += row.price;
+      });
+      return totalSales;
+    }
+
+    // Function to calculate total tax amount
+    function calculateTotalTaxAmount(data) {
+      var totalTaxAmount = 0;
+      data.forEach(function (row) {
+          totalTaxAmount += row.gstamount + row.igstamount;
+      });
+      return totalTaxAmount;
+    }
+
+
+    // Initial load
+    updateSalesTable();
+});
+
+</script>
 {% endblock  %}
