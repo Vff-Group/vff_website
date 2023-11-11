@@ -161,12 +161,13 @@ function getCSRFToken() {
     function updateSalesTable() {
         var startDate = $('#start_date').val();
         var endDate = $('#end_date').val();
+        
+      function fetchSalesRecords(){
         const dictMap = {
           'start_date': startDate,
           'end_date': endDate,
           
         }
-      function fetchSalesRecords(){
         const csrfToken = getCSRFToken();
             $.ajax({
                 type: 'POST',
