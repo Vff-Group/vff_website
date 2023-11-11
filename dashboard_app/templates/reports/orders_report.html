@@ -110,10 +110,9 @@
                         </th>
                       </tr>
                     </thead>
-                    <tbody id="orderTableBody">
+                    <tbody>
                       <tr></tr>
                     </tbody>
-                    
                   </table>
                 </div>
               </div>
@@ -286,7 +285,6 @@ function getCSRFToken() {
     // Print button click event
     $("#print").click(function() {
       var tableContent = $("#orderTable").prop('outerHTML');
-      
     var printContent = `
       <html>
         <head>
@@ -326,7 +324,7 @@ function getCSRFToken() {
           ${tableContent}
         </body>
       </html>`;
-      printJS({ printable: printContent, type: 'html', documentTitle: 'Order Report' });
+      printJS({ printable: 'orderTable', type: 'html', documentTitle: 'Order Report' });
     });
   
     // Download button click event
