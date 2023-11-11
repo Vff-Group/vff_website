@@ -285,6 +285,7 @@ function getCSRFToken() {
     // Print button click event
     $("#print").click(function() {
       var tableContent = $("#orderTable").prop('outerHTML');
+      tableContent.find("style").remove(); // Remove existing styles
     var printContent = `
       <html>
         <head>
