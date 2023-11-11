@@ -202,10 +202,10 @@ function getCSRFToken() {
                                 '<p class="text-xs text-secondary mb-0">'+row.mobile_no+'</p>'+
                               '</div>'+
                             '</div></td>' +
-                            '<td><p class="text-xs text-secondary mb-0">' + row.addons_price + '</p></td>' +
-                            '<td><p class="text-xs text-secondary mb-0">' + discountPercentage + '</p></td>' +
-                            '<td><p class="text-xs text-secondary mb-0">' + (row.gstamount+row.igstamount) + '</p></td>' +
-                            '<td><p class="text-xs text-secondary mb-0">' + row.price + '</p></td>' +
+                            '<td><p class="text-xs text-secondary mb-0 text-center">Rs.' + row.addons_price + '/-</p></td>' +
+                            '<td><p class="text-xs text-secondary mb-0 text-center">' + discountPercentage + '</p></td>' +
+                            '<td><p class="text-xs text-secondary mb-0 text-center">Rs.' + (row.gstamount+row.igstamount) + '/-</p></td>' +
+                            '<td><h6 class="mb-0 text-sm  text-center">Rs.' + row.price + '/-</h6></td>' +
                             // Add other columns here
                             '</tr>';
                         $('#salesTableBody').append(newRow);
