@@ -125,8 +125,8 @@
                     <small class="text-dark total-amount">Total Order Amount: Rs.0/-</small>
                   </div>
                   <div class="col-4">
-                    <button class="btn btn-success" id="download">Download </button>
-                    <button class="btn btn-warning ms-2" id="print">Print </button>
+                    <button class="btn btn-success" id="download" style="display:none;">Download </button>
+                    <button class="btn btn-warning ms-2" id="print" style="display:none;">Print </button>
                   </div>
                 </div>
               </div>
@@ -182,6 +182,16 @@ var data = [];
         success: function(data) {
           // Populate the table with the received data
           data = data.data;
+          // Check if the data is empty
+    if (data.length === 0) {
+      // If data is empty, hide the buttons
+      $("#download").hide();
+      $("#print").hide();
+  } else {
+      // If data is not empty, show the buttons
+      $("#download").show();
+      $("#print").show();
+  }
           populateTable(data);
   
           // Calculate and display total orders and order amount

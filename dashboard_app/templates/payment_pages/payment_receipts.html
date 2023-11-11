@@ -392,10 +392,17 @@ function generatePDF() {
                     // Clear existing table rows
                     console.log(JSON.stringify(data.data));
 
-                    if(data.data.length === 0){
-                                  // Show the buttons once data is loaded
-        $('#download-report, #print-report').css('display', 'none');
+                    
+                      if (data.data.length === 0) {
+                        // If data is empty, hide the buttons
+                        $("#download-report").hide();
+                        $("#print-report").hide();
+                    } else {
+                        // If data is not empty, show the buttons
+                        $("#download-report").show();
+                        $("#print-report").show();
                     }
+                    
                     var total_amount = parseFloat(data.total_amount);
                     var total_gst = parseFloat(data.total_gst);
                     var total_igst = parseFloat(data.total_igst);
