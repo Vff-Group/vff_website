@@ -182,7 +182,7 @@ def all_branches(request):
     usrid = request.session.get('userid')
     request.session['branchid'] = ''
     print(f'Admin Usrid ::{usrid}')
-    query = "select branchtbl.branchid,branch_name,branchtbl.address,branch_type,creation_date,branchtbl.status,gstno,igstno,branchtbl.city,state,branchtbl.pincode,usrname,admintbl.usrid,contactno,gstno from vff.usertbl,vff.branchtbl,vff.admintbl where admintbl.branchid=branchtbl.branchid and usertbl.usrid=admintbl.usrid and branchtbl.owner_id='"+str(usrid)+"'"
+    query = "select branchtbl.branchid,branch_name,branchtbl.address,branch_type,creation_date,branchtbl.status,gstno,igstno,branchtbl.city,state,branchtbl.pincode,usrname,admintbl.usrid,contactno,gstno from vff.usertbl,vff.branchtbl,vff.admintbl where admintbl.branchid=branchtbl.branchid and usertbl.usrid=admintbl.usrid and admintbl.usrid='"+str(usrid)+"'"
     rows = execute_raw_query(query)
     data = []    
     if not rows == 500:
