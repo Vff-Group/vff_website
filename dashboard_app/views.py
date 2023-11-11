@@ -3127,7 +3127,7 @@ def load_payment_receipt(request, start_date, end_date):
     filter = ''
     if branch_id :
         filter = " and  laundry_ordertbl.branch_id='"+str(branch_id)+"'"
-    query = "select laundry_receipt_invoice_tbl.date,orderid,customer_name,price,payment_type,additional_instruction,payment_id,gstamount,igstamount from vff.laundry_ordertbl,vff.laundry_receipt_invoice_tbl,vff.laundry_customertbl,vff.laundry_payment_tbl where laundry_ordertbl.orderid=laundry_receipt_invoice_tbl.order_id and laundry_ordertbl.orderid=laundry_payment_tbl.order_id and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.pickup_dt>='"+str(start_date)+"' and laundry_ordertbl.pickup_dt<='"+str(end_date)+"' "+filter+" order by orderid desc"
+    query = "select laundry_receipt_invoice_tbl.date,orderid,customer_name,price,payment_type,additional_instruction,payment_id,gstamount,igstamount,razor_pay_payment_id from vff.laundry_ordertbl,vff.laundry_receipt_invoice_tbl,vff.laundry_customertbl,vff.laundry_payment_tbl where laundry_ordertbl.orderid=laundry_receipt_invoice_tbl.order_id and laundry_ordertbl.orderid=laundry_payment_tbl.order_id and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.pickup_dt>='"+str(start_date)+"' and laundry_ordertbl.pickup_dt<='"+str(end_date)+"' "+filter+" order by orderid desc"
     
     query_result = execute_raw_query(query)
     
@@ -3152,6 +3152,7 @@ def load_payment_receipt(request, start_date, end_date):
                 'payment_id': row[6],
                 'gstamount': row[7],
                 'igstamount': row[8],
+                'razor_pay_payment_id': row[9],
                 
                
             })
