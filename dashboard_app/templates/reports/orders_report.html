@@ -240,10 +240,10 @@ function getCSRFToken() {
       // Iterate through the data and append rows to the table
       for (var i = 0; i < data.length; i++) {
         var row = "<tr>" +
-                    "<td>" + data[i].pickup_dt + "</td>" +
-                    "<td>" + data[i].orderid + "</td>" +
-                    "<td>" + data[i].customer_name + "</td>" +
-                    "<td>" + data[i].price + "</td>" +
+                    "<td> <p class='text-xs text-secondary mb-0'>" + data[i].pickup_dt + "</p></td>" +
+                    "<td> <p class='text-xs text-secondary mb-0'>" + data[i].orderid + "</p></td>" +
+                    "<td> <p class='text-xs text-secondary mb-0'>" + data[i].customer_name + "</p></td>" +
+                    "<td> <p class='text-xs text-secondary mb-0'>Rs." + data[i].price + "/-</p></td>" +
                     "<td class='text-center'>" + data[i].order_status + "</td>" +
                   "</tr>";
   
