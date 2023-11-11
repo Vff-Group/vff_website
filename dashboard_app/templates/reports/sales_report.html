@@ -239,7 +239,7 @@ function getCSRFToken() {
     function calculateDiscountPercentage(discountPrice, totalPrice) {
       console.log('discountPrice::::'+discountPrice)
       if (totalPrice !== 0 && discountPrice !== 0) {
-          var discountPercentage = ((totalPrice - discountPrice) / totalPrice) * 100;
+        var discountPercentage = (discountAmount / originalAmount) * 100;
           var formattedDiscount = 'Rs.' + discountPrice.toFixed(2) + '/- [' + discountPercentage.toFixed(1) + '%]';
           return formattedDiscount;
       }
