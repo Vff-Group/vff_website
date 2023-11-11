@@ -237,12 +237,15 @@ function getCSRFToken() {
 
     // Function to calculate discount percentage and format it
     function calculateDiscountPercentage(discountPrice, totalPrice) {
+      console.log('discountPrice::::'+discountPrice);
       if (totalPrice !== 0) {
           var discountPercentage = ((totalPrice - discountPrice) / totalPrice) * 100;
-          return discountPercentage.toFixed(1) + ' (' + discountPercentage.toFixed(1) + '%)';
+          var formattedDiscount = 'Rs.' + discountPrice.toFixed(2) + '/- [' + discountPercentage.toFixed(1) + '%]';
+          return formattedDiscount;
       }
-      return '0 (0%)';
-    }
+      return '0 - (0%)';
+  }
+  
     // Function to calculate total sales
     function calculateTotalSales(data) {
       var totalSales = 0;
