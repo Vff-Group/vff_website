@@ -1448,9 +1448,9 @@ def update_order_status(request,order_id,booking_id):
                     print(f"Error loading data: {e}")
         condition = delivery_price != '0.0' and order_taken_on == "OnCounter" and order_status == "Completed"
         print(f'Condition::{condition}')            
-        if ((order_status == "Out for Delivery" and order_taken_on == 'App') or (delivery_price != '0.0' and order_taken_on == 'OnCounter' and order_status == "Out for Delivery")) or ((order_status == "Completed" and order_taken_on == 'App') or condition) or order_status == "Processing" or order_status == "Pick Up Done" or order_status== "Reached Store":
-            
-            print('Entering Here Now 2')
+        #if ((order_status == "Out for Delivery" and order_taken_on == 'App') or (delivery_price != '0.0' and order_taken_on == 'OnCounter' and order_status == "Out for Delivery")) or ((order_status == "Completed" and order_taken_on == 'App') or condition) or order_status == "Processing" or order_status == "Pick Up Done" or order_status== "Reached Store":
+        if ((order_status == "Out for Delivery" and order_taken_on == 'App') or (delivery_price != '0.0' and order_taken_on == 'OnCounter' and order_status == "Out for Delivery")):   
+            print('Entering Here Now to send notification to delivery boy')
             #To Send for Delivery Boy
             if order_status !="Processing":
                 title = "VFF Group"
