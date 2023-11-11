@@ -153,18 +153,18 @@ function getCSRFToken() {
 
   $(document).ready(function () {
     // Add an event listener for the date inputs
-    $('#end_date').on('change', function () {
+    $('#end-date').on('change', function () {
         updateSalesTable();
     });
 
     // Function to fetch data and update the table
     function updateSalesTable() {
-        var startDate = $('#start_date').val();
-        var endDate = $('#end_date').val();
+        var startDate = $('#start-date').val();
+        var endDate = $('#end-date').val();
         
       function fetchSalesRecords(){
-        var startDate = $('#start_date').val();
-        var endDate = $('#end_date').val();
+        var startDate = $('#start-date').val();
+        var endDate = $('#end-date').val();
         const dictMap = {
           'start_date': startDate,
           'end_date': endDate,
