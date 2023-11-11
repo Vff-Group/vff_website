@@ -202,10 +202,10 @@ function getCSRFToken() {
                                 '<p class="text-xs text-secondary mb-0">'+row.mobile_no+'</p>'+
                               '</div>'+
                             '</div></td>' +
-                            '<td><p class="text-xs text-secondary mb-0">' + row.customer_name + '</p></td>' +
-                            '<td><p class="text-xs text-secondary mb-0">' + row.orderid + '</p></td>' +
-                            '<td><p class="text-xs text-secondary mb-0">' + row.orderid + '</p></td>' +
-                            '<td><p class="text-xs text-secondary mb-0">' + row.orderid + '</p></td>' +
+                            '<td><p class="text-xs text-secondary mb-0">' + row.addons_price + '</p></td>' +
+                            '<td><p class="text-xs text-secondary mb-0">' + row.discount_price + '</p></td>' +
+                            '<td><p class="text-xs text-secondary mb-0">' + (row.gstamount+row.igstamount) + '</p></td>' +
+                            '<td><p class="text-xs text-secondary mb-0">' + row.price + '</p></td>' +
                             // Add other columns here
                             '</tr>';
                         $('#salesTableBody').append(newRow);
@@ -231,7 +231,6 @@ function getCSRFToken() {
           fetchSalesRecords()
         } else {
             // Handle the case where the start date, end date, or their relation is not valid
-            fetchSalesRecords();
             console.log('Invalid date range');
         }
     }
