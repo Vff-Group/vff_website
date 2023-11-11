@@ -156,7 +156,7 @@ function getCSRFToken() {
   return null;
 }
 
-
+var data = [];
   $(document).ready(function() {
     // Function to handle the AJAX request
     function fetchOrders() {
@@ -181,7 +181,7 @@ function getCSRFToken() {
         contentType: 'application/json',
         success: function(data) {
           // Populate the table with the received data
-          var data = data.data;
+          data = data.data;
           populateTable(data);
   
           // Calculate and display total orders and order amount
@@ -284,9 +284,7 @@ function getCSRFToken() {
   
     // Print button click event
     $("#print").click(function() {
-      var tableContent = $("#orderTable").prop('outerHTML');
-      tableContent = $(tableContent); // Convert to a jQuery object
-      tableContent.find("style").remove(); // Remove existing styles
+      // Remove existing styles
     var printContent = `
       <html>
         <head>
@@ -323,7 +321,38 @@ function getCSRFToken() {
           </style>
         </head>
         <body>
-          ${$("#orderTable").prop('outerHTML')}
+          <table class="table align-items-center mb-0" id="orderTable">
+            <thead>
+              <tr>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                  Date
+                </th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                  Order ID
+                </th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                  Customer
+                </th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                  Order Amount
+                </th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                  Status
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              ${data.map(order => `
+                <tr>
+                  <td><p class="text-xs text-secondary mb-0">${order.pickup_dt}</p></td>
+                  <td><p class="text-xs text-secondary mb-0">${order.orderid}</p></td>
+                  <td><p class="text-xs text-secondary mb-0">${order.customer_name}</p></td>
+                  <td><p class="text-xs text-secondary mb-0">Rs.${order.price}/-</p></td>
+                  <td class="align-middle text-center text-sm">${order.order_status}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
         </body>
       </html>`;
       printJS({ printable: printContent, type: 'html', documentTitle: 'Order Report' });
