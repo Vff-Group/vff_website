@@ -1309,7 +1309,8 @@ $("#generate-booking-id").on("click",function(){
                     booking_id_input.value = bookingIDData; // Set the value in the hidden input
                     generated_booking_id = bookingIDData;
             $("#generate-booking-id").text("Booking ID: " + bookingIDData); // Update the button text
-            add_to_cart.show();
+            // Show the add_to_cart button
+            add_to_cart.style.display = "block";
             // Disable the button after generating the booking ID
             generate_booking_id_btn.disabled = true;
                     
