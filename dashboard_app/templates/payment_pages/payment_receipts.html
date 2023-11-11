@@ -398,11 +398,11 @@ function generatePDF() {
                     }
                     //Total Amount
                     var amountLabel = document.querySelector('#total-amount');
-                    amountLabel.textContent = 'Total Amount: Rs. ' + total_amount.toFixed(2)+'/-';
+                    amountLabel.textContent = 'Total Amount: ₹. ' + total_amount.toFixed(2)+'/-';
                     
                     //Total Tax Amount
                     var amountLabel = document.querySelector('#total-tax');
-                    amountLabel.textContent = 'Total Tax Amount: Rs. ' + totalTax.toFixed(2)+'/-';
+                    amountLabel.textContent = 'Total Tax Amount: ₹. ' + totalTax.toFixed(2)+'/-';
     
                     $('#table-body').empty();
                     
@@ -416,8 +416,8 @@ function generatePDF() {
                             '<td> <p class="text-xs text-secondary mb-0">' + item.date + '</p> </td>' +
                             '<td> <p class="text-xs text-secondary mb-0"> ORD#' + item.order_id + '</p> </td>' +
                             '<td> <p class="text-xs text-secondary mb-0">' + item.customer + '</p> </td>' +
-                            '<td  class="text-center"> <p class="text-xs text-secondary mb-0">' + item.amount + '</p> </td>' +
-                            '<td class="text-center"> <p class="text-xs text-secondary mb-0">' + item.payment_type + '</p> </td>' +
+                            '<td  class="text-center"> <p class="text-xs text-secondary mb-0">₹' + item.amount + '/-</p> </td>' +
+                            '<td class="text-center"> <p class="text-xs text-secondary mb-0">' + item.payment_type + '</p> <p class="text-xxs text-secondary mb-0">[]'+item.payment_id+']</p> </td>' +
                             '<td class="text-center"> <p class="text-xs text-secondary mb-0">' + item.note + '</p> </td>' +
                             '</tr>';
                         $('#table-body').append(newRow);
