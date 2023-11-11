@@ -260,10 +260,10 @@ function generateHTMLTemplate() {
     '<div class="card-footer px-4 pt-0 pb-2 mt-2" style="background-color: #343a40; color: white; font-weight: bold; text-align: end; margin-top: 20px;">' +
     '<div class="row">' +
     '<div class="col-4">' +
-    '<small class="mb-2 text-dark">' + totalOrders + '</small>' +
+    '<small class="mb-2 text-dark" style="margin-top:2px; margin-bottom:2px; color: #343a40;">' + totalOrders + '</small>' +
     '</div>' +
-    '<div class="col-4">' +
-    '<small class="text-dark">' + totalAmount + '</small>' +
+    '<div class="col-4"> ' +
+    '<small class="text-dark" style="margin-top:2px; margin-bottom:2px; color: #343a40;">' + totalAmount + '</small>' +
     '</div>' +
     '</div>' +
     '</div>';
@@ -275,7 +275,7 @@ function generateHTMLTemplate() {
    // Create a heading with center alignment
    var heading = '<h2 style="text-align: center; margin-bottom: 20px; color: #343a40;">Payment Receipts</h2>';
    // Display selected start date and end date
-  var dateInfo = '<div style="text-align: center; margin-top: 5px;">Selected Start Date: ' + selectedStartDate + ' | Selected End Date: ' + selectedEndDate + '</div>';
+  var dateInfo = '<div style="text-align: center; margin-top: 5px; margin-bottom:5px;">Selected Start Date: ' + selectedStartDate + ' | Selected End Date: ' + selectedEndDate + '</div>';
 
   // Combine the table and footer data
   var htmlTemplate = heading+dateInfo+htmlTable + footerDiv;
