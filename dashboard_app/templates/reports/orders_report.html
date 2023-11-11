@@ -284,7 +284,7 @@ function getCSRFToken() {
   
     // Print button click event
     $("#print").click(function() {
-      var tableContent = $("#orderTable");
+      var tableContent = $("#orderTable").prop('outerHTML');
     var printContent = `
       <html>
         <head>
