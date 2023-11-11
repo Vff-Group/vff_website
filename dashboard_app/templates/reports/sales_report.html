@@ -186,9 +186,9 @@ function getCSRFToken() {
 
                     // Populate the table dynamically
                     response.data.forEach(function (row) {
-                        // Append rows to the table
-                        // ...
-
+                        
+                        // Calculate discount percentage and format it
+                        discountPercentage = calculateDiscountPercentage(row.discount_price, row.price);
                         // Example:
                         var newRow = '<tr>' +
                             '<td><p class="text-xs text-secondary mb-0">' + row.pickup_dt + '</p></td>' +
@@ -203,7 +203,7 @@ function getCSRFToken() {
                               '</div>'+
                             '</div></td>' +
                             '<td><p class="text-xs text-secondary mb-0">' + row.addons_price + '</p></td>' +
-                            '<td><p class="text-xs text-secondary mb-0">' + row.discount_price + '</p></td>' +
+                            '<td><p class="text-xs text-secondary mb-0">' + discountPercentage + '</p></td>' +
                             '<td><p class="text-xs text-secondary mb-0">' + (row.gstamount+row.igstamount) + '</p></td>' +
                             '<td><p class="text-xs text-secondary mb-0">' + row.price + '</p></td>' +
                             // Add other columns here
@@ -235,6 +235,14 @@ function getCSRFToken() {
         }
     }
 
+    // Function to calculate discount percentage and format it
+    function calculateDiscountPercentage(discountPrice, totalPrice) {
+      if (totalPrice !== 0) {
+          var discountPercentage = ((totalPrice - discountPrice) / totalPrice) * 100;
+          return discountPercentage.toFixed(1) + ' (' + discountPercentage.toFixed(1) + '%)';
+      }
+      return '0 (0%)';
+    }
     // Function to calculate total sales
     function calculateTotalSales(data) {
       var totalSales = 0;
