@@ -390,10 +390,9 @@ function generatePDF() {
                 method: 'GET',
                 success: function (data) {
                     // Clear existing table rows
-                    console.log(JSON.stringify(data.data));
-                    var dlength = JSON.stringify(data.data);
                     
-                      if (dlength.length === 0) {
+                  
+                      if (data.data.length === 0) {
                         // If data is empty, hide the buttons
                         $("#download-report").hide();
                         $("#print-report").hide();
