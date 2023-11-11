@@ -1980,7 +1980,7 @@ def add_new_branch(request,branch_id=None,usr_id=None):
     if branch_id:
         try:
             with connection.cursor() as cursor:
-                query = "select branch_name,owner_name,branchtbl.address,branch_type,branchtbl.city,branchtbl.state,mobile_no,usertbl.address,usertbl.city,usertbl.pincode,branchtbl.pincode,profile_img,owner_id,aadhar_no,houseno,usertbl.landmark,date_of_birth,age,gender,gstno,igstno,branchtbl.landmark,contactno from vff.usertbl,vff.branchtbl where branchtbl.owner_id=usertbl.usrid and branchid='"+str(branch_id)+"'"
+                query = "select branch_name,owner_name,branchtbl.address,branch_type,branchtbl.city,branchtbl.state,mobile_no,usertbl.address,usertbl.city,usertbl.pincode,branchtbl.pincode,profile_img,owner_id,aadhar_no,houseno,usertbl.landmark,date_of_birth,age,gender,gstno,igstno,branchtbl.landmark,contactno,state_name from vff.usertbl,vff.branchtbl where branchtbl.owner_id=usertbl.usrid and branchid='"+str(branch_id)+"'"
                 cursor.execute(query)
                 print(f'Query Branch Edit ::{query}')
                 row = cursor.fetchone()
@@ -2013,6 +2013,7 @@ def add_new_branch(request,branch_id=None,usr_id=None):
                         'igstno': row[20],
                         'branch_landmark': row[21],
                         'branch_contactno': row[22],
+                        'state': row[23],
                         
                         
                         
@@ -2040,6 +2041,8 @@ def add_new_branch(request,branch_id=None,usr_id=None):
         branch_pincode = request.POST.get('branch_pincode')
         branch_landmark = request.POST.get('branch_landmark')
         branch_contactno = request.POST.get('branch_contactno')
+        owner_city = request.POST.get('city')
+        owner_state = request.POST.get('state')
         uploaded_image = request.FILES.get('profile-image1')
 
         print(f'branch_name--->{branch_name}')
@@ -2083,7 +2086,7 @@ def add_new_branch(request,branch_id=None,usr_id=None):
                     print(f'branch_id--->::{branch_id}')
                     # Update an existing branchid
                     update_query = (
-                        "update vff.usertbl set usrname='"+str(uname)+"',mobile_no='"+str(primary_mobno)+"',address='"+str(address)+"',age='"+str(age)+"',gender='"+str(gender)+"',date_of_birth='"+str(date_of_birth)+"',pincode='"+str(pincode)+"',landmark='"+str(land_mark)+"',profile_img='"+str(image_url)+"' where usrid='"+str(usr_id)+"'"
+                        "update vff.usertbl set usrname='"+str(uname)+"',mobile_no='"+str(primary_mobno)+"',address='"+str(address)+"',age='"+str(age)+"',gender='"+str(gender)+"',date_of_birth='"+str(date_of_birth)+"',pincode='"+str(pincode)+"',landmark='"+str(land_mark)+"',profile_img='"+str(image_url)+"',city='"+str(owner_city)+"',state_name='"+str(owner_state)+"' where usrid='"+str(usr_id)+"'"
                     )
                     print(f"update user details::{update_query}")
                     cursor.execute(update_query)
@@ -2095,7 +2098,7 @@ def add_new_branch(request,branch_id=None,usr_id=None):
                     cursor.execute(update_customer)
                 else:
                     # Insert a new Branch Owner
-                    usertbl_query = "insert into vff.usertbl (usrname,mobile_no,address,age,gender,date_of_birth,pincode,landmark,profile_img) VALUES ('"+str(uname)+"', '"+str(primary_mobno)+"', '"+str(address)+"','"+str(age)+"','"+str(gender)+"','"+str(date_of_birth)+"','"+str(pincode)+"','"+str(land_mark)+"','"+str(image_url)+"') RETURNING usrid"
+                    usertbl_query = "insert into vff.usertbl (usrname,mobile_no,address,age,gender,date_of_birth,pincode,landmark,profile_img,city,state_name) VALUES ('"+str(uname)+"', '"+str(primary_mobno)+"', '"+str(address)+"','"+str(age)+"','"+str(gender)+"','"+str(date_of_birth)+"','"+str(pincode)+"','"+str(land_mark)+"','"+str(image_url)+"','"+str(owner_city)+"','"+str(owner_state)+"') RETURNING usrid"
                     cursor.execute(usertbl_query)
                     usrid = cursor.fetchone()[0]  # Retrieve the returned usrid
                     

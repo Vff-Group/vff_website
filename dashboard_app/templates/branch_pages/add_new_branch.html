@@ -48,7 +48,7 @@ Add New Branch Details
                     </div>
                   {% endif %}
                 </label>
-                <input type="file" id="image_upload" class="d-none" accept="image/*" name="profile-image1" onchange="displayImage(event)">
+                <input type="file" id="image_upload" class="d-none" accept="image/jpeg, image/png" name="profile-image1" onchange="displayImage(event)">
               </div>
             </div>
           </div>
@@ -121,7 +121,22 @@ Add New Branch Details
             </div>
           </div>
         </div>
-        
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-city">City</label>
+              <input id="input-city" class="form-control form-control-alternative" placeholder="Enter your City Name"  type="text" name="city" value="{{ data.city|default:'' }}"  required>
+            </div>
+          </div>
+          
+
+          <div class="col-lg-3">
+            <div class="form-group">
+              <label class="form-control-label" for="input-state">State</label>
+              <input id="input-state" class="form-control form-control-alternative" placeholder="Enter Your State Name"  type="text" name="state" value="{{ data.state|default:'' }}"  required>
+            </div>
+          </div>
+        </div>
        
           
       </div>
