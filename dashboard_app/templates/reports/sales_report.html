@@ -180,7 +180,16 @@ function getCSRFToken() {
                 },
                 contentType: 'application/json',
                 success: function (response) {
-                  
+                         // Check if the data is empty
+                        if (response.data.length === 0) {
+                          // If data is empty, hide the buttons
+                          $("#download").hide();
+                          $("#print").hide();
+                      } else {
+                          // If data is not empty, show the buttons
+                          $("#download").show();
+                          $("#print").show();
+                      }
                     // Clear existing rows
                     $('#salesTableBody').empty();
 
