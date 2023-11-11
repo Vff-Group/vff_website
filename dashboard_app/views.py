@@ -1922,11 +1922,13 @@ def all_main_branches(request):
         return redirect('dashboard_app:login')
     error_msg = "No Branches Created Till Now"
     branch_id = request.session.get('branchid')
-    admin_usrid = request.session.get('userid')
+    owner_id = request.session.get('userid')
+    filter = ''
+    if branch_id:
+        filter = "and branchtbl.owner_id='"+str(owner_id)+"'"
     
-    
-    query = "select admintbl.branchid,branch_name,owner_name,branchtbl.address,branch_type,creation_date,branchtbl.epoch,branchtbl.status,branchtbl.city,branchtbl.state,mobile_no,usertbl.address,usertbl.city,usertbl.pincode,branchtbl.pincode,profile_img,device_token,owner_id from vff.admintbl,vff.usertbl,vff.branchtbl where branchtbl.owner_id=usertbl.usrid and admintbl.usrid=usertbl.usrid and admintbl.usrid=branchtbl.owner_id and admintbl.branchid!='-1'  and admintbl.usrid='"+str(admin_usrid)+"'"
-    
+    query = "select branchid,branch_name,owner_name,branchtbl.address,branch_type,creation_date,branchtbl.epoch,status,branchtbl.city,branchtbl.state,mobile_no,usertbl.address,usertbl.city,usertbl.pincode,branchtbl.pincode,profile_img,device_token,owner_id from vff.usertbl,vff.branchtbl where branchtbl.owner_id=usertbl.usrid "+filter+""
+    #select admintbl.branchid,branch_name,owner_name,branchtbl.address,branch_type,creation_date,branchtbl.epoch,branchtbl.status,branchtbl.city,branchtbl.state,mobile_no,usertbl.address,usertbl.city,usertbl.pincode,branchtbl.pincode,profile_img,device_token,owner_id from vff.admintbl,vff.usertbl,vff.branchtbl where branchtbl.owner_id=usertbl.usrid and admintbl.usrid=usertbl.usrid and admintbl.usrid=branchtbl.owner_id and admintbl.branchid!='-1'  and admintbl.usrid='"+str(admin_usrid)+"'
     query_result = execute_raw_query(query)
     
     
