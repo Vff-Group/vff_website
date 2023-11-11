@@ -77,11 +77,11 @@
                         >
                           Customer
                         </th>
-                        <th
+                        <!-- <th
                           class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
                         >
                           Sub Total
-                        </th>
+                        </th> -->
                         <th
                           class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
                         >
@@ -113,13 +113,13 @@
               <div class="card-footer px-4 pt-0 pb-2 mt-2">
                 <div class="row">
                   <div class="col-3">
-                    <small class="mb-2 text-dark" id="total-orders">Total Order: 3</small>
+                    <small class="mb-2 text-dark" id="total-orders">Total Order: 0</small>
                   </div>
                   <div class="col-3">
-                    <small class="text-dark" id="total-sales">Total Sales: Rs.4000/-</small>
+                    <small class="text-dark" id="total-sales">Total Sales: Rs.0/-</small>
                   </div>
                   <div class="col-3">
-                    <small class="text-dark" id="total-tax-amount">Total Tax Amount: Rs.1000/-</small>
+                    <small class="text-dark" id="total-tax-amount">Total Tax Amount: Rs.0/-</small>
                   </div>
                   <div class="col-3">
                     <button class="btn btn-success">Download Report</button>
@@ -191,8 +191,21 @@ function getCSRFToken() {
 
                         // Example:
                         var newRow = '<tr>' +
-                            '<td>' + row.delivery_epoch + '</td>' +
-                            '<td>' + row.orderid + '</td>' +
+                            '<td><p class="text-xs text-secondary mb-0">' + row.pickup_dt + '</p></td>' +
+                            '<td><p class="text-xs text-secondary mb-0">ORD#' + row.orderid + '</p></td>' +
+                            '<td><div class="d-flex px-2 py-1">'+
+                              '<div>'+
+                                '<img src="' + row.profile_img + '" class="avatar avatar-sm me-3" alt="user1">'+
+                              '</div>'+
+                              '<div class="d-flex flex-column justify-content-center">'+
+                                '<h6 class="mb-0 text-sm">' + row.customer_name + '</h6>'+
+                                '<p class="text-xs text-secondary mb-0">'+row.mobile_no+'</p>'+
+                              '</div>'+
+                            '</div></td>' +
+                            '<td><p class="text-xs text-secondary mb-0">' + row.customer_name + '</p></td>' +
+                            '<td><p class="text-xs text-secondary mb-0">' + row.orderid + '</p></td>' +
+                            '<td><p class="text-xs text-secondary mb-0">' + row.orderid + '</p></td>' +
+                            '<td><p class="text-xs text-secondary mb-0">' + row.orderid + '</p></td>' +
                             // Add other columns here
                             '</tr>';
                         $('#salesTableBody').append(newRow);
