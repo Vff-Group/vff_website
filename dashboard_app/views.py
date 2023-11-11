@@ -1654,7 +1654,11 @@ def get_todays_notification(request):
     
     
     return JsonResponse(context)
-            
+    
+#To Print Label Tags
+def print_label_tags(request,orderid):
+    
+    return render(request,'invoice_pages/print_tag_labels.html')        
         
 #Thermal Printer size
 def generate_bill(request, orderid):

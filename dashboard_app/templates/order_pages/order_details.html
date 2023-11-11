@@ -294,10 +294,21 @@
                 </div>
               </div>
               {% endif %}
-              <form action="{% url 'dashboard_app:generate_bill' order_id%}" method="post" target="_blank">
-                {% csrf_token %}
-                <button id="printButton" type="submit" class="btn btn-primary my-4">Print Bill</button>
-              </form>
+              <div class="row">
+                <div class="col-lg-6">
+                  <form action="{% url 'dashboard_app:generate_bill' order_id%}" method="post" target="_blank">
+                    {% csrf_token %}
+                    <button id="printButton" type="submit" class="btn btn-primary my-4">Print Bill</button>
+                  </form>
+                </div>
+                <div class="col-lg-6 d-flex align-items-end">
+                  <form action="{% url 'dashboard_app:print_label_tags' order_id%}" method="post" target="_blank">
+                    {% csrf_token %}
+                    <button id="printLabelBtn" type="submit" class="btn btn-facebook my-4">Labels Print</button>
+                  </form>
+                </div>
+              </div>
+              
               {% if order_status != 'Completed' %}
               <div class="col">
                 <form method="post" action="{% url 'dashboard_app:update_order_status' order_id booking_id%}">

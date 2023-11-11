@@ -26,6 +26,7 @@ urlpatterns = [
     path('all_orders/create_order/',views.create_new_order,name='create_order'),
     path('all_orders/order_details/<int:orderid>',views.view_order_detail,name='view_order_detail'),
     path('all_orders/generate_bill/<int:orderid>',views.generate_bill,name='generate_bill'),
+    path('all_orders/print_label_tags/<int:orderid>',views.print_label_tags,name='print_label_tags'),
     path('assigned_delivery_boy/<int:orderid>',views.assigned_delivery_boy,name='assigned_delivery_boy'),
     path('delivery_accept/<int:booking_id>/<int:delivery_boy_id>',views.delivery_accept,name='delivery_accept'),
     path('update_order_status/<int:order_id>/<int:booking_id>',views.update_order_status,name='update_order_status'),
