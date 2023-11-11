@@ -166,10 +166,8 @@ function getCSRFToken() {
           'end_date': endDate,
           
         }
-
-        // Check if both start date and end date are provided, and end date is not less than start date
-        if (startDate && endDate && startDate <= endDate) {
-          const csrfToken = getCSRFToken();
+      function fetchSalesRecords(){
+        const csrfToken = getCSRFToken();
             $.ajax({
                 type: 'POST',
                 url: '/admin_dashboard/sales_report/',
@@ -211,8 +209,13 @@ function getCSRFToken() {
                     console.error('Error fetching data:', error);
                 }
             });
+      }
+        // Check if both start date and end date are provided, and end date is not less than start date
+        if (startDate && endDate && startDate <= endDate) {
+          fetchSalesRecords()
         } else {
             // Handle the case where the start date, end date, or their relation is not valid
+            fetchSalesRecords();
             console.log('Invalid date range');
         }
     }
