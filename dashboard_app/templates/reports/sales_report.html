@@ -400,8 +400,8 @@ $("#download").click(function () {
   var footerRow = [];
   footerRow.length = headers.length;
   footerRow[headers.length - 3] = totalOrders; // Add totalOrders to the Third last column
-  footerRow[headers.length - 2] = totalSales; // Add totalSales to the second last column
-  footerRow[headers.length - 1] = totalTaxAmount; // Add totalTaxAmount to the last column
+  footerRow[headers.length - 2] = totalTaxAmount; // Add totalTaxAmount to the last column
+  footerRow[headers.length - 1] = totalSales; // Add totalSales to the second last column
   rows.push(footerRow);
 
   // Create a worksheet with headers and data
