@@ -895,6 +895,7 @@ function updateTaxAmount() {
       gstAmountLabel.text('Rs.' + GSTamount.toFixed(2) + '/-');
   } else {
       gstAmountLabel.text('Rs.0/-');
+      GSTamount = 0;
   }
 }
 
