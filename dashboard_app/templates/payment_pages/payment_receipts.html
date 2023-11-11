@@ -238,7 +238,7 @@ function generateHTMLTemplate() {
     '<thead>' +
     '<tr>';
   headers.forEach(function (header) {
-    htmlTable += '<th style="border: 1px solid #dee2e6; padding: 8px;" scope="col">' + header + '</th>';
+    htmlTable += '<th style="border: 1px solid #dee2e6; padding: 8px; background-color: #343a40; color: white; font-weight: bold;" scope="col">' + header + '</th>';
   });
   htmlTable += '</tr>' +
     '</thead>' +
@@ -257,7 +257,7 @@ function generateHTMLTemplate() {
 
   // Create a div for the footer data with Bootstrap styling
   var footerDiv =
-    '<div class="card-footer px-4 pt-0 pb-2 mt-2" style="background-color: #343a40;">' +
+    '<div class="card-footer px-4 pt-0 pb-2 mt-2" style="background-color: #343a40; color: white; font-weight: bold; text-align: end; margin-top: 20px;">' +
     '<div class="row">' +
     '<div class="col-4">' +
     '<small class="mb-2 text-dark">' + totalOrders + '</small>' +
