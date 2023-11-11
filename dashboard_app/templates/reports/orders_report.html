@@ -125,8 +125,8 @@
                     <small class="text-dark total-amount">Total Order Amount: Rs.0/-</small>
                   </div>
                   <div class="col-4">
-                    <button class="btn btn-success">Download Report</button>
-                    <button class="btn btn-warning">Print Report</button>
+                    <button class="btn btn-success" id="download">Download </button>
+                    <button class="btn btn-warning" id="print">Print </button>
                   </div>
                 </div>
               </div>
@@ -283,12 +283,12 @@ function getCSRFToken() {
     });
   
     // Print button click event
-    $(".btn-print").click(function() {
+    $("#print").click(function() {
       printJS({ printable: 'orderTable', type: 'html', documentTitle: 'Order Report' });
     });
   
     // Download button click event
-    $(".btn-download").click(function() {
+    $("#download").click(function() {
       // Convert table data to Excel
       var ws = XLSX.utils.table_to_sheet(document.getElementById('orderTable'));
       var wb = XLSX.utils.book_new();
