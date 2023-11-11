@@ -1298,7 +1298,7 @@ $("#generate-booking-id").on("click",function(){
         },
         contentType: 'application/json',
         success: function (response) {
-            console.log(response.message);
+            
             // Handle success response
             const bookingIDData = response.booking_id;
 // Now you can access the cartItemsData as a JavaScript object
@@ -1309,10 +1309,12 @@ $("#generate-booking-id").on("click",function(){
                     booking_id_input.value = bookingIDData; // Set the value in the hidden input
                     generated_booking_id = bookingIDData;
             $("#generate-booking-id").text("Booking ID: " + bookingIDData); // Update the button text
+            // Disable the anchor link
+            generate_booking_id_btn.classList.add("disabled"); // Add a class for styling
+            generate_booking_id_btn.removeAttribute("href"); // Remove the href attribute to make it unclickable
+            generate_booking_id_btn.style.pointerEvents = "none"; // Disable pointer events to prevent clicking
             // Show the add_to_cart button
             add_to_cart.style.display = "block";
-            // Disable the button after generating the booking ID
-            generate_booking_id_btn.disabled = true;
                     
                    
 
