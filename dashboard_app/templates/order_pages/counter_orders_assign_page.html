@@ -249,7 +249,7 @@
                           <th class='text-secondary opacity-7'></th>
                           <th >
                             <div class="col-lg-4">
-                                <button class="btn btn-primary btn-sm" id="add_to_cart" >Add To Cart</button>
+                                <button class="btn btn-primary btn-sm" id="add_to_cart" style="display: none;">Add To Cart</button>
                             </div>
                           </th>
                          
@@ -334,7 +334,7 @@
         <div class="card-body p-3 pb-0">
             <div class="row d-flex justify-content-end">
                 <div class="col">
-                    <a class="btn btn-facebook text-xxs" id="generate-booking-id">Generate Booking ID</a>
+                    <a class="btn btn-facebook text-xxs" id="generate-booking-id" style="display: none;">Generate Booking ID</a>
                     <input
                             class="form-control form-control-alternative"
                             type="hidden"
@@ -1274,6 +1274,9 @@ var save_btn = $("#save_btn");
 $("#generate-booking-id").on("click",function(){
     var selected_customer_id = document.getElementById("selected-customer-id");
     var customer_name_input = document.getElementById("customer-name");
+    //generate-booking-id,add_to_cart
+    var add_to_cart = document.getElementById("add_to_cart");
+    var generate_booking_id_btn = document.getElementById("generate-booking-id");
     
     var customer_id = selected_customer_id.value.trim()
     var customer_name = customer_name_input.value.trim()
@@ -1306,7 +1309,9 @@ $("#generate-booking-id").on("click",function(){
                     booking_id_input.value = bookingIDData; // Set the value in the hidden input
                     generated_booking_id = bookingIDData;
             $("#generate-booking-id").text("Booking ID: " + bookingIDData); // Update the button text
-            $("#generate-booking-id").prop("disabled", true);
+            add_to_cart.show();
+            // Disable the button after generating the booking ID
+            generate_booking_id_btn.disabled = true;
                     
                    
 
@@ -2043,6 +2048,10 @@ if (subCategoryTable.find('tr').length > 0) {
         const selectedCustomerIdInput = $('#selected-customer-id');
         const selectedMobileNoInput = $('#selected-mobile-no');
         const selectedCustomerNameInput = $('#selected-customer-name');
+        //generate-booking-id,add_to_cart
+        const booking_id_btn = $('#generate-booking-id');
+        
+
     
         inputField.on('input', function() {
             const inputText = inputField.val();
@@ -2063,7 +2072,8 @@ if (subCategoryTable.find('tr').length > 0) {
                                 selectedCustomerIdInput.val(suggestion.consmrid);
                                 selectedMobileNoInput.val(suggestion.mobile_no);
                                 selectedCustomerNameInput.val(suggestion.customer_name);
-    
+                                //show Generate Booking ID Button
+                                booking_id_btn.show();
                                 // Hide the suggestions list (ul)
                                 suggestionContainer.hide();
                                 add_customer_btn.show();
