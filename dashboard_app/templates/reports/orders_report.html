@@ -359,16 +359,62 @@ var data = [];
     });
   
     // Download button click event
-    $("#download").click(function() {
+   // $("#download").click(function() {
       // Convert table data to Excel
-      var ws = XLSX.utils.table_to_sheet(document.getElementById('orderTable'));
-      var wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Order Report');
-      XLSX.writeFile(wb, 'order_report.xlsx');
-    });
+     // var ws = XLSX.utils.table_to_sheet(document.getElementById('orderTable'));
+      //var wb = XLSX.utils.book_new();
+      //XLSX.utils.book_append_sheet(wb, ws, 'Order Report');
+      //XLSX.writeFile(wb, 'order_report.xlsx');
+    //});
+  //});
+
+  // Download button click event
+$("#download").click(function () {
+  // Extract table headers from the <thead>
+  var headers = [];
+  var headerRow = document.getElementById('orderTable').querySelector('thead').querySelector('tr');
+  headerRow.querySelectorAll('th').forEach(function (cell) {
+    headers.push(cell.textContent);
   });
+
+  // Extract table data rows
+  var rows = [];
+  document.getElementById('orderTable').querySelectorAll('tbody tr').forEach(function (row) {
+    var rowData = [];
+    row.querySelectorAll('td').forEach(function (cell) {
+      rowData.push(cell.textContent);
+    });
+    rows.push(rowData);
+  });
+
+  // Extract footer data
+  var totalOrders = $(".total-orders").text().trim();
+  var totalAmount = $(".total-amount").text().trim();
+
+  // Add the footer data to the last row of the table
+  var footerRow = [];
+  footerRow.length = headers.length;
+  footerRow[headers.length - 2] = totalOrders; // Add totalOrders to the second last column
+  footerRow[headers.length - 1] = totalAmount; // Add totalAmount to the last column
+  rows.push(footerRow);
+
+  // Create a worksheet with headers and data
+  var worksheet = XLSX.utils.json_to_sheet([headers, ...rows]);
+
+  // Create a workbook and add the worksheet
+  var workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Order Report');
+
+  // Generate the Excel file name
+  var fileName = 'order_report.xlsx';
+
+  // Generate and download the Excel file
+  XLSX.writeFile(workbook, fileName);
+});
+
+  
   </script>
   
-  <!-- ... your existing HTML code ... -->
+ 
   
 {% endblock  %}
