@@ -208,63 +208,65 @@ printButton.addEventListener('click', function () {
 
 
 function generateHTMLTemplate() {
-  var table = document.getElementById('table-body');
+  var table = document.getElementById('orderTable');
   var footerData = document.querySelector('.card-footer');
 
   // Extract table headers from the <thead>
   var headers = [];
-  var headerRow = table.closest('table').querySelector('thead').querySelector('tr');
+  var headerRow = table.querySelector('thead').querySelector('tr');
   headerRow.querySelectorAll('th').forEach(function (cell) {
-      headers.push(cell.textContent);
+    headers.push(cell.textContent);
   });
 
   // Extract table data rows and store them in the 'rows' array
   var rows = [];
-  table.querySelectorAll('tr').forEach(function (row) {
-      var rowData = [];
-      row.querySelectorAll('td').forEach(function (cell) {
-          rowData.push(cell.textContent);
-      });
-      rows.push(rowData);
+  table.querySelectorAll('tbody tr').forEach(function (row) {
+    var rowData = [];
+    row.querySelectorAll('td').forEach(function (cell) {
+      rowData.push(cell.textContent);
+    });
+    rows.push(rowData);
   });
 
   // Extract footer data
-  var totalAmount = footerData.querySelector('.col-4:nth-child(1)').textContent.trim();
-  var totalTaxAmount = footerData.querySelector('.col-4:nth-child(2)').textContent.trim();
+  var totalOrders = $(".total-orders").text().trim();
+  var totalAmount = $(".total-amount").text().trim();
 
   // Create an HTML table with Bootstrap styling and borders
-  var htmlTable = '<table class="table table-bordered table-dark">' +
-                  '<thead>' +
-                  '<tr>';
+  var htmlTable =
+    '<table class="table table-bordered table-dark">' +
+    '<thead>' +
+    '<tr>';
   headers.forEach(function (header) {
-      htmlTable += '<th scope="col">' + header + '</th>';
+    htmlTable += '<th scope="col">' + header + '</th>';
   });
   htmlTable += '</tr>' +
-              '</thead>' +
-              '<tbody>';
+    '</thead>' +
+    '<tbody>';
 
   rows.forEach(function (rowData) {
-      htmlTable += '<tr>';
-      rowData.forEach(function (cell) {
-          htmlTable += '<td>' + cell + '</td>';
-      });
-      htmlTable += '</tr>';
+    htmlTable += '<tr>';
+    rowData.forEach(function (cell) {
+      htmlTable += '<td>' + cell + '</td>';
+    });
+    htmlTable += '</tr>';
   });
 
   htmlTable += '</tbody>' +
-              '</table>';
+    '</table>';
 
-  // Create a div for the footer data
-  var footerDiv = '<div class="card-footer px-4 pt-0 pb-2 mt-2">' +
-                  '<div class="row">' +
-                  '<div class="col-4">' +
-                  '<small class="mb-2 text-dark">' + totalAmount + '</small>' +
-                  '</div>' +
-                  '<div class="col-4">' +
-                  '<small class="text-dark">' + totalTaxAmount + '</small>' +
-                  '</div>' +
-                  '</div>' +
-                  '</div>';
+  // Create a div for the footer data with Bootstrap styling
+  var footerDiv =
+    '<div class="card-footer px-4 pt-0 pb-2 mt-2">' +
+    '<div class="row">' +
+    '<div class="col-4">' +
+    '<small class="mb-2 text-dark">' + totalOrders + '</small>' +
+    '</div>' +
+    '<div class="col-4">' +
+    '<small class="text-dark">' + totalAmount + '</small>' +
+    '</div>' +
+    '</div>' +
+    '</div>';
 
   // Combine the table and footer data
   var htmlTemplate = htmlTable + footerDiv;
