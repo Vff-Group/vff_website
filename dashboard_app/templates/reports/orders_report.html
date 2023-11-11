@@ -239,12 +239,35 @@ function getCSRFToken() {
   
       // Iterate through the data and append rows to the table
       for (var i = 0; i < data.length; i++) {
+        var status_order = data[i].order_status;
+        var badge = "<span class='badge badge-sm bg-success'>"+status_order+"</span>";
+        if (status_order === "Completed")
+        {
+          badge = "<span class='badge badge-sm bg-success'>"+status_order+"</span>";
+        }else if(status_order === "Accepted"){
+          badge = "<span class='badge badge-sm bg-primary'>"+status_order+"</span>";
+        
+        }else if(status_order === "Pick Up Done"){
+          badge = "<span class='badge badge-sm bg-primary'>"+status_order+"</span>";
+        
+        }else if(status_order === "Reached Store"){
+          badge = "<span class='badge badge-sm bg-primary'>"+status_order+"</span>";
+        }else if(status_order === "Processing"){
+          badge = "<span class='badge badge-sm bg-warning'>"+status_order+"</span>";
+        }else if(status_order === "Payment Done"){
+          badge = "<span class='badge badge-sm bg-info'>"+status_order+"</span>";
+        
+        }else if(status_order === "Out for Delivery"){
+          badge = "<span class='badge badge-sm bg-info'>"+status_order+"</span>";
+        }else{
+          badge = "<span class='badge badge-sm bg-danger'>"+status_order+"</span>";
+        }
         var row = "<tr>" +
                     "<td> <p class='text-xs text-secondary mb-0'>" + data[i].pickup_dt + "</p></td>" +
                     "<td> <p class='text-xs text-secondary mb-0'>" + data[i].orderid + "</p></td>" +
                     "<td> <p class='text-xs text-secondary mb-0'>" + data[i].customer_name + "</p></td>" +
                     "<td> <p class='text-xs text-secondary mb-0'>Rs." + data[i].price + "/-</p></td>" +
-                    "<td class='text-center'>" + data[i].order_status + "</td>" +
+                    "<td class='align-middle text-center text-sm'>" + badge + "</td>" +
                   "</tr>";
   
         tableBody.append(row);
