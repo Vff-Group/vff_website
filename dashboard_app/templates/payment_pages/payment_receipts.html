@@ -411,13 +411,19 @@ function generatePDF() {
                       if(item.note === 'NA'){
                         item.note = '-'
                       }
+                      var filter = ''
+                      if(item.payment_type === "Cash"){
+                        filter = ''
+                      }else{
+                        filter = '<p class="text-xxs text-secondary mb-0">[ '+item.razor_pay_payment_id+' ]</p> '
+                      }
                         var newRow = '<tr>' +
                             '<td  class="text-center"> <p class="text-xs text-secondary mb-0">' + (index + 1) + '</p> </td>' +
                             '<td> <p class="text-xs text-secondary mb-0">' + item.date + '</p> </td>' +
                             '<td> <p class="text-xs text-secondary mb-0"> ORD#' + item.order_id + '</p> </td>' +
                             '<td> <p class="text-xs text-secondary mb-0">' + item.customer + '</p> </td>' +
                             '<td  class="text-center"> <p class="text-xs text-secondary mb-0">₹' + item.amount + '/-</p> </td>' +
-                            '<td class="text-center"> <p class="text-xs text-secondary mb-0">' + item.payment_type + '</p> <p class="text-xxs text-secondary mb-0">[ '+item.razor_pay_payment_id+' ]</p> </td>' +
+                            '<td class="text-center"> <p class="text-xs text-secondary mb-0">' + item.payment_type + '</p> '+filter+'</td>' +
                             '<td class="text-center"> <p class="text-xs text-secondary mb-0">' + item.note + '</p> </td>' +
                             '</tr>';
                         $('#table-body').append(newRow);
