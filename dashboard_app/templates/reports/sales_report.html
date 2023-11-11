@@ -237,6 +237,7 @@ function getCSRFToken() {
 
     // Function to calculate discount percentage and format it
     function calculateDiscountPercentage(discountPrice, totalPrice) {
+      console.log('discountPrice::::'+discountPrice)
       if (totalPrice !== 0 && discountPrice !== 0) {
           var discountPercentage = ((totalPrice - discountPrice) / totalPrice) * 100;
           var formattedDiscount = 'Rs.' + discountPrice.toFixed(2) + '/- [' + discountPercentage.toFixed(1) + '%]';
