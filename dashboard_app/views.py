@@ -1924,7 +1924,8 @@ def all_main_branches(request):
     branch_id = request.session.get('branchid')
     owner_id = request.session.get('userid')
     filter = ''
-    if branch_id:
+    super_admin = request.session.get('username')
+    if branch_id and super_admin!='Super Admin':
         filter = "and branchtbl.owner_id='"+str(owner_id)+"'"
     
     query = "select branchid,branch_name,owner_name,branchtbl.address,branch_type,creation_date,branchtbl.epoch,status,branchtbl.city,branchtbl.state,mobile_no,usertbl.address,usertbl.city,usertbl.pincode,branchtbl.pincode,profile_img,device_token,owner_id from vff.usertbl,vff.branchtbl where branchtbl.owner_id=usertbl.usrid "+filter+""
