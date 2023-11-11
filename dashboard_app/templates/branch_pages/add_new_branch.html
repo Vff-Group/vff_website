@@ -193,6 +193,14 @@ Add New Branch Details
               <input id="input-landmark" class="form-control form-control-alternative" placeholder="Nearest landmark like car showroom,etc"  type="text" name="branch_landmark" value="{{ data.branch_landmark|default:'' }}"  required>
             </div>
           </div>
+
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-branch-contact">Branch Contact Number</label>
+              <input type="number" id="input-branch-contact" class="form-control form-control-alternative" placeholder="Enter Branch contact number" name="branch_contactno" value="{{ data.branch_contactno|default:'' }}"  required>
+            </div>
+          </div>
+
         </div>
         
        
@@ -327,15 +335,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
     imageInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
-        // Optionally display the selected image, e.g., for preview
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                imageDiv.getElementsByTagName('img')[0].src = event.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
+        // Check if the selected file has a valid format
+    if (file && isFileValidFormat(file)) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+          imageDiv.getElementsByTagName('img')[0].src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+  } else {
+      // Clear the file input if an invalid format is chosen
+      imageInput.value = null;
+      alert('Please choose a valid image file (PNG or JPEG).');
+  }
     });
+    // Function to check if the file format is valid
+function isFileValidFormat(file) {
+  const validFormats = ['image/png', 'image/jpeg'];
+
+  // Check if the file type is in the list of valid formats
+  return validFormats.includes(file.type);
+}
 </script>
 <script>
 
