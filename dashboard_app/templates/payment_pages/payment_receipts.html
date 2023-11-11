@@ -234,11 +234,11 @@ function generateHTMLTemplate() {
 
   // Create an HTML table with Bootstrap styling and borders
   var htmlTable =
-    '<table class="table table-bordered table-dark">' +
+    '<table style="width: 100%;" class="table table-bordered table-dark">' +
     '<thead>' +
     '<tr>';
   headers.forEach(function (header) {
-    htmlTable += '<th scope="col">' + header + '</th>';
+    htmlTable += '<th style="border: 1px solid #dee2e6; padding: 8px;" scope="col">' + header + '</th>';
   });
   htmlTable += '</tr>' +
     '</thead>' +
@@ -247,7 +247,7 @@ function generateHTMLTemplate() {
   rows.forEach(function (rowData) {
     htmlTable += '<tr>';
     rowData.forEach(function (cell) {
-      htmlTable += '<td>' + cell + '</td>';
+      htmlTable += '<td  style="border: 1px solid #dee2e6; padding: 8px;">' + cell + '</td>';
     });
     htmlTable += '</tr>';
   });
@@ -257,7 +257,7 @@ function generateHTMLTemplate() {
 
   // Create a div for the footer data with Bootstrap styling
   var footerDiv =
-    '<div class="card-footer px-4 pt-0 pb-2 mt-2">' +
+    '<div class="card-footer px-4 pt-0 pb-2 mt-2" style="background-color: #343a40;">' +
     '<div class="row">' +
     '<div class="col-4">' +
     '<small class="mb-2 text-dark">' + totalOrders + '</small>' +
