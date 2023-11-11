@@ -321,22 +321,22 @@ var data = [];
           </style>
         </head>
         <body>
-          <table class="table align-items-center mb-0" id="orderTable">
+          <table>
             <thead>
               <tr>
-                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                <th >
                   Date
                 </th>
-                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                <th >
                   Order ID
                 </th>
-                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                <th >
                   Customer
                 </th>
-                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                <th >
                   Order Amount
                 </th>
-                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                <th >
                   Status
                 </th>
               </tr>
@@ -344,11 +344,11 @@ var data = [];
             <tbody>
               ${data.map(order => `
                 <tr>
-                  <td><p class="text-xs text-secondary mb-0">${order.pickup_dt}</p></td>
-                  <td><p class="text-xs text-secondary mb-0">${order.orderid}</p></td>
-                  <td><p class="text-xs text-secondary mb-0">${order.customer_name}</p></td>
-                  <td><p class="text-xs text-secondary mb-0">Rs.${order.price}/-</p></td>
-                  <td class="align-middle text-center text-sm">${order.order_status}</td>
+                  <td>${order.pickup_dt}</td>
+                  <td>${order.orderid}</td>
+                  <td>${order.customer_name}</td>
+                  <td>Rs.${order.price}/-</td>
+                  <td >${order.order_status}</td>
                 </tr>
               `).join('')}
             </tbody>
