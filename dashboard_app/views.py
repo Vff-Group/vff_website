@@ -1551,6 +1551,9 @@ def update_order_status(request,order_id,booking_id):
         elif order_status == "Reached Store":
             title = "Reached Store"
             msg = "Your Laundry has arrived at Store for Order ID : #"+str(order_id)+".\nWe will ping you once the processing has been started Thank you."
+        elif order_status == "Ready for Delivery":
+            title = "Ready For Delivery"
+            msg = "Your Laundry Package is Ready For Delivery for Order ID : #"+str(order_id)+".\nThank you."
         else:
             msg = "Your Laundry Package is on its way to deliver for Order ID : #"+str(order_id)+""
         data = {
@@ -1577,7 +1580,7 @@ def update_order_status(request,order_id,booking_id):
                 cursor.execute(query2)
                 connection.commit()
                 #Insert Delivery Boy Record
-                if order_status != "Processing" :
+                if order_status != "Processing" and order_status !="Ready for Delivery":
                     insert_notify="insert into vff.laundry_notificationtbl(title,body,reciever_id,sender_id,order_id) values ('"+str(title)+"','"+str(msg)+"','"+str(delivery_boy_id)+"','"+str(userid)+"','"+str(order_id)+"')"
                     cursor.execute(insert_notify)
                     print(f'Notification inserted for Delivery Boy::{insert_notify}')
