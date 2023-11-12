@@ -81,7 +81,7 @@
               <div class="card-body px-0 pt-0 pb-2 mt-2">
                 <div class="table-responsive p-0">
                   <table class="table table-bordered align-items-center mb-0  table-hover"  id="orderTable" >
-                    <thead class="bg-light">
+                    <thead class="bg-light" class="bg-light">
                       <tr>
                         <th
                           class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
@@ -314,7 +314,7 @@ function generateHTMLTemplate() {
   var table = document.getElementById('table-body');
   var footerData = document.querySelector('.card-footer');
 
-  // Extract table headers from the <thead>
+  // Extract table headers from the <thead class="bg-light">
   var headers = [];
   var headerRow = table.closest('table').querySelector('thead').querySelector('tr');
   headerRow.querySelectorAll('th').forEach(function (cell) {
@@ -338,7 +338,7 @@ function generateHTMLTemplate() {
   // Create an HTML table with Bootstrap styling and borders
   var htmlTable =
     '<table style="width: 100%;" class="table table-bordered table-dark">' +
-    '<thead>' +
+    '<thead class="bg-light">' +
     '<tr>';
   headers.forEach(function (header) {
     htmlTable += '<th style="border: 1px solid #dee2e6; padding: 8px; background-color: #343a40; color: white; font-weight: bold;" scope="col">' + header + '</th>';
@@ -394,7 +394,7 @@ function generateHTMLTemplate() {
 
   // Download button click event
 $("#download").click(function () {
-  // Extract table headers from the <thead>
+  // Extract table headers from the <thead class="bg-light">
   var headers = [];
   var headerRow = document.getElementById('orderTable').querySelector('thead').querySelector('tr');
   headerRow.querySelectorAll('th').forEach(function (cell) {
