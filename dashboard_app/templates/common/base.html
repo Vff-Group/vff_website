@@ -35,6 +35,11 @@
     ></script>
     <link href="{% static 'css/nucleo-svg.css' %}" rel="stylesheet" />
 
+    <!-- Style Toast  -->
+    <link href="{% static 'css/toast.style.min.css' %}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{% static 'js/toast.script.js' %}"></script>
+
     <!-- Add these links to your HTML -->
 <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -1152,6 +1157,17 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
   }
   
 </script>
-
+<script>
+  $.Toast("test", "this is a test message.", "success", {
+    has_icon:true,
+    has_close_btn:true,
+stack: true,
+    fullscreen:true,
+    timeout:8000,
+    sticky:false,
+    has_progress:true,
+    rtl:false,
+});
+</script>
   </body>
 </html>
