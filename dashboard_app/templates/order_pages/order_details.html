@@ -321,7 +321,7 @@
                                 <input type="hidden" name="delivery_price" value="{{delivery_price_taken}}">
                                 <input type="hidden" name="wants_delivery" value="{{wants_delivery}}">
                                 <select class="form-control form-control-alternative" id="input-order-status" name="order-status">
-                                  {% if (wants_delivery == '1' or wants_delivery == 1) and order_taken_on == 'OnCounter'  %}
+                                  {% if wants_delivery == '1'  and order_taken_on == 'OnCounter'  %}
 
                                   
                                   <option value="Processing" {% if order_status == 'Processing' %}selected{% endif %}>Processing</option>
