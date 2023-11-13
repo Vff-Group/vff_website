@@ -287,7 +287,7 @@
                           <h4 class="card-title">Customer Details</h4>
                       </div>
                 <div class="row">
-                    
+                    <div class="col-lg-12">
                         <form method="get">
                             {% csrf_token %}
                             <div class="form-group">
@@ -329,7 +329,7 @@
                             value=""
                         />
                         
-                    
+                      </div>
                 </div>
                 </div>
                 </div>
@@ -2143,7 +2143,7 @@ if (subCategoryTable.find('tr').length > 0) {
     
     </script>
 <script>
-  $(document).ready(function() {
+    $(document).ready(function() {
     const inputField = $('#customer-name');
     const add_customer_btn = $('#add-customer');
     const suggestionContainer = $('#suggestion-container');
@@ -2186,7 +2186,7 @@ if (subCategoryTable.find('tr').length > 0) {
                     });
                 } else {
                     // No customer found message
-                    const noCustomerItem = $('<li class="nav-item text-muted">').text('No customer found');
+                    const noCustomerItem = $('<li class="nav-item text-muted">').text('No customer found with this number');
                     suggestionList.append(noCustomerItem);
                 }
             });
