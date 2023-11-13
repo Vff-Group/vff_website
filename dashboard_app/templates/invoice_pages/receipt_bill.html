@@ -111,6 +111,9 @@
       <p>GST No : {{branch_gstno}}</p>
       <p>Receipt : #{{receipt_id}}</p>
       <p>Date: {{receiptDate}}</p>
+      {% if wants_delivery == 1 %}
+      <p>Delivery Estimated Date: {{wants_delivery}}</p>
+      {% endif %}
       <p>Cashier: {{receiptName}}</p>
       <p>Branch ID: #{{branch_id}}</p>
     </div>

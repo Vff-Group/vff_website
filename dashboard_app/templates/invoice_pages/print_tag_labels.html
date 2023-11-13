@@ -40,18 +40,22 @@
 </head>
 <body>
     <!-- Your content goes here -->
+    {% for row in query_result %}
     <div class="label">
-        <p>ORDER ID#1234</p>
+        <p>ORDER ID#{{order_id}}</p>
         <p>Sam Rocks</p>
-        <p>Dry Cleaning</p>
-        <p class="sub-item">Saree</p>
+        {% if row.type_of == "Kg" %}
+          {{row.cat_name}}
+          <p class="sub-item">{{sub_items}}</p>
+          <p>[ {{row.item_quantity}} {{row.type_of}} ]</p>
+          {% else %}
+          {{row.cat_name}}
+          <p class="sub-item">{{row.sub_cat_name}}</p>
+          [ {{row.section_type}} /{{row.item_quantity}} {{row.type_of}}]
+          {% endif %}
+        
     </div>
     <hr/>
-    <div class="label">
-        <p>ORDER ID#1234</p>
-        <p>Sam Rocks</p>
-        <p>Wash and Fold</p>
-        <p class="sub-item">[Jeans(3),TShirts(7),Hoodies(2),Formal Pants(2)]</p>
-    </div>
+    {% endfor %}
 </body>
 </html>
