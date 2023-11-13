@@ -2488,14 +2488,7 @@ def get_lat_lng_from_address(address):
     else:
         return None
 
-# Example usage:
-address = "New Vaibhav Nagar Belgaum"
-result = get_lat_lng_from_address(address)
 
-if result:
-    print(f"Latitude: {result[0]}, Longitude: {result[1]}")
-else:
-    print("Location not found.")
 
 #Place Order
 def place_new_order(request):
@@ -2985,7 +2978,14 @@ def daily_report(request):
     return render(request, 'reports/daily_report.html', context)
 
 def search_customer_to_assign_order(request,mobno):
-    
+    # Example usage:
+    address = "New Vaibhav Nagar Belgaum"
+    result = get_lat_lng_from_address(address)
+
+    if result:
+        print(f"Latitude: {result[0]}, Longitude: {result[1]}")
+    else:
+        print("Location not found.")
     # mobno = request.GET.get('mobno', '')
     print(f'Mobile No::{mobno}')
     query = "select consmrid,customer_name,company_name,gstno,igstno,mobile_no from vff.usertbl,vff.laundry_customertbl where laundry_customertbl.usrid=usertbl.usrid and mobile_no ILIKE '"+str(mobno)+"%'"
