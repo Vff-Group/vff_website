@@ -1387,7 +1387,7 @@ def delivery_accept(request,booking_id,delivery_boy_id):
 #Assign Delivery Boy to Order ID
 def assigned_delivery_boy(request,orderid):
     branch_id = request.session.get('branchid')
-    error_msg = ""
+    error_msg = "No Delivery Agents Created"
     query = "select delivery_boy_id,name,is_online,status,profile_img,mobile_no,address from vff.usertbl,vff.laundry_delivery_boytbl where laundry_delivery_boytbl.usrid=usertbl.usrid and branchid='"+str(branch_id)+"'"
     query_result = execute_raw_query(query)
        
