@@ -694,12 +694,11 @@
 
 <script>
 
-  $(document).ready(function () {
-    // Handle wantsDelivery checkbox change
-    $("#wantsDelivery").change(function () {
-      // Update wants_delivery variable based on the checkbox state
-      wantsDelivery = $(this).is(":checked") ? 1 : 0;
-  });
+$("#wantsDelivery").change(function () {
+    // Update wants_delivery variable based on the checkbox state
+    var wantsDeliveryCheckbox = $('#wantsDelivery');
+    wantsDeliveryCheckbox.prop('checked')
+    wantsDelivery = wantsDeliveryCheckbox ? 1 : 0;
 });
     // When "Cancel" button in the main modal is clicked
 $('#modal-default1').on('show.bs.modal', function (e) {
@@ -767,6 +766,7 @@ $('#modal-default1').on('hidden.bs.modal', function (e) {
                 $("#input-paymentmode").removeClass("is-invalid").addClass("is-valid");
             }
     });
+
     });
 // Initialize form validation for your form
 $('#order-form').validate({
