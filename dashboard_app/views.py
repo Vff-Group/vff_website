@@ -2313,7 +2313,8 @@ def load_cart_items_after_deletion(request):
 def get_delivery_chart_details(request):
     #Load Cart Items
     branch_id = request.session.get('branchid')
-    query="select to_char(pickup_dt, 'YYYY-MM') AS month,COUNT(*) AS completed_order_count FROM vff.laundry_ordertbl WHERE order_completed = '1' AND branch_id = '"+str(branch_id)+"' GROUP BY month ORDER BY month;"
+    #query="select to_char(pickup_dt, 'YYYY-MM') AS month,COUNT(*) AS completed_order_count FROM vff.laundry_ordertbl WHERE order_completed = '1' AND branch_id = '"+str(branch_id)+"' GROUP BY month ORDER BY month;"
+    query = "WITH MonthlyCounts AS (SELECT TO_DATE(to_char(pickup_dt, 'YYYY-MM') || '-01', 'YYYY-MM-DD') AS month, COUNT(*) AS completed_order_count FROM vff.laundry_ordertbl WHERE order_completed = '1' AND branch_id = '"+str(branch_id)+"' GROUP BY month) SELECT TO_CHAR(current_month.month, 'YYYY-MM') AS current_month, current_month.completed_order_count AS current_month_count, TO_CHAR(previous_month.month, 'YYYY-MM') AS previous_month, previous_month.completed_order_count AS previous_month_count, CASE WHEN previous_month.completed_order_count = 0 THEN 100 ELSE ((current_month.completed_order_count - previous_month.completed_order_count) / previous_month.completed_order_count) * 100 END AS percentage_increase FROM MonthlyCounts current_month LEFT JOIN MonthlyCounts previous_month ON current_month.month = previous_month.month + INTERVAL '1 month' ORDER BY current_month.month"
     query_result = execute_raw_query(query)
     
     data = []    
@@ -2321,18 +2322,18 @@ def get_delivery_chart_details(request):
     if not query_result == 500:
         for row in query_result:
             data.append({
-                'year_month':row[0],
-                'count': row[1],
-                
+                'current_month': row[0],
+                'current_month_count': row[1],
+                'previous_month': row[2],
+                'previous_month_count': row[3],
+                'percentage_increase': row[4],
             })
-                
+
     else:
         error_msg = 'Something Went Wrong'
-        return JsonResponse({'error':error_msg})
-    
-   
-    
-    return JsonResponse({'data':data})
+        return JsonResponse({'error': error_msg})
+
+    return JsonResponse({'data': data})
 
 #Load extra add ons items
 def load_extra_items(request):

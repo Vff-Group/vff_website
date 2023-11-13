@@ -1569,108 +1569,7 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
     <script src="{% static 'js/plugins/perfect-scrollbar.min.js' %}"></script>
     <script src="{% static 'js/plugins/smooth-scrollbar.min.js' %}"></script>
     <script src="{% static 'js/plugins/chartjs.min.js' %}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-      var ctx = document.getElementById("chart-bars").getContext("2d");
-
-      
-// Function to convert numeric month to abbreviated month name with year
-function getMonthWithYear(monthYearString) {
-  const [year, month] = monthYearString.split('-');
-  const monthNames = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-  ];
-  return `${monthNames[parseInt(month) - 1]} ${year}`;
-}
-// Function to update the chart with data
-function updateChart(data) {
-  var labels = data.map(item => getMonthWithYear(item.year_month));
-  var counts = data.map(item => item.count);
-
-  new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          label: "Completed Orders",
-          tension: 0.4,
-          borderWidth: 0,
-          borderRadius: 4,
-          borderSkipped: false,
-          backgroundColor: "#fff",
-          data: counts,
-          maxBarThickness: 6,
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          display: false,
-        },
-      },
-      interaction: {
-        intersect: false,
-        mode: "index",
-      },
-      scales: {
-        y: {
-          grid: {
-            drawBorder: false,
-            display: false,
-            drawOnChartArea: false,
-            drawTicks: false,
-          },
-          ticks: {
-            suggestedMin: 0,
-            suggestedMax: Math.max(...counts) + 5, // Adjusted based on the maximum value in the data
-            beginAtZero: true,
-            padding: 15,
-            font: {
-              size: 14,
-              family: "Open Sans",
-              style: "normal",
-              lineHeight: 2,
-            },
-            color: "#fff",
-          },
-        },
-        x: {
-          grid: {
-            drawBorder: false,
-            display: false,
-            drawOnChartArea: false,
-            drawTicks: false,
-          },
-          ticks: {
-            display: false,
-          },
-        },
-      },
-    },
-  });
-}
-// AJAX request to fetch data from the server
-$.ajax({
-  url: "/admin_dashboard/get_delivery_chart_details/", // Replace with the actual backend endpoint
-  method: "GET",
-  dataType: "json",
-  success: function (response) {
-    if (response.error) {
-      console.error("Error fetching data:", response.error);
-    } else {
-      // Update the chart with the fetched data
-      updateChart(response.data);
-    }
-  },
-  error: function (error) {
-    console.error("Error fetching data:", error);
-  },
-});
+   <script>
 
       /*var ctx = document.getElementById("chart-bars").getContext("2d");
 
@@ -1750,6 +1649,7 @@ $.ajax({
         },
       });
       */
+      
       var ctx2 = document.getElementById("chart-line").getContext("2d");
 
       var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
@@ -1792,7 +1692,7 @@ $.ajax({
               maxBarThickness: 6,
             },
             {
-              label: "Websites",
+              label: "Counter",
               tension: 0.4,
               borderWidth: 0,
               pointRadius: 0,
