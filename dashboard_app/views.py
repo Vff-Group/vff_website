@@ -281,6 +281,10 @@ def dashboard(request):
     filter=''
     delivery_filter=''
     order_filter=''
+    total_money = '0'
+    total_customers = '0'
+    total_delivery_boys = '0'
+    total_orders_delivered = '0'
     if branchid:
         filter = "where branch_id='"+str(branchid)+"'"
         delivery_filter = "where branchid='"+str(branchid)+"'"
@@ -2528,7 +2532,8 @@ def all_expenses(request):
     filter = ''
     if branch_id :
         filter = " where branch_id='"+str(branch_id)+"'"
-    query = "select expensesid,exp_catgry_name,exp_catid,exp_amount,payment_mode,tax_included,tax_percentage,extra_note,epoch_time,date from vff.laundry_expensestbl "+filter+" order by expensesid desc"
+        
+    query = "select expensesid,exp_catgry_name,exp_catid,exp_amount,payment_mode,tax_included,tax_percentage,extra_note,epoch_time,date from vff.laundry_expensestbl  where branch_id='"+str(branch_id)+"' and date>='"+str(start_date)+"' and date<='"+str(end_date)+"' order by expensesid desc"
     
     query_result = execute_raw_query(query)
     
