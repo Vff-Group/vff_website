@@ -2478,7 +2478,9 @@ def generate_booking_id(request):
 
 from geopy.geocoders import Nominatim
 
-def get_lat_lng_from_address(address):
+
+def get_lat_lng_from_address(city, state, street):
+    address = f"{street}, {city}, {state}"
     geolocator = Nominatim(user_agent="your_app_name")  # Replace "your_app_name" with a unique name for your application
     location = geolocator.geocode(address)
 
@@ -2980,7 +2982,11 @@ def daily_report(request):
 def search_customer_to_assign_order(request,mobno):
     # Example usage:
     address = "New Vaibhav Nagar Belgaum"
-    result = get_lat_lng_from_address(address)
+    city_name = "Belgaum"
+    state_name = "Karnataka"
+    street_name = "New Vaibhav Nagar 6th cross belgaum - 590010"
+
+    result = get_lat_lng_from_address(city_name, state_name, street_name)
 
     if result:
         print(f"Latitude: {result[0]}, Longitude: {result[1]}")
