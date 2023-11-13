@@ -1494,25 +1494,8 @@ $("#add_to_cart").on("click",function(){
 
     jsonItems = JSON.stringify(selectedItems);
     if (selectedItems.length === 0){
-      toastr.success("This Is Success Message", "Top Right", {
-        timeOut: 500000000,
-        closeButton: !0,
-        debug: !1,
-        newestOnTop: !0,
-        progressBar: !0,
-        positionClass: "toast-top-right",
-        preventDuplicates: !0,
-        onclick: null,
-        showDuration: "300",
-        hideDuration: "1000",
-        extendedTimeOut: "1000",
-        showEasing: "swing",
-        hideEasing: "linear",
-        showMethod: "fadeIn",
-        hideMethod: "fadeOut",
-        tapToDismiss: !1
-    })
-      //  showToast('Alert','Please select the laundry items before adding to cart')
+      
+       showToast('Alert','Please select the laundry items before adding to cart')
         return;
     }
     
@@ -1890,8 +1873,26 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
 
 // Function to show a toast message
 function showToast(message, bodyContent) {
+  toastr.error(bodyContent, message, {
+    positionClass: "toast-top-right",
+    timeOut: 5e3,
+    closeButton: !0,
+    debug: !1,
+    newestOnTop: !0,
+    progressBar: !0,
+    preventDuplicates: !0,
+    onclick: null,
+    showDuration: "300",
+    hideDuration: "1000",
+    extendedTimeOut: "1000",
+    showEasing: "swing",
+    hideEasing: "linear",
+    showMethod: "fadeIn",
+    hideMethod: "fadeOut",
+    tapToDismiss: !1
+})
     // Get the toast element and its content
-    var toastElement = document.getElementById("liveToast");
+    /*var toastElement = document.getElementById("liveToast");
     var toastBody = toastElement.querySelector(".toast-body");
 
     // Update the toast content with the provided message and body content
@@ -1899,7 +1900,7 @@ function showToast(message, bodyContent) {
 
     // Show the toast
     var toast = new bootstrap.Toast(toastElement);
-    toast.show();
+    toast.show();*/
 }
 
 
