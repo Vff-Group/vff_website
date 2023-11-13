@@ -231,7 +231,7 @@
                 <div class="card-body px-0 pt-0 pb-2" style="height: 400px; overflow-y: scroll;">
                 <div class="table-responsive p-0">
                     <table class="table table-bordered align-items-center mb-0  table-hover" id="subCategoryTable" style="width: 100%;">
-                      <thead class="bg-light">
+                      <thead>
                         <tr>
                           <th
                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 w-50 "
@@ -281,27 +281,14 @@
           <div class="card-header pb-0 p-3">
             <div class="row d-flex justify-content-end">
               <div class="col-lg-12 d-flex align-items-center">
-                
+                <div class="card">
+                  <div class="card-body">
+                      <div class="mb-4">
+                          <h4 class="card-title">Customer Details</h4>
+                      </div>
                 <div class="row">
-                  <div class="col">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="mb-4">
-                                <h4 class="card-title">Customer Details</h4>
-                            </div>
-                            <form method="get">
-                            <select class="js-data-example-ajax w-100" id="customer-name" name="mobno">
-                            </select>
-                          </form>
-                            <!-- Hidden input fields -->
-                            <input type="hidden" id="selected-customer-id" name="selected_customer_id" value="" />
-                            <input type="hidden" id="selected-mobile-no" name="selected-mobile-no" value="" />
-                            <input type="hidden" id="selected-customer-name" name="selected-customer-name" value="" />
-                        </div>
-                    </div>
-                </div>
-                
-                        <!-- <form method="get">
+                    
+                        <form method="get">
                             {% csrf_token %}
                             <div class="form-group">
                                 <input
@@ -340,11 +327,12 @@
                             id="selected-customer-name"
                             name="selected-customer-name"
                             value=""
-                        /> -->
+                        />
                         
                     
                 </div>
-
+                </div>
+                </div>
               </div>
               
           </div>
@@ -384,7 +372,7 @@
             <div class="row">
                 <div class="table table-responsive">
                     <table  class="table align-items-center mb-0"  id="cartItemsTable" style="width: 100%;">
-                        <thead class="bg-light">
+                        <thead>
                             <th class="text-start text-xs">Service Name</th>
                             <th class="text-start text-xs">Service Type</th>
                             <th class="text-start text-xs">Cost</th>
@@ -2117,55 +2105,7 @@ if (subCategoryTable.find('tr').length > 0) {
         }
     
     </script>
-    <!-- Select2 CSS -->
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
-
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-<!-- Select2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
-
-    <script>
-      $(document).ready(function () {
-        // Initialize Select2
-        $("#customer-name").select2({
-            width: "100%",
-            ajax: {
-                url: function (params) {
-                    return `/admin_dashboard/search_customer_to_assign_order/${params.term}/`;
-                },
-                dataType: 'json',
-                delay: 250,
-                processResults: function (data) {
-                    return {
-                        results: data.suggestions,
-                    };
-                },
-                cache: true
-            },
-            minimumInputLength: 1,
-            placeholder: 'Search for Customer number',
-            escapeMarkup: function (markup) {
-                return markup;
-            },
-            templateResult: formatRepo,
-            templateSelection: formatRepoSelection
-        });
-    
-        // Additional logic for selecting a suggestion
-        $("#customer-name").on('select2:select', function (e) {
-            const suggestion = e.params.data;
-            // Set the selected customer details in hidden inputs
-            $('#selected-customer-id').val(suggestion.consmrid);
-            $('#selected-mobile-no').val(suggestion.mobile_no);
-            $('#selected-customer-name').val(suggestion.customer_name);
-            // Additional logic if needed
-        });
-    });
-    
-    </script>
-<!-- <script>
+<script>
     $(document).ready(function() {
         const inputField = $('#customer-name');
         const add_customer_btn = $('#add-customer');
@@ -2228,6 +2168,44 @@ if (subCategoryTable.find('tr').length > 0) {
         });
     });
     
+</script>
+<!-- <script>
+  $(document).ready(function() {
+    const inputField = $('#customer-name');
+    const suggestionContainer = $('#suggestion-container');
+    const selectedCustomerInput = $('#selected-customer');
+
+    inputField.on('input', function() {
+      const inputText = inputField.val();
+
+      if (inputText.length > 0) {
+        $.get(`/admin_dashboard/search_customer_to_assign_order/${inputText}/`, function(data) {
+            const suggestions = data.suggestions; 
+            suggestionContainer.empty();
+        
+            if (suggestions.length > 0) {
+                const suggestionList = $('<ul>');
+                suggestions.forEach(function(suggestion) {
+                    const suggestionItem = $('<li>').text(suggestion.customer_name);
+                    suggestionItem.on('click', function() {
+                        // When a suggestion is clicked, set the value in the input field
+                        selectedCustomerInput.val(suggestion.customer_name);
+                    });
+                    suggestionList.append(suggestionItem);
+                });
+                suggestionContainer.append(suggestionList);
+            }
+        });
+      } else {
+        suggestionContainer.empty();
+      }
+    });
+
+    inputField.focusout(function() {
+      // Clear suggestions when the input field loses focus.
+      suggestionContainer.empty();
+    });
+  });
 </script> -->
 
 {% endblock  %}
