@@ -1460,25 +1460,8 @@ $("#add_to_cart").on("click",function(){
     // Perform validation
     if (!selectedSubSection && selectedCategory === "DRY CLEAN") {
         // Show a toast message for validation failure
-        toastr.success("This Is Success Message", "Top Right", {
-          timeOut: 500000000,
-          closeButton: !0,
-          debug: !1,
-          newestOnTop: !0,
-          progressBar: !0,
-          positionClass: "toast-top-right",
-          preventDuplicates: !0,
-          onclick: null,
-          showDuration: "300",
-          hideDuration: "1000",
-          extendedTimeOut: "1000",
-          showEasing: "swing",
-          hideEasing: "linear",
-          showMethod: "fadeIn",
-          hideMethod: "fadeOut",
-          tapToDismiss: !1
-      })
-        //showToast("Validation Error", "Sub Section.");
+        
+        showToast("Validation Error", "Sub Section.");
         return; // Stop further execution
     }
 
@@ -1511,7 +1494,25 @@ $("#add_to_cart").on("click",function(){
 
     jsonItems = JSON.stringify(selectedItems);
     if (selectedItems.length === 0){
-        showToast('Alert','Please select the laundry items before adding to cart')
+      toastr.success("This Is Success Message", "Top Right", {
+        timeOut: 500000000,
+        closeButton: !0,
+        debug: !1,
+        newestOnTop: !0,
+        progressBar: !0,
+        positionClass: "toast-top-right",
+        preventDuplicates: !0,
+        onclick: null,
+        showDuration: "300",
+        hideDuration: "1000",
+        extendedTimeOut: "1000",
+        showEasing: "swing",
+        hideEasing: "linear",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut",
+        tapToDismiss: !1
+    })
+      //  showToast('Alert','Please select the laundry items before adding to cart')
         return;
     }
     
