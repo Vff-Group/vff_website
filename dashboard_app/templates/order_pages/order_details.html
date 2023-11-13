@@ -57,7 +57,7 @@
                         {% if payment_type != 'Cash' %}  
                         <small>Transaction ID - {{payment_id}}</small>
                         {% else %}
-                        <small>Transaction Type - {{payment_type}}</small>
+                        <small>Transaction Type - <span class="badge badge-sm bg-success">{{payment_type}}</span></small>
                         {% endif %}  
                       </div>
                       
