@@ -914,7 +914,7 @@ function updateTaxAmount() {
   var gstAmountLabel = $('#tax-total');
 
   // Check if either GST or IGST is selected
-  if (igstCheckbox.prop('checked')) {
+  if (gstCheckbox.prop('checked')) {
       // Calculate GST amount
       GSTamount = (totalPayment * 18) / 100;
       gstAmountLabel.text('Rs.' + GSTamount.toFixed(2) + '/-');
