@@ -915,7 +915,7 @@ function updateTaxAmount() {
 
   // Check if either GST or IGST is selected
   if (gstCheckbox.prop('checked')) {
-      
+    IGSTamount = 0;
       // Calculate GST amount
       GSTamount = (totalPayment * 18) / 100;
       console.log('GSTamount:::'+GSTamount);
@@ -926,9 +926,10 @@ function updateTaxAmount() {
       GSTamount = 0;
   }
   if (igstCheckbox.prop('checked')) {
-    
+    GSTamount = 0;
     // Calculate GST amount
     IGSTamount = (totalPayment * 18) / 100;
+    console.log('IGSTamount::::'+IGSTamount);
     gstAmountLabel.text('Rs.' + IGSTamount.toFixed(2) + '/-');
     
 } else {
