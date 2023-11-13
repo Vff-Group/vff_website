@@ -31,7 +31,8 @@
                 <div class="card-header pb-0">
                   <div class="row">
                     <div class="col-6">
-                      <h6 class="mb-2">{{branch_name}}</h6>
+                      <h6 class="mb-2">VFF Group</h6>
+                      <h6 class="mb-2">Branch Name: {{branch_name}}</h6>
                       <div class="col">
                         <small>{{branch_address}}</small>
                       </div>
@@ -63,13 +64,20 @@
                       <div class="col">
                           <small>Delivery Date : {{delivery_date}}</small>
                       </div>
+                      <div class="col">
+                        {% if wants_delivery == '1' %}
+                        <small>Requested Delivery : Yes</small>
+                        {% else %}
+                        <small>Requested Delivery : No</small>
+                        {% endif %}
+                    </div>
 
                       <div class="col mt-1">
                         <p class="">Order : {{order_completed_status}}</p>
                         
                     </div>
                     <div class="col mt-1">
-                        <p class="">Order Status : {{order_status}}</p>
+                        <h6 class="mb-1">Order Status : {{order_status}}</h6>
                         
                     </div>
                    
