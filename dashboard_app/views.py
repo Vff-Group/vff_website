@@ -2476,6 +2476,27 @@ def generate_booking_id(request):
     
     return JsonResponse({'error_msg':error_msg})
 
+from geopy.geocoders import Nominatim
+
+def get_lat_lng_from_address(address):
+    geolocator = Nominatim(user_agent="your_app_name")  # Replace "your_app_name" with a unique name for your application
+    location = geolocator.geocode(address)
+
+    if location:
+        latitude, longitude = location.latitude, location.longitude
+        return latitude, longitude
+    else:
+        return None
+
+# Example usage:
+address = "New Vaibhav Nagar Belgaum"
+result = get_lat_lng_from_address(address)
+
+if result:
+    print(f"Latitude: {result[0]}, Longitude: {result[1]}")
+else:
+    print("Location not found.")
+
 #Place Order
 def place_new_order(request):
     
