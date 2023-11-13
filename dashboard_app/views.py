@@ -1670,8 +1670,221 @@ def get_todays_notification(request):
     
 #To Print Label Tags
 def print_label_tags(request,orderid):
+    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name,categoryid,subcategoryid,booking_type,dt,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,time,item_cost,item_quantity,type,section_type,laundry_ordertbl.booking_id,gstamount,igstamount,discount_price,wants_delivery from vff.laundry_active_orders_tbl,vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and laundry_active_orders_tbl.order_id=laundry_ordertbl.orderid and orderid='"+str(orderid)+"' order by orderid desc;"
     
-    return render(request,'invoice_pages/print_tag_labels.html')        
+    query_result = execute_raw_query(query)
+    print(f'query_result:::{query_result}')
+    
+        
+    data = []
+    sub_items = []    
+    if not query_result == 500:
+        for row in query_result:
+            depoch = row[25]#delivery epoch
+            oepoch = row[22]#order taken epoch
+            orderStatus = row[20]
+            print("Delivery Epoch:"+str(depoch))
+            print("Order Taken Epoch:"+str(oepoch))
+            deliveryEpoch = epochToDateTime(depoch)
+            orderTakenEpoch = epochToDateTime(oepoch)
+            if orderStatus != "Completed":
+                deliveryEpoch = "Not Delivered Yet"
+            sub_items.append(row[33])
+            data.append({
+                'consmrid': row[0],
+                'usrid': row[1],
+                'customer_name': row[2],
+                'mobile_no': row[3],
+                'houseno': row[4],
+                'address': row[5],
+                'city': row[6],
+                'pincode': row[7],
+                'landmark': row[8],
+                'profile_img': row[9],
+                'device_token': row[10],
+                'orderid': row[11],
+                'delivery_boyid': row[12],
+                'quantity':row[13],
+                'price': row[14],
+                'pickup_dt': row[15],
+                'delivery_dt': row[16],
+                'clat': row[17],
+                'clng': row[18],
+                'order_completed': row[19],
+                'order_status': orderStatus,
+                'additional_instruction': row[21],
+                'order_taken_epoch': orderTakenEpoch,
+                'cancel_reason': row[23],
+                'feedback': row[24],
+                'delivery_epoch': deliveryEpoch,
+                'delivery_boy_name': row[26],
+                'categoryid': row[27],
+                'subcategoryid': row[28],
+                'ordertype': row[29],
+                'dt': row[30],
+                'cat_img': row[31],
+                'cat_name': row[32],
+                'sub_cat_name': row[33],
+                'sub_cat_img': row[34],
+                'actual_cost': row[35],
+                'time': row[36],
+                'item_cost': row[37],
+                'item_quantity': row[38],
+                'type_of': row[39],
+                'section_type': row[40],
+                'booking_id': row[41],
+                'gstamount': row[42],
+                'igstamount': row[43],
+                'discount_price': row[44],
+                'wants_delivery': row[45],
+                
+                
+                
+               
+            })
+        
+        #Payment Details
+        payment_id = 'Payment Not Done'
+        query_payment = "select razor_pay_payment_id,status,time,dt,payment_type from vff.laundry_payment_tbl where order_id='"+str(orderid)+"'"
+        pay_result = execute_raw_query_fetch_one(query_payment)
+        if pay_result:   
+            payment_id = pay_result[0]
+            payment_type = pay_result[4]
+        
+        
+        #extra_cart_item like softner
+        extra_error = "No Extra Items added"
+        extra_query = "select extra_item_name,price from vff.laundry_cart_extra_items_tbl where order_id='"+str(orderid)+"'"
+        extra_query_result = execute_raw_query(extra_query)
+        extra_data = []    
+        if not extra_query_result == 500:
+            for row in extra_query_result:
+                extra_data.append({
+                    'extra_item_name':row[0],
+                    'extra_item_price':row[1]
+                })
+        #delivery charges
+        delivery_price = 0
+        total_laundry_cost = 0
+        range = 0
+        delivery_query = "select price,range  from vff.laundry_delivery_chargetbl"
+        dlvrych_result = execute_raw_query_fetch_one(delivery_query)
+        if dlvrych_result:   
+            delivery_price = dlvrych_result[0]
+            range = dlvrych_result[1]
+        
+        extra_item_sum = sum(extra['extra_item_price'] for extra in extra_data)
+
+        total_laundry_cost = sum(item['item_cost'] for item in data)
+        print(f'total_laundry_cost::{total_laundry_cost}')
+        print(f'extra_item_sum::{extra_item_sum}')
+        print(f'delivery_price::{delivery_price}')
+        
+        if total_laundry_cost != 0:
+            if total_laundry_cost < range:
+                total_laundry_cost += delivery_price
+                print(f'Updating TotalCost:{total_laundry_cost}')
+            else:
+                delivery_price = 0
+        
+        #request.session['branchid'] = branchid
+        branch_name = request.session.get('branch_name') 
+        branch_address = request.session.get('branch_address') 
+        branch_gstno = request.session.get('branch_gstno')
+        branch_igstno = request.session.get('branch_igstno')
+        branch_city = request.session.get('branch_city')
+        branch_state = request.session.get('branch_state')
+        branch_pincode = request.session.get('branch_pincode')
+        branch_contactno = request.session.get('branch_contactno')
+        branch_admin_name = request.session.get('branch_admin_name')
+        branch_admin_id = request.session.get('branch_admin_id')
+        branchid = request.session.get('branchid')
+        
+        
+        total_cost = total_laundry_cost + extra_item_sum
+        print(f'total_cost::{total_cost}')
+        totalGST = (total_cost * 18) / 100
+        print(f'totalGST::{totalGST}')
+        gst_amount = totalGST
+        sub_total = total_laundry_cost
+        
+        first_order_id = data[0]['orderid'] if data else ''
+        discount_amount = data[0]['discount_price'] if data else ''
+        booking_id = data[0]['booking_id'] if data else ''
+        mobile_no = data[0]['mobile_no'] if data else ''
+        customer_name = data[0]['customer_name'] if data else ''
+        address = data[0]['address'] if data else ''
+        houseno = data[0]['houseno'] if data else ''
+        city = data[0]['city'] if data else ''
+        pincode = data[0]['pincode'] if data else ''
+        landmark = data[0]['landmark'] if data else ''
+        order_status = data[0]['order_status'] if data else ''
+        order_completed = data[0]['order_completed'] if data else ''
+        order_date = data[0]['order_taken_epoch'] if data else ''
+        delivery_date = data[0]['delivery_epoch'] if data else ''
+        wants_delivery = data[0]['wants_delivery'] if data else ''
+        request.session['order_id'] = first_order_id
+        order_completed_status = ""
+        if order_completed == 0:
+            order_completed_status = "Accepted"
+        elif order_completed == 1:
+            order_completed_status = "Completed"
+        elif order_completed_status == 2:
+            order_completed_status = "Cancelled"
+            
+        print(f'OrderID::{first_order_id}')
+        print(f'sub_items:::{sub_items}')
+        receiptID = ''
+        receiptName = ''
+        branchID = ''
+        receiptDate = ''
+        #Insert Record in Receipt Table
+        receipt_query = "select receiptid,receipt_name,branch_id,date  from vff.laundry_receipt_invoice_tbl where order_id='"+str(first_order_id)+"'"
+        receipt_result = execute_raw_query_fetch_one(receipt_query)
+        if receipt_result:   
+            receiptID = receipt_result[0]
+            receiptName = receipt_result[1]
+            branchID = receipt_result[2]
+            receiptDate = receipt_result[3]
+            
+        else:
+            try:
+                with connection.cursor() as cursor:
+                    insert_receipt="insert into vff.laundry_receipt_invoice_tbl (order_id,receipt_name,receipt_id,branch_id) values ('"+str(first_order_id)+"','"+str(branch_admin_name)+"','"+str(branch_admin_id)+"','"+str(branchid)+"')  returning receiptid"
+                    cursor.execute(insert_receipt)
+                    print(f'Insert receipt record:{insert_receipt}')
+                    receipt_id = cursor.fetchone()[0]  
+                    receiptID = receipt_id
+                    receipt_query = "select receiptid,receipt_name,branch_id,date  from vff.laundry_receipt_invoice_tbl where order_id='"+str(first_order_id)+"'"
+                    receipt_result = execute_raw_query_fetch_one(receipt_query)
+                    if receipt_result:   
+                        receiptID = receipt_result[0]
+                        receiptName = receipt_result[1]
+                        branchID = receipt_result[2]
+                        receiptDate = receipt_result[3]
+        
+            except Exception as e:
+                print(e)
+                receipt_query = "select receiptid,receipt_name,branch_id,date  from vff.laundry_receipt_invoice_tbl where order_id='"+str(first_order_id)+"'"
+                receipt_result = execute_raw_query_fetch_one(receipt_query)
+                if receipt_result:   
+                    receiptID = receipt_result[0]
+                    receiptName = receipt_result[1]
+                    branchID = receipt_result[2]
+                    receiptDate = receipt_result[3]
+            
+            
+                
+            
+        
+        
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    context ={'query_result':data,'extra_data':extra_data,'payment_id':payment_id,'order_id':first_order_id,'customer_name':customer_name
+              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total,'receipt_id':receiptID,'branch_id':branchID,'receiptName':receiptName,'receiptDate':receiptDate,'wants_delivery':wants_delivery}
+    
+    return render(request,'invoice_pages/print_tag_labels.html',context)        
         
 #Thermal Printer size
 def generate_bill(request, orderid):
