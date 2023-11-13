@@ -928,7 +928,7 @@ function updateTaxAmount() {
     
   } else {
     gstAmountLabel.text('Rs.0/-');
-    if(igstCheckbox.prop('checked')){
+    if(igstCheckbox.prop('checked') === false){
       IGSTamount = 0;
     }else{
       GSTamount = 0;
