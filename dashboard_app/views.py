@@ -2476,19 +2476,7 @@ def generate_booking_id(request):
     
     return JsonResponse({'error_msg':error_msg})
 
-from geopy.geocoders import Nominatim
 
-
-def get_lat_lng_from_address(city, state, street):
-    address = f"{street}, {city}, {state}"
-    geolocator = Nominatim(user_agent="your_app_name")  # Replace "your_app_name" with a unique name for your application
-    location = geolocator.geocode(address)
-
-    if location:
-        latitude, longitude = location.latitude, location.longitude
-        return latitude, longitude
-    else:
-        return None
 
 
 
@@ -2980,18 +2968,7 @@ def daily_report(request):
     return render(request, 'reports/daily_report.html', context)
 
 def search_customer_to_assign_order(request,mobno):
-    # Example usage:
-    address = "New Vaibhav Nagar Belgaum"
-    city_name = "Belgaum"
-    state_name = "Karnataka"
-    street_name = "New Vaibhav Nagar 6th cross belgaum - 590010"
-
-    result = get_lat_lng_from_address(city_name, state_name, street_name)
-
-    if result:
-        print(f"Latitude: {result[0]}, Longitude: {result[1]}")
-    else:
-        print("Location not found.")
+    
     # mobno = request.GET.get('mobno', '')
     print(f'Mobile No::{mobno}')
     query = "select consmrid,customer_name,company_name,gstno,igstno,mobile_no from vff.usertbl,vff.laundry_customertbl where laundry_customertbl.usrid=usertbl.usrid and mobile_no ILIKE '"+str(mobno)+"%'"
