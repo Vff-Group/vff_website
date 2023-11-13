@@ -767,11 +767,21 @@ $('#modal-default1').on('hidden.bs.modal', function (e) {
     });
 
     });
+
+    // Add custom validation method
+$.validator.addMethod('dateLessThanToday', function (value, element) {
+  var selectedDate = new Date(value);
+  var currentDate = new Date();
+  return selectedDate >= currentDate;
+}, 'Please select a delivery date today or later');
 // Initialize form validation for your form
 $('#order-form').validate({
     rules: {
         // Define validation rules for your form fields
-        'dateofdelivery': 'required',
+        'dateofdelivery': {
+          required: 'Please select a delivery date',
+          dateLessThanToday: 'Delivery date must be today or later'
+      },
        // 'discount-value': 'required',
         'input-paymentmode': 'required',
         // Add rules for other form fields
@@ -804,7 +814,7 @@ $('#order-form').validate({
     submitHandler: function(form) {
         // When the form is valid, handle the form submission here
         event.preventDefault();
-
+      
         var selected_customer_id = document.getElementById("selected-customer-id");
     var customer_name_input = document.getElementById("customer-name");
     var date_of_delivery = document.getElementById('date-of-delivery').value.trim();
