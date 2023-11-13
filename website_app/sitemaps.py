@@ -10,7 +10,7 @@ class PostSitemap(Sitemap):
 class StaticViewSitemap(Sitemap):
     
     def items(self):
-        return ['index','aboutus','services','contactus','privacy']
+        return ['website_app:index','website_app:aboutus','website_app:services','website_app:contactus','website_app:privacy']
     
     def location(self,item):
         return reverse(item)
