@@ -21,7 +21,6 @@ from website_app.sitemaps import PostSitemap,StaticViewSitemap
 from django.contrib.sitemaps.views import sitemap
 
 sitemaps = {
-    'posts': PostSitemap,
     'static':StaticViewSitemap,
 }
 
@@ -33,6 +32,6 @@ urlpatterns = [
     # path('firebase-messaging-sw.js',showFirebaseJS,name="show_firebase_js"),
     path('admin_dashboard/',include('dashboard_app.urls',namespace='dashboard_app')),
     path("django-check-seo/", include("django_check_seo.urls")),
-    path('sitemaps.xml',sitemap ,{'sitemaps':sitemaps}),
+    path('sitemaps.xml',sitemap ,{'sitemaps':sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     
 ]
