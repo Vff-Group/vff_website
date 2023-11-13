@@ -17,7 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from dashboard_app.views import *
+from website_app.sitemaps import PostSitemap
+from django.contrib.sitemaps.views import sitemap
 
+sitemaps = {
+    'posts': PostSitemap,
+}
 
 
 urlpatterns = [
@@ -27,5 +32,6 @@ urlpatterns = [
     # path('firebase-messaging-sw.js',showFirebaseJS,name="show_firebase_js"),
     path('admin_dashboard/',include('dashboard_app.urls',namespace='dashboard_app')),
     path("django-check-seo/", include("django_check_seo.urls")),
+    path('sitemaps.xml',sitemap ,{'sitemaps':sitemaps}),
     
 ]
