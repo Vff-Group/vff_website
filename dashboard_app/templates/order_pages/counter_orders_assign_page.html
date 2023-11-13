@@ -773,7 +773,13 @@ $.validator.addMethod('dateLessThanToday', function (value, element) {
   var selectedDate = new Date(value);
   var currentDate = new Date();
   return selectedDate >= currentDate;
-}, 'Please select a delivery date today or later');
+}, function() {
+  // Show a toast message when validation fails
+  toastr.error('Delivery date must be today or later');
+  // Return false to indicate validation failure
+  return false;
+});
+
 // Initialize form validation for your form
 $('#order-form').validate({
     rules: {
