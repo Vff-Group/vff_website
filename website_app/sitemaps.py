@@ -15,8 +15,13 @@ class StaticViewSitemap(Sitemap):
     def items(self):
         return ['website_app:index','website_app:aboutus','website_app:services','website_app:contactus','website_app:privacy']
     
-    def location(self,item):
-        return reverse(item)
-    
+    def location(self, item):
+        return f'https://vff-group.com{reverse(item)}'
+
     def get_absolute_path(self, item):
-        return reverse(item)
+        return self.location(item)
+    # def location(self,item):
+    #     return reverse(item)
+    
+    # def get_absolute_path(self, item):
+    #     return reverse(item)
