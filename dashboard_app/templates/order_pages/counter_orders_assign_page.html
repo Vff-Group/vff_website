@@ -694,12 +694,9 @@
 
 <script>
 
-$("#wantsDelivery").change(function () {
-    // Update wants_delivery variable based on the checkbox state
-    var wantsDeliveryCheckbox = $('#wantsDelivery');
-    wantsDeliveryCheckbox.prop('checked')
-    wantsDelivery = wantsDeliveryCheckbox ? 1 : 0;
-    console.log('wantsDelivery::'+wantsDelivery);
+  $('#wantsDelivery').change(function() {
+    wantsDelivery = $(this).prop('checked') ? 1 : 0;
+    console.log('wantsDeliveryChecked:', wantsDelivery);
 });
     // When "Cancel" button in the main modal is clicked
 $('#modal-default1').on('show.bs.modal', function (e) {
@@ -853,7 +850,8 @@ $('#order-form').validate({
             // Add other form fields to the JSON object
         };
         console.log('dictMap::'+JSON.stringify(dictMap));
-        
+      
+        return;
         // Perform an AJAX POST request
         
         const csrfToken = getCSRFToken();
