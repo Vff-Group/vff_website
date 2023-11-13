@@ -2143,68 +2143,71 @@ if (subCategoryTable.find('tr').length > 0) {
     
     </script>
 <script>
-    $(document).ready(function() {
-        const inputField = $('#customer-name');
-        const add_customer_btn = $('#add-customer');
-        const suggestionContainer = $('#suggestion-container');
-        const suggestionList = $('#suggestion-list');
-        const selectedCustomerIdInput = $('#selected-customer-id');
-        const selectedMobileNoInput = $('#selected-mobile-no');
-        const selectedCustomerNameInput = $('#selected-customer-name');
-        //generate-booking-id,add_to_cart
-        const booking_id_btn = $('#generate-booking-id');
-        
+  $(document).ready(function() {
+    const inputField = $('#customer-name');
+    const add_customer_btn = $('#add-customer');
+    const suggestionContainer = $('#suggestion-container');
+    const suggestionList = $('#suggestion-list');
+    const selectedCustomerIdInput = $('#selected-customer-id');
+    const selectedMobileNoInput = $('#selected-mobile-no');
+    const selectedCustomerNameInput = $('#selected-customer-name');
+    //generate-booking-id,add_to_cart
+    const booking_id_btn = $('#generate-booking-id');
 
-    
-        inputField.on('input', function() {
-            const inputText = inputField.val();
-            suggestionContainer.show();
-            if (inputText.length > 0) {
-                $.get(`/admin_dashboard/search_customer_to_assign_order/${inputText}/`, function(data) {
-                    const suggestions = data.suggestions;
-                    suggestionList.empty();
-                    add_customer_btn.hide();
-                    if (suggestions.length > 0) {
-                        suggestions.forEach(function(suggestion) {
-                            const suggestionItem = $('<li class="nav-item">').text(suggestion.customer_name);
-                            suggestionItem.on('click', function() {
-                                // When a suggestion is clicked, set the value in the input field
-                                inputField.val(suggestion.customer_name);
-    
-                                // Set the selected customer details in hidden inputs
-                                selectedCustomerIdInput.val(suggestion.consmrid);
-                                selectedMobileNoInput.val(suggestion.mobile_no);
-                                selectedCustomerNameInput.val(suggestion.customer_name);
-                                //show Generate Booking ID Button
-                                booking_id_btn.show();
-                                // Hide the suggestions list (ul)
-                                suggestionContainer.hide();
-                                add_customer_btn.show();
-                                // Hide the popover
-                                inputField.popover('hide');
-                            });
-                            suggestionList.append(suggestionItem);
-                        });
-                    }
-                });
-            } else {
+    inputField.on('input', function() {
+        const inputText = inputField.val();
+        suggestionContainer.show();
+        if (inputText.length > 0) {
+            $.get(`/admin_dashboard/search_customer_to_assign_order/${inputText}/`, function(data) {
+                const suggestions = data.suggestions;
                 suggestionList.empty();
-            }
-        });
-    
-        inputField.focus(function() {
-            // Display the suggestions container when the input field is focused
-            suggestionContainer.show();
-            add_customer_btn.hide();
-        });
-    
-        inputField.focusout(function() {
-            // Hide the popover when the input field loses focus
-            inputField.popover('hide');
-            add_customer_btn.show();
-        });
+                add_customer_btn.hide();
+
+                if (suggestions.length > 0) {
+                    suggestions.forEach(function(suggestion) {
+                        const suggestionItem = $('<li class="nav-item">').text(suggestion.customer_name);
+                        suggestionItem.on('click', function() {
+                            // When a suggestion is clicked, set the value in the input field
+                            inputField.val(suggestion.customer_name);
+
+                            // Set the selected customer details in hidden inputs
+                            selectedCustomerIdInput.val(suggestion.consmrid);
+                            selectedMobileNoInput.val(suggestion.mobile_no);
+                            selectedCustomerNameInput.val(suggestion.customer_name);
+                            //show Generate Booking ID Button
+                            booking_id_btn.show();
+                            // Hide the suggestions list (ul)
+                            suggestionContainer.hide();
+                            add_customer_btn.show();
+                            // Hide the popover
+                            inputField.popover('hide');
+                        });
+                        suggestionList.append(suggestionItem);
+                    });
+                } else {
+                    // No customer found message
+                    const noCustomerItem = $('<li class="nav-item text-muted">').text('No customer found');
+                    suggestionList.append(noCustomerItem);
+                }
+            });
+        } else {
+            suggestionList.empty();
+        }
     });
-    
+
+    inputField.focus(function() {
+        // Display the suggestions container when the input field is focused
+        suggestionContainer.show();
+        add_customer_btn.hide();
+    });
+
+    inputField.focusout(function() {
+        // Hide the popover when the input field loses focus
+        inputField.popover('hide');
+        add_customer_btn.show();
+    });
+});
+
 </script>
 <!-- <script>
   $(document).ready(function() {
