@@ -914,28 +914,28 @@ function updateTaxAmount() {
   var gstAmountLabel = $('#tax-total');
 
   // Check if either GST or IGST is selected
-  if (gstCheckbox.prop('checked')) {
+  if (gstCheckbox.prop('checked') && IGSTamount === 0) {
     IGSTamount = 0;
       // Calculate GST amount
       GSTamount = (totalPayment * 18) / 100;
-      console.log('GSTamount:::'+GSTamount);
       gstAmountLabel.text('Rs.' + GSTamount.toFixed(2) + '/-');
+      console.log('GSTamount:::'+GSTamount);
       
   } else {
       gstAmountLabel.text('Rs.0/-');
       GSTamount = 0;
   }
-  if (igstCheckbox.prop('checked')) {
+  
+  if (igstCheckbox.prop('checked') && GSTamount === 0) {
     GSTamount = 0;
     // Calculate GST amount
     IGSTamount = (totalPayment * 18) / 100;
-    console.log('IGSTamount::::'+IGSTamount);
     gstAmountLabel.text('Rs.' + IGSTamount.toFixed(2) + '/-');
-    
-} else {
+    console.log('IGSTamount::::'+IGSTamount);
+  } else {
     gstAmountLabel.text('Rs.0/-');
     IGSTamount = 0;
-}
+  }
 }
 
 // Event listener for the payment mode selection
