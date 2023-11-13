@@ -2028,6 +2028,7 @@ def generate_bill(request, orderid):
         
         first_order_id = data[0]['orderid'] if data else ''
         discount_amount = data[0]['discount_price'] if data else ''
+        delivery_dt = data[0]['delivery_dt'] if data else ''
         booking_id = data[0]['booking_id'] if data else ''
         mobile_no = data[0]['mobile_no'] if data else ''
         customer_name = data[0]['customer_name'] if data else ''
@@ -2100,7 +2101,7 @@ def generate_bill(request, orderid):
         error_msg = 'Something Went Wrong'
     
     context ={'query_result':data,'extra_data':extra_data,'payment_id':payment_id,'order_id':first_order_id,'customer_name':customer_name
-              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total,'receipt_id':receiptID,'branch_id':branchID,'receiptName':receiptName,'receiptDate':receiptDate,'wants_delivery':wants_delivery}
+              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total,'receipt_id':receiptID,'branch_id':branchID,'receiptName':receiptName,'receiptDate':receiptDate,'wants_delivery':wants_delivery,'delivery_dt':delivery_dt}
     
     # return HttpResponse(formatted_bill_content)
     return render(request,'invoice_pages/receipt_bill.html',context)
