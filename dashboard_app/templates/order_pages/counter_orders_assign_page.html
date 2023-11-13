@@ -913,7 +913,18 @@ function updateTaxAmount() {
   var igstCheckbox = $('#includeIGST');
   var gstAmountLabel = $('#tax-total');
 
-  // Check if either GST or IGST is selected
+  // Check if either GST or IGST is selected 
+  if (igstCheckbox.prop('checked') && GSTamount === 0) {
+    GSTamount = 0;
+    // Calculate GST amount
+    IGSTamount = (totalPayment * 18) / 100;
+    gstAmountLabel.text('Rs.' + IGSTamount.toFixed(2) + '/-');
+    console.log('IGSTamount::::'+IGSTamount);
+  } else {
+    gstAmountLabel.text('Rs.0/-');
+    IGSTamount = 0;
+  }
+
   if (gstCheckbox.prop('checked') && IGSTamount === 0) {
     IGSTamount = 0;
       // Calculate GST amount
@@ -924,17 +935,6 @@ function updateTaxAmount() {
   } else {
       gstAmountLabel.text('Rs.0/-');
       GSTamount = 0;
-  }
-  
-  if (igstCheckbox.prop('checked') && GSTamount === 0) {
-    GSTamount = 0;
-    // Calculate GST amount
-    IGSTamount = (totalPayment * 18) / 100;
-    gstAmountLabel.text('Rs.' + IGSTamount.toFixed(2) + '/-');
-    console.log('IGSTamount::::'+IGSTamount);
-  } else {
-    gstAmountLabel.text('Rs.0/-');
-    IGSTamount = 0;
   }
 }
 
