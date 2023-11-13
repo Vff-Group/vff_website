@@ -134,6 +134,8 @@
                         <span class="badge badge-sm bg-warning">{{row.order_status}}</span>
                         {% elif row.order_status == "Payment Done" %}
                         <span class="badge badge-sm bg-info">{{row.order_status}}</span>
+                        {% elif row.order_status == "Ready for Delivery" %}
+                        <span class="badge badge-sm bg-gradient-primary">{{row.order_status}}</span>
                         {% elif row.order_status == "Out for Delivery" %}
                         <span class="badge badge-sm bg-info">{{row.order_status}}</span>
                         {% else %}
