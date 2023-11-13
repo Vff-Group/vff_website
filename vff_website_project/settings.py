@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django_check_seo',
+    'cms',
+    'menus',
+    'treebeard',
     'website_app',
     'dashboard_app',
 ]
