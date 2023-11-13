@@ -912,30 +912,31 @@ function updateTaxAmount() {
   var gstCheckbox = $('#includeGST');
   var igstCheckbox = $('#includeIGST');
   var gstAmountLabel = $('#tax-total');
-
+  var gstTotal = 0;
   // Check if either GST or IGST is selected 
-  if (igstCheckbox.prop('checked') && GSTamount === 0) {
-    GSTamount = 0;
+  if (gstCheckbox.prop('checked') || igstCheckbox.prop('checked')) {
+    
     // Calculate GST amount
-    IGSTamount = (totalPayment * 18) / 100;
-    gstAmountLabel.text('Rs.' + IGSTamount.toFixed(2) + '/-');
-    console.log('IGSTamount::::'+IGSTamount);
+    if(igstCheckbox.prop('checked')){
+      IGSTamount = (totalPayment * 18) / 100;  
+      gstTotal = IGSTamount;
+    }else{
+      GSTamount = (totalPayment * 18) / 100;
+      gstTotal = GSTamount;
+    }
+    gstAmountLabel.text('Rs.' + gstTotal.toFixed(2) + '/-');
+    
   } else {
     gstAmountLabel.text('Rs.0/-');
-    IGSTamount = 0;
+    if(igstCheckbox.prop('checked')){
+      IGSTamount = 0;
+    }else{
+      GSTamount = 0;
+    }
+
   }
 
-  if (gstCheckbox.prop('checked') && IGSTamount === 0) {
-    IGSTamount = 0;
-      // Calculate GST amount
-      GSTamount = (totalPayment * 18) / 100;
-      gstAmountLabel.text('Rs.' + GSTamount.toFixed(2) + '/-');
-      console.log('GSTamount:::'+GSTamount);
-      
-  } else {
-      gstAmountLabel.text('Rs.0/-');
-      GSTamount = 0;
-  }
+  
 }
 
 // Event listener for the payment mode selection
