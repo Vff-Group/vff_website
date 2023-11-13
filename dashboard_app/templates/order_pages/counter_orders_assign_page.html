@@ -699,6 +699,7 @@ $("#wantsDelivery").change(function () {
     var wantsDeliveryCheckbox = $('#wantsDelivery');
     wantsDeliveryCheckbox.prop('checked')
     wantsDelivery = wantsDeliveryCheckbox ? 1 : 0;
+    console.log('wantsDelivery::'+wantsDelivery);
 });
     // When "Cancel" button in the main modal is clicked
 $('#modal-default1').on('show.bs.modal', function (e) {
