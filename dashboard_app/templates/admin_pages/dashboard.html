@@ -291,7 +291,7 @@
               </div>
               <h6 class="ms-2 mt-4 mb-0">Active Delivery</h6>
               <p class="text-sm ms-2">
-                (<span class="font-weight-bolder">+3%</span>) than last month
+                (<span class="font-weight-bolder" id="total_last_month">+3%</span>) than last month
               </p>
               <!-- <div class="container border-radius-lg">
                 <div class="row justify-content-center">
@@ -510,12 +510,15 @@ new Chart(ctx, {
             }
 
             label += tooltipItem.yLabel + ' (<span class="font-weight-bolder">+' + percentageIncreases[tooltipItem.index].toFixed(2) + '%</span>) than last month';
-            console.log('label::'+label);
+            
+            // Update HTML content with previous month count and percentage increase
+            document.getElementById("total_last_month").innerHTML = '+' + previousCounts[tooltipItem.index] + '%';
             return label;
           },
         },
         },
-    },
+    
+      },
   },
 });
 }
