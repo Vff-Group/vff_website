@@ -47,11 +47,11 @@
         {% if row.type_of == "Kg" %}
           {{row.cat_name}}
           <p class="sub-item">{{sub_items}}</p>
-          <p>[ {{row.item_quantity}} {{row.type_of}} ]</p>
+          <p  class="sub-item">[ {{row.item_quantity}} {{row.type_of}} ]</p>
           {% else %}
           {{row.cat_name}}
           <p class="sub-item">{{row.sub_cat_name}}</p>
-          [ {{row.section_type}} /{{row.item_quantity}} {{row.type_of}}]
+          <p  class="sub-item">[ {{row.section_type}} /{{row.item_quantity}} {{row.type_of}}]</p>
           {% endif %}
         
     </div>
