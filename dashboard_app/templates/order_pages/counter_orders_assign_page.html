@@ -920,7 +920,7 @@ function updateTaxAmount() {
       GSTamount = (totalPayment * 18) / 100;
       console.log('GSTamount:::'+GSTamount);
       gstAmountLabel.text('Rs.' + GSTamount.toFixed(2) + '/-');
-      igstCheckbox.prop('checked', false);
+      
   } else {
       gstAmountLabel.text('Rs.0/-');
       GSTamount = 0;
@@ -930,7 +930,7 @@ function updateTaxAmount() {
     // Calculate GST amount
     IGSTamount = (totalPayment * 18) / 100;
     gstAmountLabel.text('Rs.' + IGSTamount.toFixed(2) + '/-');
-    gstCheckbox.prop('checked', false);
+    
 } else {
     gstAmountLabel.text('Rs.0/-');
     IGSTamount = 0;
