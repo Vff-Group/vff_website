@@ -486,6 +486,14 @@
                           </div>
                         </div>
                         <hr />
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="wantsDelivery" name="wantsDelivery">
+                                <label class="form-check-label" for="wantsDelivery">Wants Delivery</label>
+                            </div>
+                        </div>
+                        </div>
                         <div class="container" id="gst-container">
                           <div class="row">
                             <div class="col-lg-5">
@@ -495,7 +503,7 @@
                               </div>
                             </div>
                         
-                            <div class="col-lg-1 text-center">
+                            <div class="col-lg-2 text-center">
                               <span class="or-label">OR</span>
                             </div>
                         
@@ -685,7 +693,13 @@
 
 <script>
 
- 
+  $(document).ready(function () {
+    // Handle wantsDelivery checkbox change
+    $("#wantsDelivery").change(function () {
+      // Update wants_delivery variable based on the checkbox state
+      wantsDelivery = $(this).is(":checked") ? 1 : 0;
+  });
+});
     // When "Cancel" button in the main modal is clicked
 $('#modal-default1').on('show.bs.modal', function (e) {
     var $modal = $(this);
@@ -731,6 +745,7 @@ $('#modal-default1').on('hidden.bs.modal', function (e) {
                 var delivery_range = 0;
                 var delivery_charges = 0;
                 var totalPayment = 0;
+                var wantsDelivery = 0;
                 var payment_id = "";
                 var paymentType = "";
 
@@ -831,6 +846,7 @@ $('#order-form').validate({
             'extra_items': extraItems,
             'additional_instruction': add_information,
             'dateofdelivery': date_of_delivery,
+            'wantsDelivery':wantsDelivery
             // Add other form fields to the JSON object
         };
         console.log('dictMap::'+JSON.stringify(dictMap));

@@ -1093,7 +1093,7 @@ def view_order_detail(request,orderid):
     #     usrname = result[0] 
     # else:
     #     alert_delivery_boy = "No Delivery Boy is Free To Recieve Orders"
-    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name,categoryid,subcategoryid,booking_type,dt,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,time,item_cost,item_quantity,type,section_type,laundry_ordertbl.booking_id,gstamount,igstamount,discount_price,order_taken_on,delivery_price from vff.laundry_active_orders_tbl,vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and laundry_active_orders_tbl.order_id=laundry_ordertbl.orderid and orderid='"+str(orderid)+"' order by orderid desc;"
+    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name,categoryid,subcategoryid,booking_type,dt,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,time,item_cost,item_quantity,type,section_type,laundry_ordertbl.booking_id,gstamount,igstamount,discount_price,order_taken_on,delivery_price,wants_delivery from vff.laundry_active_orders_tbl,vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and laundry_active_orders_tbl.order_id=laundry_ordertbl.orderid and orderid='"+str(orderid)+"' order by orderid desc;"
     
     query_result = execute_raw_query(query)
     print(f'query_result:::{query_result}')
@@ -1161,6 +1161,7 @@ def view_order_detail(request,orderid):
                 'discount_price': row[44],
                 'order_taken_on': row[45],
                 'delivery_price_taken': row[46],
+                'wants_delivery': row[47],
                 
                 
                
@@ -1245,6 +1246,7 @@ def view_order_detail(request,orderid):
         order_date = data[0]['order_taken_epoch'] if data else ''
         delivery_date = data[0]['delivery_epoch'] if data else ''
         additional_instruction = data[0]['additional_instruction'] if data else ''
+        wants_delivery = data[0]['wants_delivery'] if data else ''
         request.session['order_id'] = first_order_id
         order_completed_status = ""
         if order_completed == 0:
@@ -1261,7 +1263,7 @@ def view_order_detail(request,orderid):
         error_msg = 'Something Went Wrong'
     
     context ={'query_result':data,'extra_data':extra_data,'error_msg':error_msg,'payment_id':payment_id,'order_id':first_order_id,'customer_name':customer_name
-              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range,'alert_delivery_boy':alert_delivery_boy,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total,'additional_instruction':additional_instruction,'order_taken_on':order_taken_on,'delivery_price_taken':delivery_price_taken}
+              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range,'alert_delivery_boy':alert_delivery_boy,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total,'additional_instruction':additional_instruction,'order_taken_on':order_taken_on,'delivery_price_taken':delivery_price_taken,'wants_delivery':wants_delivery}
     
     return render(request,'order_pages/order_details.html',context)
 
@@ -1408,6 +1410,7 @@ def update_order_status(request,order_id,booking_id):
         order_status = request.POST.get('order-status')
         order_taken_on = request.POST.get('order_taken_on')
         delivery_price = request.POST.get('delivery_price')
+        wants_delivery = request.POST.get('wants_delivery')
         # order_id = request.session.get('order_id')
         userid = request.session.get('userid')
         order_completed  = "0"
@@ -1422,7 +1425,7 @@ def update_order_status(request,order_id,booking_id):
         print(f'Current_delivery_price::{delivery_price}')
         
         #To Check if Order is Already Assigned to Someone or what
-        if (order_status == "Out for Delivery" and order_taken_on == 'App') or (delivery_price != '0.0' and order_taken_on == 'OnCounter' and order_status == "Out for Delivery"):
+        if (order_status == "Out for Delivery" and order_taken_on == 'App') or (wants_delivery == '1' and order_taken_on == 'OnCounter' and order_status == "Out for Delivery"):
             print('Entering Here Now')
             query_check = "select delivery_boy_id,orderid from vff.laundry_order_assignmenttbl,vff.laundry_ordertbl where laundry_ordertbl.orderid=laundry_order_assignmenttbl.order_id and laundry_ordertbl.booking_id=laundry_order_assignmenttbl.booking_id and type_of_order='Drop' and laundry_order_assignmenttbl.order_id='"+str(order_id)+"'"
             cresult = execute_raw_query_fetch_one(query_check)
@@ -1446,10 +1449,10 @@ def update_order_status(request,order_id,booking_id):
 
                 except Exception as e:
                     print(f"Error loading data: {e}")
-        condition = delivery_price != '0.0' and order_taken_on == "OnCounter" and order_status == "Completed"
+        condition = wants_delivery == '1' and order_taken_on == "OnCounter" and order_status == "Completed"
         print(f'Condition::{condition}')            
         #if ((order_status == "Out for Delivery" and order_taken_on == 'App') or (delivery_price != '0.0' and order_taken_on == 'OnCounter' and order_status == "Out for Delivery")) or ((order_status == "Completed" and order_taken_on == 'App') or condition) or order_status == "Processing" or order_status == "Pick Up Done" or order_status== "Reached Store":
-        if ((order_status == "Out for Delivery" and order_taken_on == 'App') or (delivery_price != '0.0' and order_taken_on == 'OnCounter' and order_status == "Out for Delivery")):   
+        if ((order_status == "Out for Delivery" and order_taken_on == 'App') or (wants_delivery == '1' and order_taken_on == 'OnCounter' and order_status == "Out for Delivery")):   
             print('Entering Here Now to send notification to delivery boy')
             #To Send for Delivery Boy
             if order_status !="Processing":
@@ -2431,6 +2434,7 @@ def place_new_order(request):
         extra_item_dict = jdict['extra_items']
         additional_instruction = jdict['additional_instruction']
         dateofdelivery = jdict['dateofdelivery']
+        wantsDelivery = jdict['wantsDelivery']
 
         branch_id = request.session.get('branchid')
         print(f'total_price::{total_price}')
@@ -2438,7 +2442,7 @@ def place_new_order(request):
             with connection.cursor() as cursor:
                 #Insert Record into Order Table First to Generate Order ID
                 #Adding delivery_boyid = 1 for counter orders only
-                query_order = "insert into vff.laundry_ordertbl(customerid,quantity,price,order_status,additional_instruction,booking_id,delivery_price,discount_price,delivery,delivery_boyid,gstamount,branch_id,order_taken_on) values ('"+str(customer_id)+"','"+str(total_items)+"','"+str(total_price)+"','"+str(order_status)+"','"+str(additional_instruction)+"','"+str(booking_id)+"','"+str(delivery_price)+"','"+str(discount_price)+"','"+str(dateofdelivery)+"','1','"+str(gstamount)+"','"+str(branch_id)+"','OnCounter') returning orderid"
+                query_order = "insert into vff.laundry_ordertbl(customerid,quantity,price,order_status,additional_instruction,booking_id,delivery_price,discount_price,delivery,delivery_boyid,gstamount,branch_id,order_taken_on,wants_delivery) values ('"+str(customer_id)+"','"+str(total_items)+"','"+str(total_price)+"','"+str(order_status)+"','"+str(additional_instruction)+"','"+str(booking_id)+"','"+str(delivery_price)+"','"+str(discount_price)+"','"+str(dateofdelivery)+"','1','"+str(gstamount)+"','"+str(branch_id)+"','OnCounter','"+str(wantsDelivery)+"') returning orderid"
                 cursor.execute(query_order)
                 order_id = cursor.fetchone()[0]
                 print(f'Retuning BOOKING ID-------->{order_id}')

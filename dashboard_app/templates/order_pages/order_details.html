@@ -319,8 +319,9 @@
                                 <label class="form-control-label" for="input-order-status">Change Order Status</label>
                                 <input type="hidden" name="order_taken_on" value="{{order_taken_on}}">
                                 <input type="hidden" name="delivery_price" value="{{delivery_price_taken}}">
+                                <input type="hidden" name="wants_delivery" value="{{wants_delivery}}">
                                 <select class="form-control form-control-alternative" id="input-order-status" name="order-status">
-                                  {% if delivery_price_taken != 0.0 and order_taken_on == 'OnCounter'  %}
+                                  {% if (wants_delivery == '1' or wants_delivery == 1) and order_taken_on == 'OnCounter'  %}
 
                                   
                                   <option value="Processing" {% if order_status == 'Processing' %}selected{% endif %}>Processing</option>
@@ -330,7 +331,7 @@
                                   
                                   {% elif order_taken_on == 'OnCounter' %}
                                   <option value="Processing" {% if order_status == 'Processing' %}selected{% endif %}>Processing</option>
-                                  <option value="Ready for Delivery" {% if order_status == 'Ready for Delivery' %}selected{% endif %}>Ready for Delivery</option>
+                                  
                                   <option value="Completed" {% if order_status == 'Completed' %}selected{% endif %}>Completed</option>
                                   
                                   {% else %}
