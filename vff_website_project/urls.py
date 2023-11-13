@@ -17,11 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from dashboard_app.views import *
-from website_app.sitemaps import PostSitemap
+from website_app.sitemaps import PostSitemap,StaticViewSitemap
 from django.contrib.sitemaps.views import sitemap
 
 sitemaps = {
     'posts': PostSitemap,
+    'static':StaticViewSitemap,
 }
 
 
