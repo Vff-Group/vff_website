@@ -733,7 +733,8 @@ $('#modal-default1').on('hidden.bs.modal', function (e) {
         var extraItems = [];
                 var grossTotal = 0; // Total amount
                 var grossQuantity = 0; // Total Quantity
-                var GSTamount = 0; // Total Quantity
+                var GSTamount = 0; // Total GST
+                var IGSTamount = 0; // Total IGST
                 var addOnsTotal = 0;
                 var booking_id = -1;
                 var deliveryTotal = 0;
@@ -840,6 +841,7 @@ $('#order-form').validate({
             'total_price': totalPayment,
             'total_items': grossQuantity,
             'gstamount': GSTamount,
+            'igstamount': IGSTamount,
             'razor_pay_id': payment_id,
             'payment_status': "Success",
             'payment_type': paymentType,
@@ -912,7 +914,7 @@ function updateTaxAmount() {
   var gstAmountLabel = $('#tax-total');
 
   // Check if either GST or IGST is selected
-  if (gstCheckbox.prop('checked') || igstCheckbox.prop('checked')) {
+  if (igstCheckbox.prop('checked')) {
       // Calculate GST amount
       GSTamount = (totalPayment * 18) / 100;
       gstAmountLabel.text('Rs.' + GSTamount.toFixed(2) + '/-');
@@ -920,6 +922,14 @@ function updateTaxAmount() {
       gstAmountLabel.text('Rs.0/-');
       GSTamount = 0;
   }
+  if (igstCheckbox.prop('checked')) {
+    // Calculate GST amount
+    IGSTamount = (totalPayment * 18) / 100;
+    gstAmountLabel.text('Rs.' + IGSTamount.toFixed(2) + '/-');
+} else {
+    gstAmountLabel.text('Rs.0/-');
+    IGSTamount = 0;
+}
 }
 
 // Event listener for the payment mode selection
