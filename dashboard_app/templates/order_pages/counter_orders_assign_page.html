@@ -775,7 +775,7 @@ $.validator.addMethod('dateLessThanToday', function (value, element) {
   return selectedDate >= currentDate;
 }, function() {
   // Show a toast message when validation fails
-  toastr.error('Delivery date must be today or later');
+  showToast('Alert','Please Select Estimated Date for Today or Future Date')
   // Return false to indicate validation failure
   return false;
 });
