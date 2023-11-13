@@ -2925,6 +2925,8 @@ def add_expense_new_item(request):
         dateofexpense = request.POST.get('dateofexpense')
         exp_category = request.POST.get('exp_category')
         exp_amount = request.POST.get('exp_amount')
+        invoice_no = request.POST.get('invoice_no')
+        company_name = request.POST.get('company_name')
         payment_mode = request.POST.get('payment_mode')
         tax_included = request.POST.get("taxIncluded")
         tax_percentage = request.POST.get("taxPercentage")
@@ -2932,6 +2934,10 @@ def add_expense_new_item(request):
         exp_catid = request.POST.get('selectedCategoryId')
         print(f'exp_catid:::{exp_catid}')
         tax = 0
+        if not company_name:
+            company_name = 'NA'
+        if not invoice_no:
+            invoice_no = 'NA'
         if not notes:
             notes='NA'
         if not tax_percentage:
@@ -2946,7 +2952,7 @@ def add_expense_new_item(request):
         try:
             with connection.cursor() as cursor:
                 
-                insert_query = "insert into vff.laundry_expensestbl (exp_catgry_name,exp_catid,exp_amount,payment_mode,tax_included,tax_percentage,extra_note,date,branch_id) values ('"+str(exp_category)+"','"+str(exp_catid)+"','"+str(exp_amount)+"','"+str(payment_mode)+"','"+str(tax)+"','"+str(tax_percentage)+"','"+str(notes)+"','"+str(dateofexpense)+"','"+str(branch_id)+"')"
+                insert_query = "insert into vff.laundry_expensestbl (exp_catgry_name,exp_catid,exp_amount,payment_mode,tax_included,tax_percentage,extra_note,date,branch_id,invoice_no,company_name) values ('"+str(exp_category)+"','"+str(exp_catid)+"','"+str(exp_amount)+"','"+str(payment_mode)+"','"+str(tax)+"','"+str(tax_percentage)+"','"+str(notes)+"','"+str(dateofexpense)+"','"+str(branch_id)+"','"+str(invoice_no)+"','"+str(company_name)+"')"
                 cursor.execute(insert_query)
 
                 connection.commit()
