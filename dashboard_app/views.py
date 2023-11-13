@@ -2818,8 +2818,8 @@ def all_expenses(request):
     if branch_id :
         filter = " where branch_id='"+str(branch_id)+"'"
         
-    query = "select expensesid,exp_catgry_name,exp_catid,exp_amount,payment_mode,tax_included,tax_percentage,extra_note,epoch_time,date from vff.laundry_expensestbl  where branch_id='"+str(branch_id)+"' and date>='"+str(start_date)+"' and date<='"+str(end_date)+"' order by expensesid desc"
-    
+    #query = "select expensesid,exp_catgry_name,exp_catid,exp_amount,payment_mode,tax_included,tax_percentage,extra_note,epoch_time,date from vff.laundry_expensestbl  where branch_id='"+str(branch_id)+"' and date>='"+str(start_date)+"' and date<='"+str(end_date)+"' order by expensesid desc"
+    query = "select expensesid,exp_catgry_name,exp_catid,exp_amount,payment_mode,tax_included,tax_percentage,extra_note,epoch_time,date from vff.laundry_expensestbl  where branch_id='"+str(branch_id)+"'  order by expensesid desc"
     query_result = execute_raw_query(query)
     
     
