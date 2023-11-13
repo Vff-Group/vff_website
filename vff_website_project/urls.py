@@ -19,6 +19,7 @@ from django.urls import path,include
 from dashboard_app.views import *
 from website_app.sitemaps import PostSitemap,StaticViewSitemap
 from django.contrib.sitemaps.views import sitemap
+from website_app.views import custom_404_view
 
 sitemaps = {
     'static':StaticViewSitemap,
@@ -35,3 +36,5 @@ urlpatterns = [
     path('sitemaps.xml',sitemap ,{'sitemaps':sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     
 ]
+
+handler404 = custom_404_view

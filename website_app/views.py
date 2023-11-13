@@ -21,4 +21,5 @@ def privacy(request):
     current_url = request.get_full_path()
     return render(request,"privacy.html",{'current_url': current_url})
 
-
+def custom_404_view(request, exception=None):
+    return render(request, '404.html', status=404)
