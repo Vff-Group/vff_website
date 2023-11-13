@@ -2335,6 +2335,40 @@ def get_delivery_chart_details(request):
 
     return JsonResponse({'data': data})
 
+#Load  Sales CHart Details
+def get_sales_chart_details(request):
+    #Load Cart Items
+    branch_id = request.session.get('branchid')
+    
+    query = "select to_char(pickup_dt, 'YYYY-MM') AS month,COUNT(*) AS completed_order_count FROM vff.laundry_ordertbl WHERE order_completed = '1' AND branch_id = '"+str(branch_id)+"' and order_taken_on='App'  GROUP BY month ORDER BY month"
+    query_result = execute_raw_query(query)
+    
+    data = []    
+    
+    query2 = "select to_char(pickup_dt, 'YYYY-MM') AS month,COUNT(*) AS completed_order_count FROM vff.laundry_ordertbl WHERE order_completed = '1' AND branch_id = '"+str(branch_id)+"' and order_taken_on='OnCounter'  GROUP BY month ORDER BY month"
+    query_result2 = execute_raw_query(query2)
+    
+    if not query_result == 500 and not query_result2 == 500:
+        for row in query_result:
+            data.append({
+                'order_taken_on': 'App',
+                'month': row[0],
+                'completed_order_count': row[1],
+            })
+
+        for row in query_result2:
+            data.append({
+                'order_taken_on': 'OnCounter',
+                'month': row[0],
+                'completed_order_count': row[1],
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+        return JsonResponse({'error': error_msg})
+
+    return JsonResponse({'data': data})
+
+
 #Load extra add ons items
 def load_extra_items(request):
     #Load Cart Items

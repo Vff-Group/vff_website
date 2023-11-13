@@ -95,6 +95,7 @@ urlpatterns = [
     
     #Load Charts Details 
     path('get_delivery_chart_details/',views.get_delivery_chart_details,name='get_delivery_chart_details'),
+    path('get_sales_chart_details/',views.get_sales_chart_details,name='get_sales_chart_details'),
 ]
 
 if settings.DEBUG:
