@@ -26,5 +26,6 @@ urlpatterns = [
     # path('send/' , send),
     # path('firebase-messaging-sw.js',showFirebaseJS,name="show_firebase_js"),
     path('admin_dashboard/',include('dashboard_app.urls',namespace='dashboard_app')),
+    path("django-check-seo/", include("django_check_seo.urls")),
     
 ]
