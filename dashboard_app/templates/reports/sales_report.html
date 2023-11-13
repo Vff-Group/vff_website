@@ -227,8 +227,8 @@ function getCSRFToken() {
 
                     // Update totals in the footer
                     $('#total-orders').text('Total Order: ' + totalOrders);
-                    $('#total-sales').text('Total Sales: Rs.' + totalSales);
-                    $('#total-tax-amount').text('Total Tax Amount: Rs.' + totalTaxAmount);
+                    $('#total-sales').text('Total Sales: Rs.' + totalSales.toFixed(2));
+                    $('#total-tax-amount').text('Total Tax Amount: Rs.' + totalTaxAmount.toFixed(2));
                 },
                 error: function (error) {
                     console.error('Error fetching data:', error);
