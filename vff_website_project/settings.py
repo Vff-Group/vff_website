@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'website_app',
     'dashboard_app',
 ]
-
+SITE_ID = 8296
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
