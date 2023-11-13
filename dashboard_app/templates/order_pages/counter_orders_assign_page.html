@@ -2120,7 +2120,7 @@ if (subCategoryTable.find('tr').length > 0) {
     <script>
       $(document).ready(function () {
         // Initialize Select2
-        $(".js-data-example-ajax").select2({
+        $("#customer-name").select2({
             width: "100%",
             ajax: {
                 url: function (params) {
@@ -2145,7 +2145,7 @@ if (subCategoryTable.find('tr').length > 0) {
         });
     
         // Additional logic for selecting a suggestion
-        $(".js-data-example-ajax").on('select2:select', function (e) {
+        $("#customer-name").on('select2:select', function (e) {
             const suggestion = e.params.data;
             // Set the selected customer details in hidden inputs
             $('#selected-customer-id').val(suggestion.consmrid);
