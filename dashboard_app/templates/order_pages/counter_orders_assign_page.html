@@ -918,6 +918,7 @@ function updateTaxAmount() {
       
       // Calculate GST amount
       GSTamount = (totalPayment * 18) / 100;
+      console.log('GSTamount:::'+GSTamount);
       gstAmountLabel.text('Rs.' + GSTamount.toFixed(2) + '/-');
       igstCheckbox.prop('checked', false);
   } else {
