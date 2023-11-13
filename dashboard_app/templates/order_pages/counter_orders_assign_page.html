@@ -1873,7 +1873,7 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
 
 // Function to show a toast message
 function showToast(message, bodyContent) {
-  toastr.error(bodyContent, message, {
+  toastr.warning(bodyContent, message, {
     positionClass: "toast-top-right",
     timeOut: 5e3,
     closeButton: !0,
@@ -1882,7 +1882,7 @@ function showToast(message, bodyContent) {
     progressBar: !0,
     preventDuplicates: !0,
     onclick: null,
-    showDuration: "100",
+    showDuration: "300",
     hideDuration: "1000",
     extendedTimeOut: "1000",
     showEasing: "swing",
