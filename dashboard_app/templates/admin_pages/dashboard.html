@@ -533,6 +533,12 @@ $.ajax({
       // Extract the unique months from the data
       var uniqueMonths = [...new Set(data.data.map(entry => entry.month))];
 
+      // Update the chart data with the fetched data
+      salesChart.data.labels = uniqueMonths.map(month => {
+          var [year, monthName] = month.split('-');
+          return `${monthName} ${year}`;
+      });
+
       // Create datasets for each order_taken_on type
       var datasets = [];
       data.data.forEach(entry => {
@@ -556,7 +562,7 @@ $.ajax({
       });
 
       // Update the chart data with the fetched data
-      salesChart.data.labels = uniqueMonths;
+      //salesChart.data.labels = uniqueMonths;
       salesChart.data.datasets = datasets;
 
       // Update the chart
