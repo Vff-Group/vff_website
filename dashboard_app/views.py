@@ -2309,6 +2309,31 @@ def load_cart_items_after_deletion(request):
     return JsonResponse({'cart_items_data':cart_items_data})
 
 
+#Load Delivered Sales CHart Details
+def get_delivery_chart_details(request):
+    #Load Cart Items
+    branch_id = request.session.get('branchid')
+    query="select to_char(pickup_dt, 'YYYY-MM') AS month,COUNT(*) AS completed_order_count FROM vff.laundry_ordertbl WHERE order_completed = '1' AND branch_id = '"+str(branch_id)+"' GROUP BY month ORDER BY month;"
+    query_result = execute_raw_query(query)
+    
+    data = []    
+    
+    if not query_result == 500:
+        for row in query_result:
+            data.append({
+                'year_month':row[0],
+                'count': row[1],
+                
+            })
+                
+    else:
+        error_msg = 'Something Went Wrong'
+        return JsonResponse({'error':error_msg})
+    
+   
+    
+    return JsonResponse({'data':data})
+
 #Load extra add ons items
 def load_extra_items(request):
     #Load Cart Items

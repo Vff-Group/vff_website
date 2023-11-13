@@ -92,6 +92,9 @@ urlpatterns = [
  
     #Notification Screen   
     path('get_todays_notification/',views.get_todays_notification,name='get_todays_notification'),
+    
+    #Load Charts Details 
+    path('get_delivery_chart_details/',views.get_delivery_chart_details,name='get_delivery_chart_details'),
 ]
 
 if settings.DEBUG:
