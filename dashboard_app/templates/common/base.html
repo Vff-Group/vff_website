@@ -1573,9 +1573,19 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
     <script>
       var ctx = document.getElementById("chart-bars").getContext("2d");
 
+      
+// Function to convert numeric month to abbreviated month name with year
+function getMonthWithYear(monthYearString) {
+  const [year, month] = monthYearString.split('-');
+  const monthNames = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+  return `${monthNames[parseInt(month) - 1]} ${year}`;
+}
 // Function to update the chart with data
 function updateChart(data) {
-  var labels = data.map(item => item.year_month);
+  var labels = data.map(item => getMonthWithYear(item.year_month));
   var counts = data.map(item => item.count);
 
   new Chart(ctx, {
