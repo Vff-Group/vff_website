@@ -929,10 +929,12 @@ function updateTaxAmount() {
     // Calculate GST amount
     if(igstCheckbox.prop('checked')){
       GSTamount = 0;
+      gstCheckbox.prop('checked',false);
       IGSTamount = (totalPayment * 18) / 100;  
       gstTotal = IGSTamount;
     }else{
       IGSTamount = 0;
+      igstCheckbox.prop('checked',false);
       GSTamount = (totalPayment * 18) / 100;
       gstTotal = GSTamount;
     }
