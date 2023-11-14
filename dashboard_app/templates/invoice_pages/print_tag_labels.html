@@ -58,7 +58,7 @@
           {{row.cat_name}}
           <p class="sub-item">{{sub_items}}</p>
           <p  class="sub-item">[ {{row.item_quantity}} {{row.type_of}} ]</p>
-          <hr/>
+      
 
          
 
@@ -67,18 +67,15 @@
 
             <!-- Content to be repeated based on item_quantity -->
             
-            <p>VELVET WASH</p>
-        <p>ORDER ID#{{order_id}}</p>
-        <p>{{customer_name}}</p>
-            {{row.cat_name}}
+
           <p class="sub-item">{{row.sub_cat_name}}</p>
           <p  class="sub-item">[ {{row.section_type}}]</p>
           <p  class="sub-item">Total Qty : [{{row.item_quantity}} {{row.type_of}}]</p>
-            <hr/>
+
  
         {% endif %}
     </div>
-    
+<hr/>    
     {% endfor %}
 </body>
 </html>
