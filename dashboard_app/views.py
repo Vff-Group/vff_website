@@ -1841,7 +1841,7 @@ def print_label_tags(request,orderid):
         print(f'OrderID::{first_order_id}')
         print(f'sub_items:::{sub_items}')
         # Extract numbers within parentheses and sum them up
-        total_sum = sum(int(re.search(r'\((\d+)\)', item).group(1)) if re.search(r'\((\d+)\)', item) else 0 for item in sub_items)
+        total_sum = sum(int(re.search(r'\((\d+)\)', item).group(1)) for item in sub_items if re.search(r'\((\d+)\)', item))
         print(f'total_sum::{total_sum}')
         
         receiptID = ''
