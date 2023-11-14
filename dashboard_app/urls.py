@@ -3,7 +3,7 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
-app_name = 'dashboard_app' #nameSpacese
+app_name = 'dashboard_app' #nameSpaceses
 
 urlpatterns = [
     path('',views.login_view,name='login'),
