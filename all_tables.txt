@@ -1,7 +1,6 @@
 #Adding items to cart[cart_item tbl] and [active Order Table]
 
-#Need to add all these tables init
-
+#Need to add all these tables if not added 
 def add_laundry_items_to_cart(obj):
     val = obj.pkt[6:] 
     jdict=json.loads(val)
