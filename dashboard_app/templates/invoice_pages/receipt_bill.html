@@ -122,7 +122,13 @@
       <p>Order ID: #{{order_id}}</p>
       <p>Customer: {{customer_name}}</p>
       <p>Phone: +91-{{mobile_no}}</p>
-      <p>Address: {{houseno}} {{address}}, {{city}} {{pincode}}-INDIA</p>
+      <p>Address:
+        {% if houseno != 'NA' %} 
+        {{houseno}}
+        {% endif %}
+         {{address}},
+          {{city}} 
+          {{pincode}}-INDIA</p>
     </div>
 
     <div class="item-list">
