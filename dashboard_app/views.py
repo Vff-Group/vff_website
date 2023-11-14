@@ -1239,6 +1239,7 @@ def view_order_detail(request,orderid):
         #Calculating GST For state and central govt
         gstamount = data[0]['gstamount'] if data else ''
         igstamount = data[0]['igstamount'] if data else ''
+        print(f'igstamount:::{igstamount}')
         state_gst = 0
         central_gst = 0
         if gstamount != 0 or gstamount !='0.0' :
@@ -2048,6 +2049,7 @@ def generate_bill(request, orderid):
         igstamount = data[0]['igstamount'] if data else ''
         state_gst = 0
         central_gst = 0
+        print(f'igstamount:::{igstamount}')
         if gstamount != 0 or gstamount !='0.0' :
             totalGST = (total_cost * 18) / 100
             print(f'totalGST::{totalGST}')
