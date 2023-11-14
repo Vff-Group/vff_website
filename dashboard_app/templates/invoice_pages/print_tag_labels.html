@@ -45,7 +45,7 @@
     {% for row in query_result %}
     <div class="label">
         <p>ORDER ID#{{order_id}}</p>
-        <p>Sam Rocks</p>
+        <p>{{customer_name}}</p>
         {% if row.type_of == "Kg" %}
           {{row.cat_name}}
           <p class="sub-item">{{sub_items}}</p>
