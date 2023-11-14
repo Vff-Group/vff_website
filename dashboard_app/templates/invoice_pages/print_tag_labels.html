@@ -53,7 +53,7 @@
         <p>ORDER ID#{{order_id}}</p>
         <p>{{customer_name}}</p>
         
-        {% for row2 in row.item_quantity %}
+        {% for row2 in range(row.item_quantity) %}
         {% if row.type_of == "Kg" %}
           {{row.cat_name}}
           <p class="sub-item">{{sub_items}}</p>
