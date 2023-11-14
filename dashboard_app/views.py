@@ -1243,6 +1243,7 @@ def view_order_detail(request,orderid):
         print(f'gstamount:::{gstamount}')
         state_gst = 0
         central_gst = 0
+        gst_amount = '0'
         if gstamount != 0 and gstamount != 0.0 :
             totalGST = (total_cost * 18) / 100
             print(f'totalGST::{totalGST}')
@@ -2050,9 +2051,10 @@ def generate_bill(request, orderid):
         igstamount = data[0]['igstamount'] if data else ''
         state_gst = 0
         central_gst = 0
+        gst_amount = '0'
         print(f'igstamount:::{igstamount}')
         print(f'gstamount:::{gstamount}')
-        if gstamount != 0 and gstamount !=0.0  :
+        if gstamount != 0 and gstamount != 0.0 :
             totalGST = (total_cost * 18) / 100
             print(f'totalGST::{totalGST}')
             state_gst = totalGST / 2
