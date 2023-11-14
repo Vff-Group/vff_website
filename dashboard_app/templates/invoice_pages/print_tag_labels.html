@@ -60,21 +60,7 @@
           <p  class="sub-item">[ {{row.item_quantity}} {{row.type_of}} ]</p>
           <hr/>
 
-          {% for item_quantity_pair in sub_items.split(',') %}
-                {% with item_quantity_pair|split:"(" as item_details %}
-                    {% with item_name=item_details.0|striptags|trim %}
-                        {% with quantity=item_details.1|slice:"0:-1"|default:1|add:"0" %}
-                            <p>VELVET WASH</p>
-                            <p>ORDER ID#{{ order_id }}</p>
-                            <p>{{ customer_name }}</p>
-                            {{ row.cat_name }}
-                            <p class="sub-item">{{ item_name }}</p>
-                            <p class="sub-item">Total Qty : [{{ quantity }} {{ row.type_of }}]</p>
-                            <hr/>
-                        {% endwith %}
-                    {% endwith %}
-                {% endwith %}
-            {% endfor %}
+         
 
           {% else %}
           
