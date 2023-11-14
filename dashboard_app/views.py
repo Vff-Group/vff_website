@@ -1682,6 +1682,7 @@ def print_label_tags(request,orderid):
     if not query_result == 500:
         for row in query_result:
             quantity = row[13]
+            print(f'quantity:add:{quantity}')
             quantity_range = list(range(quantity)) 
             depoch = row[25]#delivery epoch
             oepoch = row[22]#order taken epoch
