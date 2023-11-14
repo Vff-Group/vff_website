@@ -166,10 +166,10 @@
 
     <div class="total">
       <p>Subtotal : ₹{{sub_total}}/-</p>
-      {% if gst_amount != '0' %}
+      {% if gst_amount != '0'  and gst_amount != '0.0' %}
       <p>CGST (9%) : ₹{{central_gst}}/-</p>
       <p>SGST (9%) : ₹{{state_gst}}/-</p>
-      {% elif igstamount != '0' %}
+      {% elif igstamount != '0' and igstamount != '0.0'%}
       <p>IGST (18%) : ₹{{igstamount}}/-</p>
       {% endif %}
       <p>Discount : ₹{{discount_amount}}/-</p>
