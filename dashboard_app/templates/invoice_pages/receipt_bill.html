@@ -166,8 +166,11 @@
 
     <div class="total">
       <p>Subtotal : ₹{{sub_total}}/-</p>
-      {% if payment_type != "Cash" %}
-      <p>Tax (18%) : ₹{{gst_amount}}/-</p>
+      {% if gst_amount != 0 %}
+      <p>CGST (9%) : ₹{{central_gst}}/-</p>
+      <p>SGST (9%) : ₹{{state_gst}}/-</p>
+      {% elif igstamount !=0 %}
+      <p>IGST (18%) : ₹{{igstamount}}/-</p>
       {% endif %}
       <p>Discount : ₹{{discount_amount}}/-</p>
       <p>Delivery Charges : ₹{{delivery_price}}/-</p>

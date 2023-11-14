@@ -1233,11 +1233,21 @@ def view_order_detail(request,orderid):
         
         total_cost = total_laundry_cost + extra_item_sum
         print(f'total_cost::{total_cost}')
-        totalGST = (total_cost * 18) / 100
-        print(f'totalGST::{totalGST}')
-        gst_amount = totalGST
+        
         sub_total = total_laundry_cost
         
+        #Calculating GST For state and central govt
+        gstamount = data[0]['gstamount'] if data else ''
+        igstamount = data[0]['igstamount'] if data else ''
+        state_gst = 0
+        central_gst = 0
+        if gstamount != 0 or gstamount !='0.0' :
+            totalGST = (total_cost * 18) / 100
+            print(f'totalGST::{totalGST}')
+            state_gst = totalGST / 2
+            central_gst = totalGST / 2
+            gst_amount = totalGST
+            
         first_order_id = data[0]['orderid'] if data else ''
         discount_amount = data[0]['discount_price'] if data else ''
         booking_id = data[0]['booking_id'] if data else ''
@@ -1272,7 +1282,7 @@ def view_order_detail(request,orderid):
         error_msg = 'Something Went Wrong'
     
     context ={'query_result':data,'extra_data':extra_data,'error_msg':error_msg,'payment_id':payment_id,'order_id':first_order_id,'customer_name':customer_name
-              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range_price,'alert_delivery_boy':alert_delivery_boy,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total,'additional_instruction':additional_instruction,'order_taken_on':order_taken_on,'delivery_price_taken':delivery_price_taken,'wants_delivery':wants_delivery}
+              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range_price,'alert_delivery_boy':alert_delivery_boy,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total,'additional_instruction':additional_instruction,'order_taken_on':order_taken_on,'delivery_price_taken':delivery_price_taken,'wants_delivery':wants_delivery,'state_gst':state_gst,'central_gst':central_gst,'igstamount':igstamount}
     
     return render(request,'order_pages/order_details.html',context)
 
@@ -2032,10 +2042,19 @@ def generate_bill(request, orderid):
         
         total_cost = total_laundry_cost + extra_item_sum
         print(f'total_cost::{total_cost}')
-        totalGST = (total_cost * 18) / 100
-        print(f'totalGST::{totalGST}')
-        gst_amount = totalGST
+        
         sub_total = total_laundry_cost
+        gstamount = data[0]['gstamount'] if data else ''
+        igstamount = data[0]['igstamount'] if data else ''
+        state_gst = 0
+        central_gst = 0
+        if gstamount != 0 or gstamount !='0.0' :
+            totalGST = (total_cost * 18) / 100
+            print(f'totalGST::{totalGST}')
+            state_gst = totalGST / 2
+            central_gst = totalGST / 2
+            gst_amount = totalGST
+        
         
         first_order_id = data[0]['orderid'] if data else ''
         discount_amount = data[0]['discount_price'] if data else ''
@@ -2112,7 +2131,7 @@ def generate_bill(request, orderid):
         error_msg = 'Something Went Wrong'
     
     context ={'query_result':data,'extra_data':extra_data,'payment_id':payment_id,'order_id':first_order_id,'customer_name':customer_name
-              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range_price,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total,'receipt_id':receiptID,'branch_id':branchID,'receiptName':receiptName,'receiptDate':receiptDate,'wants_delivery':wants_delivery,'delivery_dt':delivery_dt}
+              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range_price,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total,'receipt_id':receiptID,'branch_id':branchID,'receiptName':receiptName,'receiptDate':receiptDate,'wants_delivery':wants_delivery,'delivery_dt':delivery_dt,'state_gst':state_gst,'central_gst':central_gst,'igstamount':igstamount}
     
     # return HttpResponse(formatted_bill_content)
     return render(request,'invoice_pages/receipt_bill.html',context)
