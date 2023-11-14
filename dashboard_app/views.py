@@ -1197,12 +1197,12 @@ def view_order_detail(request,orderid):
         #delivery charges
         delivery_price = 0
         total_laundry_cost = 0
-        range = 0
+        range_price = 0
         delivery_query = "select price,range  from vff.laundry_delivery_chargetbl"
         dlvrych_result = execute_raw_query_fetch_one(delivery_query)
         if dlvrych_result:   
             delivery_price = dlvrych_result[0]
-            range = dlvrych_result[1]
+            range_price = dlvrych_result[1]
         
         extra_item_sum = sum(extra['extra_item_price'] for extra in extra_data)
 
@@ -1212,7 +1212,7 @@ def view_order_detail(request,orderid):
         print(f'delivery_price::{delivery_price}')
         
         if total_laundry_cost != 0:
-            if total_laundry_cost < range:
+            if total_laundry_cost < range_price:
                 total_laundry_cost += delivery_price
                 print(f'Updating TotalCost:{total_laundry_cost}')
             else:
@@ -1270,7 +1270,7 @@ def view_order_detail(request,orderid):
         error_msg = 'Something Went Wrong'
     
     context ={'query_result':data,'extra_data':extra_data,'error_msg':error_msg,'payment_id':payment_id,'order_id':first_order_id,'customer_name':customer_name
-              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range,'alert_delivery_boy':alert_delivery_boy,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total,'additional_instruction':additional_instruction,'order_taken_on':order_taken_on,'delivery_price_taken':delivery_price_taken,'wants_delivery':wants_delivery}
+              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range_price,'alert_delivery_boy':alert_delivery_boy,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total,'additional_instruction':additional_instruction,'order_taken_on':order_taken_on,'delivery_price_taken':delivery_price_taken,'wants_delivery':wants_delivery}
     
     return render(request,'order_pages/order_details.html',context)
 
@@ -1771,12 +1771,12 @@ def print_label_tags(request,orderid):
         #delivery charges
         delivery_price = 0
         total_laundry_cost = 0
-        range = 0
+        range_price = 0
         delivery_query = "select price,range  from vff.laundry_delivery_chargetbl"
         dlvrych_result = execute_raw_query_fetch_one(delivery_query)
         if dlvrych_result:   
             delivery_price = dlvrych_result[0]
-            range = dlvrych_result[1]
+            range_price = dlvrych_result[1]
         
         extra_item_sum = sum(extra['extra_item_price'] for extra in extra_data)
 
@@ -1786,7 +1786,7 @@ def print_label_tags(request,orderid):
         print(f'delivery_price::{delivery_price}')
         
         if total_laundry_cost != 0:
-            if total_laundry_cost < range:
+            if total_laundry_cost < range_price:
                 total_laundry_cost += delivery_price
                 print(f'Updating TotalCost:{total_laundry_cost}')
             else:
@@ -1887,7 +1887,7 @@ def print_label_tags(request,orderid):
         error_msg = 'Something Went Wrong'
     
     context ={'query_result':data,'extra_data':extra_data,'payment_id':payment_id,'order_id':first_order_id,'customer_name':customer_name
-              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total,'receipt_id':receiptID,'branch_id':branchID,'receiptName':receiptName,'receiptDate':receiptDate,'wants_delivery':wants_delivery}
+              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range_price,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total,'receipt_id':receiptID,'branch_id':branchID,'receiptName':receiptName,'receiptDate':receiptDate,'wants_delivery':wants_delivery}
     
     return render(request,'invoice_pages/print_tag_labels.html',context)        
         
@@ -1989,12 +1989,12 @@ def generate_bill(request, orderid):
         #delivery charges
         delivery_price = 0
         total_laundry_cost = 0
-        range = 0
+        range_price = 0
         delivery_query = "select price,range  from vff.laundry_delivery_chargetbl"
         dlvrych_result = execute_raw_query_fetch_one(delivery_query)
         if dlvrych_result:   
             delivery_price = dlvrych_result[0]
-            range = dlvrych_result[1]
+            range_price = dlvrych_result[1]
         
         extra_item_sum = sum(extra['extra_item_price'] for extra in extra_data)
 
@@ -2004,7 +2004,7 @@ def generate_bill(request, orderid):
         print(f'delivery_price::{delivery_price}')
         
         if total_laundry_cost != 0:
-            if total_laundry_cost < range:
+            if total_laundry_cost < range_price:
                 total_laundry_cost += delivery_price
                 print(f'Updating TotalCost:{total_laundry_cost}')
             else:
@@ -2106,7 +2106,7 @@ def generate_bill(request, orderid):
         error_msg = 'Something Went Wrong'
     
     context ={'query_result':data,'extra_data':extra_data,'payment_id':payment_id,'order_id':first_order_id,'customer_name':customer_name
-              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total,'receipt_id':receiptID,'branch_id':branchID,'receiptName':receiptName,'receiptDate':receiptDate,'wants_delivery':wants_delivery,'delivery_dt':delivery_dt}
+              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':total_cost,'extra_error':extra_error,'range_price':range_price,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':discount_amount,'sub_total':sub_total,'receipt_id':receiptID,'branch_id':branchID,'receiptName':receiptName,'receiptDate':receiptDate,'wants_delivery':wants_delivery,'delivery_dt':delivery_dt}
     
     # return HttpResponse(formatted_bill_content)
     return render(request,'invoice_pages/receipt_bill.html',context)
