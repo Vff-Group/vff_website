@@ -52,8 +52,9 @@
         <p>VELVET WASH</p>
         <p>ORDER ID#{{order_id}}</p>
         <p>{{customer_name}}</p>
-        {% if row.type_of == "Kg" %}
+        
         {% for row2 in row.item_quantity %}
+        {% if row.type_of == "Kg" %}
           {{row.cat_name}}
           <p class="sub-item">{{sub_items}}</p>
           <p  class="sub-item">[ {{row.item_quantity}} {{row.type_of}} ]</p>
