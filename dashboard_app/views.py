@@ -1681,6 +1681,7 @@ def print_label_tags(request,orderid):
     sub_items = []    
     if not query_result == 500:
         for row in query_result:
+            
             depoch = row[25]#delivery epoch
             oepoch = row[22]#order taken epoch
             orderStatus = row[20]
@@ -1706,6 +1707,7 @@ def print_label_tags(request,orderid):
                 'orderid': row[11],
                 'delivery_boyid': row[12],
                 'quantity':row[13],
+                'quantity_range' : range(row[13]),
                 'price': row[14],
                 'pickup_dt': row[15],
                 'delivery_dt': row[16],

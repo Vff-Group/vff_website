@@ -61,7 +61,7 @@
           <p class="sub-item">{{row.sub_cat_name}}</p>
           <p  class="sub-item">[ {{row.section_type}} /{{row.item_quantity}} {{row.type_of}}]</p>
           {% endif %}
-          {% for i in range(row.item_quantity) %}
+          {% for i in row.quantity_range %}
             <!-- Content to be repeated based on item_quantity -->
             <div class="inner-content">
                 <!-- Your inner content here -->
