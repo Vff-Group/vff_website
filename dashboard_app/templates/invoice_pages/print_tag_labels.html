@@ -52,8 +52,6 @@
         <p>VELVET WASH</p>
         <p>ORDER ID#{{order_id}}</p>
         <p>{{customer_name}}</p>
-        
-        {% for row2 in range(row.item_quantity) %}
         {% if row.type_of == "Kg" %}
           {{row.cat_name}}
           <p class="sub-item">{{sub_items}}</p>
@@ -63,7 +61,14 @@
           <p class="sub-item">{{row.sub_cat_name}}</p>
           <p  class="sub-item">[ {{row.section_type}} /{{row.item_quantity}} {{row.type_of}}]</p>
           {% endif %}
-        {% endfor %}  
+          {% for i in range(row.item_quantity) %}
+            <!-- Content to be repeated based on item_quantity -->
+            <div class="inner-content">
+                <!-- Your inner content here -->
+                <p>Inner content for item {{ i + 1 }}</p>
+            </div>
+            <hr/>
+        {% endfor %}
         
     </div>
     <hr/>
