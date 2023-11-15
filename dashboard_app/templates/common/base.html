@@ -1805,14 +1805,29 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
 
 <script>
   $(document).ready(function() {
+
+      // Get the CSRF token from the cookie
+      function getCSRFToken() {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith("csrftoken=")) {
+                return cookie.substring("csrftoken=".length, cookie.length);
+            }
+        }
+        return null;
+      }
   $('#searchBtn').click(function() {
     const orderId = $('#input-cost').val(); // Get the value of the order ID input field
     const type = $('#input-type').val(); // Get the value of the type input field
-
+    const csrfToken = getCSRFToken();
     // AJAX request
     $.ajax({
       type: 'POST', // or 'GET' depending on your server implementation
       url: '/admin_dashboard/search/', // Replace this with your server endpoint
+      headers: {
+            'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+        },
       data: {
         searchid: orderId,
         type: type,
