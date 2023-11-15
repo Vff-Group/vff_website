@@ -5,6 +5,26 @@
 
 
 
+<div class="modal fade" id="ordersModal" tabindex="-1" role="dialog" aria-labelledby="ordersModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ordersModalLabel">Orders Status</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4" id="processingOrders"></div>
+          <div class="col-md-4" id="readyToDelivery"></div>
+          <div class="col-md-4" id="newOrders"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
   <div class="container-fluid py-4">
     <div class="row">
@@ -707,6 +727,19 @@ Notification.requestPermission().then((permission) => {
   }
 });
 
+
+</script>
+
+<script>
+  $(document).ready(function() {
+  // Function to fetch and display orders status
+  function fetchOrdersStatus() {
+   $('#ordersModal').modal('show'); // Show the modal after data is loaded
+  }
+
+  // Call the function when the screen loads
+  fetchOrdersStatus();
+});
 
 </script>
 
