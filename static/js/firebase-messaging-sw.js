@@ -1,7 +1,7 @@
   // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
-  import { getMessaging,getToken } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-messaging.js";
-  import { getFirestore } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
+importScripts('https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/9.21.0/firebase-messaging.js');
+
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
 const firebaseConfig = {
@@ -16,20 +16,9 @@ const firebaseConfig = {
 console.log("firebase_config::"+firebaseConfig);
   // Initialize Firebase app
 
-   // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  console.log("app:"+app);
-  // Initialize Firebase messaging
-  // const messaging = firebase.messaging();
-  const messaging = getMessaging(app);
-
-  // Register the service worker from the static folder
-  navigator.serviceWorker.register('/static/js/firebase-messaging-sw.js')
-    .then((registration) => {
-      console.log('Service Worker registered:', registration);
-    }).catch((err) => {
-      console.error('Service Worker registration failed:', err);
-    });
+  // Initialize Firebase app in the service worker
+firebase.initializeApp(firebaseConfig);
+const messaging = firebase.messaging();
 
 // Customize notification behavior when the app is in the background
 messaging.setBackgroundMessageHandler((payload) => {
