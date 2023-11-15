@@ -654,7 +654,12 @@ var salesChart = new Chart(ctx2, {
 <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 
 <!-- Initialize Firebase -->
-<script>
+<script type="module">
+   // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 const firebaseConfig = {
   apiKey: "AIzaSyB377d4_AFRtoEIjpN2Puf3CYwe-I9dCGE",
   authDomain: "vff-group-b185c.firebaseapp.com",
@@ -666,10 +671,12 @@ const firebaseConfig = {
 };
 console.log("firebase_config::"+firebaseConfig);
   // Initialize Firebase app
-  firebase.initializeApp(firebaseConfig);
+   // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
 
   // Initialize Firebase messaging
-  const messaging = firebase.messaging();
+  // const messaging = firebase.messaging();
+  const messaging = app.messaging();
   messaging
         .getToken({
           vapidKey:
