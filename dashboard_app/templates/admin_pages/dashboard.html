@@ -738,7 +738,8 @@ Notification.requestPermission().then((permission) => {
   $(document).ready(function() {
   // Function to fetch and display orders status
   function fetchOrdersStatus() {
-   $('#ordersModal').modal('show'); // Show the modal after data is loaded
+   var myOffcanvas = new bootstrap.Offcanvas(document.getElementById('ordersModal'));
+        myOffcanvas.show();// Show the modal after data is loaded
   }
 
   // Call the function when the screen loads
