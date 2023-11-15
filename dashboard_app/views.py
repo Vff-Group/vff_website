@@ -258,6 +258,7 @@ def search_orderid_or_mobile_number(request):
     if request.method == "POST":
         searchid = request.POST.get("searchid")
         type = request.POST.get("type")
+        print(f'Type of serach::{type}')
         if type == "Order ID":
             query = "select orderid from vff.laundry_ordertbl where orderid='"+str(searchid)+"'"
             result = execute_raw_query_fetch_one(query)

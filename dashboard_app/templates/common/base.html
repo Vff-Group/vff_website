@@ -1821,6 +1821,8 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
     const orderId = $('#input-cost').val(); // Get the value of the order ID input field
     const type = $('#input-type').val(); // Get the value of the type input field
     const csrfToken = getCSRFToken();
+
+    console.log('TypeOfORder::'+type);
     // AJAX request
     $.ajax({
       type: 'POST', // or 'GET' depending on your server implementation
