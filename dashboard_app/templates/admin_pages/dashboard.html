@@ -400,60 +400,24 @@
       </div>
 
       <div class="col-xl-6 col-lg-12">
-        <div class="modal fade w-75" id="ordersModal" tabindex="-1" role="dialog" aria-labelledby="ordersModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ordersModalLabel">Orders Sequence</h5>
-        <button
-                  type="button"
-                  class="btn-close text-dark"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
+        <!-- Your updated HTML structure with offcanvas -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="ordersModal" aria-labelledby="ordersModalLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="ordersModalLabel">Orders</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="row">
+      <!-- Column for Processing Orders -->
+      <div class="col-md-4" id="processingOrders">
+        <!-- Cards for processing orders -->
       </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-4" id="processingOrders">
-             <h4>Processing Orders</h4>
-            <div class="card">
-              <div class="card-body">
-                <p class="card-text">Order ID: 123</p>
-                <p class="card-text">Customer Name: John Doe</p>
-                <p class="card-text">Mobile No: 1234567890</p>
-                <p class="card-text">Address: Some Address</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4" id="readyToDelivery">
-             <h4>Ready For Delivery</h4>
-            <div class="card">
-              <div class="card-body">
-                <p class="card-text">Order ID: 234</p>
-                <p class="card-text">Customer Name: John Doe</p>
-                <p class="card-text">Mobile No: 1234567890</p>
-                <p class="card-text">Address: Some Address</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4" id="newOrders">
-             <h4>Fresh Orders</h4>
-            <div class="card">
-              <div class="card-body">
-                <p class="card-text">Order ID: 123</p>
-                <p class="card-text">Customer Name: John Doe</p>
-                <p class="card-text">Mobile No: 1234567890</p>
-                <p class="card-text">Address: Some Address</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- Columns for Ready to Delivery and New Orders -->
+      <!-- ... (other columns and cards) -->
     </div>
   </div>
 </div>
+
       </div>
     <footer class="footer pt-3">
       <div class="container-fluid">
