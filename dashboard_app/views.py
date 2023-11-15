@@ -267,7 +267,7 @@ def search_orderid_or_mobile_number(request):
             else:
                 return JsonResponse({'orderFound': False})
         else:
-            return redirect('dashboard_app:dashboard')
+            return JsonResponse({'orderFound': False})
            
 
 #Dashboard Page
