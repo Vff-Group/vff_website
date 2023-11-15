@@ -5,25 +5,7 @@
 
 
 
-<div class="modal fade" id="ordersModal" tabindex="-1" role="dialog" aria-labelledby="ordersModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ordersModalLabel">Orders Status</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-4" id="processingOrders"></div>
-          <div class="col-md-4" id="readyToDelivery"></div>
-          <div class="col-md-4" id="newOrders"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 
   <div class="container-fluid py-4">
@@ -415,6 +397,58 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="modal fade" id="ordersModal" tabindex="-1" role="dialog" aria-labelledby="ordersModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ordersModalLabel">Orders Status</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4" id="processingOrders">
+             <h4>Processing Orders</h4>
+            <div class="card">
+              <div class="card-body">
+                <p class="card-text">Order ID: 123</p>
+                <p class="card-text">Customer Name: John Doe</p>
+                <p class="card-text">Mobile No: 1234567890</p>
+                <p class="card-text">Address: Some Address</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4" id="readyToDelivery">
+             <h4>Ready For Delivery</h4>
+            <div class="card">
+              <div class="card-body">
+                <p class="card-text">Order ID: 234</p>
+                <p class="card-text">Customer Name: John Doe</p>
+                <p class="card-text">Mobile No: 1234567890</p>
+                <p class="card-text">Address: Some Address</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4" id="newOrders">
+             <h4>Fresh Orders</h4>
+            <div class="card">
+              <div class="card-body">
+                <p class="card-text">Order ID: 123</p>
+                <p class="card-text">Customer Name: John Doe</p>
+                <p class="card-text">Mobile No: 1234567890</p>
+                <p class="card-text">Address: Some Address</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
       </div>
     <footer class="footer pt-3">
       <div class="container-fluid">
