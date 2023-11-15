@@ -772,7 +772,7 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
                 </button>
               </div>
               <div class="modal-body">
-                <form method="post" action="{% url 'dashboard_app:search' %}">
+                <form method="post" >
                   {% csrf_token %}
                   <div class="row">
                     <div class="col-lg-12">
@@ -812,7 +812,7 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
 
                   <div class="row justify-content-center p-4 mt-1">
                     <div class="col-lg-2">
-                      <button type="submit" class="btn btn-primary my-4">
+                      <button type="submit" class="btn btn-primary my-4" id="searchBtn">
                         Search
                       </button>
                     </div>
@@ -1802,6 +1802,72 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-qZqy51hpVr3PJSkt2W4tTwZrBEJpCgFf3KpBbqMvuv0PAjqHI8h11ABjKz5x0mu2" crossorigin="anonymous"></script>
 <!-- Include jQuery and Bootstrap JS before this script -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oGsFzPfNsYkLCRi3BEs0s+WyQl3ByVylUk5l1RlW37E=" crossorigin="anonymous"></script>
+
+<script>
+  $(document).ready(function() {
+  $('#searchBtn').click(function() {
+    const orderId = $('#input-cost').val(); // Get the value of the order ID input field
+    const type = $('#input-type').val(); // Get the value of the type input field
+
+    // AJAX request
+    $.ajax({
+      type: 'POST', // or 'GET' depending on your server implementation
+      url: '/admin_dashboard/search/', // Replace this with your server endpoint
+      data: {
+        searchid: orderId,
+        type: type,
+        csrfmiddlewaretoken: '{{ csrf_token }}' // Ensure you have CSRF protection
+      },
+      success: function(response) {
+        // Check the response from the server
+        if (response.orderFound) {
+          // Order found, do something with the response
+          // For example, display the order details in a modal
+          $('#modal-body').html(response.orderDetails); // Replace '#modal-body' with your modal's body ID or class
+        } else {
+          // Order not found, show a toast message
+          showToast('Alert','Order not found');
+        }
+      },
+      error: function(xhr, status, error) {
+        // Handle any AJAX errors
+        console.error(error);
+      }
+    });
+  });
+// Function to show a toast message
+function showToast(message, bodyContent) {
+  toastr.warning(bodyContent, message, {
+    positionClass: "toast-top-right",
+    timeOut: 5e3,
+    closeButton: !0,
+    debug: !1,
+    newestOnTop: !0,
+    progressBar: !0,
+    preventDuplicates: !0,
+    onclick: null,
+    showDuration: "300",
+    hideDuration: "1000",
+    extendedTimeOut: "1000",
+    showEasing: "swing",
+    hideEasing: "linear",
+    showMethod: "fadeIn",
+    hideMethod: "fadeOut",
+    tapToDismiss: !1
+})
+}
+  // // Function to show a toast message
+  // function showToast(message) {
+  //   // Implement your toast notification logic here
+  //   // This might involve showing a hidden div with the message and styling it appropriately
+  //   // For example:
+  //   $('#toastMessage').text(message);
+  //   $('#toastMessage').fadeIn().delay(2000).fadeOut(); // Show for 2 seconds and then hide
+  // }
+});
+
+
+</script>
 <script>
   $(document).ready(function () {
     $('#notificationBell').on('click', function () {
