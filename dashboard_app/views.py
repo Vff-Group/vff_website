@@ -266,6 +266,16 @@ def search_orderid_or_mobile_number(request):
                 return redirect('dashboard_app:view_order_detail',orderid=orderid)
             else:
                 return JsonResponse({'orderFound': False})
+        elif type == "Mobile Number":
+            
+            # query = "select orderid from vff.laundry_ordertbl where orderid='"+str(searchid)+"'"
+            query_mobno = "select orderid,usrname from vff.usertbl,vff.laundry_customertbl,vff.laundry_ordertbl where laundry_customertbl.consmrid=laundry_ordertbl.customerid and laundry_customertbl.usrid=usertbl.usrid and  mobile_no='"+str(searchid)+"' order by orderid desc limit 1"
+            result_mobno = execute_raw_query_fetch_one(query_mobno)
+            if result_mobno:  
+                orderid = result_mobno[0]
+                return redirect('dashboard_app:view_order_detail',orderid=orderid)
+            else:
+                return JsonResponse({'orderFound': False})
         else:
             return JsonResponse({'orderFound': False})
            
