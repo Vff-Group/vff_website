@@ -20,7 +20,7 @@ console.log("firebase_config::"+firebaseConfig);
 firebase.initializeApp(firebaseConfig);
 
 const messaging = firebase.messaging();
-console.log("messaging::"+messaging);
+console.log("messaging::"+messaging)
 // Customize notification behavior when the app is in the background
 messaging.setBackgroundMessageHandler((payload) => {
   console.log('Background Message:', payload);
