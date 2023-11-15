@@ -265,7 +265,8 @@ def search_orderid_or_mobile_number(request):
             if result:  
                 orderid = result[0]
                 return redirect('dashboard_app:view_order_detail',orderid=orderid)
-            
+            else:
+                return JsonResponse({'orderFound': False})
         elif type == "Mobile Number":
             
             # query = "select orderid from vff.laundry_ordertbl where orderid='"+str(searchid)+"'"
@@ -273,6 +274,7 @@ def search_orderid_or_mobile_number(request):
             result_mobno = execute_raw_query_fetch_one(query_mobno)
             if result_mobno:  
                 orderid = result_mobno[0]
+                print(f'orderid::::{orderid}')
                 return redirect('dashboard_app:view_order_detail',orderid=orderid)
             else:
                 return JsonResponse({'orderFound': False})
