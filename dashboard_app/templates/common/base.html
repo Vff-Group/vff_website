@@ -1840,7 +1840,8 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
         if (response.orderFound) {
           // Order found, do something with the response
           // For example, display the order details in a modal
-          $('#modal-body').html(response.orderDetails); // Replace '#modal-body' with your modal's body ID or class
+          window.location.href = `/dashboard_app/view_order_detail/` + response.orderid;
+         // $('#modal-body').html(response.orderDetails); // Replace '#modal-body' with your modal's body ID or class
         } else {
           // Order not found, show a toast message
           showToast('Alert','Order not found');

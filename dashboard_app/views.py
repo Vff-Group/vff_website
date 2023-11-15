@@ -264,7 +264,8 @@ def search_orderid_or_mobile_number(request):
             result = execute_raw_query_fetch_one(query)
             if result:  
                 orderid = result[0]
-                return redirect('dashboard_app:view_order_detail',orderid=orderid)
+                # return redirect('dashboard_app:view_order_detail',orderid=orderid)
+                return JsonResponse({'orderFound': True, 'orderid': orderid})
             else:
                 return JsonResponse({'orderFound': False})
         elif type == "Mobile Number":
@@ -275,7 +276,8 @@ def search_orderid_or_mobile_number(request):
             if result_mobno:  
                 orderid = result_mobno[0]
                 print(f'orderid::::{orderid}')
-                return redirect('dashboard_app:view_order_detail',orderid=orderid)
+                # return redirect('dashboard_app:view_order_detail',orderid=orderid)
+                return JsonResponse({'orderFound': True, 'orderid': orderid})
             else:
                 return JsonResponse({'orderFound': False})
         else:
