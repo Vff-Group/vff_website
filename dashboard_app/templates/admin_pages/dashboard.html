@@ -672,9 +672,10 @@ const firebaseConfig = {
 };
 console.log("firebase_config::"+firebaseConfig);
   // Initialize Firebase app
+  
    // Initialize Firebase
   const app = initializeApp(firebaseConfig);
-
+  console.log("app:"+app);
   // Initialize Firebase messaging
   // const messaging = firebase.messaging();
   const messaging = app.messaging();
