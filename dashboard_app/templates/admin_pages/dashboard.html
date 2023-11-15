@@ -657,7 +657,7 @@ var salesChart = new Chart(ctx2, {
 <script type="module">
    // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
-  importScripts('https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js');
+  import { getMessaging } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-messaging.js";
   import { getFirestore } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
@@ -672,13 +672,13 @@ const firebaseConfig = {
 };
 console.log("firebase_config::"+firebaseConfig);
   // Initialize Firebase app
-  
+
    // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   console.log("app:"+app);
   // Initialize Firebase messaging
   // const messaging = firebase.messaging();
-  const messaging = app.messaging();
+  const messaging = getMessaging(app);
   messaging
         .getToken({
           vapidKey:
