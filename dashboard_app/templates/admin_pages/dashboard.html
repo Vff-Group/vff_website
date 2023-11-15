@@ -649,4 +649,99 @@ var salesChart = new Chart(ctx2, {
 });
 
 </script>
+<script src="https://www.gstatic.com/firebasejs/9.6.8/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.8/firebase-messaging.js"></script>
+
+<!-- Initialize Firebase -->
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyB377d4_AFRtoEIjpN2Puf3CYwe-I9dCGE",
+  authDomain: "vff-group-b185c.firebaseapp.com",
+  projectId: "vff-group-b185c",
+  storageBucket: "vff-group-b185c.appspot.com",
+  messagingSenderId: "711189707453",
+  appId: "1:711189707453:web:3813986a11e36f830b55d4",
+  measurementId: "G-YYEJHD2GJ1"
+};
+
+  // Initialize Firebase app
+  firebase.initializeApp(firebaseConfig);
+
+  // Initialize Firebase messaging
+  const messaging = firebase.messaging();
+  messaging
+        .getToken({
+          vapidKey:
+            "AAAApZY1ur0:APA91bHsk-e3OC5R2vqO7dD0WZp7ifULNzqrUPnQu07et7RLFMWWcwOqY9Bl-9YQWkuXUP5nM7bVMgMP-qKISf9Jcf2ix9j7oOkScq9-3BH0hfCH3nIWgkn4hbnmSLyw4pmq66rMZz8R",
+        })
+        .then((currentToken) => {
+          if (currentToken) {
+            // Send the token to your server and update the UI if necessary
+            console.log("currentToken::"+currentToken);
+            // ...
+          } else {
+            // Show permission request UI
+            console.log(
+              "No registration token available. Request permission to generate one."
+            );
+            requestPermission();
+            // ...
+          }
+        })
+        .catch((err) => {
+          console.log("An error occurred while retrieving token. ", err);
+          // ...
+        });
+      function requestPermission() {
+        console.log("Requesting permission...");
+        Notification.requestPermission().then((permission) => {
+          if (permission === "granted") {
+            console.log("Notification permission granted.");
+          }
+        });
+      }
+   
+
+// Handle incoming messages when the app is in the foreground
+messaging.onMessage((payload) => {
+  console.log('Message received:', payload);
+  // Handle how you want to display the notification to the user
+  // Extract notification details
+  const { title, body } = payload.notification;
+
+  // Display the notification using Toastify
+  Toastify({
+    text: `${title}: ${body}`,
+    duration: 5000, // Duration to display the notification (in milliseconds)
+    close: true, // Option to close the notification
+    // You can add more options or customizations here
+  }).showToast();
+});
+
+</script>
+
+<script>
+  // Request permission for notifications
+Notification.requestPermission().then(function(permission) {
+    if (permission === 'granted') {
+        // Get device token and send it to backend
+        // Use the SDK provided by the chosen push notification service
+        // For example, Firebase FCM SDK
+        messaging.getToken().then(function(currentToken) {
+            if (currentToken) {
+                // Send currentToken to Django backend
+                // (via AJAX request or other means)
+                console.log('DeviceToken::'+currentToken)   
+            } else {
+                console.log('No registration token available.');
+            }
+        }).catch(function(err) {
+            console.log('An error occurred while retrieving token:', err);
+        });
+    }
+});
+
+
+
+</script>
 {% endblock %}
