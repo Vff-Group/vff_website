@@ -681,12 +681,12 @@ console.log("firebase_config::"+firebaseConfig);
   const messaging = getMessaging(app);
   console.log("messaging::"+messaging);
   // Register the service worker from the static folder
-  // navigator.serviceWorker.register('/static/js/firebase-messaging-sw.js')
-  //   .then((registration) => {
-  //     console.log('Service Worker registered:', registration);
-  //   }).catch((err) => {
-  //     console.error('Service Worker registration failed:', err);
-  //   });
+  navigator.serviceWorker.register('/static/js/firebase-messaging-sw.js')
+    .then((registration) => {
+      console.log('Service Worker registered:', registration);
+    }).catch((err) => {
+      console.error('Service Worker registration failed:', err);
+    });
 
   // Request permission for notifications
 Notification.requestPermission().then((permission) => {
