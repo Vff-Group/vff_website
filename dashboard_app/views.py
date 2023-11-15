@@ -26,8 +26,8 @@ serverToken="AAAApZY1ur0:APA91bHsk-e3OC5R2vqO7dD0WZp7ifULNzqrUPnQu07et7RLFMWWcwO
 import firebase_admin
 from firebase_admin import credentials, messaging
 
-cred = credentials.Certificate('path/to/serviceAccountKey.json')
-firebase_admin.initialize_app(cred)
+# cred = credentials.Certificate('path/to/serviceAccountKey.json')
+# firebase_admin.initialize_app(cred)
 
 
 # def sendFMCMsg(deviceToken,msg,title,data):
