@@ -679,6 +679,15 @@ console.log("firebase_config::"+firebaseConfig);
   // Initialize Firebase messaging
   // const messaging = firebase.messaging();
   const messaging = getMessaging(app);
+
+  // Register the service worker from the static folder
+  navigator.serviceWorker.register('/static/js/firebase-messaging-sw.js')
+    .then((registration) => {
+      console.log('Service Worker registered:', registration);
+    }).catch((err) => {
+      console.error('Service Worker registration failed:', err);
+    });
+
   // Request permission for notifications
 Notification.requestPermission().then((permission) => {
   if (permission === 'granted') {
