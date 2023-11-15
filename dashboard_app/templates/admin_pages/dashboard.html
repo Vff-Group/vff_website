@@ -657,7 +657,7 @@ var salesChart = new Chart(ctx2, {
 <script type="module">
    // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
-  import { getMessaging } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-messaging.js";
+  import { getMessaging,getToken } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-messaging.js";
   import { getFirestore } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
@@ -680,24 +680,22 @@ console.log("firebase_config::"+firebaseConfig);
   // const messaging = firebase.messaging();
   const messaging = getMessaging(app);
   // Request permission for notifications
-  // Request permission for notifications
-  Notification.requestPermission().then(function(permission) {
-    if (permission === 'granted') {
-        // Get device token and send it to backend
-        // Use the SDK provided by the chosen push notification service
-        // For example, Firebase FCM SDK
-        messaging.getToken().then(function(currentToken) {
-            if (currentToken) {
-                // Send currentToken to Django backend
-                // (via AJAX request or other means)
-                console.log('DeviceToken::'+currentToken)   
-            } else {
-                console.log('No registration token available.');
-            }
-        }).catch(function(err) {
-            console.log('An error occurred while retrieving token:', err);
-        });
-    }
+Notification.requestPermission().then((permission) => {
+  if (permission === 'granted') {
+    // Get FCM token
+    getToken(messaging, { vapidKey: 'AAAApZY1ur0:APA91bHsk-e3OC5R2vqO7dD0WZp7ifULNzqrUPnQu07et7RLFMWWcwOqY9Bl-9YQWkuXUP5nM7bVMgMP-qKISf9Jcf2ix9j7oOkScq9-3BH0hfCH3nIWgkn4hbnmSLyw4pmq66rMZz8R' }).then((currentToken) => {
+      if (currentToken) {
+        console.log('FCM Token:', currentToken);
+        // Send the token to your server for storage or use
+      } else {
+        console.log('No registration token available.');
+      }
+    }).catch((err) => {
+      console.log('An error occurred while retrieving token:', err);
+    });
+  } else {
+    console.log('Permission for notifications denied.');
+  }
 });
 
 
