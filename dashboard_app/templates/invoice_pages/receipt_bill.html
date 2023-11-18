@@ -120,34 +120,34 @@
     <div class="header">
       <h1 style="font-size: 12px;">{{branch_name}}</h1>
       
-      <h6>Ve7vet Wash</h6>
-      <p>{{branch_address}} {{branch_city}},{{branch_state}} - {{branch_pincode}}</p>
-      <p>Phone: (+91) {{branch_contactno}} </p>
-      <p>Website: <a href="https://vff-group.com/">www.vff-group.com/</a></p>
+      <h5>Ve7vet Wash</h5>
+      <h5>{{branch_address}} {{branch_city}},{{branch_state}} - {{branch_pincode}}</h5>
+      <h5>Phone: (+91) {{branch_contactno}} </h5>
+      <h5>Website: <a href="https://vff-group.com/">www.vff-group.com/</a></h5>
     </div>
 
     <div class="receipt-info">
-      <p>GST No : {{branch_gstno}}</p>
-      <p>Receipt : #{{receipt_id}}</p>
-      <p>Date: {{receiptDate}}</p>
+      <h5>GST No : {{branch_gstno}}</h5>
+      <h5>Receipt : #{{receipt_id}}</h5>
+      <h5>Date: {{receiptDate}}</h5>
       {% if wants_delivery == 1 %}
-      <p>Delivery Estimated Date: {{delivery_dt}}</p>
+      <h5>Delivery Estimated Date: {{delivery_dt}}</h5>
       {% endif %}
-      <p>Cashier: {{receiptName}}</p>
-      <p>Branch ID: #{{branch_id}}</p>
+      <h5>Cashier: {{receiptName}}</h5>
+      <h5>Branch ID: #{{branch_id}}</h5>
     </div>
 
     <div class="receipt-info">
-      <p>Order ID: #{{order_id}}</p>
-      <p>Customer: {{customer_name}}</p>
-      <p>Phone: +91-{{mobile_no}}</p>
-      <p>Address:
+      <h5>Order ID: #{{order_id}}</h5>
+      <h5>Customer: {{customer_name}}</h5>
+      <h5>Phone: +91-{{mobile_no}}</h5>
+      <h5>Address:
         {% if houseno != 'NA' %} 
         {{houseno}}
         {% endif %}
          {{address}},
           {{city}} 
-          {{pincode}}-INDIA</p>
+          {{pincode}}-INDIA</h5>
     </div>
 
     <div class="item-list">
@@ -190,32 +190,32 @@
     </div>
 
     <div class="total">
-      <p>Subtotal : ₹{{sub_total}}/-</p>
+      <h5>Subtotal : ₹{{sub_total}}/-</h5>
       {% if gst_amount != '0'  and gst_amount != '0.0' %}
-      <p>CGST (9%) : ₹{{central_gst}}/-</p>
-      <p>SGST (9%) : ₹{{state_gst}}/-</p>
+      <h5>CGST (9%) : ₹{{central_gst}}/-</h5>
+      <h5>SGST (9%) : ₹{{state_gst}}/-</h5>
       {% elif igstamount != '0' and igstamount != '0.0'%}
-      <p>IGST (18%) : ₹{{igstamount}}/-</p>
+      <h5>IGST (18%) : ₹{{igstamount}}/-</h5>
       {% endif %}
-      <p>Discount : ₹{{discount_amount}}/-</p>
-      <p>Delivery Charges : ₹{{delivery_price}}/-</p>
+      <h5>Discount : ₹{{discount_amount}}/-</h5>
+      <h5>Delivery Charges : ₹{{delivery_price}}/-</h5>
       <h1>Total : ₹{{total_cost}}/-</h1>
       
     </div>
 
     <div class="payment-info">
-      <p>Payment Method: {{payment_type}}</p>
+      <h5>Payment Method: {{payment_type}}</h5>
       {% if payment_type != 'Cash' %}  
-      <p>Transaction ID: {{payment_id}}</p>
+      <h5>Transaction ID: {{payment_id}}</h5>
       {% endif %}
 
-      <!-- <p>Card Type: Visa</p>
-      <p>Card Number: **** **** **** 1234</p> -->
+      <!-- <h5>Card Type: Visa</h5>
+      <h5>Card Number: **** **** **** 1234</h5> -->
     </div>
 
     <div class="terms-and-conditions">
-      <p>Terms and Conditions:</p>
-      <p>1. The Amount can't be refunded once payment has been made.</p>
+      <h5>Terms and Conditions:</h5>
+      <h5>1. The Amount can't be refunded once payment has been made.</h5>
       <!-- Add more terms and conditions text here -->
     </div>
   </div>
