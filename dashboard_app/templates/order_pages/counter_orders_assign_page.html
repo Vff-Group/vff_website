@@ -958,9 +958,11 @@ function updateTaxAmount() {
     gstAmountLabel.text('Rs.0/-');
     if(GSTamount !== 0){
       IGSTamount = 0;
+      igstCheckbox.prop('disabled',false);
     grossTotal -= GSTamount;
     }else{
       GSTamount = 0;
+      gstCheckbox.prop('disabled',false);
       grossTotal -= IGSTamount;
     }
     
