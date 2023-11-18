@@ -2060,7 +2060,7 @@ def generate_bill(request, orderid):
         
         
         total_cost = total_laundry_cost + extra_item_sum
-        print(f'total_cost::{total_cost}')
+        
         
         sub_total = total_laundry_cost
         gstamount = data[0]['gstamount'] if data else ''
@@ -2076,8 +2076,12 @@ def generate_bill(request, orderid):
             state_gst = totalGST / 2
             central_gst = totalGST / 2
             gst_amount = totalGST
+            total_cost += totalGST
+        else:
+            total_cost += igstamount
         
         
+        print(f'total_cost::{total_cost}')
         first_order_id = data[0]['orderid'] if data else ''
         discount_amount = data[0]['discount_price'] if data else ''
         delivery_dt = data[0]['delivery_dt'] if data else ''
