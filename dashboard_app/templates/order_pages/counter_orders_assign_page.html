@@ -946,12 +946,13 @@ function updateTaxAmount() {
       gstTotal = GSTamount;
       
     }
-    totalPayment +=gstTotal
+    totalPayment +=gstTotal;
     gstAmountLabel.text('Rs.' + gstTotal.toFixed(2) + '/-');
     $('#gross-total').text('Rs.'+totalPayment.toFixed(2)+'/-');
   } else {
     gstAmountLabel.text('Rs.0/-');
-    totalPayment -=gstTotal
+    totalPayment -=gstTotal;
+    $('#gross-total').text('Rs.'+totalPayment.toFixed(2)+'/-');
  
   }
 
