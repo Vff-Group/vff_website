@@ -924,7 +924,7 @@ function updateTaxAmount() {
     
     totalPayment = parseFloat(grossTotal).toFixed(0);
 }
-  var totalPayment = totalPayment;
+  
   var gstCheckbox = $('#includeGST');
   var igstCheckbox = $('#includeIGST');
   var gstAmountLabel = $('#tax-total');
@@ -938,14 +938,16 @@ function updateTaxAmount() {
       gstCheckbox.prop('checked',false);
       IGSTamount = (totalPayment * 18) / 100;  
       gstTotal = IGSTamount;
+      totalPayment += IGSTamount;
     }else{
       IGSTamount = 0;
       igstCheckbox.prop('checked',false);
       GSTamount = (totalPayment * 18) / 100;
       gstTotal = GSTamount;
+      totalPayment += GSTamount;
     }
     gstAmountLabel.text('Rs.' + gstTotal.toFixed(2) + '/-');
-    
+    $('#gross-total').text('Rs.'+totalPayment+'/-');
   } else {
     gstAmountLabel.text('Rs.0/-');
  
