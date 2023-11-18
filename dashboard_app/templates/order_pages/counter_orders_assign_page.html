@@ -938,13 +938,13 @@ function updateTaxAmount() {
       gstCheckbox.prop('checked',false);
       IGSTamount = (totalPayment * 18) / 100;  
       gstTotal = IGSTamount;
-      grossTotal += IGSTamount;
+      grossTotal += gstTotal;
     }else{
       IGSTamount = 0;
       igstCheckbox.prop('checked',false);
       GSTamount = (totalPayment * 18) / 100;
       gstTotal = GSTamount;
-      grossTotal += GSTamount;
+      grossTotal += gstTotal;
     }
     
     
@@ -952,7 +952,7 @@ function updateTaxAmount() {
     
   } else {
     gstAmountLabel.text('Rs.0/-');
-    
+    grossTotal -= gstTotal;
     
  
   }
