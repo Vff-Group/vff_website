@@ -112,6 +112,9 @@
     .monochrome {
       filter: grayscale(100%);
   }
+  h1{
+    font-size: 10px;
+  }
   </style>
 </head>
 <body>
@@ -123,34 +126,34 @@
     <div class="header">
       <h1 style="font-size: 12px;">{{branch_name}}</h1>
       
-      <h5>Ve7vet Wash</h5>
-      <h5>{{branch_address}} {{branch_city}},{{branch_state}} - {{branch_pincode}}</h5>
-      <h5>Phone: (+91) {{branch_contactno}} </h5>
-      <h5>Website: <a href="https://vff-group.com/">www.vff-group.com/</a></h5>
+      <h1>Ve7vet Wash</h1>
+      <h1>{{branch_address}} {{branch_city}},{{branch_state}} - {{branch_pincode}}</h1>
+      <h1>Phone: (+91) {{branch_contactno}} </h1>
+      <h1>Website: <a href="https://vff-group.com/">www.vff-group.com/</a></h1>
     </div>
 
     <div class="receipt-info">
-      <h5>GST No : {{branch_gstno}}</h5>
-      <h5>Receipt : #{{receipt_id}}</h5>
-      <h5>Date: {{receiptDate}}</h5>
+      <h1>GST No : {{branch_gstno}}</h1>
+      <h1>Receipt : #{{receipt_id}}</h1>
+      <h1>Date: {{receiptDate}}</h1>
       {% if wants_delivery == 1 %}
-      <h5>Delivery Estimated Date: {{delivery_dt}}</h5>
+      <h1>Delivery Estimated Date: {{delivery_dt}}</h1>
       {% endif %}
-      <h5>Cashier: {{receiptName}}</h5>
-      <h5>Branch ID: #{{branch_id}}</h5>
+      <h1>Cashier: {{receiptName}}</h1>
+      <h1>Branch ID: #{{branch_id}}</h1>
     </div>
 
     <div class="receipt-info">
-      <h5>Order ID: #{{order_id}}</h5>
-      <h5>Customer: {{customer_name}}</h5>
-      <h5>Phone: +91-{{mobile_no}}</h5>
-      <h5>Address:
+      <h1>Order ID: #{{order_id}}</h1>
+      <h1>Customer: {{customer_name}}</h1>
+      <h1>Phone: +91-{{mobile_no}}</h1>
+      <h1>Address:
         {% if houseno != 'NA' %} 
         {{houseno}}
         {% endif %}
          {{address}},
           {{city}} 
-          {{pincode}}-INDIA</h5>
+          {{pincode}}-INDIA</h1>
     </div>
 
     <div class="item-list">
@@ -171,16 +174,16 @@
           {{row.sub_cat_name}}
           [ {{row.section_type}} ]
           {% endif %}
-        </h5>
+        </h1>
         <h5 class="item-name">
           {{row.item_quantity}} {{row.type_of}}
-        </h5>
+        </h1>
         <h5 class="item-name">
           ₹ {{row.actual_cost}} /  {{row.type_of}}
-        </h5>
+        </h1>
         <h5 class="item-name">
           ₹ {{row.item_cost}}
-        </h5>
+        </h1>
       </div>
       {% endfor %}
      
@@ -188,32 +191,32 @@
     </div>
 
     <div class="total">
-      <h5>Subtotal : ₹{{sub_total}}/-</h5>
+      <h1>Subtotal : ₹{{sub_total}}/-</h1>
       {% if gst_amount != '0'  and gst_amount != '0.0' %}
-      <h5>CGST (9%) : ₹{{central_gst}}/-</h5>
-      <h5>SGST (9%) : ₹{{state_gst}}/-</h5>
+      <h1>CGST (9%) : ₹{{central_gst}}/-</h1>
+      <h1>SGST (9%) : ₹{{state_gst}}/-</h1>
       {% elif igstamount != '0' and igstamount != '0.0'%}
-      <h5>IGST (18%) : ₹{{igstamount}}/-</h5>
+      <h1>IGST (18%) : ₹{{igstamount}}/-</h1>
       {% endif %}
-      <h5>Discount : ₹{{discount_amount}}/-</h5>
-      <h5>Delivery Charges : ₹{{delivery_price}}/-</h5>
+      <h1>Discount : ₹{{discount_amount}}/-</h1>
+      <h1>Delivery Charges : ₹{{delivery_price}}/-</h1>
       <h1>Total : ₹{{total_cost}}/-</h1>
       
     </div>
 
     <div class="payment-info">
-      <h5>Payment Method: {{payment_type}}</h5>
+      <h1>Payment Method: {{payment_type}}</h1>
       {% if payment_type != 'Cash' %}  
-      <h5>Transaction ID: {{payment_id}}</h5>
+      <h1>Transaction ID: {{payment_id}}</h1>
       {% endif %}
 
-      <!-- <h5>Card Type: Visa</h5>
-      <h5>Card Number: **** **** **** 1234</h5> -->
+      <!-- <h1>Card Type: Visa</h1>
+      <h1>Card Number: **** **** **** 1234</h1> -->
     </div>
 
     <div class="terms-and-conditions">
-      <h5>Terms and Conditions:</h5>
-      <h5>1. The Amount can't be refunded once payment has been made.</h5>
+      <h1>Terms and Conditions:</h1>
+      <h1>1. The Amount can't be refunded once payment has been made.</h1>
       <!-- Add more terms and conditions text here -->
     </div>
   </div>
