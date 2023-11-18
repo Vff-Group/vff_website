@@ -1229,12 +1229,12 @@ def view_order_detail(request,orderid):
         print(f'extra_item_sum::{extra_item_sum}')
         print(f'delivery_price::{delivery_price}')
         
-        if total_laundry_cost != 0:
-            if total_laundry_cost < range_price:
-                total_laundry_cost += delivery_price
-                print(f'Updating TotalCost:{total_laundry_cost}')
-            else:
-                delivery_price = 0
+        # if total_laundry_cost != 0:
+        #     if total_laundry_cost < range_price:
+        #         total_laundry_cost += delivery_price
+        #         print(f'Updating TotalCost:{total_laundry_cost}')
+        #     else:
+        #         delivery_price = 0
         
         #request.session['branchid'] = branchid
         branch_name = request.session.get('branch_name') 
@@ -2041,12 +2041,12 @@ def generate_bill(request, orderid):
         print(f'extra_item_sum::{extra_item_sum}')
         print(f'delivery_price::{delivery_price}')
         
-        if total_laundry_cost != 0:
-            if total_laundry_cost < range_price:
-                total_laundry_cost += delivery_price
-                print(f'Updating TotalCost:{total_laundry_cost}')
-            else:
-                delivery_price = 0
+        # if total_laundry_cost != 0:
+        #     if total_laundry_cost < range_price:
+        #         total_laundry_cost += delivery_price
+        #         print(f'Updating TotalCost:{total_laundry_cost}')
+        #     else:
+        #         delivery_price = 0
         
         #request.session['branchid'] = branchid
         branch_name = request.session.get('branch_name') 
