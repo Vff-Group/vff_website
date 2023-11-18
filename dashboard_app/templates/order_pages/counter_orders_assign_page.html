@@ -1494,7 +1494,7 @@ $("#add_to_cart").on("click",function(){
     }
 
     var kgs_quantity = inputElement.value.trim();
-
+    console.log("kgs_quantity::"+kgs_quantity);
     // Perform validation
     if (!selectedCategory ) {
         // Show a toast message for validation failure
@@ -1583,6 +1583,7 @@ $("#add_to_cart").on("click",function(){
         actualCost = parseFloat(offer_price);
     }
     
+    console.log("totalCost::"+totalCost);
 
     dictMap['cat_id'] = selectedCategoryId;
       dictMap['customer_id'] = customer_id;
