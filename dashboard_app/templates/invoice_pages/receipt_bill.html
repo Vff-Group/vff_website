@@ -159,7 +159,7 @@
       </div>
       {% for row in query_result %}
       <div class="item">
-        <span class="item-name">
+        <h5 class="item-name">
           {% if row.type_of == "Kg" %}
           {{row.cat_name}}
           {{sub_items}}
@@ -168,24 +168,19 @@
           {{row.sub_cat_name}}
           [ {{row.section_type}} ]
           {% endif %}
-        </span>
-        <span class="item-name">
+        </h5>
+        <h5 class="item-name">
           {{row.item_quantity}} {{row.type_of}}
-        </span>
-        <span class="item-name">
+        </h5>
+        <h5 class="item-name">
           ₹ {{row.actual_cost}} /  {{row.type_of}}
-        </span>
-        <span class="item-name">
+        </h5>
+        <h5 class="item-name">
           ₹ {{row.item_cost}}
-        </span>
+        </h5>
       </div>
       {% endfor %}
-      <!-- <div class="item">
-        <span class="item-name">Wash & Fold</span>
-        <span class="item-name">4</span>
-        <span class="item-name">$2.50</span>
-        <span class="item-name">$6.00</span>
-      </div> -->
+     
       
     </div>
 
