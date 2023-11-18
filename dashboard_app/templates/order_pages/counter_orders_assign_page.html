@@ -938,26 +938,26 @@ function updateTaxAmount() {
       gstCheckbox.prop('checked',false);
       IGSTamount = (totalPayment * 18) / 100;  
       gstTotal = IGSTamount;
-      
+      grossTotal += IGSTamount;
     }else{
       IGSTamount = 0;
       igstCheckbox.prop('checked',false);
       GSTamount = (totalPayment * 18) / 100;
       gstTotal = GSTamount;
-      
+      grossTotal += GSTamount;
     }
     
-    totalPayment = (totalPayment += parseFloat(gstTotal.toFixed(2)));
+    
     gstAmountLabel.text('Rs.' + gstTotal.toFixed(2) + '/-');
     
   } else {
     gstAmountLabel.text('Rs.0/-');
-    totalPayment -= parseFloat(gstTotal.toFixed(2));
+    
     
  
   }
 
-  $('#gross-total').text('Rs.'+totalPayment+'/-');
+  $('#gross-total').text('Rs.'+grossTotal+'/-');
 
   
 }
