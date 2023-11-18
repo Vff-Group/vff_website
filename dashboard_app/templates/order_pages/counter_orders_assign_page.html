@@ -953,8 +953,10 @@ function updateTaxAmount() {
   } else {
     gstAmountLabel.text('Rs.0/-');
     if(GSTamount !== 0){
+      IGSTamount = 0;
     grossTotal -= GSTamount;
     }else{
+      GSTamount = 0;
       grossTotal -= IGSTamount;
     }
     
