@@ -946,17 +946,14 @@ function updateTaxAmount() {
       gstTotal = GSTamount;
       
     }
-    var sum = (totalPayment + gstTotal.toFixed(2));
-    console.log("total_summm::"+sum)
-    totalPayment = sum;
+    
+    totalPayment += parseFloat(gstTotal);
     gstAmountLabel.text('Rs.' + gstTotal.toFixed(2) + '/-');
 
     $('#gross-total').text('Rs.'+totalPayment+'/-');
   } else {
     gstAmountLabel.text('Rs.0/-');
-    var sum = (totalPayment - gstTotal.toFixed(2));
-    
-    totalPayment = sum;
+    totalPayment -= parseFloat(gstTotal);
     $('#gross-total').text('Rs.'+totalPayment+'/-');
  
   }
