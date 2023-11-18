@@ -952,7 +952,11 @@ function updateTaxAmount() {
     $('#gross-total').text('Rs.'+grossTotal+'/-');
   } else {
     gstAmountLabel.text('Rs.0/-');
-    grossTotal -= gstTotal;
+    if(GSTamount !== 0){
+    grossTotal -= GSTamount;
+    }else{
+      grossTotal -= IGSTamount;
+    }
     
     $('#gross-total').text('Rs.'+grossTotal+'/-');
   }
