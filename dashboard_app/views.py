@@ -1266,6 +1266,9 @@ def view_order_detail(request,orderid):
             state_gst = totalGST / 2
             central_gst = totalGST / 2
             gst_amount = totalGST
+            total_cost += totalGST + delivery_price
+        else:
+            total_cost += igstamount + delivery_price
             
         first_order_id = data[0]['orderid'] if data else ''
         discount_amount = data[0]['discount_price'] if data else ''
@@ -2076,9 +2079,9 @@ def generate_bill(request, orderid):
             state_gst = totalGST / 2
             central_gst = totalGST / 2
             gst_amount = totalGST
-            total_cost += totalGST
+            total_cost += totalGST + delivery_price
         else:
-            total_cost += igstamount
+            total_cost += igstamount + delivery_price
         
         
         print(f'total_cost::{total_cost}')
