@@ -947,15 +947,17 @@ function updateTaxAmount() {
       
     }
     
-    totalPayment = (totalPayment + parseFloat(gstTotal.toFixed(2)));
+    totalPayment = (totalPayment += parseFloat(gstTotal.toFixed(2)));
     gstAmountLabel.text('Rs.' + gstTotal.toFixed(2) + '/-');
-    $('#gross-total').text('Rs.'+totalPayment+'/-');
+    
   } else {
     gstAmountLabel.text('Rs.0/-');
     totalPayment -= parseFloat(gstTotal.toFixed(2));
-    $('#gross-total').text('Rs.'+totalPayment+'/-');
+    
  
   }
+
+  $('#gross-total').text('Rs.'+totalPayment+'/-');
 
   
 }
