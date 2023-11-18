@@ -936,14 +936,16 @@ function updateTaxAmount() {
     if(igstCheckbox.prop('checked')){
       GSTamount = 0;
       gstTotal = 0;
-      gstCheckbox.prop('checked',false);
+      igstCheckbox.prop('disabled',false);
+      gstCheckbox.prop('disabled',true);
       IGSTamount = (totalPayment * 18) / 100;  
       gstTotal = IGSTamount;
       grossTotal += gstTotal;
     }else{
       IGSTamount = 0;
       gstTotal = 0;
-      igstCheckbox.prop('checked',false);
+      gstCheckbox.prop('disabled',false);
+      igstCheckbox.prop('disabled',true);
       GSTamount = (totalPayment * 18) / 100;
       gstTotal = GSTamount;
       grossTotal += gstTotal;
