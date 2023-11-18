@@ -2089,11 +2089,13 @@ def generate_bill(request, orderid):
                 total_cost += totalGST + delivery_price
             else:
                 total_cost += totalGST
+                delivery_price = 0
         else:
             if total_cost < range_price:
                 total_cost += igstamount + delivery_price
             else:
                 total_cost += igstamount 
+                delivery_price = 0
         
         
         print(f'total_cost::{total_cost}')
