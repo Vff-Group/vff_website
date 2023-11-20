@@ -956,7 +956,7 @@ function updateTaxAmount() {
     
     
     gstAmountLabel.text('Rs.' + gstTotal.toFixed(2) + '/-');
-    $('#gross-total').text('Rs.'+grossTotal+'/-');
+    $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
   } else {
     gstAmountLabel.text('Rs.0/-');
     
@@ -972,7 +972,7 @@ function updateTaxAmount() {
 
     
     
-    $('#gross-total').text('Rs.'+grossTotal+'/-');
+    $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
   }
 
   
