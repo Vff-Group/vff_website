@@ -1950,7 +1950,8 @@ def generate_bill(request, orderid):
             depoch = row[25]#delivery epoch
             oepoch = row[22]#order taken epoch
             orderStatus = row[20]
-            item_cost = row[37]
+            item_cost_str = row[37]
+            item_cost = float(item_cost_str)
             formatted_cost = '{:.2f}'.format(item_cost)
             print("Delivery Epoch:"+str(depoch))
             print("Order Taken Epoch:"+str(oepoch))
