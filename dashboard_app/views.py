@@ -2102,7 +2102,8 @@ def generate_bill(request, orderid):
             else:
                 total_cost += igstamount 
                 delivery_price = 0
-        
+        if igstamount == 0.0:
+            igstamount = '0.0'
         
         print(f'total_cost::{total_cost}')
         first_order_id = data[0]['orderid'] if data else ''
