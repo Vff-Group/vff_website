@@ -943,7 +943,7 @@ function updateTaxAmount() {
       gstCheckbox.prop('disabled',true);
       IGSTamount = (totalPayment * 18) / 100;  
       gstTotal = IGSTamount;
-      grossTotal += gstTotal.toFixed(2);
+      grossTotal += gstTotal;
     }else{
       IGSTamount = 0;
       gstTotal = 0;
@@ -951,7 +951,7 @@ function updateTaxAmount() {
       igstCheckbox.prop('disabled',true);
       GSTamount = (totalPayment * 18) / 100;
       gstTotal = GSTamount;
-      grossTotal += gstTotal.toFixed(2);
+      grossTotal += gstTotal;
     }
     
     
