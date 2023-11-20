@@ -1010,12 +1010,12 @@ $('#input-paymentmode').change(function() {
     // Check if the payment mode is 'Cash' and hide the 'Pay Now' button
     if (paymentMode === 'Cash') {
         $('#pay-button').hide();
-        gstContainer.show();
+        //gstContainer.show();
          // If the payment mode is "Cash," hiding the payment ID container
          paymentIdContainer.hide();
     } else {
         $('#pay-button').show();
-        gstContainer.hide();
+        //gstContainer.hide();
         // If the payment mode is not "Cash," show the payment ID container
         paymentIdContainer.show();
     }
@@ -1372,11 +1372,11 @@ function payment_show(totalPayment,customerName,customerMobno){
         "image": "https://vff-group.com/static/images/logo.png",
         "handler": function (response){
             //payment_id =  response.razorpay_payment_id;
-            GSTamount = 0
-            IGSTamount = 0
-            GSTamount = ((totalPayment * 18)/100);
-            var gstAmountLabel = $('#tax-total');
-            gstAmountLabel.text('Rs.' + GSTamount.toFixed(2) + '/-');
+            //GSTamount = 0
+            //IGSTamount = 0
+            //GSTamount = ((totalPayment * 18)/100);
+            //var gstAmountLabel = $('#tax-total');
+            //gstAmountLabel.text('Rs.' + GSTamount.toFixed(2) + '/-');
             
             // Update the payment ID input
             $('#input-paymentid').val(payment_id);
