@@ -828,7 +828,12 @@ $('#order-form').validate({
     var customer_name_input = document.getElementById("customer-name");
     var date_of_delivery = document.getElementById('date-of-delivery').value.trim();
     var add_information = $("#additional_info").val();
-
+    var payment_id = $("#input-paymentid").val();
+    if(payment_id === ""){
+      
+      showToast('Alert','Please Pay before placing the order as you have selected Payment Method Other then Cash');
+      return;
+  }
     if(add_information === ""){
         add_information = 'NA';
     }
@@ -840,6 +845,7 @@ $('#order-form').validate({
         showToast('Alert','Please Search customer before adding any items');
         return;
     }
+
     if(discountedAmount !== 0 && !isNaN(discountedAmount)){
       totalPayment = parseFloat(discountedAmount).toFixed(0);
   }else{
@@ -989,12 +995,12 @@ $('#input-paymentmode').change(function() {
     // Check if the payment mode is 'Cash' and hide the 'Pay Now' button
     if (paymentMode === 'Cash') {
         $('#pay-button').hide();
-        gstContainer.show();
+        //gstContainer.show();
          // If the payment mode is "Cash," hiding the payment ID container
          paymentIdContainer.hide();
     } else {
         $('#pay-button').show();
-        gstContainer.hide();
+        //gstContainer.hide();
         // If the payment mode is not "Cash," show the payment ID container
         paymentIdContainer.show();
     }
@@ -1350,8 +1356,13 @@ function payment_show(totalPayment,customerName,customerMobno){
         "description": "Laundry Service Charges",
         "image": "https://vff-group.com/static/images/logo.png",
         "handler": function (response){
-            payment_id =  response.razorpay_payment_id;
-            GSTamount = ((totalPayment * 18)/100);
+            //payment_id =  response.razorpay_payment_id;
+            //GSTamount = 0
+            //IGSTamount = 0
+            //GSTamount = ((totalPayment * 18)/100);
+            //var gstAmountLabel = $('#tax-total');
+            //gstAmountLabel.text('Rs.' + GSTamount.toFixed(2) + '/-');
+            
             // Update the payment ID input
             $('#input-paymentid').val(payment_id);
             disableElements();
