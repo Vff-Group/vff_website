@@ -963,7 +963,7 @@ function updateTaxAmount() {
       igstCheckbox.prop('disabled',false);
       gstCheckbox.prop('disabled',true);
       IGSTamount = (totalPayment * 18) / 100;  
-      gstTotal = parseFloat(IGSTamount).toFixed(0);;
+      gstTotal = IGSTamount;
       grossTotal += gstTotal;
     }else{
       IGSTamount = 0;
@@ -971,29 +971,29 @@ function updateTaxAmount() {
       gstCheckbox.prop('disabled',false);
       igstCheckbox.prop('disabled',true);
       GSTamount = (totalPayment * 18) / 100;
-      gstTotal = parseFloat(GSTamount).toFixed(0);
+      gstTotal = GSTamount;
       grossTotal += gstTotal;
     }
     
     
-    gstAmountLabel.text('Rs.' + gstTotal + '/-');
-    $('#gross-total').text('Rs.'+grossTotal+'/-');
+    gstAmountLabel.text('Rs.' + gstTotal.toFixed(2) + '/-');
+    $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
   } else {
     gstAmountLabel.text('Rs.0/-');
     
     if(GSTamount !== 0){
       IGSTamount = 0;
       igstCheckbox.prop('disabled',false);
-    grossTotal -= parseFloat(GSTamount).toFixed(0);
+    grossTotal -= GSTamount;
     }else{
       GSTamount = 0;
       gstCheckbox.prop('disabled',false);
-      grossTotal -= parseFloat(IGSTamount).toFixed(0);
+      grossTotal -= IGSTamount;
     }
 
     
     
-    $('#gross-total').text('Rs.'+grossTotal+'/-');
+    $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
   }
 
   
@@ -1092,7 +1092,7 @@ $(document).ready(function() {
                 var sum_data = data.sum_data;
                 var delivery_data = data.delivery_charges_data;
 
-                grossTotal = parseFloat(sum_data[0].total_cost).toFixed(0);
+                grossTotal = sum_data[0].total_cost.toFixed(2);
                 delivery_price = delivery_data[0].delivery_price;
                 delivery_range = delivery_data[0].delivery_range;
 
@@ -1286,7 +1286,7 @@ $(document).ready(function() {
             // Calculate the discounted amount
             discountedAmount = grossTotal - (grossTotal * (discount / 100)).toFixed(0);
             
-            discountAmount = (grossTotal * (discount / 100)).toFixed(0);
+            discountAmount = (grossTotal * (discount / 100)).toFixed(2);
             discountAmount = discountAmount;
 
             console.log("discountAmount::"+(grossTotal * (discount / 100)));
@@ -1376,7 +1376,7 @@ function payment_show(totalPayment,customerName,customerMobno){
             //IGSTamount = 0
             //GSTamount = ((totalPayment * 18)/100);
             //var gstAmountLabel = $('#tax-total');
-            //gstAmountLabel.text('Rs.' + GSTamount.toFixed(0) + '/-');
+            //gstAmountLabel.text('Rs.' + GSTamount.toFixed(2) + '/-');
             
             // Update the payment ID input
             $('#input-paymentid').val(payment_id);
