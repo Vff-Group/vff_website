@@ -202,6 +202,8 @@
       <h1>SGST (9%) : ₹{{state_gst}}/-</h1>
       {% elif igstamount != '0' and igstamount != '0.0'%}
       <h1>IGST (18%) : ₹{{igstamount}}/-</h1>
+      {% else %}
+      
       {% endif %}
       <h1>Discount : ₹{{discount_amount}}/-</h1>
       
