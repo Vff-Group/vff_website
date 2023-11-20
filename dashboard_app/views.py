@@ -1951,7 +1951,7 @@ def generate_bill(request, orderid):
             oepoch = row[22]#order taken epoch
             orderStatus = row[20]
             item_cost = row[37]
-            item_cost = range(item_cost,2)
+            formatted_cost = '{:.2f}'.format(item_cost)
             print("Delivery Epoch:"+str(depoch))
             print("Order Taken Epoch:"+str(oepoch))
             deliveryEpoch = epochToDateTime(depoch)
@@ -1997,7 +1997,7 @@ def generate_bill(request, orderid):
                 'sub_cat_img': row[34],
                 'actual_cost': row[35],
                 'time': row[36],
-                'item_cost': item_cost,
+                'item_cost': formatted_cost,
                 'item_quantity': row[38],
                 'type_of': row[39],
                 'section_type': row[40],
