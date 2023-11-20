@@ -830,7 +830,8 @@ $('#order-form').validate({
     var add_information = $("#additional_info").val();
     var payment_id = $("#input-paymentid").val();
     var selectedDate = new Date(document.getElementById("date-of-delivery").value);
-  var today = new Date();
+    var today = new Date();
+    today.setHours(0, 0, 0, 0); 
 
   if (selectedDate < today) {
     showToast('Alert','Estimated Delivery Date Can not be less then todays date');
