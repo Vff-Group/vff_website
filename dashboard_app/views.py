@@ -2046,7 +2046,7 @@ def generate_bill(request, orderid):
         extra_item_sum = sum(extra['extra_item_price'] for extra in extra_data)
 
         # total_laundry_cost = sum(item['item_cost'] for item in data)
-        total_laundry_cost = sum(round(item['item_cost'], 2) for item in data)
+        total_laundry_cost = sum(round(float(item['item_cost']), 2) for item in data)
         print(f'total_laundry_cost::{total_laundry_cost}')
         print(f'extra_item_sum::{extra_item_sum}')
         print(f'delivery_price::{delivery_price}')
