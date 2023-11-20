@@ -844,11 +844,19 @@ $('#order-form').validate({
     showToast('Alert','Estimated Delivery Date Can not be less then todays date');
     return;
   }
-    if(payment_id === ""){
+  
+  $('#input-paymentmode').change(function() {
+    var paymentMode = $(this).val();
+    if (paymentMode !== 'Cash') {
+      if(payment_id === ""){
       
-      showToast('Alert','Please Pay before placing the order as you have selected Payment Mode Other then Cash');
-      return;
-  }
+        showToast('Alert','Please Pay before placing the order as you have selected Payment Mode Other then Cash');
+        return;
+    }
+    }
+  });
+
+  
     if(add_information === ""){
         add_information = 'NA';
     }
