@@ -1419,6 +1419,7 @@ $("#generate-booking-id").on("click",function(){
     var customer_id = selected_customer_id.value.trim()
     var customer_name = customer_name_input.value.trim()
 
+    
     if(customer_id === ""){
         showToast('Alert','Please Search customer before adding any items');
         return;
@@ -2259,6 +2260,7 @@ if (subCategoryTable.find('tr').length > 0) {
             });
         } else {
             suggestionList.empty();
+            booking_id_btn.show();
         }
     });
 
