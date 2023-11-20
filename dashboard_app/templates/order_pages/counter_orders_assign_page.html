@@ -963,7 +963,7 @@ function updateTaxAmount() {
       igstCheckbox.prop('disabled',false);
       gstCheckbox.prop('disabled',true);
       IGSTamount = (totalPayment * 18) / 100;  
-      gstTotal = IGSTamount;
+      gstTotal = parseFloat(IGSTamount).toFixed(0);;
       grossTotal += gstTotal;
     }else{
       IGSTamount = 0;
@@ -971,7 +971,7 @@ function updateTaxAmount() {
       gstCheckbox.prop('disabled',false);
       igstCheckbox.prop('disabled',true);
       GSTamount = (totalPayment * 18) / 100;
-      gstTotal = GSTamount;
+      gstTotal = parseFloat(GSTamount).toFixed(0);
       grossTotal += gstTotal;
     }
     
@@ -984,11 +984,11 @@ function updateTaxAmount() {
     if(GSTamount !== 0){
       IGSTamount = 0;
       igstCheckbox.prop('disabled',false);
-    grossTotal -= GSTamount;
+    grossTotal -= parseFloat(GSTamount).toFixed(0);
     }else{
       GSTamount = 0;
       gstCheckbox.prop('disabled',false);
-      grossTotal -= IGSTamount;
+      grossTotal -= parseFloat(IGSTamount).toFixed(0);
     }
 
     
@@ -1092,7 +1092,7 @@ $(document).ready(function() {
                 var sum_data = data.sum_data;
                 var delivery_data = data.delivery_charges_data;
 
-                grossTotal = sum_data[0].total_cost.toFixed(0);
+                grossTotal = parseFloat(sum_data[0].total_cost).toFixed(0);
                 delivery_price = delivery_data[0].delivery_price;
                 delivery_range = delivery_data[0].delivery_range;
 
