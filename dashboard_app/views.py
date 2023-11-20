@@ -1131,6 +1131,9 @@ def view_order_detail(request,orderid):
             depoch = row[25]#delivery epoch
             oepoch = row[22]#order taken epoch
             orderStatus = row[20]
+            item_cost_str = row[37]
+            item_cost = float(item_cost_str)
+            formatted_cost = '{:.2f}'.format(item_cost)
             print("Delivery Epoch:"+str(depoch))
             print("Order Taken Epoch:"+str(oepoch))
             deliveryEpoch = epochToDateTime(depoch)
@@ -1176,7 +1179,7 @@ def view_order_detail(request,orderid):
                 'sub_cat_img': row[34],
                 'actual_cost': row[35],
                 'time': row[36],
-                'item_cost': row[37],
+                'item_cost': formatted_cost,
                 'item_quantity': row[38],
                 'type_of': row[39],
                 'section_type': row[40],
@@ -1224,7 +1227,7 @@ def view_order_detail(request,orderid):
         
         extra_item_sum = sum(extra['extra_item_price'] for extra in extra_data)
 
-        total_laundry_cost = sum(item['item_cost'] for item in data)
+        total_laundry_cost = sum(round(float(item['item_cost']), 2) for item in data)
         print(f'total_laundry_cost::{total_laundry_cost}')
         print(f'extra_item_sum::{extra_item_sum}')
         print(f'delivery_price::{delivery_price}')
