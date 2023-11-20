@@ -845,16 +845,15 @@ $('#order-form').validate({
     return;
   }
   
-  $('#input-paymentmode').change(function() {
-    var paymentMode = $(this).val();
-    if (paymentMode !== 'Cash') {
-      if(payment_id === ""){
-      
-        showToast('Alert','Please Pay before placing the order as you have selected Payment Mode Other then Cash');
-        return;
-    }
-    }
-  });
+  var paymentModeSelect = document.getElementById('input-paymentmode');
+
+// Check if payment mode is not equal to 'Cash'
+if (paymentModeSelect.value !== 'Cash') {
+  if (payment_id === '') {
+    showToast('Alert', 'Please Pay before placing the order as you have selected Payment Mode Other than Cash');
+    return;
+  }
+}
 
   
     if(add_information === ""){
