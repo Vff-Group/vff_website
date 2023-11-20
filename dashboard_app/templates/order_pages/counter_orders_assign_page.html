@@ -831,11 +831,15 @@ $('#order-form').validate({
     var payment_id = $("#input-paymentid").val();
     var selectedDate = new Date(document.getElementById("date-of-delivery").value);
     console.log("selectedDate::"+selectedDate);
-    var today = new Date();
+    var today = new Date(todayDate);
+  var selected = new Date(selectedDate);
+  today.setHours(0, 0, 0, 0); // Set hours to 0 to compare dates without time
+  selected.setHours(0, 0, 0, 0); // Set hours to 0 to compare dates without time
+
     console.log("todayDate::"+today);
     //today.setHours(0, 0, 0, 0); 
 
-  if (selectedDate < today) {
+  if (selected < today) {
     showToast('Alert','Estimated Delivery Date Can not be less then todays date');
     return;
   }
