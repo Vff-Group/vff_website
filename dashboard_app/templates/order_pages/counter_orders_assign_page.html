@@ -976,8 +976,8 @@ function updateTaxAmount() {
     }
     
     
-    gstAmountLabel.text('Rs.' + gstTotal.toFixed(2) + '/-');
-    $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
+    gstAmountLabel.text('Rs.' + gstTotal.toFixed(0) + '/-');
+    $('#gross-total').text('Rs.'+grossTotal.toFixed(0)+'/-');
   } else {
     gstAmountLabel.text('Rs.0/-');
     
@@ -993,7 +993,7 @@ function updateTaxAmount() {
 
     
     
-    $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
+    $('#gross-total').text('Rs.'+grossTotal.toFixed(0)+'/-');
   }
 
   
@@ -1092,7 +1092,7 @@ $(document).ready(function() {
                 var sum_data = data.sum_data;
                 var delivery_data = data.delivery_charges_data;
 
-                grossTotal = sum_data[0].total_cost;
+                grossTotal = sum_data[0].total_cost.toFixed(0);
                 delivery_price = delivery_data[0].delivery_price;
                 delivery_range = delivery_data[0].delivery_range;
 
@@ -1155,7 +1155,7 @@ $(document).ready(function() {
                                     var sum = (discountedAmount -= charge.delivery_price);
                                     discountedAmount = sum;
                                     
-                                    $('#gross-total').text('Rs.'+discountedAmount.toFixed(2)+'/-');
+                                    $('#gross-total').text('Rs.'+discountedAmount+'/-');
                                     $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
                                     checkState = false;
                                 }else if(!isNaN(grossTotal)){
@@ -1167,7 +1167,7 @@ $(document).ready(function() {
                                     grossTotal = sum;
                                     
                                     
-                                    $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
+                                    $('#gross-total').text('Rs.'+grossTotal+'/-');
                                     $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
                                     checkState = false;
                                     
@@ -1264,17 +1264,17 @@ $(document).ready(function() {
 
                 
                 if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-                $('#gross-total').text('Rs.'+discountedAmount+'/-');
+                $('#gross-total').text('Rs.'+discountedAmount.toFixed(0)+'/-');
                 }else{
-                    $('#gross-total').text('Rs.'+grossTotal+'/-');
+                    $('#gross-total').text('Rs.'+grossTotal.toFixed(0)+'/-');
                 }
                     if(!isNaN(addOnsTotal)){
-                    $('#addons-total').text('Rs.'+addOnsTotal+'/-');
+                    $('#addons-total').text('Rs.'+addOnsTotal.toFixed(0)+'/-');
                     }
                     
             // Update the discounted amount
             if(!isNaN(discountAmount)){
-            $('#discount-amount').text('Rs.'+discountAmount+'/-');
+            $('#discount-amount').text('Rs.'+discountAmount.toFixed(0)+'/-');
             }
 
                 });
@@ -1286,7 +1286,7 @@ $(document).ready(function() {
             // Calculate the discounted amount
             discountedAmount = grossTotal - (grossTotal * (discount / 100)).toFixed(0);
             
-            discountAmount = (grossTotal * (discount / 100)).toFixed(2);
+            discountAmount = (grossTotal * (discount / 100)).toFixed(0);
             discountAmount = discountAmount;
 
             console.log("discountAmount::"+(grossTotal * (discount / 100)));
@@ -1376,7 +1376,7 @@ function payment_show(totalPayment,customerName,customerMobno){
             //IGSTamount = 0
             //GSTamount = ((totalPayment * 18)/100);
             //var gstAmountLabel = $('#tax-total');
-            //gstAmountLabel.text('Rs.' + GSTamount.toFixed(2) + '/-');
+            //gstAmountLabel.text('Rs.' + GSTamount.toFixed(0) + '/-');
             
             // Update the payment ID input
             $('#input-paymentid').val(payment_id);
