@@ -303,6 +303,9 @@
                                 />
                             </div>
                         </form>
+                        <div id="progress" class="progress" style="display: none;">
+                          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                        </div>
                         <div id="suggestion-container" style="height: 100px; overflow-y:scroll; display:none;">
                             <ul class="navbar-nav" id="suggestion-list"></ul>
                         </div>
@@ -2209,12 +2212,17 @@ if (subCategoryTable.find('tr').length > 0) {
     const selectedCustomerNameInput = $('#selected-customer-name');
     //generate-booking-id,add_to_cart
     const booking_id_btn = $('#generate-booking-id');
+    const progress = $('#progress');
 
     inputField.on('input', function() {
         const inputText = inputField.val();
         suggestionContainer.show();
         if (inputText.length > 0) {
+           // Showing the progress bar while fetching data
+            progress.show();
             $.get(`/admin_dashboard/search_customer_to_assign_order/${inputText}/`, function(data) {
+                // Hide the progress bar on successful data retrieval
+                progress.hide();
                 const suggestions = data.suggestions;
                 suggestionList.empty();
                 add_customer_btn.hide();
@@ -2245,6 +2253,9 @@ if (subCategoryTable.find('tr').length > 0) {
                     const noCustomerItem = $('<li class="nav-item text-muted">').text('No customer found with this number');
                     suggestionList.append(noCustomerItem);
                 }
+            }).fail(function(){
+              showToast('Alert','Something Went Wrong')
+              progress.hide();
             });
         } else {
             suggestionList.empty();
