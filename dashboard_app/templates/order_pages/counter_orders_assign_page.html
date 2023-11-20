@@ -787,11 +787,11 @@ $.validator.addMethod('dateLessThanToday', function (value, element) {
 $('#order-form').validate({
     rules: {
         // Define validation rules for your form fields
-        'dateofdelivery': {
-          required: 'Please select a delivery date',
+        //'dateofdelivery': {
+          //required: 'Please select a delivery date',
           //dateLessThanToday: 'Delivery date must be today or later'
-      },
-       // 'discount-value': 'required',
+      //},
+       'dateofdelivery': 'required',
         'input-paymentmode': 'required',
         // Add rules for other form fields
     },
