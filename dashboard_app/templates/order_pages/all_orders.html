@@ -233,32 +233,45 @@
         });
 
         function applyFilters() {
-          var orderIdSearch = $('#order-id-search').val().toLowerCase();
-          var orderTypeFilter = $('#input-order_type').val();
-          var dateOfOrder = $('#date-of-order').val();
-      
-          $('.table tbody tr').each(function () {
-              var orderId = $(this).find('td:first h6').text().toLowerCase();
-              var customerName = $(this).find('td:nth-child(2) .text-sm').text().toLowerCase();
-              var mobileNumber = $(this).find('td:nth-child(2) .text-xs').text();
-              var orderType = $(this).find('td:nth-child(7) .badge').text();
-              var orderDate = $(this).find('td:nth-child(5) span').text();
-              var displayedDate = new Date(orderDate);
-              var orderDatePart = extractDatePart(orderDate);
-      
-              if (
-                  (orderId.includes(orderIdSearch) || orderIdSearch === '') &&
-                  (customerName.includes(orderIdSearch) || mobileNumber.includes(orderIdSearch) || orderIdSearch === '') &&
-                  (orderType === orderTypeFilter || orderTypeFilter === 'All Orders') &&
-                  (orderDatePart === dateOfOrder || dateOfOrder === '')
-              ) {
-                  $(this).show();
-              } else {
-                  $(this).hide();
-              }
-          });
-      }
-      
+            // Get the user's search input
+            var orderIdSearch = $('#order-id-search').val().toLowerCase();
+
+            // Get the selected order type filter
+            var orderTypeFilter = $('#input-order_type').val();
+
+            // Get the selected date filter
+            var dateOfOrder = $('#date-of-order').val();
+
+            // Extract the date part from the displayed date in the table
+           function extractDatePart(dateString) {
+            return dateString.split(' ')[0];
+        }
+            // Loop through the table rows and hide/show them based on the filters
+            $('.table tbody tr').each(function () {
+                var orderId = $(this).find('td:first h6').text().toLowerCase();
+                
+                var orderType = $(this).find('td:nth-child(7) .badge').text();
+                var orderDate = $(this).find('td:nth-child(5) span').text();
+                // Convert the displayed date to a JavaScript Date object
+                var displayedDate = new Date(orderDate);
+                console.log('displayedDate::'+displayedDate);
+               // Format the displayed date for comparison
+                // Format the displayed date to include the date and time with AM/PM
+               // Extract the date part of the orderDate
+               var orderDatePart = extractDatePart(orderDate);
+            console.log("orderDatePart::"+orderDatePart);
+            if (
+              (orderId.includes(orderIdSearch) || orderIdSearch === '') &&
+              (orderType === orderTypeFilter || orderTypeFilter === 'All Orders') &&
+              (orderDatePart === dateOfOrder || dateOfOrder === '')
+          )  {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+    
       });
 </script>
 
