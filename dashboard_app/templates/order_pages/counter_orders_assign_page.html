@@ -1572,12 +1572,13 @@ $("#add_to_cart").on("click",function(){
         inputElement.classList.add("is-invalid");
         showToast('Alert','Please Provide the quantity in Kgs')
         return;
-    } else if(kgs_quantity !== "" && kgs_quantity < 5){
-        inputElement.classList.remove("is-valid");
-        inputElement.classList.add("is-invalid");
-        showToast('Alert','We accept only order above 5 Kgs')
-        return;
     }
+    //else if(kgs_quantity !== "" && kgs_quantity < 5){
+      //inputElement.classList.remove("is-valid");
+      //inputElement.classList.add("is-invalid");
+      //showToast('Alert','We accept only order above 5 Kgs')
+    //  return;
+  //}
     else {
         inputElement.classList.remove("is-invalid");
         inputElement.classList.add("is-valid");
