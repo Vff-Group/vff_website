@@ -1312,6 +1312,8 @@ def view_order_detail(request,orderid):
             
         print(f'OrderID::{first_order_id}')
         print(f'sub_items:::{sub_items}')
+        print(f'wants_delivery:::{wants_delivery}')
+        print(f'order_taken_on:::{order_taken_on}')
         
     else:
         error_msg = 'Something Went Wrong'
