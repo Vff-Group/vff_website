@@ -1112,7 +1112,7 @@ $(document).ready(function() {
 
 
                 var subTotal = grossTotal;
-                $('#sub-total').text('Rs.'+subTotal+'/-');
+                $('#sub-total').text('Rs.'+subTotal.toFixed(2)+'/-');
                 $('#gross-total').text('Rs.'+grossTotal+'/-');
                 grossQuantity = sum_data[0].total_quantity;
 
