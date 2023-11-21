@@ -216,63 +216,49 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-    $(document).ready(function () {
-        // Add an event listener to the search input field
-        $('#order-id-search').on('input', function () {
-            applyFilters();
-        });
+  $(document).ready(function () {
+    // Add an event listener to the search input field
+    $('#order-id-search').on('input', function () {
+        applyFilters();
+    });
 
-        // Add an event listener to the select field for order type
-        $('#input-order_type').change(function () {
-            applyFilters();
-        });
+    // Add an event listener to the select field for order type
+    $('#input-order_type').change(function () {
+        applyFilters();
+    });
 
-        // Add an event listener to the date input field
-        $('#date-of-order').on('input', function () {
-            applyFilters();
-        });
+    // Add an event listener to the date input field
+    $('#date-of-order').on('input', function () {
+        applyFilters();
+    });
 
-        function applyFilters() {
-            // Get the user's search input
-            var orderIdSearch = $('#order-id-search').val().toLowerCase();
+    function applyFilters() {
+        // Get the user's search input
+        var userSearch = $('#order-id-search').val().toLowerCase();
 
-            // Get the selected order type filter
-            var orderTypeFilter = $('#input-order_type').val();
+        // Loop through the table rows and hide/show them based on the filters
+        $('.table tbody tr').each(function () {
+            var customerName = $(this).find('td:nth-child(2) h6').text().toLowerCase();
+            var mobileNumber = $(this).find('td:nth-child(2) p.text-xs').text();
 
-            // Get the selected date filter
-            var dateOfOrder = $('#date-of-order').val();
+            var orderId = $(this).find('td:first h6').text().toLowerCase();
+            var orderType = $(this).find('td:nth-child(7) .badge').text();
+            var orderDate = $(this).find('td:nth-child(5) span').text();
+            var orderDatePart = orderDate.split(' ')[0].toLowerCase();
 
-            // Extract the date part from the displayed date in the table
-           function extractDatePart(dateString) {
-            return dateString.split(' ')[0];
-        }
-            // Loop through the table rows and hide/show them based on the filters
-            $('.table tbody tr').each(function () {
-                var orderId = $(this).find('td:first h6').text().toLowerCase();
-                
-                var orderType = $(this).find('td:nth-child(7) .badge').text();
-                var orderDate = $(this).find('td:nth-child(5) span').text();
-                // Convert the displayed date to a JavaScript Date object
-                var displayedDate = new Date(orderDate);
-                console.log('displayedDate::'+displayedDate);
-               // Format the displayed date for comparison
-                // Format the displayed date to include the date and time with AM/PM
-               // Extract the date part of the orderDate
-               var orderDatePart = extractDatePart(orderDate);
-            console.log("orderDatePart::"+orderDatePart);
             if (
-              (orderId.includes(orderIdSearch) || orderIdSearch === '') &&
-              (orderType === orderTypeFilter || orderTypeFilter === 'All Orders') &&
-              (orderDatePart === dateOfOrder || dateOfOrder === '')
-          )  {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
-        }
-    
-      });
+                (customerName.includes(userSearch) || mobileNumber.includes(userSearch) || orderId.includes(userSearch) || userSearch === '') &&
+                (orderType === $('#input-order_type').val() || $('#input-order_type').val() === 'All Orders') &&
+                (orderDatePart === $('#date-of-order').val() || $('#date-of-order').val() === '')
+            ) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    }
+});
+
 </script>
 
 
