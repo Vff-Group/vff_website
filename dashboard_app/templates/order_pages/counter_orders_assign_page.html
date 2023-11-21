@@ -1113,7 +1113,7 @@ $(document).ready(function() {
 
                 var subTotal = grossTotal;
                 $('#sub-total').text('Rs.'+subTotal.toFixed(2)+'/-');
-                $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
+                $('#gross-total').text('Rs.'+grossTotal+'/-');
                 grossQuantity = sum_data[0].total_quantity;
 
                 console.log('grossTotalDB::'+grossTotal);
@@ -1641,7 +1641,7 @@ $("#add_to_cart").on("click",function(){
       dictMap['sub_cat_name'] = subCategoryNames;
       dictMap['item_quantity'] = kgs_quantity;
       dictMap['actual_cost'] = actualCost;
-      dictMap['cost'] = totalCost;
+      dictMap['cost'] = totalCost.toFixed(2);
       dictMap['type_of'] = 'Kg'; //Kgs
       dictMap['sub_cat_id'] = subCategoryID;
       dictMap['sub_cat_img'] = subCategoryImage;
