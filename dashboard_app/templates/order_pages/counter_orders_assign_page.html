@@ -951,7 +951,7 @@ $('#includeIGST').change(function() {
 function updateTaxAmount() {
   if(discountedAmount !== 0 && !isNaN(discountedAmount)){
     totalPayment = parseFloat(discountedAmount).toFixed(0);
-    grossTotal = discountedAmount;
+    //grossTotal = discountedAmount;
 }else{
     
     totalPayment = parseFloat(grossTotal).toFixed(0);
