@@ -1973,7 +1973,9 @@ def generate_bill(request, orderid):
             orderTakenEpoch = epochToDateTime(oepoch)
             if orderStatus != "Completed":
                 deliveryEpoch = "Not Delivered Yet"
-            sub_items.append(row[33])
+            cat_name=row[32]
+            if cat_name != 'DRY CLEAN':
+                sub_items.append(row[33])
             data.append({
                 'consmrid': row[0],
                 'usrid': row[1],
