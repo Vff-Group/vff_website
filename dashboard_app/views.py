@@ -1315,7 +1315,7 @@ def view_order_detail(request,orderid):
             
         print(f'OrderID::{first_order_id}')
         print(f'sub_items:::{sub_items}')
-        print(f'sub_cat_name:::{sub_cat_name}')
+        
         print(f'wants_delivery:::{wants_delivery}')
         print(f'order_taken_on:::{order_taken_on}')
         
