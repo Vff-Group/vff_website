@@ -1303,7 +1303,7 @@ $(document).ready(function() {
 
             console.log("discountAmount::"+(grossTotal * (discount / 100)));
             // Update the discounted amount
-            discountedAmount = discountAmount;
+            discountedAmount = grossTotal - discountAmount;
             if(discount === "" || isNaN(discount)){
                 discountAmount = 0;
                 $('#discount-amount').text('Rs.'+discountAmount+'/-');
