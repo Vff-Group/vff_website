@@ -1276,11 +1276,13 @@ def view_order_detail(request,orderid):
                 total_cost += totalGST + delivery_price
             else:
                 total_cost += totalGST
+                delivery_price = 0
         else:
             if total_cost < range_price:
                 total_cost += igstamount + delivery_price
             else:
                 total_cost += igstamount 
+                delivery_price =0
         
         igstamount = round(igstamount,2)
         if igstamount == 0.0:
