@@ -951,6 +951,7 @@ $('#includeIGST').change(function() {
 function updateTaxAmount() {
   if(discountedAmount !== 0 && !isNaN(discountedAmount)){
     totalPayment = parseFloat(discountedAmount).toFixed(0);
+    grossTotal = discountedAmount;
 }else{
     
     totalPayment = parseFloat(grossTotal).toFixed(0);
@@ -1298,7 +1299,7 @@ $(document).ready(function() {
             // Calculate the discounted amount
             //discountedAmount = (grossTotal - (grossTotal * (discount / 100))).toFixed(2);
             // Check if the discount is 100%
-    if (discount === 100) {
+    if (discount === 100.0) {
       discountedAmount = 0; // Set the discounted amount to 0 if the discount is 100%
   } else {
       discountedAmount = (grossTotal - (grossTotal * (discount / 100))).toFixed(2);
