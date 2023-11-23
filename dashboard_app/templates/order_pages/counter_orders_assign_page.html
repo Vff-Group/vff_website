@@ -1296,7 +1296,13 @@ $(document).ready(function() {
             discount = parseFloat($(this).val());
 
             // Calculate the discounted amount
-            discountedAmount = (grossTotal - (grossTotal * (discount / 100))).toFixed(2);
+            //discountedAmount = (grossTotal - (grossTotal * (discount / 100))).toFixed(2);
+            // Check if the discount is 100%
+    if (discount === 100) {
+      discountedAmount = 0; // Set the discounted amount to 0 if the discount is 100%
+  } else {
+      discountedAmount = (grossTotal - (grossTotal * (discount / 100))).toFixed(2);
+  }
             
             discountAmount = (grossTotal * (discount / 100)).toFixed(2);
             discountAmount = parseFloat(discountAmount).toFixed(2);
