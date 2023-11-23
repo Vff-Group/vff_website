@@ -1140,7 +1140,10 @@ def view_order_detail(request,orderid):
             orderTakenEpoch = epochToDateTime(oepoch)
             if orderStatus != "Completed":
                 deliveryEpoch = "Not Delivered Yet"
-            sub_items.append(row[33])
+            cat_name=row[32]
+            if cat_name != 'DRY CLEAN':
+                sub_items.append(row[33])
+            
             data.append({
                 'consmrid': row[0],
                 'usrid': row[1],
@@ -1312,6 +1315,7 @@ def view_order_detail(request,orderid):
             
         print(f'OrderID::{first_order_id}')
         print(f'sub_items:::{sub_items}')
+        print(f'sub_cat_name:::{sub_cat_name}')
         print(f'wants_delivery:::{wants_delivery}')
         print(f'order_taken_on:::{order_taken_on}')
         
@@ -1742,7 +1746,9 @@ def print_label_tags(request,orderid):
             orderTakenEpoch = epochToDateTime(oepoch)
             if orderStatus != "Completed":
                 deliveryEpoch = "Not Delivered Yet"
-            sub_items.append(row[33])
+            cat_name=row[32]
+            if cat_name != 'DRY CLEAN':
+                sub_items.append(row[33])
             data.append({
                 'consmrid': row[0],
                 'usrid': row[1],
