@@ -1296,7 +1296,7 @@ $(document).ready(function() {
             discount = parseFloat($(this).val());
 
             // Calculate the discounted amount
-            discountedAmount = grossTotal - (grossTotal * (discount / 100)).toFixed(0);
+            discountedAmount = grossTotal - (grossTotal * (discount / 100)).toFixed(2);
             
             discountAmount = (grossTotal * (discount / 100)).toFixed(2);
             discountAmount = parseFloat(discountAmount).toFixed(2);
