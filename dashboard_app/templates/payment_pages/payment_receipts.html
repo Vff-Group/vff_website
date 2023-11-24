@@ -435,8 +435,11 @@ function generatePDF() {
                       }else{
                         filter = '<p class="text-xxs text-secondary mb-0">[ '+item.razor_pay_payment_id+' ]</p> '
                       }
-
-                      if(item.igstamount !== 0.0){
+                      console.log("item.gstamount:::"+item.gstamount);
+                      console.log("item.igstamount:::"+item.igstamount);
+                      if(item.gstamount === '0.0' && item.igstamount === '0.0'){
+                        tax_filter = '₹'+item.igstamount+'/-'
+                      }else if(item.igstamount !== '0.0'){
                         tax_filter = '₹'+item.igstamount+'/- [IGST]'
                       }else{
                         tax_filter = '₹'+item.gstamount+'/- [GST]'
