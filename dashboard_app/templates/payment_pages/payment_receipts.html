@@ -91,6 +91,11 @@
                         <th
                           class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
                         >
+                          Tax Amount
+                        </th>
+                        <th
+                          class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        >
                           Payment Type
                         </th>
                         <th
@@ -183,7 +188,8 @@ function generateExcel() {
   var orderId = rows.length > 1 ? rows[1][2] : 'UnknownOrderID';
 
   // Generate the Excel file name with customer name and order id
-  var fileName = 'payment_receipt_' + customerName + '_' + orderId + '.xlsx';
+  //var fileName = 'payment_receipt_' + customerName + '_' + orderId + '.xlsx';
+  var fileName = 'payment_receipt.xlsx';
 
   // Generate and download the Excel file
   XLSX.writeFile(workbook, fileName);
@@ -406,11 +412,8 @@ function generatePDF() {
                     var total_gst = parseFloat(data.total_gst);
                     var total_igst = parseFloat(data.total_igst);
                     var totalTax = 0
-                    if(total_igst > 0){
-                      totalTax = total_igst;
-                    }else{
-                      totalTax = total_gst;
-                    }
+                    totalTax = total_gst + total_igst;
+                    
                     //Total Amount
                     var amountLabel = document.querySelector('#total-amount');
                     amountLabel.textContent = 'Total Amount: ₹. ' + total_amount.toFixed(2)+'/-';
@@ -426,11 +429,17 @@ function generatePDF() {
                       if(item.note === 'NA'){
                         item.note = '-'
                       }
-                      var filter = ''
+                      var filter = '',tax_filter = ''
                       if(item.payment_type === "Cash"){
                         filter = ''
                       }else{
                         filter = '<p class="text-xxs text-secondary mb-0">[ '+item.razor_pay_payment_id+' ]</p> '
+                      }
+
+                      if(item.igstamount !== 0.0){
+                        tax_filter = '₹'+item.igstamount+'/- [IGST]'
+                      }else{
+                        tax_filter = '₹'+item.gstamount+'/- [GST]'
                       }
                         var newRow = '<tr>' +
                             '<td  class="text-center"> <p class="text-xs text-secondary mb-0">' + (index + 1) + '</p> </td>' +
@@ -438,6 +447,7 @@ function generatePDF() {
                             '<td> <p class="text-xs text-secondary mb-0"> ORD#' + item.order_id + '</p> </td>' +
                             '<td> <p class="text-xs text-secondary mb-0">' + item.customer + '</p> </td>' +
                             '<td  class="text-center"> <p class="text-xs text-secondary mb-0">₹' + item.amount + '/-</p> </td>' +
+                            '<td  class="text-center"> <p class="text-xs text-secondary mb-0">₹' + tax_filter + '/-</p> </td>' +
                             '<td class="text-center"> <p class="text-xs text-secondary mb-0">' + item.payment_type + '</p> '+filter+'</td>' +
                             '<td class="text-center"> <p class="text-xs text-secondary mb-0">' + item.note + '</p> </td>' +
                             '</tr>';

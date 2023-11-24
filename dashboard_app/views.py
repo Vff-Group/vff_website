@@ -3627,7 +3627,7 @@ def load_payment_receipt(request, start_date, end_date):
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
     # context = {'query_result': data,'current_url': current_url,'error_msg':error_msg}
-    return JsonResponse({'data':data,'total_amount':total_amount,'total_gst':total_gst,'total_igst':total_igst})
+    return JsonResponse({'data':data,'total_amount':total_amount,'total_gst':total_gst,'total_igst':total_igst,'total_tax':total_tax})
     return render(request, 'payment_pages/payment_receipts.html', {'current_url': current_url,'data':data})
 
 
