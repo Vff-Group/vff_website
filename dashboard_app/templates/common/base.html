@@ -205,6 +205,11 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
         </div>
       </div>
     </div>
+    <audio id="notificationSound" style="display: none;">
+      <source src="{% static 'audio/new_order_ringtone.mp3' %}" type="audio/mpeg">
+      Your browser does not support the audio element.
+  </audio>
+  
     <aside
       class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3"
       id="sidenav-main"
@@ -1992,5 +1997,34 @@ function showToast(message, bodyContent) {
   
 </script>
 
+<script>
+  // Function to play notification sound
+function playNotificationSound() {
+  var notificationSound = document.getElementById('notificationSound');
+  notificationSound.play();
+}
+
+// Function to check for new notifications using AJAX
+function checkForNewNotifications() {
+  $.ajax({
+      url: '/check_notifications/', // Replace with your Django endpoint
+      type: 'GET',
+      success: function(response) {
+          if (response.hasNewNotification) {
+              // Play sound and show modal or update UI
+              playNotificationSound();
+              $('#notificationModal').modal('show');
+          }
+      },
+      error: function(error) {
+          console.error('Error checking notifications:', error);
+      }
+  });
+}
+
+// Check for new notifications every 30 seconds (for example)
+setInterval(checkForNewNotifications, 30000);
+
+</script>
   </body>
 </html>
