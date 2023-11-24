@@ -3592,11 +3592,22 @@ def load_payment_receipt(request, start_date, end_date):
     total_amount = 0
     total_gst = 0
     total_igst = 0
+    total_tax = 0
     if not query_result == 500:
         for row in query_result:
+            total_tax 
             total_amount += float(row[3])
-            total_gst += float(row[7])
-            total_igst += float(row[8])
+            gst = float(row[7])
+            print(f'gst::{gst}')
+            total_gst += gst
+            print(f'total_gst::{total_gst}')
+            igst = float(row[8])
+            print(f'igst::{igst}')
+            total_igst += igst
+            print(f'total_igst::{total_igst}')
+            total_tax += (gst + igst)
+            print(f'total_tax::{total_tax}')
+            
             data.append({
                 'date': row[0],
                 'order_id': row[1],
