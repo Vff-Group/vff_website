@@ -447,7 +447,7 @@ function generatePDF() {
                             '<td> <p class="text-xs text-secondary mb-0"> ORD#' + item.order_id + '</p> </td>' +
                             '<td> <p class="text-xs text-secondary mb-0">' + item.customer + '</p> </td>' +
                             '<td  class="text-center"> <p class="text-xs text-secondary mb-0">₹' + item.amount + '/-</p> </td>' +
-                            '<td  class="text-center"> <p class="text-xs text-secondary mb-0">₹' + tax_filter + '/-</p> </td>' +
+                            '<td  class="text-center"> <p class="text-xs text-secondary mb-0">' + tax_filter + '</p> </td>' +
                             '<td class="text-center"> <p class="text-xs text-secondary mb-0">' + item.payment_type + '</p> '+filter+'</td>' +
                             '<td class="text-center"> <p class="text-xs text-secondary mb-0">' + item.note + '</p> </td>' +
                             '</tr>';
