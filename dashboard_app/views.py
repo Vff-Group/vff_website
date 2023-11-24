@@ -2104,13 +2104,13 @@ def generate_bill(request, orderid):
         if gstamount != 0 and gstamount != 0.0 :
             totalGST = (total_cost * 18) / 100
             print(f'totalGST::{totalGST}')
-            state_gst = totalGST / 2
-            central_gst = totalGST / 2
-            gst_amount = totalGST
+            state_gst = gstamount / 2
+            central_gst = gstamount / 2
+            gst_amount = gstamount
             if total_cost < range_price:
-                total_cost += totalGST + delivery_price
+                total_cost += gstamount + delivery_price
             else:
-                total_cost += totalGST
+                total_cost += gstamount
                 delivery_price = 0
         else:
             if total_cost < range_price:
