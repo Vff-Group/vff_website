@@ -9,13 +9,12 @@
 
 
   <div class="container-fluid py-4">
+    <h5> {{ request.session.branch_name }}- [{{request.session.branch_address}}]</h5>
     <div class="row">
       <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
         <a href="{% url 'dashboard_app:sales_report' %}">
         <div class="card">
-          <div class="card-header">
-           <h5> {{ request.session.branch_name }}- [{{request.session.branch_address}}]</h5>
-          </div>
+          
           <div class="card-body p-3">
             <div class="row">
               <div class="col-8">
