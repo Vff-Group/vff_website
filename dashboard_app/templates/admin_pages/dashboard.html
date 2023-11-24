@@ -1,5 +1,5 @@
 {% extends 'common/base.html' %} 
-{% block title %}Dashboard [{{ request.session.branch_name }}] {% endblock title%}
+{% block title %}Dashboard -{{ request.session.branch_name }}- [{{request.session.branch_address}}] {% endblock title%}
 {% load static %} {% block content %}
 
 
