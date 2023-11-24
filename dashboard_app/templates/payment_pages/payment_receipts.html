@@ -172,8 +172,8 @@ function generateExcel() {
   // Add the footer data to the last row of the table
   var footerRow = [];
   footerRow.length = headers.length;
-  footerRow[headers.length - 3] = totalAmount; // Add totalAmount to the third last column
-  footerRow[headers.length - 2] = totalTaxAmount; // Add totalTaxAmount to the second last column
+  footerRow[headers.length - 4] = totalAmount; // Add totalAmount to the third last column
+  footerRow[headers.length - 3] = totalTaxAmount; // Add totalTaxAmount to the second last column
   rows.push(footerRow);
 
   // Create a worksheet with headers and data
