@@ -3598,15 +3598,15 @@ def load_payment_receipt(request, start_date, end_date):
             total_tax 
             total_amount += float(row[3])
             gst = float(row[7])
-            print(f'gst::{gst}')
+            
             total_gst += gst
-            print(f'total_gst::{total_gst}')
+            
             igst = float(row[8])
-            print(f'igst::{igst}')
+            
             total_igst += igst
-            print(f'total_igst::{total_igst}')
+            
             total_tax += (gst + igst)
-            print(f'total_tax::{total_tax}')
+            
             
             data.append({
                 'date': row[0],
