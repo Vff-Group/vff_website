@@ -6,10 +6,15 @@ from django.conf.urls.static import static
 app_name = 'dashboard_app' #nameSpaceses
 
 urlpatterns = [
+    #Login
     path('',views.login_view,name='login'),
+    #All Branches after login
     path('all_branches/',views.all_branches,name='all_branches'),
+    #Saving branch related details
     path('selected_branch/',views.save_selected_branch,name='selected_branches'),
+    #Main Dashboard
     path('dashboard/',views.dashboard,name='dashboard'),
+    #Search by number or Order ID
     path('search/',views.search_orderid_or_mobile_number,name='search'),
     path('customers/',views.all_customers,name='customers'),
     path('customers/add_customer/',views.add_customer,name='add_customer'),
