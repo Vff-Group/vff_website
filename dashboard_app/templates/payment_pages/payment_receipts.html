@@ -437,9 +437,9 @@ function generatePDF() {
                       }
                       console.log("item.gstamount:::"+item.gstamount);
                       console.log("item.igstamount:::"+item.igstamount);
-                      if(item.gstamount === '0.0' && item.igstamount === '0.0'){
+                      if(item.gstamount === 0 && item.igstamount === 0){
                         tax_filter = '₹'+item.igstamount+'/-'
-                      }else if(item.igstamount !== '0.0'){
+                      }else if(item.igstamount !== 0){
                         tax_filter = '₹'+item.igstamount+'/- [IGST]'
                       }else{
                         tax_filter = '₹'+item.gstamount+'/- [GST]'
