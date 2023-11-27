@@ -2044,6 +2044,7 @@ function checkForNewNotifications() {
                   var address = notification.address;
                   var bookingId = notification.bookingid;
                   var timeAgo = calculateTimeAgo(notification.booking_done_timing);
+                  var bookingUrl = "{% url 'dashboard_app:all_unassigned_bookings' %}";
                   // Create HTML elements to display notification data
                   var notificationHtml = `
                   <ul class="navbar-nav">
