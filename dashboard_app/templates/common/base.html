@@ -2024,6 +2024,12 @@ function playNotificationSound() {
   notificationSound.play();
 }
 
+function stopNotificationSound() {
+  var notificationSound = document.getElementById('notificationSound');
+  notificationSound.pause();
+  notificationSound.currentTime = 0;
+}
+
 // Function to check for new notifications using AJAX
 function checkForNewNotifications() {
   $.ajax({
@@ -2092,6 +2098,11 @@ function checkForNewNotifications() {
 
 // Check for new notifications every 30 seconds (for example)
 setInterval(checkForNewNotifications, 30000);
+
+// When the modal is hidden or closed, stop the notification sound
+$('#notificationModal').on('hidden.bs.modal', function () {
+  stopNotificationSound();
+});
 
 </script>
   </body>
