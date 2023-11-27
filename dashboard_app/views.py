@@ -1743,6 +1743,7 @@ def assigned_delivery_boy(request,orderid):
 def update_order_status_new(request,order_id,booking_id):
     alert_delivery_boy = ""
     if request.method == "POST":
+        print(request.POST) 
         order_status = request.POST.get('order-status')
         order_taken_on = request.POST.get('order_taken_on')
         delivery_price = request.POST.get('delivery_price')
