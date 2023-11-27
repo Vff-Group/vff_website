@@ -1749,7 +1749,7 @@ def update_order_status_new(request,order_id,booking_id):
         delivery_price = request.POST.get('delivery_price')
         wants_delivery = request.POST.get('wants_delivery')
         delivery_boy_id_default = '-1'
-        delivery_boy_id_default = request.POST.get('delivery-boy-id-selected')
+        delivery_boy_id_default = request.POST.get('selectedDeliveryBoyId')
         print(f'delivery_boy_id_default::{delivery_boy_id_default}')
         if not delivery_boy_id_default:
             delivery_boy_id_default='-1'
