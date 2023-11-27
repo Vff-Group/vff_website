@@ -1750,6 +1750,7 @@ def update_order_status_new(request,order_id,booking_id):
         delivery_boy_id_default = '-1'
         if 'delivery-boy' in request.POST:
             delivery_boy_id_default = request.POST.get('delivery-boy')
+            print(f'delivery_boy_id_default::{delivery_boy_id_default}')
             if not delivery_boy_id_default:
                 delivery_boy_id_default='-1'
         # order_id = request.session.get('order_id')
