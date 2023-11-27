@@ -1703,15 +1703,15 @@ def check_notifications(request):
     sub_items = []    
     if not query_result == 500:
         for row in query_result:
-            depoch = row[5]
-            bookingEpoch = epochToDateTime(depoch)
+            
+            #bookingEpoch = epochToDateTime(depoch)
             data.append({
                 'bookingid': row[0],
                 'address': row[1],
                 'city': row[2],
                 'pincode': row[3],
                 'landmark': row[4],
-                'booking_done_timing': bookingEpoch,
+                'booking_done_timing': row[5],
                 'customer_name': row[6],
                 'customer_profile': row[7],   
             })    
