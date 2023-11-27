@@ -1692,7 +1692,7 @@ def check_notifications(request):
     today_date = datetime.now().strftime("%Y-%m-%d")
     print(today_date)
     
-    query = "select notification_id,title,body,date,laundry_notificationtbl.epoch,order_id,booking_id,customer_name,profile_img from vff.laundry_customertbl,vff.laundry_notificationtbl,vff.usertbl where laundry_notificationtbl.sender_id=laundry_customertbl.usrid and laundry_customertbl.usrid=usertbl.usrid and laundry_notificationtbl.date='"+str(today_date)+"' and laundry_notificationtbl.branch_id='"+str(branch_id)+"' and title='Pickup Request' and reciever_id='-1'  order by notification_id desc order by notification_id desc" #and title='Pickup Request' 
+    query = "select notification_id,title,body,date,laundry_notificationtbl.epoch,order_id,booking_id,customer_name,profile_img from vff.laundry_customertbl,vff.laundry_notificationtbl,vff.usertbl where laundry_notificationtbl.sender_id=laundry_customertbl.usrid and laundry_customertbl.usrid=usertbl.usrid and laundry_notificationtbl.date='"+str(today_date)+"' and laundry_notificationtbl.branch_id='"+str(branch_id)+"' and title='Pickup Request' and reciever_id='-1'  order by notification_id desc" #and title='Pickup Request' 
     
     query_result = execute_raw_query(query)
     print(f'query_result:::{query_result}')
