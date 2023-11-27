@@ -1982,7 +1982,8 @@ def check_notifications(request):
     else:
         error_msg = 'Something Went Wrong'
         
-    
+    if len(data) == 0:
+        return JsonResponse({'noData':'No New Order Found'})
     
     context ={'query_result':data}
     

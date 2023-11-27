@@ -482,13 +482,16 @@ printWindow.close();
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 
 <script>
-  // Update hidden input field value on delivery boy selection
+  
+
+  $(document).ready(function () {
+
+    // Update hidden input field value on delivery boy selection
 $('#delivery-boy').change(function () {
   var selectedDeliveryBoyId = $(this).val();
   $('#selectedDeliveryBoyId').val(selectedDeliveryBoyId);
 });
 
-  $(document).ready(function () {
     $('#input-order-status').change(function () {
       var selectedOption = $(this).val();
   
