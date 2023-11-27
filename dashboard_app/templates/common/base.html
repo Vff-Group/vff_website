@@ -218,7 +218,8 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
           </div>
           <div class="modal-body">
               <img src="{% static 'img/new_notification_image.jpg'%}" id="notificationImage" class="img-fluid" alt="Notification Image" style="height:50%; width: fit-content;">
-              <p class="mt-3" id="notificationDescription">NOtification Description</p>
+              <p class="mt-3" id="notificationDescription">No Delivery Boy was Free</p>
+              <div id="notificationContent"></div>
           </div>
       </div>
   </div>
@@ -2032,7 +2033,33 @@ function checkForNewNotifications() {
           if (response.query_result) {
               // Play sound and show modal or update UI
               playNotificationSound();
-              $('#notificationModal').modal('show');
+             // $('#notificationModal').modal('show');
+             var notificationContent = $('#notificationContent');
+              notificationContent.empty(); // Clear previous content
+
+              // Iterate through each notification and populate modal body
+              response.query_result.forEach(function(notification) {
+                  var profileImg = notification.customer_profile;
+                  var customerName = notification.customer_name;
+                  var address = notification.address;
+                  var bookingId = notification.bookingid;
+
+                  // Create HTML elements to display notification data
+                  var notificationHtml = `
+                      <div class="notification-item">
+                          <img src="${profileImg}" class="profile-img" alt="Profile Image">
+                          <p><strong>Customer Name:</strong> ${customerName}</p>
+                          <p><strong>Address:</strong> ${address}</p>
+                          <p><strong>Booking ID:</strong> ${bookingId}</p>
+                      </div>
+                  `;
+
+                  // Append notification data to the modal body
+                  notificationContent.append(notificationHtml);
+              });
+
+              $('#notificationModal').modal('show'); // Show the modal
+
           }
       },
       error: function(error) {
