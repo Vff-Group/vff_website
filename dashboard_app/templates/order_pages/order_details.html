@@ -532,7 +532,8 @@ printWindow.close();
         console.log('selectedDeliveryBoy::'+selectedDeliveryBoy);
         // Set the initial value of the hidden input field
       $('#selectedDeliveryBoyId').val(selectedDeliveryBoy);
-        
+      var dboy = $('#selectedDeliveryBoyId').val();
+      console.log('DeliveryBoy::'+dboy);
         // Check if a delivery boy is selected
         if (!selectedDeliveryBoy) {
           event.preventDefault(); // Prevent form submission
