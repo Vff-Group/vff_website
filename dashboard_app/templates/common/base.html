@@ -2018,6 +2018,10 @@ function showToast(message, bodyContent) {
 </script>
 
 <script>
+  // Function to check if the current URL matches a specific path
+function isCounterOrdersScreen() {
+  return window.location.pathname === '/admin_dashboard/counter_orders_screen/';
+}
   // Function to play notification sound
 function playNotificationSound() {
   var notificationSound = document.getElementById('notificationSound');
@@ -2032,6 +2036,11 @@ function stopNotificationSound() {
 
 // Function to check for new notifications using AJAX
 function checkForNewNotifications() {
+  // Check if the current URL is the counter orders screen
+  if (isCounterOrdersScreen()) {
+    // Don't check for notifications on this page
+    return;
+  }
   $.ajax({
       url: '/admin_dashboard/check_notifications/', // Replace with your Django endpoint
       type: 'GET',
