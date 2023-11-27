@@ -487,10 +487,10 @@ printWindow.close();
   $(document).ready(function () {
 
     // Update hidden input field value on delivery boy selection
-$('#delivery-boy').change(function () {
-  var selectedDeliveryBoyId = $(this).val();
-  $('#selectedDeliveryBoyId').val(selectedDeliveryBoyId);
-});
+//$('#delivery-boy').change(function () {
+  //var selectedDeliveryBoyId = $(this).val();
+  //$('#selectedDeliveryBoyId').val(selectedDeliveryBoyId);
+//});
 
     $('#input-order-status').change(function () {
       var selectedOption = $(this).val();
@@ -529,7 +529,8 @@ $('#delivery-boy').change(function () {
   
       if (selectedOption === 'Out for Delivery') {
         var selectedDeliveryBoy = $('#delivery-boy').val();
-  
+        // Set the initial value of the hidden input field
+      $('#selectedDeliveryBoyId').val(selectedDeliveryBoy);
         // Check if a delivery boy is selected
         if (!selectedDeliveryBoy) {
           event.preventDefault(); // Prevent form submission
