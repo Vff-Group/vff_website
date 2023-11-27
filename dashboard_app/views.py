@@ -763,7 +763,7 @@ def get_all_delivery_boys(request):
     filter = ''
     if branch_id :
         filter = " and laundry_delivery_boytbl.branchid='"+str(branch_id)+"'"
-    query = " select laundry_delivery_boytbl.usrid,usrname,mobile_no,usertbl.address,lat,lng,age,gender,laundry_delivery_boytbl.branchid,delivery_boy_id,is_active,is_online,branch_name,usertbl.epoch,profile_img from vff.branchtbl,vff.laundry_delivery_boytbl,vff.usertbl where laundry_delivery_boytbl.usrid=usertbl.usrid and laundry_delivery_boytbl.branchid=branchtbl.branchid  "+filter+" order by usrname desc"
+    query = " select laundry_delivery_boytbl.usrid,usrname,mobile_no,usertbl.address,lat,lng,age,gender,laundry_delivery_boytbl.branchid,delivery_boy_id,is_active,is_online,branch_name,usertbl.epoch,profile_img from vff.branchtbl,vff.laundry_delivery_boytbl,vff.usertbl where laundry_delivery_boytbl.usrid=usertbl.usrid and laundry_delivery_boytbl.branchid=branchtbl.branchid and is_online='1' "+filter+" order by usrname desc"
     
     query_result = execute_raw_query(query)
     
@@ -1749,7 +1749,7 @@ def update_order_status_new(request,order_id,booking_id):
         delivery_price = request.POST.get('delivery_price')
         wants_delivery = request.POST.get('wants_delivery')
         delivery_boy_id_default = '-1'
-        delivery_boy_id_default = request.POST.get('selectedDeliveryBoyId')
+        delivery_boy_id_default = request.POST.get('delivery-boy-id-selected')
         print(f'delivery_boy_id_default::{delivery_boy_id_default}')
         if not delivery_boy_id_default:
             delivery_boy_id_default='-1'
