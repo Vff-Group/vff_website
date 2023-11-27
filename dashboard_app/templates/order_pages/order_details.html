@@ -337,7 +337,8 @@
                 </div>
               </div>
 
-
+<!-- Hidden input field to store the selected delivery boy ID -->
+<input type="hidden" id="selectedDeliveryBoyId" name="selectedDeliveryBoyId">
               
               {% if order_status != 'Completed' %}
               <!-- Add a div for the delivery boys dropdown -->
@@ -347,6 +348,7 @@
     <!-- Delivery boys will be populated here dynamically -->
   </select>
 </div>
+
 
               <div class="col">
                 <form method="post" action="{% url 'dashboard_app:update_order_status' order_id booking_id%}">
@@ -480,6 +482,12 @@ printWindow.close();
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 
 <script>
+  // Update hidden input field value on delivery boy selection
+$('#delivery-boy').change(function () {
+  var selectedDeliveryBoyId = $(this).val();
+  $('#selectedDeliveryBoyId').val(selectedDeliveryBoyId);
+});
+
   $(document).ready(function () {
     $('#input-order-status').change(function () {
       var selectedOption = $(this).val();
