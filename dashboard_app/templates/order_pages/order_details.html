@@ -540,7 +540,9 @@ printWindow.close();
           event.preventDefault(); // Prevent form submission
   
           // Show a message (you can replace this with a toast or alert)
-          alert('Please select a delivery boy before processing.');
+          //alert('Please select a delivery boy before processing.');
+          showToast('Alert','Please select a Delivery Boy before Processing Further.')
+          return;
         }
         //event.preventDefault();
         //return;
@@ -548,6 +550,39 @@ printWindow.close();
     });
   });
   
+  // Function to show a toast message
+function showToast(message, bodyContent) {
+  toastr.warning(bodyContent, message, {
+    positionClass: "toast-top-right",
+    timeOut: 5e3,
+    closeButton: !0,
+    debug: !1,
+    newestOnTop: !0,
+    progressBar: !0,
+    preventDuplicates: !0,
+    onclick: null,
+    showDuration: "300",
+    hideDuration: "1000",
+    extendedTimeOut: "1000",
+    showEasing: "swing",
+    hideEasing: "linear",
+    showMethod: "fadeIn",
+    hideMethod: "fadeOut",
+    tapToDismiss: !1
+})
+    // Get the toast element and its content
+    /*var toastElement = document.getElementById("liveToast");
+    var toastBody = toastElement.querySelector(".toast-body");
+
+    // Update the toast content with the provided message and body content
+    toastBody.textContent = bodyContent;
+
+    // Show the toast
+    var toast = new bootstrap.Toast(toastElement);
+    toast.show();*/
+}
+
+
 </script>
 {% endblock  %}
 
