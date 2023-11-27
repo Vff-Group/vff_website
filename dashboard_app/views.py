@@ -1577,6 +1577,7 @@ def update_order_status(request,order_id,booking_id):
                     redirect_url += f'?no_delivery={alert_delivery_boy}'
                     return HttpResponseRedirect(redirect_url)
                     #redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id}))
+            
             if order_status == "Out for Delivery" and deliveryBoyID != '-1':
                 
                 jfilter = "" 
@@ -1684,6 +1685,48 @@ def update_order_status(request,order_id,booking_id):
                     print(f"Error loading data: {e}")
                    
     return redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id}))
+
+#Get New Notifications for today
+def check_notifications(request):
+    branch_id = request.session.get('branchid')
+    today_date = datetime.now().strftime("%Y-%m-%d")
+    print(today_date)
+    
+    query = "select notification_id,title,body,date,laundry_notificationtbl.epoch,order_id,booking_id,customer_name,profile_img from vff.laundry_customertbl,vff.laundry_notificationtbl,vff.usertbl where laundry_notificationtbl.sender_id=laundry_customertbl.usrid and laundry_customertbl.usrid=usertbl.usrid and laundry_notificationtbl.date='"+str(today_date)+"' and laundry_notificationtbl.branch_id='"+str(branch_id)+"' and title='Pickup Request' and reciever_id='-1'  order by notification_id desc order by notification_id desc" #and title='Pickup Request' 
+    
+    query_result = execute_raw_query(query)
+    print(f'query_result:::{query_result}')
+    
+        
+    data = []
+    sub_items = []    
+    if not query_result == 500:
+        for row in query_result:
+            depoch = row[4]
+            bookingEpoch = epochToDateTime(depoch)
+            data.append({
+                'notification_id': row[0],
+                'title': row[1],
+                'body': row[2],
+                'date': row[3],
+                'epoch': bookingEpoch,
+                'order_id': row[5],
+                'booking_id': row[6],
+                'customer_name': row[8],
+                'customer_profile': row[9],
+                
+               
+            })    
+    else:
+        error_msg = 'Something Went Wrong'
+        
+    
+    
+    context ={'query_result':data}
+    
+    
+    return JsonResponse(context)
+
 
 #Get New Notifications for today
 def get_todays_notification(request):

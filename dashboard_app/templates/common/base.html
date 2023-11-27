@@ -205,6 +205,25 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
         </div>
       </div>
     </div>
+
+    <!-- Modal for notifications -->
+<div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="notificationModalLabel">New Notification</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <img src="{% static 'img/new_notification_image.jpg'%}" id="notificationImage" class="img-fluid" alt="Notification Image" style="height:50%; width: fit-content;">
+              <p class="mt-3" id="notificationDescription">NOtification Description</p>
+          </div>
+      </div>
+  </div>
+</div>
+
     <audio id="notificationSound" style="display: none;">
       <source src="{% static 'audio/new_order_ringtone.mp3' %}" type="audio/mpeg">
       Your browser does not support the audio element.
@@ -2007,10 +2026,10 @@ function playNotificationSound() {
 // Function to check for new notifications using AJAX
 function checkForNewNotifications() {
   $.ajax({
-      url: '/check_notifications/', // Replace with your Django endpoint
+      url: '/admin_dashboard/check_notifications/', // Replace with your Django endpoint
       type: 'GET',
       success: function(response) {
-          if (response.hasNewNotification) {
+          if (response.query_result) {
               // Play sound and show modal or update UI
               playNotificationSound();
               $('#notificationModal').modal('show');
