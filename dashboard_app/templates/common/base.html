@@ -1974,7 +1974,7 @@ function showToast(message, bodyContent) {
     var filteredNotifications = notifications.filter(function (notification) {
       return (
         notification.customer_name.toLowerCase().includes(searchTerm) ||
-        notification.booking_id.toLowerCase().includes(searchTerm)
+        notification.booking_id.includes(searchTerm)
       );
     });
 
