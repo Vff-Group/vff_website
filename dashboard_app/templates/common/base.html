@@ -770,10 +770,14 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-    <div class="input-group mb-3">
-      <input type="text" class="form-control" placeholder="Search notifications..." id="notificationSearchInput">
-      <button class="btn btn-outline-secondary" type="button" id="notificationSearchButton">Search</button>
-    </div>
+    <!-- Add this input field for searching customer names -->
+    <div class="form-group">
+    <input class="form-control form-control-alternative"
+    type="search" type="text" id="searchInput" placeholder="Search by customer name">
+  </div>
+    <!-- Add this label for displaying "No data found" message -->
+    <p id="noDataFound" class="text-center" style="display: none;">No data found</p>
+
     <div id="notificationsContent"></div>
   </div>
 </div>
@@ -1921,6 +1925,9 @@ function showToast(message, bodyContent) {
 </script>
 <script>
   $(document).ready(function () {
+    //TO Store All Notifications
+    var allNotifications = [];
+
     $('#notificationBell').on('click', function () {
 
       // Get the CSRF token from the cookie
@@ -1948,13 +1955,34 @@ function showToast(message, bodyContent) {
         },
         contentType: 'application/json',
         success: function (data) {
-          displayNotifications(data.query_result);
+          allNotifications = data.query_result;
+          displayNotifications(allNotifications);
         },
         error: function (error) {
           console.error('Error fetching notifications:', error);
         }
       });
     });
+  });
+
+  // Search functionality for customer names or booking IDs
+  $('#searchInput').on('input', function () {
+    var searchTerm = $(this).val().toLowerCase();
+    var notifications = allNotifications;
+
+    var filteredNotifications = notifications.filter(function (notification) {
+      return (
+        notification.customer_name.toLowerCase().includes(searchTerm) ||
+        notification.booking_id.toLowerCase().includes(searchTerm)
+      );
+    });
+
+    displayNotifications(filteredNotifications);
+    if (filteredNotifications.length === 0) {
+      $('#noDataFound').show();
+    } else {
+      $('#noDataFound').hide();
+    }
   });
 
   function displayNotifications(notifications) {
