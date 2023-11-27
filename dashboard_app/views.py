@@ -1692,7 +1692,8 @@ def check_notifications(request):
     today_date = datetime.now().strftime("%Y-%m-%d")
     print(today_date)
     
-    query = "select notification_id,title,body,date,laundry_notificationtbl.epoch,order_id,booking_id,customer_name,profile_img from vff.laundry_customertbl,vff.laundry_notificationtbl,vff.usertbl where laundry_notificationtbl.sender_id=laundry_customertbl.usrid and laundry_customertbl.usrid=usertbl.usrid and laundry_notificationtbl.date='"+str(today_date)+"' and laundry_notificationtbl.branch_id='"+str(branch_id)+"' and title='Pickup Request' and reciever_id='-1'  order by notification_id desc" #and title='Pickup Request' 
+    # query = "select notification_id,title,body,date,laundry_notificationtbl.epoch,order_id,booking_id,customer_name,profile_img from vff.laundry_customertbl,vff.laundry_notificationtbl,vff.usertbl where laundry_notificationtbl.sender_id=laundry_customertbl.usrid and laundry_customertbl.usrid=usertbl.usrid and laundry_notificationtbl.date='"+str(today_date)+"' and laundry_notificationtbl.branch_id='"+str(branch_id)+"' and title='Pickup Request' and reciever_id='-1'  order by notification_id desc" #and title='Pickup Request' 
+    query="select bookingid,laundry_order_bookingtbl.address,laundry_order_bookingtbl.city,laundry_order_bookingtbl.pincode,laundry_order_bookingtbl.landmark,time_at,customer_name,profile_img from vff.laundry_customertbl,vff.laundry_order_bookingtbl,vff.usertbl where laundry_order_bookingtbl.customerid=laundry_customertbl.consmrid and laundry_customertbl.usrid=usertbl.usrid and booking_status='NA' and booking_date='"+str(today_date)+"' and branch_id='"+str(branch_id)+"' and booking_status='NA' and delivery_boy_id='-1' order by bookingid desc"
     
     query_result = execute_raw_query(query)
     print(f'query_result:::{query_result}')
@@ -1702,20 +1703,17 @@ def check_notifications(request):
     sub_items = []    
     if not query_result == 500:
         for row in query_result:
-            depoch = row[4]
+            depoch = row[5]
             bookingEpoch = epochToDateTime(depoch)
             data.append({
-                'notification_id': row[0],
-                'title': row[1],
-                'body': row[2],
-                'date': row[3],
-                'epoch': bookingEpoch,
-                'order_id': row[5],
-                'booking_id': row[6],
-                'customer_name': row[7],
-                'customer_profile': row[8],
-                
-               
+                'bookingid': row[0],
+                'address': row[1],
+                'city': row[2],
+                'pincode': row[3],
+                'landmark': row[4],
+                'booking_done_timing': bookingEpoch,
+                'customer_name': row[6],
+                'customer_profile': row[7],   
             })    
     else:
         error_msg = 'Something Went Wrong'
