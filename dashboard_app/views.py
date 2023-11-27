@@ -1753,6 +1753,7 @@ def update_order_status_new(request,order_id,booking_id):
         print(f'delivery_boy_id_default::{delivery_boy_id_default}')
         if not delivery_boy_id_default:
             delivery_boy_id_default='-1'
+        print(f'After delivery_boy_id_default::{delivery_boy_id_default}')
         # order_id = request.session.get('order_id')
         userid = request.session.get('userid')
         order_completed  = "0"
