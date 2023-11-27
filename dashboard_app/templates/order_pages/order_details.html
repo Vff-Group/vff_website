@@ -336,8 +336,18 @@
                   </form>
                 </div>
               </div>
+
+
               
               {% if order_status != 'Completed' %}
+              <!-- Add a div for the delivery boys dropdown -->
+<div id="deliveryBoyDropdown" style="display: none;">
+  <label for="delivery-boy">Select Delivery Boy:</label>
+  <select class="form-control" id="delivery-boy" name="delivery-boy">
+    <!-- Delivery boys will be populated here dynamically -->
+  </select>
+</div>
+
               <div class="col">
                 <form method="post" action="{% url 'dashboard_app:update_order_status' order_id booking_id%}">
                     {% csrf_token %}
@@ -465,6 +475,61 @@ printWindow.close();
     //document.getElementById('printButton').addEventListener('click', function () {
       //  window.print();
     //});
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    $('#input-order-status').change(function () {
+      var selectedOption = $(this).val();
+  
+      if (selectedOption === 'Out for Delivery') {
+        // Show the delivery boys dropdown
+        $('#deliveryBoyDropdown').show();
+  
+        // Make an AJAX call to fetch delivery boys
+        $.ajax({
+          url: '/admin_dashboard/get_all_delivery_boys/',
+          type: 'GET',
+          success: function (response) {
+            // Populate the delivery boys dropdown
+            var deliveryBoyDropdown = $('#delivery-boy');
+            deliveryBoyDropdown.empty(); // Clear previous options
+  
+            // Add options for each delivery boy
+            response.deliveryBoys.forEach(function (deliveryBoy) {
+              deliveryBoyDropdown.append(`<option value="${deliveryBoy.delivery_boy_id}">${deliveryBoy.usrname}</option>`);
+            });
+          },
+          error: function (error) {
+            console.error('Error fetching delivery boys:', error);
+          }
+        });
+      } else {
+        // Hide the delivery boys dropdown if option changes
+        $('#deliveryBoyDropdown').hide();
+      }
+    });
+  
+    // Form submission validation
+    $('form').submit(function (event) {
+      var selectedOption = $('#input-order-status').val();
+  
+      if (selectedOption === 'Out for Delivery') {
+        var selectedDeliveryBoy = $('#delivery-boy').val();
+  
+        // Check if a delivery boy is selected
+        if (!selectedDeliveryBoy) {
+          event.preventDefault(); // Prevent form submission
+  
+          // Show a message (you can replace this with a toast or alert)
+          alert('Please select a delivery boy before processing.');
+        }
+      }
+    });
+  });
+  
 </script>
 {% endblock  %}
 

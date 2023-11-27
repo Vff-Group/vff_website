@@ -754,6 +754,51 @@ def delete_delivery_boy(request, usrid):
 
     return redirect('dashboard_app:customers')
 
+def get_all_delivery_boys(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    error_msg = "No Delivery Agents Data Found"
+    branch_id = request.session.get('branchid')
+    filter = ''
+    if branch_id :
+        filter = " and laundry_delivery_boytbl.branchid='"+str(branch_id)+"'"
+    query = " select laundry_delivery_boytbl.usrid,usrname,mobile_no,usertbl.address,lat,lng,age,gender,laundry_delivery_boytbl.branchid,delivery_boy_id,is_active,is_online,branch_name,usertbl.epoch,profile_img from vff.branchtbl,vff.laundry_delivery_boytbl,vff.usertbl where laundry_delivery_boytbl.usrid=usertbl.usrid and laundry_delivery_boytbl.branchid=branchtbl.branchid  "+filter+" order by usrname desc"
+    
+    query_result = execute_raw_query(query)
+    
+    
+        
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            epoch_time = row[13]
+            datetime_obj = datetime.utcfromtimestamp(epoch_time)
+            gmt_plus_0530 = pytz.timezone('Asia/Kolkata')
+            datetime_obj_gmt_plus_0530 = datetime_obj.replace(tzinfo=pytz.utc).astimezone(gmt_plus_0530)
+            formatted_datetime = datetime_obj_gmt_plus_0530.strftime('%Y-%m-%d %I:%M:%S %p')
+            data.append({
+                'usrid': row[0],
+                'usrname': row[1],
+                'mobno': row[2],
+                'address': row[3],
+                'lat': row[4],
+                'lng': row[5],
+                'age': row[6],
+                'gender': row[7],
+                'branchid': row[8],
+                'delivery_boy_id': row[9],
+                'active_status': row[10],
+                'is_online': row[11],
+                'branch_name': row[12],
+                'creation_date_time':formatted_datetime,
+                'profile_img': row[14],
+               
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+        
+    return JsonResponse({'deliveryBoys':data})
 #All Delivery Agents
 def all_delivery_agents(request):
     isLogin = is_loggedin(request)
