@@ -1375,14 +1375,20 @@ def view_order_detail(request,orderid):
     return render(request,'order_pages/order_details.html',context)
 
 #To Send notification to delivery boy for order ID
-def send_notification_to_delivery_boy(order_id,title,body,data,order_status):
+def send_notification_to_delivery_boy(order_id,title,body,data,order_status,delivery_boy_id_default):
     showAlert = ""
     usrname = ""
     delivery_boy_id = "-1"
-    if order_status == "Out for Delivery" or order_status=="Assigning":
-        query_token = "select usrname,mobile_no,device_token,delivery_boy_id,profile_img,usertbl.usrid from vff.laundry_delivery_boytbl,vff.usertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and is_online='1' and status='Free'"
-    else:
+    print(f'checking while notify delivery_boy_id_default::{delivery_boy_id_default}')
+    if delivery_boy_id_default =='-1':
+        
         query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
+    else:
+        query_token="select usrname,mobile_no,device_token,delivery_boy_id,profile_img,usertbl.usrid from vff.laundry_delivery_boytbl,vff.usertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and delivery_boy_id='"+str(delivery_boy_id_default)+"'"
+    # if order_status == "Out for Delivery" or order_status=="Assigning":
+    #     query_token = "select usrname,mobile_no,device_token,delivery_boy_id,profile_img,usertbl.usrid from vff.laundry_delivery_boytbl,vff.usertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and is_online='1' and status='Free'"
+    # else:
+    #     query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
     
     result = execute_raw_query_fetch_one(query_token)
     if result:  
@@ -1512,14 +1518,240 @@ def assigned_delivery_boy(request,orderid):
     context = {'query_result': data,'current_url': current_url,'error_msg':error_msg,'order_id':orderid}
     return render(request,'order_pages/all_assigning_delivery_boy.html',context)
 
-#Upadting Order Status        
-def update_order_status(request,order_id,booking_id):
+# def update_order_status(request,order_id,booking_id):
+#     alert_delivery_boy = ""
+#     if request.method == "POST":
+#         order_status = request.POST.get('order-status')
+#         order_taken_on = request.POST.get('order_taken_on')
+#         delivery_price = request.POST.get('delivery_price')
+#         wants_delivery = request.POST.get('wants_delivery')
+#         delivery_boy_id_default = '-1'
+#         if 'delivery-boy' in request.POST:
+#             delivery_boy_id_default = request.POST.get('delivery-boy')
+#         # order_id = request.session.get('order_id')
+#         userid = request.session.get('userid')
+#         order_completed  = "0"
+#         if order_status == "Completed":
+#             order_completed = "1"
+#         elif order_status == "Cancelled":
+#             order_completed = "2"
+#         else:
+#             order_completed = "0"
+#         print(f'Currentorder_status::{order_status}')
+#         print(f'Current_order_taken_on::{order_taken_on}')
+#         print(f'Current_delivery_price::{delivery_price}')
+        
+#         #To Check if Order is Already Assigned to Someone or what
+#         if (order_status == "Out for Delivery" and order_taken_on == 'App') or (wants_delivery == '1' and order_taken_on == 'OnCounter' and order_status == "Out for Delivery"):
+#             print('Entering Here Now')
+#             query_check = "select delivery_boy_id,orderid from vff.laundry_order_assignmenttbl,vff.laundry_ordertbl where laundry_ordertbl.orderid=laundry_order_assignmenttbl.order_id and laundry_ordertbl.booking_id=laundry_order_assignmenttbl.booking_id and type_of_order='Drop' and laundry_order_assignmenttbl.order_id='"+str(order_id)+"'"
+#             cresult = execute_raw_query_fetch_one(query_check)
+#             if cresult:
+#                 alert_delivery_boy = "Delivery boy Already Assigned To this Order."
+#                 redirect_url = reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id})
+#                 redirect_url += f'?no_delivery={alert_delivery_boy}'
+#                 return HttpResponseRedirect(redirect_url)
+#             #Sending Notification to Delivery Boy who is free to take orders
+#             query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
+#             result = execute_raw_query_fetch_one(query_token)
+#             if result:  
+#                 usrname = result[0] 
+#                 delivery_boy_id = result[3]
+#                 device_token = result[2]
+#                 try:
+#                     with connection.cursor() as cursor:
+#                         update_free = "update vff.laundry_delivery_boytbl set status='Free' where delivery_boy_id='"+str(delivery_boy_id)+"'"
+#                         cursor.execute(update_free)
+#                         connection.commit()
+
+#                 except Exception as e:
+#                     print(f"Error loading data: {e}")
+#         condition = wants_delivery == '1' and order_taken_on == "OnCounter" and order_status == "Completed"
+#         print(f'Condition::{condition}')            
+#         #if ((order_status == "Out for Delivery" and order_taken_on == 'App') or (delivery_price != '0.0' and order_taken_on == 'OnCounter' and order_status == "Out for Delivery")) or ((order_status == "Completed" and order_taken_on == 'App') or condition) or order_status == "Processing" or order_status == "Pick Up Done" or order_status== "Reached Store":
+#         if ((order_status == "Out for Delivery" and order_taken_on == 'App') or (wants_delivery == '1' and order_taken_on == 'OnCounter' and order_status == "Out for Delivery")):   
+#             print('Entering Here Now to send notification to delivery boy')
+#             #To Send for Delivery Boy
+#             if order_status !="Processing":
+#                 title = "VFF Group"
+#                 msg = "Delivery Package is ready pick it up from store"
+#                 if order_status == "Completed":
+#                     title = "Order Completed"
+#                     msg = "Laundry Package Delivery Successfully. Now You are free to accept new Orders"
+#                 # elif order_status == "Processing":
+#                 #     msg = "Processing has been started for Order ID : #"+str(order_id)+". You are now free to recieve new orders."
+#                 elif order_status == "Pick Up Done":
+#                     title = "Pick Up Done"
+#                     msg = "Laundry PickUp Done for Order ID : #"+str(order_id)+""
+#                 elif order_status == "Reached Store":
+#                     title = "Reached Store"
+#                     msg = "Now you are ready to Receive New Orders."
+#                 else:
+#                     msg = "Order ID #"+str(order_id)+" Assigned.\nDelivery Package is ready pick it up from store"
+
+#                 data = {
+
+#                      'order_id_pickup':order_id
+#                      }
+#                 notifyDeliveryBoy,deliveryBoyID,deliveryBOYName = send_notification_to_delivery_boy(order_id,title,msg,data,order_status)
+#                 print(f'deliveryBoyID::{deliveryBoyID}')
+#                 print(f"notifyDeliveryBoy::{notifyDeliveryBoy}")
+                
+            
+#                 if (order_status == "Out for Delivery" and deliveryBoyID != '-1' ):
+#                     try:
+#                         with connection.cursor() as cursor:
+#                             filter = ""
+
+#                             if order_status == "Out for Delivery" and deliveryBoyID != '-1':
+#                                 filter = ",delivery_boyid='"+str(deliveryBoyID)+"'"
+#                             query = "update vff.laundry_ordertbl set order_status='"+str(order_status)+"',order_completed='"+str(order_completed)+"'"+filter+" where orderid='"+str(order_id)+"'"
+#                             print(f'Updating To Busy Status::{query}')
+#                             cursor.execute(query)
+#                             connection.commit()
+                            
+#                             #Insert While Assigning Order for delivery
+#                             query_assign = "insert into vff.laundry_order_assignmenttbl (booking_id,order_id,delivery_boy_id,type_of_order) values ('"+str(booking_id)+"','"+str(order_id)+"','"+str(deliveryBoyID)+"','Drop')"
+#                             print(f'Inserting Assing to Drop::{query_assign}')
+#                             cursor.execute(query_assign)
+#                             connection.commit()
+                            
+#                             #Make Him In Busy Mode
+#                             query3="update vff.laundry_delivery_boytbl set status='Busy' where delivery_boy_id='"+str(deliveryBoyID)+"'"
+#                             cursor.execute(query3)
+#                             print(f'Putting Delivery Boy to busy mode::{query3}')
+#                             connection.commit()
+#                     except Exception as e:
+#                         print(e)
+#                 else:
+#                     print('No Delivery Boy is Available to Take Orders')
+#                     alert_delivery_boy = "No Delivery Boy is Free To Receive Orders"
+#                     redirect_url = reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id})
+#                     redirect_url += f'?no_delivery={alert_delivery_boy}'
+#                     return HttpResponseRedirect(redirect_url)
+#                     #redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id}))
+            
+#             if order_status == "Out for Delivery" and deliveryBoyID != '-1':
+                
+#                 jfilter = "" 
+#                 status = ""
+#                 if order_status == "Out for Delivery":
+#                     jfilter =",delivery_boyid"
+#                     status = "Busy"
+#                 else:
+#                     jfilter = ",delivery_boy_id"
+#                     status = "Free"
+#                 query_token = "select usrname,mobile_no,device_token"+jfilter+" from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=vff.laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
+#                 result = execute_raw_query_fetch_one(query_token)
+#                 if result:  
+#                     usrname = result[0] 
+#                     delivery_boy_id = result[3]
+#                     device_token = result[2]
+                    
+#                     try:
+#                         with connection.cursor() as cursor:
+#                             update_free = "update vff.laundry_delivery_boytbl set status='"+str(status)+"' where delivery_boy_id='"+str(delivery_boy_id)+"'"
+#                             cursor.execute(update_free)
+#                             connection.commit()
+
+#                     except Exception as e:
+#                         print(f"Error loading data: {e}")
+                
+            
+#         #To send to customer
+#         title = "VFF Group"
+#         if order_status == "Completed":
+#             title = "Order Completed"
+#             msg = "Laundry Package Delivery Successfully for Order ID : #"+str(order_id)+" . Keep Ordering with Velvet Wash"
+#         elif order_status == "Processing":
+#             title = "Processing Status"
+#             msg = "Processing has been started for your Order ID : #"+str(order_id)+""
+#         elif order_status == "Pick Up Done":
+#             title = "Pick Up Done"
+#             msg = "Laundry PickUp Done for Order ID : #"+str(order_id)+""
+#         elif order_status == "Reached Store":
+#             title = "Reached Store"
+#             msg = "Your Laundry has arrived at Store for Order ID : #"+str(order_id)+".\nWe will ping you once the processing has been started Thank you."
+#         elif order_status == "Ready for Delivery":
+#             title = "Ready For Delivery"
+#             msg = "Your Laundry Package is Ready For Delivery for Order ID : #"+str(order_id)+".\nThank you."
+#         else:
+#             msg = "Your Laundry Package is on its way to deliver for Order ID : #"+str(order_id)+""
+#         data = {
+#              'intent':'MainRoute',
+#              }
+#         notifyCustomer,customerid = send_notification_customer(order_id,title,msg,data)
+        
+        
+#         try:
+#             with connection.cursor() as cursor:
+#                 filter = ""
+#                 if order_status == "Completed":
+#                     current_timestamp = time.time()
+#                     current_datetime = datetime.now().strftime("%Y-%m-%d")
+#                     filter = ",delivery='"+str(current_datetime)+"',delivery_epoch='"+str(current_timestamp)+"'"
+#                 if order_status == "Out for Delivery" and deliveryBoyID != '-1':
+#                     filter = ",delivery_boyid='"+str(delivery_boy_id)+"'"
+#                 query = "update vff.laundry_ordertbl set order_status='"+str(order_status)+"',order_completed='"+str(order_completed)+"'"+filter+" where orderid='"+str(order_id)+"'"
+#                 print(f'----------------------------------- Updating Order ID with delivery Epoch ----------------')
+#                 print(f'query_update::{query}')
+#                 cursor.execute(query)
+#                 connection.commit()
+#                 query2 = "insert into vff.laundry_order_historytbl(order_id,order_stages) values ('"+str(order_id)+"','"+str(order_status)+"')"
+#                 cursor.execute(query2)
+#                 connection.commit()
+#                 #Insert Delivery Boy Record
+#                 if order_status != "Processing" and order_status !="Ready for Delivery":
+#                     insert_notify="insert into vff.laundry_notificationtbl(title,body,reciever_id,sender_id,order_id) values ('"+str(title)+"','"+str(msg)+"','"+str(delivery_boy_id)+"','"+str(userid)+"','"+str(order_id)+"')"
+#                     cursor.execute(insert_notify)
+#                     print(f'Notification inserted for Delivery Boy::{insert_notify}')
+#                     connection.commit()
+#                 #Insert Customers Record
+#                 cinsert_notify="insert into vff.laundry_notificationtbl(title,body,reciever_id,sender_id,order_id) values ('"+str(title)+"','"+str(msg)+"','"+str(customerid)+"','"+str(userid)+"','"+str(order_id)+"')"
+#                 cursor.execute(cinsert_notify)
+#                 connection.commit()
+#                 print(f'Notification inserted for Customers::{cinsert_notify}')
+#                 print("Order Status Updated Successfully")
+#                 return redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id}))
+#         except Exception as e:
+#                 print(f"Error loading data: {e}")
+            
+                
+#         else:
+#             #Only when Delivery boy is not needed to update status
+            
+#             try:
+#                 with connection.cursor() as cursor:
+#                     query2 = "insert into vff.laundry_order_historytbl(order_id,order_stages) values ('"+str(order_id)+"','"+str(order_status)+"')"
+#                     cursor.execute(query2)
+#                     connection.commit()
+#                     query = "update vff.laundry_ordertbl set order_status='"+str(order_status)+"',order_completed='"+str(order_completed)+"' where orderid='"+str(order_id)+"'"    
+#                     print(f'query_update::{query}')
+#                     cursor.execute(query)
+#                     connection.commit()
+#                     #Insert Customers Record
+#                     cinsert_notify="insert into vff.laundry_notificationtbl(title,body,reciever_id,sender_id,order_id) values ('"+str(title)+"','"+str(msg)+"','"+str(customerid)+"','"+str(userid)+"','"+str(order_id)+"')"
+#                     cursor.execute(cinsert_notify)
+#                     connection.commit()
+#                     print("Order Status Updated Successfully")
+#             except Exception as e:
+#                     print(f"Error loading data: {e}")
+                   
+#     return redirect(reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id}))
+
+#Upadting New Order Status [OLD Code is Above only]     
+def update_order_status_new(request,order_id,booking_id):
     alert_delivery_boy = ""
     if request.method == "POST":
         order_status = request.POST.get('order-status')
         order_taken_on = request.POST.get('order_taken_on')
         delivery_price = request.POST.get('delivery_price')
         wants_delivery = request.POST.get('wants_delivery')
+        delivery_boy_id_default = '-1'
+        if 'delivery-boy' in request.POST:
+            delivery_boy_id_default = request.POST.get('delivery-boy')
+            if not delivery_boy_id_default:
+                delivery_boy_id_default='-1'
         # order_id = request.session.get('order_id')
         userid = request.session.get('userid')
         order_completed  = "0"
@@ -1543,21 +1775,7 @@ def update_order_status(request,order_id,booking_id):
                 redirect_url = reverse('dashboard_app:view_order_detail', kwargs={'orderid': order_id})
                 redirect_url += f'?no_delivery={alert_delivery_boy}'
                 return HttpResponseRedirect(redirect_url)
-            #Sending Notification to Delivery Boy who is free to take orders
-            query_token = "select usrname,mobile_no,device_token,delivery_boy_id from vff.usertbl,vff.laundry_delivery_boytbl,vff.laundry_ordertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and orderid='"+str(order_id)+"'"
-            result = execute_raw_query_fetch_one(query_token)
-            if result:  
-                usrname = result[0] 
-                delivery_boy_id = result[3]
-                device_token = result[2]
-                try:
-                    with connection.cursor() as cursor:
-                        update_free = "update vff.laundry_delivery_boytbl set status='Free' where delivery_boy_id='"+str(delivery_boy_id)+"'"
-                        cursor.execute(update_free)
-                        connection.commit()
-
-                except Exception as e:
-                    print(f"Error loading data: {e}")
+            
         condition = wants_delivery == '1' and order_taken_on == "OnCounter" and order_status == "Completed"
         print(f'Condition::{condition}')            
         #if ((order_status == "Out for Delivery" and order_taken_on == 'App') or (delivery_price != '0.0' and order_taken_on == 'OnCounter' and order_status == "Out for Delivery")) or ((order_status == "Completed" and order_taken_on == 'App') or condition) or order_status == "Processing" or order_status == "Pick Up Done" or order_status== "Reached Store":
@@ -1585,11 +1803,11 @@ def update_order_status(request,order_id,booking_id):
 
                      'order_id_pickup':order_id
                      }
-                notifyDeliveryBoy,deliveryBoyID,deliveryBOYName = send_notification_to_delivery_boy(order_id,title,msg,data,order_status)
+                notifyDeliveryBoy,deliveryBoyID,deliveryBOYName = send_notification_to_delivery_boy(order_id,title,msg,data,order_status,delivery_boy_id_default)
                 print(f'deliveryBoyID::{deliveryBoyID}')
                 print(f"notifyDeliveryBoy::{notifyDeliveryBoy}")
                 
-            
+
                 if (order_status == "Out for Delivery" and deliveryBoyID != '-1' ):
                     try:
                         with connection.cursor() as cursor:
