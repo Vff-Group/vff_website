@@ -1712,8 +1712,8 @@ def check_notifications(request):
                 'epoch': bookingEpoch,
                 'order_id': row[5],
                 'booking_id': row[6],
-                'customer_name': row[8],
-                'customer_profile': row[9],
+                'customer_name': row[7],
+                'customer_profile': row[8],
                 
                
             })    
