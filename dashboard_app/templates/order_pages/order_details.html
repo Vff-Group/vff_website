@@ -529,8 +529,10 @@ printWindow.close();
   
       if (selectedOption === 'Out for Delivery') {
         var selectedDeliveryBoy = $('#delivery-boy').val();
+        console.log('selectedDeliveryBoy::'+selectedDeliveryBoy);
         // Set the initial value of the hidden input field
       $('#selectedDeliveryBoyId').val(selectedDeliveryBoy);
+        
         // Check if a delivery boy is selected
         if (!selectedDeliveryBoy) {
           event.preventDefault(); // Prevent form submission
@@ -538,6 +540,7 @@ printWindow.close();
           // Show a message (you can replace this with a toast or alert)
           alert('Please select a delivery boy before processing.');
         }
+        return;
       }
     });
   });
