@@ -220,17 +220,20 @@ Offers{%endblock title%} {% block content %}
                   </td>
 
                   <td class="align-middle text-center text-sm">
+                    <input type="hidden" name="offer_id" value="{{ row.offerid }}">
                     {% if row.is_active == 1 %}
-                    <span class="badge badge-sm bg-success"> Active </span>
+                    <span class="badge badge-sm bg-success" > Active </span>
                     {% else %}
                     <span class="badge badge-sm bg-danger"> Not Active </span>
                     {% endif %}
                   </td>
-
+                  <form method="post" action="{% url 'dashboard_app:update_offer_status' %}">
+                    {% csrf_token %}
                   {% if row.is_active == 1%}
                   <td class="align-middle">
                     <div class="row">
                       <div class="col">
+                        <input type="hidden" name="status" value="deactivate">
                         <a
                           href=""
                           class="text-danger font-weight-bold text-xs"
@@ -246,6 +249,7 @@ Offers{%endblock title%} {% block content %}
                   <td class="align-middle">
                     <div class="row">
                       <div class="col">
+                        <input type="hidden" name="status" value="activate">
                         <a
                           href=""
                           class="text-success font-weight-bold text-xs"
@@ -258,6 +262,7 @@ Offers{%endblock title%} {% block content %}
                     </div>
                   </td>
                   {% endif %}
+                  </form>
                 </tr>
 
                 {% endfor %}

@@ -3253,6 +3253,28 @@ def all_expenses(request):
     
     return render(request, 'expenses_pages/all_expenses_list.html', context)
 
+#Update offer status
+def update_offer_status(request):
+    if request.method == 'POST':
+        offer_id = request.POST.get('offer_id')
+        status = request.POST.get('status')
+        update_query=''
+        if status=='activate':
+            update_query="update vff.laundry_offerstbl set is_active='1' where offerid='"+str(offer_id)+"'"
+        else:
+            update_query="update vff.laundry_offerstbl set is_active='0' where offerid='"+str(offer_id)+"'"
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(update_query)
+
+                connection.commit()
+                print("Offer Updated Successfully.")
+                return redirect('dashboard_app:all_offers')
+        except Exception as e:
+            print(f"Error loading data: {e}")
+    current_url = request.get_full_path()
+    context={'current_url': current_url}    
+    return render(request, 'offers_pages/all_offers.html', context)
 #All Offers
 def all_offers(request):
     isLogin = is_loggedin(request)

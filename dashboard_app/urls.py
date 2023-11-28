@@ -87,6 +87,7 @@ urlpatterns = [
     #Offers Pages
     path('all_offers/',views.all_offers,name='all_offers'),
     path('all_offers/add_new_offer/',views.add_new_offer,name='add_new_offer'),
+    path('update_offer_status/', views.update_offer_status, name='dashboard_app:update_offer_status'),
     
     #Reports Screen
     path('daily_report/',views.daily_report,name='daily_report'),
