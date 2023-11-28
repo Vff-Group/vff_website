@@ -1,5 +1,5 @@
-{% extends "common/base.html" %} {% load static %} {% block title %}All
-Offers{% endblock title%} {% block content %}
+{% extends "common/base.html" %} {% load static %} {% block title %}All Offers{%
+endblock title%} {% block content %}
 
 <div class="container-fluid py-4">
   <div class="row">
@@ -20,12 +20,14 @@ Offers{% endblock title%} {% block content %}
 
         <!-- Add Offer  -->
         <div class="col-md-4">
-          <div class="modal fade"
+          <div
+            class="modal fade"
             id="modal-default1"
             tabindex="-1"
             role="dialog"
             aria-labelledby="modal-default"
-            aria-hidden="true">
+            aria-hidden="true"
+          >
             <div
               class="modal-dialog modal- modal-dialog-centered modal-"
               role="document"
@@ -37,41 +39,64 @@ Offers{% endblock title%} {% block content %}
               <span aria-hidden="true">×</span>
             </button>
           </div> -->
-                <form method="post"
-                  action="{% url 'dashboard_app:add_new_offer' %}">
+                <form
+                  method="post"
+                  action="{% url 'dashboard_app:add_new_offer' %}"
+                >
                   {% csrf_token %}
                   <div class="modal-body">
                     <h6 class="heading-small text-muted mb-4">Add New Offer</h6>
                     <div class="pl-lg-4">
                       <div class="row">
                         <div class="col">
-                          
-                            <div class="col-lg-1">
-                                <div class="form-group">
-                                  <div class="avatar avatar-xl position-relative" id="input-profile">
-                                    <label for="image_upload" class="avatar-img-label cursor-pointer">
-                                      {% if data.profile_img %}
-                                        <div class="row">
-                                          <div class="col mt-4">
-                                            <div class="card mb-4 shadow-lg">
-                                              <img src="{{ data.profile_img }}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
-                                            </div>
-                                          </div>
-                                        </div>
-                                      {% else %}
-                                        <div class="row">
-                                          <div class="col mt-4">
-                                            <div class="card mb-4 shadow-lg d-flex" id="imageCard">
-                                              <i class="fa fa-plus text-secondary m-3 p-4"></i>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      {% endif %}
-                                    </label>
-                                    <input type="file" id="image_upload" class="d-none" accept="image/jpeg, image/png" name="profile-image1" onchange="displayImage(event)">
+                          <div class="col-lg-1">
+                            <div class="form-group">
+                              <div
+                                class="avatar avatar-xl position-relative"
+                                id="input-profile"
+                              >
+                                <label
+                                  for="image_upload"
+                                  class="avatar-img-label cursor-pointer"
+                                >
+                                  {% if data.profile_img %}
+                                  <div class="row">
+                                    <div class="col mt-4">
+                                      <div class="card mb-4 shadow-lg">
+                                        <img
+                                          src="{{ data.profile_img }}"
+                                          alt="profile_image"
+                                          class="w-100 border-radius-lg shadow-sm"
+                                        />
+                                      </div>
+                                    </div>
                                   </div>
-                                </div>
+                                  {% else %}
+                                  <div class="row">
+                                    <div class="col mt-4">
+                                      <div
+                                        class="card mb-4 shadow-lg d-flex"
+                                        id="imageCard"
+                                      >
+                                        <i
+                                          class="fa fa-plus text-secondary m-3 p-4"
+                                        ></i>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  {% endif %}
+                                </label>
+                                <input
+                                  type="file"
+                                  id="image_upload"
+                                  class="d-none"
+                                  accept="image/jpeg, image/png"
+                                  name="profile-image1"
+                                  onchange="displayImage(event)"
+                                />
                               </div>
+                            </div>
+                          </div>
 
                           <div class="form-group">
                             <label
@@ -86,7 +111,6 @@ Offers{% endblock title%} {% block content %}
                               placeholder="Enter Offer Title"
                               name="title_offer"
                               value=""
-                              
                             />
                           </div>
 
@@ -103,10 +127,8 @@ Offers{% endblock title%} {% block content %}
                               placeholder="Enter Offer Description"
                               name="title_description"
                               value=""
-                              
                             />
                           </div>
-                          
                         </div>
                       </div>
                     </div>
@@ -134,7 +156,9 @@ Offers{% endblock title%} {% block content %}
         <!-- Action Buttons End  -->
         <div class="card-body px-0 pt-0 pb-2">
           <div class="table-responsive p-0">
-            <table class="table table-bordered align-items-center mb-0  table-hover">
+            <table
+              class="table table-bordered align-items-center mb-0 table-hover"
+            >
               <thead class="bg-light">
                 <tr>
                   <th
@@ -152,9 +176,7 @@ Offers{% endblock title%} {% block content %}
                   >
                     Description
                   </th>
-                  
-                  
-                  
+
                   <th class="text-secondary opacity-7"></th>
                 </tr>
               </thead>
@@ -179,7 +201,7 @@ Offers{% endblock title%} {% block content %}
                 </button>
               </div>
               {% else %}
-              <tbody  >
+              <tbody>
                 {% for row in query_result %}
                 <tr>
                   <td>
@@ -205,7 +227,7 @@ Offers{% endblock title%} {% block content %}
                     <span class="badge badge-sm bg-danger"> Not Active </span>
                     {% endif %}
                   </td>
-                  
+
                   {% if row.is_active == 1%}
                   <td class="align-middle">
                     <div class="row">
@@ -219,7 +241,6 @@ Offers{% endblock title%} {% block content %}
                           Deactivate
                         </a>
                       </div>
-                     
                     </div>
                   </td>
                   {% else %}
@@ -235,11 +256,9 @@ Offers{% endblock title%} {% block content %}
                           Activate
                         </a>
                       </div>
-                     
                     </div>
                   </td>
                   {% endif %}
-
                 </tr>
 
                 {% endfor %}
@@ -256,130 +275,135 @@ Offers{% endblock title%} {% block content %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-    const imageInput = document.getElementById('image_upload');
-    const imageDiv = document.getElementById('input-profile');
+  const imageInput = document.getElementById("image_upload");
+  const imageDiv = document.getElementById("input-profile");
 
-    imageDiv.addEventListener('click', () => {
-       // imageInput.click();
-    });
+  imageDiv.addEventListener("click", () => {
+    // imageInput.click();
+  });
 
-    imageInput.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        // Optionally display the selected image, e.g., for preview
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                imageDiv.getElementsByTagName('img')[0].src = event.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-</script>
-<script>
-
-  // function displayImage(event) {
-    //const file = event.target.files[0];
-    //if (file) {
-      //const reader = new FileReader();
-      //reader.onload = function(e) {
-        //const imageCard = document.getElementById('imageCard');
-        //imageCard.innerHTML = `<img src="${e.target.result}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">`;
-      //};
-      //reader.readAsDataURL(file);
-    //}
-  //} 
-
-    // Function to handle image upload
-    document.getElementById('image_upload').addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        const formData = new FormData();
-        formData.append('image', file);
-    
-        // Get the CSRF token from the cookie
-        const csrftoken = getCookie('csrftoken');
-    
-        // Send a POST request to the server to upload the image
-        fetch('/upload_image/', {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': csrftoken  // Include the CSRF token in the headers
-            },
-            body: formData,
-        })
-        .then(response => response.json())
-        .then(data => {
-            const imageElement = document.getElementById('uploaded-image');
-            const imageUrlElement = document.getElementById('image-url');
-    
-            // Display the uploaded image and URL
-            imageElement.src = data.image_url;
-            imageElement.style.display = 'block';
-    
-            imageUrlElement.innerText = 'Image URL: ' + data.image_url;
-            imageUrlElement.style.display = 'block';
-        })
-        .catch(error => console.error('Error uploading image:', error));
-    });
-    
-    // Function to get the CSRF token from the cookie
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.startsWith(name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
+  imageInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    // Optionally display the selected image, e.g., for preview
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        imageDiv.getElementsByTagName("img")[0].src = event.target.result;
+      };
+      reader.readAsDataURL(file);
     }
-    
+  });
+</script>
+<script>
+  // function displayImage(event) {
+  //const file = event.target.files[0];
+  //if (file) {
+  //const reader = new FileReader();
+  //reader.onload = function(e) {
+  //const imageCard = document.getElementById('imageCard');
+  //imageCard.innerHTML = `<img src="${e.target.result}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">`;
+  //};
+  //reader.readAsDataURL(file);
+  //}
+  //}
 
+  // Function to handle image upload
+  document
+    .getElementById("image_upload")
+    .addEventListener("change", function (event) {
+      const file = event.target.files[0];
+      const formData = new FormData();
+      formData.append("image", file);
+
+      // Get the CSRF token from the cookie
+      const csrftoken = getCookie("csrftoken");
+
+      // Send a POST request to the server to upload the image
+      fetch("/upload_image/", {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": csrftoken, // Include the CSRF token in the headers
+        },
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const imageElement = document.getElementById("uploaded-image");
+          const imageUrlElement = document.getElementById("image-url");
+
+          // Display the uploaded image and URL
+          imageElement.src = data.image_url;
+          imageElement.style.display = "block";
+
+          imageUrlElement.innerText = "Image URL: " + data.image_url;
+          imageUrlElement.style.display = "block";
+        })
+        .catch((error) => console.error("Error uploading image:", error));
+    });
+
+  // Function to get the CSRF token from the cookie
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(name + "=")) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
 </script>
 
 <script>
-    $(document).ready(function() {
-        $('form').submit(function(event) {
-          // Prevent the default form submission
-          event.preventDefault();
-    
-          // Get values of title and description inputs
-          var title = $('#input-offer-title').val();
-          var description = $('#input-offer-description').val();
-    
-          // Check length of title and description
-          if (title.length > 25 || description.length > 50) {
-            // Show a toast message for exceeding character limits
-            showToast('Alert','Title should be within 25 characters and Description within 50 characters');
-          } else {
-            // If within character limits, proceed with form submission
-            this.submit();
-          }
-        });
-    
-          // Function to show a toast message
-function showToast(message, bodyContent) {
-    toastr.warning(bodyContent, message, {
-      positionClass: "toast-top-right",
-      timeOut: 5e3,
-      closeButton: !0,
-      debug: !1,
-      newestOnTop: !0,
-      progressBar: !0,
-      preventDuplicates: !0,
-      onclick: null,
-      showDuration: "300",
-      hideDuration: "1000",
-      extendedTimeOut: "1000",
-      showEasing: "swing",
-      hideEasing: "linear",
-      showMethod: "fadeIn",
-      hideMethod: "fadeOut",
-      tapToDismiss: !1
-  })
+  $(document).ready(function () {
+    $("form").submit(function (event) {
+      // Prevent the default form submission
+      event.preventDefault();
+
+      // Get values of title and description inputs
+      var title = $("#input-offer-title").val();
+      var description = $("#input-offer-description").val();
+      var image = $("#image_upload")[0].files[0];
+
+      // Check length of title and description
+      if (title.length > 25 || description.length > 50) {
+        // Show a toast message for exceeding character limits
+        showToast(
+          "Alert",
+          "Title should be within 25 characters and Description within 50 characters"
+        );
+      } else if (!image) {
+        showToast('Alert',"Please select an image");
+      } else {
+        // If within character limits, proceed with form submission
+        this.submit();
+      }
+    });
+
+    // Function to show a toast message
+    function showToast(message, bodyContent) {
+      toastr.warning(bodyContent, message, {
+        positionClass: "toast-top-center",
+        timeOut: 5e3,
+        closeButton: !0,
+        debug: !1,
+        newestOnTop: !0,
+        progressBar: !0,
+        preventDuplicates: !0,
+        onclick: null,
+        showDuration: "300",
+        hideDuration: "1000",
+        extendedTimeOut: "1000",
+        showEasing: "swing",
+        hideEasing: "linear",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut",
+        tapToDismiss: !1,
+      });
       // Get the toast element and its content
       /*var toastElement = document.getElementById("liveToast");
       var toastBody = toastElement.querySelector(".toast-body");
@@ -390,8 +414,7 @@ function showToast(message, bodyContent) {
       // Show the toast
       var toast = new bootstrap.Toast(toastElement);
       toast.show();*/
-  }
-  
-      });
+    }
+  });
 </script>
 {% endblock %}
