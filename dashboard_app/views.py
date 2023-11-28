@@ -3414,7 +3414,7 @@ def add_new_offer(request):
             jdict = json.loads(request.body)
             title_offer=jdict['title_offer']
             title_description = jdict['title_description']
-            uploaded_image = jdict['image_path']
+            uploaded_image = request.FILES.get('profile-image1')
             
             # image_url = 'NA'  # Default value if no image is uploaded
             
