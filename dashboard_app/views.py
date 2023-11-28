@@ -3420,7 +3420,7 @@ def add_new_offer(request):
             
             if uploaded_image:
                 image_url = upload_images2(uploaded_image)
-            
+            print(f'image_url::{image_url}')
             try:
                 with connection.cursor() as cursor:
                     
