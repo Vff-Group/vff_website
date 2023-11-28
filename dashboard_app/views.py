@@ -3415,8 +3415,8 @@ def add_new_offer(request):
             title_offer=jdict['title_offer']
             title_description = jdict['title_description']
             image_path = jdict['image_path']
-            uploaded_image = request.FILES.get(image_path)
-            
+            uploaded_image = request.FILES[image_path]
+            print(f'uploaded_image::{uploaded_image}')
             # image_url = 'NA'  # Default value if no image is uploaded
             
             if uploaded_image:
