@@ -1,0 +1,369 @@
+{% extends "common/base.html" %} {% load static %} {% block title %}All
+Offers{% endblock title%} {% block content %}
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header pb-0 d-flex justify-content-between">
+          <h6>All Offers</h6>
+          <div class="row justify-content-center align-items-center p-1">
+            <a href="" data-bs-toggle="modal" data-bs-target="#modal-default1">
+              <span class="badge badge-sm bg-gradient-success">
+                <i class="fa-solid fa-user-plus"></i>
+                Add New Offer</span
+              >
+            </a>
+          </div>
+        </div>
+        <!-- Action Buttons  -->
+
+        <!-- Add Offer  -->
+        <div class="col-md-4">
+          <div class="modal fade"
+            id="modal-default1"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="modal-default"
+            aria-hidden="true">
+            <div
+              class="modal-dialog modal- modal-dialog-centered modal-"
+              role="document"
+            >
+              <div class="modal-content">
+                <!-- <div class="modal-header">
+            <h6 class="modal-title" id="modal-title-default">Add Expense</h6>
+            <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div> -->
+                <form
+                  method="post"
+                  action="{% url 'dashboard_app:add_expense_new_item' %}"
+                >
+                  {% csrf_token %}
+                  <div class="modal-body">
+                    <h6 class="heading-small text-muted mb-4">Add New Offer</h6>
+                    <div class="pl-lg-4">
+                      <div class="row">
+                        <div class="col">
+                          <div class="form-group">
+                            <label
+                              for="date-of-expense"
+                              class="form-control-label"
+                              >Date *</label
+                            >
+                            <input
+                              class="form-control form-control-alternative"
+                              type="date"
+                              id="date-of-expense"
+                              name="dateofexpense"
+                              value="{{ data.dateofexpense|date:'Y-m-d' }}"
+                              required
+                            />
+                          </div>
+
+                          <div class="form-group">
+                            <label
+                              class="form-control-label"
+                              for="input-invoice-no"
+                              >Invoice Number</label
+                            >
+                            <input
+                              type="text"
+                              id="input-invoice-no"
+                              class="form-control form-control-alternative"
+                              placeholder="Enter Invoice Number"
+                              name="invoice_no"
+                              value="{{ data.invoice_no|default:'' }}"
+                              
+                            />
+                          </div>
+
+                          <div class="form-group">
+                            <label
+                              class="form-control-label"
+                              for="input-company-name"
+                              >Company Name</label
+                            >
+                            <input
+                              type="text"
+                              id="input-company-name"
+                              class="form-control form-control-alternative"
+                              placeholder="Enter Company Name"
+                              name="company_name"
+                              value="{{ data.invoice_no|default:'' }}"
+                              
+                            />
+                          </div>
+
+                          <div class="form-group">
+                            <label
+                              class="form-control-label"
+                              for="input-category"
+                              >Expense Category</label
+                            >
+                            <select
+                              class="form-control form-control-alternative"
+                              id="input-category"
+                              name="exp_category"
+                              required
+                            >
+                              <option disabled selected>
+                                Choose Expense Category
+                              </option>
+                              {% for category in data_all_categories %}
+                              <option
+                                value="{{ category.category_name }}"
+                                data-catid="{{ category.expcatid }}"
+                              >
+                                {{ category.category_name }}
+                              </option>
+                              {% endfor %}
+
+                              <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
+                            </select>
+                          </div>
+
+                          <input
+                            type="hidden"
+                            id="selectedCategoryId"
+                            name="selectedCategoryId"
+                            value=""
+                          />
+
+                          <div class="form-group">
+                            <label
+                              class="form-control-label"
+                              for="input-country"
+                              >Expense Amount</label
+                            >
+                            <input
+                              type="number"
+                              id="input-postal-code"
+                              class="form-control form-control-alternative"
+                              placeholder="Enter Expense Amount"
+                              name="exp_amount"
+                              value="{{ data.pincode|default:'' }}"
+                              required
+                            />
+                          </div>
+
+                          <div class="form-group">
+                            <label
+                              class="form-control-label"
+                              for="input-category"
+                              >Payment Mode</label
+                            >
+                            <select
+                              class="form-control form-control-alternative"
+                              id="input-category"
+                              name="payment_mode"
+                              required
+                            >
+                              <option disabled selected>
+                                Choose Payment Mode
+                              </option>
+                              <option value="Cash">Cash</option>
+                              <option value="UPI">UPI</option>
+                              <option value="Card">Card</option>
+                              <option value="Cheque">Cheque</option>
+                              <option value="Bank Transfer">
+                                Bank Transfer
+                              </option>
+                              <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
+                            </select>
+                          </div>
+
+                          <h5 class="modal-title" id="taxModalLabel">
+                            Tax Included?
+                          </h5>
+                          <div class="form-group">
+                            <label for="taxIncluded">Select an option:</label>
+                            <div class="form-check">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                name="taxIncluded"
+                                id="taxNo"
+                                value="no"
+                                checked
+                              />
+                              <label class="form-check-label" for="taxNo">
+                                NO
+                              </label>
+                            </div>
+                            <div class="form-check">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                name="taxIncluded"
+                                id="taxYes"
+                                value="yes"
+                              />
+                              <label class="form-check-label" for="taxYes">
+                                YES
+                              </label>
+                            </div>
+                          </div>
+
+                          <div
+                            class="form-group"
+                            id="taxPercentageInput"
+                            style="display: none"
+                          >
+                            <label for="taxPercentage">Tax Percentage:</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="taxPercentage"
+                              placeholder="Example 5% "
+                              name="taxPercentage"
+                            />
+                          </div>
+
+                          <div class="pl-lg-4">
+                            <div class="form-group">
+                              <label>Notes</label>
+                              <textarea
+                                rows="4"
+                                class="form-control form-control-alternative"
+                                placeholder="Enter Notes"
+                                name="notes"
+                              ></textarea>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn bg-gradient-success">
+                      Save
+                    </button>
+
+                    <button
+                      type="button"
+                      class="btn btn-link ml-auto"
+                      data-bs-dismiss="modal"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Add Offer End  -->
+
+        <!-- Action Buttons End  -->
+        <div class="card-body px-0 pt-0 pb-2">
+          <div class="table-responsive p-0">
+            <table class="table table-bordered align-items-center mb-0  table-hover">
+              <thead class="bg-light">
+                <tr>
+                  <th
+                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                  >
+                    Date
+                  </th>
+                  <th
+                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                  >
+                    Title
+                  </th>
+                  <th
+                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                  >
+                    Description
+                  </th>
+                  
+                  
+                  
+                  <th class="text-secondary opacity-7"></th>
+                </tr>
+              </thead>
+              {% if not query_result%}
+              <div
+                class="alert alert-info alert-dismissible m-4 fade show"
+                role="alert"
+              >
+                <span class="alert-icon text-white"
+                  ><i class="ni ni-like-2"></i
+                ></span>
+                <span class="alert-text text-white"
+                  ><strong>Info!</strong> {{error_msg}}!</span
+                >
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="alert"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              {% else %}
+              <tbody  >
+                {% for row in query_result %}
+                <tr>
+                  <td>
+                    <div class="d-flex px-2 py-1">
+                      <p class="mb-0 text-xs text-center">{{row.date}}</p>
+                    </div>
+                  </td>
+                  <td>
+                    <p class="text-xs font-weight-bold mb-0">
+                      Rs.{{row.title}}/-
+                    </p>
+                  </td>
+                  <td>
+                    <p class="text-xs font-weight-bold mb-0">
+                      {{row.description}}
+                    </p>
+                  </td>
+
+                  <td class="align-middle text-center text-sm">
+                    {% if row.is_active == 1 %}
+                    <span class="badge badge-sm bg-success"> Active </span>
+                    {% else %}
+                    <span class="badge badge-sm bg-danger"> Not Active </span>
+                    {% endif %}
+                  </td>
+                  
+                  {% if row.is_active == 1%}
+                  <td class="align-middle">
+                    <div class="row">
+                      <div class="col">
+                        <a
+                          href=""
+                          class="text-danger font-weight-bold text-xs"
+                          data-toggle="tooltip"
+                          data-original-title="Edit user"
+                        >
+                          Deactivate
+                        </a>
+                      </div>
+                     
+                    </div>
+                  </td>
+                  {% endif %}
+
+                </tr>
+
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+{% endblock %}

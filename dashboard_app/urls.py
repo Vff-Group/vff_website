@@ -84,6 +84,8 @@ urlpatterns = [
     #Place Order
     path('place_new_order/',views.place_new_order,name='place_new_order'),
     
+    #Offers Pages
+    path('all_offers/',views.all_offers,name='all_offers'),
     
     #Reports Screen
     path('daily_report/',views.daily_report,name='daily_report'),

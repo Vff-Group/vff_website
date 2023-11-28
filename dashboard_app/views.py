@@ -3253,6 +3253,41 @@ def all_expenses(request):
     
     return render(request, 'expenses_pages/all_expenses_list.html', context)
 
+#All Offers
+def all_offers(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    error_msg = "No Offers Found"
+    
+    
+    query_all_offers = "select offerid,ftitle,fdesc,fimage,epoch,date,is_active from vff.laundry_offerstbl"
+    result_offers = execute_raw_query(query_all_offers)
+    
+    data_offers = []    
+    if not result_offers == 500:
+        for row in result_offers:
+            
+            data_offers.append({
+                'offerid': row[0],
+                'title': row[1],
+                'description': row[2],
+                'image': row[3],  
+                'epoch': row[4],  
+                'date': row[5],  
+                'is_active': row[6],  
+            })
+    else:
+        error_msg="Something Went Wrong"
+    
+    
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'query_result': data_offers,'current_url': current_url,'error_msg':error_msg}
+    
+    return render(request, 'offers_pages/all_offers.html', context)
+
+
 #Expenses Category
 def expense_category(request):
     isLogin = is_loggedin(request)
