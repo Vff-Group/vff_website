@@ -1,4 +1,4 @@
-{% extends "common/base.html" %} {% load static %} {% block title %}All
+{% extends "common/base.html" %} {% load static %} {% block title %}All 
 Offers{%endblock title%} {% block content %}
 
 <div class="container-fluid py-4">
@@ -39,7 +39,9 @@ Offers{%endblock title%} {% block content %}
               <span aria-hidden="true">×</span>
             </button>
           </div> -->
-                <form id="offerForm">
+                <form
+                  method="post"
+                  action="{% url 'dashboard_app:add_new_offer' %}" enctype="multipart/form-data">
                   {% csrf_token %}
                   <div class="modal-body">
                     <h6 class="heading-small text-muted mb-4">Add New Offer</h6>
@@ -292,97 +294,8 @@ Offers{%endblock title%} {% block content %}
   });
 </script>
 
+
 <script>
-  $(document).ready(function () {
-    function getCSRFToken() {
-      const cookies = document.cookie.split(";");
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.startsWith("csrftoken=")) {
-          return cookie.substring("csrftoken=".length, cookie.length);
-        }
-      }
-      return null;
-    }
-
-    $("form").submit(function (event) {
-      // Prevent the default form submission
-      event.preventDefault();
-
-      // Get values of title and description inputs
-      var title = $("#input-offer-title").val();
-      var description = $("#input-offer-description").val();
-      var image = $("#image_upload")[0].files[0];
-
-      // Check length of title and description
-      if (title.length > 25 || description.length > 50) {
-        // Show a toast message for exceeding character limits
-        showToast(
-          "Alert",
-          "Title should be within 25 characters and Description within 50 characters"
-        );
-      } else if (!image) {
-        showToast("Alert", "Please select an image");
-      } else {
-        // If within character limits and an image is selected, proceed with AJAX request
-        // Create a JavaScript object
-        const profileImage = document.querySelector('input[name="profile-image1"]').value;
-        var formData = {
-          title_offer: title,
-          title_description: description,
-          image_path: profileImage,
-        };
-
-        // Convert the object to JSON
-        var jsonData = JSON.stringify(formData);
-        const csrfToken = getCSRFToken();
-        // AJAX POST request
-        $.ajax({
-          type: "POST",
-          url: "{% url 'dashboard_app:add_new_offer' %}",
-          data: jsonData,
-          headers: {
-            "X-CSRFToken": csrfToken, // Include the CSRF token in the headers
-          },
-          contentType: 'application/json',
-          
-          success: function (response) {
-            // Handle success response if needed
-            console.log("Success:", response);
-            // Perform further actions based on the response from Django
-          },
-          error: function (error) {
-            // Handle error response if needed
-            console.error("Error:", error);
-          },
-        });
-      }
-    });
-
-    // Function to show a toast message
-    function showToast(message, bodyContent) {
-      toastr.warning(bodyContent, message, {
-        positionClass: "toast-top-center",
-        timeOut: 5000,
-        closeButton: true,
-        debug: false,
-        newestOnTop: true,
-        progressBar: true,
-        preventDuplicates: true,
-        onclick: null,
-        showDuration: "300",
-        hideDuration: "1000",
-        extendedTimeOut: "1000",
-        showEasing: "swing",
-        hideEasing: "linear",
-        showMethod: "fadeIn",
-        hideMethod: "fadeOut",
-        tapToDismiss: false,
-      });
-    }
-  });
-</script>
-<!-- <script>
   $(document).ready(function () {
     $("form").submit(function (event) {
       // Prevent the default form submission
@@ -447,5 +360,5 @@ Offers{%endblock title%} {% block content %}
       toast.show();*/
     }
   });
-</script> -->
+</script>
 {% endblock %}
