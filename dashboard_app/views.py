@@ -3410,7 +3410,7 @@ def add_new_offer(request):
     error_msg = ""
     
     if request.method == "POST":
-        try:
+        
             jdict = json.loads(request.body)
             title_offer=jdict['title_offer']
             title_description = jdict['title_description']
@@ -3433,9 +3433,7 @@ def add_new_offer(request):
                     return redirect('dashboard_app:all_offers')
             except Exception as e:
                 print(f"Error loading data: {e}")
-        except Exception as e:
-            print(f"Error adding new offer: {e}")
-            return JsonResponse({"error": str(e)}, status=500)
+        
     return redirect('dashboard_app:all_offers')
 
 
