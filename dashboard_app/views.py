@@ -3410,26 +3410,33 @@ def add_new_offer(request):
     error_msg = ""
     
     if request.method == "POST":
-        title_offer = request.POST.get('title_offer')
-        title_description = request.POST.get('title_description')
-        uploaded_image = request.FILES.get('profile-image1')
-        
-        # image_url='NA'
-        if uploaded_image:
-            image_url = upload_images2(uploaded_image)
-            
         try:
-            with connection.cursor() as cursor:
-                
-                insert_query = "insert into vff.laundry_offerstbl (ftitle,fdesc,fimage) values ('"+str(title_offer)+"','"+str(title_description)+"','"+str(image_url)+"')"
-                cursor.execute(insert_query)
+            data = json.loads(request.body.decode('utf-8'))
+            
+            title_offer = data.get('title_offer')
+            title_description = data.get('title_description')
+            uploaded_image = request.FILES.get('profile-image1')
+            
+            image_url = 'NA'  # Default value if no image is uploaded
+            
+            if uploaded_image:
+                image_url = upload_images2(uploaded_image)
+            
+            try:
+                with connection.cursor() as cursor:
 
-                connection.commit()
+                    insert_query = "insert into vff.laundry_offerstbl (ftitle,fdesc,fimage) values ('"+str(title_offer)+"','"+str(title_description)+"','"+str(image_url)+"')"
+                    cursor.execute(insert_query)
 
-                print(f"New Offer Added Successfully.")
-                return redirect('dashboard_app:all_offers')
+                    connection.commit()
+
+                    print(f"New Offer Added Successfully.")
+                    return redirect('dashboard_app:all_offers')
+            except Exception as e:
+                print(f"Error loading data: {e}")
         except Exception as e:
-            print(f"Error loading data: {e}")
+            print(f"Error adding new offer: {e}")
+            return JsonResponse({"error": str(e)}, status=500)
     return redirect('dashboard_app:all_offers')
 
 
