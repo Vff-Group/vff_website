@@ -3413,7 +3413,7 @@ def add_new_offer(request):
         title_offer = request.POST.get('title_offer')
         title_description = request.POST.get('title_description')
         uploaded_image = request.FILES.get('profile-image1')
-
+        
         # image_url='NA'
         if uploaded_image:
             image_url = upload_images2(uploaded_image)
