@@ -344,8 +344,8 @@ Offers{%endblock title%} {% block content %}
           headers: {
             "X-CSRFToken": csrfToken, // Include the CSRF token in the headers
           },
-          processData: false,
-          contentType: false,
+          contentType: 'application/json',
+          
           success: function (response) {
             // Handle success response if needed
             console.log("Success:", response);
