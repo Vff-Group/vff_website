@@ -3402,6 +3402,35 @@ def add_expense_new_item(request):
             print(f"Error loading data: {e}")
     return redirect('dashboard_app:all_expenses')
 
+#Add New Offer
+def add_new_offer(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    error_msg = ""
+    
+    if request.method == "POST":
+        title_offer = request.POST.get('title_offer')
+        title_description = request.POST.get('title_description')
+        uploaded_image = request.FILES.get('profile-image1')
+
+        image_url='NA'
+        if uploaded_image:
+            image_url = upload_images2(uploaded_image)
+            
+        try:
+            with connection.cursor() as cursor:
+                
+                insert_query = "insert into vff.laundry_offerstbl (ftitle,fdesc,fimage) values ('"+str(title_offer)+"','"+str(title_description)+"','"+str(image_url)+"')"
+                cursor.execute(insert_query)
+
+                connection.commit()
+
+                print(f"New Offer Added Successfully.")
+                return redirect('dashboard_app:all_offers')
+        except Exception as e:
+            print(f"Error loading data: {e}")
+    return redirect('dashboard_app:all_offers')
 
 
 #Orders Status Screen

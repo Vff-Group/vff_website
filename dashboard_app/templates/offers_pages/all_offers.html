@@ -39,7 +39,7 @@ Offers{% endblock title%} {% block content %}
           </div> -->
                 <form
                   method="post"
-                  action="{% url 'dashboard_app:add_expense_new_item' %}"
+                  action="{% url 'dashboard_app:add_new_offer' %}"
                 >
                   {% csrf_token %}
                   <div class="modal-body">
@@ -47,35 +47,47 @@ Offers{% endblock title%} {% block content %}
                     <div class="pl-lg-4">
                       <div class="row">
                         <div class="col">
-                          <div class="form-group">
-                            <label
-                              for="date-of-expense"
-                              class="form-control-label"
-                              >Date *</label
-                            >
-                            <input
-                              class="form-control form-control-alternative"
-                              type="date"
-                              id="date-of-expense"
-                              name="dateofexpense"
-                              value="{{ data.dateofexpense|date:'Y-m-d' }}"
-                              required
-                            />
-                          </div>
+                          
+                            <div class="col-lg-1">
+                                <div class="form-group">
+                                  <div class="avatar avatar-xl position-relative" id="input-profile">
+                                    <label for="image_upload" class="avatar-img-label cursor-pointer">
+                                      {% if data.profile_img %}
+                                        <div class="row">
+                                          <div class="col mt-4">
+                                            <div class="card mb-4 shadow-lg">
+                                              <img src="{{ data.profile_img }}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                                            </div>
+                                          </div>
+                                        </div>
+                                      {% else %}
+                                        <div class="row">
+                                          <div class="col mt-4">
+                                            <div class="card mb-4 shadow-lg d-flex" id="imageCard">
+                                              <i class="fa fa-plus text-secondary m-3 p-4"></i>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      {% endif %}
+                                    </label>
+                                    <input type="file" id="image_upload" class="d-none" accept="image/jpeg, image/png" name="profile-image1" onchange="displayImage(event)">
+                                  </div>
+                                </div>
+                              </div>
 
                           <div class="form-group">
                             <label
                               class="form-control-label"
-                              for="input-invoice-no"
-                              >Invoice Number</label
+                              for="input-offer-title"
+                              >Offer Title</label
                             >
                             <input
                               type="text"
-                              id="input-invoice-no"
+                              id="input-offer-title"
                               class="form-control form-control-alternative"
-                              placeholder="Enter Invoice Number"
-                              name="invoice_no"
-                              value="{{ data.invoice_no|default:'' }}"
+                              placeholder="Enter Offer Title"
+                              name="title_offer"
+                              value=""
                               
                             />
                           </div>
@@ -83,163 +95,27 @@ Offers{% endblock title%} {% block content %}
                           <div class="form-group">
                             <label
                               class="form-control-label"
-                              for="input-company-name"
-                              >Company Name</label
+                              for="input-offer-description"
+                              >Offer Description</label
                             >
                             <input
                               type="text"
-                              id="input-company-name"
+                              id="input-offer-description"
                               class="form-control form-control-alternative"
-                              placeholder="Enter Company Name"
-                              name="company_name"
-                              value="{{ data.invoice_no|default:'' }}"
+                              placeholder="Enter Offer Description"
+                              name="title_description"
+                              value=""
                               
                             />
                           </div>
-
-                          <div class="form-group">
-                            <label
-                              class="form-control-label"
-                              for="input-category"
-                              >Expense Category</label
-                            >
-                            <select
-                              class="form-control form-control-alternative"
-                              id="input-category"
-                              name="exp_category"
-                              required
-                            >
-                              <option disabled selected>
-                                Choose Expense Category
-                              </option>
-                              {% for category in data_all_categories %}
-                              <option
-                                value="{{ category.category_name }}"
-                                data-catid="{{ category.expcatid }}"
-                              >
-                                {{ category.category_name }}
-                              </option>
-                              {% endfor %}
-
-                              <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
-                            </select>
-                          </div>
-
-                          <input
-                            type="hidden"
-                            id="selectedCategoryId"
-                            name="selectedCategoryId"
-                            value=""
-                          />
-
-                          <div class="form-group">
-                            <label
-                              class="form-control-label"
-                              for="input-country"
-                              >Expense Amount</label
-                            >
-                            <input
-                              type="number"
-                              id="input-postal-code"
-                              class="form-control form-control-alternative"
-                              placeholder="Enter Expense Amount"
-                              name="exp_amount"
-                              value="{{ data.pincode|default:'' }}"
-                              required
-                            />
-                          </div>
-
-                          <div class="form-group">
-                            <label
-                              class="form-control-label"
-                              for="input-category"
-                              >Payment Mode</label
-                            >
-                            <select
-                              class="form-control form-control-alternative"
-                              id="input-category"
-                              name="payment_mode"
-                              required
-                            >
-                              <option disabled selected>
-                                Choose Payment Mode
-                              </option>
-                              <option value="Cash">Cash</option>
-                              <option value="UPI">UPI</option>
-                              <option value="Card">Card</option>
-                              <option value="Cheque">Cheque</option>
-                              <option value="Bank Transfer">
-                                Bank Transfer
-                              </option>
-                              <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
-                            </select>
-                          </div>
-
-                          <h5 class="modal-title" id="taxModalLabel">
-                            Tax Included?
-                          </h5>
-                          <div class="form-group">
-                            <label for="taxIncluded">Select an option:</label>
-                            <div class="form-check">
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                name="taxIncluded"
-                                id="taxNo"
-                                value="no"
-                                checked
-                              />
-                              <label class="form-check-label" for="taxNo">
-                                NO
-                              </label>
-                            </div>
-                            <div class="form-check">
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                name="taxIncluded"
-                                id="taxYes"
-                                value="yes"
-                              />
-                              <label class="form-check-label" for="taxYes">
-                                YES
-                              </label>
-                            </div>
-                          </div>
-
-                          <div
-                            class="form-group"
-                            id="taxPercentageInput"
-                            style="display: none"
-                          >
-                            <label for="taxPercentage">Tax Percentage:</label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="taxPercentage"
-                              placeholder="Example 5% "
-                              name="taxPercentage"
-                            />
-                          </div>
-
-                          <div class="pl-lg-4">
-                            <div class="form-group">
-                              <label>Notes</label>
-                              <textarea
-                                rows="4"
-                                class="form-control form-control-alternative"
-                                placeholder="Enter Notes"
-                                name="notes"
-                              ></textarea>
-                            </div>
-                          </div>
+                          
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="modal-footer">
                     <button type="submit" class="btn bg-gradient-success">
-                      Save
+                      Create
                     </button>
 
                     <button
@@ -348,6 +224,22 @@ Offers{% endblock title%} {% block content %}
                      
                     </div>
                   </td>
+                  {% else %}
+                  <td class="align-middle">
+                    <div class="row">
+                      <div class="col">
+                        <a
+                          href=""
+                          class="text-success font-weight-bold text-xs"
+                          data-toggle="tooltip"
+                          data-original-title="Edit user"
+                        >
+                          Activate
+                        </a>
+                      </div>
+                     
+                    </div>
+                  </td>
                   {% endif %}
 
                 </tr>
@@ -365,5 +257,89 @@ Offers{% endblock title%} {% block content %}
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script>
+    const imageInput = document.getElementById('image_upload');
+    const imageDiv = document.getElementById('input-profile');
+
+    imageDiv.addEventListener('click', () => {
+       // imageInput.click();
+    });
+
+    imageInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        // Optionally display the selected image, e.g., for preview
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                imageDiv.getElementsByTagName('img')[0].src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+<script>
+
+  // function displayImage(event) {
+    //const file = event.target.files[0];
+    //if (file) {
+      //const reader = new FileReader();
+      //reader.onload = function(e) {
+        //const imageCard = document.getElementById('imageCard');
+        //imageCard.innerHTML = `<img src="${e.target.result}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">`;
+      //};
+      //reader.readAsDataURL(file);
+    //}
+  //} 
+
+    // Function to handle image upload
+    document.getElementById('image_upload').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const formData = new FormData();
+        formData.append('image', file);
+    
+        // Get the CSRF token from the cookie
+        const csrftoken = getCookie('csrftoken');
+    
+        // Send a POST request to the server to upload the image
+        fetch('/upload_image/', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrftoken  // Include the CSRF token in the headers
+            },
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            const imageElement = document.getElementById('uploaded-image');
+            const imageUrlElement = document.getElementById('image-url');
+    
+            // Display the uploaded image and URL
+            imageElement.src = data.image_url;
+            imageElement.style.display = 'block';
+    
+            imageUrlElement.innerText = 'Image URL: ' + data.image_url;
+            imageUrlElement.style.display = 'block';
+        })
+        .catch(error => console.error('Error uploading image:', error));
+    });
+    
+    // Function to get the CSRF token from the cookie
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+
+</script>
 
 {% endblock %}

@@ -86,6 +86,7 @@ urlpatterns = [
     
     #Offers Pages
     path('all_offers/',views.all_offers,name='all_offers'),
+    path('all_offers/add_new_offer/',views.add_new_offer,name='add_new_offer'),
     
     #Reports Screen
     path('daily_report/',views.daily_report,name='daily_report'),
