@@ -3411,25 +3411,24 @@ def add_new_offer(request):
     
     if request.method == "POST":
         try:
-            data = json.loads(request.body.decode('utf-8'))
+            jdict = json.loads(request.body)
+            title_offer=jdict['title_offer']
+            title_description = jdict['title_description']
+            uploaded_image = jdict['image_path']
             
-            title_offer = data.get('title_offer')
-            title_description = data.get('title_description')
-            uploaded_image = request.FILES.get('profile-image1')
-            
-            image_url = 'NA'  # Default value if no image is uploaded
+            # image_url = 'NA'  # Default value if no image is uploaded
             
             if uploaded_image:
                 image_url = upload_images2(uploaded_image)
             
             try:
                 with connection.cursor() as cursor:
-
+                    
                     insert_query = "insert into vff.laundry_offerstbl (ftitle,fdesc,fimage) values ('"+str(title_offer)+"','"+str(title_description)+"','"+str(image_url)+"')"
                     cursor.execute(insert_query)
-
+    
                     connection.commit()
-
+    
                     print(f"New Offer Added Successfully.")
                     return redirect('dashboard_app:all_offers')
             except Exception as e:
