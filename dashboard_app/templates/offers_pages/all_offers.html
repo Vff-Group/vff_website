@@ -294,69 +294,7 @@ Offers{%endblock title%} {% block content %}
     }
   });
 </script>
-<script>
-  // function displayImage(event) {
-  //const file = event.target.files[0];
-  //if (file) {
-  //const reader = new FileReader();
-  //reader.onload = function(e) {
-  //const imageCard = document.getElementById('imageCard');
-  //imageCard.innerHTML = `<img src="${e.target.result}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">`;
-  //};
-  //reader.readAsDataURL(file);
-  //}
-  //}
 
-  // Function to handle image upload
-  document
-    .getElementById("image_upload")
-    .addEventListener("change", function (event) {
-      const file = event.target.files[0];
-      const formData = new FormData();
-      formData.append("image", file);
-
-      // Get the CSRF token from the cookie
-      const csrftoken = getCookie("csrftoken");
-
-      // Send a POST request to the server to upload the image
-      fetch("/upload_image/", {
-        method: "POST",
-        headers: {
-          "X-CSRFToken": csrftoken, // Include the CSRF token in the headers
-        },
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          const imageElement = document.getElementById("uploaded-image");
-          const imageUrlElement = document.getElementById("image-url");
-
-          // Display the uploaded image and URL
-          imageElement.src = data.image_url;
-          imageElement.style.display = "block";
-
-          imageUrlElement.innerText = "Image URL: " + data.image_url;
-          imageUrlElement.style.display = "block";
-        })
-        .catch((error) => console.error("Error uploading image:", error));
-    });
-
-  // Function to get the CSRF token from the cookie
-  function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-      const cookies = document.cookie.split(";");
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.startsWith(name + "=")) {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
-        }
-      }
-    }
-    return cookieValue;
-  }
-</script>
 
 <script>
   $(document).ready(function () {
