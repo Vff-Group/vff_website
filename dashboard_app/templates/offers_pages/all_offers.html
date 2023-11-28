@@ -37,10 +37,8 @@ Offers{% endblock title%} {% block content %}
               <span aria-hidden="true">×</span>
             </button>
           </div> -->
-                <form
-                  method="post"
-                  action="{% url 'dashboard_app:add_new_offer' %}"
-                >
+                <form method="post"
+                  action="{% url 'dashboard_app:add_new_offer' %}">
                   {% csrf_token %}
                   <div class="modal-body">
                     <h6 class="heading-small text-muted mb-4">Add New Offer</h6>
@@ -342,4 +340,58 @@ Offers{% endblock title%} {% block content %}
 
 </script>
 
+<script>
+    $(document).ready(function() {
+        $('form').submit(function(event) {
+          // Prevent the default form submission
+          event.preventDefault();
+    
+          // Get values of title and description inputs
+          var title = $('#input-offer-title').val();
+          var description = $('#input-offer-description').val();
+    
+          // Check length of title and description
+          if (title.length > 25 || description.length > 50) {
+            // Show a toast message for exceeding character limits
+            showToast('Alert','Title should be within 25 characters and Description within 50 characters');
+          } else {
+            // If within character limits, proceed with form submission
+            this.submit();
+          }
+        });
+    
+          // Function to show a toast message
+function showToast(message, bodyContent) {
+    toastr.warning(bodyContent, message, {
+      positionClass: "toast-top-right",
+      timeOut: 5e3,
+      closeButton: !0,
+      debug: !1,
+      newestOnTop: !0,
+      progressBar: !0,
+      preventDuplicates: !0,
+      onclick: null,
+      showDuration: "300",
+      hideDuration: "1000",
+      extendedTimeOut: "1000",
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut",
+      tapToDismiss: !1
+  })
+      // Get the toast element and its content
+      /*var toastElement = document.getElementById("liveToast");
+      var toastBody = toastElement.querySelector(".toast-body");
+  
+      // Update the toast content with the provided message and body content
+      toastBody.textContent = bodyContent;
+  
+      // Show the toast
+      var toast = new bootstrap.Toast(toastElement);
+      toast.show();*/
+  }
+  
+      });
+</script>
 {% endblock %}
