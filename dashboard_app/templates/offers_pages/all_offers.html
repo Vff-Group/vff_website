@@ -293,7 +293,20 @@ Offers{%endblock title%} {% block content %}
 </script>
 
 <script>
+    
     $(document).ready(function () {
+        function getCSRFToken() {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith("csrftoken=")) {
+                    return cookie.substring("csrftoken=".length, cookie.length);
+                }
+            }
+            return null;
+        }
+
+        
         $("form").submit(function (event) {
           // Prevent the default form submission
           event.preventDefault();
@@ -318,12 +331,15 @@ Offers{%endblock title%} {% block content %}
             formData.append("title_offer", title);
             formData.append("title_description", description);
             formData.append("profile-image1", image);
-      
+            const csrfToken = getCSRFToken();
             // AJAX POST request
             $.ajax({
               type: "POST",
               url: "{% url 'dashboard_app:add_new_offer' %}",
               data: formData,
+              headers: {
+                'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+            },
               processData: false,
               contentType: false,
               success: function (response) {
