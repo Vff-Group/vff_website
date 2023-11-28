@@ -89,7 +89,7 @@ Offers{%endblock title%} {% block content %}
                                 <input
                                   type="file"
                                   id="image_upload"
-                                  class="d-block"
+                                  class="d-none"
                                   accept="image/jpeg, image/png"
                                   name="profile-image1"
                                   onchange="displayImage(event)"
@@ -318,7 +318,13 @@ Offers{%endblock title%} {% block content %}
         showToast('Alert',"Please select an image");
       } else {
         // If within character limits, proceed with form submission
-        this.submit();
+        // Get the value of the profile-image1 input
+      const profileImage = document.querySelector('input[name="profile-image1"]').value;
+
+      // Log the value (you can perform further operations or validations here)
+      console.log('Profile Image:', profileImage);
+      event.preventDefault();
+        //this.submit();
       }
     
     });
