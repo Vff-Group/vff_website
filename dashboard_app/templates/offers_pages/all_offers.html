@@ -239,6 +239,7 @@ Offers{%endblock title%} {% block content %}
                           class="text-danger font-weight-bold text-xs"
                           data-toggle="tooltip"
                           data-original-title="Edit user"
+                          onclick="submitForm(this)"
                         >
                           Deactivate
                         </a>
@@ -255,6 +256,7 @@ Offers{%endblock title%} {% block content %}
                           class="text-success font-weight-bold text-xs"
                           data-toggle="tooltip"
                           data-original-title="Edit user"
+                          onclick="submitForm(this)"
                         >
                           Activate
                         </a>
@@ -277,7 +279,14 @@ Offers{%endblock title%} {% block content %}
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+<script>
+    function submitForm(link) {
+        // Find the form associated with the clicked link
+        var form = link.parentNode.parentNode.querySelector('form');
+        // Submit the form
+        form.submit();
+    }
+</script>
 <script>
   const imageInput = document.getElementById("image_upload");
   const imageDiv = document.getElementById("input-profile");
