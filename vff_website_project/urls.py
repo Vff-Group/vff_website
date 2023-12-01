@@ -19,7 +19,7 @@ from django.urls import path,include
 from dashboard_app.views import *
 from website_app.sitemaps import PostSitemap,StaticViewSitemap
 from django.contrib.sitemaps.views import sitemap
-from website_app.views import custom_404_view
+from website_app.views import custom_404_view,custom_500_view
 
 sitemaps = {
     'static':StaticViewSitemap,
@@ -38,3 +38,4 @@ urlpatterns = [
 ]
 
 handler404 = custom_404_view
+handler500 = custom_500_view
