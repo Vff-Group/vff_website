@@ -24,4 +24,5 @@ def login(request):
         print(f'jdict::{jdict}')
         mobno=jdict['mobno']
         emailid = jdict['email_id']
-    return JsonResponse({'response':'Success','email_id':emailid,'mobno':mobno})
+        return JsonResponse({'response':'Success','email_id':emailid,'mobno':mobno})
+    return JsonResponse({'error':'Something Went Wrong'})
