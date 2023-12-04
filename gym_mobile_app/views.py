@@ -19,26 +19,80 @@ import re
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
+
 @csrf_exempt
 def login(request):
-    # Printing headers
-    received_headers = request.headers
-    print(f"Received Headers: {received_headers}")
+    errorRet={'ErrorCode#2':'ErrorCode#2'}
     if request.method == "POST":
-        
-
         # Parsing and printing JSON body
         try:
             jdict = json.loads(request.body)
             print(f"Received Body: {jdict}")
             mobno = jdict['mobno']
             emailid = jdict['email_id']
-            return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno})
+            query = "select mobno,usrname from vff.usertbl where mobno='"+str(mobno)+"'"
+            result = execute_raw_query_fetch_one(query)
+            if result != None:
+                return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno})
         except json.JSONDecodeError as e:
             print(f"Failed to parse JSON: {e}")
-            return JsonResponse({'error': 'Invalid JSON format'})
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except Exception as ex:
+            print(f"Error fetching data: {ex}")
+            return JsonResponse({'ErrorCode#2': 'ErrorCode#2', 'ErrorCode': 8})
 
-    return JsonResponse({'error': 'Something Went Wrong'})
+    return JsonResponse(errorRet)
+
+
+def execute_raw_query(query, params=None,):
+    
+    result = []
+    try:
+        print(f"{Fore.GREEN}Query Executed: {query}{Style.RESET_ALL}")
+        with connection.cursor() as cursor:
+            cursor.execute(query, params)
+            result = cursor.fetchall()
+            print(f"Result: {result}, Result length: {len(result)}")
+        return result
+    except DatabaseError as e:
+        print(f"{Fore.RED}DatabaseError Found: {e}{Style.RESET_ALL}")
+        # Need To Handle the error appropriately, such as logging or raising a custom exception
+        # roll back transactions if needed
+        
+        return 500
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        # Handle other unexpected errors
+        return 500
+    finally:
+        # Ensure the cursor is closed to release resources
+        cursor.close()  # Note: cursor might not be defined if an exception occurs earlier
+
+def execute_raw_query_fetch_one(query, params=None,):
+    
+    result = []
+    try:
+        print(f"{Fore.GREEN}Query Executed: {query}{Style.RESET_ALL}")
+        with connection.cursor() as cursor:
+            cursor.execute(query, params)
+            result = cursor.fetchone()
+            print(f"Result: {result}")
+        return result
+    except DatabaseError as e:
+        print(f"{Fore.RED}DatabaseError Found: {e}{Style.RESET_ALL}")
+        # Need To Handle the error appropriately, such as logging or raising a custom exception
+        # roll back transactions if needed
+        
+        return 500
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        # Handle other unexpected errors
+        return 500
+    finally:
+        # Ensure the cursor is closed to release resources
+        cursor.close()  # Note: cursor might not be defined if an exception occurs earlier
+
+
 
 def get_csrf_token(request):
     csrf_token = get_token(request)
