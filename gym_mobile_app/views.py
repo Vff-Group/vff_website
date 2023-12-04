@@ -21,12 +21,22 @@ from django.middleware.csrf import get_token
 
 def login(request):
     if request.method == "POST":
-        jdict = json.loads(request.body)
-        print(f'jdict::{jdict}')
-        mobno=jdict['mobno']
-        emailid = jdict['email_id']
-        return JsonResponse({'response':'Success','email_id':emailid,'mobno':mobno})
-    return JsonResponse({'error':'Something Went Wrong'})
+        # Printing headers
+        received_headers = request.headers
+        print(f"Received Headers: {received_headers}")
+
+        # Parsing and printing JSON body
+        try:
+            jdict = json.loads(request.body)
+            print(f"Received Body: {jdict}")
+            mobno = jdict['mobno']
+            emailid = jdict['email_id']
+            return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno})
+        except json.JSONDecodeError as e:
+            print(f"Failed to parse JSON: {e}")
+            return JsonResponse({'error': 'Invalid JSON format'})
+
+    return JsonResponse({'error': 'Something Went Wrong'})
 
 def get_csrf_token(request):
     csrf_token = get_token(request)
