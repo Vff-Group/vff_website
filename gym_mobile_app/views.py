@@ -30,4 +30,5 @@ def login(request):
 
 def get_csrf_token(request):
     csrf_token = get_token(request)
+    print(f'csrf_token_django::{csrf_token}')
     return JsonResponse({'csrf_token': csrf_token})
