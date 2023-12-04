@@ -16,6 +16,7 @@ import requests
 import json
 import time
 import re
+from django.middleware.csrf import get_token
 # Create your views here.
 
 def login(request):
@@ -28,4 +29,5 @@ def login(request):
     return JsonResponse({'error':'Something Went Wrong'})
 
 def get_csrf_token(request):
-    return JsonResponse({'csrf_token': request.COOKIES.get('csrftoken', '')})
+    csrf_token = get_token(request)
+    return JsonResponse({'csrf_token': csrf_token})
