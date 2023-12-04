@@ -32,6 +32,7 @@ urlpatterns = [
     # path('send/' , send),
     # path('firebase-messaging-sw.js',showFirebaseJS,name="show_firebase_js"),
     path('admin_dashboard/',include('dashboard_app.urls',namespace='dashboard_app')),
+    path('gym_mobile_app/',include('gym_mobile_app.urls',namespace='gym_mobile_app')),
     path("django-check-seo/", include("django_check_seo.urls")),
     path('sitemaps.xml',sitemap ,{'sitemaps':sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     
