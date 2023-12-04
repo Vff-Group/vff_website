@@ -20740,3 +20740,24 @@ button.owl-next {
 }
 
 /* //testimonials section */
+
+#myVideo {
+  width: 100%; /* Make the video responsive to the viewport width */
+  height: auto; /* Allow the height to adjust proportionally */
+}
+
+/* Tablet Portrait */
+@media screen and (max-width: 768px) {
+  #myVideo {
+      width: 100%;
+      height: auto;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 480px) {
+  #myVideo {
+      width: 100%;
+      height: auto;
+  }
+}
