@@ -26,3 +26,6 @@ def login(request):
         emailid = jdict['email_id']
         return JsonResponse({'response':'Success','email_id':emailid,'mobno':mobno})
     return JsonResponse({'error':'Something Went Wrong'})
+
+def get_csrf_token(request):
+    return JsonResponse({'csrf_token': request.COOKIES.get('csrftoken', '')})
