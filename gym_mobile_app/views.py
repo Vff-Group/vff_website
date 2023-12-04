@@ -30,7 +30,7 @@ def login(request):
             print(f"Received Body: {jdict}")
             mobno = jdict['mobno']
             emailid = jdict['email_id']
-            query = "select mobno,usrname from vff.usertbl where mobno='"+str(mobno)+"'"
+            query = "select mobile_no,usrname from vff.usertbl where mobile_no='"+str(mobno)+"'"
             result = execute_raw_query_fetch_one(query)
             if result != None:
                 return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno})
