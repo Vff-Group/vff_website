@@ -20,10 +20,11 @@ from django.middleware.csrf import get_token
 # Create your views here.
 
 def login(request):
+    # Printing headers
+    received_headers = request.headers
+    print(f"Received Headers: {received_headers}")
     if request.method == "POST":
-        # Printing headers
-        received_headers = request.headers
-        print(f"Received Headers: {received_headers}")
+        
 
         # Parsing and printing JSON body
         try:
