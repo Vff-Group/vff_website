@@ -17,8 +17,9 @@ import json
 import time
 import re
 from django.middleware.csrf import get_token
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
-
+@csrf_exempt
 def login(request):
     # Printing headers
     received_headers = request.headers
