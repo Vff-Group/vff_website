@@ -67,6 +67,10 @@ def register_member(request):
             emailid = jdict['email_id']
             name = jdict['name']
             mobno = jdict['mobno']
+            query = "select usertbl.usrid,memberid,usrname,gym_memberstbl.email,mobno,gym_memberstbl.gender,weight,height,password from vff.usertbl,vff.gym_memberstbl where gym_memberstbl.usrid=usertbl.usrid and gym_memberstbl.email='"+str(emailid)+"'"
+            result = execute_raw_query_fetch_one(query)
+            if result != None:
+                return JsonResponse({'AlreadyExists':True})
             try:
                 with connection.cursor() as cursor:
                     insert_query="insert into vff.usertbl(usrname,email,mobile_no) values ('"+str(name)+"','"+str(emailid)+"','"+str(mobno)+"') returning usrid"
@@ -91,6 +95,56 @@ def register_member(request):
                     password = result[4]
                     mobno = result[5]
                 return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno,'usrid':usrid,'usrname':usrname,'memberid':memberid})
+            
+        except json.JSONDecodeError as e:
+            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except Exception as ex:
+            print(f"Error fetching data: {ex}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+
+    return JsonResponse(errorRet)
+
+
+@csrf_exempt
+def profile_complete(request):
+    errorRet={'ErrorCode#2':'ErrorCode#2'}
+    if request.method == "POST":
+        # Parsing and printing JSON body
+        try:
+            jdict = json.loads(request.body)
+            memberid = jdict['memberid']
+            gender = jdict['gender']
+            weight = jdict['weight']
+            height = jdict['height']
+            date_of_birth = jdict['date_of_birth']
+            
+            try:
+                with connection.cursor() as cursor:
+                    insert_query="update vff.gym_memberstbl set gender='"+str(gender)+"',weight='"+str(weight)+"',height='"+str(height)+"',date_of_birth='"+str(date_of_birth)+"'"
+                    cursor.execute(insert_query)
+                    usrid = cursor.fetchone()[0]
+                    
+                    connection.commit()
+            except Exception as e:
+                print(f"Error loading data: {e}")
+                return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            
+            query = "select usertbl.usrid,memberid,usrname,gym_memberstbl.email,mobno,gym_memberstbl.gender,weight,height,password,gym_memberstbl.date_of_birth  from vff.usertbl,vff.gym_memberstbl where gym_memberstbl.usrid=usertbl.usrid and memberid='"+str(memberid)+"'"
+            result = execute_raw_query_fetch_one(query)
+            if result != None:
+                if result[0] != None:
+                    usrid = result[0]
+                    memberid = result[1]
+                    usrname = result[2]
+                    emailid = result[4]
+                    mobno = result[5]
+                    gender = result[6]
+                    weight = result[7]
+                    height = result[8]
+                    password = result[9]
+                    date_of_birth = result[10]
+                return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno,'gender':gender,'usrid':usrid,'usrname':usrname,'memberid':memberid,'weight':weight,'height':height,'password':password,'date_of_birth':date_of_birth})
             
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
