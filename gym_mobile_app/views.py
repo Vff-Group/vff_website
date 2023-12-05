@@ -43,7 +43,10 @@ def login(request):
                     height = result[8]
                     password = result[9]
                 return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno,'gender':gender,'usrid':usrid,'usrname':usrname,'memberid':memberid,'weight':weight,'height':height})
-            
+        
+        except KeyError as e:
+            print(f"KeyError: {e} - Key does not exist in the JSON")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
         except json.JSONDecodeError as e:
             print(f"Failed to parse JSON: {e}")
             return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
