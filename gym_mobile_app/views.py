@@ -44,7 +44,7 @@ def login(request):
                     password = result[9]
                 return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno,'gender':gender,'usrid':usrid,'usrname':usrname,'memberid':memberid,'weight':weight,'height':height})
             else:
-                return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+                return JsonResponse({'ErrorCode#2': 'ErrorCode#2'})
         except json.JSONDecodeError as e:
             print(f"Failed to parse JSON: {e}")
             return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
@@ -90,7 +90,7 @@ def register_member(request):
                     mobno = result[5]
                 return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno,'usrid':usrid,'usrname':usrname,'memberid':memberid})
             else:
-                return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})    
+                return JsonResponse({'ErrorCode#2': 'ErrorCode#2'})    
         except json.JSONDecodeError as e:
             print(f"Failed to parse JSON: {e}")
             return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
