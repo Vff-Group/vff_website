@@ -51,7 +51,7 @@ def login(request):
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
             return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
         except Exception as ex:
-            print(f"{Style.RESET_ALL}Error fetching data: {ex{Style.RESET_ALL}}")
+            print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
             return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
 
     return JsonResponse(errorRet)
