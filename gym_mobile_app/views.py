@@ -45,13 +45,13 @@ def login(request):
                 return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno,'gender':gender,'usrid':usrid,'usrname':usrname,'memberid':memberid,'weight':weight,'height':height})
         
         except KeyError as e:
-            print(f"KeyError: {e} - Key does not exist in the JSON")
+            print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
             return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
         except json.JSONDecodeError as e:
-            print(f"Failed to parse JSON: {e}")
+            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
             return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
         except Exception as ex:
-            print(f"Error fetching data: {ex}")
+            print(f"{Style.RESET_ALL}Error fetching data: {ex{Style.RESET_ALL}}")
             return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
 
     return JsonResponse(errorRet)
@@ -93,7 +93,7 @@ def register_member(request):
                 return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno,'usrid':usrid,'usrname':usrname,'memberid':memberid})
             
         except json.JSONDecodeError as e:
-            print(f"Failed to parse JSON: {e}")
+            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
             return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
         except Exception as ex:
             print(f"Error fetching data: {ex}")
