@@ -29,7 +29,7 @@ def login(request):
             jdict = json.loads(request.body)
             password = jdict['password']
             emailid = jdict['email_id']
-            query = "select usertbl.usrid,memberid,usrname,gym_memberstbl.email,mobno,gym_memberstbl.gender,weight,height,password from vff.usertbl,vff.gym_memberstbl where gym_memberstbl.usrid=usertbl.usrid and gym_memberstbl.email='"+str(emailid)+"' and password='"+str(password)+"'"
+            query = "select usertbl.usrid,memberid,usrname,gym_memberstbl.email,mobno,gym_memberstbl.gender,weight,height,password,gymid from vff.usertbl,vff.gym_memberstbl where gym_memberstbl.usrid=usertbl.usrid and gym_memberstbl.email='"+str(emailid)+"' and password='"+str(password)+"'"
             result = execute_raw_query_fetch_one(query)
             if result != None:
                 if result[0] != None:
@@ -42,7 +42,8 @@ def login(request):
                     weight = result[6]
                     height = result[7]
                     password = result[8]
-                return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno,'gender':gender,'usrid':usrid,'usrname':usrname,'memberid':memberid,'weight':weight,'height':height})
+                    gymid = result[9]
+                return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno,'gender':gender,'usrid':usrid,'usrname':usrname,'memberid':memberid,'weight':weight,'height':height,'gymid':gymid})
         
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
@@ -67,6 +68,7 @@ def register_member(request):
             emailid = jdict['email_id']
             name = jdict['name']
             mobno = jdict['mobno']
+            gymid = jdict['gymid']
             query = "select usertbl.usrid,memberid,usrname,gym_memberstbl.email,mobno,gym_memberstbl.gender,weight,height,password from vff.usertbl,vff.gym_memberstbl where gym_memberstbl.usrid=usertbl.usrid and gym_memberstbl.email='"+str(emailid)+"'"
             result = execute_raw_query_fetch_one(query)
             if result != None:
@@ -76,7 +78,7 @@ def register_member(request):
                     insert_query="insert into vff.usertbl(usrname,email,mobile_no) values ('"+str(name)+"','"+str(emailid)+"','"+str(mobno)+"') returning usrid"
                     cursor.execute(insert_query)
                     usrid = cursor.fetchone()[0]
-                    insert_query2="insert into vff.gym_memberstbl (name,email,password,usrid,mobno) values ('"+str(name)+"','"+str(emailid)+"','"+str(password)+"','"+str(usrid)+"','"+str(mobno)+"') returning memberid"
+                    insert_query2="insert into vff.gym_memberstbl (name,email,password,usrid,mobno,gymid) values ('"+str(name)+"','"+str(emailid)+"','"+str(password)+"','"+str(usrid)+"','"+str(mobno)+"','"+str(gymid)+"') returning memberid"
                     cursor.execute(insert_query2)
                     memberid_ret = cursor.fetchone()[0]
                     connection.commit()
@@ -84,7 +86,7 @@ def register_member(request):
                 print(f"Error loading data: {e}")
                 return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
             
-            query = "select gym_memberstbl.usrid,memberid,usrname,gym_memberstbl.email,password,mobno from vff.usertbl,vff.gym_memberstbl where gym_memberstbl.usrid=usertbl.usrid and memberid='"+str(memberid_ret)+"'"
+            query = "select gym_memberstbl.usrid,memberid,usrname,gym_memberstbl.email,password,mobno,gymid from vff.usertbl,vff.gym_memberstbl where gym_memberstbl.usrid=usertbl.usrid and memberid='"+str(memberid_ret)+"'"
             result = execute_raw_query_fetch_one(query)
             if result != None:
                 if result[0] != None:
@@ -94,7 +96,8 @@ def register_member(request):
                     emailid = result[3]
                     password = result[4]
                     mobno = result[5]
-                return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno,'usrid':usrid,'usrname':usrname,'memberid':memberid})
+                    gymid = result[6]
+                return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno,'usrid':usrid,'usrname':usrname,'memberid':memberid,'gymid':gymid})
             
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
