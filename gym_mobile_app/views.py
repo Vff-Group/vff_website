@@ -27,19 +27,76 @@ def login(request):
         # Parsing and printing JSON body
         try:
             jdict = json.loads(request.body)
-            print(f"Received Body: {jdict}")
-            mobno = jdict['mobno']
+            password = jdict['password']
             emailid = jdict['email_id']
-            query = "select mobile_no,usrname from vff.usertbl where mobile_no='"+str(mobno)+"'"
+            query = "select usertbl.usrid,memberid,usrname,gym_memberstbl.email,mobno,gym_memberstbl.gender,weight,height,password from vff.usertbl,vff.gym_memberstbl where gym_memberstbl.usrid=usertbl.usrid and gym_memberstbl.email='"+str(emailid)+"' and password='"+str(password)+"'"
             result = execute_raw_query_fetch_one(query)
             if result != None:
-                return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno})
+                if result[0] != None:
+                    usrid = result[0]
+                    memberid = result[1]
+                    usrname = result[2]
+                    emailid = result[4]
+                    mobno = result[5]
+                    gender = result[6]
+                    weight = result[7]
+                    height = result[8]
+                    password = result[9]
+                return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno,'gender':gender,'usrid':usrid,'usrname':usrname,'memberid':memberid,'weight':weight,'height':height})
+            else:
+                return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
         except json.JSONDecodeError as e:
             print(f"Failed to parse JSON: {e}")
             return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
         except Exception as ex:
             print(f"Error fetching data: {ex}")
-            return JsonResponse({'ErrorCode#2': 'ErrorCode#2', 'ErrorCode': 8})
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+
+    return JsonResponse(errorRet)
+
+@csrf_exempt
+def register_member(request):
+    errorRet={'ErrorCode#2':'ErrorCode#2'}
+    if request.method == "POST":
+        # Parsing and printing JSON body
+        try:
+            jdict = json.loads(request.body)
+            password = jdict['password']
+            emailid = jdict['email_id']
+            name = jdict['name']
+            mobno = jdict['mobno']
+            try:
+                with connection.cursor() as cursor:
+                    insert_query="insert into vff.usertbl(usrname,email,mobile_no) values ('"+str(name)+"','"+str(emailid)+"','"+str(mobno)+"') returning usrid"
+                    cursor.execute(insert_query)
+                    usrid = cursor.fetchone()[0]
+                    insert_query2="insert into vff.gym_memberstbl (name,email,password,usrid,mobno) values ('"+str(name)+"','"+str(emailid)+"','"+str(password)+"','"+str(usrid)+"','"+str(mobno)+"') returning memberid"
+                    cursor.execute(insert_query2)
+                    memberid_ret = cursor.fetchone()[0]
+                    connection.commit()
+            except Exception as e:
+                print(f"Error loading data: {e}")
+                return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            
+            query = "select gym_memberstbl.usrid,memberid,usrname,gym_memberstbl.email,password,mobno from vff.usertbl,vff.gym_memberstbl where gym_memberstbl.usrid=usertbl.usrid and memberid='"+str(memberid_ret)+"'"
+            result = execute_raw_query_fetch_one(query)
+            if result != None:
+                if result[0] != None:
+                    usrid = result[0]
+                    memberid = result[1]
+                    usrname = result[2]
+                    emailid = result[3]
+                    password = result[4]
+                    mobno = result[5]
+                return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno,'usrid':usrid,'usrname':usrname,'memberid':memberid})
+            else:
+                return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})    
+        except json.JSONDecodeError as e:
+            print(f"Failed to parse JSON: {e}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except Exception as ex:
+            print(f"Error fetching data: {ex}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
 
     return JsonResponse(errorRet)
 
