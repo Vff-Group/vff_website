@@ -36,12 +36,12 @@ def login(request):
                     usrid = result[0]
                     memberid = result[1]
                     usrname = result[2]
-                    emailid = result[4]
-                    mobno = result[5]
-                    gender = result[6]
-                    weight = result[7]
-                    height = result[8]
-                    password = result[9]
+                    emailid = result[3]
+                    mobno = result[4]
+                    gender = result[5]
+                    weight = result[6]
+                    height = result[7]
+                    password = result[8]
                 return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno,'gender':gender,'usrid':usrid,'usrname':usrname,'memberid':memberid,'weight':weight,'height':height})
         
         except KeyError as e:
