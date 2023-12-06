@@ -950,14 +950,14 @@ $('#includeIGST').change(function() {
 
 // Function to update tax amount based on checkbox state
 function updateTaxAmount() {
-  //if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-    //totalPayment = parseFloat(discountedAmount).toFixed(2);
-    //grossTotal = discountedAmount;
-//}else{
+  if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+    totalPayment = parseFloat(discountedAmount).toFixed(2);
+    grossTotal = discountedAmount;
+}else{
     
-  //  totalPayment = parseFloat(grossTotal).toFixed(2);
-//}
-  totalPayment = parseFloat(subTotal).toFixed(2);  
+    totalPayment = parseFloat(grossTotal).toFixed(2);
+}
+  //totalPayment = parseFloat(subTotal).toFixed(2);  
   var gstCheckbox = $('#includeGST');
   var igstCheckbox = $('#includeIGST');
   var gstAmountLabel = $('#tax-total');

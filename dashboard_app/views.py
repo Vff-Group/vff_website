@@ -1318,15 +1318,17 @@ def view_order_detail(request,orderid):
             central_gst = gstamount / 2
             gst_amount = gstamount
             if total_cost < range_price:
-                total_cost += gstamount + delivery_price
+                # total_cost += gstamount + delivery_price
+                total_cost +=   delivery_price
             else:
-                total_cost += gstamount
+                # total_cost += gstamount
                 delivery_price = 0
         else:
             if total_cost < range_price:
-                total_cost += igstamount + delivery_price
+                #total_cost += igstamount + delivery_price
+                total_cost += delivery_price
             else:
-                total_cost += igstamount 
+                # total_cost += igstamount 
                 delivery_price =0
         
         igstamount = round(igstamount,2)
@@ -2416,15 +2418,17 @@ def generate_bill(request, orderid):
             central_gst = gstamount / 2
             gst_amount = gstamount
             if total_cost < range_price:
-                total_cost += gstamount + delivery_price
+                # total_cost += gstamount + delivery_price
+                total_cost +=  delivery_price
             else:
-                total_cost += gstamount
+                # total_cost += gstamount
                 delivery_price = 0
         else:
             if total_cost < range_price:
-                total_cost += igstamount + delivery_price
+                # total_cost += igstamount + delivery_price
+                total_cost +=  delivery_price
             else:
-                total_cost += igstamount 
+                # total_cost += igstamount 
                 delivery_price = 0
         igstamount = round(igstamount,2)
         if igstamount == 0.0:
