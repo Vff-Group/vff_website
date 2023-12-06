@@ -735,6 +735,7 @@ $('#modal-default1').on('hidden.bs.modal', function (e) {
 
         var extraItems = [];
                 var grossTotal = 0; // Total amount
+                var subTotal = 0; // Total amount
                 var grossQuantity = 0; // Total Quantity
                 var GSTamount = 0; // Total GST
                 var IGSTamount = 0; // Total IGST
@@ -1133,7 +1134,7 @@ $(document).ready(function() {
               
 
 
-                var subTotal = grossTotal;
+                subTotal = grossTotal;
                 $('#sub-total').text('Rs.'+subTotal.toFixed(2)+'/-');
                 $('#gross-total').text('Rs.'+grossTotal+'/-');
                 grossQuantity = sum_data[0].total_quantity;
