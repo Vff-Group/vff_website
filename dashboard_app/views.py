@@ -1889,6 +1889,9 @@ def update_order_status_new(request,order_id,booking_id):
         elif order_status == "Ready for Delivery":
             title = "Ready For Delivery"
             msg = "Your Laundry Package is Ready For Delivery for Order ID : #"+str(order_id)+".\nThank you."
+        elif order_status == "Returned Delivery":
+            title = "Returned Delivery"
+            msg = "Your Laundry Package has successfully Returned Store For Re-Processing Order ID : #"+str(order_id)+".\nWe are sorry for the inconvenience."
         else:
             msg = "Your Laundry Package is on its way to deliver for Order ID : #"+str(order_id)+""
         data = {

@@ -368,11 +368,13 @@
                                   <option value="Processing" {% if order_status == 'Processing' %}selected{% endif %}>Processing</option>
                                   <option value="Ready for Delivery" {% if order_status == 'Ready for Delivery' %}selected{% endif %}>Ready for Delivery</option>
                                   <option value="Out for Delivery" {% if order_status == 'Out for Delivery' %}selected{% endif %}>Out for Delivery</option>
+                                  <option value="Returned Delivery" {% if order_status == 'Returned Delivery' %}selected{% endif %}>Returned Delivery</option>
                                   <option value="Completed" {% if order_status == 'Completed' %}selected{% endif %}>Completed</option>
                                   
                                   {% elif order_taken_on == 'OnCounter' %}
                                   <option value="Processing" {% if order_status == 'Processing' %}selected{% endif %}>Processing</option>
                                   <option value="Ready for Delivery" {% if order_status == 'Ready for Delivery' %}selected{% endif %}>Ready for Delivery</option>
+                                  <option value="Returned Delivery" {% if order_status == 'Returned Delivery' %}selected{% endif %}>Returned Delivery</option>
                                   <option value="Completed" {% if order_status == 'Completed' %}selected{% endif %}>Completed</option>
                                   
                                   {% else %}
@@ -383,6 +385,7 @@
                                   <option value="Processing" {% if order_status == 'Processing' %}selected{% endif %}>Processing</option>
                                   <option value="Ready for Delivery" {% if order_status == 'Ready for Delivery' %}selected{% endif %}>Ready for Delivery</option>
                                   <option value="Out for Delivery" {% if order_status == 'Out for Delivery' %}selected{% endif %}>Out for Delivery</option>
+                                  <option value="Returned Delivery" {% if order_status == 'Returned Delivery' %}selected{% endif %}>Returned Delivery</option>
                                   <option value="Completed" {% if order_status == 'Completed' %}selected{% endif %}>Completed</option>
                                   {% if order_status != 'Payment Done'%}
                                   <option value="Cancelled" {% if order_status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
