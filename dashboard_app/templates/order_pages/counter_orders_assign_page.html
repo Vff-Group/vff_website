@@ -973,11 +973,11 @@ function updateTaxAmount() {
       gstCheckbox.prop('disabled',true);
       IGSTamount = (totalPayment * 18) / 100;  
       gstTotal = IGSTamount;
-      if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-        discountedAmount -=gstTotal
-      }else{
-        grossTotal -= gstTotal;
-      }
+      //if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+        //discountedAmount -=gstTotal
+      //}else{
+        //grossTotal -= gstTotal;
+      //}
     }else{
       IGSTamount = 0;
       gstTotal = 0;
@@ -985,45 +985,45 @@ function updateTaxAmount() {
       igstCheckbox.prop('disabled',true);
       GSTamount = (totalPayment * 18) / 100;
       gstTotal = GSTamount;
-      if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-        discountedAmount -=gstTotal
-      }else{
-        grossTotal -= gstTotal;
-      }
+      //if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+        //discountedAmount -=gstTotal
+      //}else{
+        //grossTotal -= gstTotal;
+      //}
     }
     
     
     gstAmountLabel.text('Rs.' + gstTotal.toFixed(2) + '/-');
-    $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
+    //$('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
   } else {
     gstAmountLabel.text('Rs.0/-');
     
     if(GSTamount !== 0){
       IGSTamount = 0;
       igstCheckbox.prop('disabled',false);
-      if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-        discountedAmount -=GSTamount;
-      }else{
-        grossTotal -= GSTamount;
-      }
+      //if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+        //discountedAmount -=GSTamount;
+      //}else{
+       // grossTotal -= GSTamount;
+     // }
     
     }else{
       GSTamount = 0;
       gstCheckbox.prop('disabled',false);
-      if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-        discountedAmount -=IGSTamount;
-      }else{
-        grossTotal -= IGSTamount;
-      }
+      //if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+        //discountedAmount -=IGSTamount;
+      //}else{
+        //grossTotal -= IGSTamount;
+      //}
     }
 
     
-    if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+    //if(discountedAmount !== 0 && !isNaN(discountedAmount)){
 
-      $('#gross-total').text('Rs.'+discountedAmount.toFixed(2)+'/-');
-    }else{
-      $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
-    }
+      //$('#gross-total').text('Rs.'+discountedAmount.toFixed(2)+'/-');
+    //}else{
+      //$('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
+    //}
   }
 
   
