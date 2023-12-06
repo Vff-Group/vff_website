@@ -949,14 +949,14 @@ $('#includeIGST').change(function() {
 
 // Function to update tax amount based on checkbox state
 function updateTaxAmount() {
-  if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-    totalPayment = parseFloat(discountedAmount).toFixed(2);
+  //if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+    //totalPayment = parseFloat(discountedAmount).toFixed(2);
     //grossTotal = discountedAmount;
-}else{
+//}else{
     
-    totalPayment = parseFloat(grossTotal).toFixed(2);
-}
-  
+  //  totalPayment = parseFloat(grossTotal).toFixed(2);
+//}
+  totalPayment = parseFloat(subTotal).toFixed(2);  
   var gstCheckbox = $('#includeGST');
   var igstCheckbox = $('#includeIGST');
   var gstAmountLabel = $('#tax-total');
@@ -973,9 +973,9 @@ function updateTaxAmount() {
       IGSTamount = (totalPayment * 18) / 100;  
       gstTotal = IGSTamount;
       if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-        discountedAmount +=gstTotal
+        discountedAmount -=gstTotal
       }else{
-        grossTotal += gstTotal;
+        grossTotal -= gstTotal;
       }
     }else{
       IGSTamount = 0;
@@ -985,9 +985,9 @@ function updateTaxAmount() {
       GSTamount = (totalPayment * 18) / 100;
       gstTotal = GSTamount;
       if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-        discountedAmount +=gstTotal
+        discountedAmount -=gstTotal
       }else{
-        grossTotal += gstTotal;
+        grossTotal -= gstTotal;
       }
     }
     
