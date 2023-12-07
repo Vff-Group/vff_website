@@ -36,13 +36,19 @@
     <link href="{% static 'css/nucleo-svg.css' %}" rel="stylesheet" />
 
     <!-- Style Toast  -->
-    <link rel="stylesheet" href="{% static 'vendor/toastr/css/toastr.min.css' %}">
+    <link
+      rel="stylesheet"
+      href="{% static 'vendor/toastr/css/toastr.min.css' %}"
+    />
 
     <!-- Select 2 for dropdown search option  -->
-    <link rel="stylesheet" href="{% static 'vendor/select2/css/select2.min.css' %}">
+    <link
+      rel="stylesheet"
+      href="{% static 'vendor/select2/css/select2.min.css' %}"
+    />
 
     <!-- Add these links to your HTML -->
-<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.min.js"></script> -->
 
@@ -65,11 +71,11 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script> -->
 
     <!-- Include Firebase SDK -->
-<!-- <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-app.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-messaging.js"></script> -->
 
-<!-- Your Firebase configuration -->
-<!-- <script>
+    <!-- Your Firebase configuration -->
+    <!-- <script>
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyB377d4_AFRtoEIjpN2Puf3CYwe-I9dCGE",
@@ -133,10 +139,13 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
 </script> -->
 
     <!-- For Toast Messages  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!-- <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script> -->
-<!-- 
+    <!-- 
     <script>
       const firebaseConfig = {
         apiKey: "AIzaSyB377d4_AFRtoEIjpN2Puf3CYwe-I9dCGE",
@@ -192,7 +201,6 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
       }
     
     </script>  -->
-  
   </head>
   <body class="g-sidenav-show bg-gray-100">
     <div id="preloader-active">
@@ -207,30 +215,63 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
     </div>
 
     <!-- Modal for notifications -->
-<div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-      <div class="modal-content">
+    <div
+      class="modal fade"
+      id="notificationModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="notificationModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title" id="notificationModalLabel">New Booking Notification</h5>
-              <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
+            <h5 class="modal-title" id="notificationModalLabel">
+              New Booking Notification
+            </h5>
+            <button
+              type="button"
+              class="btn-close text-dark"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
           </div>
           <div class="modal-body">
-              <img src="{% static 'img/new_notification_image.jpg'%}" id="notificationImage" class="img-fluid" alt="Notification Image" style="height:50%; width: fit-content;">
-              <h6 class="mt-3 d-flex justify-content-center" id="notificationDescription">Yet Delivery is not Accepted / No Delivery Boy was Free </h6>
-              <small class="mt-3 d-flex justify-content-center " id="notificationDescription">Click on the notification Icon and Check weather the Booking ID is Assigned or not. </small>
-              <div id="notificationContent"></div>
+            <img
+              src="{% static 'img/new_notification_image.jpg'%}"
+              id="notificationImage"
+              class="img-fluid"
+              alt="Notification Image"
+              style="height: 50%; width: fit-content"
+            />
+            <h6
+              class="mt-3 d-flex justify-content-center"
+              id="notificationDescription"
+            >
+              Yet Delivery is not Accepted / No Delivery Boy was Free
+            </h6>
+            <small
+              class="mt-3 d-flex justify-content-center"
+              id="notificationDescription"
+              >Click on the notification Icon and Check weather the Booking ID
+              is Assigned or not.
+            </small>
+            <div id="notificationContent"></div>
           </div>
+        </div>
       </div>
-  </div>
-</div>
+    </div>
 
-    <audio id="notificationSound" style="display: none;">
-      <source src="{% static 'audio/new_order_ringtone.mp3' %}" type="audio/mpeg">
+    <audio id="notificationSound" style="display: none">
+      <source
+        src="{% static 'audio/new_order_ringtone.mp3' %}"
+        type="audio/mpeg"
+      />
       Your browser does not support the audio element.
-  </audio>
-  
+    </audio>
+
     <aside
       class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3"
       id="sidenav-main"
@@ -321,7 +362,7 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
               <span class="nav-link-text ms-1">Category Settings</span>
             </a>
           </li>
-          
+          {% if request.session.admin_type == "Super Admin" %}
           <li class="nav-item mt-3">
             <h6
               class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6"
@@ -338,7 +379,6 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
               <div
                 class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
               >
-              
                 <i
                   class="fa-solid fa-dumpster-fire fa-lg {% if not current_url == '/admin_dashboard/all_main_branches/' %}text-dark{% endif %}"
                 ></i>
@@ -355,7 +395,6 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
               <div
                 class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
               >
-              
                 <i
                   class="fa-solid fa-dumpster-fire fa-lg {% if not current_url == '/admin_dashboard/staff/' %}text-dark{% endif %}"
                 ></i>
@@ -379,6 +418,7 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
               <span class="nav-link-text ms-1">Offers Settings</span>
             </a>
           </li>
+          {% endif %}
           <li class="nav-item mt-3">
             <h6
               class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6"
@@ -395,7 +435,6 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
               <div
                 class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
               >
-              
                 <i
                   class="fa-solid fa-dumpster-fire fa-lg {% if not current_url == '/admin_dashboard/counter_orders_screen/' %}text-dark{% endif %}"
                 ></i>
@@ -403,8 +442,6 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
               <span class="nav-link-text ms-1">Add Counter Order</span>
             </a>
           </li>
-
-         
 
           <li class="nav-item">
             <a
@@ -462,7 +499,7 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
               <span class="nav-link-text ms-1">UnAssigned Bookings</span>
             </a>
           </li>
-          
+
           <li class="nav-item mt-3">
             <h6
               class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6"
@@ -470,40 +507,55 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
               Finance
             </h6>
           </li>
-           <li class="nav-item">
-            <a class="nav-link"  href="{% url 'dashboard_app:all_expenses' %}"
-            data-url="{% url 'dashboard_app:all_expenses' %}">
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="{% url 'dashboard_app:all_expenses' %}"
+              data-url="{% url 'dashboard_app:all_expenses' %}"
+            >
               <div
                 class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
               >
-                <i class="fa-solid fa-credit-card fa-lg {% if not current_url == '/admin_dashboard/all_expenses/' %}text-dark{% endif %}"></i>
+                <i
+                  class="fa-solid fa-credit-card fa-lg {% if not current_url == '/admin_dashboard/all_expenses/' %}text-dark{% endif %}"
+                ></i>
               </div>
               <span class="nav-link-text ms-1">Expenses</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'dashboard_app:expense_category' %}"
-            data-url="{% url 'dashboard_app:expense_category' %}">
+            <a
+              class="nav-link"
+              href="{% url 'dashboard_app:expense_category' %}"
+              data-url="{% url 'dashboard_app:expense_category' %}"
+            >
               <div
                 class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
               >
-                <i class="fa-solid fa-bars fa-lg {% if not current_url == '/admin_dashboard/expense_category/' %}text-dark{% endif %}"></i>
+                <i
+                  class="fa-solid fa-bars fa-lg {% if not current_url == '/admin_dashboard/expense_category/' %}text-dark{% endif %}"
+                ></i>
               </div>
               <span class="nav-link-text ms-1">Expense Category</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"href="{% url 'dashboard_app:payment_receipt' %}"
-            data-url="{% url 'dashboard_app:payment_receipt' %}">
+            <a
+              class="nav-link"
+              href="{% url 'dashboard_app:payment_receipt' %}"
+              data-url="{% url 'dashboard_app:payment_receipt' %}"
+            >
               <div
                 class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
               >
-                <i class="fa-solid fa-money-bill-1 fa-lg {% if not current_url == '/admin_dashboard/payment_receipt/' %}text-dark{% endif %}"></i>
+                <i
+                  class="fa-solid fa-money-bill-1 fa-lg {% if not current_url == '/admin_dashboard/payment_receipt/' %}text-dark{% endif %}"
+                ></i>
               </div>
               <span class="nav-link-text ms-1">Payment Receipts</span>
             </a>
           </li>
-
+          {% if request.session.admin_type == "Super Admin" %}
           <li class="nav-item mt-3">
             <h6
               class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6"
@@ -513,42 +565,57 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'dashboard_app:daily_report' %}"
-            data-url="{% url 'dashboard_app:daily_report' %}">
+            <a
+              class="nav-link"
+              href="{% url 'dashboard_app:daily_report' %}"
+              data-url="{% url 'dashboard_app:daily_report' %}"
+            >
               <div
                 class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
               >
-                <i class="fa-solid fa-turn-up fa-lg {% if not current_url == '/admin_dashboard/daily_report/' %}text-dark{% endif %}"></i>
+                <i
+                  class="fa-solid fa-turn-up fa-lg {% if not current_url == '/admin_dashboard/daily_report/' %}text-dark{% endif %}"
+                ></i>
               </div>
               <span class="nav-link-text ms-1">Daily Report</span>
             </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'dashboard_app:order_report' %}"
-            data-url="{% url 'dashboard_app:order_report' %}">
+            <a
+              class="nav-link"
+              href="{% url 'dashboard_app:order_report' %}"
+              data-url="{% url 'dashboard_app:order_report' %}"
+            >
               <div
                 class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
               >
-                <i class="fa-solid fa-receipt fa-lg {% if not current_url == '/admin_dashboard/order_report/' %}text-dark{% endif %}"></i>
+                <i
+                  class="fa-solid fa-receipt fa-lg {% if not current_url == '/admin_dashboard/order_report/' %}text-dark{% endif %}"
+                ></i>
               </div>
               <span class="nav-link-text ms-1">Order Report</span>
             </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'dashboard_app:sales_report' %}"
-            data-url="{% url 'dashboard_app:sales_report' %}">
+            <a
+              class="nav-link"
+              href="{% url 'dashboard_app:sales_report' %}"
+              data-url="{% url 'dashboard_app:sales_report' %}"
+            >
               <div
                 class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
               >
-                <i class="fa-solid fa-chart-simple fa-lg {% if not current_url == '/admin_dashboard/sales_report/' %}text-dark{% endif %}"></i>
+                <i
+                  class="fa-solid fa-chart-simple fa-lg {% if not current_url == '/admin_dashboard/sales_report/' %}text-dark{% endif %}"
+                ></i>
               </div>
               <span class="nav-link-text ms-1">Sales Report</span>
             </a>
           </li>
 
-
+          {% endif %}
           <!-- <li class="nav-item">
             <a class="nav-link" href="{% url 'dashboard_app:expense_report' %}"
             data-url="{% url 'dashboard_app:expense_report' %}">
@@ -561,7 +628,6 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
             </a>
           </li> -->
 
-
           <!-- <li class="nav-item">
             <a class="nav-link" href="{% url 'dashboard_app:tax_report' %}"
             data-url="{% url 'dashboard_app:tax_report' %}">
@@ -573,7 +639,6 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
               <span class="nav-link-text ms-1">Tax Report</span>
             </a>
           </li> -->
-
 
           <!-- <li class="nav-item mt-3">
             <h6
@@ -770,35 +835,56 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
                 </ul>
               </li> -->
               <li class="nav-item dropdown pe-2 d-flex align-items-center">
-                <a href="javascript:;" class="nav-link text-body p-0" id="notificationBell" data-bs-toggle="offcanvas" data-bs-target="#notificationsOffcanvas" aria-expanded="false">
+                <a
+                  href="javascript:;"
+                  class="nav-link text-body p-0"
+                  id="notificationBell"
+                  data-bs-toggle="offcanvas"
+                  data-bs-target="#notificationsOffcanvas"
+                  aria-expanded="false"
+                >
                   <i class="fa fa-bell cursor-pointer"></i>
                 </a>
               </li>
-              
             </ul>
           </div>
         </div>
       </nav>
       <!-- End Navbar -->
-<!-- Offcanvas for Notifications -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="notificationsOffcanvas">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title">Notifications</h5>
-    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">
-    <!-- Add this input field for searching customer names -->
-    <div class="form-group">
-    <input class="form-control form-control-alternative"
-    type="search" type="text" id="searchInput" placeholder="Search by customer name">
-  </div>
-    <!-- Add this label for displaying "No data found" message -->
-    <p id="noDataFound" class="text-center" style="display: none;">No data found</p>
+      <!-- Offcanvas for Notifications -->
+      <div
+        class="offcanvas offcanvas-end"
+        tabindex="-1"
+        id="notificationsOffcanvas"
+      >
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title">Notifications</h5>
+          <button
+            type="button"
+            class="btn-close text-reset"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="offcanvas-body">
+          <!-- Add this input field for searching customer names -->
+          <div class="form-group">
+            <input
+              class="form-control form-control-alternative"
+              type="search"
+              type="text"
+              id="searchInput"
+              placeholder="Search by customer name"
+            />
+          </div>
+          <!-- Add this label for displaying "No data found" message -->
+          <p id="noDataFound" class="text-center" style="display: none">
+            No data found
+          </p>
 
-    <div id="notificationsContent"></div>
-  </div>
-</div>
-
+          <div id="notificationsContent"></div>
+        </div>
+      </div>
 
       <div class="col-md-4">
         <div
@@ -815,7 +901,9 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
           >
             <div class="modal-content">
               <div class="modal-header">
-                <h6 class="modal-title" id="modal-title-default">Most Recent Order Search</h6>
+                <h6 class="modal-title" id="modal-title-default">
+                  Most Recent Order Search
+                </h6>
                 <button
                   type="button"
                   class="btn-close text-dark"
@@ -826,14 +914,14 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
                 </button>
               </div>
               <div class="modal-body">
-                <form id="searchForm" >
+                <form id="searchForm">
                   {% csrf_token %}
                   <div class="row">
                     <div class="col-lg-12">
                       <div class="form-group">
                         <label class="form-control-label" for="input-cost"
-                          >#Order ID or Mobile Number </label
-                        >
+                          >#Order ID or Mobile Number
+                        </label>
                         <input
                           type="number"
                           id="input-cost"
@@ -866,7 +954,11 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
 
                   <div class="row justify-content-center p-4 mt-1">
                     <div class="col-lg-2">
-                      <button type="button" class="btn btn-primary my-4" id="searchBtn">
+                      <button
+                        type="button"
+                        class="btn btn-primary my-4"
+                        id="searchBtn"
+                      >
                         Search
                       </button>
                     </div>
@@ -886,7 +978,7 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
           </div>
         </div>
       </div>
-      
+
       <!-- Toastr -->
       <!-- <div class="row">
         <div class="col-12">
@@ -914,10 +1006,10 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
         </div>
     </div> -->
 
-    <!--**********************************
+      <!--**********************************
             Content body start
         ***********************************-->
-        <!-- <div class="content-body">
+      <!-- <div class="content-body">
           <div class="container-fluid">
               <div class="row page-titles mx-0">
                   <div class="col-sm-6 p-md-0">
@@ -1625,8 +1717,7 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
     <script src="{% static 'js/plugins/perfect-scrollbar.min.js' %}"></script>
     <script src="{% static 'js/plugins/smooth-scrollbar.min.js' %}"></script>
     <script src="{% static 'js/plugins/chartjs.min.js' %}"></script>
-   <script>
-
+    <script>
       /*var ctx = document.getElementById("chart-bars").getContext("2d");
 
       new Chart(ctx, {
@@ -1705,8 +1796,8 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
         },
       });
       */
-      
-     /* var ctx2 = document.getElementById("chart-line").getContext("2d");
+
+      /* var ctx2 = document.getElementById("chart-line").getContext("2d");
 
       var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
 
@@ -1839,184 +1930,196 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
     <script src="{% static 'js/main.js' %}"></script>
 
     <!-- Required vendors -->
-<script src="{% static 'vendor/global/global.min.js' %}"></script>
-<script src="{% static 'js/quixnav-init.js' %}"></script>
-<script src="{% static 'js/custom.min.js' %}"></script>
-<!-- Toastr -->
-<script src="{% static 'vendor/toastr/js/toastr.min.js' %}"></script>
+    <script src="{% static 'vendor/global/global.min.js' %}"></script>
+    <script src="{% static 'js/quixnav-init.js' %}"></script>
+    <script src="{% static 'js/custom.min.js' %}"></script>
+    <!-- Toastr -->
+    <script src="{% static 'vendor/toastr/js/toastr.min.js' %}"></script>
 
-<!-- All init script -->
-<script src="{% static 'js/plugins-init/toastr-init.js' %}"></script>
-<script src="{% static 'vendor/select2/js/select2.full.min.js' %}"></script>
-<script src="{% static 'js/plugins-init/select2-init.js' %}"></script>
+    <!-- All init script -->
+    <script src="{% static 'js/plugins-init/toastr-init.js' %}"></script>
+    <script src="{% static 'vendor/select2/js/select2.full.min.js' %}"></script>
+    <script src="{% static 'js/plugins-init/select2-init.js' %}"></script>
 
     <!-- To Show Notifications  -->
     <!-- Include jQuery and Bootstrap JS before this script -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oGsFzPfNsYkLCRi3BEs0s+WyQl3ByVylUk5l1RlW37E=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-qZqy51hpVr3PJSkt2W4tTwZrBEJpCgFf3KpBbqMvuv0PAjqHI8h11ABjKz5x0mu2" crossorigin="anonymous"></script>
-<!-- Include jQuery and Bootstrap JS before this script -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oGsFzPfNsYkLCRi3BEs0s+WyQl3ByVylUk5l1RlW37E=" crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.min.js"
+      integrity="sha256-oGsFzPfNsYkLCRi3BEs0s+WyQl3ByVylUk5l1RlW37E="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-qZqy51hpVr3PJSkt2W4tTwZrBEJpCgFf3KpBbqMvuv0PAjqHI8h11ABjKz5x0mu2"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Include jQuery and Bootstrap JS before this script -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.min.js"
+      integrity="sha256-oGsFzPfNsYkLCRi3BEs0s+WyQl3ByVylUk5l1RlW37E="
+      crossorigin="anonymous"
+    ></script>
 
-<script>
-  $(document).ready(function() {
-
-      // Get the CSRF token from the cookie
-      function getCSRFToken() {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
+    <script>
+      $(document).ready(function () {
+        // Get the CSRF token from the cookie
+        function getCSRFToken() {
+          const cookies = document.cookie.split(";");
+          for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].trim();
             if (cookie.startsWith("csrftoken=")) {
-                return cookie.substring("csrftoken=".length, cookie.length);
+              return cookie.substring("csrftoken=".length, cookie.length);
             }
+          }
+          return null;
         }
-        return null;
-      }
-  $('#searchBtn').click(function() {
-    const orderId = $('#input-cost').val(); // Get the value of the order ID input field
-    const type = $('#input-type').val(); // Get the value of the type input field
-    const csrfToken = getCSRFToken();
+        $("#searchBtn").click(function () {
+          const orderId = $("#input-cost").val(); // Get the value of the order ID input field
+          const type = $("#input-type").val(); // Get the value of the type input field
+          const csrfToken = getCSRFToken();
 
-    console.log('TypeOfORder::'+type);
-    // AJAX request
-    $.ajax({
-      type: 'POST', // or 'GET' depending on your server implementation
-      url: '/admin_dashboard/search/', // Replace this with your server endpoint
-      headers: {
-            'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
-        },
-      data: {
-        searchid: orderId,
-        type: type,
-        csrfmiddlewaretoken: '{{ csrf_token }}' // Ensure you have CSRF protection
-      },
-      success: function(response) {
-        // Check the response from the server
-        if (response.orderFound) {
-          // Order found, do something with the response
-          // For example, display the order details in a modal
-          window.location.href = `/admin_dashboard/all_orders/order_details/` + response.orderid;
-         // $('#modal-body').html(response.orderDetails); // Replace '#modal-body' with your modal's body ID or class
+          console.log("TypeOfORder::" + type);
+          // AJAX request
+          $.ajax({
+            type: "POST", // or 'GET' depending on your server implementation
+            url: "/admin_dashboard/search/", // Replace this with your server endpoint
+            headers: {
+              "X-CSRFToken": csrfToken, // Include the CSRF token in the headers
+            },
+            data: {
+              searchid: orderId,
+              type: type,
+              csrfmiddlewaretoken: "{{ csrf_token }}", // Ensure you have CSRF protection
+            },
+            success: function (response) {
+              // Check the response from the server
+              if (response.orderFound) {
+                // Order found, do something with the response
+                // For example, display the order details in a modal
+                window.location.href =
+                  `/admin_dashboard/all_orders/order_details/` +
+                  response.orderid;
+                // $('#modal-body').html(response.orderDetails); // Replace '#modal-body' with your modal's body ID or class
+              } else {
+                // Order not found, show a toast message
+                showToast("Alert", "Order not found");
+              }
+            },
+            error: function (xhr, status, error) {
+              // Handle any AJAX errors
+              console.error(error);
+            },
+          });
+        });
+        // Function to show a toast message
+        function showToast(message, bodyContent) {
+          toastr.warning(bodyContent, message, {
+            positionClass: "toast-top-right",
+            timeOut: 5e3,
+            closeButton: !0,
+            debug: !1,
+            newestOnTop: !0,
+            progressBar: !0,
+            preventDuplicates: !0,
+            onclick: null,
+            showDuration: "300",
+            hideDuration: "1000",
+            extendedTimeOut: "1000",
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut",
+            tapToDismiss: !1,
+          });
+        }
+        // // Function to show a toast message
+        // function showToast(message) {
+        //   // Implement your toast notification logic here
+        //   // This might involve showing a hidden div with the message and styling it appropriately
+        //   // For example:
+        //   $('#toastMessage').text(message);
+        //   $('#toastMessage').fadeIn().delay(2000).fadeOut(); // Show for 2 seconds and then hide
+        // }
+      });
+    </script>
+    <script>
+      var allNotifications = [];
+      $(document).ready(function () {
+        //TO Store All Notifications
+
+        $("#notificationBell").on("click", function () {
+          // Get the CSRF token from the cookie
+          function getCSRFToken() {
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              if (cookie.startsWith("csrftoken=")) {
+                return cookie.substring("csrftoken=".length, cookie.length);
+              }
+            }
+            return null;
+          }
+
+          //CSRF TOken
+          const csrfToken = getCSRFToken();
+          // Make AJAX request to get notifications
+          $.ajax({
+            url: "/admin_dashboard/get_todays_notification",
+            method: "GET",
+
+            headers: {
+              "X-CSRFToken": csrfToken, // Include the CSRF token in the headers
+            },
+            contentType: "application/json",
+            success: function (data) {
+              allNotifications = data.query_result;
+              displayNotifications(allNotifications);
+            },
+            error: function (error) {
+              console.error("Error fetching notifications:", error);
+            },
+          });
+        });
+      });
+
+      // Search functionality for customer names or booking IDs
+      $("#searchInput").on("input", function () {
+        var searchTerm = $(this).val().toLowerCase();
+        var notifications = allNotifications;
+
+        var filteredNotifications = allNotifications.filter(function (
+          notification
+        ) {
+          return (
+            notification.customer_name.toLowerCase().includes(searchTerm) ||
+            String(notification.booking_id).toLowerCase().includes(searchTerm)
+          );
+        });
+
+        displayNotifications(filteredNotifications);
+        if (filteredNotifications.length === 0) {
+          $("#noDataFound").show();
         } else {
-          // Order not found, show a toast message
-          showToast('Alert','Order not found');
-        }
-      },
-      error: function(xhr, status, error) {
-        // Handle any AJAX errors
-        console.error(error);
-      }
-    });
-  });
-// Function to show a toast message
-function showToast(message, bodyContent) {
-  toastr.warning(bodyContent, message, {
-    positionClass: "toast-top-right",
-    timeOut: 5e3,
-    closeButton: !0,
-    debug: !1,
-    newestOnTop: !0,
-    progressBar: !0,
-    preventDuplicates: !0,
-    onclick: null,
-    showDuration: "300",
-    hideDuration: "1000",
-    extendedTimeOut: "1000",
-    showEasing: "swing",
-    hideEasing: "linear",
-    showMethod: "fadeIn",
-    hideMethod: "fadeOut",
-    tapToDismiss: !1
-})
-}
-  // // Function to show a toast message
-  // function showToast(message) {
-  //   // Implement your toast notification logic here
-  //   // This might involve showing a hidden div with the message and styling it appropriately
-  //   // For example:
-  //   $('#toastMessage').text(message);
-  //   $('#toastMessage').fadeIn().delay(2000).fadeOut(); // Show for 2 seconds and then hide
-  // }
-});
-
-
-</script>
-<script>
-  var allNotifications = [];
-  $(document).ready(function () {
-    //TO Store All Notifications
-    
-
-    $('#notificationBell').on('click', function () {
-
-      // Get the CSRF token from the cookie
-      function getCSRFToken() {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.startsWith("csrftoken=")) {
-                return cookie.substring("csrftoken=".length, cookie.length);
-            }
-        }
-        return null;
-      }
-
-      
-      //CSRF TOken
-      const csrfToken = getCSRFToken();
-      // Make AJAX request to get notifications
-      $.ajax({
-        url: '/admin_dashboard/get_todays_notification',
-        method: 'GET',
-        
-        headers: {
-            'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
-        },
-        contentType: 'application/json',
-        success: function (data) {
-          allNotifications = data.query_result;
-          displayNotifications(allNotifications);
-        },
-        error: function (error) {
-          console.error('Error fetching notifications:', error);
+          $("#noDataFound").hide();
         }
       });
-    });
-  });
 
-  // Search functionality for customer names or booking IDs
-  $('#searchInput').on('input', function () {
-    var searchTerm = $(this).val().toLowerCase();
-    var notifications = allNotifications;
-
-    var filteredNotifications = allNotifications.filter(function (notification) {
-      return (
-        notification.customer_name.toLowerCase().includes(searchTerm) ||
-        (String(notification.booking_id).toLowerCase().includes(searchTerm))
-      );
-    });
-
-    displayNotifications(filteredNotifications);
-    if (filteredNotifications.length === 0) {
-      $('#noDataFound').show();
-    } else {
-      $('#noDataFound').hide();
-    }
-  });
-
-  function displayNotifications(notifications) {
-    var notificationsContent = $('#notificationsContent');
-    notificationsContent.empty();
-    if (notifications.length === 0) {
-      // Display a label when there are no notifications
-      notificationsContent.html('<p class="text-center">No Notifications found for today</p>');
-      return;
-    }
-    notifications.forEach(function (notification) {
-      var timeAgo = calculateTimeAgo(notification.epoch);
-      // <img src="${notification.ImageURL}" class="avatar avatar-sm me-3" />
-      //nav-item,dropdown-menu
-      var bookingUrl = "{% url 'dashboard_app:all_unassigned_bookings' %}";
-      var notificationItem = `
+      function displayNotifications(notifications) {
+        var notificationsContent = $("#notificationsContent");
+        notificationsContent.empty();
+        if (notifications.length === 0) {
+          // Display a label when there are no notifications
+          notificationsContent.html(
+            '<p class="text-center">No Notifications found for today</p>'
+          );
+          return;
+        }
+        notifications.forEach(function (notification) {
+          var timeAgo = calculateTimeAgo(notification.epoch);
+          // <img src="${notification.ImageURL}" class="avatar avatar-sm me-3" />
+          //nav-item,dropdown-menu
+          var bookingUrl = "{% url 'dashboard_app:all_unassigned_bookings' %}";
+          var notificationItem = `
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="dropdown-item border-radius-md" href="${bookingUrl}">
@@ -2043,76 +2146,80 @@ function showToast(message, bodyContent) {
         </li>
         <hr class="mb-1">
       </ul>`;
-  
-      notificationsContent.append(notificationItem);
-    });
-  }
-  
-  function calculateTimeAgo(epochTime) {
-    const currentTime = Math.floor(Date.now() / 1000); // Get current time in seconds
-    const secondsAgo = currentTime - epochTime;
-  
-    if (secondsAgo < 60) {
-      return 'Just now';
-    } else if (secondsAgo < 3600) {
-      const minutesAgo = Math.floor(secondsAgo / 60);
-      return `${minutesAgo} ${minutesAgo === 1 ? 'minute' : 'minutes'} ago`;
-    } else if (secondsAgo < 86400) {
-      const hoursAgo = Math.floor(secondsAgo / 3600);
-      return `${hoursAgo} ${hoursAgo === 1 ? 'hour' : 'hours'} ago`;
-    } else {
-      const daysAgo = Math.floor(secondsAgo / 86400);
-      return `${daysAgo} ${daysAgo === 1 ? 'day' : 'days'} ago`;
-    }
-  }
-  
-</script>
 
-<script>
-  // Function to check if the current URL matches a specific path
-function isCounterOrdersScreen() {
-  return window.location.pathname === '/admin_dashboard/counter_orders_screen/';
-}
-  // Function to play notification sound
-function playNotificationSound() {
-  var notificationSound = document.getElementById('notificationSound');
-  notificationSound.play();
-}
+          notificationsContent.append(notificationItem);
+        });
+      }
 
-function stopNotificationSound() {
-  var notificationSound = document.getElementById('notificationSound');
-  notificationSound.pause();
-  notificationSound.currentTime = 0;
-}
+      function calculateTimeAgo(epochTime) {
+        const currentTime = Math.floor(Date.now() / 1000); // Get current time in seconds
+        const secondsAgo = currentTime - epochTime;
 
-// Function to check for new notifications using AJAX
-function checkForNewNotifications() {
-  // Check if the current URL is the counter orders screen
-  if (isCounterOrdersScreen()) {
-    // Don't check for notifications on this page
-    return;
-  }
-  $.ajax({
-      url: '/admin_dashboard/check_notifications/', // Replace with your Django endpoint
-      type: 'GET',
-      success: function(response) {
-          if (response.query_result) {
+        if (secondsAgo < 60) {
+          return "Just now";
+        } else if (secondsAgo < 3600) {
+          const minutesAgo = Math.floor(secondsAgo / 60);
+          return `${minutesAgo} ${minutesAgo === 1 ? "minute" : "minutes"} ago`;
+        } else if (secondsAgo < 86400) {
+          const hoursAgo = Math.floor(secondsAgo / 3600);
+          return `${hoursAgo} ${hoursAgo === 1 ? "hour" : "hours"} ago`;
+        } else {
+          const daysAgo = Math.floor(secondsAgo / 86400);
+          return `${daysAgo} ${daysAgo === 1 ? "day" : "days"} ago`;
+        }
+      }
+    </script>
+
+    <script>
+      // Function to check if the current URL matches a specific path
+      function isCounterOrdersScreen() {
+        return (
+          window.location.pathname === "/admin_dashboard/counter_orders_screen/"
+        );
+      }
+      // Function to play notification sound
+      function playNotificationSound() {
+        var notificationSound = document.getElementById("notificationSound");
+        notificationSound.play();
+      }
+
+      function stopNotificationSound() {
+        var notificationSound = document.getElementById("notificationSound");
+        notificationSound.pause();
+        notificationSound.currentTime = 0;
+      }
+
+      // Function to check for new notifications using AJAX
+      function checkForNewNotifications() {
+        // Check if the current URL is the counter orders screen
+        if (isCounterOrdersScreen()) {
+          // Don't check for notifications on this page
+          return;
+        }
+        $.ajax({
+          url: "/admin_dashboard/check_notifications/", // Replace with your Django endpoint
+          type: "GET",
+          success: function (response) {
+            if (response.query_result) {
               // Play sound and show modal or update UI
               playNotificationSound();
-             // $('#notificationModal').modal('show');
-             var notificationContent = $('#notificationContent');
+              // $('#notificationModal').modal('show');
+              var notificationContent = $("#notificationContent");
               notificationContent.empty(); // Clear previous content
 
               // Iterate through each notification and populate modal body
-              response.query_result.forEach(function(notification) {
-                  var profileImg = notification.customer_profile;
-                  var customerName = notification.customer_name;
-                  var address = notification.address;
-                  var bookingId = notification.bookingid;
-                  var timeAgo = calculateTimeAgo(notification.booking_done_timing);
-                  var bookingUrl = "{% url 'dashboard_app:all_unassigned_bookings' %}";
-                  // Create HTML elements to display notification data
-                  var notificationHtml = `
+              response.query_result.forEach(function (notification) {
+                var profileImg = notification.customer_profile;
+                var customerName = notification.customer_name;
+                var address = notification.address;
+                var bookingId = notification.bookingid;
+                var timeAgo = calculateTimeAgo(
+                  notification.booking_done_timing
+                );
+                var bookingUrl =
+                  "{% url 'dashboard_app:all_unassigned_bookings' %}";
+                // Create HTML elements to display notification data
+                var notificationHtml = `
                   <ul class="navbar-nav">
                     <li class="nav-item">
                       <a class="dropdown-item border-radius-md" href="${bookingUrl}">
@@ -2142,28 +2249,26 @@ function checkForNewNotifications() {
                       
                   `;
 
-                  // Append notification data to the modal body
-                  notificationContent.append(notificationHtml);
+                // Append notification data to the modal body
+                notificationContent.append(notificationHtml);
               });
 
-              $('#notificationModal').modal('show'); // Show the modal
-
-          }
-      },
-      error: function(error) {
-          console.error('Error checking notifications:', error);
+              $("#notificationModal").modal("show"); // Show the modal
+            }
+          },
+          error: function (error) {
+            console.error("Error checking notifications:", error);
+          },
+        });
       }
-  });
-}
 
-// Check for new notifications every 30 seconds (for example)
-setInterval(checkForNewNotifications, 30000);
+      // Check for new notifications every 30 seconds (for example)
+      setInterval(checkForNewNotifications, 30000);
 
-// When the modal is hidden or closed, stop the notification sound
-$('#notificationModal').on('hidden.bs.modal', function () {
-  stopNotificationSound();
-});
-
-</script>
+      // When the modal is hidden or closed, stop the notification sound
+      $("#notificationModal").on("hidden.bs.modal", function () {
+        stopNotificationSound();
+      });
+    </script>
   </body>
 </html>

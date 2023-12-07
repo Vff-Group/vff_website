@@ -191,7 +191,7 @@ def all_branches(request):
     usrid = request.session.get('userid')
     request.session['branchid'] = ''
     print(f'Admin Usrid ::{usrid}')
-    query = "select branchtbl.branchid,branch_name,branchtbl.address,branch_type,creation_date,branchtbl.status,gstno,igstno,branchtbl.city,state,branchtbl.pincode,usrname,admintbl.usrid,contactno,gstno from vff.usertbl,vff.branchtbl,vff.admintbl where admintbl.branchid=branchtbl.branchid and usertbl.usrid=admintbl.usrid and admintbl.usrid='"+str(usrid)+"'"
+    query = "select branchtbl.branchid,branch_name,branchtbl.address,branch_type,creation_date,branchtbl.status,gstno,igstno,branchtbl.city,state,branchtbl.pincode,usrname,admintbl.usrid,contactno,gstno,type from vff.usertbl,vff.branchtbl,vff.admintbl where admintbl.branchid=branchtbl.branchid and usertbl.usrid=admintbl.usrid and admintbl.usrid='"+str(usrid)+"'"
     rows = execute_raw_query(query)
     data = []    
     if not rows == 500:
@@ -212,6 +212,7 @@ def all_branches(request):
                 'admin_id': row[12],
                 'contactno': row[13],
                 'gstno': row[14],
+                'type': row[15],
                 
             })
     else:
@@ -233,6 +234,7 @@ def save_selected_branch(request):
         branch_contactno = request.POST.get('branch_contactno')
         branch_admin_name = request.POST.get('branch_admin_name')
         branch_admin_id = request.POST.get('branch_admin_id')
+        admin_type = request.POST.get('admin_type')
         print(branch_name,branchid,branch_address)
         # Save the selected branchid and brandname to the session
         
@@ -247,6 +249,7 @@ def save_selected_branch(request):
         request.session['branch_contactno'] = branch_contactno
         request.session['branch_admin_name'] = branch_admin_name
         request.session['branch_admin_id'] = branch_admin_id
+        request.session['admin_type'] = admin_type
         request.session['branch_selected'] = True
         request.session.save()  # Save the session to persist the changes
 
