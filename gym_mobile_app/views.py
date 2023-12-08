@@ -57,6 +57,7 @@ def login(request):
 
     return JsonResponse(errorRet)
 
+
 @csrf_exempt
 def register_member(request):
     errorRet={'ErrorCode#2':'ErrorCode#2'}
@@ -73,31 +74,32 @@ def register_member(request):
             result = execute_raw_query_fetch_one(query)
             if result != None:
                 return JsonResponse({'AlreadyExists':True})
-            try:
-                with connection.cursor() as cursor:
-                    insert_query="insert into vff.usertbl(usrname,email,mobile_no) values ('"+str(name)+"','"+str(emailid)+"','"+str(mobno)+"') returning usrid"
-                    cursor.execute(insert_query)
-                    usrid = cursor.fetchone()[0]
-                    insert_query2="insert into vff.gym_memberstbl (name,email,password,usrid,mobno,gymid) values ('"+str(name)+"','"+str(emailid)+"','"+str(password)+"','"+str(usrid)+"','"+str(mobno)+"','"+str(gymid)+"') returning memberid"
-                    cursor.execute(insert_query2)
-                    memberid_ret = cursor.fetchone()[0]
-                    connection.commit()
-            except Exception as e:
-                print(f"Error loading data: {e}")
-                return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
-            
-            query = "select gym_memberstbl.usrid,memberid,usrname,gym_memberstbl.email,password,mobno,gymid from vff.usertbl,vff.gym_memberstbl where gym_memberstbl.usrid=usertbl.usrid and memberid='"+str(memberid_ret)+"'"
-            result = execute_raw_query_fetch_one(query)
-            if result != None:
-                if result[0] != None:
-                    usrid = result[0]
-                    memberid = result[1]
-                    usrname = result[2]
-                    emailid = result[3]
-                    password = result[4]
-                    mobno = result[5]
-                    gymid = result[6]
-                return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno,'usrid':usrid,'usrname':usrname,'memberid':memberid,'gymid':gymid})
+            if result == None:
+                try:
+                    with connection.cursor() as cursor:
+                        insert_query="insert into vff.usertbl(usrname,email,mobile_no) values ('"+str(name)+"','"+str(emailid)+"','"+str(mobno)+"') returning usrid"
+                        cursor.execute(insert_query)
+                        usrid = cursor.fetchone()[0]
+                        insert_query2="insert into vff.gym_memberstbl (name,email,password,usrid,mobno,gymid) values ('"+str(name)+"','"+str(emailid)+"','"+str(password)+"','"+str(usrid)+"','"+str(mobno)+"','"+str(gymid)+"') returning memberid"
+                        cursor.execute(insert_query2)
+                        memberid_ret = cursor.fetchone()[0]
+                        connection.commit()
+                except Exception as e:
+                    print(f"Error loading data: {e}")
+                    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+                
+                query = "select gym_memberstbl.usrid,memberid,usrname,gym_memberstbl.email,password,mobno,gymid from vff.usertbl,vff.gym_memberstbl where gym_memberstbl.usrid=usertbl.usrid and memberid='"+str(memberid_ret)+"'"
+                result = execute_raw_query_fetch_one(query)
+                if result != None:
+                    if result[0] != None:
+                        usrid = result[0]
+                        memberid = result[1]
+                        usrname = result[2]
+                        emailid = result[3]
+                        password = result[4]
+                        mobno = result[5]
+                        gymid = result[6]
+                    return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno,'usrid':usrid,'usrname':usrname,'memberid':memberid,'gymid':gymid})
             
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
@@ -124,30 +126,18 @@ def profile_complete(request):
             
             try:
                 with connection.cursor() as cursor:
-                    insert_query="update vff.gym_memberstbl set gender='"+str(gender)+"',weight='"+str(weight)+"',height='"+str(height)+"',date_of_birth='"+str(date_of_birth)+"'"
+                    insert_query="update vff.gym_memberstbl set gender='"+str(gender)+"',weight='"+str(weight)+"',height='"+str(height)+"',date_of_birth='"+str(date_of_birth)+"' where memberid='"+str(memberid)+"'"
                     cursor.execute(insert_query)
                     usrid = cursor.fetchone()[0]
                     
                     connection.commit()
+                    return JsonResponse({'response': 'Success'})
             except Exception as e:
                 print(f"Error loading data: {e}")
                 return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
             
-            query = "select usertbl.usrid,memberid,usrname,gym_memberstbl.email,mobno,gym_memberstbl.gender,weight,height,password,gym_memberstbl.date_of_birth  from vff.usertbl,vff.gym_memberstbl where gym_memberstbl.usrid=usertbl.usrid and memberid='"+str(memberid)+"'"
-            result = execute_raw_query_fetch_one(query)
-            if result != None:
-                if result[0] != None:
-                    usrid = result[0]
-                    memberid = result[1]
-                    usrname = result[2]
-                    emailid = result[4]
-                    mobno = result[5]
-                    gender = result[6]
-                    weight = result[7]
-                    height = result[8]
-                    password = result[9]
-                    date_of_birth = result[10]
-                return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno,'gender':gender,'usrid':usrid,'usrname':usrname,'memberid':memberid,'weight':weight,'height':height,'password':password,'date_of_birth':date_of_birth})
+            
+                
             
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")

@@ -1959,8 +1959,8 @@ def update_order_status_new(request,order_id,booking_id):
 #Get New Notifications for today
 def check_notifications(request):
     branch_id = request.session.get('branchid')
-    if branch_id == None:
-        return
+    # if branch_id == None:
+    #     return
     today_date = datetime.now().strftime("%Y-%m-%d")
     print(today_date)
     
