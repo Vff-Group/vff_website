@@ -284,8 +284,8 @@ def get_fees_chart_details(request):
                     })    
             else:
                 error_msg = 'Something Went Wrong'
-                context ={'query_result':data} 
-                return JsonResponse(context)
+            context ={'query_result':data} 
+            return JsonResponse(context)
         
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
