@@ -222,6 +222,76 @@ def get_feesdetails(request):
 
     return JsonResponse(errorRet)
 
+@csrf_exempt
+def get_diet_chart_details(request):
+    errorRet={'ErrorCode#2':'ErrorCode#2'}
+    if request.method == "POST":
+        # Parsing and printing JSON body
+        
+        try:
+            jdict = json.loads(request.body)
+            memberid = jdict['memberid']
+            today_date = datetime.now().strftime("%Y-%m-%d")
+            print(today_date)    
+            query = "select diet_chart_id,name,description,price,validity_in_days from vff.gym_main_diet_chart_tbl"
+            result = execute_raw_query_fetch_one(query)
+            if result != None:
+                if result[0] != None:
+                    diet_chart_id = result[0]
+                    name = result[1]
+                    description = result[2]
+                    validity_in_days = result[3]
+                    
+                    
+                return JsonResponse({'response': 'Success', 'diet_chart_id': diet_chart_id, 'name': name,'description':description,'validity_in_days':validity_in_days})
+        
+        except KeyError as e:
+            print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except json.JSONDecodeError as e:
+            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except Exception as ex:
+            print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+
+    return JsonResponse(errorRet)
+
+@csrf_exempt
+def get_fees_chart_details(request):
+    errorRet={'ErrorCode#2':'ErrorCode#2'}
+    if request.method == "POST":
+        # Parsing and printing JSON body
+        
+        try:
+            jdict = json.loads(request.body)
+            memberid = jdict['memberid']
+            today_date = datetime.now().strftime("%Y-%m-%d")
+            print(today_date)    
+            query = "select fdetail_id,fees_type,duration_in_months,price,description from vff.gym_fees_detailstbl"
+            result = execute_raw_query_fetch_one(query)
+            if result != None:
+                if result[0] != None:
+                    fdetail_id = result[0]
+                    fees_type = result[1]
+                    duration_in_months = result[2]
+                    price = result[3]
+                    description = result[4]
+                    
+                    
+                return JsonResponse({'response': 'Success', 'fdetail_id': fdetail_id, 'title': fees_type,'duration_in_months':duration_in_months,'price':price,'description':description})
+        
+        except KeyError as e:
+            print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except json.JSONDecodeError as e:
+            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except Exception as ex:
+            print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+
+    return JsonResponse(errorRet)
 
 
 
