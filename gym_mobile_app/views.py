@@ -147,6 +147,40 @@ def profile_complete(request):
 
     return JsonResponse(errorRet)
 
+@csrf_exempt
+def set_goal(request):
+    errorRet={'ErrorCode#2':'ErrorCode#2'}
+    if request.method == "POST":
+        # Parsing and printing JSON body
+        try:
+            jdict = json.loads(request.body)
+            memberid = jdict['memberid']
+            goal = jdict['goal']
+            
+            
+            try:
+                with connection.cursor() as cursor:
+                    insert_query="update vff.gym_memberstbl set goal='"+str(goal)+"' where memberid='"+str(memberid)+"'"
+                    cursor.execute(insert_query)
+                    connection.commit()
+                    
+                    return JsonResponse({'response': 'Success'})
+            except Exception as e:
+                print(f"Error loading data: {e}")
+                return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            
+            
+                
+            
+        except json.JSONDecodeError as e:
+            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except Exception as ex:
+            print(f"Error fetching data: {ex}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+
+    return JsonResponse(errorRet)
+
 
 def execute_raw_query(query, params=None,):
     
