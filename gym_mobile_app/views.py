@@ -233,7 +233,7 @@ def get_diet_chart_details(request):
             today_date = datetime.now().strftime("%Y-%m-%d")
             print(today_date)    
             query = "select diet_chart_id,name,description,price,validity_in_days from vff.gym_main_diet_chart_tbl"
-            result = execute_raw_query_fetch_one(query)
+            result = execute_raw_query(query)
             if result != None:
                 if result[0] != None:
                     diet_chart_id = result[0]
@@ -268,7 +268,7 @@ def get_fees_chart_details(request):
             today_date = datetime.now().strftime("%Y-%m-%d")
             print(today_date)    
             query = "select fdetail_id,fees_type,duration_in_months,price,description from vff.gym_fees_detailstbl"
-            result = execute_raw_query_fetch_one(query)
+            result = execute_raw_query(query)
             if result != None:
                 if result[0] != None:
                     fdetail_id = result[0]
