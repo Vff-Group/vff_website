@@ -229,8 +229,7 @@ def get_diet_chart_details(request):
         # Parsing and printing JSON body
         
         try:
-            jdict = json.loads(request.body)
-            memberid = jdict['memberid']
+            
             today_date = datetime.now().strftime("%Y-%m-%d")
             print(today_date)    
             query = "select diet_chart_id,name,description,price,validity_in_days from vff.gym_main_diet_chart_tbl"
@@ -257,6 +256,7 @@ def get_diet_chart_details(request):
 
     return JsonResponse(errorRet)
 
+
 @csrf_exempt
 def get_fees_chart_details(request):
     errorRet={'ErrorCode#2':'ErrorCode#2'}
@@ -264,8 +264,7 @@ def get_fees_chart_details(request):
         # Parsing and printing JSON body
         
         try:
-            jdict = json.loads(request.body)
-            memberid = jdict['memberid']
+            
             today_date = datetime.now().strftime("%Y-%m-%d")
             print(today_date)    
             query = "select fdetail_id,fees_type,duration_in_months,price,description from vff.gym_fees_detailstbl"
@@ -294,6 +293,51 @@ def get_fees_chart_details(request):
     return JsonResponse(errorRet)
 
 
+@csrf_exempt
+def save_gym_fees(request):
+    errorRet={'ErrorCode#2':'ErrorCode#2'}
+    if request.method == "POST":
+        # Parsing and printing JSON body
+        try:
+            jdict = json.loads(request.body)
+            memberid = jdict['memberid']
+            amount = jdict['amount']
+            recent_cleared_date = jdict['recent_cleared_date']
+            duration_in_month = jdict['duration']
+            payment_method = jdict['payment_method']
+            razor_pay_id = jdict['razor_pay_id']
+            payment_status = jdict['payment_status']
+            next_due_date = jdict['next_due_date']
+            
+            
+            try:
+                with connection.cursor() as cursor:
+                    # Inserting into Payment Table
+                    insert_query="insert into vff.gym_paymenttbl(member_id,amount,payment_method,razor_pay_id,payment_status) values ('"+str(memberid)+"','"+str(amount)+"','"+str(payment_method)+"','"+str(razor_pay_id)+"','"+str(payment_status)+"',)"
+                    cursor.execute(insert_query)
+                    
+                    #Inserting into Fees Table
+                    fees_query_insert="insert into vff.gym_feestbl(member_type,duration_in_months,price,member_id,fees_date,last_due_date) values ('Regular Member','"+str(duration_in_month)+"','"+str(amount)+"','"+str(memberid)+"','"+str(next_due_date)+"','"+str(recent_cleared_date)+"')"
+                    cursor.execute(fees_query_insert)
+                    
+                    connection.commit()
+                    
+                    return JsonResponse({'response': 'Success'})
+            except Exception as e:
+                print(f"Error loading data: {e}")
+                return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            
+            
+                
+            
+        except json.JSONDecodeError as e:
+            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except Exception as ex:
+            print(f"Error fetching data: {ex}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+
+    return JsonResponse(errorRet)
 
 def execute_raw_query(query, params=None,):
     
