@@ -269,16 +269,23 @@ def get_fees_chart_details(request):
             print(today_date)    
             query = "select fdetail_id,fees_type,duration_in_months,price,description from vff.gym_fees_detailstbl"
             result = execute_raw_query(query)
-            if result != None:
-                if result[0] != None:
-                    fdetail_id = result[0]
-                    fees_type = result[1]
-                    duration_in_months = result[2]
-                    price = result[3]
-                    description = result[4]
+            data = []
+            sub_items = []    
+            if not query_result == 500:
+                for row in query_result:
                     
-                    
-                return JsonResponse({'response': 'Success', 'fdetail_id': fdetail_id, 'title': fees_type,'duration_in_months':duration_in_months,'price':price,'description':description})
+                    #bookingEpoch = epochToDateTime(depoch)
+                    data.append({
+                    'fdetail_id':row[0],
+                    'title':row[1],
+                    'duration_in_months':row[2],
+                    'price':row[3],
+                    'description':row[4]  
+                    })    
+            else:
+                error_msg = 'Something Went Wrong'
+                context ={'query_result':data} 
+                return JsonResponse(context)
         
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
