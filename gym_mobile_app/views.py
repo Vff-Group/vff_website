@@ -232,17 +232,27 @@ def get_diet_chart_details(request):
             
             today_date = datetime.now().strftime("%Y-%m-%d")
             print(today_date)    
-            query = "select diet_chart_id,name,description,price,validity_in_days from vff.gym_main_diet_chart_tbl"
+            query = "select diet_chart_id,name,description,price,validity_in_days,image from vff.gym_main_diet_chart_tbl"
             result = execute_raw_query(query)
-            if result != None:
-                if result[0] != None:
-                    diet_chart_id = result[0]
-                    name = result[1]
-                    description = result[2]
-                    validity_in_days = result[3]
+            data = []
+            sub_items = []    
+            if not result == 500:
+                for row in result:
                     
-                    
-                return JsonResponse({'response': 'Success', 'diet_chart_id': diet_chart_id, 'name': name,'description':description,'validity_in_days':validity_in_days})
+                    #bookingEpoch = epochToDateTime(depoch)
+                    data.append({
+                    'diet_chart_id':row[0],
+                    'name':row[1],
+                    'description':row[2],
+                    'price':row[3],
+                    'validity_in_days':row[4],
+                    'image':row[5]  
+                    })    
+            else:
+                error_msg = 'Something Went Wrong'
+            context ={'query_result':data} 
+            return JsonResponse(context)
+            
         
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
