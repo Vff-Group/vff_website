@@ -271,8 +271,8 @@ def get_fees_chart_details(request):
             result = execute_raw_query(query)
             data = []
             sub_items = []    
-            if not query_result == 500:
-                for row in query_result:
+            if not result == 500:
+                for row in result:
                     
                     #bookingEpoch = epochToDateTime(depoch)
                     data.append({
