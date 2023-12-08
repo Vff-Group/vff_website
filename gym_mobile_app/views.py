@@ -128,9 +128,8 @@ def profile_complete(request):
                 with connection.cursor() as cursor:
                     insert_query="update vff.gym_memberstbl set gender='"+str(gender)+"',weight='"+str(weight)+"',height='"+str(height)+"',date_of_birth='"+str(date_of_birth)+"' where memberid='"+str(memberid)+"'"
                     cursor.execute(insert_query)
-                    usrid = cursor.fetchone()[0]
-                    
                     connection.commit()
+                    
                     return JsonResponse({'response': 'Success'})
             except Exception as e:
                 print(f"Error loading data: {e}")
