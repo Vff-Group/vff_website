@@ -58,6 +58,8 @@ def login(request):
     return JsonResponse(errorRet)
 
 
+
+
 @csrf_exempt
 def register_member(request):
     errorRet={'ErrorCode#2':'ErrorCode#2'}
@@ -180,6 +182,47 @@ def set_goal(request):
             return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
 
     return JsonResponse(errorRet)
+
+@csrf_exempt
+def get_feesdetails(request):
+    errorRet={'ErrorCode#2':'ErrorCode#2'}
+    if request.method == "POST":
+        # Parsing and printing JSON body
+        
+        try:
+            jdict = json.loads(request.body)
+            memberid = jdict['memberid']
+            today_date = datetime.now().strftime("%Y-%m-%d")
+            print(today_date)    
+            query = "select memberid,name,mobno,member_type,duration_in_months,price,fees_date,last_due_date,feesid from vff.gym_feestbl,vff.gym_memberstbl where gym_feestbl.member_id=gym_memberstbl.memberid and gym_memberstbl.memberid='"+str(memberid)+"'  order by feesid desc"
+            result = execute_raw_query_fetch_one(query)
+            if result != None:
+                if result[0] != None:
+                    memberid = result[0]
+                    name = result[1]
+                    mobno = result[2]
+                    member_type = result[3]
+                    duration_in_months = result[4]
+                    price = result[5]
+                    fees_date = result[6]
+                    last_due_date = result[7]
+                    fees_id = result[8]
+                    
+                return JsonResponse({'response': 'Success', 'memberid': memberid, 'name': name,'mobno':mobno,'member_type':member_type,'duration_in_months':duration_in_months,'price':price,'fees_date':fees_date,'last_due_date':last_due_date,'fees_id':fees_id})
+        
+        except KeyError as e:
+            print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except json.JSONDecodeError as e:
+            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except Exception as ex:
+            print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+
+    return JsonResponse(errorRet)
+
+
 
 
 def execute_raw_query(query, params=None,):
