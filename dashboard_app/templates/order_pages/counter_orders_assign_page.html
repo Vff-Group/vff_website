@@ -750,7 +750,8 @@ $('#modal-default1').on('hidden.bs.modal', function (e) {
 </script>
 
     <script>
-
+      var previousDeliveryCharges = 0;
+      var currentInput = "";
         var extraItems = [];
                 var grossTotal = 0; // Total amount
                 var subTotal = 0; // Total amount
@@ -1240,8 +1241,7 @@ $(document).ready(function() {
                     return checkboxContainer;
                 }
 
-                var previousDeliveryCharges = 0;
-                var currentInput = "";
+                
                 function addDeliveryCharges(deliveryCharges) {
                   console.log('adding delivery charges::');
                  if(deliveryCharges !==0){
@@ -1352,7 +1352,7 @@ $(document).ready(function() {
         if (!isNaN(diff)) {
             previousDeliveryCharges += diff;
         }
-        addDeliveryCharges(previousDeliveryCharges);
+        addDeliveryCharges(parseFloat(inputValue));
     //} else if (inputValue.length < currentInput.length) {
     } else {
         // If a character is removed
@@ -1362,7 +1362,7 @@ $(document).ready(function() {
         if (!isNaN(diff)) {
             previousDeliveryCharges -= diff;
         }
-        removeDeliveryCharges(previousDeliveryCharges);
+        removeDeliveryCharges(parseFloat(inputValue));
     }
 
     // Update the gross total and store the current input
