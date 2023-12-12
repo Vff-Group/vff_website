@@ -3689,8 +3689,8 @@ def load_sub_categories(request,cat_id):
     context = {'sub_categories':sub_category_data,'section_data':section_data}
     return JsonResponse(context)
     
-def load_section_type_sub_categories(request,section_type):
-    query = "select sub_cat_name,sub_cat_img,cost,type,subcatid from vff.laundry_sub_categorytbl where section_type='"+str(section_type)+"' order by sub_cat_name"
+def load_section_type_sub_categories(request,section_type,cat_id):
+    query = "select sub_cat_name,sub_cat_img,cost,type,subcatid from vff.laundry_sub_categorytbl where section_type='"+str(section_type)+"' and cat_id='"+str(cat_id)+"' order by sub_cat_name"
     
     query_result = execute_raw_query(query)
     

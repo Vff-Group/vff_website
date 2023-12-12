@@ -2263,7 +2263,7 @@ function showToast(message, bodyContent) {
                 section_column.hide();
                 only_dry_clean_column.show();
                 price_column.show();
-            $.get(`/admin_dashboard/load_section_type_sub_categories/All`, function(data) {
+            $.get(`/admin_dashboard/load_section_type_sub_categories/All/${cat_id}`, function(data) {
                 /*subCategorySelect.empty();
                 subCategorySelect.append('<option disabled selected>Choose Sub Category</option>');
         
@@ -2377,7 +2377,7 @@ if (subCategoryTable.find('tr').length > 0) {
             //var subCategorySelect = $('#input-subcategory');
             
             
-            $.get(`/admin_dashboard/load_section_type_sub_categories/${section_type}`, function(data) {
+            $.get(`/admin_dashboard/load_section_type_sub_categories/${section_type}/${cat_id}`, function(data) {
                 
 
 subCategoryTable.empty(); // Clear any existing rows

@@ -72,7 +72,7 @@ urlpatterns = [
     
     path('load_sub_categories/<str:cat_id>',views.load_sub_categories,name='load_sub_categories'),
     path('load_other_category_wise_details/<str:cat_id>',views.load_other_category_wise_details,name='load_other_category_wise_details'),
-    path('load_section_type_sub_categories/<str:section_type>',views.load_section_type_sub_categories,name='load_section_type_sub_categories'),
+    path('load_section_type_sub_categories/<str:section_type>/<int:cat_id>/',views.load_section_type_sub_categories,name='load_section_type_sub_categories'),
     path('search_customer_to_assign_order/<str:mobno>/',views.search_customer_to_assign_order,name='search_customer_to_assign_order'),
     
     #Add Items TO Cart
