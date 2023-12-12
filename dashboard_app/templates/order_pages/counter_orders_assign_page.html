@@ -1241,7 +1241,8 @@ $(document).ready(function() {
                 }
 
                 var previousDeliveryCharges = 0;
-                function calculateTotals(deliveryCharges) {
+                var currentInput = "";
+                function addDeliveryCharges(deliveryCharges) {
                   
                  if(deliveryCharges !==0){
                   if(discountedAmount !== 0 && !isNaN(discountedAmount)){
@@ -1273,6 +1274,38 @@ $(document).ready(function() {
                   //$("#delivery-charges").text("Rs. " + deliveryCharges.toFixed(2) + "/-");
                   //$("#gross-total").text("Rs. " + grossTotal.toFixed(2) + "/-");
               }
+
+              function removeDeliveryCharges(deliveryCharges) {
+                  
+                if(deliveryCharges !==0){
+                 if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+                   console.log("Add BdiscountedAmount---->"+discountedAmount);
+                   delivery_charges = deliveryCharges;
+                   var sum = (discountedAmount -= deliveryCharges);
+                   discountedAmount = sum;
+                   
+                   $('#gross-total').text('Rs.'+discountedAmount.toFixed(2)+'/-');
+                   $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+                   
+               }else if(!isNaN(grossTotal)){
+                   console.log("Add BgrossTotal---->"+grossTotal);
+                   console.log("charge.delivery_price===>"+deliveryCharges);
+                   var sum = (grossTotal -= deliveryCharges);
+                   console.log('sumss::'+sum);
+                   delivery_charges = deliveryCharges;
+                   grossTotal = sum;
+                   
+                   console.log("Add AgrossTotal---->"+grossTotal);
+                   $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
+                   $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+               }
+               // Update the previous delivery charges value
+               previousDeliveryCharges = deliveryCharges;
+             }
+                 // Update the displayed values
+                 //$("#delivery-charges").text("Rs. " + deliveryCharges.toFixed(2) + "/-");
+                 //$("#gross-total").text("Rs. " + grossTotal.toFixed(2) + "/-");
+             }
 
                  // Function to add the delivery charge checkbox to the container
                 function addDeliveryChargeInputBox() {
@@ -1318,6 +1351,7 @@ $(document).ready(function() {
         if (!isNaN(diff)) {
             previousDeliveryCharges += diff;
         }
+        addDeliveryCharges(previousDeliveryCharges);
     } else if (inputValue.length < currentInput.length) {
         // If a character is removed
         var removedChar = currentInput.slice(-1);
@@ -1326,10 +1360,11 @@ $(document).ready(function() {
         if (!isNaN(diff)) {
             previousDeliveryCharges -= diff;
         }
+        removeDeliveryCharges(previousDeliveryCharges);
     }
 
     // Update the gross total and store the current input
-    calculateTotals(previousDeliveryCharges);
+    
     currentInput = inputValue;
   });
 
