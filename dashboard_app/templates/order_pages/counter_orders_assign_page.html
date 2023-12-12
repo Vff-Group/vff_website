@@ -59,7 +59,7 @@
                               </option>
                               {% endfor %}
 
-                              <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
+                              
                             </select>
                           </div>
                         
@@ -2357,8 +2357,13 @@ if (subCategoryTable.find('tr').length > 0) {
     
         function loadSubCategoriesBySection(sectionTypeSelect) {
             var section_type = $(sectionTypeSelect).val();
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var cat_id = selectedOption.getAttribute('data-catids');
+        
+        // Use the catid as needed, for example, log it to the console
+        console.log('Selected catid:', catid);
             var categorySelect = $("#input-category").val();
-            var cat_id = $(categorySelect).find(":selected").data("catids");
+            //var cat_id = $(categorySelect).find(":selected").data("catids");
             var section_id = $(sectionTypeSelect).find(":selected").data("section_id");
             var cat_img = $(categorySelect).find(":selected").data("cat_img");
             var cat_name = $(categorySelect).find(":selected").data("cat_name");
