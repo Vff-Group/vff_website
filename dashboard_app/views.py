@@ -3561,7 +3561,7 @@ def counter_orders_screen(request):
         error_msg = 'Something Went Wrong'
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
-    if request.method == 'GET' and request.is_ajax():
+    if request.method == 'GET':
         booking_id = request.GET.get('booking_id')
         customer_name = request.GET.get('customer_name')
         mobile_number = request.GET.get('mobile_number')
