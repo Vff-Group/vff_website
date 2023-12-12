@@ -3176,6 +3176,12 @@ def place_new_order(request):
                 cursor.execute(query_active_orders)
                 connection.commit()
                 
+                #Update booking table with order_id_assigned
+                update_order_sequence="update vff.laundry_order_bookingtbl set order_id_generated='1' where bookingid='"+str(booking_id)+"'"
+                print(f'update_order_sequence::{update_order_sequence}')
+                cursor.execute(update_order_sequence)
+                connection.commit()
+                
                 #insert extra items selected by customer while checking out
                 print(f'extra_item_dict::{extra_item_dict}')
                 try:
