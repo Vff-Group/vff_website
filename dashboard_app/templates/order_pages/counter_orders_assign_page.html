@@ -684,30 +684,7 @@
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-    <script>
-      // Get the booking ID value
-      var bookingId = document.getElementById('selected-booking-id').value;
-      var selected_customer_id = document.getElementById("selected-customer-id");
-      var customer_name_input = document.getElementById("customer-name");
-      //generate-booking-id,add_to_cart
-      var add_to_cart = document.getElementById("add_to_cart");
-      var generate_booking_id_btn = document.getElementById("generate-booking-id");
-      // Check if the booking ID exists
-      if (bookingId) {
-          // If booking ID exists, show the button
-          document.getElementById('generate-booking-id').style.display = 'inline-block';
-          var booking_id_input = document.getElementById("selected-booking-id");
-          booking_id_input.value = bookingId; // Set the value in the hidden input
-          generated_booking_id = bookingId;
-  $("#generate-booking-id").text("Booking ID: " + bookingId); // Update the button text
-  // Disable the anchor link
-  generate_booking_id_btn.classList.add("disabled"); // Add a class for styling
-  generate_booking_id_btn.removeAttribute("href"); // Remove the href attribute to make it unclickable
-  generate_booking_id_btn.style.pointerEvents = "none"; // Disable pointer events to prevent clicking
-  // Show the add_to_cart button
-  add_to_cart.style.display = "block";
-      }
-  </script>
+    
 
     <script>
       $(document).ready(function () {
@@ -775,6 +752,36 @@ $('#modal-default1').on('hidden.bs.modal', function (e) {
 </script>
 
     <script>
+
+      var selectedItems = [];
+let selectedCategoryId = null;
+let selectedCategoryName = null;
+let selectedCategoryImage = null;
+let selectedCategoryBookingID = null;
+let generated_booking_id = "";
+var save_btn = $("#save_btn");
+      // Get the booking ID value
+      var bookingId = document.getElementById('selected-booking-id').value;
+      var selected_customer_id = document.getElementById("selected-customer-id");
+      var customer_name_input = document.getElementById("customer-name");
+      //generate-booking-id,add_to_cart
+      var add_to_cart = document.getElementById("add_to_cart");
+      var generate_booking_id_btn = document.getElementById("generate-booking-id");
+      // Check if the booking ID exists
+      if (bookingId) {
+          // If booking ID exists, show the button
+          document.getElementById('generate-booking-id').style.display = 'inline-block';
+          var booking_id_input = document.getElementById("selected-booking-id");
+          booking_id_input.value = bookingId; // Set the value in the hidden input
+          generated_booking_id = bookingId;
+  $("#generate-booking-id").text("Booking ID: " + bookingId); // Update the button text
+  // Disable the anchor link
+  generate_booking_id_btn.classList.add("disabled"); // Add a class for styling
+  generate_booking_id_btn.removeAttribute("href"); // Remove the href attribute to make it unclickable
+  generate_booking_id_btn.style.pointerEvents = "none"; // Disable pointer events to prevent clicking
+  // Show the add_to_cart button
+  add_to_cart.style.display = "block";
+      }
       
       var previousDeliveryCharges = 0;
       var currentInput = "";
@@ -1622,13 +1629,7 @@ function getCSRFToken() {
     return null;
 }
 
-var selectedItems = [];
-let selectedCategoryId = null;
-let selectedCategoryName = null;
-let selectedCategoryImage = null;
-let selectedCategoryBookingID = null;
-let generated_booking_id = "";
-var save_btn = $("#save_btn");
+
 
 //Create booking ID Before adding items to cart
 $("#generate-booking-id").on("click",function(){
