@@ -65,7 +65,10 @@ urlpatterns = [
     #Order Screens
     path('order_status_screen/',views.order_status_screen,name='order_status_screen'),
     path('get_all_delivery_boys/',views.get_all_delivery_boys,name='get_all_delivery_boys'),
-    path('counter_orders_screen/',views.counter_orders_screen,name='counter_orders_screen'),
+    
+    #On Counter Order Screen
+    path('counter_orders_screen_with_booking_id/<int:bookingid>/',views.counter_orders_screen_with_booking_id,name='counter_orders_screen_with_booking_id'),
+    
     path('load_sub_categories/<str:cat_id>',views.load_sub_categories,name='load_sub_categories'),
     path('load_other_category_wise_details/<str:cat_id>',views.load_other_category_wise_details,name='load_other_category_wise_details'),
     path('load_section_type_sub_categories/<str:section_type>',views.load_section_type_sub_categories,name='load_section_type_sub_categories'),

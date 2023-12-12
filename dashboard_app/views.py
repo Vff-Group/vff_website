@@ -3560,27 +3560,65 @@ def counter_orders_screen(request):
     else:
         error_msg = 'Something Went Wrong'
     current_url = request.get_full_path()
-    # using the 'current_url' variable to determine the active card.
-    if request.method == 'GET':
-        booking_id = request.GET.get('booking_id')
-        customer_name = request.GET.get('customer_name')
-        mobile_number = request.GET.get('mobile_number')
-        customer_id = request.GET.get('customer_id')
-
-        # Process the received data or perform necessary operations
-        # For example, pass it to the template or do some backend logic
-
-        # For demonstration purposes, you can return a JSON response
-        data = {
-            'booking_id': booking_id,
-            'customer_name': customer_name,
-            'mobile_number': mobile_number,
-            'customer_id': customer_id,
-        }
-        print(f'booking_data::{data}')
-    context = {'category_data': category_data,'current_url': current_url,'error_msg':error_msg,'data':data}
+    
+    context = {'category_data': category_data,'current_url': current_url,'error_msg':error_msg}
     
     return render(request, 'order_pages/counter_orders_assign_page.html', context)
+
+#Counter Orders Assign
+def counter_orders_screen_with_booking_id(request,bookingid):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    error_msg = "No Categories Found"
+    branch_id = request.session.get('branchid')
+    filter = ''
+   #CategoryWise Details
+   #select category_name,regular_price,regular_price_type,express_price_type,express_price,offer_price,offer_price_type,cat_img from vff.laundry_categorytbl where catid='"+str(cat_id)+"'
+   
+   #Sub Categorywise Details
+   #select sub_cat_name,sub_cat_img,cost,type,section_type,subcatid from vff.laundry_sub_categorytbl where catid='"+str(cat_id)+"'
+   
+   #To get the booking details 
+    query_data = "select bookingid,customerid,customer_name from vff.laundry_customertbl,vff.laundry_order_bookingtbl where laundry_customertbl.consmrid=laundry_order_bookingtbl.customerid and bookingid='"+str(bookingid)+"'"
+    result_query = execute_raw_query_fetch_one(query_data)
+    if result_query:   
+        booking_id = result_query[0]
+        customer_id = result_query[1]
+        customer_name = result_query[2]
+        
+    query = "select catid,category_name,cat_img,regular_price,regular_price_type,express_price,express_price_type,offer_price,offer_price_type,description,min_hours from vff.laundry_categorytbl order by category_name "
+    
+    query_result = execute_raw_query(query)
+    
+    
+        
+    category_data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            category_data.append({
+                'catid': row[0],
+                'categoryname': row[1],
+                'cat_img': row[2],
+                'regular_prize': row[3],
+                'regular_prize_type': row[4],
+                'express_prize': row[5],
+                'express_prize_type': row[6],
+                'offer_prize': row[7],
+                'offer_prize_type': row[8],
+                'description': row[9],
+                'min_hours': row[9],
+               
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+    
+    context = {'category_data': category_data,'current_url': current_url,'error_msg':error_msg,'booking_id':booking_id,'customer_id':customer_id,'customer_name':customer_name}
+    
+    return render(request, 'order_pages/counter_orders_assign_page.html', context)
+
 
 def load_other_category_wise_details(request,cat_id):
     print(f'other service cat_id ::{cat_id}')

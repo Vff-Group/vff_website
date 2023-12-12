@@ -297,7 +297,7 @@
                                     id="customer-name"
                                     name="mobno"
                                     placeholder="Search customer phone"
-                                    value=""
+                                    value="{{ customer_name|default:'' }}"
                                     autocomplete="off"
                                     
                                 />
@@ -314,7 +314,7 @@
                             type="hidden"
                             id="selected-customer-id"
                             name="selected_customer_id"
-                            value=""
+                            value="{{ customer_id|default:'' }}"
                         />
                         
                         <input
@@ -329,7 +329,7 @@
                             type="hidden"
                             id="selected-customer-name"
                             name="selected-customer-name"
-                            value=""
+                            value="{{ customer_name|default:'' }}"
                         />
                         
                       </div>
@@ -348,7 +348,7 @@
                             type="hidden"
                             id="selected-booking-id"
                             name="booking-id"
-                            value=""
+                            value="{{ booking_id|default:'' }}"
                         />
                   </div>
                   <div class="col d-flex justify-content-end" id="add-customer">
@@ -668,7 +668,7 @@
         </div>
     </div>
 </div>
-              </form>
+           </form>
             </div>
           </div>
         </div>
@@ -683,6 +683,27 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <script>
+      // Get the booking ID value
+      var bookingId = document.getElementById('selected-booking-id').value;
+  
+      // Check if the booking ID exists
+      if (bookingId) {
+          // If booking ID exists, show the button
+          //document.getElementById('generate-booking-id').style.display = 'inline-block';
+          var booking_id_input = document.getElementById("selected-booking-id");
+          booking_id_input.value = bookingId; // Set the value in the hidden input
+          generated_booking_id = bookingId;
+  $("#generate-booking-id").text("Booking ID: " + bookingId); // Update the button text
+  // Disable the anchor link
+  generate_booking_id_btn.classList.add("disabled"); // Add a class for styling
+  generate_booking_id_btn.removeAttribute("href"); // Remove the href attribute to make it unclickable
+  generate_booking_id_btn.style.pointerEvents = "none"; // Disable pointer events to prevent clicking
+  // Show the add_to_cart button
+  add_to_cart.style.display = "block";
+      }
+  </script>
 
     <script>
       $(document).ready(function () {
