@@ -22,6 +22,38 @@
           
           <!-- Action Buttons End  -->
           <div class="card-body px-0 pt-0 pb-2">
+            <div class="row ms-2">
+
+              <div class="col-lg-6">
+                <form method="get">
+                  {% csrf_token %}
+                  <div class="form-group">
+                      <input
+                          class="form-control form-control-alternative"
+                          type="search"
+                          id="booking-id-search"
+                          name="bookingid-search"
+                          placeholder="Search Booking ID, Customer Name, Mobile Number"
+                          value=""
+                          autocomplete="off"
+                          
+                      />
+                  </div>
+              </form>
+              </div>
+
+             
+
+              <div class="col-lg-3">
+                <div class="col-lg-8">
+                  <div class="form-group">
+                      
+                      <input class="form-control form-control-alternative" type="date"  id="date-of-booking" name="booking" value="" >
+                  </div>
+              </div>
+              </div>
+            </div>
+
             <div class="table-responsive p-0">
               <table class="table table-bordered align-items-center mb-0  table-hover">
                 <thead class="bg-light">
@@ -114,4 +146,35 @@
     </div>
 </div>
 </main>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('#booking-id-search, #date-of-booking').on('input change', function () {
+      applyFilters();
+    });
+  
+    function applyFilters() {
+      var userSearch = $('#booking-id-search').val().toLowerCase();
+      var bookingDateFilter = $('#date-of-booking').val().toLowerCase();
+  
+      $('.table tbody tr').each(function () {
+        var bookingId = $(this).find('td:first h6').text().toLowerCase();
+        var customerName = $(this).find('.text-sm').text().toLowerCase();
+        var mobileNumber = $(this).find('.text-secondary').text().toLowerCase();
+        var orderDate = $(this).find('.text-xs').eq(0).text().toLowerCase();
+  
+        if (
+          (bookingId.includes(userSearch) || customerName.includes(userSearch) || mobileNumber.includes(userSearch) || userSearch === '') &&
+          (orderDate.includes(bookingDateFilter) || bookingDateFilter === '')
+        ) {
+          $(this).show();
+        } else {
+          $(this).hide();
+        }
+      });
+    }
+  });
+  
+</script>
 {% endblock  %}
