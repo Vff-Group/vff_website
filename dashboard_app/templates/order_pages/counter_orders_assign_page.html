@@ -1595,7 +1595,7 @@ $("#add_to_cart").on("click",function(){
     const dictMap = {};
     
     //TO Check if Quantity is added or not
-    if (selectedCategory !== "DRY CLEAN"){
+    if (selectedCategory !== "DRY CLEAN"   && selectedCategory !== "STEAM IRON" && selectedCategory !== "SAREE STEAM IRON"){
     
     if (kgs_quantity === "") {
         inputElement.classList.remove("is-valid");
@@ -1627,7 +1627,7 @@ $("#add_to_cart").on("click",function(){
         return;
     }
     
-    if(selectedCategory !== "DRY CLEAN"){
+    if(selectedCategory !== "DRY CLEAN"  && selectedCategory !== "STEAM IRON" && selectedCategory !== "SAREE STEAM IRON"){
     const subCategoryNameList = selectedItems.map(item => `${item.sub_cat_name} (${item.item_quantity})`);
     const subCategoryIDList = selectedItems.map(item => `${item.sub_cat_id}`);
     const subCategoryImageList = selectedItems.map(item => `${item.sub_cat_img}`);
@@ -1689,7 +1689,8 @@ else{
       dictMap['cat_id'] = selectedCategoryId;
       dictMap['booking_id'] = booking_id;
       dictMap['customer_id'] = customer_id;
-      dictMap['booking_type'] = "Dry Cleaning";
+      //dictMap['booking_type'] = "Dry Cleaning";
+      dictMap['booking_type'] = selectedCategory+" Service";
       dictMap['cat_img'] = selectedCategoryImage;
       dictMap['cat_name'] = selectedCategoryName;
       dictMap['key'] = 1;
