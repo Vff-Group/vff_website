@@ -750,6 +750,10 @@ $('#modal-default1').on('hidden.bs.modal', function (e) {
 </script>
 
     <script>
+      $('#modal-default1').on('shown.bs.modal', function (e) {
+        // Find all input elements within the modal content and reset their values
+        $(this).find('input').val('');
+    });
       var previousDeliveryCharges = 0;
       var currentInput = "";
         var extraItems = [];
