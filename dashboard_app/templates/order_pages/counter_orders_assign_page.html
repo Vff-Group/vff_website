@@ -1144,7 +1144,11 @@ $(document).ready(function() {
             $('#delivery-charges').text('Rs.0/-');
         }
         $('#delivery-input').val('');
-        $('discounted-input').val('');
+        $('#discounted-input').val('');
+        if(!isNaN(discountAmount)){
+          $('#discounted-input').text('Rs.0/-');
+        }
+        
                 // Handle the data you received from the server
                 console.log('datata:'+JSON.stringify(data));
                 //Gets Extra Items Details
