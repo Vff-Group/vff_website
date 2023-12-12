@@ -449,6 +449,24 @@
                         <div id="delivery-charges-container">
                             <hr />
                             <!-- This is where the checkbox will be added -->
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label
+                                  for="delivery-label"
+                                  class="form-control-label"
+                                  >Delivery Charges </label
+                                >
+                                <input
+                                  class="form-control form-control-alternative"
+                                  type="text"
+                                  id="delivery-input"
+                                  name="delivery-value"
+                                  value=""
+                                  placeholder="Enter delivery charges"
+                                  autocomplete="off"
+                                />
+                              </div>
+                            </div>
                         </div>
                         <hr />
                         <div class="row">
@@ -1214,6 +1232,7 @@ $(document).ready(function() {
                         // For example: $('#grossTotal').text(grossTotal);
                         console.log('Delivery_totalPayment::'+totalPayment);
                     });
+                   
                     checkboxContainer.append(divider);
                     checkboxContainer.append(checkbox);
                     checkboxContainer.append(label);
@@ -1221,6 +1240,36 @@ $(document).ready(function() {
                     return checkboxContainer;
                 }
                 
+                function calculateTotals(deliveryCharges) {
+                  
+                 if(deliveryCharges !==0){
+                  if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+                    console.log("Add BdiscountedAmount---->"+discountedAmount);
+                    delivery_charges = deliveryCharges;
+                    var sum = (discountedAmount += deliveryCharges);
+                    discountedAmount = sum;
+                    
+                    $('#gross-total').text('Rs.'+discountedAmount.toFixed(2)+'/-');
+                    $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+                    
+                }else if(!isNaN(grossTotal)){
+                    console.log("Add BgrossTotal---->"+grossTotal);
+                    console.log("charge.delivery_price===>"+deliveryCharges);
+                    var sum = (grossTotal += deliveryCharges);
+                    console.log('sumss::'+sum);
+                    delivery_charges = deliveryCharges;
+                    grossTotal = sum;
+                    
+                    console.log("Add AgrossTotal---->"+grossTotal);
+                    $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
+                    $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+                    
+                }
+              }
+                  // Update the displayed values
+                  //$("#delivery-charges").text("Rs. " + deliveryCharges.toFixed(2) + "/-");
+                  //$("#gross-total").text("Rs. " + grossTotal.toFixed(2) + "/-");
+              }
 
                  // Function to add the delivery charge checkbox to the container
                 function addDeliveryChargeCheckbox() {
@@ -1230,19 +1279,20 @@ $(document).ready(function() {
         
         if (grossTotal < delivery_range) {
             // Only add the delivery charge checkbox if gross total is below Rs 500
-            var charge = delivery_data[0];
-            var checkbox = createDeliveryCheckbox(charge);
-            deliveryChargesContainer.empty(); 
-
-            deliveryChargesContainer.append(checkbox);
+            //var charge = delivery_data[0];
+            //var checkbox = createDeliveryCheckbox(charge);
+            deliveryChargesContainer.show(); 
+            
+            
+            //deliveryChargesContainer.append(checkbox);
 
             //UPDATE GROSS_TOTAL
            // Update grossTotal here as well
         
 
             // Add a label for the delivery charges condition
-        var conditionLabel = $("<div class='container mt-2'><p class='text-muted'>Delivery charges are applicable only if the gross total is below Rs "+delivery_range+".</p></div>");
-        deliveryChargesContainer.append(conditionLabel);
+       // var conditionLabel = $("<div class='container mt-2'><p class='text-muted'>Delivery charges are applicable only if the gross total is below Rs "+delivery_range+".</p></div>");
+        //deliveryChargesContainer.append(conditionLabel);
         }else {
             // Remove the container if the gross total is above the delivery range
             deliveryChargesContainer.remove();
@@ -1250,6 +1300,25 @@ $(document).ready(function() {
 
         
     }
+
+    // Event listener for the delivery charges input field
+    $("#delivery-input").on("input", function() {
+      var deliveryCharges = parseFloat($(this).val()) || 0;
+      
+      // Apply logic when delivery charges are zero or removed
+      if (deliveryCharges === 0) {
+          // Implement your logic here for zero or removed delivery charges
+          // For example:
+          // Reset other related values or apply your specific logic
+          
+          // For now, resetting all values to zero
+          $("#delivery-input").val(""); // Clear the input box
+          calculateTotals(0); // Recalculate totals with zero delivery charges
+      } else {
+          // Calculate totals with the entered delivery charges
+          calculateTotals(deliveryCharges);
+      }
+  });
 
                 // Call the function to add the delivery charge checkbox to the container
                 addDeliveryChargeCheckbox();
