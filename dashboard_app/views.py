@@ -1242,7 +1242,7 @@ def view_order_detail(request,orderid):
                 
                
             })
-        
+        delivery_price_taken = data[0]['delivery_price_taken'] if data else ''
         #Payment Details
         payment_id = 'Payment Not Done'
         query_payment = "select razor_pay_payment_id,status,time,dt,payment_type from vff.laundry_payment_tbl where order_id='"+str(orderid)+"'"
@@ -1317,19 +1317,25 @@ def view_order_detail(request,orderid):
             state_gst = gstamount / 2
             central_gst = gstamount / 2
             gst_amount = gstamount
-            if total_cost < range_price:
-                # total_cost += gstamount + delivery_price
-                total_cost +=   delivery_price
-            else:
-                # total_cost += gstamount
-                delivery_price = 0
+            if delivery_price_taken !=0 or delivery_price_taken !=0.0:
+                total_cost += delivery_price_taken;
+            
+            # if total_cost < range_price:
+            #     # total_cost += gstamount + delivery_price
+            #     total_cost +=   delivery_price
+            # else:
+            #     # total_cost += gstamount
+            #     delivery_price = 0
         else:
-            if total_cost < range_price:
-                #total_cost += igstamount + delivery_price
-                total_cost += delivery_price
-            else:
-                # total_cost += igstamount 
-                delivery_price =0
+            if delivery_price_taken !=0 or delivery_price_taken !=0.0:
+                total_cost += delivery_price_taken;
+            
+            # if total_cost < range_price:
+            #     #total_cost += igstamount + delivery_price
+            #     total_cost += delivery_price
+            # else:
+            #     # total_cost += igstamount 
+            #     delivery_price =0
         
         igstamount = round(igstamount,2)
         if igstamount == 0.0:
@@ -1347,7 +1353,7 @@ def view_order_detail(request,orderid):
         landmark = data[0]['landmark'] if data else ''
         order_status = data[0]['order_status'] if data else ''
         order_taken_on = data[0]['order_taken_on'] if data else ''
-        delivery_price_taken = data[0]['delivery_price_taken'] if data else ''
+        
         order_completed = data[0]['order_completed'] if data else ''
         order_date = data[0]['order_taken_epoch'] if data else ''
         delivery_date = data[0]['delivery_epoch'] if data else ''
