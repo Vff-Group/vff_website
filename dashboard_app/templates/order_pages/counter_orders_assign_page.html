@@ -1336,26 +1336,29 @@ $(document).ready(function() {
         
     }
     var deliverySum = 0;
+    var initialGrossTotal = grossTotal;
     $('#delivery-input').on('input', function() {
+
       delivery_charges = parseFloat($(this).val());
       console.log('delivery_charges::'+delivery_charges);
       // Update the discounted amount
-      deliverySum = grossTotal + delivery_charges;
+      
       console.log('deliverySum::'+deliverySum);
       if(delivery_charges === "" || isNaN(delivery_charges)){
         delivery_charges = 0;
           $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
-          
+          deliverySum = delivery_charges;  
       }
       if(!isNaN(delivery_charges)){
         $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+        deliverySum = delivery_charges;
           }
 
       if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-        discountedAmount= discountedAmount + deliverySum;
+        discountedAmount= initialGrossTotal + delivery_charges;
           $('#gross-total').text('Rs.'+discountedAmount.toFixed(2)+'/-');
           }else{
-            grossTotal = grossTotal +deliverySum;
+            grossTotal = initialGrossTotal +delivery_charges;
               $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
           }
   });
