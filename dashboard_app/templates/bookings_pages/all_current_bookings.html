@@ -62,7 +62,7 @@
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Booking ID #</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Customer Details</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Address</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Order Recieved Time</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Booking Recieved Time</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Delivery Boy Name</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Current Status</th>
                     <!-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Quantity</th>
@@ -162,13 +162,15 @@
         var bookingId = $(this).find('td:first h6').text().toLowerCase();
         var customerName = $(this).find('.text-sm').text().toLowerCase();
         var mobileNumber = $(this).find('.text-secondary').text().toLowerCase();
-        var orderDate = $(this).find('.text-xs').eq(0).text().toLowerCase();
+        //var orderDate = $(this).find('.text-xs').eq(0).text().toLowerCase();
+        //var orderDatePart = orderDate.split(' ')[0].toLowerCase();
+        var orderDate = $(this).find('td:nth-child(4) span').text();
         var orderDatePart = orderDate.split(' ')[0].toLowerCase();
   
         if (
           (bookingId.includes(userSearch) || customerName.includes(userSearch) || mobileNumber.includes(userSearch) || userSearch === '') &&
           (orderDate.includes(bookingDateFilter) || bookingDateFilter === '') &&
-          (orderDatePart === $('#date-of-order').val() || $('#date-of-order').val() === '')
+          (orderDatePart === $('#date-of-booking').val() || $('#date-of-booking').val() === '')
         ) {
           $(this).show();
         } else {
