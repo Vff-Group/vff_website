@@ -687,7 +687,11 @@
     <script>
       // Get the booking ID value
       var bookingId = document.getElementById('selected-booking-id').value;
-  
+      var selected_customer_id = document.getElementById("selected-customer-id");
+      var customer_name_input = document.getElementById("customer-name");
+      //generate-booking-id,add_to_cart
+      var add_to_cart = document.getElementById("add_to_cart");
+      var generate_booking_id_btn = document.getElementById("generate-booking-id");
       // Check if the booking ID exists
       if (bookingId) {
           // If booking ID exists, show the button
