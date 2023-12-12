@@ -1241,28 +1241,26 @@ $(document).ready(function() {
                 }
 
                 var previousDeliveryCharges = 0;
-                
-                //Calculates the delivery charges
                 function calculateTotals(deliveryCharges) {
-                  if (deliveryCharges !== 0) {
-                      var subtractedCharges = previousDeliveryCharges - deliveryCharges;
+                  if (deliveryCharges !== 0 || previousDeliveryCharges !== 0) {
+                      var changeInCharges = deliveryCharges - previousDeliveryCharges;
               
                       if (discountedAmount !== 0 && !isNaN(discountedAmount)) {
                           delivery_charges = deliveryCharges;
-                          var sum = (discountedAmount += subtractedCharges);
+                          var sum = (discountedAmount += changeInCharges);
                           discountedAmount = sum;
               
                           $('#gross-total').text('Rs.' + discountedAmount.toFixed(2) + '/-');
                           $('#delivery-charges').text('Rs.' + delivery_charges + '/-');
                       } else if (!isNaN(grossTotal)) {
                           delivery_charges = deliveryCharges;
-                          var sum = (grossTotal += subtractedCharges);
+                          var sum = (grossTotal += changeInCharges);
                           grossTotal = sum;
               
                           $('#gross-total').text('Rs.' + grossTotal.toFixed(2) + '/-');
                           $('#delivery-charges').text('Rs.' + delivery_charges + '/-');
                       }
-              
+                      
                       // Update the previous delivery charges value
                       previousDeliveryCharges = deliveryCharges;
                   }
@@ -1302,23 +1300,16 @@ $(document).ready(function() {
     $("#delivery-input").on("input", function() {
       var deliveryCharges = parseFloat($(this).val()) || 0;
       
-      // Apply logic when delivery charges are zero or removed
-      if (deliveryCharges === 0) {
-          // Implement your logic here for zero or removed delivery charges
-          // For example:
-          // Reset other related values or apply your specific logic
-          
-          // For now, resetting all values to zero
-          $("#delivery-input").val(""); // Clear the input box
-          previousDeliveryCharges = 0;
-          calculateTotals(0); // Recalculate totals with zero delivery charges
-      } else {
-          // Calculate totals with the entered delivery charges
-          calculateTotals(deliveryCharges);
-      }
+      if (deliveryCharges === 0 && previousDeliveryCharges !== 0) {
+        // Subtract the previous charges if the input is cleared
+        calculateTotals(0);
+    } else {
+        // Calculate totals with the entered delivery charges
+        calculateTotals(deliveryCharges);
+    }
   });
 
-                // Call the function to add the delivery charge input box to the container
+                // Call the function to add the delivery charge input to the container
                 addDeliveryChargeInputBox();
 
                 //Add Ons CheckBoxes
