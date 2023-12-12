@@ -3561,7 +3561,24 @@ def counter_orders_screen(request):
         error_msg = 'Something Went Wrong'
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
-    context = {'category_data': category_data,'current_url': current_url,'error_msg':error_msg}
+    if request.method == 'GET' and request.is_ajax():
+        booking_id = request.GET.get('booking_id')
+        customer_name = request.GET.get('customer_name')
+        mobile_number = request.GET.get('mobile_number')
+        customer_id = request.GET.get('customer_id')
+
+        # Process the received data or perform necessary operations
+        # For example, pass it to the template or do some backend logic
+
+        # For demonstration purposes, you can return a JSON response
+        data = {
+            'booking_id': booking_id,
+            'customer_name': customer_name,
+            'mobile_number': mobile_number,
+            'customer_id': customer_id,
+        }
+        print(f'booking_data::{data}')
+    context = {'category_data': category_data,'current_url': current_url,'error_msg':error_msg,'data':data}
     
     return render(request, 'order_pages/counter_orders_assign_page.html', context)
 
