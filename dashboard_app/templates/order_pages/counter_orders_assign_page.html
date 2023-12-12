@@ -1339,9 +1339,10 @@ $(document).ready(function() {
 
     // Event listener for the delivery charges input field
     $("#delivery-input").on("input", function() {
-      var deliveryCharges = parseFloat($(this).val()) || 0;
+      //var deliveryCharges = parseFloat($(this).val()) || 0;
       
       var inputValue = parseFloat($(this).val()) || 0;
+      console.log('inputValue::'+inputValue);
 
     if (inputValue.length > currentInput.length) {
         // If a character is added
