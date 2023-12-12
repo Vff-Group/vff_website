@@ -118,23 +118,28 @@
                         <span class="badge badge-sm bg-danger">{{row.order_status}}</span>
                         {% endif %}
                       </td>
-                      
-                    {% comment %} <td class="align-middle">
+                    {% if row.order_id_generated == 0 %}  
+                     <td class="align-middle">
                         <div class="row">
                             <div class="col">
-                                <a href="{% url 'dashboard_app:assigned_delivery_boy' row.bookingid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                    Assign Delivery Boy
-                                  </a> 
-                                  {% comment %} <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                    Assign Delivery Boy
-                                  </a> 
+                              <!-- row.bookingid -->
+                              <a href="#" class="text-secondary font-weight-bold text-xs add-details"
+                              data-bookingid="{{ row.bookingid }}"
+                              data-customername="{{ row.customer_name }}"
+                              data-customermobile="{{ row.mobile_no }}"
+                              data-customerid="{{ row.customerid }}"
+                              data-toggle="tooltip" data-original-title="Edit user">
+                             Add Details
+                           </a> 
+                                 
                             </div>
                            
                           
                         </div>
                       
                       
-                    </td> {% endcomment %}
+                    </td> 
+{% endif %}
                   </tr>
                   {% endfor %}
                 </tbody>
@@ -148,6 +153,39 @@
 </main>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('.add-details').click(function (event) {
+      event.preventDefault();
+  
+      var bookingId = $(this).data('bookingid');
+      var customerName = $(this).data('customername');
+      var customerMobile = $(this).data('customermobile');
+      var customerId = $(this).data('customerid');
+  
+      // AJAX request
+      $.ajax({
+        type: 'GET',
+        url: '{% url "dashboard_app:counter_orders_screen" %}',
+        data: {
+          booking_id: bookingId,
+          customer_name: customerName,
+          mobile_number: customerMobile,
+          customer_id: customerId
+        },
+        dataType: 'json',
+        success: function (data) {
+          console.log('AJAX request successful', data);
+          // Handle the response data as needed
+        },
+        error: function (xhr, textStatus, errorThrown) {
+          console.error('AJAX request failed', textStatus, errorThrown);
+        }
+      });
+    });
+  });
+  
+</script>
 <script>
   $(document).ready(function () {
     $('#booking-id-search, #date-of-booking').on('input change', function () {
