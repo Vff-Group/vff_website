@@ -2274,7 +2274,7 @@ def print_label_tags(request,orderid):
         
 #Thermal Printer size
 def generate_bill(request, orderid):
-    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name,categoryid,subcategoryid,booking_type,dt,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,time,item_cost,item_quantity,type,section_type,laundry_ordertbl.booking_id,gstamount,igstamount,discount_price,wants_delivery from vff.laundry_active_orders_tbl,vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and laundry_active_orders_tbl.order_id=laundry_ordertbl.orderid and orderid='"+str(orderid)+"' order by orderid desc;"
+    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name,categoryid,subcategoryid,booking_type,dt,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,time,item_cost,item_quantity,type,section_type,laundry_ordertbl.booking_id,gstamount,igstamount,discount_price,wants_delivery,delivery_price from vff.laundry_active_orders_tbl,vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and laundry_active_orders_tbl.order_id=laundry_ordertbl.orderid and orderid='"+str(orderid)+"' order by orderid desc;"
     
     query_result = execute_raw_query(query)
     print(f'query_result:::{query_result}')
@@ -2346,12 +2346,13 @@ def generate_bill(request, orderid):
                 'igstamount': row[43],
                 'discount_price': row[44],
                 'wants_delivery': row[45],
+                'delivery_price_taken': row[46],
                 
                 
                 
                
             })
-        
+        delivery_price_taken = data[0]['delivery_price_taken'] if data else ''
         #Payment Details
         payment_id = 'Payment Not Done'
         query_payment = "select razor_pay_payment_id,status,time,dt,payment_type from vff.laundry_payment_tbl where order_id='"+str(orderid)+"'"
@@ -2428,19 +2429,25 @@ def generate_bill(request, orderid):
             state_gst = gstamount / 2
             central_gst = gstamount / 2
             gst_amount = gstamount
-            if total_cost < range_price:
-                # total_cost += gstamount + delivery_price
-                total_cost +=  delivery_price
-            else:
-                # total_cost += gstamount
-                delivery_price = 0
+            if delivery_price_taken !=0 or delivery_price_taken !=0.0:
+                total_cost += delivery_price_taken;
+            
+            # if total_cost < range_price:
+            #     # total_cost += gstamount + delivery_price
+            #     total_cost +=   delivery_price
+            # else:
+            #     # total_cost += gstamount
+            #     delivery_price = 0
         else:
-            if total_cost < range_price:
-                # total_cost += igstamount + delivery_price
-                total_cost +=  delivery_price
-            else:
-                # total_cost += igstamount 
-                delivery_price = 0
+            if delivery_price_taken !=0 or delivery_price_taken !=0.0:
+                total_cost += delivery_price_taken;
+            
+            # if total_cost < range_price:
+            #     #total_cost += igstamount + delivery_price
+            #     total_cost += delivery_price
+            # else:
+            #     # total_cost += igstamount 
+            #     delivery_price =0
         igstamount = round(igstamount,2)
         if igstamount == 0.0:
             igstamount = '0.0'
