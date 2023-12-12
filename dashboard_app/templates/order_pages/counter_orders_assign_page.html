@@ -496,7 +496,7 @@
                               >
                               <input
                                 class="form-control form-control-alternative"
-                                type="text"
+                                type="number"
                                 id="discounted-input"
                                 name="discount-value"
                                 value=""
@@ -750,10 +750,7 @@ $('#modal-default1').on('hidden.bs.modal', function (e) {
 </script>
 
     <script>
-      $('#modal-default1').on('shown.bs.modal', function (e) {
-        // Find all input elements within the modal content and reset their values
-        $(this).find('input').val('');
-    });
+      
       var previousDeliveryCharges = 0;
       var currentInput = "";
         var extraItems = [];
@@ -1146,6 +1143,8 @@ $(document).ready(function() {
         if(!isNaN(delivery_charges)){
             $('#delivery-charges').text('Rs.0/-');
         }
+        $('#delivery-input').val('');
+        $('discounted-input').val('');
                 // Handle the data you received from the server
                 console.log('datata:'+JSON.stringify(data));
                 //Gets Extra Items Details
