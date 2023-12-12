@@ -1243,7 +1243,7 @@ $(document).ready(function() {
                 var previousDeliveryCharges = 0;
                 var currentInput = "";
                 function addDeliveryCharges(deliveryCharges) {
-                  
+                  console.log('adding delivery charges::');
                  if(deliveryCharges !==0){
                   if(discountedAmount !== 0 && !isNaN(discountedAmount)){
                     console.log("Add BdiscountedAmount---->"+discountedAmount);
@@ -1277,7 +1277,7 @@ $(document).ready(function() {
 
               function removeDeliveryCharges(deliveryCharges) {
                   
-                if(deliveryCharges !==0){
+                console.log('removing delivery charges::');
                  if(discountedAmount !== 0 && !isNaN(discountedAmount)){
                    console.log("Add BdiscountedAmount---->"+discountedAmount);
                    delivery_charges = deliveryCharges;
@@ -1299,9 +1299,8 @@ $(document).ready(function() {
                    $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
                    $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
                }
-               // Update the previous delivery charges value
-               previousDeliveryCharges = deliveryCharges;
-             }
+               
+             
                  // Update the displayed values
                  //$("#delivery-charges").text("Rs. " + deliveryCharges.toFixed(2) + "/-");
                  //$("#gross-total").text("Rs. " + grossTotal.toFixed(2) + "/-");
@@ -1354,7 +1353,8 @@ $(document).ready(function() {
             previousDeliveryCharges += diff;
         }
         addDeliveryCharges(previousDeliveryCharges);
-    } else if (inputValue.length < currentInput.length) {
+    //} else if (inputValue.length < currentInput.length) {
+    } else {
         // If a character is removed
         var removedChar = currentInput.slice(-1);
         var diff = parseFloat(removedChar);
