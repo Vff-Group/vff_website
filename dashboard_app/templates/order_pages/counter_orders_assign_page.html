@@ -1335,40 +1335,31 @@ $(document).ready(function() {
 
         
     }
+    var deliverySum = 0;
+    $('#delivery-input').on('input', function() {
+      delivery_charges = parseFloat($(this).val());
+      // Update the discounted amount
+      deliverySum = grossTotal + delivery_charges;
+      if(delivery_charges === "" || isNaN(delivery_charges)){
+        delivery_charges = 0;
+          $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+          
+      }
+      if(!isNaN(delivery_charges)){
+        $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+          }
 
-    // Event listener for the delivery charges input field
-    $("#delivery-input").on("input", function() {
-      //var deliveryCharges = parseFloat($(this).val()) || 0;
-      
-      var inputValue = $(this).val();
-      console.log('inputValue::'+inputValue);
-      console.log('inputValue.length::'+inputValue.length);
-      console.log('currentInput.length::'+currentInput.length);
-    if (inputValue.length > currentInput.length) {
-        // If a character is added
-        var addedChar = inputValue.slice(-1);
-        var diff = parseFloat(addedChar);
-
-        if (!isNaN(diff)) {
-            previousDeliveryCharges += diff;
-        }
-        addDeliveryCharges(parseFloat(inputValue));
-    //} else if (inputValue.length < currentInput.length) {
-    } else {
-        // If a character is removed
-        var removedChar = currentInput.slice(-1);
-        var diff = parseFloat(removedChar);
-
-        if (!isNaN(diff)) {
-            previousDeliveryCharges -= diff;
-        }
-        removeDeliveryCharges(parseFloat(inputValue));
-    }
-
-    // Update the gross total and store the current input
-    
-    currentInput = inputValue;
+      if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+        discountedAmount= discountedAmount + deliverySum;
+          $('#gross-total').text('Rs.'+discountedAmount.toFixed(2)+'/-');
+          }else{
+            grossTotal = grossTotal +deliverySum;
+              $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
+          }
   });
+
+
+   
 
                 // Call the function to add the delivery charge input to the container
                 addDeliveryChargeInputBox();
