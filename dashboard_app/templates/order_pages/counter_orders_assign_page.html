@@ -1578,14 +1578,14 @@ $("#add_to_cart").on("click",function(){
     }
 
     // Perform validation
-    if (!selectedServiceType && selectedCategory !== "DRY CLEAN") {
+    if (!selectedServiceType && (selectedCategory !== "DRY CLEAN"  || selectedCategory !== "STEAM IRON" || selectedCategory !== "SAREE STEAM IRON")) {
         // Show a toast message for validation failure
         showToast("Validation Error", "Please Price Type");
         return; // Stop further execution
     }
 
     // Perform validation
-    if (!selectedSubSection && selectedCategory === "DRY CLEAN") {
+    if (!selectedSubSection && (selectedCategory === "DRY CLEAN" || selectedCategory === "STEAM IRON" || selectedCategory === "SAREE STEAM IRON")) {
         // Show a toast message for validation failure
         
         showToast("Validation Error", "Sub Section.");
@@ -1939,7 +1939,7 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
         } else {
             // Create a new object and push it to the list
             section_type_selected = 'All'
-            if(selectedCategoryName == "DRY CLEAN"){
+            if(selectedCategoryName == "DRY CLEAN" || selectedCategoryName == "STEAM IRON" || selectedCategoryName == "SAREE STEAM IRON"){
                 var section_type = $(this).closest("tr").find("#section_type").text();
                 section_type_selected = section_type;
             }
@@ -2075,7 +2075,7 @@ function showToast(message, bodyContent) {
             //var emptyTh = $("<th class='text-secondary opacity-7'></th>");
 
             console.log('selectedCategory::'+selectedCategory)
-            if (selectedCategory == "DRY CLEAN"){
+            if (selectedCategory == "DRY CLEAN" || selectedCategory == "STEAM IRON" || selectedCategory == "SAREE STEAM IRON"){
                 //Load Sections Here 
                 //$("#subCategoryTable").find("thead tr").remove(costTh);
                 //$("#subCategoryTable").find("thead tr").append(costTh);
