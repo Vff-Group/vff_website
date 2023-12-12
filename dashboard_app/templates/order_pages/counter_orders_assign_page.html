@@ -1578,7 +1578,7 @@ $("#add_to_cart").on("click",function(){
     }
 
     // Perform validation
-    if (!selectedServiceType && (selectedCategory !== "DRY CLEAN"  || selectedCategory !== "STEAM IRON" || selectedCategory !== "SAREE STEAM IRON")) {
+    if (!selectedServiceType && (selectedCategory !== "DRY CLEAN"  && selectedCategory !== "STEAM IRON" && selectedCategory !== "SAREE STEAM IRON")) {
         // Show a toast message for validation failure
         showToast("Validation Error", "Please Price Type");
         return; // Stop further execution
