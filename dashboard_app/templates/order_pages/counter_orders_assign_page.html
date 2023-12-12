@@ -753,6 +753,7 @@ $('#modal-default1').on('hidden.bs.modal', function (e) {
       var previousDeliveryCharges = 0;
       var currentInput = "";
         var extraItems = [];
+        var initialGrossTotal =0;
                 var grossTotal = 0; // Total amount
                 var subTotal = 0; // Total amount
                 var grossQuantity = 0; // Total Quantity
@@ -1339,7 +1340,7 @@ $(document).ready(function() {
         
     }
     var deliverySum = 0;
-    var initialGrossTotal = grossTotal;
+    
     $('#delivery-input').on('input', function() {
 
       delivery_charges = parseFloat($(this).val());
@@ -1490,6 +1491,7 @@ $(document).ready(function() {
                 
                 totalPayment = parseFloat(grossTotal).toFixed(0);
             }
+            initialGrossTotal = grossTotal;
             // Convert the selectedItems object to JSON
     var selectedItemsJSON = JSON.stringify(extraItems);
     console.log('Selected Extra Items JSON: ' + selectedItemsJSON);
