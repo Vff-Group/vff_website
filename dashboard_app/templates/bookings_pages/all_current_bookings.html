@@ -150,26 +150,25 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   $(document).ready(function () {
-    $('#order-id-search, #date-of-booking').on('input change', function () {
+    $('#booking-id-search, #date-of-booking').on('input change', function () {
       applyFilters();
     });
   
     function applyFilters() {
-      var userSearch = $('#order-id-search').val().toLowerCase();
+      var userSearch = $('#booking-id-search').val().toLowerCase();
       var bookingDateFilter = $('#date-of-booking').val().toLowerCase();
   
       $('.table tbody tr').each(function () {
         var bookingId = $(this).find('td:first h6').text().toLowerCase();
         var customerName = $(this).find('.text-sm').text().toLowerCase();
         var mobileNumber = $(this).find('.text-secondary').text().toLowerCase();
-        var orderDateTime = $(this).find('.text-xs').eq(0).text().toLowerCase();
-  
-        // Extracting date part from the date-time string
-        var orderDate = orderDateTime.split(' ')[0];
+        var orderDate = $(this).find('.text-xs').eq(0).text().toLowerCase();
+        var orderDatePart = orderDate.split(' ')[0].toLowerCase();
   
         if (
           (bookingId.includes(userSearch) || customerName.includes(userSearch) || mobileNumber.includes(userSearch) || userSearch === '') &&
-          (orderDate.includes(bookingDateFilter) || bookingDateFilter === '')
+          (orderDate.includes(bookingDateFilter) || bookingDateFilter === '') &&
+          (orderDatePart === $('#date-of-order').val() || $('#date-of-order').val() === '')
         ) {
           $(this).show();
         } else {
@@ -178,7 +177,6 @@
       });
     }
   });
-  
   
 </script>
 {% endblock  %}
