@@ -1341,9 +1341,10 @@ $(document).ready(function() {
     $("#delivery-input").on("input", function() {
       //var deliveryCharges = parseFloat($(this).val()) || 0;
       
-      var inputValue = parseFloat($(this).val()) || 0;
+      var inputValue = $(this).val();
       console.log('inputValue::'+inputValue);
-
+      console.log('inputValue.length::'+inputValue.length);
+      console.log('currentInput.length::'+currentInput.length);
     if (inputValue.length > currentInput.length) {
         // If a character is added
         var addedChar = inputValue.slice(-1);
