@@ -156,7 +156,12 @@
                         <small>{{row.ordertype}}</small>
                       </td>
                     <td>
+                      {% if row.type_of == "Sqft" %}
                       <p class="text-xs font-weight-bold mb-0">{{row.item_quantity}} {{row.type_of}}</p>
+                      <p class="text-xs font-weight-bold mb-0">W-[{{row.square_width}}] H-[{{row.square_height}}]</p>
+                      {% else %}
+                      <p class="text-xs font-weight-bold mb-0">{{row.item_quantity}} {{row.type_of}}</p>
+                      {% endif %}
                     </td>
                     <td>
                         <h6 class="text-xs font-weight-bold mb-0 text-center">₹ {{row.item_cost}}</h6>
