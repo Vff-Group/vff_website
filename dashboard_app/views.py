@@ -2858,7 +2858,8 @@ def add_items_to_cart(request):
                         sub_cat_img = item['sub_cat_img']
                         section_type = item['section_type']
                         
-                        filter_table_value = str(cost)
+                        filter_table_value = '"'+str(cost)+'"'
+                        filter_items =  "item_cost"
                         if type_of == "Sqft":
                             total_cost = 0
                             print(f"actual_cost::{actual_cost}")
@@ -2873,8 +2874,10 @@ def add_items_to_cart(request):
                             print(f"Total_item_quantity::{item_quantity}")
                             total_cost *= item_quantity
                             print(f'Total Sqrt Cost::{total_cost}') 
-                            filter_table_value = str(total_cost)
-                        query_dry = "insert into vff.laundry_cart_items(catid,subcatid,customer_id,booking_id,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type) values ('"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(customer_id)+"','"+str(booking_id)+"','"+str(booking_type)+"','"+filter_table_value+"','"+str(item_quantity)+"','"+str(type_of)+"','"+str(cat_img)+"','"+str(cat_name)+"','"+str(sub_cat_name)+"','"+str(sub_cat_img)+"','"+str(actual_cost)+"','"+str(section_type)+"')"
+                            filter_items =  "item_cost,square_width,square_height"
+                            filter_table_value = '"'+str(total_cost)+'","'+str(item_width_per_sqft)+'","'+str(item_height_per_sqft)+'"'
+                            
+                        query_dry = "insert into vff.laundry_cart_items(catid,subcatid,customer_id,booking_id,booking_type,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type,"+filter_items+") values ('"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(customer_id)+"','"+str(booking_id)+"','"+str(booking_type)+"','"+str(item_quantity)+"','"+str(type_of)+"','"+str(cat_img)+"','"+str(cat_name)+"','"+str(sub_cat_name)+"','"+str(sub_cat_img)+"','"+str(actual_cost)+"','"+str(section_type)+"',"+filter_table_value+")"
                         cursor.execute(query_dry)
                         connection.commit();
             except Exception as e:
