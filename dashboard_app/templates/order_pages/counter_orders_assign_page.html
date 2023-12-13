@@ -2295,7 +2295,7 @@ function showToast(message, bodyContent) {
             var showSearchLayout = $('#show-search');
             showSearchLayout.hide();
             peice_wise_cart.hide();
-            document.getElementById('peice-wise-cart').style.display = 'inline-block';
+            document.getElementById('peice-wise-cart').style.display = 'flex';
             //Extra Headers
            // var costTh = $("<th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-25'>Cost</th>");
             //var emptyTh = $("<th class='text-secondary opacity-7'></th>");
@@ -2308,7 +2308,7 @@ function showToast(message, bodyContent) {
                 //$("#subCategoryTable").find("thead tr").append(emptyTh);
               if(selectedCategory == "PieceWise Category"){
                 peice_wise_cart.show();
-                document.getElementById('peice-wise-cart').style.display = 'inline-block';
+                document.getElementById('peice-wise-cart').style.display = 'flex';
               }else{
                 peice_wise_cart.hide();
                 document.getElementById('peice-wise-cart').style.display = 'none';
