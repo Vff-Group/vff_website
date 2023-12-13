@@ -1375,7 +1375,8 @@ def view_order_detail(request,orderid):
         print(f'wants_delivery:::{wants_delivery}')
         print(f'order_taken_on:::{order_taken_on}')
         
-        total_cost -= discount_amount;
+        total_cost -= discount_amount
+        total_cost = round(total_cost)
         
     else:
         error_msg = 'Something Went Wrong'
@@ -2529,7 +2530,8 @@ def generate_bill(request, orderid):
         
     else:
         error_msg = 'Something Went Wrong'
-    
+    total_cost -= discount_amount
+    total_cost = round(total_cost)
     context ={'query_result':data,'extra_data':extra_data,'payment_id':payment_id,'order_id':first_order_id,'customer_name':customer_name
               ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':round(total_cost,2),'extra_error':extra_error,'range_price':range_price,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':round(discount_amount,2),'sub_total':round(sub_total,2),'receipt_id':receiptID,'branch_id':branchID,'receiptName':receiptName,'receiptDate':receiptDate,'wants_delivery':wants_delivery,'delivery_dt':delivery_dt,'state_gst':round(state_gst, 2),'central_gst':round(central_gst,2),'igstamount':igstamount,'delivery_price_taken':delivery_price_taken}
     
