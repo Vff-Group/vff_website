@@ -2832,14 +2832,16 @@ def add_items_to_cart(request):
         else:
             cat_id = jdict['cat_id']
             customer_id = jdict['customer_id']
-            item_per_sqft = jdict['item_per_sqft']
+            item_width_per_sqft = jdict['item_width_per_sqft']
+            item_height_per_sqft = jdict['item_height_per_sqft']
             
             booking_type = jdict['booking_type']
             cat_img = jdict['cat_img']
             cat_name = jdict['cat_name']  
             all_data = jdict['all_items']
             print(f'all_data::{all_data}')
-            print(f'item_per_sqft::{item_per_sqft}')
+            print(f'item_width_per_sqft::{item_width_per_sqft}')
+            print(f'item_height_per_sqft::{item_height_per_sqft}')
             
             try:
                 with connection.cursor() as cursor:
@@ -2860,12 +2862,15 @@ def add_items_to_cart(request):
                         if type_of == "Sqft":
                             total_cost = 0
                             print(f"actual_cost::{actual_cost}")
-                            print(f"item_per_sqft::{item_per_sqft}")
+                            
                             actual_cost = float(actual_cost)
-                            item_per_sqft = float(item_per_sqft)
-
-                            total_cost = (actual_cost * item_per_sqft)
+                            item_width_per_sqft = float(item_width_per_sqft)
+                            item_height_per_sqft = float(item_height_per_sqft)
+                            total_square_feet = item_width_per_sqft * item_height_per_sqft
+                            print(f'total_square_feet::{total_square_feet}')
+                            total_cost = (actual_cost * total_square_feet)
                             print(f"TotalCost::{total_cost}")
+                            print(f"Total_item_quantity::{item_quantity}")
                             total_cost *= item_quantity
                             print(f'Total Sqrt Cost::{total_cost}') 
                             filter_table_value = str(total_cost)

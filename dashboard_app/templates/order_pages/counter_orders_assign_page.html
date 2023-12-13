@@ -185,16 +185,37 @@
     
     <div class="form-group">
       <label
-        for="item-per-sqft-price"
+        for="item-per-width-sqft-price"
+        class="form-control-label text-secondary"
+        >Add Value in Square Feet Width</label
+      >
+      <input
+        class="form-control form-control-alternative"
+        type="number"
+        id="item-per-width-sqft-price"
+        name="per_width_sqft"
+        placeholder="Add Value in Square Feet Width"
+        value=""
+        required
+      />
+    </div>
+
+  </div>
+
+  <div class="col-lg-6" id="if-sqft">
+    
+    <div class="form-group">
+      <label
+        for="item-per-height-sqft-price"
         class="form-control-label text-secondary"
         >Add Value in Square Feet</label
       >
       <input
         class="form-control form-control-alternative"
         type="number"
-        id="item-per-sqft-price"
-        name="per_sqft"
-        placeholder="Add Value in Square Feet"
+        id="item-per-height-sqft-price"
+        name="per_width_sqft"
+        placeholder="Add Value in Square Feet Height"
         value=""
         required
       />
@@ -1729,7 +1750,8 @@ $("#add_to_cart").on("click",function(){
     
     
     var inputElement = document.getElementById("item-quantity");
-    var inputPerPieceElement = document.getElementById("item-per-sqft-price");
+    var inputWidthPerSqft = document.getElementById("item-per-width-sqft-price");
+    var inputHeightPerSqft = document.getElementById("item-per-height-sqft-price");
     
     
 
@@ -1754,9 +1776,11 @@ $("#add_to_cart").on("click",function(){
     }
 
     var kgs_quantity = inputElement.value.trim();
-    var per_sqft_quantity = inputPerPieceElement.value.trim();
+    var per_width_sqft_quantity = inputWidthPerSqft.value.trim();
+    var per_height_sqft_quantity = inputHeightPerSqft.value.trim();
 
-    console.log("per_sqft_quantity:"+per_sqft_quantity);
+    console.log("per_height_sqft_quantity:"+per_height_sqft_quantity);
+    console.log("per_width_sqft_quantity:"+per_width_sqft_quantity);
     console.log("kgs_quantity::"+kgs_quantity);
     // Perform validation
     if (!selectedCategory ) {
@@ -1792,8 +1816,11 @@ $("#add_to_cart").on("click",function(){
         return;
     }
 
-    if(per_sqft_quantity === ""){
-      per_sqft_quantity = 0;
+    if(per_width_sqft_quantity === ""){
+      per_width_sqft_quantity = 0;
+    }
+    if(per_height_sqft_quantity === ""){
+      per_height_sqft_quantity = 0;
     }
     //else if(kgs_quantity !== "" && kgs_quantity < 5){
       //inputElement.classList.remove("is-valid");
@@ -1881,7 +1908,8 @@ else{
       dictMap['cat_id'] = selectedCategoryId;
       dictMap['booking_id'] = booking_id;
       dictMap['customer_id'] = customer_id;
-      dictMap['item_per_sqft'] = parseFloat(per_sqft_quantity);
+      dictMap['item_width_per_sqft'] = parseFloat(per_width_sqft_quantity);
+      dictMap['item_height_per_sqft'] = parseFloat(per_height_sqft_quantity);
       //dictMap['booking_type'] = "Dry Cleaning";
       dictMap['booking_type'] = selectedCategory+" Service";
       dictMap['cat_img'] = selectedCategoryImage;
