@@ -2858,7 +2858,9 @@ def add_items_to_cart(request):
                         filter_table_value = str(cost)
                         if type_of == "Sqft":
                             total_cost = 0
-                            total_cost = (item_per_sqft * item_quantity) 
+                            total_cost = (actual_cost * item_per_sqft)
+                            total_cost *= item_quantity
+                            print(f'Total Sqrt Cost::{total_cost}') 
                             filter_table_value = str(total_cost)
                         query_dry = "insert into vff.laundry_cart_items(catid,subcatid,customer_id,booking_id,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type) values ('"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(customer_id)+"','"+str(booking_id)+"','"+str(booking_type)+"','"+filter_table_value+"','"+str(item_quantity)+"','"+str(type_of)+"','"+str(cat_img)+"','"+str(cat_name)+"','"+str(sub_cat_name)+"','"+str(sub_cat_img)+"','"+str(actual_cost)+"','"+str(section_type)+"')"
                         cursor.execute(query_dry)
