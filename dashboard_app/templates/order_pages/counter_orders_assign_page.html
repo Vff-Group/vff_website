@@ -1755,6 +1755,7 @@ $("#add_to_cart").on("click",function(){
 
     var kgs_quantity = inputElement.value.trim();
     var per_sqft_quantity = inputPerPieceElement.value.trim();
+
     console.log("per_sqft_quantity:"+per_sqft_quantity);
     console.log("kgs_quantity::"+kgs_quantity);
     // Perform validation
@@ -1875,12 +1876,12 @@ $("#add_to_cart").on("click",function(){
 }
 //End of Other Laundry Services Add Item to Cart
 else{
-  totalCost = (parseFloat(express_price) * parseFloat(per_sqft_quantity));
+ 
   
       dictMap['cat_id'] = selectedCategoryId;
       dictMap['booking_id'] = booking_id;
       dictMap['customer_id'] = customer_id;
-      dictMap['item_per_sqft'] = per_sqft_quantity.toFixed(1);
+      dictMap['item_per_sqft'] = parseFloat(per_sqft_quantity);
       //dictMap['booking_type'] = "Dry Cleaning";
       dictMap['booking_type'] = selectedCategory+" Service";
       dictMap['cat_img'] = selectedCategoryImage;
