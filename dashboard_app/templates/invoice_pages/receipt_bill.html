@@ -85,6 +85,16 @@
       color: #000000;/* Allow text to wrap to the next line */
     }
 
+    .item-sub-name{
+      width: 80px; /* Set a fixed width for the "Item" column */
+      margin: 2px auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* Align the item name to the center */
+      word-wrap: break-word; 
+      color: #000000;/* Allow text to wrap to the next line */
+    }
+
     .total {
       color: #000000;
       text-align: right;
@@ -187,8 +197,7 @@
         </h1>
         <h1 class="item-name">
           {% if row.type_of == "Sqft" %}
-          {{row.item_quantity}} Piece
-          <br>
+          <p class="text-xs font-weight-bold mb-0">{{row.item_quantity}} Piece</p>
           <p class="text-xs font-weight-bold mb-0">W-[{{row.square_width}}] H-[{{row.square_height}}] = {{row.total_square_feet}}</p>
           {% else %}
           {{row.item_quantity}} {{row.type_of}}
