@@ -2875,7 +2875,8 @@ def add_items_to_cart(request):
                             total_cost *= item_quantity
                             print(f'Total Sqrt Cost::{total_cost}') 
                             filter_items =  "item_cost,square_width,square_height"
-                            filter_table_value = '"'+str(total_cost)+'","'+str(item_width_per_sqft_prv)+'","'+str(item_height_per_sqft_prv)+'"'
+                            filter_table_value = "'"+str(total_cost)+"','"+str(item_width_per_sqft_prv)+"','"+str(item_height_per_sqft_prv)+"'"
+                            # filter_table_value = ""'+str(total_cost)+'","'+str(item_width_per_sqft_prv)+'","'+str(item_height_per_sqft_prv)+'""
                             
                         query_dry = "insert into vff.laundry_cart_items(catid,subcatid,customer_id,booking_id,booking_type,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type,"+filter_items+") values ('"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(customer_id)+"','"+str(booking_id)+"','"+str(booking_type)+"','"+str(item_quantity)+"','"+str(type_of)+"','"+str(cat_img)+"','"+str(cat_name)+"','"+str(sub_cat_name)+"','"+str(sub_cat_img)+"','"+str(actual_cost)+"','"+str(section_type)+"',"+filter_table_value+")"
                         print(f'query_dry::{query_dry}')
