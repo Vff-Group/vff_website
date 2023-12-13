@@ -2861,6 +2861,9 @@ def add_items_to_cart(request):
                             total_cost = 0
                             print(f"actual_cost::{actual_cost}")
                             print(f"item_per_sqft::{item_per_sqft}")
+                            actual_cost = float(actual_cost)
+                            item_per_sqft = float(item_per_sqft)
+
                             total_cost = (actual_cost * item_per_sqft)
                             print(f"TotalCost::{total_cost}")
                             total_cost *= item_quantity
