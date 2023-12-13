@@ -1733,14 +1733,14 @@ $("#add_to_cart").on("click",function(){
     }
 
     // Perform validation
-    if (!selectedServiceType && (selectedCategory !== "DRY CLEAN"  && selectedCategory !== "STEAM IRON" && selectedCategory !== "SAREE STEAM IRON")) {
+    if (!selectedServiceType && (selectedCategory !== "DRY CLEAN"  && selectedCategory !== "STEAM IRON" && selectedCategory !== "SAREE STEAM IRON" &&  selectedCategory !== "PieceWise Category")) {
         // Show a toast message for validation failure
         showToast("Validation Error", "Please Price Type");
         return; // Stop further execution
     }
 
     // Perform validation
-    if (!selectedSubSection && (selectedCategory === "DRY CLEAN" || selectedCategory === "STEAM IRON" || selectedCategory === "SAREE STEAM IRON")) {
+    if (!selectedSubSection && (selectedCategory === "DRY CLEAN" || selectedCategory === "STEAM IRON" || selectedCategory === "SAREE STEAM IRON" || selectedCategory === "PieceWise Category")) {
         // Show a toast message for validation failure
         
         showToast("Validation Error", "Sub Section.");
@@ -1750,7 +1750,7 @@ $("#add_to_cart").on("click",function(){
     const dictMap = {};
     
     //TO Check if Quantity is added or not
-    if (selectedCategory !== "DRY CLEAN"   && selectedCategory !== "STEAM IRON" && selectedCategory !== "SAREE STEAM IRON"){
+    if (selectedCategory !== "DRY CLEAN"   && selectedCategory !== "STEAM IRON" && selectedCategory !== "SAREE STEAM IRON"  && selectedCategory !== "PieceWise Category"){
     
     if (kgs_quantity === "") {
         inputElement.classList.remove("is-valid");
@@ -1782,7 +1782,7 @@ $("#add_to_cart").on("click",function(){
         return;
     }
     
-    if(selectedCategory !== "DRY CLEAN"  && selectedCategory !== "STEAM IRON" && selectedCategory !== "SAREE STEAM IRON"){
+    if(selectedCategory !== "DRY CLEAN"  && selectedCategory !== "STEAM IRON" && selectedCategory !== "SAREE STEAM IRON"  && selectedCategory !== "PieceWise Category"){
     const subCategoryNameList = selectedItems.map(item => `${item.sub_cat_name} (${item.item_quantity})`);
     const subCategoryIDList = selectedItems.map(item => `${item.sub_cat_id}`);
     const subCategoryImageList = selectedItems.map(item => `${item.sub_cat_img}`);
@@ -2095,7 +2095,7 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
         } else {
             // Create a new object and push it to the list
             section_type_selected = 'All'
-            if(selectedCategoryName == "DRY CLEAN" || selectedCategoryName == "STEAM IRON" || selectedCategoryName == "SAREE STEAM IRON"){
+            if(selectedCategoryName == "DRY CLEAN" || selectedCategoryName == "STEAM IRON" || selectedCategoryName == "SAREE STEAM IRON" || selectedCategoryName == "PieceWise Category"){
                 var section_type = $(this).closest("tr").find("#section_type").text();
                 section_type_selected = section_type;
             }
@@ -2231,7 +2231,7 @@ function showToast(message, bodyContent) {
             //var emptyTh = $("<th class='text-secondary opacity-7'></th>");
             window.selectedCatId = cat_id;
             console.log('selectedCategory::'+selectedCategory)
-            if (selectedCategory == "DRY CLEAN" || selectedCategory == "STEAM IRON" || selectedCategory == "SAREE STEAM IRON"){
+            if (selectedCategory == "DRY CLEAN" || selectedCategory == "STEAM IRON" || selectedCategory == "SAREE STEAM IRON" || selectedCategory == "PieceWise Category"){
                 //Load Sections Here 
                 //$("#subCategoryTable").find("thead tr").remove(costTh);
                 //$("#subCategoryTable").find("thead tr").append(costTh);
