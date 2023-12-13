@@ -158,7 +158,8 @@
                     <td>
                       {% if row.type_of == "Sqft" %}
                       <p class="text-xs font-weight-bold mb-0">{{row.item_quantity}} Piece</p>
-                      <p class="text-xs font-weight-bold mb-0">W-[{{row.square_width}}] H-[{{row.square_height}}]</p>
+                      <p class="text-xs font-weight-bold mb-0">W-[{{row.square_width}}] H-[{{row.square_height}}] = {{row.total_square_feet}}</p>
+                      
                       {% else %}
                       <p class="text-xs font-weight-bold mb-0">{{row.item_quantity}} {{row.type_of}}</p>
                       {% endif %}
