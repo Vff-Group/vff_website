@@ -2859,7 +2859,10 @@ def add_items_to_cart(request):
                         filter_table_value = str(cost)
                         if type_of == "Sqft":
                             total_cost = 0
+                            print(f"actual_cost::{actual_cost}")
+                            print(f"item_per_sqft::{item_per_sqft}")
                             total_cost = (actual_cost * item_per_sqft)
+                            print(f"TotalCost::{total_cost}")
                             total_cost *= item_quantity
                             print(f'Total Sqrt Cost::{total_cost}') 
                             filter_table_value = str(total_cost)
