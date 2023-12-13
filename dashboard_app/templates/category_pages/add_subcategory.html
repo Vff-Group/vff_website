@@ -80,9 +80,10 @@ Add New Sub-Category Details
 
           <div class="col-lg-6">
             <div class="form-group">
-              <label class="form-control-label" for="input-type">Cost Type [Per Kg/Piece]</label>
+              <label class="form-control-label" for="input-type">Cost Type [Per Kg/Piece/Sqft]</label>
               <select class="form-control form-control-alternative" id="input-type" name="type" required>
                 <option value="Piece" {% if data.type == 'Piece' %}selected{% endif %}>Piece</option>
+                <option value="Sqft" {% if data.type == 'Sqft' %}selected{% endif %}>Sqft</option>
                 <option value="Kg"  {% if data.type == 'Kg' %}selected{% endif %}>Kg</option>
               </select>
             </div>
