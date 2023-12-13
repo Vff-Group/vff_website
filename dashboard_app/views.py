@@ -1375,6 +1375,8 @@ def view_order_detail(request,orderid):
         print(f'wants_delivery:::{wants_delivery}')
         print(f'order_taken_on:::{order_taken_on}')
         
+        total_cost -= discount_amount;
+        
     else:
         error_msg = 'Something Went Wrong'
     
