@@ -2840,8 +2840,8 @@ def add_items_to_cart(request):
             cat_name = jdict['cat_name']  
             all_data = jdict['all_items']
             print(f'all_data::{all_data}')
-            print(f'item_width_per_sqft::{item_width_per_sqft}')
-            print(f'item_height_per_sqft::{item_height_per_sqft}')
+            print(f'item_width_per_sqft::{item_width_per_sqft_prv}')
+            print(f'item_height_per_sqft::{item_height_per_sqft_prv}')
             
             try:
                 with connection.cursor() as cursor:
