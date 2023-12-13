@@ -118,7 +118,7 @@
                         <span class="badge badge-sm bg-danger">{{row.order_status}}</span>
                         {% endif %}
                       </td>
-                    {% if row.order_id_generated == 0 %}  
+                    {% if row.order_id_generated == 0 and row.order_status == "Reached Store" %}  
                      <td class="align-middle">
                         <div class="row">
                             <div class="col">

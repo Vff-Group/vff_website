@@ -83,6 +83,7 @@
                       </td>
                       
                     <td class="align-middle">
+                      {% if row.order_status == "Accepted"%}
                         <div class="row">
                             <div class="col">
                                 <a href="{% url 'dashboard_app:assigned_delivery_boy' row.bookingid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
@@ -95,7 +96,7 @@
                            
                           
                         </div>
-                      
+                        {% endif %}
                       
                     </td>
                   </tr>
