@@ -178,7 +178,7 @@
             
 <hr>
 
-<div class="row">
+<div class="row" id="peice-wise-cart">
              
                   
   <div class="col-lg-6" id="if-sqft">
@@ -2286,7 +2286,7 @@ function showToast(message, bodyContent) {
             //To Hide and 
             
             var only_dry_clean_column = $('#other-then-dry-clean');
-            var per_sqft_column = $('#if-sqft');
+            var peice_wise_cart = $('#peice-wise-cart');
             
             var price_column = $('#price_col');
             //var subCategorySelect = $('#input-subcategory');
@@ -2304,7 +2304,11 @@ function showToast(message, bodyContent) {
                 //$("#subCategoryTable").find("thead tr").remove(costTh);
                 //$("#subCategoryTable").find("thead tr").append(costTh);
                 //$("#subCategoryTable").find("thead tr").append(emptyTh);
-
+              if(selectedCategory == "PieceWise Category"){
+                peice_wise_cart.show();
+              }else{
+                peice_wise_cart.hide();
+              }
                 subCategoryTable.empty()
 
                 section_column.show();
