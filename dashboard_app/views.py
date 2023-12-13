@@ -2866,7 +2866,7 @@ def add_items_to_cart(request):
                         sub_cat_img = item['sub_cat_img']
                         section_type = item['section_type']
                         
-                        filter_table_value = '"'+str(cost)+'"'
+                        filter_table_value = "'"+str(cost)+"'"
                         filter_items =  "item_cost"
                         if type_of == "Sqft":
                             total_cost = 0
