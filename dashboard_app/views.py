@@ -2832,6 +2832,7 @@ def add_items_to_cart(request):
         else:
             cat_id = jdict['cat_id']
             customer_id = jdict['customer_id']
+            item_per_sqft = jdict['item_per_sqft']
             
             booking_type = jdict['booking_type']
             cat_img = jdict['cat_img']
@@ -2846,13 +2847,20 @@ def add_items_to_cart(request):
                         sub_cat_name = item['sub_cat_name']
                         print(f'sub_cat_name::{sub_cat_name}')
                         item_quantity = item['item_quantity']
+                        
                         actual_cost = item['actual_cost']
                         cost = item['cost']
                         type_of = item['type_of']
                         sub_cat_id = item['sub_cat_id']
                         sub_cat_img = item['sub_cat_img']
                         section_type = item['section_type']
-                        query_dry = "insert into vff.laundry_cart_items(catid,subcatid,customer_id,booking_id,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type) values ('"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(customer_id)+"','"+str(booking_id)+"','"+str(booking_type)+"','"+str(cost)+"','"+str(item_quantity)+"','"+str(type_of)+"','"+str(cat_img)+"','"+str(cat_name)+"','"+str(sub_cat_name)+"','"+str(sub_cat_img)+"','"+str(actual_cost)+"','"+str(section_type)+"')"
+                        
+                        filter_table_value = str(cost)
+                        if type_of == "Sqft":
+                            total_cost = 0
+                            total_cost = (item_per_sqft * item_quantity) 
+                            filter_table_value = str(total_cost)
+                        query_dry = "insert into vff.laundry_cart_items(catid,subcatid,customer_id,booking_id,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type) values ('"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(customer_id)+"','"+str(booking_id)+"','"+str(booking_type)+"','"+filter_table_value+"','"+str(item_quantity)+"','"+str(type_of)+"','"+str(cat_img)+"','"+str(cat_name)+"','"+str(sub_cat_name)+"','"+str(sub_cat_img)+"','"+str(actual_cost)+"','"+str(section_type)+"')"
                         cursor.execute(query_dry)
                         connection.commit();
             except Exception as e:

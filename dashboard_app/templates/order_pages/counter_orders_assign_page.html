@@ -175,7 +175,35 @@
 
                 </div>
             </form>
+            
 <hr>
+
+<div class="row">
+             
+                  
+  <div class="col-lg-6" id="if-sqft">
+    
+    <div class="form-group">
+      <label
+        for="item-per-sqft-price"
+        class="form-control-label text-secondary"
+        >Add Value in Square Feet</label
+      >
+      <input
+        class="form-control form-control-alternative"
+        type="number"
+        id="item-per-sqft-price"
+        name="per_sqft"
+        placeholder="Add Value in Square Feet"
+        value=""
+        required
+      />
+    </div>
+
+  </div>
+
+</div>
+
                 <div class="row">
              
                   
@@ -201,6 +229,7 @@
                   </div>
 
                 </div>
+
 
                 
                 <div class="row" id="show-search" style="display: none;">
@@ -1700,6 +1729,7 @@ $("#add_to_cart").on("click",function(){
     
     
     var inputElement = document.getElementById("item-quantity");
+    var inputPerPieceElement = document.getElementById("item-per-sqft-price");
     
     
 
@@ -1724,6 +1754,8 @@ $("#add_to_cart").on("click",function(){
     }
 
     var kgs_quantity = inputElement.value.trim();
+    var per_sqft_quantity = inputPerPieceElement.value.trim();
+    console.log("per_sqft_quantity:"+per_sqft_quantity);
     console.log("kgs_quantity::"+kgs_quantity);
     // Perform validation
     if (!selectedCategory ) {
@@ -1757,6 +1789,10 @@ $("#add_to_cart").on("click",function(){
         inputElement.classList.add("is-invalid");
         showToast('Alert','Please Provide the quantity in Kgs')
         return;
+    }
+
+    if(per_sqft_quantity === ""){
+      per_sqft_quantity = 0;
     }
     //else if(kgs_quantity !== "" && kgs_quantity < 5){
       //inputElement.classList.remove("is-valid");
@@ -1839,11 +1875,12 @@ $("#add_to_cart").on("click",function(){
 }
 //End of Other Laundry Services Add Item to Cart
 else{
-    
-    
+  totalCost = (parseFloat(express_price) * parseFloat(per_sqft_quantity));
+  
       dictMap['cat_id'] = selectedCategoryId;
       dictMap['booking_id'] = booking_id;
       dictMap['customer_id'] = customer_id;
+      dictMap['item_per_sqft'] = per_sqft_quantity.toFixed(1);
       //dictMap['booking_type'] = "Dry Cleaning";
       dictMap['booking_type'] = selectedCategory+" Service";
       dictMap['cat_img'] = selectedCategoryImage;
@@ -2220,6 +2257,8 @@ function showToast(message, bodyContent) {
             //To Hide and 
             
             var only_dry_clean_column = $('#other-then-dry-clean');
+            var per_sqft_column = $('#if-sqft');
+            
             var price_column = $('#price_col');
             //var subCategorySelect = $('#input-subcategory');
             var subCategoryTable = $('#subCategoryTable tbody');
