@@ -112,6 +112,10 @@ urlpatterns = [
     #Load Charts Details 
     path('get_delivery_chart_details/',views.get_delivery_chart_details,name='get_delivery_chart_details'),
     path('get_sales_chart_details/',views.get_sales_chart_details,name='get_sales_chart_details'),
+    
+    #Delete Urls
+    
+    path('delete_sub_category/<int:subcatid>/<int:catid>/<str:catname>/',views.delete_sub_category,name='delete_sub_category'),
 ]
 
 if settings.DEBUG:

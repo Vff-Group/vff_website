@@ -4517,6 +4517,20 @@ def update_sub_category(request, catid,subcatid,catname):
     return render(request, 'category_pages/add_subcategory.html', {'data': data,'catname':catname})
 
 
+def delete_sub_category(request, subcatid,catid,catname):
+    try:
+        with connection.cursor() as cursor:
+            # Delete the senior citizen using usrid
+            delete_query = "DELETE FROM vff.laundry_sub_categorytbl WHERE subcatid = '"+str(subcatid)+"'"
+            cursor.execute(delete_query)
+            connection.commit()
+
+            return redirect(reverse('dashboard_app:all_sub_categories', kwargs={'catid': catid,'catname':catname}))
+    except Exception as e:
+        print(f"Error deleting senior citizen: {e}")
+
+    return redirect(reverse('dashboard_app:all_sub_categories', kwargs={'catid': catid,'catname':catname}))
+
 def execute_raw_query(query, params=None,):
     
     result = []
