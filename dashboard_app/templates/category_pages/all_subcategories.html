@@ -24,6 +24,26 @@
         </div>
         
       </form>
+
+      <div class="row">
+        <div class="col-lg-8">
+          <form method="get">
+            {% csrf_token %}
+            <div class="form-group">
+                <input
+                    class="form-control form-control-alternative"
+                    type="search"
+                    id="sub-category-name-search"
+                    name="sub-category-name-search-input"
+                    placeholder="Search Sub Category Name"
+                    value=""
+                    autocomplete="off"
+                    
+                />
+            </div>
+        </form>
+        </div>
+      </div>
       
       <div class="col-12">
         <div class="card mb-4">
@@ -143,6 +163,9 @@
     </div>
 </div>
 </main>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
   // Get a reference to the dropdown element
   var dropdown = document.getElementById("input-section_type");
@@ -158,6 +181,21 @@
       // Submit the form
       form.submit();
   });
+
+  $(document).ready(function () {
+    $('#sub-category-name-search').on('input', function () {
+      var searchText = $(this).val().toLowerCase();
+      $('.table tbody tr').each(function () {
+        var subCategoryName = $(this).find('td:nth-child(2) h6').text().toLowerCase();
+        if (subCategoryName.includes(searchText)) {
+          $(this).show();
+        } else {
+          $(this).hide();
+        }
+      });
+    });
+  });
+  
 </script>
 
 {% endblock  %}
