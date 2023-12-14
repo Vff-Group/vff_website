@@ -82,18 +82,18 @@
                                     View Sub Category
                                   </a>
                             </div>
-                            <div class="col">
+                            {% comment %} <div class="col">
                                 <a href="" class="text-danger font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.usrid}}">
                                     Delete
                                   </a>
-                            </div>
+                            </div> {% endcomment %}
                         </div>
                       
                       
                     </td>
                   </tr>
 
-                  <div class="col-md-4">
+                  {% comment %} <div class="col-md-4">
                     
                     <div class="modal fade" id="modal-default{{row.usrid}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
                       <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
@@ -117,7 +117,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> {% endcomment %}
                   {% endfor %}
                 </tbody>
               </table>
