@@ -4268,7 +4268,7 @@ def add_category(request, catid=None):
             image_url = data.get('categoryimg')
         else:
             # Handle the case where there's no uploaded image and no previous image
-            image_url = ''  # Set it to a default value or handle accordingly
+            image_url = 'NA'  # Set it to a default value or handle accordingly
 
         try:
             with connection.cursor() as cursor:
@@ -4431,7 +4431,7 @@ def add_sub_category(request, catid,catname):
             image_url = data.get('sub_cat_img')
         else:
             # Handle the case where there's no uploaded image and no previous image
-            image_url = ''  # Set it to a default value or handle accordingly
+            image_url = 'NA'  # Set it to a default value or handle accordingly
 
         try:
             with connection.cursor() as cursor:
@@ -4495,7 +4495,7 @@ def update_sub_category(request, catid,subcatid,catname):
             image_url = data.get('sub_cat_img')
         else:
             # Handle the case where there's no uploaded image and no previous image
-            image_url = ''  # Set it to a default value or handle accordingly
+            image_url = 'NA'  # Set it to a default value or handle accordingly
 
         try:
             with connection.cursor() as cursor:
