@@ -2339,7 +2339,7 @@ function showToast(message, bodyContent) {
                 section_column.hide();
                 only_dry_clean_column.show();
                 price_column.show();
-            $.get(`/admin_dashboard/load_section_type_sub_categories/All/${cat_id}`, function(data) {
+            $.get(`/admin_dashboard/load_section_type_sub_categories/All`, function(data) {
                 /*subCategorySelect.empty();
                 subCategorySelect.append('<option disabled selected>Choose Sub Category</option>');
         
