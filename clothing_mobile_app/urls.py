@@ -1,0 +1,46 @@
+from django.urls import path
+from . import views
+
+app_name = 'clothing_app' #namespace
+
+urlpatterns = [
+    #  path('get_csrf_token/', views.get_csrf_token, name='get_csrf_token'),
+    # path('login/', views.login,name='login'),
+    
+    #Loads the main Categories Like Men,Women
+    path('get_main_categories/', views.get_main_categories,name='get_main_categories'),
+    
+    #To Get Categories Like Shop By Category, Shop By Sports
+    path('get_categories/', views.get_categories,name='get_categories'),
+    
+    #To Get Sub Categories Like Top,Jackets based on Category ID
+    path('get_sub_categories/', views.get_sub_categories,name='get_sub_categories'),
+    
+    #To Load Product Category all filters Like Clothing, Accessories
+    path('get_product_category_filter/', views.get_product_category_filter,name='get_product_category_filter'),
+    
+    #To Load Product Type all Filters Like Tops,etc
+    path('get_product_type_filter/', views.get_product_type_filter,name='get_product_type_filter'),
+    
+    #To Load Single Product Details
+    path('get_single_product_details/', views.get_single_product_details,name='get_single_product_details'),
+    
+    #To Load Single Product Image Details
+    path('get_product_images/', views.get_product_images,name='get_product_images'),
+    
+    #To Load Single Product Color Details
+    path('get_product_colors/', views.get_product_colors,name='get_product_colors'),
+    
+    # path('register/', views.register_member,name='register'),
+    # path('set_goal/', views.set_goal,name='set_goal'),
+    # path('get_fees_details/', views.get_feesdetails,name='get_fees_details'),
+    # path('get_diet_chart_details/', views.get_diet_chart_details,name='get_diet_chart_details'),
+    # path('get_fees_chart_details/', views.get_fees_chart_details,name='get_fees_chart_details'),
+    # path('save_gym_fees/', views.save_gym_fees,name='save_gym_fees'),
+    
+    # path('aboutus/',views.about_us,name="aboutus"),
+    # path('services/',views.services,name="services"),
+    # path('contactus/',views.contactus,name="contactus"),
+    # path('privacy_policy/',views.privacy,name="privacy"),
+
+]
