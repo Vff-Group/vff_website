@@ -32,14 +32,14 @@ def contact_form_submit(request):
         message = request.POST.get('w3lMessage')
         print(f'Name: {name}\nEmail: {email}\nMessage: {message}')
         # Send email using configured settings
-        send_mail(
+        res = send_mail(
             'Subject',
             f'Name: {name}\nEmail: {email}\nMessage: {message}',
             email,  # Replace with your email ID as the sender
             ['info@vff-group.com'],  # Replace with the recipient's email
             fail_silently=False,
         )
-        
+        print(f'Contact Res::{res}')
         return JsonResponse({'message': 'Message sent successfully'})
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
