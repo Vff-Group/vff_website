@@ -395,9 +395,10 @@ def load_all_product_details(request):
                     'main_cat_id':row[12],
                     'cat_id':row[13],
                     'sub_catid':row[14],
-                    'image':row[15],
-                    'size':row[16],
-                    'ratings':row[17],
+                    'offer_price':row[15],
+                    'image':row[16],
+                    'size':row[17],
+                    'ratings':row[18],
                     
                     })    
             else:
