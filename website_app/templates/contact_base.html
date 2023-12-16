@@ -1,0 +1,224 @@
+{% load static %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Meta tags for SEO -->
+    <meta
+      name="description"
+      content="Welcome to Vff Group Laundry Service - your trusted partner for top-quality laundry and dry cleaning services. Our dedicated team is committed to providing exceptional laundry solutions, ensuring your clothes are handled with care and returned fresh, clean, and perfectly pressed. Discover convenience and reliability with Vff Group Laundry Service."
+    />
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    
+    <meta
+      name="keywords"
+      content="vff, vff group, VFF Group, VFF GROUP, laundry, best laundry in belgaum, Vff group belgaum, VFF GROUP Belgaum, belgaum, Belgaum VFF Group,laundry, dry cleaning, Vff Group Laundry, laundry service, dry cleaning service, top laundry, belgaum, laundry top, vff, group, groups, laundry new, auto nagar, tilakwade, tilakwadi, colony, deepa, raghav, pattar, velvet wash, vf brand india pvt ltd, Vff group owner, Vff group reviews, vff group india, vff group belgaum contact number, Vff group belgaum reviews, Vff Group belgaum prices, Best laundry in belgaum near me, Best laundry in belgaum price, Justdial, google, google map, google mail, google sign in, google history, laundry near me, laundry bag"
+    />
+    <meta name="author" content="Vff Group" />
+    
+    <title>VFF GROUP | Innovative Laundry Solutions for Homes & Businesses</title>
+    <link rel="icon" type="image/ico" href="{% static 'logos/favicon.ico' %}">
+    {% comment %} <link rel="website icon" href="{% static 'images/logo.png' %}" type="png" /> {% endcomment %}
+    <!-- Standard favicon -->
+<link rel="icon" type="image/png" href="{% static 'logos/favicon.png' %}" sizes="32x32">
+
+<!-- Apple Touch Icon for iOS devices -->
+<link rel="apple-touch-icon" sizes="180x180" href="{% static 'logos/apple-touch-icon.png' %}">
+
+
+
+<!-- Android Chrome icon -->
+<link rel="icon" type="image/png" href="{% static 'logos/android-chrome-192x192.png' %}" sizes="192x192">
+
+<!-- Shortcut Icon for older versions of IE -->
+<link rel="shortcut icon" href="{% static 'logos/favicon.ico' %}">
+
+
+
+    <!-- Google fonts -->
+    <link
+      href="//fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Template CSS Style link -->
+    <link rel="stylesheet" href="{% static 'css/style-starter.css' %}" />
+  </head>
+
+  <body>
+    <!-- header -->
+    <header id="site-header" class="fixed-top">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <a class="navbar-brand" href="{% url 'website_app:index' %}">
+            <img
+              src="{% static 'images/logo.png' %}"
+              alt="logo"
+              width="50"
+              height="50"
+            />
+            <span class="ms-1"> Ve7vet</span>Wash {% comment %}
+            <i class="fas fa-hands-wash"></i> {% endcomment %}
+          </a>
+          <button
+            class="navbar-toggler collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarScroll"
+            aria-controls="navbarScroll"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
+            <span class="navbar-toggler-icon fa icon-close fa-times"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll">
+              <li class="nav-item">
+                <a
+                  class="nav-link {% if current_url == '/' %}active {% endif %}"
+                  aria-current="page"
+                  href="{% url 'website_app:index' %}"
+                  >Home</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link {% if current_url == '/aboutus/' %}active {% endif %}"
+                  href="{% url 'website_app:aboutus' %}"
+                  >About Us</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link {% if current_url == '/services/' %}active {% endif %}"
+                  href="{% url 'website_app:services' %}"
+                  >Services</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link {% if current_url == '/contactus/' %}active {% endif %}"
+                  href="{% url 'website_app:contactus' %}"
+                  >Contact</a
+                >
+              </li>
+            </ul>
+            {% comment %}
+            <form
+              action="#error"
+              method="GET"
+              class="d-flex search-header ms-lg-2"
+            >
+              <input
+                class="form-control"
+                type="search"
+                placeholder="Enter Keyword..."
+                aria-label="Search"
+                required
+              />
+              <button class="btn btn-style" type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+            </form>
+            {% endcomment %}
+          </div>
+          <!-- toggle switch for light and dark theme -->
+          <div class="cont-ser-position">
+            <nav class="navigation">
+              <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="checkbox">
+                  <input type="checkbox" id="checkbox" />
+                  <div class="mode-container">
+                    <i class="gg-sun"></i>
+                    <i class="gg-moon"></i>
+                  </div>
+                </label>
+              </div>
+            </nav>
+          </div>
+          <!-- //toggle switch for light and dark theme -->
+        </nav>
+      </div>
+    </header>
+    <!-- //header -->
+
+    {% block content %} {% endblock %}
+
+   
+    <script>
+      // When the user scrolls down 20px from the top of the document, show the button
+      window.onscroll = function () {
+        scrollFunction();
+      };
+
+      function scrollFunction() {
+        if (
+          document.body.scrollTop > 20 ||
+          document.documentElement.scrollTop > 20
+        ) {
+          document.getElementById("movetop").style.display = "block";
+        } else {
+          document.getElementById("movetop").style.display = "none";
+        }
+      }
+
+      // When the user clicks on the button, scroll to the top of the document
+      function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      }
+    </script>
+    <!-- //move top -->
+    <!-- common jquery plugin -->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <!-- //common jquery plugin -->
+    <script src="{%static 'js/counter.js' %}"></script>
+    <!-- theme switch js (light and dark)-->
+    <script src="{% static 'js/theme-change.js' %}"></script>
+    <!-- //theme switch js (light and dark)-->
+
+    <!-- MENU-JS -->
+    <script>
+      $(window).on("scroll", function () {
+        var scroll = $(window).scrollTop();
+
+        if (scroll >= 80) {
+          $("#site-header").addClass("nav-fixed");
+        } else {
+          $("#site-header").removeClass("nav-fixed");
+        }
+      });
+
+      //Main navigation Active Class Add Remove
+      $(".navbar-toggler").on("click", function () {
+        $("header").toggleClass("active");
+      });
+      $(document).on("ready", function () {
+        if ($(window).width() > 991) {
+          $("header").removeClass("active");
+        }
+        $(window).on("resize", function () {
+          if ($(window).width() > 991) {
+            $("header").removeClass("active");
+          }
+        });
+      });
+    </script>
+    <!-- //MENU-JS -->
+
+    <!-- disable body scroll which navbar is in active -->
+    <script>
+      $(function () {
+        $(".navbar-toggler").click(function () {
+          $("body").toggleClass("noscroll");
+        });
+      });
+    </script>
+    <!-- //disable body scroll which navbar is in active -->
+
+    <!-- bootstrap -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  </body>
+</html>
