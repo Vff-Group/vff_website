@@ -35,7 +35,7 @@ def contact_form_submit(request):
         send_mail(
             'Subject',
             f'Name: {name}\nEmail: {email}\nPhone: {phone}\nMessage: {message}',
-            'your_email@example.com',  # Replace with your email ID as the sender
+            email,  # Replace with your email ID as the sender
             ['info@vff-group.com'],  # Replace with the recipient's email
             fail_silently=False,
         )
