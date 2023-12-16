@@ -80,4 +80,32 @@
         </div>
     </section>
     <!-- //contact -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#contactForm').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: '/website_app/contact_form_submit/',  // Replace with your Django URL for handling form submission
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function (response) {
+                    // Clear the form on success
+                    $('#contactForm')[0].reset();
+                    // Show success toast or message
+                    // Replace this with your preferred method (e.g., Bootstrap Toast)
+                    alert('Message sent successfully!');
+                },
+                error: function (error) {
+                    // Show error toast or message
+                    // Replace this with your preferred method (e.g., Bootstrap Toast)
+                    alert('Error sending message!');
+                }
+            });
+        });
+    });
+</script>
+
 {% endblock %}

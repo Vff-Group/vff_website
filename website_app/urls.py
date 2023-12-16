@@ -9,5 +9,6 @@ urlpatterns = [
     path('services/',views.services,name="services"),
     path('contactus/',views.contactus,name="contactus"),
     path('privacy_policy/',views.privacy,name="privacy"),
+    path('contact_form_submit/',views.contact_form_submit,name="contact_form_submit"),
     #  path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
