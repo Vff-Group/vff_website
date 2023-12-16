@@ -30,7 +30,7 @@ def contact_form_submit(request):
         email = request.POST.get('email')
         phone = request.POST.get('phone')  # Ensure the correct input name for phone
         message = request.POST.get('w3lMessage')
-        print(f'phone:::{phone}')
+        print(f'phone:::{message}')
         # Send email using configured settings
         send_mail(
             'Subject',
