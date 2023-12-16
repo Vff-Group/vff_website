@@ -23,7 +23,10 @@ urlpatterns = [
     path('get_product_type_filter/', views.get_product_type_filter,name='get_product_type_filter'),
     
     #To Load Single Product Details
-    path('get_single_product_details/', views.get_single_product_details,name='get_single_product_details'),
+    path('load_single_product_details/', views.load_single_product_details,name='load_single_product_details'),
+    
+    #To Load All Product Details
+    path('load_all_product_details/', views.load_all_product_details,name='load_all_product_details'),
     
     #To Load Single Product Image Details
     path('get_product_images/', views.get_product_images,name='get_product_images'),
