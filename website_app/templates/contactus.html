@@ -100,7 +100,7 @@
         $('#contactForm').submit(function (e) {
             e.preventDefault();
             $.ajax({
-                url: '/website_app/contact_form_submit/',  // Replace with your Django URL for handling form submission
+                url: '/contact_form_submit/',  // Replace with your Django URL for handling form submission
                 type: 'POST',
                 headers: {
                     'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
