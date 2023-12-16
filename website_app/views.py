@@ -48,7 +48,7 @@ def contact_form_submit(request):
         #     ['info@vff-group.com'],  # Replace with the recipient's email
         #     fail_silently=False,
         # )
-        print(f'Contact Res::{res}')
+        print(f'Contact Res::')
         return JsonResponse({'message': 'Message sent successfully'})
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
