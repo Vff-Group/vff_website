@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
@@ -32,13 +33,21 @@ def contact_form_submit(request):
         message = request.POST.get('w3lMessage')
         print(f'Name: {name}\nEmail: {email}\nMessage: {message}')
         # Send email using configured settings
-        res = send_mail(
-            'Subject',
-            f'Name: {name}\nEmail: {email}\nMessage: {message}',
-            email,  # Replace with your email ID as the sender
-            ['info@vff-group.com'],  # Replace with the recipient's email
-            fail_silently=False,
-        )
+        EmailMessage(
+               f'Name: {name}\nEmail: {email}\nMessage: {message}',
+               message,
+               email, # Send from (your website)
+               ['info@vff-group.com'], # Send to (your admin email)
+               [],
+               reply_to=[email] # Email from the form to get back to
+           ).send()
+        # res = send_mail(
+        #     'Subject',
+        #     f'Name: {name}\nEmail: {email}\nMessage: {message}',
+        #     email,  # Replace with your email ID as the sender
+        #     ['info@vff-group.com'],  # Replace with the recipient's email
+        #     fail_silently=False,
+        # )
         print(f'Contact Res::{res}')
         return JsonResponse({'message': 'Message sent successfully'})
     return JsonResponse({'error': 'Invalid request'}, status=400)
