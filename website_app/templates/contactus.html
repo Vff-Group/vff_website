@@ -99,13 +99,15 @@
         const csrfToken = getCSRFToken();
         $('#contactForm').submit(function (e) {
             e.preventDefault();
+            const dataValue = $(this).serialize()
+            console.log("dataValue ::"+dataValue)
             $.ajax({
                 url: '/contact_form_submit/',  // Replace with your Django URL for handling form submission
                 type: 'POST',
                 headers: {
                     'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
                 },
-                data: $(this).serialize(),
+                data: dataValue,
                 success: function (response) {
                     // Clear the form on success
                     $('#contactForm')[0].reset();
