@@ -84,12 +84,27 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
+    function getCSRFToken() {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith("csrftoken=")) {
+                return cookie.substring("csrftoken=".length, cookie.length);
+            }
+        }
+        return null;
+    }
+
     $(document).ready(function () {
+        const csrfToken = getCSRFToken();
         $('#contactForm').submit(function (e) {
             e.preventDefault();
             $.ajax({
                 url: '/website_app/contact_form_submit/',  // Replace with your Django URL for handling form submission
                 type: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+                },
                 data: $(this).serialize(),
                 success: function (response) {
                     // Clear the form on success
