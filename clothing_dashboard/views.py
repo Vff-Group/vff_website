@@ -58,10 +58,10 @@ def login_view(request):
     #             }
     #         return render(request, 'admin_pages/login.html', context)
         
-    return render(request,"admin/login.html")
+    return render(request,"admin_pages/login.html")
 
 def dashboard_view(request):
-    return render(request,"admin/dashboard.html")
+    return render(request,"admin_pages/dashboard.html")
 
 def epochToDateTime(epoch):
     datetime_obj = datetime.utcfromtimestamp(epoch)
