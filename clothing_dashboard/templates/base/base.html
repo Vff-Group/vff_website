@@ -1,0 +1,606 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="{% static 'img/logos/logo.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="{% static 'img/logos/logo.png' %}"
+    />
+    <title>VFF Group</title>
+    <!-- PDF Download LInk  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <!--     Fonts and icons     -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
+      rel="stylesheet"
+    />
+    <!-- Nucleo Icons -->
+    <link href="{% static 'css/nucleo-icons.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/nucleo-svg.css' %}" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script
+      src="https://kit.fontawesome.com/42d5adcbca.js"
+      crossorigin="anonymous"
+    ></script>
+    <link href="{% static 'css/nucleo-svg.css' %}" rel="stylesheet" />
+
+    <!-- Style Toast  -->
+    <link rel="stylesheet" href="{% static 'vendor/toastr/css/toastr.min.css' %}">
+
+    <!-- Select 2 for dropdown search option  -->
+    <link rel="stylesheet" href="{% static 'vendor/select2/css/select2.min.css' %}">
+
+    <!-- Add these links to your HTML -->
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.min.js"></script> -->
+
+    <!-- CSS Files -->
+    <link
+      id="pagestyle"
+      href="{% static 'css/vff-group-dashboard.css' %}"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/eea5b138cd.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- <script src="firebase-messaging-sw.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-messaging-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-remote-config-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script> -->
+
+    <!-- Include Firebase SDK -->
+<!-- <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-messaging.js"></script> -->
+
+<!-- Your Firebase configuration -->
+<!-- <script>
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyB377d4_AFRtoEIjpN2Puf3CYwe-I9dCGE",
+  authDomain: "vff-group-b185c.firebaseapp.com",
+  projectId: "vff-group-b185c",
+  storageBucket: "vff-group-b185c.appspot.com",
+  messagingSenderId: "711189707453",
+  appId: "1:711189707453:web:3813986a11e36f830b55d4",
+  measurementId: "G-YYEJHD2GJ1"
+};
+// Initialize Firebase
+const app = firebase.initializeApp(firebaseConfig)
+
+messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
+
+  
+  
+  
+  // Retrieve the device token
+  const messaging = firebase.messaging();
+  
+  messaging.requestPermission().then(() => {
+    return messaging.getToken();
+  }).then((token) => {
+    console.log("Device Token:", token);
+    // Send this token to your Django backend
+  }).catch((err) => {
+    console.log("Error getting permission or token:", err);
+  });
+</script>
+
+// Your notification handling JavaScript
+<script>
+  // Handle foreground notification
+  messaging.onMessage((payload) => {
+    console.log('Foreground Message:', payload);
+    // Customize the appearance or behavior of the notification here
+    // You can use a library like Toast or create your own notification UI
+  });
+
+  // Handle background notification
+  messaging.onBackgroundMessage((payload) => {
+    console.log('Background Message:', payload);
+    // Customize the behavior when the app is in the background
+    // You might want to show a notification using the Notification API
+    self.registration.showNotification(payload.notification.title, {
+      body: payload.notification.body,
+    });
+  });
+
+  // Service worker to handle background notifications
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/static/js/firebase-messaging-sw.js')
+      .then((registration) => {
+        console.log('Service Worker registered with scope:', registration.scope);
+      })
+      .catch((err) => {
+        console.error('Service Worker registration failed:', err);
+      });
+  }
+</script> -->
+
+    <!-- For Toast Messages  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <!-- <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script> -->
+<!-- 
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyB377d4_AFRtoEIjpN2Puf3CYwe-I9dCGE",
+        authDomain: "vff-group-b185c.firebaseapp.com",
+        projectId: "vff-group-b185c",
+        storageBucket: "vff-group-b185c.appspot.com",
+        messagingSenderId: "711189707453",
+        appId: "1:711189707453:web:3813986a11e36f830b55d4",
+        measurementId: "G-YYEJHD2GJ1",
+      };
+
+      requestPermission();
+      console.log(firebaseConfig);
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      // Initialize Firebase
+      //firebase.initializeApp(firebaseConfig);
+
+      // Initialize Firebase Cloud Messaging and get a reference to the service
+      const messaging = app.messaging();
+
+      messaging
+        .getToken({
+          vapidKey:
+            "AAAApZY1ur0:APA91bHsk-e3OC5R2vqO7dD0WZp7ifULNzqrUPnQu07et7RLFMWWcwOqY9Bl-9YQWkuXUP5nM7bVMgMP-qKISf9Jcf2ix9j7oOkScq9-3BH0hfCH3nIWgkn4hbnmSLyw4pmq66rMZz8R",
+        })
+        .then((currentToken) => {
+          if (currentToken) {
+            // Send the token to your server and update the UI if necessary
+            console.log(currentToken);
+            // ...
+          } else {
+            // Show permission request UI
+            console.log(
+              "No registration token available. Request permission to generate one."
+            );
+            requestPermission();
+            // ...
+          }
+        })
+        .catch((err) => {
+          console.log("An error occurred while retrieving token. ", err);
+          // ...
+        });
+      function requestPermission() {
+        console.log("Requesting permission...");
+        Notification.requestPermission().then((permission) => {
+          if (permission === "granted") {
+            console.log("Notification permission granted.");
+          }
+        });
+      }
+    
+    </script>  -->
+  
+  </head>
+  <body class="g-sidenav-show bg-gray-100">
+    <div id="preloader-active">
+      <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+          <div class="preloader-circle"></div>
+          <div class="preloader-img pere-text">
+            <img src="{% static 'img/logos/logo.png' %}" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for notifications -->
+<div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="notificationModalLabel">New Booking Notification</h5>
+              <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <img src="{% static 'img/new_notification_image.jpg'%}" id="notificationImage" class="img-fluid" alt="Notification Image" style="height:50%; width: fit-content;">
+              <h6 class="mt-3 d-flex justify-content-center" id="notificationDescription">Yet Delivery is not Accepted / No Delivery Boy was Free </h6>
+              <small class="mt-3 d-flex justify-content-center " id="notificationDescription">Click on the notification Icon and Check weather the Booking ID is Assigned or not. </small>
+              <div id="notificationContent"></div>
+          </div>
+      </div>
+  </div>
+</div>
+
+    <audio id="notificationSound" style="display: none;">
+      <source src="{% static 'audio/new_order_ringtone.mp3' %}" type="audio/mpeg">
+      Your browser does not support the audio element.
+  </audio>
+  
+    <aside
+      class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3"
+      id="sidenav-main"
+    >
+      <div class="sidenav-header">
+        <i
+          class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+          aria-hidden="true"
+          id="iconSidenav"
+        ></i>
+        <a class="navbar-brand m-0" href="" target="_blank">
+          <img
+            src="{% static 'img/logos/color_logo.png' %}"
+            class="navbar-brand-img h-100"
+            alt="l"
+          />
+          {% comment %}
+          <span class="ms-1 font-weight-bold">United Armor</span> {%endcomment %}
+        </a>
+      </div>
+      <hr class="horizontal dark mt-0" />
+      <div
+        class="collapse navbar-collapse w-auto max-height-vh-100 h-100"
+        id="sidenav-collapse-main"
+      >
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="{% url 'clothing_dashboard_app:dashboard' %}"
+              data-url="{% url 'clothing_dashboard_app:dashboard' %}"
+            >
+              <div
+                class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
+              >
+                <i
+                  class="fa-solid fa-house-chimney {% if not current_url == '/clothing_dashboard_app/dashboard/' %}text-dark {% endif %}"
+                ></i>
+              </div>
+              <span class="nav-link-text ms-1">Dashboard</span>
+            </a>
+          </li>
+          <!-- <li class="nav-item">
+            <a
+              class="nav-link"
+              href="{% url 'dashboard_app:customers' %}"
+              data-url="{% url 'dashboard_app:customers' %}"
+            >
+              <div
+                class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
+              >
+                <i
+                  class="fa-solid fa-users-gear {% if not current_url == '/admin_dashboard/customers/' %}text-dark {% endif %}"
+                ></i>
+              </div>
+              <span class="nav-link-text ms-1">Customers Panel</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="{% url 'dashboard_app:delivery_agents' %}"
+              data-url="{% url 'dashboard_app:delivery_agents' %}"
+            >
+              <div
+                class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
+              >
+                <i
+                  class="fa-solid fa-truck fa-lg {% if not current_url == '/admin_dashboard/delivery_agents/' %}text-dark{% endif %}"
+                ></i>
+              </div>
+              <span class="nav-link-text ms-1">Delivery Staff Panel</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="{% url 'dashboard_app:all_categories' %}"
+              data-url="{% url 'dashboard_app:all_categories' %}"
+            >
+              <div
+                class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
+              >
+                <i
+                  class="fa-solid fa-shirt fa-lg {% if not current_url == '/admin_dashboard/categories/' %}text-dark{% endif %}"
+                ></i>
+              </div>
+              <span class="nav-link-text ms-1">Category Settings</span>
+            </a>
+          </li> -->
+          
+     
+         
+
+
+      
+        </ul>
+      </div>
+      <div class="sidenav-footer mx-3">
+        <div
+          class="card card-background shadow-none card-background-mask-secondary"
+          id="sidenavCard"
+        >
+          <div
+            class="full-background"
+            
+          ></div>
+          <div class="card-body text-start p-3 w-100">
+            <div
+              class="icon icon-shape icon-sm bg-white shadow text-center mb-3 d-flex align-items-center justify-content-center border-radius-md"
+            >
+              <i
+                class="ni ni-diamond text-dark text-gradient text-lg top-0"
+                aria-hidden="true"
+                id="sidenavCardIcon"
+              ></i>
+            </div>
+            <div class="docs-info">
+              <h6 class="text-white up mb-0">Need help?</h6>
+              <p class="text-xs font-weight-bold">Please contact us</p>
+              <a
+                href="https://www.pexelperfektsolution.com/"
+                target="_blank"
+                class="btn btn-white btn-sm w-100 mb-0"
+                >Contact Us</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main
+      class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg"
+    >
+      <!-- Navbar -->
+      <!-- <nav
+        class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl"
+        id="navbarBlur"
+        navbar-scroll="true"
+      >
+        <div class="container-fluid py-1 px-3">
+          <nav aria-label="breadcrumb">
+            <h6 class="font-weight-bolder mb-0">
+              {% block title %}{% endblock title%}
+            </h6>
+          </nav>
+          <div
+            class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4"
+            id="navbar"
+          >
+            <div class="ms-md-auto pe-md-3 d-flex align-items-center"></div>
+            <ul class="navbar-nav justify-content-end">
+              <li class="nav-item d-flex align-items-center">
+                <a
+                  href="javascript:;"
+                  class="nav-link text-body font-weight-bold px-0"
+                >
+                  <i class="fa fa-user me-sm-1"></i>
+                  <span class="d-sm-inline d-none text-uppercase"
+                    >{{ request.session.branch_admin_name }}</span
+                  >
+                  <span class="d-sm-inline d-none text-uppercase"
+                    >[{{ request.session.username }}]</span
+                  >
+                </a>
+              </li>
+              <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+                <a
+                  href="javascript:;"
+                  class="nav-link text-body p-0"
+                  id="iconNavbarSidenav"
+                >
+                  <div class="sidenav-toggler-inner">
+                    <i class="sidenav-toggler-line"></i>
+                    <i class="sidenav-toggler-line"></i>
+                    <i class="sidenav-toggler-line"></i>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item px-3 d-flex align-items-center">
+                <a
+                  href=""
+                  class="nav-link text-body p-0"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modal-default-search"
+                >
+                  <i
+                    class="fa fa-search fixed-plugin-button-nav cursor-pointer"
+                  ></i>
+                </a>
+              </li>
+              <li class="nav-item px-3 d-flex align-items-center">
+                <a
+                  href="{% url 'dashboard_app:all_branches' %}"
+                  class="nav-link text-body p-0"
+                  
+                >
+                  <i
+                    class="fa fa-refresh fixed-plugin-button-nav cursor-pointer"
+                  ></i>
+                </a>
+              </li>
+             
+              <li class="nav-item dropdown pe-2 d-flex align-items-center">
+                <a href="" class="nav-link text-body p-0" id="notificationBell" data-bs-toggle="offcanvas" data-bs-target="#notificationsOffcanvas" aria-expanded="false">
+                  <i class="fa fa-bell cursor-pointer"></i>
+                </a>
+              </li>
+              
+            </ul>
+          </div>
+        </div>
+      </nav> -->
+      <!-- End Navbar -->
+<!-- Offcanvas for Notifications -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="notificationsOffcanvas">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Notifications</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <!-- Add this input field for searching customer names -->
+    <div class="form-group">
+    <input class="form-control form-control-alternative"
+    type="search" type="text" id="searchInput" placeholder="Search by customer name">
+  </div>
+    <!-- Add this label for displaying "No data found" message -->
+    <p id="noDataFound" class="text-center" style="display: none;">No data found</p>
+
+    <div id="notificationsContent"></div>
+  </div>
+</div>
+
+
+      <!-- <div class="col-md-4">
+        <div
+          class="modal fade"
+          id="modal-default-search"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="modal-default"
+          aria-hidden="true"
+        >
+          <div
+            class="modal-dialog modal- modal-dialog-centered modal-"
+            role="document"
+          >
+            <div class="modal-content">
+              <div class="modal-header">
+                <h6 class="modal-title" id="modal-title-default">Most Recent Order Search</h6>
+                <button
+                  type="button"
+                  class="btn-close text-dark"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form id="searchForm" >
+                  {% csrf_token %}
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-cost"
+                          >#Order ID or Mobile Number </label
+                        >
+                        <input
+                          type="number"
+                          id="input-cost"
+                          class="form-control form-control-alternative"
+                          placeholder="Search using Order ID,Mobile Number"
+                          name="searchid"
+                          autocomplete="off"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-type"
+                          >Type</label
+                        >
+                        <select
+                          class="form-control form-control-alternative"
+                          id="input-type"
+                          name="type"
+                          required
+                        >
+                          <option value="Order ID">Order ID</option>
+                          <option value="Mobile Number">Mobile Number</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row justify-content-center p-4 mt-1">
+                    <div class="col-lg-2">
+                      <button type="button" class="btn btn-primary my-4" id="searchBtn">
+                        Search
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-link ml-auto"
+                  data-bs-dismiss="modal"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       -->
+     
+
+      {% block content %} {% endblock%}
+    </main>
+    <!--   Core JS Files   -->
+    <script src="{% static 'js/core/popper.min.js' %}"></script>
+    <script src="{% static 'js/core/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/plugins/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/plugins/smooth-scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/plugins/chartjs.min.js' %}"></script>
+   
+    <!-- //To check active menu card -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const menuItems = document.querySelectorAll(".nav-link");
+        const currentUrl = window.location.pathname;
+
+        menuItems.forEach(function (menuItem) {
+          const menuItemUrl = menuItem.getAttribute("data-url");
+          if (menuItemUrl === currentUrl) {
+            menuItem.classList.add("active");
+          }
+        });
+      });
+    </script>
+    <script src="{% static 'js/vff-group-dashboard.min.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <!-- Required vendors -->
+<script src="{% static 'vendor/global/global.min.js' %}"></script>
+<script src="{% static 'js/quixnav-init.js' %}"></script>
+<script src="{% static 'js/custom.min.js' %}"></script>
+<!-- Toastr -->
+<script src="{% static 'vendor/toastr/js/toastr.min.js' %}"></script>
+
+<!-- All init script -->
+<script src="{% static 'js/plugins-init/toastr-init.js' %}"></script>
+<script src="{% static 'vendor/select2/js/select2.full.min.js' %}"></script>
+<script src="{% static 'js/plugins-init/select2-init.js' %}"></script>
+
+    <!-- To Show Notifications  -->
+    <!-- Include jQuery and Bootstrap JS before this script -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oGsFzPfNsYkLCRi3BEs0s+WyQl3ByVylUk5l1RlW37E=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-qZqy51hpVr3PJSkt2W4tTwZrBEJpCgFf3KpBbqMvuv0PAjqHI8h11ABjKz5x0mu2" crossorigin="anonymous"></script>
+<!-- Include jQuery and Bootstrap JS before this script -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oGsFzPfNsYkLCRi3BEs0s+WyQl3ByVylUk5l1RlW37E=" crossorigin="anonymous"></script>
+
+
+  </body>
+</html>

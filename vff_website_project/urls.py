@@ -34,6 +34,7 @@ urlpatterns = [
     path('admin_dashboard/',include('dashboard_app.urls',namespace='dashboard_app')),
     path('gym_mobile_app/',include('gym_mobile_app.urls',namespace='gym_mobile_app')),
     path('clothing_mobile_app/',include('clothing_mobile_app.urls',namespace='clothing_mobile_app')),
+    path('clothing_dashboard_app/',include('clothing_dashboard.urls',namespace='clothing_dashboard_app')),
     path("django-check-seo/", include("django_check_seo.urls")),
     path('sitemaps.xml',sitemap ,{'sitemaps':sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     
