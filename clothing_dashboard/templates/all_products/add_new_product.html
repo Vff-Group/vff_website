@@ -1,111 +1,132 @@
-{% extends "common/full_page_base.html" %}
+{% extends "base/base.html" %}
 {% load static %}
-{% block title%}
-{% if data %}
-
-{% else %}
-Add New Product Details
-{% endif %}
-{% endblock title %}
+{% block title %}Add New Product{% endblock title%}
 {% block content %}
 
-<div class="main-content">
-   
+  <div class="container-fluid py-4">
     
-    <!-- Page content -->
-    <div class="container-fluid mt-2 mb-4">
-       
-       
-        <div class="container">
-            <h1 class="my-4">Add Product</h1>
-            <div class="card">
-                <div class="card-body">
-                    <form id="productForm">
-                        <div class="section" id="section1">
-                            <h2>Basic Info</h2>
-                            <p>Fill in the basic information below</p>
-                            <div class="form-group">
-                                <label for="productName">Product Name</label>
-                                <input type="text" class="form-control" id="productName" name="product_name">
-                            </div>
-                            <!-- Other basic info fields -->
-        
-                            <button type="button" class="btn btn-primary next" data-step="2">Next</button>
-                        </div>
-                    </form>
+    <div class="card">
+        <div class="card-body" id="step1">
+            <!-- First Step: Basic Information -->
+            <h2 class="card-title">Basic Information</h2>
+            <form id="basicInfoForm">
+                <div class="mb-3">
+                    <label for="productName" class="form-label">Product Name</label>
+                    <input type="text" class="form-control" id="productName" required>
                 </div>
-            </div>
-        
-            <div class="card mt-4">
-                <div class="card-body">
-                    <form id="productForm">
-                        <div class="section" id="section2">
-                            <h2>Product Img</h2>
-                            <p>Upload images of the product</p>
-                            <div class="form-group">
-                                <label for="productImages">Product Images</label>
-                                <input type="file" class="form-control-file" id="productImages" name="product_images" multiple>
-                                <div id="imagePreview" class="mt-2"></div>
-                            </div>
-                            <!-- Other image-related fields -->
-        
-                            <button type="button" class="btn btn-primary prev" data-step="1">Previous</button>
-                            <button type="button" class="btn btn-primary next" data-step="3">Next</button>
-                        </div>
-                    </form>
+                <div class="mb-3">
+                    <label for="manufacturerName" class="form-label">Manufacturer Name</label>
+                    <input type="text" class="form-control" id="manufacturerName" required>
                 </div>
-            </div>
-        
-            <div class="card mt-4">
-                <div class="card-body">
-                    <form id="productForm">
-                        <div class="section" id="section3">
-                            <h2>Meta Data</h2>
-                            <p>Fill in the meta data</p>
-                            <div class="form-group">
-                                <!-- Meta data fields -->
-                            </div>
-        
-                            <button type="button" class="btn btn-primary prev" data-step="2">Previous</button>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </form>
+                <div class="mb-3">
+                    <label for="manufacturerBrand" class="form-label">Manufacturer Brand</label>
+                    <input type="text" class="form-control" id="manufacturerBrand" required>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="price" required>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+
+                    </div>
+                </div>
+                
+               
+                <div class="mb-3">
+                    <label for="productDescription" class="form-label">Product Description</label>
+                    <textarea class="form-control" id="productDescription" rows="4" required></textarea>
+                </div>
+            </form>
+            <button onclick="nextStep()" class="btn btn-primary">Next</button>
         </div>
+    </div>
+    
+    <!-- Second Step card with image upload input -->
+    <div class="card" style="display: none;">
+        <div class="card-body" id="step2">
+            <!-- Second Step: Product Images -->
+            <h2 class="card-title">Product Images</h2>
+            <form id="productImagesForm">
+                <div class="mb-3">
+                    <label for="imageUpload" class="form-label">Upload Images</label>
+                    <input type="file" class="form-control" id="imageUpload" multiple>
+                </div>
+                <!-- Container to show uploaded images -->
+                <!-- Selected Images Card -->
+        <h2 class="card-title">Selected Images</h2>
+        <div id="selectedImages" class="card" style="width: 100px; height: 100px;"></div>
         
-        <script>
-            // JavaScript for navigating between form sections
-            const sections = document.querySelectorAll('.section');
-            const prevButtons = document.querySelectorAll('.prev');
-            const nextButtons = document.querySelectorAll('.next');
-        
-            prevButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const targetStep = this.getAttribute('data-step');
-                    showStep(targetStep);
-                });
-            });
-        
-            nextButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const targetStep = this.getAttribute('data-step');
-                    showStep(targetStep);
-                });
-            });
-        
-            function showStep(step) {
-                sections.forEach(section => {
-                    section.style.display = 'none';
-                });
-                document.getElementById(`section${step}`).style.display = 'block';
-            }
-        </script>
-        
-
+            </form>
+            <button onclick="prevStep()" class="btn btn-secondary">Previous</button>
+            <button onclick="nextStep()" class="btn btn-primary">Next</button>
+        </div>
+    </div>
+    
+    <!-- Third Step card with meta data input -->
+    <div class="card" style="display: none;">
+        <div class="card-body" id="step3">
+            <!-- Third Step: Meta Data -->
+            <h2 class="card-title">Meta Data</h2>
+            <form id="metaDataForm">
+                <div class="mb-3">
+                    <label for="metaTitle" class="form-label">Meta Title</label>
+                    <input type="text" class="form-control" id="metaTitle" required>
+                </div>
+                <div class="mb-3">
+                    <label for="metaKeywords" class="form-label">Meta Keywords</label>
+                    <input type="text" class="form-control" id="metaKeywords" required>
+                </div>
+                <!-- Add other input fields for Meta Description -->
+            </form>
+            <button onclick="prevStep()" class="btn btn-secondary">Previous</button>
+            <button  class="btn btn-success">Submit</button>
+        </div>
+    </div>
+    
+    
+    
+    
 </div>
-</div>
+</main>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script>
+    function nextStep() {
+        const currentStep = document.querySelector('.card:not([style*="display: none"])');
+        const nextStep = currentStep.nextElementSibling;
+        currentStep.style.display = 'none';
+        if (nextStep) {
+            nextStep.style.display = 'block';
+        }
+    }
+    
+    function prevStep() {
+        const currentStep = document.querySelector('.card:not([style*="display: none"])');
+        const prevStep = currentStep.previousElementSibling;
+        currentStep.style.display = 'none';
+        if (prevStep) {
+            prevStep.style.display = 'block';
+        }
+    }
+    
+    // Function to display selected images
+document.getElementById('imageUpload').addEventListener('change', function (event) {
+    const selectedImages = document.getElementById('selectedImages');
+    selectedImages.innerHTML = ''; // Clear previous images
+    
+    const files = event.target.files;
+    for (const file of files) {
+        const image = document.createElement('img');
+        image.src = URL.createObjectURL(file);
+        image.style.width = '100px';
+        image.style.height = '100px';
+        selectedImages.appendChild(image);
+    }
+});
 
-{% endblock %}
+</script>
+{% endblock  %}
