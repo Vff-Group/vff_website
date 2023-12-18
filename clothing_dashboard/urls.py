@@ -24,6 +24,9 @@ urlpatterns = [
     #All Sub Categories
     path('all_sub_categories/<int:main_cat_id>/<str:main_cat_name>/<int:cat_id>/<str:cat_name>/',views.all_sub_categories,name='all_sub_categories'),
    
+    #All Products
+    path('all_products/<int:main_cat_id>/<int:cat_id>/<int:sub_cat_id>/',views.all_products_details,name='all_products'),
+   
 ]
 
 if settings.DEBUG:

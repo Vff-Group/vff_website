@@ -141,9 +141,9 @@ def all_sub_categories(request,main_cat_id,main_cat_name,cat_id,cat_name):
         for row in query_result:
             
             data.append({
-                'catid': row[0],
-                'cat_name': row[1],
-                'active_status': row[2],
+                'sub_catid': row[0],
+                'sub_cat_name': row[1],
+                'time_creation': row[2],
                 
                 
                
@@ -155,6 +155,36 @@ def all_sub_categories(request,main_cat_id,main_cat_name,cat_id,cat_name):
     context = {'query_result':data,'current_url': current_url,'error_msg':error_msg,'main_cat_id':main_cat_id,'main_cat_name':main_cat_name,'cat_id':cat_id,'cat_name':cat_name}
     return render(request,"categories/all_sub_categories.html",context)
 
+
+def all_products_details(request,main_cat_id,cat_id,sub_cat_id): 
+    error_msg = 'No Products Found'
+    query = "select productid,product_name,max_checkout_qty,price,offer_price,default_images from vff.united_armor_all_productstbl"
+    
+    query_result = execute_raw_query(query)
+    
+    
+        
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            data.append({
+                'productid': row[0],
+                'product_name': row[1],
+                'max_checkout_qty': row[2],
+                'price': row[2],
+                'offer_price': row[2],
+                'default_images': row[2],
+                
+                
+               
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg,'main_cat_id':main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id}
+    return render(request,"all_products/all_products.html",context)
 
 
 def epochToDateTime(epoch):
