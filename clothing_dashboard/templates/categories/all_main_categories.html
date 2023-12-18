@@ -52,10 +52,19 @@
                    <td>
                     <h6 class="mb-0 text-sm">{{row.main_title_name}}</h6>
                    </td>
-                   <td>
-                    <h6 class="mb-0 text-sm">{{row.status}}</h6>
-                   </td>
                    
+                   <td class="align-middle text-center text-sm">
+                    {% if row.status == 1 %}
+                      <span class="badge badge-sm bg-success">
+                          Active
+                      </span>
+                    {% else %}
+                        <span class="badge badge-sm bg-warning">
+                        In-Active
+                        </span>
+                    {% endif %}
+                      
+                    </td>
                     
                     <td class="align-middle">
                         <div class="row">

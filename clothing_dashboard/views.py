@@ -158,7 +158,7 @@ def all_sub_categories(request,main_cat_id,main_cat_name,cat_id,cat_name):
 
 def all_products_details(request,main_cat_id,cat_id,sub_cat_id): 
     error_msg = 'No Products Found'
-    query = "select productid,product_name,max_checkout_qty,price,offer_price,default_images from vff.united_armor_all_productstbl"
+    query = "select productid,product_name,max_checkout_qty,price,offer_price,default_images from vff.united_armor_all_productstbl  where sub_catid='"+str(sub_cat_id)+"'"
     
     query_result = execute_raw_query(query)
     
