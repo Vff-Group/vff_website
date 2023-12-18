@@ -44,30 +44,29 @@
         </div>
     </div>
     
-    <!-- Second Step card with image upload input -->
-    <div class="card" style="display: none;">
-        <div class="card-body" id="step2">
-            <!-- Second Step: Product Images -->
-            <h2 class="card-title">Product Images</h2>
-            <form id="productImagesForm">
-                <div class="mb-3">
-                    <label for="imageUpload" class="form-label">Upload Images</label>
-                    <input type="file" class="form-control" id="imageUpload" multiple>
-                </div>
-                <!-- Container to show uploaded images -->
-                <!-- Selected Images Card -->
-                <h2 class="card-title">Selected Images</h2>
-                <div class="row">
-                    
-                    <div id="selectedImages" class="card" style="width: 100px; height: 100px; margin:5px;"></div>
-                </div>
-        
-        
-            </form>
-            <button onclick="prevStep()" class="btn btn-secondary">Previous</button>
-            <button onclick="nextStep()" class="btn btn-primary">Next</button>
-        </div>
+<!-- Second Step card with image upload input -->
+<div class="card" id="step2" style="display: none;">
+    <div class="card-body">
+        <!-- Second Step: Product Images -->
+        <h2 class="card-title">Product Images</h2>
+        <form id="productImagesForm">
+            <div class="mb-3">
+                <label for="imageUpload" class="form-label">Upload Images</label>
+                <input type="file" class="form-control" id="imageUpload" multiple>
+            </div>
+            <!-- Container to show uploaded images -->
+            <!-- Selected Images Card -->
+            <h2 class="card-title">Selected Images</h2>
+            <div class="row" id="selectedImagesContainer">
+                <!-- Images will be added dynamically here -->
+            </div>
+        </form>
+        <button onclick="prevStep()" class="btn btn-secondary">Previous</button>
+        <button onclick="nextStep()" class="btn btn-primary">Next</button>
     </div>
+</div>
+
+
     
     <!-- Third Step card with meta data input -->
     <div class="card" style="display: none;">
@@ -117,22 +116,34 @@
         }
     }
     
-    // Function to display selected images
+
+// Function to display selected images
 document.getElementById('imageUpload').addEventListener('change', function (event) {
-    const selectedImages = document.getElementById('selectedImages');
-    selectedImages.innerHTML = ''; // Clear previous images
-    
+    const selectedImagesContainer = document.getElementById('selectedImagesContainer');
     const files = event.target.files;
+
     for (const file of files) {
+        const imageDiv = document.createElement('div');
+        imageDiv.className = 'col-2 mt-2'; // Bootstrap classes for margin and width
+
         const image = document.createElement('img');
         image.src = URL.createObjectURL(file);
-        image.style.width = '100px';
-        image.style.height = '100px';
-        image.style.margin = '5px';
+        image.className = 'img-fluid'; // Bootstrap class for responsive images
 
-        selectedImages.appendChild(image);
+        const closeIcon = document.createElement('span');
+        closeIcon.className = 'close-icon';
+        closeIcon.innerHTML = '&times;'; // Close symbol
+        closeIcon.onclick = function () {
+            selectedImagesContainer.removeChild(imageDiv);
+        };
+
+        imageDiv.appendChild(closeIcon);
+        imageDiv.appendChild(image);
+        selectedImagesContainer.appendChild(imageDiv);
     }
 });
+
+
 
 </script>
 {% endblock  %}
