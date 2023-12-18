@@ -36,13 +36,44 @@
                 ]</h6>
                 
             <div class="row justify-content-center align-items-center p-1">
-                {% comment %} <a href="{% url 'dashboard_app:add_sub_category' catid catname%}"> {% endcomment %}
-                <span class="badge badge-sm bg-gradient-info ">
-                    <i class="fa-solid fa-user-plus"></i>
-                     Create New Sub Category</span>
-                    </a>
-            </div>
-          </div>
+                <a href=""  data-bs-toggle="modal" data-bs-target="#modal-default-subcategory">
+                    <span class="badge badge-sm bg-gradient-info ">
+                        <i class="fa-solid fa-user-plus"></i>
+                         Create New Sub Category</span>
+                        </a>
+                </div>
+              </div>
+    
+              {% comment %} Add new  category  {% endcomment %}
+              <div class="col-md-4">
+                        
+                <div class="modal fade" id="modal-default-subcategory" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+                  <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h6 class="modal-title" id="modal-title-default">Add New Sub Category For - [ {{cat_name}} ] </h6>
+                        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <input type="hidden" name="category_id" id="categoryID" value="">
+                        <div class="form-group">
+                            <label for="categoryName">Sub Category Name</label>
+                            <input type="text" class="form-control" id="categoryName" name="category_name" placeholder="Enter New Sub Category Name">
+                        </div>
+                    </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn bg-gradient-success">Add</button>
+                        <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% comment %} Add new  category End  {% endcomment %}
+              
+
           <!-- Action Buttons  -->
           
           <!-- Action Buttons End  -->
