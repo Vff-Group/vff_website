@@ -5,91 +5,89 @@
 
   <div class="container-fluid py-4">
     
-    <div class="container">
-        <h1 class="my-4">Add Product</h1>
-        <div class="row">
-            <div class="col-md-8 mx-auto">
-                <form id="productForm" class="form-inline justify-content-center">
-                    <div class="section" id="section1">
-                        <h2>Basic Info</h2>
-                        <p>Fill in the basic information below</p>
-                        <div class="form-group mx-sm-3">
-                            <label for="productName" class="sr-only">Product Name</label>
-                            <input type="text" class="form-control" id="productName" name="product_name" placeholder="Product Name">
-                        </div>
-                        <!-- Other basic info fields -->
-    
-                        <button type="button" class="btn btn-primary next mx-sm-3" data-step="2">Next</button>
-                    </div>
-    
-                    <div class="section" id="section2" style="display: none;">
-                        <h2>Product Img</h2>
-                        <p>Upload images of the product</p>
-                        <div class="form-group mx-sm-3">
-                            <label for="productImages" class="sr-only">Product Images</label>
-                            <input type="file" class="form-control-file" id="productImages" name="product_images" multiple>
-                        </div>
-                        <!-- Other image-related fields -->
-    
-                        <button type="button" class="btn btn-primary prev mx-sm-3" data-step="1">Previous</button>
-                        <button type="button" class="btn btn-primary next mx-sm-3" data-step="3">Next</button>
-                    </div>
-    
-                    <div class="section" id="section3" style="display: none;">
-                        <h2>Meta Data</h2>
-                        <p>Fill in the meta data</p>
-                        <div class="form-group mx-sm-3">
-                            <!-- Meta data fields -->
-                        </div>
-    
-                        <button type="button" class="btn btn-primary prev mx-sm-3" data-step="2">Previous</button>
-                        <button type="submit" class="btn btn-primary mx-sm-3">Submit</button>
-                    </div>
-                </form>
-            </div>
+    <div class="card">
+        <div class="card-body" id="step1">
+            <!-- First Step: Basic Information -->
+            <h2 class="card-title">Basic Information</h2>
+            <form id="basicInfoForm">
+                <div class="mb-3">
+                    <label for="productName" class="form-label">Product Name</label>
+                    <input type="text" class="form-control" id="productName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="manufacturerName" class="form-label">Manufacturer Name</label>
+                    <input type="text" class="form-control" id="manufacturerName" required>
+                </div>
+                <!-- Add other input fields for Price, Category, Features, Description -->
+            </form>
+            <button onclick="nextStep()" class="btn btn-primary">Next</button>
         </div>
     </div>
     
-    <script>
-        // JavaScript for navigating between form sections and dynamically showing/hiding Previous button
-        const sections = document.querySelectorAll('.section');
-        const prevButtons = document.querySelectorAll('.prev');
-        const nextButtons = document.querySelectorAll('.next');
+    <!-- Second Step card with image upload input -->
+    <div class="card" style="display: none;">
+        <div class="card-body" id="step2">
+            <!-- Second Step: Product Images -->
+            <h2 class="card-title">Product Images</h2>
+            <form id="productImagesForm">
+                <div class="mb-3">
+                    <label for="imageUpload" class="form-label">Upload Images</label>
+                    <input type="file" class="form-control" id="imageUpload" multiple>
+                </div>
+                <!-- Container to show uploaded images -->
+                <div id="imagePreview"></div>
+            </form>
+            <button onclick="prevStep()" class="btn btn-secondary">Previous</button>
+            <button onclick="nextStep()" class="btn btn-primary">Next</button>
+        </div>
+    </div>
     
-        prevButtons.forEach(button => {
-            button.style.display = 'none';
-            button.addEventListener('click', function() {
-                const targetStep = this.getAttribute('data-step');
-                showStep(targetStep);
-            });
-        });
+    <!-- Third Step card with meta data input -->
+    <div class="card" style="display: none;">
+        <div class="card-body" id="step3">
+            <!-- Third Step: Meta Data -->
+            <h2 class="card-title">Meta Data</h2>
+            <form id="metaDataForm">
+                <div class="mb-3">
+                    <label for="metaTitle" class="form-label">Meta Title</label>
+                    <input type="text" class="form-control" id="metaTitle" required>
+                </div>
+                <div class="mb-3">
+                    <label for="metaKeywords" class="form-label">Meta Keywords</label>
+                    <input type="text" class="form-control" id="metaKeywords" required>
+                </div>
+                <!-- Add other input fields for Meta Description -->
+            </form>
+            <button onclick="prevStep()" class="btn btn-secondary">Previous</button>
+        </div>
+    </div>
     
-        nextButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const currentSection = this.parentElement;
-                const nextStep = this.getAttribute('data-step');
     
-                // Show previous button if not on the first step
-                if (nextStep !== '2') {
-                    currentSection.querySelector('.prev').style.display = 'inline-block';
-                }
     
-                showStep(nextStep);
-            });
-        });
-    
-        function showStep(step) {
-            sections.forEach(section => {
-                section.style.display = 'none';
-            });
-            document.getElementById(`section${step}`).style.display = 'block';
-        }
-    </script>
     
 </div>
 </main>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
+<script>
+    function nextStep() {
+        const currentStep = document.querySelector('.card:not([style*="display: none"])');
+        const nextStep = currentStep.nextElementSibling;
+        currentStep.style.display = 'none';
+        if (nextStep) {
+            nextStep.style.display = 'block';
+        }
+    }
+    
+    function prevStep() {
+        const currentStep = document.querySelector('.card:not([style*="display: none"])');
+        const prevStep = currentStep.previousElementSibling;
+        currentStep.style.display = 'none';
+        if (prevStep) {
+            prevStep.style.display = 'block';
+        }
+    }
+    
+</script>
 {% endblock  %}
