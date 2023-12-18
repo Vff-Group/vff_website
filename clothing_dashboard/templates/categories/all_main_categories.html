@@ -70,7 +70,7 @@
                         <div class="row">
                             <div class="col">
                                 {% comment %} <a href="{% url 'clothing_dashboard_app:update_category' row.catid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user"> {% endcomment %}
-                                <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="modal" data-target="#categoryModal" data-category-id="{{ row.main_cat_id }}">
                                     Edit
                                   </a>
                             </div>
@@ -90,6 +90,32 @@
                     </td>
                   </tr>
 
+                 <!-- Modal for Editing/Add New Category -->
+<div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="categoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form id="categoryForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="categoryModalLabel">Edit Main Category Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="category_id" id="categoryID" value="">
+                    <div class="form-group">
+                        <label for="categoryName">Main Category Name</label>
+                        <input type="text" class="form-control" id="categoryName" name="category_name" value="{{row.main_title_name}}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
                   {% comment %} <div class="col-md-4">
                     
                     <div class="modal fade" id="modal-default{{row.usrid}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
@@ -117,6 +143,8 @@
                   </div> {% endcomment %}
                   {% endfor %}
                 </tbody> 
+
+
               </table>
             </div>
           </div>
