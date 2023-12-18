@@ -55,7 +55,10 @@
                     <input type="file" class="form-control" id="imageUpload" multiple>
                 </div>
                 <!-- Container to show uploaded images -->
-                <div id="imagePreview"></div>
+                <!-- Selected Images Card -->
+        <h2 class="card-title">Selected Images</h2>
+        <div id="selectedImages" class="card" style="width: 100px; height: 100px;"></div>
+        
             </form>
             <button onclick="prevStep()" class="btn btn-secondary">Previous</button>
             <button onclick="nextStep()" class="btn btn-primary">Next</button>
@@ -109,5 +112,20 @@
         }
     }
     
+    // Function to display selected images
+document.getElementById('imageUpload').addEventListener('change', function (event) {
+    const selectedImages = document.getElementById('selectedImages');
+    selectedImages.innerHTML = ''; // Clear previous images
+    
+    const files = event.target.files;
+    for (const file of files) {
+        const image = document.createElement('img');
+        image.src = URL.createObjectURL(file);
+        image.style.width = '100px';
+        image.style.height = '100px';
+        selectedImages.appendChild(image);
+    }
+});
+
 </script>
 {% endblock  %}
