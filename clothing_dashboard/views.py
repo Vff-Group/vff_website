@@ -186,6 +186,8 @@ def all_products_details(request,main_cat_id,cat_id,sub_cat_id):
     context = {'query_result':data,'current_url': current_url,'error_msg':error_msg,'main_cat_id':main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id}
     return render(request,"all_products/all_products.html",context)
 
+def add_new_product(request):
+    return render(request,"all_products/add_new_product.html")
 
 def epochToDateTime(epoch):
     datetime_obj = datetime.utcfromtimestamp(epoch)
