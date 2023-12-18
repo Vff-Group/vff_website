@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "base/full_page_base.html" %}
 {% load static %}
 {% block title %}Add New Product{% endblock title%}
 {% block content %}
@@ -56,8 +56,12 @@
                 </div>
                 <!-- Container to show uploaded images -->
                 <!-- Selected Images Card -->
-        <h2 class="card-title">Selected Images</h2>
-        <div id="selectedImages" class="card" style="width: 100px; height: 100px;"></div>
+                <h2 class="card-title">Selected Images</h2>
+                <div class="row">
+                    
+                    <div id="selectedImages" class="card" style="width: 100px; height: 100px; margin:5px;"></div>
+                </div>
+        
         
             </form>
             <button onclick="prevStep()" class="btn btn-secondary">Previous</button>
@@ -124,6 +128,8 @@ document.getElementById('imageUpload').addEventListener('change', function (even
         image.src = URL.createObjectURL(file);
         image.style.width = '100px';
         image.style.height = '100px';
+        image.style.margin = '5px';
+
         selectedImages.appendChild(image);
     }
 });
