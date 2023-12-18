@@ -172,9 +172,9 @@ def all_products_details(request,main_cat_id,cat_id,sub_cat_id):
                 'productid': row[0],
                 'product_name': row[1],
                 'max_checkout_qty': row[2],
-                'price': row[2],
-                'offer_price': row[2],
-                'default_images': row[2],
+                'price': row[3],
+                'offer_price': row[4],
+                'default_images': row[5],
                 
                 
                
