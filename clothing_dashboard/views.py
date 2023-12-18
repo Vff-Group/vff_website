@@ -61,7 +61,41 @@ def login_view(request):
     return render(request,"admin_pages_clothing/login.html")
 
 def dashboard_view(request):
-    return render(request,"admin_pages_clothing/dashboard.html")
+    error_msg = 'No Data Found'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"admin_pages_clothing/dashboard.html",context)
+
+def all_customers(request):
+    error_msg = 'No Customers Found'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"customers/all_customer.html",context)
+
+def all_main_categories(request):
+    error_msg = 'No Main Categories Found'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"categories/all_main_categories.html",context)
+
+def all_categories(request,main_cat_id,main_cat_name):
+    error_msg = 'No Category Found'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"categories/all_categories.html",context)
+
+def all_sub_categories(request,main_cat_id,main_cat_name,cat_id,cat_name):
+    error_msg = 'No Sub Category'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"categories/all_sub_categories.html",context)
+
+
 
 def epochToDateTime(epoch):
     datetime_obj = datetime.utcfromtimestamp(epoch)

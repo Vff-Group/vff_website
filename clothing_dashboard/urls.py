@@ -8,7 +8,21 @@ app_name = 'clothing_dashboard_app' #nameSpaceses
 urlpatterns = [
     #Login
     path('',views.login_view,name='login'),
+   
+    #Dashboard
     path('dashboard/',views.dashboard_view,name='dashboard'),
+   
+    #All Customers
+    path('all_customers/',views.all_customers,name='all_customers'),
+   
+    #All Main Categories
+    path('all_main_categories/',views.all_main_categories,name='all_main_categories'),
+   
+    #All Categories
+    path('all_categories/<int:main_cat_id>/<str:main_cat_name>/',views.all_categories,name='all_categories'),
+   
+    #All Sub Categories
+    path('all_sub_categories/<int:main_cat_id>/<str:main_cat_name>/<int:cat_id>/<str:cat_name>/',views.all_sub_categories,name='all_sub_categories'),
    
 ]
 

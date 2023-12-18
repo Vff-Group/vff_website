@@ -273,54 +273,54 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
               <span class="nav-link-text ms-1">Dashboard</span>
             </a>
           </li>
-          <!-- <li class="nav-item">
+           <li class="nav-item">
             <a
               class="nav-link"
-              href="{% url 'dashboard_app:customers' %}"
-              data-url="{% url 'dashboard_app:customers' %}"
+              href="{% url 'clothing_dashboard_app:all_customers' %}"
+              data-url="{% url 'clothing_dashboard_app:all_customers' %}"
             >
               <div
                 class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
               >
                 <i
-                  class="fa-solid fa-users-gear {% if not current_url == '/admin_dashboard/customers/' %}text-dark {% endif %}"
+                  class="fa-solid fa-users-gear {% if not current_url == '/clothing_dashboard_app/all_customers/' %}text-dark {% endif %}"
                 ></i>
               </div>
               <span class="nav-link-text ms-1">Customers Panel</span>
             </a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a
               class="nav-link"
-              href="{% url 'dashboard_app:delivery_agents' %}"
-              data-url="{% url 'dashboard_app:delivery_agents' %}"
+              href="{% url 'clothing_dashboard_app:delivery_agents' %}"
+              data-url="{% url 'clothing_dashboard_app:delivery_agents' %}"
             >
               <div
                 class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
               >
                 <i
-                  class="fa-solid fa-truck fa-lg {% if not current_url == '/admin_dashboard/delivery_agents/' %}text-dark{% endif %}"
+                  class="fa-solid fa-truck fa-lg {% if not current_url == '/clothing_dashboard_app/delivery_agents/' %}text-dark{% endif %}"
                 ></i>
               </div>
               <span class="nav-link-text ms-1">Delivery Staff Panel</span>
             </a>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a
               class="nav-link"
-              href="{% url 'dashboard_app:all_categories' %}"
-              data-url="{% url 'dashboard_app:all_categories' %}"
+              href="{% url 'clothing_dashboard_app:all_main_categories' %}"
+              data-url="{% url 'clothing_dashboard_app:all_main_categories' %}"
             >
               <div
                 class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
               >
                 <i
-                  class="fa-solid fa-shirt fa-lg {% if not current_url == '/admin_dashboard/categories/' %}text-dark{% endif %}"
+                  class="fa-solid fa-shirt fa-lg {% if not current_url == '/clothing_dashboard_app/all_main_categories/' %}text-dark{% endif %}"
                 ></i>
               </div>
               <span class="nav-link-text ms-1">Category Settings</span>
             </a>
-          </li> -->
+          </li> 
           
      
          
@@ -367,7 +367,7 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
       class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg"
     >
       <!-- Navbar -->
-      <!-- <nav
+      <nav
         class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl"
         id="navbarBlur"
         navbar-scroll="true"
@@ -423,17 +423,7 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
                   ></i>
                 </a>
               </li>
-              <li class="nav-item px-3 d-flex align-items-center">
-                <a
-                  href="{% url 'dashboard_app:all_branches' %}"
-                  class="nav-link text-body p-0"
-                  
-                >
-                  <i
-                    class="fa fa-refresh fixed-plugin-button-nav cursor-pointer"
-                  ></i>
-                </a>
-              </li>
+              
              
               <li class="nav-item dropdown pe-2 d-flex align-items-center">
                 <a href="" class="nav-link text-body p-0" id="notificationBell" data-bs-toggle="offcanvas" data-bs-target="#notificationsOffcanvas" aria-expanded="false">
@@ -444,7 +434,8 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
             </ul>
           </div>
         </div>
-      </nav> -->
+      </nav>
+      
       <!-- End Navbar -->
 <!-- Offcanvas for Notifications -->
 <div class="offcanvas offcanvas-end" tabindex="-1" id="notificationsOffcanvas">

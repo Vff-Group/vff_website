@@ -1,0 +1,183 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %}All Category{% endblock title%}
+{% block content %}
+
+  <div class="container-fluid py-4">
+    
+    <div class="row">
+      
+
+      <div class="row">
+        <div class="col-lg-8">
+          <form method="get">
+            {% csrf_token %}
+            <div class="form-group">
+                <input
+                    class="form-control form-control-alternative"
+                    type="search"
+                    id="sub-category-name-search"
+                    name="sub-category-name-search-input"
+                    placeholder="Search Sub Category Name"
+                    value=""
+                    autocomplete="off"
+                    
+                />
+            </div>
+        </form>
+        </div>
+      </div>
+      
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header pb-0 d-flex justify-content-between">
+            <h6>All Category For - [
+                <!-- {{catname}} -->
+                ]</h6>
+                
+            <div class="row justify-content-center align-items-center p-1">
+                <!-- <a href="{% url 'dashboard_app:add_sub_category' catid catname%}"> -->
+                <span class="badge badge-sm bg-gradient-info ">
+                    <i class="fa-solid fa-user-plus"></i>
+                     Create New Category</span>
+                    </a>
+            </div>
+          </div>
+          <!-- Action Buttons  -->
+          
+          <!-- Action Buttons End  -->
+          <div class="card-body px-0 pt-0 pb-2">
+            <div class="table-responsive p-0">
+              <table class="table align-items-center mb-0  table-hover">
+                <thead class="bg-light">
+                  <tr>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Category Image</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Category Name</th>
+                    
+                    <th class="text-secondary opacity-7"></th>
+                  </tr>
+                </thead>
+                {% if not query_result%}
+                <div class="alert alert-info alert-dismissible m-4 fade show" role="alert">
+                  <span class="alert-icon text-white"><i class="ni ni-like-2"></i></span>
+                  <span class="alert-text text-white"><strong>Info!</strong> {{error_msg}}!</span>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              {% else %}
+                <!-- <tbody >
+                  {% for row in query_result %}
+                  <tr>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div>
+                          <img src="{{row.sub_cat_img}}" class="avatar avatar-sm me-3" alt="user1">
+                        </div>
+                        
+                      </div>
+                    </td>
+                   <td>
+                    <h6 class="mb-0 text-sm">{{row.sub_cat_name}}</h6>
+                   </td>
+                   <td>
+                    <h6 class="mb-0 text-sm">{{row.cost}}/{{row.type}}</h6>
+                   </td>
+                   <td>
+                    <h6 class="mb-0 text-sm">{{row.section_type}}</h6>
+                   </td>
+                   
+                    <td class="align-middle">
+                        <div class="row">
+                            <div class="col">
+                                <a href="{% url 'dashboard_app:update_sub_category' catid row.subcatid catname %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                    Edit
+                                  </a>
+                            </div>
+                            
+                            <div class="col">
+                                <a href="" class="text-danger font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.subcatid}}">
+                                    Delete
+                                  </a>
+                            </div>
+                        </div>
+                      
+                      
+                    </td>
+                  </tr>
+
+                  <div class="col-md-4">
+                    
+                    <div class="modal fade" id="modal-default{{row.subcatid}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+                      <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h6 class="modal-title" id="modal-title-default">Are you sure you want to delete ?</h6>
+                            <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="alert  m-4" role="alert">
+                              <strong>Alert! </strong> <strong> {{row.sub_cat_name}}</strong> Sub Category will be deleted permanently!
+                          </div>
+                            
+                          </div>
+                          <div class="modal-footer">
+                            <form action="{% url 'dashboard_app:delete_sub_category' row.subcatid catid catname %}" method="post">
+                              {% csrf_token %}
+                              <button type="submit" class="btn bg-gradient-danger">Delete</button>
+                            </form>
+                            <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </tbody> -->
+              </table>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+</div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  // Get a reference to the dropdown element
+  var dropdown = document.getElementById("input-section_type");
+  
+  // Add an event listener to detect changes in the dropdown
+  dropdown.addEventListener("change", function() {
+      // Get a reference to the form
+      var form = document.getElementById("myForm");
+
+      // Set the form's method to "post"
+      form.method = "post";
+
+      // Submit the form
+      form.submit();
+  });
+
+  $(document).ready(function () {
+    $('#sub-category-name-search').on('input', function () {
+      var searchText = $(this).val().toLowerCase();
+      $('.table tbody tr').each(function () {
+        var subCategoryName = $(this).find('td:nth-child(2) h6').text().toLowerCase();
+        if (subCategoryName.includes(searchText)) {
+          $(this).show();
+        } else {
+          $(this).hide();
+        }
+      });
+    });
+  });
+  
+</script>
+
+{% endblock  %}
