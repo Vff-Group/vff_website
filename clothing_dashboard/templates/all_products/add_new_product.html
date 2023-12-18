@@ -135,6 +135,14 @@ document.getElementById('imageUpload').addEventListener('change', function (even
         closeIcon.innerHTML = '&times;'; // Close symbol
         closeIcon.onclick = function () {
             selectedImagesContainer.removeChild(imageDiv);
+            // Remove the file from the input
+            const input = document.getElementById('imageUpload');
+            const fileList = Array.from(input.files);
+            const index = fileList.findIndex(f => f === file);
+            if (index !== -1) {
+                fileList.splice(index, 1);
+                input.files = new FileList(fileList);
+            }
         };
 
         imageDiv.appendChild(closeIcon);
@@ -142,6 +150,7 @@ document.getElementById('imageUpload').addEventListener('change', function (even
         selectedImagesContainer.appendChild(imageDiv);
     }
 });
+
 
 
 
