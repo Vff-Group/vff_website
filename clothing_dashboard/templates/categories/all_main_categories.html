@@ -28,9 +28,8 @@
                   <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sl No</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Main Category Name</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Regular Price</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Express Price</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Offer Price</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
+                    
                     <th class="text-secondary opacity-7"></th>
                   </tr>
                 </thead>
@@ -43,43 +42,32 @@
                   </button>
               </div>
               {% else %}
-                <!-- <tbody >
+                 <tbody >
                   {% for row in query_result %}
                   <tr>
-                    <td>
-                      <div class="d-flex px-2 py-1">
-                        <div>
-                          <img src="{{row.categoryimg}}" class="avatar avatar-sm me-3" alt="user1">
-                        </div>
-                        
-                      </div>
-                    </td>
-                   <td>
-                    <h6 class="mb-0 text-sm">{{row.categoryname}}</h6>
-                   </td>
-                   <td>
-                    <h6 class="mb-0 text-sm">{{row.regular_prize}}/{{row.regular_prize_type}}</h6>
-                   </td>
-                   <td>
-                    <h6 class="mb-0 text-sm">{{row.express_prize}}/{{row.express_prize_type}}</h6>
-                   </td>
-                   <td>
-                    <h6 class="mb-0 text-sm">{{row.offer_prize}}/{{row.offer_prize_type}}</h6>
-                   </td>
-                   
                     
+                    <td class="align-middle">
+                    <h6 class="mb-0 text-sm">{{ forloop.counter }}</h6>
+                   </td>
+                   <td>
+                    <h6 class="mb-0 text-sm">{{row.main_title_name}}</h6>
+                   </td>
+                   <td>
+                    <h6 class="mb-0 text-sm">{{row.status}}</h6>
+                   </td>
                    
                     
                     <td class="align-middle">
                         <div class="row">
                             <div class="col">
-                                <a href="{% url 'dashboard_app:update_category' row.catid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                {% comment %} <a href="{% url 'clothing_dashboard_app:update_category' row.catid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user"> {% endcomment %}
+                                <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                     Edit
                                   </a>
                             </div>
                             <div class="col">
-                                <a href="{% url 'dashboard_app:all_sub_categories' row.catid row.categoryname %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                    View Sub Category
+                                <a href="{% url 'clothing_dashboard_app:all_categories' row.main_cat_id row.main_title_name %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                    View Category
                                   </a>
                             </div>
                             {% comment %} <div class="col">
@@ -119,7 +107,7 @@
                     </div>
                   </div> {% endcomment %}
                   {% endfor %}
-                </tbody> -->
+                </tbody> 
               </table>
             </div>
           </div>

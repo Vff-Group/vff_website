@@ -76,23 +76,83 @@ def all_customers(request):
 
 def all_main_categories(request):
     error_msg = 'No Main Categories Found'
+    query = "select main_cat_id,main_title_name,status,images from vff.united_armor_main_categorytbl"
+    
+    query_result = execute_raw_query(query)
+    
+    
+        
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            data.append({
+                'main_cat_id': row[0],
+                'main_title_name': row[1],
+                'status': row[2],
+                'images': row[3],
+                
+               
+            })
+    else:
+        error_msg = 'Something Went Wrong'
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
-    context = {'current_url': current_url,'error_msg':error_msg}
+    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg}
     return render(request,"categories/all_main_categories.html",context)
 
 def all_categories(request,main_cat_id,main_cat_name):
     error_msg = 'No Category Found'
+    query = "select catid,cat_name,active_status from vff.united_armor_categorytbl where main_catid='"+str(main_cat_id)+"'"
+    
+    query_result = execute_raw_query(query)
+    
+    
+        
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            data.append({
+                'catid': row[0],
+                'cat_name': row[1],
+                'active_status': row[2],
+                
+                
+               
+            })
+    else:
+        error_msg = 'Something Went Wrong'
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
-    context = {'current_url': current_url,'error_msg':error_msg}
+    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg,'main_cat_id':main_cat_id,'main_cat_name':main_cat_name}
     return render(request,"categories/all_categories.html",context)
 
 def all_sub_categories(request,main_cat_id,main_cat_name,cat_id,cat_name):
-    error_msg = 'No Sub Category'
+    error_msg = 'No Sub Category Found'
+    query = "select sub_catid,sub_cat_name,time_creation from vff.united_armor_sub_categorytbl where catid='"+str(cat_id)+"'"
+    
+    query_result = execute_raw_query(query)
+    
+    
+        
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            data.append({
+                'catid': row[0],
+                'cat_name': row[1],
+                'active_status': row[2],
+                
+                
+               
+            })
+    else:
+        error_msg = 'Something Went Wrong'
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
-    context = {'current_url': current_url,'error_msg':error_msg}
+    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg,'main_cat_id':main_cat_id,'main_cat_name':main_cat_name,'cat_id':cat_id,'cat_name':cat_name}
     return render(request,"categories/all_sub_categories.html",context)
 
 
