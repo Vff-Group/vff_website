@@ -81,7 +81,7 @@
                         <div class="row">
                             <div class="col">
                                 {% comment %} <a href="{% url 'dashboard_app:update_sub_category' catid row.subcatid catname %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user"> {% endcomment %}
-                                <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                <a href="" class="text-secondary font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.catid}}">
                                     Edit
                                   </a>
                             </div>
@@ -103,28 +103,26 @@
 
                   <div class="col-md-4">
                     
-                    <div class="modal fade" id="modal-default{{row.subcatid}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+                    <div class="modal fade" id="modal-default{{row.catid}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
                       <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h6 class="modal-title" id="modal-title-default">Are you sure you want to delete ?</h6>
+                            <h6 class="modal-title" id="modal-title-default">Edit Category Details </h6>
                             <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">×</span>
                             </button>
                           </div>
                           <div class="modal-body">
-                            <div class="alert  m-4" role="alert">
-                              <strong>Alert! </strong> <strong> {{row.sub_cat_name}}</strong> Sub Category will be deleted permanently!
-                          </div>
-                            
-                          </div>
-                          {% comment %} <div class="modal-footer">
-                            <form action="{% url 'dashboard_app:delete_sub_category' row.subcatid catid catname %}" method="post">
-                              {% csrf_token %}
-                              <button type="submit" class="btn bg-gradient-danger">Delete</button>
-                            </form>
+                            <input type="hidden" name="category_id" id="categoryID" value="">
+                            <div class="form-group">
+                                <label for="categoryName">Category Name</label>
+                                <input type="text" class="form-control" id="categoryName" name="category_name" value="{{row.cat_name}}">
+                            </div>
+                        </div>
+                          <div class="modal-footer">
+                            <button type="submit" class="btn bg-gradient-success">Save</button>
                             <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
-                          </div> {% endcomment %}
+                          </div>
                         </div>
                       </div>
                     </div>
