@@ -5,184 +5,91 @@
 
   <div class="container-fluid py-4">
     
-    <div class="row">
-      <div class="col-12">
-        <div class="card mb-4">
-          <div class="card-header pb-0 d-flex justify-content-between">
-            <h6>All Products</h6>
-            <div class="row justify-content-center align-items-center p-1">
-                <a href="{% url 'clothing_dashboard_app:add_new_product' %}">
-                <span class="badge badge-sm bg-gradient-success ">
-                    <i class="fa-solid fa-user-plus"></i>
-                     Add New Product</span>
-                    </a>
-            </div>
-          </div>
-          <!-- Action Buttons  -->
-          
-          <!-- Action Buttons End  -->
-          <div class="card-body px-0 pt-0 pb-2">
-            <div class="row ms-2">
-              <div class="col-lg-8">
-                <form method="get">
-                  {% csrf_token %}
-                  <div class="form-group">
-                    
-                      <input
-                          class="form-control form-control-alternative"
-                          type="search"
-                          id="employee-name-search"
-                          name="employeename-search"
-                          placeholder="Search Employee by name / Mobile No"
-                          value=""
-                          autocomplete="off"
-                          
-                      />
-                  </div>
-              </form>
-              </div>
-            </div>
-            <div class="table-responsive p-0">
-              <table class="table align-items-center mb-0  table-hover">
-                <thead class="bg-light">
-                  <tr>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sl No</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Product Details</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Price</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Max Quantity</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Offer Price</th>
-                    <th class="text-secondary opacity-7"></th>
-                  </tr>
-                </thead>
-                {% if not query_result%}
-                <div class="alert alert-info alert-dismissible m-4 fade show" role="alert">
-                  <span class="alert-icon text-white"><i class="ni ni-like-2"></i></span>
-                  <span class="alert-text text-white"><strong>Info!</strong> {{error_msg}}!</span>
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
-              </div>
-              {% else %}
-                <tbody >
-                  {% for row in query_result %}
-                  <tr>
-                    <td>
-                        <p class="text-xs text-secondary mb-0">{{forloop.counter}}</p>
-                    </td>
-                    <td>
-                      <div class="d-flex px-2 py-1">
-                        <div>
-                          <img src="{{row.default_images}}" class="avatar avatar-sm me-3" alt="user1">
+    <div class="container">
+        <h1 class="my-4">Add Product</h1>
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <form id="productForm" class="form-inline justify-content-center">
+                    <div class="section" id="section1">
+                        <h2>Basic Info</h2>
+                        <p>Fill in the basic information below</p>
+                        <div class="form-group mx-sm-3">
+                            <label for="productName" class="sr-only">Product Name</label>
+                            <input type="text" class="form-control" id="productName" name="product_name" placeholder="Product Name">
                         </div>
-                        <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-sm">{{row.product_name}}</h6>
-                          <p class="text-xs text-secondary mb-0">{{row.productid}}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <p class="text-xs font-weight-bold mb-0">₹.{{row.price}}/-</p>
-                      
-                    </td>
-                    <td>
-                        <p class="text-xs font-weight-bold mb-0 text-center">{{row.max_checkout_qty}}</p>
-                        
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0 text-center">₹.{{row.offer_price}}/-</p>
-                        
-                      </td>
-                    
-                    
-                    <td class="align-middle">
-                        <div class="row">
-                            <div class="col">
-                                {% comment %} <a href="{% url 'dashboard_app:update_customer' row.usrid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user"> {% endcomment %}
-                                <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                    Edit
-                                  </a>
-                            </div>
-                            <!-- <div class="col">
-                                <a href="" class="text-danger font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.usrid}}">
-                                    Delete
-                                  </a>
-                            </div> -->
-                        </div>
-                      
-                      
-                    </td>
-                  </tr>
-
-                  <div class="col-md-4">
-                    
-                    <div class="modal fade" id="modal-default{{row.usrid}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
-                      <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h6 class="modal-title" id="modal-title-default">Are you sure you want to delete ?</h6>
-                            <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">×</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <div class="alert  m-4" role="alert">
-                              <strong>Alert! </strong>{{row.usrname}} will be deleted permanantely!
-                          </div>
-                            
-                          </div>
-                          <div class="modal-footer">
-                            <form action="" method="post">
-                              {% csrf_token %}
-                              <button type="submit" class="btn bg-gradient-danger">Delete</button>
-                            </form>
-                            
-                            <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
-                          </div>
-                        </div>
-                      </div>
+                        <!-- Other basic info fields -->
+    
+                        <button type="button" class="btn btn-primary next mx-sm-3" data-step="2">Next</button>
                     </div>
-                  </div>
-                  {% endfor %}
-                </tbody>
-              </table>
+    
+                    <div class="section" id="section2" style="display: none;">
+                        <h2>Product Img</h2>
+                        <p>Upload images of the product</p>
+                        <div class="form-group mx-sm-3">
+                            <label for="productImages" class="sr-only">Product Images</label>
+                            <input type="file" class="form-control-file" id="productImages" name="product_images" multiple>
+                        </div>
+                        <!-- Other image-related fields -->
+    
+                        <button type="button" class="btn btn-primary prev mx-sm-3" data-step="1">Previous</button>
+                        <button type="button" class="btn btn-primary next mx-sm-3" data-step="3">Next</button>
+                    </div>
+    
+                    <div class="section" id="section3" style="display: none;">
+                        <h2>Meta Data</h2>
+                        <p>Fill in the meta data</p>
+                        <div class="form-group mx-sm-3">
+                            <!-- Meta data fields -->
+                        </div>
+    
+                        <button type="button" class="btn btn-primary prev mx-sm-3" data-step="2">Previous</button>
+                        <button type="submit" class="btn btn-primary mx-sm-3">Submit</button>
+                    </div>
+                </form>
             </div>
-          </div>
-          {% endif %}
         </div>
-      </div>
     </div>
+    
+    <script>
+        // JavaScript for navigating between form sections and dynamically showing/hiding Previous button
+        const sections = document.querySelectorAll('.section');
+        const prevButtons = document.querySelectorAll('.prev');
+        const nextButtons = document.querySelectorAll('.next');
+    
+        prevButtons.forEach(button => {
+            button.style.display = 'none';
+            button.addEventListener('click', function() {
+                const targetStep = this.getAttribute('data-step');
+                showStep(targetStep);
+            });
+        });
+    
+        nextButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const currentSection = this.parentElement;
+                const nextStep = this.getAttribute('data-step');
+    
+                // Show previous button if not on the first step
+                if (nextStep !== '2') {
+                    currentSection.querySelector('.prev').style.display = 'inline-block';
+                }
+    
+                showStep(nextStep);
+            });
+        });
+    
+        function showStep(step) {
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(`section${step}`).style.display = 'block';
+        }
+    </script>
+    
 </div>
 </main>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
-    $(document).ready(function () {
-        // Add an event listener to the search input field
-        $('#employee-name-search').on('input', function () {
-            applyFilters();
-        });
 
-       
-        function applyFilters() {
-          // Get the user's search input
-          var userSearch = $('#employee-name-search').val().toLowerCase();
-      
-          // Loop through the table rows and hide/show them based on the filters
-          $('.table tbody tr').each(function () {
-              var userName = $(this).find('td:first h6').text().toLowerCase();
-              var userMobile = $(this).find('td:first p.text-xs').text();
-      
-              if (
-                  userName.includes(userSearch) || userMobile.includes(userSearch) || userSearch === ''
-              ) {
-                  $(this).show();
-              } else {
-                  $(this).hide();
-              }
-          });
-      }
-      
-      });
-</script>
 {% endblock  %}
