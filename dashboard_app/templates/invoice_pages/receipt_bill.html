@@ -172,8 +172,13 @@
         {{houseno}}
         {% endif %}
          {{address}},
+         {% if city != 'NA' %} 
           {{city}} 
-          {{pincode}}-INDIA</h1>
+          {% endif %}
+          {% if pincode != 'NA' %} 
+          {{pincode}}
+          {% endif %}
+          -INDIA</h1>
     </div>
 
     <div class="item-list">
