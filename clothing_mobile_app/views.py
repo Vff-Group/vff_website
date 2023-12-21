@@ -21,7 +21,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 @csrf_exempt
-def get_main_categories(request):
+def get_home_main_categories(request):
     errorRet={'ErrorCode#2':'ErrorCode#2'}
     if request.method == "POST":
         # Parsing and printing JSON body

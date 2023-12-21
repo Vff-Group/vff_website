@@ -34,6 +34,9 @@ urlpatterns = [
     #To Load Single Product Color Details
     path('get_product_colors/', views.get_product_colors,name='get_product_colors'),
     
+    #To Load App Home Page Main Categories
+    path('get_home_main_categories/', views.get_home_main_categories,name='get_home_main_categories'),
+    
     # path('register/', views.register_member,name='register'),
     # path('set_goal/', views.set_goal,name='set_goal'),
     # path('get_fees_details/', views.get_feesdetails,name='get_fees_details'),
