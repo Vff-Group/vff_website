@@ -30,7 +30,7 @@ def get_home_main_categories(request):
             
             today_date = datetime.now().strftime("%Y-%m-%d")
             
-            query = "select main_cat_id,main_title_name,images from vff.united_armor_main_categorytbl"
+            query = "select main_cat_id,main_title_name,images from vff.united_armor_main_categorytbl order by main_cat_id"
             result = execute_raw_query(query)
             data = []
             sub_items = []    
