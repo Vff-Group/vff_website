@@ -372,7 +372,7 @@ def load_all_product_details(request):
             sub_cat_id = ""
             if 'main_cat_id' in jdict:
                 main_cat_id = jdict['main_cat_id']
-                filter_str = " AND united_armor_all_productstbl.main_cat_id='"+str(main_cat_id)+"'"
+                filter_str = " united_armor_all_productstbl.main_cat_id='"+str(main_cat_id)+"'"
             if 'cat_id' in jdict:
                 cat_id = jdict['cat_id']  
                 filter_str = " AND united_armor_all_productstbl.cat_id='"+str(cat_id)+"'"
