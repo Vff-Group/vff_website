@@ -366,12 +366,23 @@ def load_all_product_details(request):
         try:
             
             jdict = json.loads(request.body)
-            # main_cat_id = jdict['main_cat_id']
-            # cat_id = jdict['cat_id']
-            sub_cat_id = jdict['sub_cat_id']
-            # product_id = jdict['product_id']
+            filter_str = ""
+            main_cat_id = ""
+            cat_id = ""
+            sub_cat_id = ""
+            if 'main_cat_id' in jdict:
+                main_cat_id = jdict['main_cat_id']
+                filter_str = " AND united_armor_all_productstbl.main_cat_id='"+str(main_cat_id)+"'"
+            if 'cat_id' in jdict:
+                cat_id = jdict['cat_id']  
+                filter_str = " AND united_armor_all_productstbl.cat_id='"+str(cat_id)+"'"
+            if 'sub_cat_id' in jdict:
+                sub_cat_id = jdict['sub_cat_id']
+                filter_str = " AND united_armor_all_productstbl.sub_catid='"+str(sub_cat_id)+"'"
             
-            query = "SELECT productid,product_name,fitting_type,fitting_id,main_title_name,cat_name,sub_cat_name,product_catid,product_category_name,united_armor_all_productstbl.product_type_id,product_type_name,price,united_armor_all_productstbl.main_cat_id,united_armor_all_productstbl.cat_id,united_armor_all_productstbl.sub_catid,offer_price,default_images,default_size,ratings FROM vff.united_armor_all_productstbl,vff.united_armor_product_categorytbl,vff.united_armor_product_typetbl,vff.united_armor_main_categorytbl,vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl WHERE united_armor_product_categorytbl.product_catid=united_armor_all_productstbl.product_collection_id AND united_armor_product_typetbl.product_type_id=united_armor_all_productstbl.product_type_id AND united_armor_main_categorytbl.main_cat_id=united_armor_all_productstbl.main_cat_id AND united_armor_all_productstbl.cat_id=united_armor_categorytbl.catid AND united_armor_all_productstbl.sub_catid=united_armor_sub_categorytbl.sub_catid AND united_armor_all_productstbl.sub_catid='"+str(sub_cat_id)+"'"
+            
+            # query = "SELECT productid,product_name,fitting_type,fitting_id,main_title_name,cat_name,sub_cat_name,product_catid,product_category_name,united_armor_all_productstbl.product_type_id,product_type_name,price,united_armor_all_productstbl.main_cat_id,united_armor_all_productstbl.cat_id,united_armor_all_productstbl.sub_catid,offer_price,default_images,default_size,ratings FROM vff.united_armor_all_productstbl,vff.united_armor_product_categorytbl,vff.united_armor_product_typetbl,vff.united_armor_main_categorytbl,vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl WHERE united_armor_product_categorytbl.product_catid=united_armor_all_productstbl.product_collection_id AND united_armor_product_typetbl.product_type_id=united_armor_all_productstbl.product_type_id AND united_armor_main_categorytbl.main_cat_id=united_armor_all_productstbl.main_cat_id AND united_armor_all_productstbl.cat_id=united_armor_categorytbl.catid AND united_armor_all_productstbl.sub_catid=united_armor_sub_categorytbl.sub_catid AND united_armor_all_productstbl.sub_catid='"+str(sub_cat_id)+"'"
+            query = "SELECT productid,product_name,fitting_type,fitting_id,main_title_name,cat_name,sub_cat_name,product_catid,product_category_name,united_armor_all_productstbl.product_type_id,product_type_name,price,united_armor_all_productstbl.main_cat_id,united_armor_all_productstbl.cat_id,united_armor_all_productstbl.sub_catid,offer_price,default_images,default_size,ratings,default_color_id,color_name,color_code FROM vff.united_armor_product_colorstbl,vff.united_armor_all_productstbl,vff.united_armor_product_categorytbl,vff.united_armor_product_typetbl,vff.united_armor_main_categorytbl,vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl WHERE united_armor_product_colorstbl.colorsid=default_color_id  AND united_armor_product_categorytbl.product_catid=united_armor_all_productstbl.product_collection_id AND united_armor_product_typetbl.product_type_id=united_armor_all_productstbl.product_type_id AND united_armor_main_categorytbl.main_cat_id=united_armor_all_productstbl.main_cat_id AND united_armor_all_productstbl.cat_id=united_armor_categorytbl.catid AND united_armor_all_productstbl.sub_catid=united_armor_sub_categorytbl.sub_catid AND "+filter_str
             result = execute_raw_query(query)
             data = []
             sub_items = []    
@@ -399,6 +410,9 @@ def load_all_product_details(request):
                     'image':row[16],
                     'size':row[17],
                     'ratings':row[18],
+                    'default_color_id':row[19],
+                    'color_name':row[20],
+                    'color_code':row[18],
                     
                     })    
             else:
