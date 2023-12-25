@@ -116,7 +116,6 @@ def add_to_wishlist(request):
     if request.method == "POST":
         try:
             jdict = json.loads(request.body)
-            print(f'recieved_json:{jdict}')
             product_id = jdict['product_id']
             
             try:
@@ -124,7 +123,7 @@ def add_to_wishlist(request):
                     insert_query="insert into vff.united_armor_wishlisttbl (product_id) values ('"+str(product_id)+"') "
                     cursor.execute(insert_query)
                     connection.commit()
-                    JsonResponse({'response': 'Success'})
+                    return JsonResponse({'response': 'Success'})
 
             except Exception as e:
                 print(f"Error loading data: {e}")
@@ -145,7 +144,6 @@ def delete_from_wishlist(request):
     if request.method == "POST":
         try:
             jdict = json.loads(request.body)
-            print(f'recieved_json:{jdict}')
             product_id = jdict['product_id']
             
             try:
@@ -154,7 +152,7 @@ def delete_from_wishlist(request):
                     
                     cursor.execute(insert_query)
                     connection.commit()
-                    JsonResponse({'response': 'Success'})
+                    return JsonResponse({'response': 'Success'})
 
             except Exception as e:
                 print(f"Error loading data: {e}")
