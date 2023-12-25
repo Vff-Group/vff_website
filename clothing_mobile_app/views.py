@@ -19,6 +19,121 @@ import re
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import csrf_exempt
 
+
+@csrf_exempt
+def login(request):
+    errorRet={'ErrorCode#2':'ErrorCode#2'}
+    if request.method == "POST":
+        # Parsing and printing JSON body
+        try:
+            jdict = json.loads(request.body)
+            
+            mobile_no = jdict['mobno']
+            email = jdict['email']
+            #TODO:Need to add select query with mobile to check if user exists
+            query = "select customerid,customer_name,mobno,email,password from vff.united_armor_customertbl where mobno='"+str(mobile_no)+"' or email='"+str(email)+"'"
+            result = execute_raw_query_fetch_one(query)
+            if result != None:
+                if result[0] != None:
+                    customer_id = result[0]
+                    customer_name = result[1]
+                    mobile_no = result[2]
+                    email_id = result[3]
+                    password = result[4]
+                    
+                return JsonResponse({'response': 'Success', 'customer_id': customer_id, 'customer_name': customer_name,'mobile_no':mobile_no,'email_id':email_id,'password':password})
+            
+                    
+        except KeyError as e:
+            print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except json.JSONDecodeError as e:
+            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except Exception as ex:
+            print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+
+    return JsonResponse(errorRet)
+
+@csrf_exempt
+def new_register(request):
+    errorRet={'ErrorCode#2':'ErrorCode#2'}
+    if request.method == "POST":
+        try:
+            jdict = json.loads(request.body)
+            customer_name = jdict['customer_name']
+            mobile_no = jdict['mobno']
+            email = jdict['email']
+            password = jdict['password']
+            
+            #TODO:Need to add select query with mobile to check if user exists
+            query = "select customerid,customer_name,mobno,email,password from vff.united_armor_customertbl where mobno='"+str(mobile_no)+"' or email='"+str(email)+"'"
+            result = execute_raw_query_fetch_one(query)
+            if result != None:
+                if result[0] != None:
+                    customer_id = result[0]
+                    customer_name = result[1]
+                    mobile_no = result[2]
+                    email_id = result[3]
+                    password = result[4]
+                    
+                return JsonResponse({'Already': 'Already Exists'})
+            else:
+                try:
+                    with connection.cursor() as cursor:
+                        insert_query="insert into vff.united_armor_customertbl(customer_name,mobno,email,password) values ('"+str(customer_name)+"','"+str(mobile_no)+"','"+str(email)+"','"+str(password)+"')"
+                        cursor.execute(insert_query)
+                        connection.commit()
+                        query = "select customerid,customer_name,mobno,email,password from vff.united_armor_customertbl where mobno='"+str(mobile_no)+"'"
+                        result = execute_raw_query_fetch_one(query)
+                        if result != None:
+                            if result[0] != None:
+                                customer_id = result[0]
+                                customer_name = result[1]
+                                mobile_no = result[2]
+                                email_id = result[3]
+                                password = result[4]
+                            return JsonResponse({'response': 'Success', 'customer_id': customer_id, 'customer_name': customer_name,'mobile_no':mobile_no,'email_id':email_id,'password':password})
+                        
+                except Exception as e:
+                    print(f"Error loading data: {e}")
+        except KeyError as e:
+            print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except json.JSONDecodeError as e:
+            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except Exception as ex:
+            print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+
+    return JsonResponse(errorRet)
+     
+@csrf_exempt
+def update_device_token(request):
+    if request.method == "POST":
+        try:
+            jdict = json.loads(request.body)
+            device_token = jdict['device_token']
+            customer_id = jdict['customer_id']
+            with connection.cursor() as cursor:
+                insert_query="update vff.united_armor_customertbl set device_token='"+str(device_token)+"' where customerid='"+str(customer_id)+"'"
+                cursor.execute(insert_query)
+                connection.commit()
+                return JsonResponse({'response': 'Success'})
+                    
+        except KeyError as e:
+            print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except json.JSONDecodeError as e:
+            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except Exception as ex:
+            print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    
+
 # Create your views here.
 @csrf_exempt
 def get_home_main_categories(request):

@@ -5,7 +5,15 @@ app_name = 'clothing_app' #namespace
 
 urlpatterns = [
     #  path('get_csrf_token/', views.get_csrf_token, name='get_csrf_token'),
-    # path('login/', views.login,name='login'),
+    
+    #Login
+    path('login/', views.login,name='login'),
+    
+    #register
+    path('register/', views.new_register,name='register'),
+    
+    #Update Notification Device Token
+    path('update_device_token/', views.update_device_token,name='update_device_token'),
     
     #Loads the main Categories Like Men,Women
     path('get_main_categories/', views.get_main_categories,name='get_main_categories'),
