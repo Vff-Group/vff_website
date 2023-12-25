@@ -585,7 +585,7 @@ def load_all_product_details(request):
                     'ratings':row[18],
                     'default_color_id':row[19],
                     'color_name':row[20],
-                    'color_code':row[18],
+                    'color_code':row[21],
                     
                     })    
             else:
@@ -619,10 +619,10 @@ def load_single_product_details(request):
             # sub_cat_id = jdict['sub_cat_id']
             product_id = jdict['product_id']
             
-            query = "SELECT product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,main_title_name,cat_name,sub_cat_name,product_catid,product_category_name,united_armor_all_productstbl.product_type_id,product_type_name,price,united_armor_all_productstbl.main_cat_id,united_armor_all_productstbl.cat_id,united_armor_all_productstbl.sub_catid,offer_price FROM vff.united_armor_all_productstbl,vff.united_armor_product_categorytbl,vff.united_armor_product_typetbl,vff.united_armor_main_categorytbl,vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl WHERE united_armor_product_categorytbl.product_catid=united_armor_all_productstbl.product_collection_id AND united_armor_product_typetbl.product_type_id=united_armor_all_productstbl.product_type_id AND united_armor_main_categorytbl.main_cat_id=united_armor_all_productstbl.main_cat_id AND united_armor_all_productstbl.cat_id=united_armor_categorytbl.catid AND united_armor_all_productstbl.sub_catid=united_armor_sub_categorytbl.sub_catid AND productid='"+str(product_id)+"'"
+            query = "SELECT product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,main_title_name,cat_name,sub_cat_name,product_catid,product_category_name,united_armor_all_productstbl.product_type_id,product_type_name,price,united_armor_all_productstbl.main_cat_id,united_armor_all_productstbl.cat_id,united_armor_all_productstbl.sub_catid,offer_price,default_images,default_size,ratings,default_color_id,color_name,color_code FROM vff.united_armor_all_productstbl,vff.united_armor_product_categorytbl,vff.united_armor_product_typetbl,vff.united_armor_main_categorytbl,vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl WHERE united_armor_product_categorytbl.product_catid=united_armor_all_productstbl.product_collection_id AND united_armor_product_typetbl.product_type_id=united_armor_all_productstbl.product_type_id AND united_armor_main_categorytbl.main_cat_id=united_armor_all_productstbl.main_cat_id AND united_armor_all_productstbl.cat_id=united_armor_categorytbl.catid AND united_armor_all_productstbl.sub_catid=united_armor_sub_categorytbl.sub_catid AND productid='"+str(product_id)+"'"
             result = execute_raw_query(query)
             data = []
-            sub_items = []    
+            images_data = []    
             if not result == 500:
                 for row in result:
                     
@@ -647,12 +647,51 @@ def load_single_product_details(request):
                     'cat_id':row[13],
                     'sub_catid':row[14],
                     'offer_price':row[15],
+                    'image':row[16],
+                    'size':row[17],
+                    'ratings':row[18],
+                    'default_color_id':row[19],
+                    'color_name':row[20],
+                    'color_code':row[21],
                     
-                    
-                    })    
+                    })   
+                #load default first color images
+                default_color_id = data[0]['default_color_id'] if data else ''
+                query2="select imageid,image_url from vff.united_armor_product_imagestbl where color_id='"+str(default_color_id)+"'" 
+                result2 = execute_raw_query(query2)
+                if not result2 == 500:
+                    for row in result2:
+                        images_data.append({
+                        'imageid':row[0],
+                        'image_url':row[1],
+                        })
+                
+                #Loads all colors        
+                color_data = []
+                query3="select colorsid,color_name,color_code from vff.united_armor_product_colorstbl where product_id='"+str(product_id)+"'" 
+                result3 = execute_raw_query(query3)
+                if not result3 == 500:
+                    for row in result3:
+                        color_data.append({
+                        'colorsid':row[0],
+                        'color_name':row[1],
+                        'color_code':row[2],
+                        })
+                
+                #Loads all sizes        
+                size_data = []
+                query4="SELECT sizesid,size_value from vff.united_armor_product_sizestbl where product_id='"+str(product_id)+"'" 
+                result4 = execute_raw_query(query4)
+                if not result4 == 500:
+                    for row in result4:
+                        size_data.append({
+                        'sizesid':row[0],
+                        'size_value':row[1],
+                        
+                        })
             else:
                 error_msg = 'Something Went Wrong'
-            context ={'query_result':data} 
+            context ={'query_result':data,'images':images_data,'colors':color_data,'sizes':size_data} 
             return JsonResponse(context)
         
         except KeyError as e:
