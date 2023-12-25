@@ -45,16 +45,12 @@ urlpatterns = [
     #To Load App Home Page Main Categories
     path('get_home_main_categories/', views.get_home_main_categories,name='get_home_main_categories'),
     
-    # path('register/', views.register_member,name='register'),
-    # path('set_goal/', views.set_goal,name='set_goal'),
-    # path('get_fees_details/', views.get_feesdetails,name='get_fees_details'),
-    # path('get_diet_chart_details/', views.get_diet_chart_details,name='get_diet_chart_details'),
-    # path('get_fees_chart_details/', views.get_fees_chart_details,name='get_fees_chart_details'),
-    # path('save_gym_fees/', views.save_gym_fees,name='save_gym_fees'),
+    #addto wishlistt
+    path('add_to_wishlist/', views.add_to_wishlist,name='add_to_wishlist'),
     
-    # path('aboutus/',views.about_us,name="aboutus"),
-    # path('services/',views.services,name="services"),
-    # path('contactus/',views.contactus,name="contactus"),
-    # path('privacy_policy/',views.privacy,name="privacy"),
+    #remove from wishlist
+    path('delete_from_wishlist/', views.delete_from_wishlist,name='delete_from_wishlist'),
+    
+    
 
 ]

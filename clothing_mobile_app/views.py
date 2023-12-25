@@ -109,7 +109,64 @@ def new_register(request):
             return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
 
     return JsonResponse(errorRet)
-     
+
+@csrf_exempt
+def add_to_wishlist(request):
+    errorRet={'ErrorCode#8':'ErrorCode#8'}   
+    if request.method == "POST":
+        try:
+            jdict = json.loads(request.body)
+            product_id = jdict['product_id']
+            
+            try:
+                with connection.cursor() as cursor:
+                    insert_query="insert into vff.united_armor_wishlisttbl (product_id) values ('"+str(product_id)+"') "
+                    cursor.execute(insert_query)
+                    connection.commit()
+                    JsonResponse({'response': 'Success'})
+
+            except Exception as e:
+                print(f"Error loading data: {e}")
+        except KeyError as e:
+            print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except json.JSONDecodeError as e:
+            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except Exception as ex:
+            print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse(errorRet)
+
+@csrf_exempt
+def delete_from_wishlist(request):
+    errorRet={'ErrorCode#8':'ErrorCode#8'}   
+    if request.method == "POST":
+        try:
+            jdict = json.loads(request.body)
+            product_id = jdict['product_id']
+            
+            try:
+                with connection.cursor() as cursor:
+                    insert_query="delete from vff.united_armor_wishlisttbl where product_id='"+str(product_id)+"'"
+                    cursor.execute(insert_query)
+                    connection.commit()
+                    JsonResponse({'response': 'Success'})
+
+            except Exception as e:
+                print(f"Error loading data: {e}")
+        except KeyError as e:
+            print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except json.JSONDecodeError as e:
+            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except Exception as ex:
+            print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse(errorRet)
+
+
 @csrf_exempt
 def update_device_token(request):
     if request.method == "POST":
