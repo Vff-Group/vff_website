@@ -116,6 +116,7 @@ def add_to_wishlist(request):
     if request.method == "POST":
         try:
             jdict = json.loads(request.body)
+            print(f'recieved_json:{jdict}')
             product_id = jdict['product_id']
             
             try:
@@ -144,11 +145,13 @@ def delete_from_wishlist(request):
     if request.method == "POST":
         try:
             jdict = json.loads(request.body)
+            print(f'recieved_json:{jdict}')
             product_id = jdict['product_id']
             
             try:
                 with connection.cursor() as cursor:
                     insert_query="delete from vff.united_armor_wishlisttbl where product_id='"+str(product_id)+"'"
+                    
                     cursor.execute(insert_query)
                     connection.commit()
                     JsonResponse({'response': 'Success'})
