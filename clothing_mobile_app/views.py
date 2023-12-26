@@ -695,7 +695,7 @@ def load_single_product_details(request):
                 result5 = execute_raw_query(query5)
                 if not result5 == 500:
                     for row in result5:
-                        size_data.append({
+                        wishlist_data.append({
                         'wishlistid':row[0],
                         
                         })
