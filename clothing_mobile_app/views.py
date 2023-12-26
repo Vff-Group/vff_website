@@ -680,14 +680,14 @@ def load_single_product_details(request):
                 
                 #Loads all sizes        
                 size_data = []
-                query4="SELECT sizesid,size_value from vff.united_armor_product_sizestbl where product_id='"+str(product_id)+"'" 
+                query4="select sizesid,size_value,quantity_available from vff.united_armor_sizes_available,vff.united_armor_product_sizestbl where united_armor_product_sizestbl.sizesid=united_armor_sizes_available.sizeid and united_armor_sizes_available.product_id='"+str(product_id)+"'" 
                 result4 = execute_raw_query(query4)
                 if not result4 == 500:
                     for row in result4:
                         size_data.append({
                         'sizesid':row[0],
                         'size_value':row[1],
-                        
+                        'quantity_available':row[2],
                         })
             else:
                 error_msg = 'Something Went Wrong'
