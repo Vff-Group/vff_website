@@ -689,9 +689,19 @@ def load_single_product_details(request):
                         'size_value':row[1],
                         'quantity_available':row[2],
                         })
+                #Is Marked as Wishlist        
+                wishlist_data = []
+                query5="select wishlistid from vff.united_armor_wishlisttbl where product_id='"+str(product_id)+"'" 
+                result5 = execute_raw_query(query5)
+                if not result5 == 500:
+                    for row in result5:
+                        size_data.append({
+                        'wishlistid':row[0],
+                        
+                        })
             else:
                 error_msg = 'Something Went Wrong'
-            context ={'query_result':data,'images':images_data,'colors':color_data,'sizes':size_data} 
+            context ={'query_result':data,'images':images_data,'colors':color_data,'sizes':size_data,'isMarkedWishlist':wishlist_data} 
             return JsonResponse(context)
         
         except KeyError as e:
