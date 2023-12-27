@@ -51,6 +51,9 @@ urlpatterns = [
     #remove from wishlist
     path('delete_from_wishlist/', views.delete_from_wishlist,name='delete_from_wishlist'),
     
+    #get all filter data
+    path('get_all_filters/', views.get_all_filters,name='get_all_filters'),
+    
     
 
 ]

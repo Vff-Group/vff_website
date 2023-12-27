@@ -718,7 +718,90 @@ def load_single_product_details(request):
 
 
 
+@csrf_exempt
+def get_all_filters(request):
+    
+    errorRet={'ErrorCode#2':'ErrorCode#2'}
+    if request.method == "POST":
+        # Parsing and printing JSON body
+        
+        try:
+            #Product Category        
+            query = "select product_catid,product_category_name from vff.united_armor_product_categorytbl"
+            result = execute_raw_query(query)
+            product_category_data = []
+            
+            if not result == 500:
+                for row in result:
+                    
+                    
+                    product_category_data.append({
+                     'product_catid':row[0],
+                    'product_category_name':row[1],
+                    
+                    
+                    })   
+                    
+                #Product Type
+                product_type_data = []
+                query2="select product_type_id,product_type_name from vff.united_armor_product_typetbl" 
+                result2 = execute_raw_query(query2)
+                if not result2 == 500:
+                    for row in result2:
+                        product_type_data.append({
+                        'product_type_id':row[0],
+                        'product_type_name':row[1],
+                        })
+                
+                #Colors    
+                color_data = []
+                query3="select colorsid,color_name from vff.united_armor_product_colorstbl" 
+                result3 = execute_raw_query(query3)
+                if not result3 == 500:
+                    for row in result3:
+                        color_data.append({
+                        'colorsid':row[0],
+                        'color_name':row[1],
+                        })
+                
+                #Sizes  
+                size_data = []
+                query4="select sizesid,size_value from vff.united_armor_product_sizestbl" 
+                result4 = execute_raw_query(query4)
+                if not result4 == 500:
+                    for row in result4:
+                        size_data.append({
+                        'sizesid':row[0],
+                        'size_value':row[1],
+                        })
+                        
+                #Fitting    
+                fitting_data = []
+                query5="select fittingid,fit_type from vff.united_armor_fittingtbl" 
+                result5 = execute_raw_query(query5)
+                if not result5 == 500:
+                    for row in result5:
+                        fitting_data.append({
+                        'fittingid':row[0],
+                        'fit_type':row[0],
+                        
+                        })
+            else:
+                error_msg = 'Something Went Wrong'
+            context ={'product_category_data':product_category_data,'product_type_data':product_type_data,'colors':color_data,'sizes':size_data,'fitting_data':fitting_data} 
+            return JsonResponse(context)
+        
+        except KeyError as e:
+            print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except json.JSONDecodeError as e:
+            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except Exception as ex:
+            print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
 
+    return JsonResponse(errorRet)
 
 
 #Generic Def
