@@ -845,6 +845,7 @@ var save_btn = $("#save_btn");
                 var orderTakenOn = ""; // Order Taken On
                 var order_status = ""; // Order Status
                 var payment_status = ""; // Payment Status
+                var isPaymentDone = false; // Payment Done Status true or false
                 var GSTamount = 0; // Total GST
                 var IGSTamount = 0; // Total IGST
                 var addOnsTotal = 0;
@@ -1008,6 +1009,7 @@ if (paymentModeSelect.value !== 'Cash' && paymentModeSelect.value !== 'Pay Later
             'dateofdelivery': date_of_delivery,
             'wantsDelivery':wantsDelivery,
             'orderTakenOn':orderTakenOn,
+            'payment_done':isPaymentDone,
             // Add other form fields to the JSON object
         };
         console.log('dictMap::'+JSON.stringify(dictMap));
@@ -1151,6 +1153,7 @@ $('#input-paymentmode').change(function() {
     // Check if the payment mode is 'Cash' and hide the 'Pay Now' button
     if (paymentMode === 'Cash') {
       order_status = "Payment Done";
+      isPaymentDone = true;
       payment_status = "Success";
         $('#pay-button').hide();
         //gstContainer.show();
@@ -1159,6 +1162,7 @@ $('#input-paymentmode').change(function() {
     } else if(paymentMode === 'Pay Later'){
       order_status = "Payment Not Done";
       payment_status = "Not Success";
+      isPaymentDone = false;
     }else {
         $('#pay-button').show();
         //gstContainer.hide();
@@ -1640,6 +1644,7 @@ function payment_show(totalPayment,customerName,customerMobno){
             payment_id =  response.razorpay_payment_id;
             order_status = "Payment Done";
             payment_status = "Success";
+            isPaymentDone = true;
             //GSTamount = 0
             //IGSTamount = 0
             //GSTamount = ((totalPayment * 18)/100);
@@ -2194,7 +2199,7 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
                 sub_cat_name: sub_cat_name,
                 subcatid: subcatid,
                 item_quantity: currentQuantity + 1,
-                actual_cost: actual_cost,
+                actual_cost: updatedCost, // actual_cost
                 cost: total_cost,
                 type_of: type, 
                 sub_cat_id: subcatid,
