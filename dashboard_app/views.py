@@ -3205,10 +3205,11 @@ def place_new_order(request):
                 connection.commit()
                 
                 #Insert record in payment table with razorpay_payment_id
-                query_payment = "insert into vff.laundry_payment_tbl(order_id,razor_pay_payment_id,status,payment_type,branch_id) values ('"+str(order_id)+"','"+str(razor_pay_id)+"','"+str(payment_status)+"','"+str(payment_type)+"','"+str(branch_id)+"')"
-                print(f'insert payment::{query_payment}')
-                cursor.execute(query_payment)
-                connection.commit()
+                if payment_status == "Success":
+                    query_payment = "insert into vff.laundry_payment_tbl(order_id,razor_pay_payment_id,status,payment_type,branch_id) values ('"+str(order_id)+"','"+str(razor_pay_id)+"','"+str(payment_status)+"','"+str(payment_type)+"','"+str(branch_id)+"')"
+                    print(f'insert payment::{query_payment}')
+                    cursor.execute(query_payment)
+                    connection.commit()
                 
                 #Adding all cart items into active order table 
                 query_active_orders="insert into vff.laundry_active_orders_tbl(order_id,booking_id,categoryid,subcategoryid,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type,square_width,square_height) select "+str(order_id)+" as order_id,booking_id,catid,subcatid,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type,square_width,square_height from vff.laundry_cart_items where customer_id='"+str(customer_id)+"' and booking_id='"+str(booking_id)+"'"

@@ -825,6 +825,7 @@ var save_btn = $("#save_btn");
           var booking_id_input = document.getElementById("selected-booking-id");
           booking_id_input.value = bookingId; // Set the value in the hidden input
           generated_booking_id = bookingId;
+          orderTakenOn = "App";
   $("#generate-booking-id").text("Booking ID: " + bookingId); // Update the button text
   // Disable the anchor link
   generate_booking_id_btn.classList.add("disabled"); // Add a class for styling
@@ -841,6 +842,7 @@ var save_btn = $("#save_btn");
                 var grossTotal = 0; // Total amount
                 var subTotal = 0; // Total amount
                 var grossQuantity = 0; // Total Quantity
+                var orderTakenOn = ""; // Order Taken On
                 var order_status = ""; // Order Status
                 var payment_status = ""; // Payment Status
                 var GSTamount = 0; // Total GST
@@ -968,7 +970,7 @@ if (paymentModeSelect.value !== 'Cash' && paymentModeSelect.value !== 'Pay Later
     }
     var customer_id = selected_customer_id.value.trim()
     var customer_name = customer_name_input.value.trim()
-    var orderTakenOn = "OnCounter"
+    
 
     if(customer_id === ""){
       
@@ -1733,6 +1735,7 @@ $("#generate-booking-id").on("click",function(){
                     var booking_id_input = document.getElementById("selected-booking-id");
                     booking_id_input.value = bookingIDData; // Set the value in the hidden input
                     generated_booking_id = bookingIDData;
+                    orderTakenOn = "OnCounter";
             $("#generate-booking-id").text("Booking ID: " + bookingIDData); // Update the button text
             // Disable the anchor link
             generate_booking_id_btn.classList.add("disabled"); // Add a class for styling
