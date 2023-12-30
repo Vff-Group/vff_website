@@ -2156,7 +2156,7 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
         quantityInput.text(currentQuantity + 1);
         console.log('actualCost::'+actual_cost);
         console.log('updatedCost::'+updatedCost);
-        
+
         if (selectedItemIndex !== -1) {
             // Update the quantity in the selected item
             total_cost = (updatedCost * (parseFloat(currentQuantity) + 1));
@@ -2194,7 +2194,9 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
 
         if (selectedItemIndex !== -1) {
             // Update the quantity in the selected item
+            total_cost = actual_cost * (currentQuantity - 1);
             selectedItems[selectedItemIndex].item_quantity = currentQuantity - 1;
+            selectedItems[selectedItemIndex].cost = total_cost;
             //selectedItems[selectedItemIndex].item_quantity = currentQuantity - 1;
             //selectedItems[selectedItemIndex].cost = selectedItems[selectedItemIndex].actual_cost * (currentQuantity - 1);
             // Remove the item from the list if the quantity is 0
