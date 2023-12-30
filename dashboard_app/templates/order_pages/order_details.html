@@ -241,6 +241,13 @@
                         <small>Requested Delivery : <span class="badge badge-sm bg-warning">No</span></small>
                         {% endif %}
                     </div>
+                      <div class="col">
+                        {% if payment_done == 1 %}
+                        <small>Payment Done : <span class="badge badge-sm bg-success">Yes</span></small>
+                        {% else %}
+                        <small>Payment Done : <span class="badge badge-sm bg-warning">No</span></small>
+                        {% endif %}
+                    </div>
 
                       <div class="col mt-1">
                         <p class="">Order : {{order_completed_status}}</p>
@@ -385,7 +392,7 @@
                           <small class="text-primary">₹{{sub_total}}/-</small>
                         </div>
                       </div>
-                      
+
                       <div class="row mb-0">
                         <div class="col-lg-6">
                           <p class="text-xs mb-0 p-1">Addon </p>
