@@ -2194,7 +2194,7 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
 
         if (selectedItemIndex !== -1) {
             // Update the quantity in the selected item
-            total_cost = actual_cost * (currentQuantity - 1);
+            total_cost = updatedCost * (currentQuantity - 1);
             selectedItems[selectedItemIndex].item_quantity = currentQuantity - 1;
             selectedItems[selectedItemIndex].cost = total_cost;
             //selectedItems[selectedItemIndex].item_quantity = currentQuantity - 1;
