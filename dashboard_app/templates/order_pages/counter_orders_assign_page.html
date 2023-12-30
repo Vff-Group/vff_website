@@ -2139,7 +2139,9 @@ var sub_cat_img = $(this).closest("tr").find("#sub_cat_img").text();
 var actual_cost = $(this).closest("tr").find("#cost").text();
 var type = $(this).closest("tr").find("#type").text();
 var cat_name = $(this).closest("tr").find("#cat_name").text();
-  
+  // Get the value of the input box for cost modification
+  var inputBox = row.find("input[type='number']");
+  var updatedCost = parseFloat(inputBox.val()); // Parse the value to float or integer if needed
 
     
     var quantityInput = row.find(".quantity");
@@ -2152,10 +2154,12 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
     if ($(this).hasClass("increment")) {
         // Handle increment logic
         quantityInput.text(currentQuantity + 1);
-
+        console.log('actualCost::'+actual_cost);
+        console.log('updatedCost::'+updatedCost);
+        
         if (selectedItemIndex !== -1) {
             // Update the quantity in the selected item
-            total_cost = (parseFloat(actual_cost) * (parseFloat(currentQuantity) + 1));
+            total_cost = (updatedCost * (parseFloat(currentQuantity) + 1));
             console.log('total_cost_added::'+total_cost);
             selectedItems[selectedItemIndex].item_quantity = currentQuantity + 1;
             selectedItems[selectedItemIndex].cost = total_cost;
@@ -2166,12 +2170,10 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
                 var section_type = $(this).closest("tr").find("#section_type").text();
                 section_type_selected = section_type;
             }
-            // Get the value of the input box for cost modification
-            var inputBox = row.find("input[type='number']");
-            var updatedCost = parseFloat(inputBox.val()); // Parse the value to float or integer if needed
-            console.log('actualCost::'+actual_cost);
-            console.log('updatedCost::'+updatedCost);
+            
+            
             total_cost = (updatedCost * (parseFloat(currentQuantity) + 1));
+            console.log('---TotalCost--::'+total_cost);
             var newItem = {
                 sub_cat_name: sub_cat_name,
                 subcatid: subcatid,
@@ -2183,17 +2185,7 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
                 sub_cat_img: sub_cat_img, 
                 section_type: section_type_selected
             };
-           /* var newItem = {
-                subCategoryName: sub_cat_name,
-                item_quantity: currentQuantity + 1,
-                sub_cat_name: sub_cat_name,
-                actual_cost: 45, // Replace 'item.cost' with the actual value
-                cost: 45 * (currentQuantity + 1),
-                type_of: 'Kgs', // Replace 'item.typeOf' with the actual value
-                sub_cat_id: subcatid,
-                sub_cat_img: 'NA', // Replace 'item.subCategoryImage' with the actual value
-                section_type: 'All'
-            };*/
+       
             selectedItems.push(newItem);
         }
     } else if ($(this).hasClass("decrement") && currentQuantity > 0) {
