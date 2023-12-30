@@ -329,7 +329,7 @@
                       </div>
                     </td>
                     <td>
-                        <p class="text-xs font-weight-bold mb-0">₹ {{row.price}} /  {{row.type_of}}</p>
+                        <p class="text-xs font-weight-bold mb-0">₹ {{row.actual_cost}} /  {{row.type_of}}</p>
                         <small>{{row.ordertype}}</small>
                       </td>
                     <td>
@@ -523,12 +523,14 @@
               </div>
               {% endif %}
               <div class="row">
+                {% if payment_id == 1 %}
                 <div class="col-lg-6">
                   <form action="{% url 'dashboard_app:generate_bill' order_id%}" method="post" target="_blank">
                     {% csrf_token %}
                     <button id="printButton" type="submit" class="btn btn-primary my-4">Print Bill</button>
                   </form>
                 </div>
+                {% endif %}
                 <div class="col-lg-6 d-flex justify-content-end align-items-end">
                   <form action="{% url 'dashboard_app:print_label_tags' order_id%}" method="post" target="_blank">
                     {% csrf_token %}
