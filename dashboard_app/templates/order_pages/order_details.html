@@ -361,6 +361,22 @@
                     </div>
                     <div class="col-lg-6">
                       <h6 class="mb-0">Payment Details:</h6>
+                      {% if payment_done == 0 %}
+
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <p class="text-xs mb-0 p-1">Sub Total </p>
+                        </div>
+                        <div class="col-lg-6 d-flex flex-column justify-content-end align-items-end">
+                          <small class="text-primary">₹{{sub_total}}/-</small>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <button id="printLabelBtn" type="button" class="btn btn-facebook my-4"  data-bs-toggle="modal" data-bs-target="#modal-default1">Make Payment</button>
+                        </div>
+                      </div>
+                      {% else %}
                       <div class="row">
                         <div class="col-lg-6">
                           <p class="text-xs mb-0 p-1">Sub Total </p>
@@ -438,12 +454,8 @@
                           <h6 class="text-primary">₹ {{total_cost}}/-</h6>
                         </div>
                       </div>
+                      {% endif %}
                       
-                      <div class="row">
-                        <div class="col-lg-6">
-                          <button id="printLabelBtn" type="button" class="btn btn-facebook my-4"  data-bs-toggle="modal" data-bs-target="#modal-default1">Make Payment</button>
-                        </div>
-                      </div>
                       
                     </div>
                   </div>

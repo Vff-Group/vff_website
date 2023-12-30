@@ -1256,6 +1256,12 @@ def view_order_detail(request,orderid):
             payment_id = pay_result[0]
             payment_type = pay_result[4]
         
+        #Check if Payment Done or Not
+        query_payment_status = "select payment_done,order_status from vff.laundry_ordertbl where orderid='"+str(orderid)+"'"
+        payment_result = execute_raw_query_fetch_one(query_payment_status)
+        if payment_result:   
+            payment_done = payment_result[0]
+            payment_order_status = payment_result[1]
         
         #extra_cart_item like softner
         extra_error = "No Extra Items added"
@@ -1386,7 +1392,7 @@ def view_order_detail(request,orderid):
         error_msg = 'Something Went Wrong'
     
     context ={'query_result':data,'extra_data':extra_data,'error_msg':error_msg,'payment_id':payment_id,'order_id':first_order_id,'customer_name':customer_name
-              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':round(total_cost,2),'extra_error':extra_error,'range_price':range_price,'alert_delivery_boy':alert_delivery_boy,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':round(discount_amount,2),'sub_total':round(sub_total,2),'additional_instruction':additional_instruction,'order_taken_on':order_taken_on,'delivery_price_taken':delivery_price_taken,'wants_delivery':wants_delivery,'state_gst':round(state_gst,2),'central_gst':round(central_gst,2),'igstamount':igstamount}
+              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':round(total_cost,2),'extra_error':extra_error,'range_price':range_price,'alert_delivery_boy':alert_delivery_boy,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':round(discount_amount,2),'sub_total':round(sub_total,2),'additional_instruction':additional_instruction,'order_taken_on':order_taken_on,'delivery_price_taken':delivery_price_taken,'wants_delivery':wants_delivery,'state_gst':round(state_gst,2),'central_gst':round(central_gst,2),'igstamount':igstamount,'payment_done':payment_done,'payment_order_status':payment_order_status}
     
     return render(request,'order_pages/order_details.html',context)
 
