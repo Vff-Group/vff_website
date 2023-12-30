@@ -636,6 +636,7 @@
                                 <option disabled selected>
                                   Choose Payment Mode
                                 </option>
+                                <option value="Cash">Pay Later</option>
                                 <option value="Cash">Cash</option>
                                 <option value="UPI">UPI</option>
                                 <option value="Card">Card</option>
@@ -840,6 +841,8 @@ var save_btn = $("#save_btn");
                 var grossTotal = 0; // Total amount
                 var subTotal = 0; // Total amount
                 var grossQuantity = 0; // Total Quantity
+                var order_status = ""; // Order Status
+                var payment_status = ""; // Payment Status
                 var GSTamount = 0; // Total GST
                 var IGSTamount = 0; // Total IGST
                 var addOnsTotal = 0;
@@ -952,7 +955,7 @@ $('#order-form').validate({
   var paymentModeSelect = document.getElementById('input-paymentmode');
 
 // Check if payment mode is not equal to 'Cash'
-if (paymentModeSelect.value !== 'Cash') {
+if (paymentModeSelect.value !== 'Cash' || paymentModeSelect.value !== 'Pay Later') {
   if (payment_id === '') {
     showToast('Alert', 'Please Pay before placing the order as you have selected Payment Mode Other than Cash');
     return;
@@ -965,6 +968,7 @@ if (paymentModeSelect.value !== 'Cash') {
     }
     var customer_id = selected_customer_id.value.trim()
     var customer_name = customer_name_input.value.trim()
+    var orderTakenOn = "OnCounter"
 
     if(customer_id === ""){
       
@@ -991,15 +995,17 @@ if (paymentModeSelect.value !== 'Cash') {
             'discount_price': discountAmount,
             'total_price': totalPayment,
             'total_items': grossQuantity,
+            'order_status': order_status,//"Payment Done"
             'gstamount': GSTamount,
             'igstamount': IGSTamount,
             'razor_pay_id': payment_id,
-            'payment_status': "Success",
+            'payment_status': payment_status,
             'payment_type': paymentType,
             'extra_items': extraItems,
             'additional_instruction': add_information,
             'dateofdelivery': date_of_delivery,
-            'wantsDelivery':wantsDelivery
+            'wantsDelivery':wantsDelivery,
+            'orderTakenOn':orderTakenOn,
             // Add other form fields to the JSON object
         };
         console.log('dictMap::'+JSON.stringify(dictMap));
@@ -1142,11 +1148,16 @@ $('#input-paymentmode').change(function() {
     paymentType = paymentMode;
     // Check if the payment mode is 'Cash' and hide the 'Pay Now' button
     if (paymentMode === 'Cash') {
+      order_status = "Payment Done";
+      payment_status = "Success";
         $('#pay-button').hide();
         //gstContainer.show();
          // If the payment mode is "Cash," hiding the payment ID container
          paymentIdContainer.hide();
-    } else {
+    } else if(paymentMode === 'Pay Later'){
+      order_status = "Payment Not Done";
+      payment_status = "Not Success";
+    }else {
         $('#pay-button').show();
         //gstContainer.hide();
         // If the payment mode is not "Cash," show the payment ID container
@@ -1625,6 +1636,8 @@ function payment_show(totalPayment,customerName,customerMobno){
         "image": "https://vff-group.com/static/images/logo.png",
         "handler": function (response){
             payment_id =  response.razorpay_payment_id;
+            order_status = "Payment Done";
+            payment_status = "Success";
             //GSTamount = 0
             //IGSTamount = 0
             //GSTamount = ((totalPayment * 18)/100);
@@ -1652,13 +1665,13 @@ function payment_show(totalPayment,customerName,customerMobno){
     };
     var rzp1 = new Razorpay(options);
     rzp1.on('payment.failed', function (response){
-            alert(response.error.code);
+          //  alert(response.error.code);
             alert(response.error.description);
-            alert(response.error.source);
-            alert(response.error.step);
-            alert(response.error.reason);
+            //alert(response.error.source);
+            //alert(response.error.step);
+            //alert(response.error.reason);
            // alert(response.error.metadata.order_id);
-            alert(response.error.metadata.payment_id);
+            //alert(response.error.metadata.payment_id);
     });
     rzp1.open();
     /*document.getElementById('pay-button').onclick = function(e){

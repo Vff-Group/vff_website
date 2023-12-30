@@ -3182,7 +3182,7 @@ def place_new_order(request):
         customer_id = jdict['customer_id']
         total_price = jdict['total_price']
         total_items = jdict['total_items']
-        order_status = "Payment Done"
+        order_status = jdict['order_status']
         razor_pay_id = jdict['razor_pay_id']
         payment_status = jdict['payment_status']
         payment_type = jdict['payment_type']
@@ -3190,14 +3190,15 @@ def place_new_order(request):
         additional_instruction = jdict['additional_instruction']
         dateofdelivery = jdict['dateofdelivery']
         wantsDelivery = jdict['wantsDelivery']
-
+        orderTakenOn = jdict['orderTakenOn']
+        #OnCounter
         branch_id = request.session.get('branchid')
         print(f'total_price::{total_price}')
         try:
             with connection.cursor() as cursor:
                 #Insert Record into Order Table First to Generate Order ID
                 #Adding delivery_boyid = 1 for counter orders only
-                query_order = "insert into vff.laundry_ordertbl(customerid,quantity,price,order_status,additional_instruction,booking_id,delivery_price,discount_price,delivery,delivery_boyid,gstamount,igstamount,branch_id,order_taken_on,wants_delivery) values ('"+str(customer_id)+"','"+str(total_items)+"','"+str(total_price)+"','"+str(order_status)+"','"+str(additional_instruction)+"','"+str(booking_id)+"','"+str(delivery_price)+"','"+str(discount_price)+"','"+str(dateofdelivery)+"','1','"+str(gstamount)+"','"+str(igstamount)+"','"+str(branch_id)+"','OnCounter','"+str(wantsDelivery)+"') returning orderid"
+                query_order = "insert into vff.laundry_ordertbl(customerid,quantity,price,order_status,additional_instruction,booking_id,delivery_price,discount_price,delivery,delivery_boyid,gstamount,igstamount,branch_id,order_taken_on,wants_delivery) values ('"+str(customer_id)+"','"+str(total_items)+"','"+str(total_price)+"','"+str(order_status)+"','"+str(additional_instruction)+"','"+str(booking_id)+"','"+str(delivery_price)+"','"+str(discount_price)+"','"+str(dateofdelivery)+"','1','"+str(gstamount)+"','"+str(igstamount)+"','"+str(branch_id)+"','"+str(orderTakenOn)+"','"+str(wantsDelivery)+"') returning orderid"
                 cursor.execute(query_order)
                 order_id = cursor.fetchone()[0]
                 print(f'Retuning BOOKING ID-------->{order_id}')
