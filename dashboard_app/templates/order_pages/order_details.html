@@ -223,6 +223,7 @@
                         <small>Order Date :{{order_date}}</small>
                       </div>
                       
+                      {% if payment_done == 1%}
                       <div class="col mt-1">
                         {% if payment_type != 'Cash' %}  
                         <small>Transaction ID - {{payment_id}}</small>
@@ -230,6 +231,8 @@
                         <small>Transaction Type - <span class="badge badge-sm bg-success">{{payment_type}}</span></small>
                         {% endif %}  
                       </div>
+                      {% endif %}  
+
                       
                       <div class="col">
                           <small>Delivery Date : {{delivery_date}}</small>

@@ -1248,13 +1248,6 @@ def view_order_detail(request,orderid):
                
             })
         delivery_price_taken = data[0]['delivery_price_taken'] if data else ''
-        #Payment Details
-        payment_id = 'Payment Not Done'
-        query_payment = "select razor_pay_payment_id,status,time,dt,payment_type from vff.laundry_payment_tbl where order_id='"+str(orderid)+"'"
-        pay_result = execute_raw_query_fetch_one(query_payment)
-        if pay_result:   
-            payment_id = pay_result[0]
-            payment_type = pay_result[4]
         
         #Check if Payment Done or Not
         query_payment_status = "select payment_done,order_status from vff.laundry_ordertbl where orderid='"+str(orderid)+"'"
@@ -1262,6 +1255,17 @@ def view_order_detail(request,orderid):
         if payment_result:   
             payment_done = payment_result[0]
             payment_order_status = payment_result[1]
+        
+        #Payment Details
+        payment_id = '-1'
+        payment_type = 'NA'
+        query_payment = "select razor_pay_payment_id,status,time,dt,payment_type from vff.laundry_payment_tbl where order_id='"+str(orderid)+"'"
+        pay_result = execute_raw_query_fetch_one(query_payment)
+        if pay_result:   
+            payment_id = pay_result[0]
+            payment_type = pay_result[4]
+        
+        
         
         #extra_cart_item like softner
         extra_error = "No Extra Items added"
