@@ -955,7 +955,7 @@ $('#order-form').validate({
   var paymentModeSelect = document.getElementById('input-paymentmode');
 
 // Check if payment mode is not equal to 'Cash'
-if (paymentModeSelect.value !== 'Cash' || paymentModeSelect.value !== 'Pay Later') {
+if (paymentModeSelect.value !== 'Cash' && paymentModeSelect.value !== 'Pay Later') {
   if (payment_id === '') {
     showToast('Alert', 'Please Pay before placing the order as you have selected Payment Mode Other than Cash');
     return;
