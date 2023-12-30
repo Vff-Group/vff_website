@@ -234,18 +234,18 @@
                       <div class="col">
                           <small>Delivery Date : {{delivery_date}}</small>
                       </div>
-                      <div class="col mt-1">
+                      <div class="col">
                         {% if wants_delivery == 1 %}
                         <small>Requested Delivery : <span class="badge badge-sm bg-success">Yes</span></small>
                         {% else %}
-                        <small>Requested Delivery : <span class="badge badge-sm bg-danger">No</span></small>
+                        <small>Requested Delivery : <span class="badge badge-sm bg-warning">No</span></small>
                         {% endif %}
                     </div>
-                      <div class="col">
+                      <div class="col mt-1">
                         {% if payment_done == 1 %}
                         <small>Payment Done : <span class="badge badge-sm bg-success">Yes</span></small>
                         {% else %}
-                        <small>Payment Done : <span class="badge badge-sm bg-warning">No</span></small>
+                        <small>Payment Done : <span class="badge badge-sm bg-danger">No</span></small>
                         {% endif %}
                     </div>
 
