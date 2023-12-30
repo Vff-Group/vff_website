@@ -14,12 +14,161 @@
           <h6 class="heading-small text-muted mb-4">
             Payment Details
           </h6>
-          <!-- Add your form fields or content for payment details here -->
+          <div class="pl-lg-4">
+            <div class="row">
+              <div class="col">
+              <div class="row">
+                <div id="delivery-charges-container">
+                  <hr />
+                  <!-- This is to add delivery charges -->
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label
+                        for="delivery-label"
+                        class="form-control-label"
+                        >Delivery Charges </label
+                      >
+                      <input
+                        class="form-control form-control-alternative"
+                        type="number"
+                        id="delivery-input"
+                        name="delivery-value"
+                        value=""
+                        placeholder="Enter delivery charges"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+              </div>
+              
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label
+                    for="discount-label"
+                    class="form-control-label"
+                    >Discounts *</label
+                  >
+                  <input
+                    class="form-control form-control-alternative"
+                    type="number"
+                    id="discounted-input"
+                    name="discount-value"
+                    value=""
+                    placeholder="Enter if any discount"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+              </div>
+
+            <hr />
+            <div class="container" id="gst-container">
+              <div class="row">
+                <div class="col-lg-5">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="includeGST" name="includeGST">
+                    <label class="form-check-label" for="includeGST">Include GST</label>
+                  </div>
+                </div>
+            
+                <div class="col-lg-2 text-center">
+                  <span class="or-label">OR</span>
+                </div>
+            
+                <div class="col-lg-5">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="includeIGST" name="includeIGST">
+                    <label class="form-check-label" for="includeIGST">Include IGST</label>
+                  </div>
+                </div>
+              </div>
+              <hr />
+            </div>
+            
+            <div class="row">
+              <div class="col-lg-6">
+                <p class="mb-0"><small>Sub Total:</small></p>
+                <p class="mb-0"><small>Addon:</small></p>
+                <p class="mb-0"><small>Delivery Charges:</small></p>
+                <p class="mb-0"><small>Discount (%):</small></p>
+                <p class="mb-0"><small>Tax(18%):</small></p>
+              </div>
+              <div
+                class="col-lg-6 d-flex flex-column align-items-end"
+              >
+                <p class="mb-0"><small id="sub-total">Rs.0/-</small></p>
+                <p class="mb-0"><small id="addons-total">Rs.0/-</small></p>
+                <p class="mb-0"><small id="delivery-charges">Rs.0/-</small></p>
+                <p class="mb-0"><small id="discount-amount">Rs.0/-</small></p>
+                <p class="mb-0"><small id="tax-total">Rs.0/-</small></p>
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-lg-6"><h6>Gross Total</h6></div>
+              <div
+                class="col-lg-6 d-flex flex-column align-items-end"
+              >
+                <h6 id="gross-total">Rs 0</h6>
+              </div>
+            </div>
+
+            <hr />
+            <div class="row">
+              
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label
+                    class="form-control-label"
+                    for="input-paymentmode"
+                    >Payment Mode</label
+                  >
+                  <select
+                    class="form-control form-control-alternative"
+                    id="input-paymentmode"
+                    name="payment_mode"
+                    required
+                  >
+                    <option disabled selected>
+                      Choose Payment Mode
+                    </option>
+                    <option value="Pay Later">Pay Later</option>
+                    <option value="Cash">Cash</option>
+                    <option value="UPI">UPI</option>
+                    <option value="Card">Card</option>
+                    <option value="Cheque">Cheque</option>
+                    <option value="Bank Transfer">
+                      Bank Transfer
+                    </option>
+                    <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
+                  </select>
+                </div>
+              </div>
+              <div class="col-lg-6 text-center">
+                <div class="form-group">
+                    <button type="submit" id="pay-button" class="btn btn-primary mt-4" style="display: none;">Pay Now</button>
+                </div>
+              </div>
+
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group" id="payment-id-container" style="display: none;">
+                        <label class="form-control-label" for="input-paymentid">Payment ID</label>
+                        <input class="form-control form-control-alternative" type="text" id="input-paymentid" name="payment-id" disabled>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+</div>
+          </div>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <!-- Add your 'Pay Now' button or any other action buttons here -->
-          <button type="button" class="btn btn-primary">Pay Now</button>
+          <button type="button" class="btn btn-primary" id="payment-button">Pay</button>
         </div>
       </form>
     </div>
@@ -371,7 +520,7 @@
                   <button id="printLabelBtn" type="button" class="btn btn-facebook my-4"  data-bs-toggle="modal" data-bs-target="#modal-default1">Pay Now</button>
                 </div>
               </div>
-              
+
               {% if order_status != 'Completed' %}
               <!-- Add a div for the delivery boys dropdown -->
 <div id="deliveryBoyDropdown" style="display: none;">
