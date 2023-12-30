@@ -2130,7 +2130,7 @@ return 0;
         return subCategoryNameList.join(', ');
     }
     
-    
+    //To Increment of Decrement the quantity
 $("#subCategoryTable").on("click", ".increment, .decrement", function() {
     var row = $(this).closest("tr");
     var sub_cat_name = $(this).closest("tr").find("#sub_cat_name").text();
@@ -2139,6 +2139,7 @@ var sub_cat_img = $(this).closest("tr").find("#sub_cat_img").text();
 var actual_cost = $(this).closest("tr").find("#cost").text();
 var type = $(this).closest("tr").find("#type").text();
 var cat_name = $(this).closest("tr").find("#cat_name").text();
+  
 
     
     var quantityInput = row.find(".quantity");
@@ -2165,7 +2166,12 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
                 var section_type = $(this).closest("tr").find("#section_type").text();
                 section_type_selected = section_type;
             }
-            total_cost = (parseFloat(actual_cost) * (parseFloat(currentQuantity) + 1));
+            // Get the value of the input box for cost modification
+            var inputBox = row.find("input[type='number']");
+            var updatedCost = parseFloat(inputBox.val()); // Parse the value to float or integer if needed
+            console.log('actualCost::'+actual_cost);
+            console.log('updatedCost::'+updatedCost);
+            total_cost = (updatedCost * (parseFloat(currentQuantity) + 1));
             var newItem = {
                 sub_cat_name: sub_cat_name,
                 subcatid: subcatid,
@@ -2475,7 +2481,7 @@ $.each(data.sub_categories, function(index, subCategory) {
     /* newRow.append("<td><input type='number' value='0' min='0'></td>"); 
     newRow.append("<td>  <p class=\"text-xxs font-weight-bold mb-0\">" + ${subCategory.type} + "</p></td>");
     newRow.append("<td><button class='btn btn-danger btn-sm ms-1 increment'>+</button><input class='m-2' type='number' value='0' min='0'><button class='btn btn-success btn-sm ms-1 decrement'>-</button></td>");*/
-    newRow.append("<td><input type='number' class='form-control w-30' value='"+subCategory.cost+"' min='0'></td>");
+    newRow.append("<td><input type='number' class='form-control w-50' value='"+subCategory.cost+"' min='0'></td>");
     newRow.append("<td style=\"vertical-align: middle; \">  <div class=\"btn-group btn-group-sm mt-2\" style=\"width: 5px; display: flex; align-items: center;\" role=\"group\" aria-label=\"Basic mixed styles example\"> <button type=\"button\" class=\"btn btn-danger btn-sm decrement\" style=\"width: 10px;\" >-</button><button type=\"button\" class=\"btn btn-sm quantity\" style=\"width: 10px;\" >0</button><button type=\"button\" class=\"btn btn-success btn-sm increment\" style=\"width: 10px;\" >+</button> </td>")
 
     subCategoryTable.append(newRow);
