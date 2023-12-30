@@ -523,7 +523,7 @@
               </div>
               {% endif %}
               <div class="row">
-                {% if payment_id == 1 %}
+                {% if payment_done == 1 %}
                 <div class="col-lg-6">
                   <form action="{% url 'dashboard_app:generate_bill' order_id%}" method="post" target="_blank">
                     {% csrf_token %}
