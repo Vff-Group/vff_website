@@ -2469,13 +2469,13 @@ $.each(data.sub_categories, function(index, subCategory) {
             "<div id='cat_img' style='display:none;'>"+cat_img+"</div>"+
             "<div id='cat_name' style='display:none;'>"+cat_name+"</div>"+
             "<div id='section_type' style='display:none;'>"+section_type+"</div>"+
-            "<div class='d-flex px-2 py-1'> <div class='d-flex px-2 py-1'><img src="+subCategory.sub_cat_img+" class='avatar avatar-sm me-3' alt='user1'> </div> <div class='d-flex flex-column justify-content-center'> <h6 class='mb-0 text-sm' id='sub_cat_name'>"+subCategory.sub_cat_name+"</h6> <p class='text-xs text-secondary mb-0'>"+subCategory.cost +'/ '+subCategory.type+"</p> </div></div> </div> </td>")
+            "<div class='d-flex px-2 py-1'> <div class='d-flex px-2 py-1'><img src="+subCategory.sub_cat_img+" class='avatar avatar-sm me-3' alt='user1'> </div> <div class='d-flex flex-column justify-content-center'> <h6 class='mb-0 text-sm' id='sub_cat_name'>"+subCategory.sub_cat_name+"</h6> <p class='text-xs text-secondary mb-0'>"+subCategory.cost +'/ '+subCategory.type+"</p> <p><input type='number' class='form-control w-50' value='"+subCategory.cost+"' min='0'></p></div></div> </div> </td>")
    
     //newRow.append("<td>  <div class=\"d-flex px-2 py-1\"> <p class=\"mb-0 text-xxs text-center\"> " + subCategory.cost +'/ '+subCategory.type + " </p></div></td>");
     /* newRow.append("<td><input type='number' value='0' min='0'></td>"); 
     newRow.append("<td>  <p class=\"text-xxs font-weight-bold mb-0\">" + ${subCategory.type} + "</p></td>");
     newRow.append("<td><button class='btn btn-danger btn-sm ms-1 increment'>+</button><input class='m-2' type='number' value='0' min='0'><button class='btn btn-success btn-sm ms-1 decrement'>-</button></td>");*/
-    newRow.append("<td><input type='number' class='form-control w-50' value='"+subCategory.cost+"' min='0'></td>");
+    //newRow.append("<td><input type='number' class='form-control w-50' value='"+subCategory.cost+"' min='0'></td>");
     newRow.append("<td style=\"vertical-align: middle; \">  <div class=\"btn-group btn-group-sm mt-2\" style=\"width: 5px; display: flex; align-items: center;\" role=\"group\" aria-label=\"Basic mixed styles example\"> <button type=\"button\" class=\"btn btn-danger btn-sm decrement\" style=\"width: 10px;\" >-</button><button type=\"button\" class=\"btn btn-sm quantity\" style=\"width: 10px;\" >0</button><button type=\"button\" class=\"btn btn-success btn-sm increment\" style=\"width: 10px;\" >+</button> </td>")
 
     subCategoryTable.append(newRow);
