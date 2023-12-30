@@ -4,6 +4,28 @@
 {% block content %}
 
   <div class="container-fluid py-4">
+<!-- Payment Modal -->
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" id="modal-default1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form id="order-form" method="post" action="">
+        {% csrf_token %}
+        <div class="modal-body">
+          <h6 class="heading-small text-muted mb-4">
+            Payment Details
+          </h6>
+          <!-- Add your form fields or content for payment details here -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <!-- Add your 'Pay Now' button or any other action buttons here -->
+          <button type="button" class="btn btn-primary">Pay Now</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end of modal for payment details  -->
 
     <div class="row">
         <div class="col-lg-8">
@@ -344,6 +366,11 @@
               </div>
 
 
+              <div class="row">
+                <div class="col-lg-6">
+                  <button id="printLabelBtn" type="button" class="btn btn-facebook my-4"  data-bs-toggle="modal" data-bs-target="#modal-default1">Pay Now</button>
+                </div>
+              </div>
               
               {% if order_status != 'Completed' %}
               <!-- Add a div for the delivery boys dropdown -->
