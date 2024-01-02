@@ -64,8 +64,8 @@ def dashboard_view(request):
     context = {'current_url': current_url,'error_msg':error_msg}
     return render(request,"admin_pages_gym/dashboard.html",context)
 
-def all_customers(request):
-    error_msg = 'No Customers Found'
+def all_gym_members(request):
+    error_msg = 'No Members Found'
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
     context = {'current_url': current_url,'error_msg':error_msg}
