@@ -95,8 +95,8 @@ def save_selected_gym_branch(request):
     if request.method == 'POST':
         gym_branch_id = request.POST.get('gym_branch_id')
         gym_name = request.POST.get('gym_name')
-        address = request.POST.get('address')
-        admin_id = request.POST.get('adminid')
+        address = request.POST.get('branch_address')
+        admin_id = request.POST.get('branch_admin_id')
         
         
         
