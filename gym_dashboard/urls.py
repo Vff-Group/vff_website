@@ -22,6 +22,13 @@ urlpatterns = [
     path('add_new_gym_member/',views.add_new_gym_member,name='add_new_gym_member'),
    
     
+    
+    
+    
+    #All Fees Plans
+    path('all_fees_plans/',views.all_fees_plans,name='all_fees_plans'),
+   
+    
    
 ]
 

@@ -110,6 +110,13 @@ def add_new_gym_member(request):
     context = {'current_url': current_url,'error_msg':error_msg}
     return render(request,"gym_customer_pages/add_new_member.html",context)
 
+def all_fees_plans(request):
+    error_msg = 'No Fees Plans Found'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"fees/all_fees_plans.html",context)
+
 
 
 
