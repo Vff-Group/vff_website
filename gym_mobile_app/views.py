@@ -309,6 +309,50 @@ def get_fees_chart_details(request):
 
     return JsonResponse(errorRet)
 
+@csrf_exempt
+def get_notification(request):
+    errorRet={'ErrorCode#2':'ErrorCode#2'}
+    if request.method == "POST":
+        # Parsing and printing JSON body
+        
+        try:
+            jdict = json.loads(request.body)
+            memberid = jdict['memberid']
+            today_date = datetime.now().strftime("%Y-%m-%d")
+            
+            query = "select notificationid,title,body,image,notify_date,notify_time from vff.gym_notificationtbl where member_id='"+str(memberid)+"'"
+            result = execute_raw_query(query)
+            data = []
+            sub_items = []    
+            if not result == 500:
+                for row in result:
+                    
+                    #bookingEpoch = epochToDateTime(depoch)
+                    data.append({
+                    'notificationid':row[0],
+                    'title':row[1],
+                    'body':row[2],
+                    'image':row[3],
+                    'notify_date':row[4],  
+                    'notify_time':row[5]   
+                    })    
+            else:
+                error_msg = 'Something Went Wrong'
+            context ={'query_result':data} 
+            return JsonResponse(context)
+        
+        except KeyError as e:
+            print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except json.JSONDecodeError as e:
+            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except Exception as ex:
+            print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+
+    return JsonResponse(errorRet)
+
 
 @csrf_exempt
 def save_gym_fees(request):

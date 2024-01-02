@@ -13,6 +13,7 @@ urlpatterns = [
     path('get_diet_chart_details/', views.get_diet_chart_details,name='get_diet_chart_details'),
     path('get_fees_chart_details/', views.get_fees_chart_details,name='get_fees_chart_details'),
     path('save_gym_fees/', views.save_gym_fees,name='save_gym_fees'),
+    path('get_notification/', views.get_notification,name='get_notification'),
     
     # path('aboutus/',views.about_us,name="aboutus"),
     # path('services/',views.services,name="services"),
