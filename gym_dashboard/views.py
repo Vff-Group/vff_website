@@ -116,10 +116,19 @@ def dashboard_view(request):
     if isLogin == False:
         return redirect('gym_dashboard_app:login')
     error_msg = 'No Data Found'
-    
+    gym_branchid = request.session.get('gym_branch_id')
+    total_members = '0'
+    #Total GYM Members
+    query_members = "select count(*) from vff.gym_memberstbl where gymid='"+str(gym_branchid)+"'"
+    result = execute_raw_query_fetch_one(query_members)
+    if result:  
+        total_members = result[0] 
+        if total_members == None:
+            total_members = '0'
+            
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
-    context = {'current_url': current_url,'error_msg':error_msg}
+    context = {'current_url': current_url,'error_msg':error_msg,'total_gym_members': total_members,}
     return render(request,"admin_pages_gym/dashboard.html",context)
 
 def all_gym_members(request):
