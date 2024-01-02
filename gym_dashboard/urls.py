@@ -15,8 +15,11 @@ urlpatterns = [
     #Dashboard
     path('dashboard_gym/',views.dashboard_view,name='dashboard'),
    
-    #All Customers
+    #All GYM Members
     path('all_gym_members/',views.all_gym_members,name='all_gym_members'),
+   
+    #Add New GYm Member
+    path('add_new_gym_member/',views.add_new_gym_member,name='add_new_gym_member'),
    
     
    

@@ -103,6 +103,13 @@ def all_gym_members(request):
     context = {'current_url': current_url,'error_msg':error_msg}
     return render(request,"gym_customer_pages/all_gym_members.html",context)
 
+def add_new_gym_member(request):
+    error_msg = 'No Members Found'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"gym_customer_pages/add_new_member.html",context)
+
 
 
 
