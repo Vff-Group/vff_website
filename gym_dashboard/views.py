@@ -55,7 +55,7 @@ def login_view(request):
                 'password': password,
                 'error_message': 'Invalid credentials please try again',  # You can customize this error message
                 }
-            return render(request, 'admin_pages_gym/login.html', context)
+            return render(request, 'admin_pages_gym/gym_login.html', context)
         
     return render(request,"admin_pages_gym/gym_login.html")
 
