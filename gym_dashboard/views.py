@@ -53,16 +53,16 @@ def login_view(request):
     #             'password': password,
     #             'error_message': 'Invalid credentials please try again',  # You can customize this error message
     #             }
-    #         return render(request, 'admin_pages/login.html', context)
+    #         return render(request, 'admin_pages_gym/login.html', context)
         
-    return render(request,"admin_pages/gym_login.html")
+    return render(request,"admin_pages_gym/gym_login.html")
 
 def dashboard_view(request):
     error_msg = 'No Data Found'
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
     context = {'current_url': current_url,'error_msg':error_msg}
-    return render(request,"admin_pages/dashboard.html",context)
+    return render(request,"admin_pages_gym/dashboard.html",context)
 
 def all_customers(request):
     error_msg = 'No Customers Found'
