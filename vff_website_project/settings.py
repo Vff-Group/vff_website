@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'gym_mobile_app',
     'clothing_mobile_app',
     'clothing_dashboard',
+    'gym_dashboard',
 ]
 
 SITE_ID = 1
