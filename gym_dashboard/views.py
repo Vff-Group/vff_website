@@ -132,10 +132,42 @@ def dashboard_view(request):
     return render(request,"admin_pages_gym/dashboard.html",context)
 
 def all_gym_members(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('gym_dashboard_app:login')
     error_msg = 'No Members Found'
+    gym_branch_id = request.session.get('gym_branch_id')
+    query = "select memberid,name,email,mobno,date_of_birth,join_date,join_time,gender,weight,height,due_date,goal,profile_image from vff.gym_memberstbl where gymid='"+str(gym_branch_id)+"'"
+    
+    query_result = execute_raw_query(query)
+    
+    
+        
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            data.append({
+                'memberid': row[0],
+                'name': row[1],
+                'email': row[2],
+                'mobno': row[3],
+                'date_of_birth': row[4],
+                'join_date': row[5],
+                'join_time': row[6],
+                'gender': row[7],
+                'weight': row[8],
+                'height': row[9],
+                'due_date': row[10],
+                'goal': row[11],
+                'profile_image': row[12],
+            })
+    else:
+        error_msg = 'Something Went Wrong'
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
-    context = {'current_url': current_url,'error_msg':error_msg}
+    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg}
+    
     return render(request,"gym_customer_pages/all_gym_members.html",context)
 
 def add_new_gym_member(request):
