@@ -93,8 +93,8 @@
                     <td class="align-middle">
                         <div class="row">
                             <div class="col">
-                                {% comment %} <a href="{% url 'dashboard_app:update_customer' row.usrid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user"> {% endcomment %}
-                                <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                              
+                                <a href="" class="text-secondary font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.memberid}}">
                                     View Fees Status
                                   </a>
                             </div>
@@ -108,6 +108,42 @@
                       
                     </td>
                   </tr>
+
+                  <!-- Fees details modal Start -->
+                  <div class="col-md-4">
+                    <div class="modal fade" id="modal-default{{row.memberid}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+                        <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h6 class="modal-title" id="modal-title-default">{{row.name}} Fees Details</h6>
+                              <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                              </button>
+                            </div>
+                            
+                            <div class="modal-body">
+                                <div class="row m-3">
+                                    
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <form action="" method="post">
+                                  {% csrf_token %}
+                                  <button type="submit" class="btn bg-gradient-danger">Update</button>
+                                </form>
+                                
+                                <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
+                              </div>
+
+                            </div>
+                            </div>
+                            </div>
+                            
+                  </div>
+ 
+                  <!-- Fees details modal End-->
+
 
                   <div class="col-md-4">
                     
