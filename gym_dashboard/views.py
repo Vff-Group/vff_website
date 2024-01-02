@@ -57,6 +57,38 @@ def login_view(request):
         
     return render(request,"admin_pages_gym/gym_login.html")
 
+@never_cache
+def select_branch(request):
+    
+    alert_message = None
+    # if request.method == "POST":
+    #     username = request.POST.get('uname')
+    #     password = request.POST.get('passwrd')
+    #     query = "select usrname,username,password,usertbl.usrid,mobile_no,address,lat,lng,token,created_date from vff.admintbl,vff.usertbl where usertbl.usrid=admintbl.usrid and status='1' and username='"+str(username)+"' and password='"+str(password)+"'"
+    #     user_data = execute_raw_query_fetch_one(query)
+    #     if user_data and user_data[2]:
+    #             # User is authorized
+    #             print('User is Authorized')
+    #             request.session['usrname'] = user_data[0]
+    #             request.session['username'] = user_data[1]
+    #             request.session['password'] = user_data[2]
+    #             request.session['userid'] = user_data[3]
+    #             request.session['notification_token'] = user_data[8]
+    #             request.session['is_logged_in'] = True
+    #             # Setting the session to expire after one day (86400 seconds)
+    #             request.session.set_expiry(43400)
+    #             print('All Session Data Saved') 
+    #             return redirect('dashboard_app:all_branches')
+    #     else:
+    #         context = {
+    #             'username': username,
+    #             'password': password,
+    #             'error_message': 'Invalid credentials please try again',  # You can customize this error message
+    #             }
+    #         return render(request, 'admin_pages_gym/login.html', context)
+        
+    return render(request,"admin_pages_gym/gym_branch.html")
+
 def dashboard_view(request):
     error_msg = 'No Data Found'
     current_url = request.get_full_path()

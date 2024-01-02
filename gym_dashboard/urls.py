@@ -8,6 +8,9 @@ app_name = 'gym_dashboard_app' #nameSpaceses
 urlpatterns = [
     #Login
     path('',views.login_view,name='login'),
+    
+    #Gym branch Selection
+    path('select_branch/',views.select_branch,name='select_branch'),
    
     #Dashboard
     path('dashboard_gym/',views.dashboard_view,name='dashboard'),
