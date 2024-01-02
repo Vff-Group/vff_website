@@ -28,69 +28,95 @@ serverToken="AAAApZY1ur0:APA91bHsk-e3OC5R2vqO7dD0WZp7ifULNzqrUPnQu07et7RLFMWWcwO
 @never_cache
 def login_view(request):
     print("Login View is being called")
+    request.session['branchid'] = ''
     alert_message = None
-    # if request.method == "POST":
-    #     username = request.POST.get('uname')
-    #     password = request.POST.get('passwrd')
-    #     query = "select usrname,username,password,usertbl.usrid,mobile_no,address,lat,lng,token,created_date from vff.admintbl,vff.usertbl where usertbl.usrid=admintbl.usrid and status='1' and username='"+str(username)+"' and password='"+str(password)+"'"
-    #     user_data = execute_raw_query_fetch_one(query)
-    #     if user_data and user_data[2]:
-    #             # User is authorized
-    #             print('User is Authorized')
-    #             request.session['usrname'] = user_data[0]
-    #             request.session['username'] = user_data[1]
-    #             request.session['password'] = user_data[2]
-    #             request.session['userid'] = user_data[3]
-    #             request.session['notification_token'] = user_data[8]
-    #             request.session['is_logged_in'] = True
-    #             # Setting the session to expire after one day (86400 seconds)
-    #             request.session.set_expiry(43400)
-    #             print('All Session Data Saved') 
-    #             return redirect('dashboard_app:all_branches')
-    #     else:
-    #         context = {
-    #             'username': username,
-    #             'password': password,
-    #             'error_message': 'Invalid credentials please try again',  # You can customize this error message
-    #             }
-    #         return render(request, 'admin_pages_gym/login.html', context)
+    if request.method == "POST":
+        username = request.POST.get('uname')
+        password = request.POST.get('passwrd')
+        query = "select adminid,admin_name,usrid,gym_branchid from vff.gym_admintbl where username='"+str(username)+"' and password='"+str(password)+"'"
+        user_data = execute_raw_query_fetch_one(query)
+        if user_data and user_data[2]:
+                # User is authorized
+                print('User is Authorized')
+                request.session['adminid'] = user_data[0]
+                request.session['admin_name'] = user_data[1]
+                request.session['gym_admin_userid'] = user_data[2]
+                request.session['gym_branchid'] = user_data[3]
+                
+                request.session['is_gym_logged_in'] = True
+                
+                # Setting the session to expire after one day (86400 seconds)
+                request.session.set_expiry(43400)
+                print('All Session Data Saved') 
+                return redirect('gym_dashboard_app:all_gym_branches')
+        else:
+            context = {
+                'username': username,
+                'password': password,
+                'error_message': 'Invalid credentials please try again',  # You can customize this error message
+                }
+            return render(request, 'admin_pages_gym/login.html', context)
         
     return render(request,"admin_pages_gym/gym_login.html")
 
 @never_cache
-def select_branch(request):
+def all_gym_branches(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('gym_dashboard_app:login')
+    print("All Branches Gym")
+    error_msg = "No Branch Data Found"
+    usrid = request.session.get('gym_admin_userid')
+    request.session['branchid'] = ''
     
-    alert_message = None
-    # if request.method == "POST":
-    #     username = request.POST.get('uname')
-    #     password = request.POST.get('passwrd')
-    #     query = "select usrname,username,password,usertbl.usrid,mobile_no,address,lat,lng,token,created_date from vff.admintbl,vff.usertbl where usertbl.usrid=admintbl.usrid and status='1' and username='"+str(username)+"' and password='"+str(password)+"'"
-    #     user_data = execute_raw_query_fetch_one(query)
-    #     if user_data and user_data[2]:
-    #             # User is authorized
-    #             print('User is Authorized')
-    #             request.session['usrname'] = user_data[0]
-    #             request.session['username'] = user_data[1]
-    #             request.session['password'] = user_data[2]
-    #             request.session['userid'] = user_data[3]
-    #             request.session['notification_token'] = user_data[8]
-    #             request.session['is_logged_in'] = True
-    #             # Setting the session to expire after one day (86400 seconds)
-    #             request.session.set_expiry(43400)
-    #             print('All Session Data Saved') 
-    #             return redirect('dashboard_app:all_branches')
-    #     else:
-    #         context = {
-    #             'username': username,
-    #             'password': password,
-    #             'error_message': 'Invalid credentials please try again',  # You can customize this error message
-    #             }
-    #         return render(request, 'admin_pages_gym/login.html', context)
+    query = "select gym_branch_id,gym_name,gym_branchtbl.created_date,gym_branchtbl.time_at,gym_branchtbl.address,usrid,adminid from vff.gym_admintbl,vff.gym_branchtbl where gym_branchtbl.gym_branch_id=gym_admintbl.gym_branchid and usrid='"+str(usrid)+"'"
+    rows = execute_raw_query(query)
+    data = []    
+    if not rows == 500:
+        for row in rows:
+            data.append({
+                'gym_branch_id': row[0],
+                'gym_name': row[1],
+                'created_date': row[2],
+                'time_at': row[3],
+                'address': row[4],
+                'usrid': row[5],
+                'adminid': row[6],
+                
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong. [Please Try after sometime ]'
+    context = {'query_result': data,'error_msg':error_msg}
+    return render(request,'admin_pages_gym/gym_branch.html',context)
         
-    return render(request,"admin_pages_gym/gym_branch.html")
+#To save the selected branch ID and Name
+def save_selected_gym_branch(request):
+    if request.method == 'POST':
+        gym_branch_id = request.POST.get('gym_branch_id')
+        gym_name = request.POST.get('gym_name')
+        address = request.POST.get('address')
+        admin_id = request.POST.get('adminid')
+        
+        
+        
+        request.session['gym_branch_id'] = gym_branch_id
+        request.session['gym_name'] = gym_name
+        request.session['gym_address'] = address
+        request.session['gym_adminid'] = admin_id
+        request.session['gym_branch_selected'] = True
+        request.session.save()  # Save the session to persist the changes
+
+        return redirect('gym_dashboard_app:dashboard')
+    else:
+        return redirect('gym_dashboard_app:all_gym_branches')    
 
 def dashboard_view(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('gym_dashboard_app:login')
     error_msg = 'No Data Found'
+    
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
     context = {'current_url': current_url,'error_msg':error_msg}
@@ -206,3 +232,9 @@ def execute_raw_query(query, params=None,):
     finally:
         # Ensure the cursor is closed to release resources
         cursor.close()  # Note: cursor might not be defined if an exception occurs earlier
+
+
+def is_loggedin(request):
+    # Check if the session variable 'is_logged_in' exists and is set to True
+    print("checking if user has logged in or not")
+    return request.session.get('is_gym_logged_in', False)

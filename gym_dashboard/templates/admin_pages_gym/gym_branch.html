@@ -85,10 +85,8 @@
                           <table class="table align-items-center mb-0  table-hover">
                             <thead class="bg-light">
                               <tr>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Branch ID</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Branch Name</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Branch Type</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Gym Branch ID</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Gym Branch Name</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created Date</th>
                                 
                               </tr>
@@ -97,53 +95,34 @@
                               {% for row in query_result%}
                               <tr>
                                 <td class="text-center text-xs">
-                                  {{row.branchid}}
+                                  {{row.gym_branch_id}}
                                 </td>
                                 <td>
                                   
                                   <div class="d-flex px-2 py-1">
                                     
                                     <div class="d-flex flex-column justify-content-center">
-                                      <h6 class="mb-0 text-sm">{{row.branch_name}}</h6>
+                                      <h6 class="mb-0 text-sm">{{row.gym_name}}</h6>
                                       <p class="text-xs text-secondary mb-0">{{row.address}}</p>
                                     </div>
                                   </div>
                                 
                                 
                                 </td>
-                                <td>
-                                  <h6 class="mb-0 text-sm">{{row.branch_type}}</h6>
-                                </td>
-                                <td class="align-middle text-center text-sm">
-                                  <span class="badge badge-sm
-                                  {% if row.status == 1 %} bg-gradient-success {% else %} bg-gradient-danger {% endif %}">
-                                    {% if row.status == 1 %}
-                                    Active
-                                    {% else %}
-                                    In-Active
-                                    {% endif %}
-                                  </span>
-                                </td>
+                                
                                 
                                 <td class="align-middle text-center">
                                   <span class="text-secondary text-xs font-weight-bold">
-                                    {{row.creation_date}}
+                                    {{row.created_date}}
                                   </span>
                                 </td>
                                 <td>
-                                  <form method="post" action="{% url 'dashboard_app:selected_branches' %}">
+                                  <form method="post" action="{% url 'gym_dashboard_app:selected_branches' %}">
                                       {% csrf_token %}
-                                      <input type="hidden" name="branchid" value="{{ row.branchid }}">
-                                      <input type="hidden" name="branch_name" value="{{ row.branch_name }}">
+                                      <input type="hidden" name="gym_branch_id" value="{{ row.gym_branch_id }}">
+                                      <input type="hidden" name="gym_name" value="{{ row.gym_name }}">
                                       <input type="hidden" name="branch_address" value="{{ row.address }}">
-                                      <input type="hidden" name="branch_gstno" value="{{ row.gstno }}">
-                                      <input type="hidden" name="branch_igstno" value="{{ row.igstno }}">
-                                      <input type="hidden" name="branch_city" value="{{ row.city }}">
-                                      <input type="hidden" name="branch_state" value="{{ row.state }}">
-                                      <input type="hidden" name="branch_pincode" value="{{ row.pincode }}">
-                                      <input type="hidden" name="branch_contactno" value="{{ row.contactno }}">
-                                      <input type="hidden" name="branch_admin_name" value="{{ row.admin_name }}">
-                                      <input type="hidden" name="branch_admin_id" value="{{ row.admin_id }}">
+                                      <input type="hidden" name="branch_admin_id" value="{{ row.adminid }}">
                                       <button type="submit" class="btn bg-gradient-info mt-4">
                                         <i class="fa-solid fa-arrow-right"></i>
                                       </button>

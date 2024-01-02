@@ -10,7 +10,10 @@ urlpatterns = [
     path('',views.login_view,name='login'),
     
     #Gym branch Selection
-    path('select_branch/',views.select_branch,name='select_branch'),
+    path('all_gym_branches/',views.all_gym_branches,name='all_gym_branches'),
+    
+    #Save Selected  GYM branch Details in a session
+    path('selected_branches/',views.save_selected_gym_branch,name='selected_branches'),
    
     #Dashboard
     path('dashboard_gym/',views.dashboard_view,name='dashboard'),
