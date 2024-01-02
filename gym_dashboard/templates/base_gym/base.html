@@ -135,63 +135,7 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
     <!-- For Toast Messages  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <!-- <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script> -->
-<!-- 
-    <script>
-      const firebaseConfig = {
-        apiKey: "AIzaSyB377d4_AFRtoEIjpN2Puf3CYwe-I9dCGE",
-        authDomain: "united-armor-b185c.firebaseapp.com",
-        projectId: "united-armor-b185c",
-        storageBucket: "united-armor-b185c.appspot.com",
-        messagingSenderId: "711189707453",
-        appId: "1:711189707453:web:3813986a11e36f830b55d4",
-        measurementId: "G-YYEJHD2GJ1",
-      };
-
-      requestPermission();
-      console.log(firebaseConfig);
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
-      // Initialize Firebase
-      //firebase.initializeApp(firebaseConfig);
-
-      // Initialize Firebase Cloud Messaging and get a reference to the service
-      const messaging = app.messaging();
-
-      messaging
-        .getToken({
-          vapidKey:
-            "AAAApZY1ur0:APA91bHsk-e3OC5R2vqO7dD0WZp7ifULNzqrUPnQu07et7RLFMWWcwOqY9Bl-9YQWkuXUP5nM7bVMgMP-qKISf9Jcf2ix9j7oOkScq9-3BH0hfCH3nIWgkn4hbnmSLyw4pmq66rMZz8R",
-        })
-        .then((currentToken) => {
-          if (currentToken) {
-            // Send the token to your server and update the UI if necessary
-            console.log(currentToken);
-            // ...
-          } else {
-            // Show permission request UI
-            console.log(
-              "No registration token available. Request permission to generate one."
-            );
-            requestPermission();
-            // ...
-          }
-        })
-        .catch((err) => {
-          console.log("An error occurred while retrieving token. ", err);
-          // ...
-        });
-      function requestPermission() {
-        console.log("Requesting permission...");
-        Notification.requestPermission().then((permission) => {
-          if (permission === "granted") {
-            console.log("Notification permission granted.");
-          }
-        });
-      }
-    
-    </script>  -->
+  
   
   </head>
   <body class="g-sidenav-show bg-gray-100">
@@ -206,30 +150,7 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
       </div>
     </div>
 
-    <!-- Modal for notifications -->
-{% comment %} <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="notificationModalLabel">New Booking Notification</h5>
-              <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
-          </div>
-          <div class="modal-body">
-              <img src="{% static 'img/new_notification_image.jpg'%}" id="notificationImage" class="img-fluid" alt="Notification Image" style="height:50%; width: fit-content;">
-              <h6 class="mt-3 d-flex justify-content-center" id="notificationDescription">Yet Delivery is not Accepted / No Delivery Boy was Free </h6>
-              <small class="mt-3 d-flex justify-content-center " id="notificationDescription">Click on the notification Icon and Check weather the Booking ID is Assigned or not. </small>
-              <div id="notificationContent"></div>
-          </div>
-      </div>
-  </div>
-</div>
-
-    <audio id="notificationSound" style="display: none;">
-      <source src="{% static 'audio/new_order_ringtone.mp3' %}" type="audio/mpeg">
-      Your browser does not support the audio element.
-  </audio> {% endcomment %}
+    
   
     <aside
       class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3"
@@ -248,7 +169,7 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
             alt="l"
           />
           {% comment %}
-          <span class="ms-1 font-weight-bold">United Armor</span> {%endcomment %}
+          <span class="ms-1 font-weight-bold">Velvet Gym</span> {%endcomment %}
         </a>
       </div>
       <hr class="horizontal dark mt-0" />
@@ -260,14 +181,14 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
           <li class="nav-item">
             <a
               class="nav-link"
-              href="{% url 'clothing_dashboard_app:dashboard' %}"
-              data-url="{% url 'clothing_dashboard_app:dashboard' %}"
+              href="{% url 'gym_dashboard_app:dashboard' %}"
+              data-url="{% url 'gym_dashboard_app:dashboard' %}"
             >
               <div
                 class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
               >
                 <i
-                  class="fa-solid fa-house-chimney {% if not current_url == '/clothing_dashboard_app/dashboard/' %}text-dark {% endif %}"
+                  class="fa-solid fa-house-chimney {% if not current_url == '/gym_dashboard_app/dashboard_gym/' %}text-dark {% endif %}"
                 ></i>
               </div>
               <span class="nav-link-text ms-1">Dashboard</span>
@@ -276,36 +197,21 @@ messaging.getToken({ vapidKey: "BI8f1hb-vcsbUifpdiNu**********" })
            <li class="nav-item">
             <a
               class="nav-link"
-              href="{% url 'clothing_dashboard_app:all_customers' %}"
-              data-url="{% url 'clothing_dashboard_app:all_customers' %}"
+              href="{% url 'gym_dashboard_app:all_gym_members' %}"
+              data-url="{% url 'gym_dashboard_app:all_gym_members' %}"
             >
               <div
                 class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
               >
                 <i
-                  class="fa-solid fa-users-gear {% if not current_url == '/clothing_dashboard_app/all_customers/' %}text-dark {% endif %}"
+                  class="fa-solid fa-users-gear {% if not current_url == '/gym_dashboard_app/all_gym_members/' %}text-dark {% endif %}"
                 ></i>
               </div>
-              <span class="nav-link-text ms-1">Customers Panel</span>
+              <span class="nav-link-text ms-1">Members</span>
             </a>
           </li>
          
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              href="{% url 'clothing_dashboard_app:all_main_categories' %}"
-              data-url="{% url 'clothing_dashboard_app:all_main_categories' %}"
-            >
-              <div
-                class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
-              >
-                <i
-                  class="fa-solid fa-shirt fa-lg {% if not current_url == '/clothing_dashboard_app/all_main_categories/' %}text-dark{% endif %}"
-                ></i>
-              </div>
-              <span class="nav-link-text ms-1">Category Settings</span>
-            </a>
-          </li> 
+         
           
      
          

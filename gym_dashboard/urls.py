@@ -13,7 +13,7 @@ urlpatterns = [
     path('dashboard_gym/',views.dashboard_view,name='dashboard'),
    
     #All Customers
-    path('all_customers_gym/',views.all_customers,name='all_customers'),
+    path('all_gym_members/',views.all_gym_members,name='all_gym_members'),
    
     
    
