@@ -41,21 +41,21 @@
                     
                     <div class="form-group">
                         <label for="planName">Plan Name</label>
-                        <input type="text" class="form-control" id="planName" name="plan_name" placeholder="Enter New Plan Name">
+                        <input type="text" class="form-control" id="planName" name="plan_name" placeholder="Enter New Plan Name" required>
                     </div>
                     <div class="form-group">
                         <label for="price">Price</label>
-                        <input type="number" class="form-control" id="price" name="plan_price" placeholder="Enter Plan Price">
+                        <input type="number" class="form-control" id="price" name="plan_price" placeholder="Enter Plan Price" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="dsc">Description</label>
-                        <input type="text" class="form-control" id="dsc" name="plan_description" placeholder="Short 4 words description.">
+                        <input type="text" class="form-control" id="dsc" name="plan_description" placeholder="Short 4 words description." required>
                     </div>
 
                     <div class="form-group">
                         <label for="duration">Duration In Months</label>
-                        <input type="text" class="form-control" id="duration" name="duration_in_months" placeholder="Enter Duration in months Ex:[3 Months]">
+                        <input type="text" class="form-control" id="duration" name="duration_in_months" placeholder="Enter Duration in months Ex:[3 Months]" required>
                     </div>
                 </div>
                   <div class="modal-footer">
@@ -145,7 +145,7 @@
                       <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h6 class="modal-title" id="modal-title-default">Updating Fees Plan For [{{row.fees_type}}]</h6>
+                            <h6 class="modal-title" id="modal-title-default">Updating Fees Plan For [{{row.fees_type}}] Plan </h6>
                             <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">×</span>
                             </button>
@@ -159,21 +159,21 @@
                             
                             <div class="form-group">
                                 <label for="planName">Plan Name</label>
-                                <input type="text" class="form-control" id="planName" name="plan_name" placeholder="Enter New Plan Name" value="{{row.fees_type}}">
+                                <input type="text" class="form-control" id="planName" name="plan_name" placeholder="Enter New Plan Name" value="{{row.fees_type}}"  required>
                             </div>
                             <div class="form-group">
                                 <label for="price">Price</label>
-                                <input type="number" class="form-control" id="price" name="plan_price" placeholder="Enter Plan Price" value="{{row.price}}">
+                                <input type="number" class="form-control" id="price" name="plan_price" placeholder="Enter Plan Price" value="{{row.price}}"  required>
                             </div>
                             
                             <div class="form-group">
                                 <label for="dsc">Description</label>
-                                <input type="text" class="form-control" id="dsc" name="plan_description" placeholder="Short 4 words description."  value="{{row.description}}">
+                                <input type="text" class="form-control" id="dsc" name="plan_description" placeholder="Short 4 words description."  value="{{row.description}}"  required>
                             </div>
         
                             <div class="form-group">
                                 <label for="duration">Duration In Months</label>
-                                <input type="text" class="form-control" id="duration" name="duration_in_months" placeholder="Enter Duration in months Ex:[3 Months]"  value="{{row.duration_in_months}}">
+                                <input type="text" class="form-control" id="duration" name="duration_in_months" placeholder="Enter Duration in months Ex:[3 Months]"  value="{{row.duration_in_months}}"  required>
                             </div>
                         </div>
                           <div class="modal-footer">
