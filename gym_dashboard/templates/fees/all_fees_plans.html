@@ -32,8 +32,13 @@
                       <span aria-hidden="true">×</span>
                     </button>
                   </div>
+                  <form
+                  method="post"
+                  action="{% url 'gym_dashboard_app:add_new_fees_plan' %}"
+                >
+                  {% csrf_token %}
                   <div class="modal-body">
-                    <input type="hidden" name="category_id" id="categoryID" value="">
+                    
                     <div class="form-group">
                         <label for="planName">Plan Name</label>
                         <input type="text" class="form-control" id="planName" name="plan_name" placeholder="Enter New Plan Name">
@@ -42,11 +47,22 @@
                         <label for="price">Price</label>
                         <input type="number" class="form-control" id="price" name="plan_price" placeholder="Enter Plan Price">
                     </div>
+                    
+                    <div class="form-group">
+                        <label for="dsc">Description</label>
+                        <input type="text" class="form-control" id="dsc" name="plan_description" placeholder="Short 4 words description.">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="duration">Duration In Months</label>
+                        <input type="text" class="form-control" id="duration" name="duration_in_months" placeholder="Enter Duration in months Ex:[3 Months]">
+                    </div>
                 </div>
                   <div class="modal-footer">
                     <button type="submit" class="btn bg-gradient-success">Add</button>
                     <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
                   </div>
+                </form>
                 </div>
               </div>
             </div>
@@ -62,7 +78,7 @@
                   <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sl No</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Plan Details</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Last Updated Date</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Description</th>
                     
                     <th class="text-secondary opacity-7"></th>
                   </tr>
@@ -88,31 +104,29 @@
                           <img src="{{row.default_images}}" class="avatar avatar-sm me-3" alt="user1">
                         </div>
                         <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-sm">{{row.product_name}}</h6>
-                          <p class="text-xs text-secondary mb-0">{{row.productid}}</p>
+                          <h6 class="mb-0 text-sm">{{row.fees_type}}</h6>
+                          <p class="text-xs text-secondary mb-0">{{row.duration_in_months}}</p>
                         </div>
                       </div>
                     </td>
                     <td>
                       <p class="text-xs font-weight-bold mb-0">₹.{{row.price}}/-</p>
                       
+                      
                     </td>
                     <td>
-                        <p class="text-xs font-weight-bold mb-0 text-center">{{row.max_checkout_qty}}</p>
+                        <p class="text-xs font-weight-bold mb-0 text-center">{{row.description}}</p>
                         
                       </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0 text-center">₹.{{row.offer_price}}/-</p>
-                        
-                      </td>
+                      
                     
                     
                     <td class="align-middle">
                         <div class="row">
                             <div class="col">
                                 {% comment %} <a href="{% url 'dashboard_app:update_customer' row.usrid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user"> {% endcomment %}
-                                <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                    Edit
+                                <a href="" class="text-secondary font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.fdetail_id}}">
+                                    Update
                                   </a>
                             </div>
                             <!-- <div class="col">
@@ -128,29 +142,47 @@
 
                   <div class="col-md-4">
                     
-                    <div class="modal fade" id="modal-default{{row.usrid}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+                    <div class="modal fade" id="modal-default{{row.fdetail_id}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
                       <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h6 class="modal-title" id="modal-title-default">Are you sure you want to delete ?</h6>
+                            <h6 class="modal-title" id="modal-title-default">Updating Fees Plan For [{{row.fees_type}}]</h6>
                             <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">×</span>
                             </button>
                           </div>
+                          <form
+                          method="post"
+                          action="{% url 'gym_dashboard_app:update_fees_plan' row.fdetail_id %}"
+                        >
+                          {% csrf_token %}
                           <div class="modal-body">
-                            <div class="alert  m-4" role="alert">
-                              <strong>Alert! </strong>{{row.usrname}} will be deleted permanantely!
-                          </div>
                             
-                          </div>
+                            <div class="form-group">
+                                <label for="planName">Plan Name</label>
+                                <input type="text" class="form-control" id="planName" name="plan_name" placeholder="Enter New Plan Name" value="{{row.fees_type}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input type="number" class="form-control" id="price" name="plan_price" placeholder="Enter Plan Price" value="{{row.price}}">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="dsc">Description</label>
+                                <input type="text" class="form-control" id="dsc" name="plan_description" placeholder="Short 4 words description."  value="{{row.description}}">
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="duration">Duration In Months</label>
+                                <input type="text" class="form-control" id="duration" name="duration_in_months" placeholder="Enter Duration in months Ex:[3 Months]"  value="{{row.duration_in_months}}">
+                            </div>
+                        </div>
                           <div class="modal-footer">
-                            <form action="" method="post">
-                              {% csrf_token %}
-                              <button type="submit" class="btn bg-gradient-danger">Delete</button>
-                            </form>
-                            
+                            <button type="submit" class="btn bg-gradient-success">Update</button>
                             <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
                           </div>
+                        </form>
+
                         </div>
                       </div>
                     </div>

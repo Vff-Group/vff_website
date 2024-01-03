@@ -27,12 +27,15 @@ urlpatterns = [
     #Update  Gym Member Details
     path('update_gym_member/<int:member_id>/',views.update_gym_member,name='update_gym_member'),
    
-    
-    
-    
-    
     #All Fees Plans
     path('all_fees_plans/',views.all_fees_plans,name='all_fees_plans'),
+    
+    #AddNew Fees Plan
+    path('add_new_fees_plan/',views.add_new_fees_plan,name='add_new_fees_plan'),
+   
+    #Update  Fees Plan
+    path('update_fees_plan/<int:fees_plan_id>/',views.update_fees_plan,name='update_fees_plan'),
+   
    
     
    

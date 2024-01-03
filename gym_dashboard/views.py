@@ -270,13 +270,91 @@ def update_gym_member(request,member_id):
     return render(request,"gym_customer_pages/add_new_member.html",context)
 
 def all_fees_plans(request):
-    error_msg = 'No Fees Plans Found'
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('gym_dashboard_app:login')
+    error_msg = 'No Fees Details Found'
+    gym_branch_id = request.session.get('gym_branch_id')
+    query = "select fdetail_id,fees_type,duration_in_months,price,description from vff.gym_fees_detailstbl where gym_id='"+str(gym_branch_id)+"'"
+    
+    query_result = execute_raw_query(query)
+    
+    
+        
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            data.append({
+                'fdetail_id': row[0],
+                'fees_type': row[1],
+                'duration_in_months': row[2],
+                'price': row[3],
+                'description': row[4],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg}
+
+    return render(request,"fees/all_fees_plans.html",context)
+
+
+def add_new_fees_plan(request):
+    
+    error_msg = 'No Fees Details Found'
+    if request.method == "POST":
+        fees_type = request.POST.get('plan_name')
+        duration_in_months = request.POST.get('duration_in_months')
+        price = request.POST.get('plan_price')
+        description = request.POST.get('plan_description')
+        
+        gym_branch_id = request.session.get('gym_branch_id')
+        
+        try:
+            with connection.cursor() as cursor:
+                insert_query="insert into vff.gym_fees_detailstbl(fees_type,duration_in_months,price,description,gym_id) values ('"+str(fees_type)+"','"+str(duration_in_months)+"','"+str(price)+"','"+str(description)+"','"+str(gym_branch_id)+"')"
+                cursor.execute(insert_query)
+                connection.commit()
+                print("New Fees Plan Added Successfully.")
+                return redirect('gym_dashboard_app:all_fees_plans')
+        except Exception as e:
+            print(f"Error loading data: {e}")
+            
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
     context = {'current_url': current_url,'error_msg':error_msg}
     return render(request,"fees/all_fees_plans.html",context)
+    
 
-
+def update_fees_plan(request,fees_plan_id):
+    
+    error_msg = 'No Fees Details Found'
+    if request.method == "POST":
+        fees_type = request.POST.get('plan_name')
+        duration_in_months = request.POST.get('duration_in_months')
+        price = request.POST.get('plan_price')
+        description = request.POST.get('plan_description')
+        
+        gym_branch_id = request.session.get('gym_branch_id')
+        
+        try:
+            with connection.cursor() as cursor:
+                insert_query="update vff.gym_fees_detailstbl set fees_type='"+str(fees_type)+"',duration_in_months='"+str(duration_in_months)+"',price='"+str(price)+"',description='"+str(description)+"' where fdetail_id='"+str(fees_plan_id)+"'"
+                cursor.execute(insert_query)
+                connection.commit()
+                print(" Fees Plan Updated Successfully.")
+                return redirect('gym_dashboard_app:all_fees_plans')
+        except Exception as e:
+            print(f"Error loading data: {e}")
+            
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"fees/all_fees_plans.html",context)
+    pass 
 
 
 
