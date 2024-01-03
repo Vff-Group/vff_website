@@ -392,7 +392,7 @@
                           <p class="text-xs mb-0 p-1">Sub Total </p>
                         </div>
                         <div class="col-lg-6 d-flex flex-column justify-content-end align-items-end">
-                          <small class="text-primary">₹{{sub_total}}/-</small>
+                          <small id="subtotal" class="text-primary">₹{{sub_total}}/-</small>
                         </div>
                       </div>
 
@@ -835,10 +835,14 @@ $('#tax-total').text('Rs.0/-');
   if(!isNaN(discountAmount)){
     $('#discount-amount').text('Rs.0/-');
   }
+// Get the element by its ID
+const subtotalElement = document.getElementById('subtotal');
+// Extract the text content from the HTML element
+const subTotalText = subtotalElement.textContent.trim();
 
-  subTotal = sub_total;
-  grossTotal = sub_total;
-  $('#sub-total').text('Rs.'+sub_total.toFixed(2)+'/-');
+  subTotal = subTotalText;
+  grossTotal = subTotal;
+  $('#sub-total').text('Rs.'+subTotal.toFixed(2)+'/-');
   $('#gross-total').text('Rs.'+grossTotal+'/-');
 
   //Delivery Charges Calculation
