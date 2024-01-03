@@ -935,217 +935,220 @@ $('#tax-total').text('Rs.0/-');
                 e.preventDefault();
             }
 
-            function payment_show(totalPayment){
-              console.log('PaytotalPayment::'+totalPayment);
-              var options = {
-                
-                  "key": "rzp_live_SeGnLgb5JnY8Id", // Enter the Key ID generated from the Dashboard rzp_test_qtHIWapeUEAAZO
-                  "amount": (totalPayment * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-                  "currency": "INR",
-                  "name": "VFF Group", //your business name
-                  "description": "Laundry Service Charges",
-                  "image": "https://vff-group.com/static/images/logo.png",
-                  "handler": function (response){
-                      payment_id =  response.razorpay_payment_id;
-                      order_status = "Payment Done";
-                      payment_status = "Success";
-                      isPaymentDone = true;
-                      //GSTamount = 0
-                      //IGSTamount = 0
-                      //GSTamount = ((totalPayment * 18)/100);
-                      //var gstAmountLabel = $('#tax-total');
-                      //gstAmountLabel.text('Rs.' + GSTamount.toFixed(2) + '/-');
-                      
-                      // Update the payment ID input
-                      $('#input-paymentid').val(payment_id);
-                      disableElements();
-                      //alert(response.razorpay_payment_id);
-                      //alert(response.razorpay_order_id);
-                      //alert(response.razorpay_signature)
-                  },
-                  
-                  "notes": {
-                      "address": "Tilakwadi"
-                  },
-                  "theme": {
-                      "color": "#3399cc"
-                  }
-              };
-              var rzp1 = new Razorpay(options);
-              rzp1.on('payment.failed', function (response){
-                    //  alert(response.error.code);
-                      alert(response.error.description);
-                      //alert(response.error.source);
-                      //alert(response.error.step);
-                      //alert(response.error.reason);
-                     // alert(response.error.metadata.order_id);
-                      //alert(response.error.metadata.payment_id);
-              });
-              rzp1.open();
-              /*document.getElementById('pay-button').onclick = function(e){
-                  rzp1.open();
-                  e.preventDefault();
-              }*/
-          }
-   
-          // Event listener for GST checkbox
+       
+
+});
+//End of Payment Controls
+
+function payment_show(totalPayment){
+  console.log('PaytotalPayment::'+totalPayment);
+  var options = {
+    
+      "key": "rzp_live_SeGnLgb5JnY8Id", // Enter the Key ID generated from the Dashboard rzp_test_qtHIWapeUEAAZO
+      "amount": (totalPayment * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      "currency": "INR",
+      "name": "VFF Group", //your business name
+      "description": "Laundry Service Charges",
+      "image": "https://vff-group.com/static/images/logo.png",
+      "handler": function (response){
+          payment_id =  response.razorpay_payment_id;
+          order_status = "Payment Done";
+          payment_status = "Success";
+          isPaymentDone = true;
+          //GSTamount = 0
+          //IGSTamount = 0
+          //GSTamount = ((totalPayment * 18)/100);
+          //var gstAmountLabel = $('#tax-total');
+          //gstAmountLabel.text('Rs.' + GSTamount.toFixed(2) + '/-');
+          
+          // Update the payment ID input
+          $('#input-paymentid').val(payment_id);
+          disableElements();
+          //alert(response.razorpay_payment_id);
+          //alert(response.razorpay_order_id);
+          //alert(response.razorpay_signature)
+      },
+      
+      "notes": {
+          "address": "Tilakwadi"
+      },
+      "theme": {
+          "color": "#3399cc"
+      }
+  };
+  var rzp1 = new Razorpay(options);
+  rzp1.on('payment.failed', function (response){
+        //  alert(response.error.code);
+          alert(response.error.description);
+          //alert(response.error.source);
+          //alert(response.error.step);
+          //alert(response.error.reason);
+         // alert(response.error.metadata.order_id);
+          //alert(response.error.metadata.payment_id);
+  });
+  rzp1.open();
+  /*document.getElementById('pay-button').onclick = function(e){
+      rzp1.open();
+      e.preventDefault();
+  }*/
+}
+
+// Event listener for GST checkbox
 $('#includeGST').change(function() {
-  updateTaxAmount();
+updateTaxAmount();
 });
 
 // Event listener for IGST checkbox
 $('#includeIGST').change(function() {
-  updateTaxAmount();
+updateTaxAmount();
 });
 
 // Function to update tax amount based on checkbox state
 function updateTaxAmount() {
-  if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-    totalPayment = parseFloat(discountedAmount).toFixed(2);
-    grossTotal = discountedAmount;
+if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+totalPayment = parseFloat(discountedAmount).toFixed(2);
+grossTotal = discountedAmount;
 }else{
-    
-    totalPayment = parseFloat(grossTotal).toFixed(2);
+
+totalPayment = parseFloat(grossTotal).toFixed(2);
 }
-  //totalPayment = parseFloat(subTotal).toFixed(2);  
-  var gstCheckbox = $('#includeGST');
-  var igstCheckbox = $('#includeIGST');
-  var gstAmountLabel = $('#tax-total');
-  var gstTotal = 0;
-  // Check if either GST or IGST is selected 
-  if (gstCheckbox.prop('checked') || igstCheckbox.prop('checked')) {
-    
-    // Calculate GST amount
-    if(igstCheckbox.prop('checked')){
-      GSTamount = 0;
-      gstTotal = 0;
-      igstCheckbox.prop('disabled',false);
-      gstCheckbox.prop('disabled',true);
-      IGSTamount = (totalPayment * 18) / 100;  
-      gstTotal = IGSTamount;
-      //if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-        //discountedAmount -=gstTotal
-      //}else{
-        //grossTotal -= gstTotal;
-      //}
-    }else{
-      IGSTamount = 0;
-      gstTotal = 0;
-      gstCheckbox.prop('disabled',false);
-      igstCheckbox.prop('disabled',true);
-      GSTamount = (totalPayment * 18) / 100;
-      gstTotal = GSTamount;
-      //if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-        //discountedAmount -=gstTotal
-      //}else{
-        //grossTotal -= gstTotal;
-      //}
-    }
-    
-    
-    gstAmountLabel.text('Rs.' + gstTotal.toFixed(2) + '/-');
-    //$('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
-  } else {
-    gstAmountLabel.text('Rs.0/-');
-    
-    if(GSTamount !== 0){
-      IGSTamount = 0;
-      igstCheckbox.prop('disabled',false);
-      //if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-        //discountedAmount -=GSTamount;
-      //}else{
-       // grossTotal -= GSTamount;
-     // }
-    
-    }else{
-      GSTamount = 0;
-      gstCheckbox.prop('disabled',false);
-      //if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-        //discountedAmount -=IGSTamount;
-      //}else{
-        //grossTotal -= IGSTamount;
-      //}
-    }
+//totalPayment = parseFloat(subTotal).toFixed(2);  
+var gstCheckbox = $('#includeGST');
+var igstCheckbox = $('#includeIGST');
+var gstAmountLabel = $('#tax-total');
+var gstTotal = 0;
+// Check if either GST or IGST is selected 
+if (gstCheckbox.prop('checked') || igstCheckbox.prop('checked')) {
 
-    
-    //if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+// Calculate GST amount
+if(igstCheckbox.prop('checked')){
+GSTamount = 0;
+gstTotal = 0;
+igstCheckbox.prop('disabled',false);
+gstCheckbox.prop('disabled',true);
+IGSTamount = (totalPayment * 18) / 100;  
+gstTotal = IGSTamount;
+//if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+//discountedAmount -=gstTotal
+//}else{
+//grossTotal -= gstTotal;
+//}
+}else{
+IGSTamount = 0;
+gstTotal = 0;
+gstCheckbox.prop('disabled',false);
+igstCheckbox.prop('disabled',true);
+GSTamount = (totalPayment * 18) / 100;
+gstTotal = GSTamount;
+//if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+//discountedAmount -=gstTotal
+//}else{
+//grossTotal -= gstTotal;
+//}
+}
 
-      //$('#gross-total').text('Rs.'+discountedAmount.toFixed(2)+'/-');
-    //}else{
-      //$('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
-    //}
-  }
 
-  
+gstAmountLabel.text('Rs.' + gstTotal.toFixed(2) + '/-');
+//$('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
+} else {
+gstAmountLabel.text('Rs.0/-');
 
-  
+if(GSTamount !== 0){
+IGSTamount = 0;
+igstCheckbox.prop('disabled',false);
+//if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+//discountedAmount -=GSTamount;
+//}else{
+// grossTotal -= GSTamount;
+// }
+
+}else{
+GSTamount = 0;
+gstCheckbox.prop('disabled',false);
+//if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+//discountedAmount -=IGSTamount;
+//}else{
+//grossTotal -= IGSTamount;
+//}
+}
+
+
+//if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+
+//$('#gross-total').text('Rs.'+discountedAmount.toFixed(2)+'/-');
+//}else{
+//$('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
+//}
+}
+
+
+
+
 }
 
 $("#pay-button").click(function(e) {
-  // Check if payment mode is not selected
-  if ($("#input-paymentmode").val() === "Choose Payment Mode") {
-      // Add the "is-invalid" class to the payment mode dropdown
-      $("#input-paymentmode").addClass("is-invalid");
-      // You can also show an error message or perform other actions
+// Check if payment mode is not selected
+if ($("#input-paymentmode").val() === "Choose Payment Mode") {
+// Add the "is-invalid" class to the payment mode dropdown
+$("#input-paymentmode").addClass("is-invalid");
+// You can also show an error message or perform other actions
 
-      // Prevent the form submission
-       
-       e.preventDefault();
-      } else {
-          // If a valid selection is made, add the "is-valid" class
-          $("#input-paymentmode").removeClass("is-invalid").addClass("is-valid");
-      }
+// Prevent the form submission
+
+e.preventDefault();
+} else {
+// If a valid selection is made, add the "is-valid" class
+$("#input-paymentmode").removeClass("is-invalid").addClass("is-valid");
+}
 });
 
 
 
 // Event listener for the payment mode selection
 $('#input-paymentmode').change(function() {
-    var paymentMode = $(this).val();
-    var paymentIdContainer = $('#payment-id-container');
-    var gstContainer = $('#gst-container');
-    paymentType = paymentMode;
-    // Check if the payment mode is 'Cash' and hide the 'Pay Now' button
-    if (paymentMode === 'Cash') {
-      order_status = "Payment Done";
-      
-      payment_status = "Success";
-        $('#pay-button').hide();
-        //gstContainer.show();
-         // If the payment mode is "Cash," hiding the payment ID container
-         paymentIdContainer.hide();
-    } else if(paymentMode === 'Pay Later'){
-      order_status = "Payment Not Done";
-      payment_status = "Not Success";
-      
-    }else {
-        $('#pay-button').show();
-        //gstContainer.hide();
-        // If the payment mode is not "Cash," show the payment ID container
-        paymentIdContainer.show();
-    }
+var paymentMode = $(this).val();
+var paymentIdContainer = $('#payment-id-container');
+var gstContainer = $('#gst-container');
+paymentType = paymentMode;
+// Check if the payment mode is 'Cash' and hide the 'Pay Now' button
+if (paymentMode === 'Cash') {
+order_status = "Payment Done";
+
+payment_status = "Success";
+$('#pay-button').hide();
+//gstContainer.show();
+// If the payment mode is "Cash," hiding the payment ID container
+paymentIdContainer.hide();
+} else if(paymentMode === 'Pay Later'){
+order_status = "Payment Not Done";
+payment_status = "Not Success";
+
+}else {
+$('#pay-button').show();
+//gstContainer.hide();
+// If the payment mode is not "Cash," show the payment ID container
+paymentIdContainer.show();
+}
 });
 
 // Function to disable elements
 function disableElements() {
-    // Disable "Pay Now" button
-    $("#pay-button").prop("disabled", true);
+// Disable "Pay Now" button
+$("#pay-button").prop("disabled", true);
 
-    // Disable payment mode select dropdown
-    $("#input-paymentmode").prop("disabled", true);
+// Disable payment mode select dropdown
+$("#input-paymentmode").prop("disabled", true);
 
-     // Disable discount input box
-     $("#discounted-input").prop("disabled", true);
-     
-     // Disable Cancel
-     $("#cancel-btn").prop("disabled", true);
+// Disable discount input box
+$("#discounted-input").prop("disabled", true);
 
-     //Disable Delivery Charges Input Box
-     $("#delivery-input").prop("disabled", true);
+// Disable Cancel
+$("#cancel-btn").prop("disabled", true);
+
+//Disable Delivery Charges Input Box
+$("#delivery-input").prop("disabled", true);
 }
 
-});
-//End of Payment Controls
 </script>
 {% endblock  %}
 
