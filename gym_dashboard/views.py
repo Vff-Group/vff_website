@@ -275,7 +275,7 @@ def all_fees_plans(request):
         return redirect('gym_dashboard_app:login')
     error_msg = 'No Fees Details Found'
     gym_branch_id = request.session.get('gym_branch_id')
-    query = "select fdetail_id,fees_type,duration_in_months,price,description from vff.gym_fees_detailstbl where gym_id='"+str(gym_branch_id)+"'"
+    query = "select fdetail_id,fees_type,duration_in_months,price,description from vff.gym_fees_detailstbl where gym_id='"+str(gym_branch_id)+"'  order by fdetail_id"
     
     query_result = execute_raw_query(query)
     
