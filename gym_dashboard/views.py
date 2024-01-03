@@ -172,9 +172,102 @@ def all_gym_members(request):
 
 def add_new_gym_member(request):
     error_msg = 'No Members Found'
+    if request.method == "POST":
+        uname = request.POST.get('fullname')
+        email_id = request.POST.get('email_id')
+        primary_mobno = request.POST.get('primaryno')
+        age = request.POST.get('age')
+        password = request.POST.get('password')
+        gender = request.POST.get('gender')
+        address = request.POST.get('fulladdress')
+        pin_code = request.POST.get('pincode')
+        land_mark = request.POST.get('landmark')
+        date_of_birth = request.POST.get('dateofbirth')
+        date_of_joining = request.POST.get('dateofjoining')
+        due_date = request.POST.get('duedate')
+        uploaded_image = request.FILES.get('profile-image1')
+        gym_branch_id = request.session.get('gym_branch_id')
+        if uploaded_image:
+            image_url = upload_images2(uploaded_image)
+        else:
+            # Handle the case where there's no uploaded image and no previous image
+            image_url = 'https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg'  # Set it to a default value or handle accordingly
+        try:
+            with connection.cursor() as cursor:
+                insert_query="insert into (name,email,mobno,date_of_birth,join_date,gender,password,gymid,due_date,profile_image,address,pincode,landmark,age)"
+                +" values ('"+str(uname)+"','"+str(email_id)+"','"+str(primary_mobno)+"','"+str(date_of_birth)+"','"+str(date_of_joining)+"','"+str(gender)+"','"+str(password)+"','"+str(gym_branch_id)+"','"+str(due_date)+"','"+str(image_url)+"','"+str(address)+"','"+str(pin_code)+"',,'"+str(land_mark)+"','"+str(age)+"')"
+                cursor.execute(insert_query)
+                connection.commit()
+                print("Member Added Successfully.")
+                return redirect('gym_dashboard_app:all_gym_members')
+        except Exception as e:
+            print(f"Error loading data: {e}")
+            
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
     context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"gym_customer_pages/add_new_member.html",context)
+
+def update_gym_member(request,member_id):
+    error_msg = 'No Members Found'
+    current_url = request.get_full_path()
+    data = {}
+    if member_id:
+        query = "select name,email,mobno,date_of_birth,join_date,gender,password,due_date,profile_image,address,pincode,landmark,age from vff.gym_memberstbl where memberid='"+str(member_id)+"'"
+        result = execute_raw_query_fetch_one(query)
+        if result:   
+            data = {
+                'fullname' : result[0],
+                'email' : result[1],
+                'primaryno' : result[2],
+                'dateofbirth' : result[3],
+                'dateofjoining' : result[4],
+                'gender' : result[5],
+                'password' : result[6],
+                'due_date' : result[7],
+                'profile_img' : result[8],
+                'fulladdress' : result[9],
+                'pincode' : result[10],
+                'landmark' : result[11],
+                'age' : result[12],
+            }
+       
+            
+    if request.method == "POST":
+        uname = request.POST.get('fullname')
+        email_id = request.POST.get('email_id')
+        primary_mobno = request.POST.get('primaryno')
+        age = request.POST.get('age')
+        password = request.POST.get('password')
+        gender = request.POST.get('gender')
+        address = request.POST.get('fulladdress')
+        pin_code = request.POST.get('pincode')
+        land_mark = request.POST.get('landmark')
+        date_of_birth = request.POST.get('dateofbirth')
+        date_of_joining = request.POST.get('dateofjoining')
+        due_date = request.POST.get('duedate')
+        uploaded_image = request.FILES.get('profile-image1')
+        gym_branch_id = request.session.get('gym_branch_id')
+        if uploaded_image:
+            image_url = upload_images2(uploaded_image)
+        elif data.get('profile_img'):
+            image_url = data.get('profile_img')
+        else:
+            # Handle the case where there's no uploaded image and no previous image
+            image_url = 'https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg'  # Set it to a default value or handle accordingly
+        try:
+            with connection.cursor() as cursor:
+                insert_query="update vff.gym_memberstbl set name='"+str(uname)+"',email='"+str(email_id)+"',mobno='"+str(primary_mobno)+"',date_of_birth='"+str(date_of_birth)+"',join_date='"+str(date_of_joining)+"',gender='"+str(gender)+"',password='"+str(password)+"',due_date='"+str(due_date)+"',profile_image='"+str(image_url)+"',address='"+str(address)+"',pincode='"+str(pin_code)+"',landmark='"+str(land_mark)+"',age='"+str(age)+"' where memberid='"+str(member_id)+"'"
+                cursor.execute(insert_query)
+                connection.commit()
+                print("Member Updated Successfully.")
+                return redirect('gym_dashboard_app:all_gym_members')
+        except Exception as e:
+            print(f"Error loading data: {e}")
+            
+    
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg,'data':data}
     return render(request,"gym_customer_pages/add_new_member.html",context)
 
 def all_fees_plans(request):

@@ -21,8 +21,11 @@ urlpatterns = [
     #All GYM Members
     path('all_gym_members/',views.all_gym_members,name='all_gym_members'),
    
-    #Add New GYm Member
+    #AddNew Gym Member
     path('add_new_gym_member/',views.add_new_gym_member,name='add_new_gym_member'),
+   
+    #Update  Gym Member Details
+    path('update_gym_member/<int:member_id>/',views.update_gym_member,name='update_gym_member'),
    
     
     

@@ -101,7 +101,34 @@ Add New Member Details
 
         </div>
       </div>
-     
+      <hr class="my-4" />
+      <!-- Other Information -->
+      <h6 class="heading-small text-muted mb-4">Other Information</h6>
+      <div class="pl-lg-4">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label for="date-of-due-date" class="form-control-label">Next Due Date</label>
+                    <input class="form-control form-control-alternative" type="date"  id="date-of-due-date" name="duedate" value="{{ data.due_date|date:'Y-m-d' }}" required>
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-email">Email</label>
+                  <input id="input-email" class="form-control form-control-alternative" placeholder="Login Email"  type="text" name="email_id" value="{{ data.email|default:'' }}"  required>
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-password">Password</label>
+                  <input id="input-password" class="form-control form-control-alternative" placeholder="Login Password"  type="text" name="password" value="{{ data.password|default:'' }}"  required>
+                </div>
+              </div>
+
+        </div>
+
       <hr class="my-4" />
       <!-- Address -->
       <h6 class="heading-small text-muted mb-4">Contact information</h6>
@@ -132,6 +159,8 @@ Add New Member Details
           
       </div>
       <hr class="my-4" />
+     
+
       <!-- Display the uploaded image -->
 <div id="uploaded-image-container">
     <img src="#" id="uploaded-image" alt="Uploaded Image" style="display: none;">

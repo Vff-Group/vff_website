@@ -514,9 +514,9 @@ def add_customer(request,usrid=None):
             image_url = data.get('profile_img')
         else:
             # Handle the case where there's no uploaded image and no previous image
-            image_url = 'NA'  # Set it to a default value or handle accordingly
+            image_url = 'https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg'  # Set it to a default value or handle accordingly
             
-        # image_url = 'NA'
+        # image_url = 'https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg'
         # if request.FILES.get('profile-image1'):
         #         uploaded_image = request.FILES['profile-image1']
         #         image_url = upload_images2(uploaded_image)
@@ -650,9 +650,9 @@ def add_staff(request,usrid=None):
             image_url = data.get('profile_img')
         else:
             # Handle the case where there's no uploaded image and no previous image
-            image_url = 'NA'  # Set it to a default value or handle accordingly
+            image_url = 'https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg'  # Set it to a default value or handle accordingly
             
-        # image_url = 'NA'
+        # image_url = 'https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg'
         # if request.FILES.get('profile-image1'):
         #         uploaded_image = request.FILES['profile-image1']
         #         image_url = upload_images2(uploaded_image)
@@ -905,7 +905,7 @@ def add_delivery_agent(request,usrid=None):
             image_url = data.get('profile_img')
         else:
             # Handle the case where there's no uploaded image and no previous image
-            image_url = 'NA'  # Set it to a default value or handle accordingly
+            image_url = 'https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg'  # Set it to a default value or handle accordingly
             
         # if request.FILES.get('delivery-image'):
         #     uploaded_image = request.FILES['delivery-image']
@@ -2735,9 +2735,9 @@ def add_new_branch(request,branch_id=None,usr_id=None):
             image_url = data.get('profile_img')
         else:
             # Handle the case where there's no uploaded image and no previous image
-            image_url = 'NA'  # Set it to a default value or handle accordingly
+            image_url = 'https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg'  # Set it to a default value or handle accordingly
             
-        # image_url = 'NA'
+        # image_url = 'https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg'
         # if request.FILES.get('profile-image1'):
         #         uploaded_image = request.FILES['profile-image1']
         #         image_url = upload_images2(uploaded_image)
@@ -4280,7 +4280,7 @@ def add_category(request, catid=None):
             image_url = data.get('categoryimg')
         else:
             # Handle the case where there's no uploaded image and no previous image
-            image_url = 'NA'  # Set it to a default value or handle accordingly
+            image_url = 'https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg'  # Set it to a default value or handle accordingly
 
         try:
             with connection.cursor() as cursor:
@@ -4443,7 +4443,7 @@ def add_sub_category(request, catid,catname):
             image_url = data.get('sub_cat_img')
         else:
             # Handle the case where there's no uploaded image and no previous image
-            image_url = 'NA'  # Set it to a default value or handle accordingly
+            image_url = 'https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg'  # Set it to a default value or handle accordingly
 
         try:
             with connection.cursor() as cursor:
@@ -4507,7 +4507,7 @@ def update_sub_category(request, catid,subcatid,catname):
             image_url = data.get('sub_cat_img')
         else:
             # Handle the case where there's no uploaded image and no previous image
-            image_url = 'NA'  # Set it to a default value or handle accordingly
+            image_url = 'https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg'  # Set it to a default value or handle accordingly
 
         try:
             with connection.cursor() as cursor:
