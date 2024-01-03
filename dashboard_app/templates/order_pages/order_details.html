@@ -1168,11 +1168,6 @@ $("#delivery-input").prop("disabled", true);
 // Initialize form validation for your form
 $('#order-form').validate({
   rules: {
-      // Define validation rules for your form fields
-      //'dateofdelivery': {
-        //required: 'Please select a delivery date',
-        //dateLessThanToday: 'Delivery date must be today or later'
-    //},
      
       'input-paymentmode': 'required',
       // Add rules for other form fields
@@ -1220,18 +1215,7 @@ if (payment_id === '') {
 }
 
 
-  if(add_information === ""){
-      add_information = 'NA';
-  }
-  var customer_id = selected_customer_id.value.trim()
-  var customer_name = customer_name_input.value.trim()
   
-
-  if(customer_id === ""){
-    
-      showToast('Alert','Please Search customer before adding any items');
-      return;
-  }
 
   if(discountedAmount !== 0 && !isNaN(discountedAmount)){
     totalPayment = parseFloat(discountedAmount).toFixed(0);
@@ -1246,24 +1230,17 @@ if (payment_id === '') {
 
       // Create a JSON object with the form data
       const dictMap = {
-          'booking_id': generated_booking_id,
-          'customer_id' : customer_id,
+          'order_id': order_id,
           'delivery_price': delivery_charges,
           'discount_price': discountAmount,
           'total_price': totalPayment,
-          'total_items': grossQuantity,
-          'order_status': order_status,//"Payment Done"
+          'order_status': "Payment Done",
           'gstamount': GSTamount,
           'igstamount': IGSTamount,
           'razor_pay_id': payment_id,
           'payment_status': payment_status,
           'payment_type': paymentType,
-          'extra_items': extraItems,
-          'additional_instruction': add_information,
-          'dateofdelivery': date_of_delivery,
-          'wantsDelivery':wantsDelivery,
-          'orderTakenOn':orderTakenOn,
-          'payment_done':isPaymentDone,
+          
           // Add other form fields to the JSON object
       };
       console.log('dictMap::'+JSON.stringify(dictMap));
@@ -1274,7 +1251,7 @@ if (payment_id === '') {
       const csrfToken = getCSRFToken();
       $.ajax({
           type: 'POST',
-          url: '/admin_dashboard/place_new_order/', 
+          url: '/admin_dashboard/update_payment_details_for_order/', 
           data: JSON.stringify(dictMap),
       headers: {
           'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
@@ -1284,7 +1261,7 @@ if (payment_id === '') {
              console.log('Success:'+JSON.stringify(data.html))
 
              // Redirect to the "all counter orders" URL
-            window.location.replace('/admin_dashboard/all_orders');
+            window.location.replace('/admin_dashboard/all_orders/');
 
   // Open a new tab for printing
   //var newTab = window.open();

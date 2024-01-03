@@ -88,6 +88,8 @@ urlpatterns = [
     path('load_extra_items/',views.load_extra_items,name='load_extra_items'),
     #Place Order
     path('place_new_order/',views.place_new_order,name='place_new_order'),
+    #Update Order After Payment for Pay Later
+    path('update_payment_details_for_order/',views.update_payment_details_for_order,name='update_payment_details_for_order'),
     
     #Offers Pages
     path('all_offers/',views.all_offers,name='all_offers'),

@@ -3266,6 +3266,64 @@ def place_new_order(request):
     return JsonResponse({'html':'html'})
     #return redirect('dashboard_app:all_orders')
 
+#Update Payment Details After Order is Payed
+def update_payment_details_for_order(request):
+    
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    
+    
+    error_msg = "Something Went Wrong"
+    if request.method == "POST":
+        jdict = json.loads(request.body)
+        order_id = jdict['order_id']
+        delivery_price = jdict['delivery_price']
+        discount_price = jdict['discount_price']
+        gstamount = jdict['gstamount']
+        igstamount = jdict['igstamount']
+        total_price = jdict['total_price']
+        order_status = jdict['order_status']
+        razor_pay_id = jdict['razor_pay_id']
+        payment_status = jdict['payment_status']
+        payment_type = jdict['payment_type']
+        
+        #OnCounter
+        branch_id = request.session.get('branchid')
+        print(f'total_price::{total_price}')
+        try:
+            with connection.cursor() as cursor:
+                #Insert Record into Order Table First to Generate Order ID
+                #Adding delivery_boyid = 1 for counter orders only
+                query_order = "update vff.laundry_ordertbl set price='"+str(total_price)+"',order_status='"+str(order_status)+"',delivery_price='"+str(delivery_price)+"',discount_price='"+str(discount_price)+"',gstamount='"+str(gstamount)+"',igstamount='"+str(igstamount)+"',payment_done='1' where orderid='"+str(order_id)+"'"
+                cursor.execute(query_order)
+                
+                connection.commit()
+                
+                #Insert record in payment table with razorpay_payment_id
+                
+                query_payment = "insert into vff.laundry_payment_tbl(order_id,razor_pay_payment_id,status,payment_type,branch_id) values ('"+str(order_id)+"','"+str(razor_pay_id)+"','"+str(payment_status)+"','"+str(payment_type)+"','"+str(branch_id)+"')"
+                print(f'insert payment::{query_payment}')
+                cursor.execute(query_payment)
+                connection.commit()
+                
+                    
+                #Update Order status
+                update_order_status_while_placing_order(request,order_id,order_status)
+                    
+
+                
+        except Exception as e:
+            print(f"Error Updateing Order Details After Payment: {e}")
+            error_msg = 'Something went wrong'
+            return JsonResponse({'error':error_msg})
+        
+            
+
+    
+    return JsonResponse({'html':'html'})
+    #return redirect('dashboard_app:all_orders')
+
 def update_order_status_while_placing_order(request,order_id,status):
     try:
         with connection.cursor() as cursor:
