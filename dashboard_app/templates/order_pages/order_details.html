@@ -396,8 +396,8 @@
                           <input
                             class="form-control form-control-alternative"
                             type="hidden"
-                            id="sub-total"
-                            name="sub_total"
+                            id="subtotal"
+                            
                             value="{{sub_total}}"
                         />
                         </div>
@@ -843,7 +843,7 @@ $('#tax-total').text('Rs.0/-');
     $('#discount-amount').text('Rs.0/-');
   }
 // Get the element by its ID
-const subtotalElement = document.getElementById('sub-total').value;
+const subtotalElement = document.getElementById('subtotal').value;
 // Extract the text content from the HTML element
 const subTotalText = parseFloat(subtotalElement);
 
