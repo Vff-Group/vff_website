@@ -1081,6 +1081,24 @@ function updateTaxAmount() {
   
 }
 
+$("#pay-button").click(function(e) {
+  // Check if payment mode is not selected
+  if ($("#input-paymentmode").val() === "Choose Payment Mode") {
+      // Add the "is-invalid" class to the payment mode dropdown
+      $("#input-paymentmode").addClass("is-invalid");
+      // You can also show an error message or perform other actions
+
+      // Prevent the form submission
+       
+       e.preventDefault();
+      } else {
+          // If a valid selection is made, add the "is-valid" class
+          $("#input-paymentmode").removeClass("is-invalid").addClass("is-valid");
+      }
+});
+
+
+
 // Event listener for the payment mode selection
 $('#input-paymentmode').change(function() {
     var paymentMode = $(this).val();
