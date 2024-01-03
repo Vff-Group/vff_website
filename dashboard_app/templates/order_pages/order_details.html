@@ -836,8 +836,9 @@ $('#tax-total').text('Rs.0/-');
     $('#discount-amount').text('Rs.0/-');
   }
 
-  subTotal = grossTotal;
-  $('#sub-total').text('Rs.'+subTotal.toFixed(2)+'/-');
+  subTotal = sub_total;
+  grossTotal = sub_total;
+  $('#sub-total').text('Rs.'+sub_total.toFixed(2)+'/-');
   $('#gross-total').text('Rs.'+grossTotal+'/-');
 
   //Delivery Charges Calculation
