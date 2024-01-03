@@ -104,6 +104,13 @@
                             
                             value="{{sub_total}}"
                         />
+                        <input
+                            class="form-control form-control-alternative"
+                            type="hidden"
+                            id="orderid"
+                            
+                            value="{{order_id}}"
+                        />
                 <p class="mb-0"><small id="addons-total">Rs.0/-</small></p>
                 <p class="mb-0"><small id="delivery-charges">Rs.0/-</small></p>
                 <p class="mb-0"><small id="discount-amount">Rs.0/-</small></p>
@@ -820,6 +827,7 @@ var delivery_range = 0;
 var delivery_charges = 0;
 var totalPayment = 0;
 var wantsDelivery = 0;
+var order_id = '-1';
 var payment_id = "";
 var paymentType = "";
 
@@ -845,6 +853,8 @@ $('#tax-total').text('Rs.0/-');
   }
 // Get the element by its ID
 const subtotalElement = document.getElementById('subtotal').value;
+order_id = document.getElementById('orderid').value;
+
 // Extract the text content from the HTML element
 const subTotalText = parseFloat(subtotalElement);
 
@@ -1212,6 +1222,11 @@ if (payment_id === '') {
   showToast('Alert', 'Please Pay before placing the order as you have selected Payment Mode Other than Cash');
   return;
 }
+}
+
+if(order_id ==='-1'){
+  showToast('Alert', 'Order ID Not Found Please Refresh the page');
+  return;
 }
 
 
