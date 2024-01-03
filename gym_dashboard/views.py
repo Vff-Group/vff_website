@@ -194,8 +194,7 @@ def add_new_gym_member(request):
             image_url = 'https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg'  # Set it to a default value or handle accordingly
         try:
             with connection.cursor() as cursor:
-                insert_query="insert into (name,email,mobno,date_of_birth,join_date,gender,password,gymid,due_date,profile_image,address,pincode,landmark,age)"
-                +" values ('"+str(uname)+"','"+str(email_id)+"','"+str(primary_mobno)+"','"+str(date_of_birth)+"','"+str(date_of_joining)+"','"+str(gender)+"','"+str(password)+"','"+str(gym_branch_id)+"','"+str(due_date)+"','"+str(image_url)+"','"+str(address)+"','"+str(pin_code)+"',,'"+str(land_mark)+"','"+str(age)+"')"
+                insert_query="insert into (name,email,mobno,date_of_birth,join_date,gender,password,gymid,due_date,profile_image,address,pincode,landmark,age) values ('"+str(uname)+"','"+str(email_id)+"','"+str(primary_mobno)+"','"+str(date_of_birth)+"','"+str(date_of_joining)+"','"+str(gender)+"','"+str(password)+"','"+str(gym_branch_id)+"','"+str(due_date)+"','"+str(image_url)+"','"+str(address)+"','"+str(pin_code)+"','"+str(land_mark)+"','"+str(age)+"')"
                 cursor.execute(insert_query)
                 connection.commit()
                 print("Member Added Successfully.")
