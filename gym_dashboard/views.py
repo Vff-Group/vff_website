@@ -303,7 +303,7 @@ def upload_images2(uploaded_image):
     file_extension = mimetypes.guess_extension(uploaded_image.content_type)
 
     # Construct the custom image name with the unique identifier and original extension
-    custom_image_name = f'gym_member_{unique_identifier}{file_extension}'
+    custom_image_name = f'gym-member-{unique_identifier}{file_extension}'
     # Assuming you have a MEDIA_ROOT where the images will be stored
     file_path = os.path.join(settings.MEDIA_ROOT, custom_image_name)
 
