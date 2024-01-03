@@ -801,32 +801,32 @@ function showToast(message, bodyContent) {
 }
 
 
+var grossTotal = 0; // Total amount
+var subTotal = 0; // Total amount
+var grossQuantity = 0; // Total Quantity
+var orderTakenOn = ""; // Order Taken On
+var order_status = ""; // Order Status
+var payment_status = ""; // Payment Status
+var isPaymentDone = false; // Payment Done Status true or false
+var GSTamount = 0; // Total GST
+var IGSTamount = 0; // Total IGST
+var addOnsTotal = 0;
+var booking_id = -1;
+var deliveryTotal = 0;
+var discountAmount = 0;
+var discountedAmount = 0;
+var delivery_price =0;
+var delivery_range = 0;
+var delivery_charges = 0;
+var totalPayment = 0;
+var wantsDelivery = 0;
+var payment_id = "";
+var paymentType = "";
 
 //Make Payment Controls
 $(document).ready(function() {
 
 
-  var grossTotal = 0; // Total amount
-  var subTotal = 0; // Total amount
-  var grossQuantity = 0; // Total Quantity
-  var orderTakenOn = ""; // Order Taken On
-  var order_status = ""; // Order Status
-  var payment_status = ""; // Payment Status
-  var isPaymentDone = false; // Payment Done Status true or false
-  var GSTamount = 0; // Total GST
-  var IGSTamount = 0; // Total IGST
-  var addOnsTotal = 0;
-  var booking_id = -1;
-  var deliveryTotal = 0;
-  var discountAmount = 0;
-  var discountedAmount = 0;
-  var delivery_price =0;
-  var delivery_range = 0;
-  var delivery_charges = 0;
-  var totalPayment = 0;
-  var wantsDelivery = 0;
-  var payment_id = "";
-  var paymentType = "";
 
 if(!isNaN(addOnsTotal)){
   $('#addons-total').text('Rs.'+addOnsTotal+'/-');
@@ -1165,10 +1165,149 @@ $("#cancel-btn").prop("disabled", true);
 $("#delivery-input").prop("disabled", true);
 }
 
+// Initialize form validation for your form
+$('#order-form').validate({
+  rules: {
+      // Define validation rules for your form fields
+      //'dateofdelivery': {
+        //required: 'Please select a delivery date',
+        //dateLessThanToday: 'Delivery date must be today or later'
+    //},
+     
+      'input-paymentmode': 'required',
+      // Add rules for other form fields
+  },
+  messages: {
+      
+      'input-paymentmode': 'Please select a payment mode',
+      // Add custom error messages for other fields
+  },
+  errorClass: 'is-invalid',
+  validClass: 'is-valid',
+  errorElement: 'div', // Use a custom error element, e.g., div
+  errorPlacement: function(error, element) {
+      // Handle error placement as needed
+      // You can add error messages where you prefer
+      // Example: error.appendTo(element.parent());
+  },
+  highlight: function(element, errorClass, validClass) {
+      // Highlight the field with missing input
+      // Remove valid class and add invalid class
+      $(element).removeClass(validClass).addClass(errorClass);
+  },
+  unhighlight: function(element, errorClass, validClass) {
+      // Unhighlight the field with valid input
+      // Remove invalid class and add valid class
+      $(element).removeClass(errorClass).addClass(validClass);
+  },
+  submitHandler: function(form) {
+      // When the form is valid, handle the form submission here
+      event.preventDefault();
+    
+      
+  
+  var payment_id = $("#input-paymentid").val();
+ 
+
+var paymentModeSelect = document.getElementById('input-paymentmode');
+
+// Check if payment mode is not equal to 'Cash'
+if (paymentModeSelect.value !== 'Cash' ) {
+if (payment_id === '') {
+  showToast('Alert', 'Please Pay before placing the order as you have selected Payment Mode Other than Cash');
+  return;
+}
+}
+
+
+  if(add_information === ""){
+      add_information = 'NA';
+  }
+  var customer_id = selected_customer_id.value.trim()
+  var customer_name = customer_name_input.value.trim()
+  
+
+  if(customer_id === ""){
+    
+      showToast('Alert','Please Search customer before adding any items');
+      return;
+  }
+
+  if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+    totalPayment = parseFloat(discountedAmount).toFixed(0);
+}else{
+    
+    totalPayment = parseFloat(grossTotal).toFixed(0);
+}
+  if(totalPayment == 0){
+    showToast('Alert','Total is 0');
+      return;
+  }
+
+      // Create a JSON object with the form data
+      const dictMap = {
+          'booking_id': generated_booking_id,
+          'customer_id' : customer_id,
+          'delivery_price': delivery_charges,
+          'discount_price': discountAmount,
+          'total_price': totalPayment,
+          'total_items': grossQuantity,
+          'order_status': order_status,//"Payment Done"
+          'gstamount': GSTamount,
+          'igstamount': IGSTamount,
+          'razor_pay_id': payment_id,
+          'payment_status': payment_status,
+          'payment_type': paymentType,
+          'extra_items': extraItems,
+          'additional_instruction': add_information,
+          'dateofdelivery': date_of_delivery,
+          'wantsDelivery':wantsDelivery,
+          'orderTakenOn':orderTakenOn,
+          'payment_done':isPaymentDone,
+          // Add other form fields to the JSON object
+      };
+      console.log('dictMap::'+JSON.stringify(dictMap));
+    
+      
+      // Perform an AJAX POST request
+      
+      const csrfToken = getCSRFToken();
+      $.ajax({
+          type: 'POST',
+          url: '/admin_dashboard/place_new_order/', 
+          data: JSON.stringify(dictMap),
+      headers: {
+          'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+      },
+      contentType: 'application/json',
+          success: function (data) {
+             console.log('Success:'+JSON.stringify(data.html))
+
+             // Redirect to the "all counter orders" URL
+            window.location.replace('/admin_dashboard/all_orders');
+
+  // Open a new tab for printing
+  //var newTab = window.open();
+  //newTab.document.write(data.html);
+
+  // Listen for the beforeunload event to close the tab if canceled
+  //newTab.onbeforeunload = function (e) {
+      // Close the tab when the user tries to close it
+    //  newTab.close();
+  //};
+          },
+          error: function (error) {
+              console.error('Error:', error);
+          }
+      });
+  
+      
+  }
+});
+
+
 </script>
 
-<script>
-  
-</script>
+
 {% endblock  %}
 
