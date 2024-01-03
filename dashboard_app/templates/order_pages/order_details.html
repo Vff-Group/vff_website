@@ -848,7 +848,8 @@ const subtotalElement = document.getElementById('subtotal').value;
 const subTotalText = parseFloat(subtotalElement);
 
   subTotal = subTotalText;
-  grossTotal = subTotal;
+  console.log('subTotalText::'+subTotalText);
+  //grossTotal = subTotal;
   $('#sub-total').text('Rs.'+subTotal.toFixed(2)+'/-');
   $('#gross-total').text('Rs.'+grossTotal+'/-');
 
