@@ -392,7 +392,14 @@
                           <p class="text-xs mb-0 p-1">Sub Total </p>
                         </div>
                         <div class="col-lg-6 d-flex flex-column justify-content-end align-items-end">
-                          <small id="subtotal" class="text-primary">₹{{sub_total}}/-</small>
+                          <small  class="text-primary">₹{{sub_total}}/-</small>
+                          <input
+                            class="form-control form-control-alternative"
+                            type="hidden"
+                            id="sub-total"
+                            name="sub_total"
+                            value="{{sub_total}}"
+                        />
                         </div>
                       </div>
 
@@ -836,9 +843,9 @@ $('#tax-total').text('Rs.0/-');
     $('#discount-amount').text('Rs.0/-');
   }
 // Get the element by its ID
-const subtotalElement = document.getElementById('subtotal').text;
+const subtotalElement = document.getElementById('sub-total');
 // Extract the text content from the HTML element
-const subTotalText = parseFloat(subtotalElement);
+const subTotalText = parseFloat(subtotalElement.value.trim());
 
   subTotal = subTotalText;
   grossTotal = subTotal;
