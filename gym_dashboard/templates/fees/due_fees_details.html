@@ -1,0 +1,180 @@
+{% extends "base_gym/base.html" %}
+{% load static %}
+{% block title %}All Due Fees{% endblock title%}
+{% block content %}
+
+  <div class="container-fluid py-4">
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header pb-0 d-flex justify-content-between">
+            <h6>All Due Fees</h6>
+            
+          </div>
+          <!-- Action Buttons  -->
+          
+          
+
+          <!-- Action Buttons End  -->
+          <div class="card-body px-0 pt-0 pb-2">
+            
+            <div class="table-responsive p-0">
+              <table class="table align-items-center mb-0  table-hover">
+                <thead class="bg-light">
+                  <tr>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sl No</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Member Details</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Amount</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Plan Taken</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">Due Date</th>
+                    
+                    <th class="text-secondary opacity-7"></th>
+                  </tr>
+                </thead>
+                {% if not query_result%}
+                <div class="alert alert-info alert-dismissible m-4 fade show" role="alert">
+                  <span class="alert-icon text-white"><i class="ni ni-like-2"></i></span>
+                  <span class="alert-text text-white"><strong>Info!</strong> {{error_msg}}!</span>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              {% else %}
+                <tbody >
+                  {% for row in query_result %}
+                  <tr>
+                    <td>
+                        <p class="text-xs text-secondary mb-0">{{forloop.counter}}</p>
+                    </td>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">{{row.fees_type}}</h6>
+                          <p class="text-xs text-secondary mb-0">{{row.duration_in_months}}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">₹.{{row.price}}/-</p>
+                      
+                      
+                    </td>
+                    <td>
+                        <p class="text-xs font-weight-bold mb-0 text-center">{{row.description}}</p>
+                        
+                      </td>
+                      
+                    
+                    
+                    <td class="align-middle">
+                        <div class="row">
+                            <div class="col">
+                                {% comment %} <a href="{% url 'dashboard_app:update_customer' row.usrid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user"> {% endcomment %}
+                                <a href="" class="text-secondary font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.fdetail_id}}">
+                                    Update
+                                  </a>
+                            </div>
+                            <!-- <div class="col">
+                                <a href="" class="text-danger font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.usrid}}">
+                                    Delete
+                                  </a>
+                            </div> -->
+                        </div>
+                      
+                      
+                    </td>
+                  </tr>
+
+                  <div class="col-md-4">
+                    
+                    <div class="modal fade" id="modal-default{{row.fdetail_id}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+                      <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h6 class="modal-title" id="modal-title-default">Updating Fees Plan For [{{row.fees_type}}] Plan </h6>
+                            <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                          </div>
+                          <form
+                          method="post"
+                          action="{% url 'gym_dashboard_app:update_fees_plan' row.fdetail_id %}"
+                        >
+                          {% csrf_token %}
+                          <div class="modal-body">
+                            
+                            <div class="form-group">
+                                <label for="planName">Plan Name</label>
+                                <input type="text" class="form-control" id="planName" name="plan_name" placeholder="Enter New Plan Name" value="{{row.fees_type}}"  required>
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input type="number" class="form-control" id="price" name="plan_price" placeholder="Enter Plan Price" value="{{row.price}}"  required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="dsc">Description</label>
+                                <input type="text" class="form-control" id="dsc" name="plan_description" placeholder="Short 4 words description."  value="{{row.description}}"  required>
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="duration">Duration In Months</label>
+                                <input type="text" class="form-control" id="duration" name="duration_in_months" placeholder="Enter Duration in months Ex:[3 Months]"  value="{{row.duration_in_months}}"  required>
+                            </div>
+                        </div>
+                          <div class="modal-footer">
+                            <button type="submit" class="btn bg-gradient-success">Update</button>
+                            <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
+                          </div>
+                        </form>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+</div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Add an event listener to the search input field
+        $('#employee-name-search').on('input', function () {
+            applyFilters();
+        });
+
+       
+        function applyFilters() {
+          // Get the user's search input
+          var userSearch = $('#employee-name-search').val().toLowerCase();
+      
+          // Loop through the table rows and hide/show them based on the filters
+          $('.table tbody tr').each(function () {
+              var userName = $(this).find('td:first h6').text().toLowerCase();
+              var userMobile = $(this).find('td:first p.text-xs').text();
+      
+              if (
+                  userName.includes(userSearch) || userMobile.includes(userSearch) || userSearch === ''
+              ) {
+                  $(this).show();
+              } else {
+                  $(this).hide();
+              }
+          });
+      }
+      
+      });
+</script>
+{% endblock  %}
