@@ -97,7 +97,7 @@
                     <td class="align-middle">
                         <div class="row">
                             <div class="col">
-                                {% comment %} <a href="{% url 'dashboard_app:update_customer' row.usrid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user"> {% endcomment %}
+                                
                                 <a href="" class="text-secondary font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.member_id}}">
                                     Make Payment
                                   </a>
@@ -182,6 +182,8 @@
 </main>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
     $(document).ready(function () {
@@ -226,7 +228,7 @@
 
             // Parse the value to float
             var totalPayment = parseFloat(planPrice);
-            
+
             // Trigger Razorpay payment
             var options = {
                 "key": "rzp_test_qtHIWapeUEAAZO", // Enter the Key ID generated from the Dashboard rzp_test_qtHIWapeUEAAZO
