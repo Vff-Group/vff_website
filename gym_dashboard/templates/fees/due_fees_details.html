@@ -307,10 +307,10 @@ var payment_status = ""; // Payment Status
                             feesPlanDropdown.empty();
                                                 
                             // Populate dropdown with fetched plans
-                            data.forEach(function(plan) {
+                            $.each(data.section_data, function(index, subSection) {
                                 feesPlanDropdown.append($('<option>', {
-                                    value: plan.id,
-                                    text: plan.name
+                                    value: subSection.id,
+                                    text: subSection.name
                                 }));
                             });
                         
