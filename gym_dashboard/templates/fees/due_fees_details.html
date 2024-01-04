@@ -376,7 +376,7 @@ var payment_status = ""; // Payment Status
                             }
                             feesPlanDropdown.append($('<option>', {
                                 value: subSection.id,
-                                text: subSection.name+" ["+isCardio+"]<br>Duration: "+subSection.duration+"<br>Price:"+subSection.price,
+                                html: subSection.name + " [" + isCardio + "]<br>Duration: " + subSection.duration + "<br>Price: " + subSection.price
                             }));
                         });
                     
