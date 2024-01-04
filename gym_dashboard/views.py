@@ -28,7 +28,7 @@ serverToken="AAAApZY1ur0:APA91bHsk-e3OC5R2vqO7dD0WZp7ifULNzqrUPnQu07et7RLFMWWcwO
 @never_cache
 def login_view(request):
     print("Login View is being called")
-    request.session['branchid'] = ''
+    request.session['gym_branch_id'] = ''
     alert_message = None
     if request.method == "POST":
         username = request.POST.get('uname')
@@ -67,7 +67,7 @@ def all_gym_branches(request):
     print("All Branches Gym")
     error_msg = "No Branch Data Found"
     usrid = request.session.get('gym_admin_userid')
-    request.session['branchid'] = ''
+    request.session['gym_branch_id'] = ''
     
     query = "select gym_branch_id,gym_name,gym_branchtbl.created_date,gym_branchtbl.time_at,gym_branchtbl.address,usrid,adminid from vff.gym_admintbl,vff.gym_branchtbl where gym_branchtbl.gym_branch_id=gym_admintbl.gym_branchid and usrid='"+str(usrid)+"'"
     rows = execute_raw_query(query)
