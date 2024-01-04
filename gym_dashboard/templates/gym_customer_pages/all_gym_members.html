@@ -49,7 +49,7 @@
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sl No</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Member Details</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Joining Date</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Fees Status</th>
+                    {% comment %} <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Fees Status</th> {% endcomment %}
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Next Due Date</th>
                     <th class="text-secondary opacity-7"></th>
                   </tr>
@@ -85,7 +85,7 @@
                       
                     </td>
                     
-                    <td>
+                    {% comment %} <td>
                       <div class="d-flex px-2 py-1">
                         
                         <div class="d-flex flex-column justify-content-center">
@@ -109,7 +109,7 @@
                           </p>
                         </div>
                       </div>
-                    </td>
+                    </td> {% endcomment %}
 
                       <td>
                         <p class="text-xs font-weight-bold mb-0 text-center">{{row.due_date}}</p>
@@ -128,13 +128,13 @@
 
                             
 
-                          {% if row.fees_status == 'NA' %}
+                          {% comment %} {% if row.fees_status == 'NA' %}
                             <div class="col">
                                 <a href="" class="text-warning font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.memberid}}">
                                     Pay Now
                                   </a>
                             </div> 
-                            {% endif %}
+                            {% endif %} {% endcomment %}
                         </div>
                       
                       
@@ -142,7 +142,7 @@
                   </tr>
 
                  
-                  <div class="col-md-4">
+                  {% comment %} <div class="col-md-4">
                     
           
                     <div class="modal fade" id="modal-default{{row.memberid}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -245,7 +245,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> {% endcomment %}
 
                   
 
