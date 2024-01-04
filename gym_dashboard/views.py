@@ -501,11 +501,13 @@ def update_fees_payment_details_for_member(request):
         try:
             with connection.cursor() as cursor:
                 update_member_tbl = "update vff.gym_memberstbl set fees_status='Paid',due_date='"+str(fees_date)+"' where memberid='"+str(member_id)+"'"
+                print(f'members Table Queyr::{update_member_tbl}')
                 cursor.execute(update_member_tbl)
                 connection.commit()
                 
                 #update fees table
                 query_fees_tbl = "update vff.gym_feestbl set fees_date='"+str(fees_date)+"',fees_paid_date='"+str(fees_paid_date)+"',last_due_date='"+str(last_due_date)+"',fees_plan_id='"+str(fees_plan_id)+"',price='"+str(new_plan_price)+"',duration_in_months='"+str(new_plan_duration)+"' where feesid='"+str(fees_tbl_id)+"'"
+                print(f'Fees Table Queyr::{query_fees_tbl}')
                 cursor.execute(query_fees_tbl)
                 
                 connection.commit()

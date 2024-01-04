@@ -42,6 +42,9 @@ urlpatterns = [
     #All Fees Plans
     path('fetch_fees_plans/',views.fetch_fees_plans,name='fetch_fees_plans'),
    
+    #All Fees Plans
+    path('update_fees_paid_details/',views.update_fees_payment_details_for_member,name='update_fees_paid_details'),
+   
    
     
    

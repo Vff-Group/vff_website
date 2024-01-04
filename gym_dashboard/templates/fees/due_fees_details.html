@@ -535,7 +535,7 @@ function getCSRFToken() {
         const csrfToken = getCSRFToken();
         $.ajax({
             
-            url: '/gym_dashboard_app/update_fees_details/', 
+            url: '/gym_dashboard_app/update_fees_paid_details/', 
             method: 'POST',
             data: JSON.stringify(dictMap),
             headers: {
