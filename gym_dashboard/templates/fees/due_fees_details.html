@@ -143,6 +143,47 @@
                                 <input type="text" class="form-control" id="duration" name="duration_in_months"  value="{{row.duration_in_months}}"  disabled>
                             </div>
 
+                            <div class="row">
+              
+                                <div class="col-lg-6">
+                                  <div class="form-group">
+                                    <label
+                                      class="form-control-label"
+                                      for="input-paymentmode"
+                                      >Payment Mode</label
+                                    >
+                                    <select
+                                      class="form-control form-control-alternative"
+                                      id="input-paymentmode"
+                                      name="payment_mode"
+                                      required
+                                    >
+                                      <option disabled selected>
+                                        Choose Payment Mode
+                                      </option>
+                                      <option value="Cash">Cash</option>
+                                      <option value="UPI">UPI</option>
+                                      <option value="Card">Card</option>
+                                      <option value="Cheque">Cheque</option>
+                                      <option value="Bank Transfer">
+                                        Bank Transfer
+                                      </option>
+                                      <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
+                                    </select>
+                                  </div>
+                                </div>
+                                
+                  
+                                </div>
+                                <div class="row">
+                                  <div class="col-lg-6">
+                                      <div class="form-group" id="payment-id-container" style="display: none;">
+                                          <label class="form-control-label" for="input-paymentid">Payment ID</label>
+                                          <input class="form-control form-control-alternative" type="text" id="input-paymentid" name="payment-id" disabled>
+                                      </div>
+                                  </div>
+                              </div>
+
                             <div class="form-group">
                                 <button type="button" class="btn bg-gradient-success makePaymentBtn">Make Payment</button>
                             </div>
@@ -216,6 +257,10 @@
 </script>
 
 <script>
+    var payment_id = "";
+var paymentType = "";
+var order_status = ""; // Order Status
+var payment_status = ""; // Payment Status
     $(document).ready(function() {
 
         $(".makePaymentBtn").on("click", function() {
@@ -239,9 +284,12 @@
                 "image": "https://vff-group.com/static/images/logo.png",
                 // Other options...
                 handler: function(response) {
-                    //payment_id =  response.razorpay_payment_id;
-                    //order_status = "Payment Done";
-                    //payment_status = "Success";
+                    payment_id =  response.razorpay_payment_id;
+                    order_status = "Payment Done";
+                    payment_status = "Success";
+                    $('#input-paymentid').val(payment_id);
+                    disableElements();
+                    const csrfToken = getCSRFToken();
                     $.ajax({
                         url: '/gym_dashboard_app/fetch_fees_plans/', // URL to fetch fees plans
                         type: 'POST',
@@ -285,6 +333,52 @@
             rzp.open(); // Open Razorpay payment window
         });
     });
+
+
+    var payment_id = $("#input-paymentid").val();
+    // Event listener for the payment mode selection
+$('#input-paymentmode').change(function() {
+    var paymentMode = $(this).val();
+    var paymentIdContainer = $('#payment-id-container');
+    var gstContainer = $('#gst-container');
+    paymentType = paymentMode;
+    // Check if the payment mode is 'Cash' and hide the 'Pay Now' button
+    if (paymentMode === 'Cash') {
+    order_status = "Payment Done";
+    
+    payment_status = "Success";
+    //$('#pay-button').hide();
+    //gstContainer.show();
+    // If the payment mode is "Cash," hiding the payment ID container
+    paymentIdContainer.hide();
+    }else {
+    //$('#pay-button').show();
+    //gstContainer.hide();
+    // If the payment mode is not "Cash," show the payment ID container
+    paymentIdContainer.show();
+    }
+    });
+    
+    var paymentModeSelect = document.getElementById('input-paymentmode');
+
+// Check if payment mode is not equal to 'Cash'
+if (paymentModeSelect.value !== 'Cash' ) {
+if (payment_id === '') {
+  showToast('Alert', 'Please Pay before placing the order as you have selected Payment Mode Other than Cash');
+  return;
+}
+}
+
+// Function to disable elements
+function disableElements() {
+// Disable "Pay Now" button
+$(".makePaymentBtn").prop("disabled", true);
+
+// Disable payment mode select dropdown
+$("#input-paymentmode").prop("disabled", true);
+
+}
+
 
     // Get the CSRF token from the cookie
 function getCSRFToken() {
