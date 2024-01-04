@@ -191,7 +191,7 @@
                               </div>
 
                             <div class="form-group">
-                                <button type="button" class="btn bg-gradient-success makePaymentBtn">Make Payment</button>
+                                <button type="button" class="btn bg-gradient-success makePaymentBtn" style="display: none;">Make Payment</button>
                             </div>
 
                              <!-- Dropdown for fees plans -->
@@ -280,6 +280,7 @@ var new_plan_id = "";
             
             var paid_amount = 0;
             var payment_method = "";
+
     $(document).ready(function() {
 
         //Make Payment Button and fetch gym plans
@@ -373,6 +374,10 @@ var new_plan_id = "";
             payment_method = selectedMode;
             // Toggle visibility of payment ID container based on selected mode
             if (selectedMode === 'Cash') {
+                var planPrice = $('#price').val();
+                $('.makePaymentBtn').hide();
+                // Parse the value to float
+                paid_amount = parseFloat(planPrice);
                 isOnlinePayment = false;
                 paymentSuccessful = true
                 payment_status = "Success";
@@ -419,7 +424,7 @@ var new_plan_id = "";
            
             } else {
                 isOnlinePayment = true;
-                
+                $('.makePaymentBtn').show();
                 $('#payment-id-container').show(); // Show container for other modes
             }
         });
