@@ -152,12 +152,12 @@ def all_gym_members(request):
             
             due_date = row[10]
             print(f'due_date::{due_date}')
-            converted_date = convert_date_format(str(due_date))
+            
             
             fees_status = row[13]
             status = "NA"
             if fees_status !="NA":
-                if converted_date <= current_date:
+                if due_date <= current_date:
                     status = 'Unpaid'
                 else:
                     status = 'Paid'
