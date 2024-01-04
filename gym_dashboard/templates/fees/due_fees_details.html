@@ -25,8 +25,8 @@
                   <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sl No</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Member Details</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Plan Details</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Amount</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Plan Taken</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">Due Date</th>
                     
                     <th class="text-secondary opacity-7"></th>
@@ -48,21 +48,47 @@
                         <p class="text-xs text-secondary mb-0">{{forloop.counter}}</p>
                     </td>
                     <td>
-                      <div class="d-flex px-2 py-1">
-                        
-                        <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-sm">{{row.fees_type}}</h6>
-                          <p class="text-xs text-secondary mb-0">{{row.duration_in_months}}</p>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="{{row.profile_img}}" class="avatar avatar-sm me-3" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">{{row.member_name}}</h6>
+                            <p class="text-xs text-secondary mb-0">{{row.mobno}}</p>
+                            Join Date: <p class="text-xs text-secondary mb-0">{{row.join_date}}</p>
+                          </div>
                         </div>
-                      </div>
-                    </td>
+                      </td>
+
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">{{row.plan_name}}</h6>
+                            
+                            <p class="align-middle text-center text-sm">
+                                {% if row.cardio == 1 %}
+                                <span class="badge badge-sm bg-success">
+                                    {{row.duration_in_months}} [With Cardio]
+                                </span>
+                              {% else %}
+                                  <span class="badge badge-sm bg-warning">
+                                    {{row.duration_in_months}} [WithOut Cardio]
+                                  </span>
+                              {% endif %}
+                                
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+
                     <td>
                       <p class="text-xs font-weight-bold mb-0">₹.{{row.price}}/-</p>
                       
                       
                     </td>
                     <td>
-                        <p class="text-xs font-weight-bold mb-0 text-center">{{row.description}}</p>
+                        <p class="text-xs font-weight-bold mb-0 text-center">{{row.fees_date}}</p>
                         
                       </td>
                       
@@ -72,8 +98,8 @@
                         <div class="row">
                             <div class="col">
                                 {% comment %} <a href="{% url 'dashboard_app:update_customer' row.usrid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user"> {% endcomment %}
-                                <a href="" class="text-secondary font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.fdetail_id}}">
-                                    Update
+                                <a href="" class="text-secondary font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.member_id}}">
+                                    Make Payment
                                   </a>
                             </div>
                             <!-- <div class="col">
@@ -89,40 +115,49 @@
 
                   <div class="col-md-4">
                     
-                    <div class="modal fade" id="modal-default{{row.fdetail_id}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+                    <div class="modal fade" id="modal-default{{row.member_id}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
                       <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h6 class="modal-title" id="modal-title-default">Updating Fees Plan For [{{row.fees_type}}] Plan </h6>
+                            <h6 class="modal-title" id="modal-title-default">Making Payment For Member [{{row.member_name}}]  </h6>
                             <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">×</span>
                             </button>
                           </div>
                           <form
                           method="post"
-                          action="{% url 'gym_dashboard_app:update_fees_plan' row.fdetail_id %}"
                         >
                           {% csrf_token %}
                           <div class="modal-body">
                             
-                            <div class="form-group">
-                                <label for="planName">Plan Name</label>
-                                <input type="text" class="form-control" id="planName" name="plan_name" placeholder="Enter New Plan Name" value="{{row.fees_type}}"  required>
-                            </div>
-                            <div class="form-group">
-                                <label for="price">Price</label>
-                                <input type="number" class="form-control" id="price" name="plan_price" placeholder="Enter Plan Price" value="{{row.price}}"  required>
-                            </div>
                             
                             <div class="form-group">
-                                <label for="dsc">Description</label>
-                                <input type="text" class="form-control" id="dsc" name="plan_description" placeholder="Short 4 words description."  value="{{row.description}}"  required>
+                                <label for="price">Amount to pay</label>
+                                <input type="number" class="form-control" id="price" name="plan_price" placeholder="Enter Plan Price" value="{{row.price}}"  disabled>
                             </div>
+                            
+                            
         
                             <div class="form-group">
                                 <label for="duration">Duration In Months</label>
-                                <input type="text" class="form-control" id="duration" name="duration_in_months" placeholder="Enter Duration in months Ex:[3 Months]"  value="{{row.duration_in_months}}"  required>
+                                <input type="text" class="form-control" id="duration" name="duration_in_months"  value="{{row.duration_in_months}}"  disabled>
                             </div>
+
+                            <div class="form-group">
+                                <button type="button" class="btn bg-gradient-success">Make Payment</button>
+                            </div>
+
+                             <!-- Dropdown for fees plans -->
+            <div class="form-group">
+                <label for="feesPlanDropdown">Choose a Plan</label>
+                <select class="form-control" id="feesPlanDropdown" name="fees_plan_id">
+                    <!-- Options will be populated dynamically -->
+                </select>
+                <!-- Hidden input for selected plan ID -->
+                <input type="hidden" id="selectedPlanId" name="selected_plan_id">
+            </div>
+
+
                         </div>
                           <div class="modal-footer">
                             <button type="submit" class="btn bg-gradient-success">Update</button>
@@ -176,5 +211,89 @@
       }
       
       });
+</script>
+
+<script>
+    $(document).ready(function() {
+
+        $(".makePaymentBtn").on("click", function() {
+            // Prevent form submission
+            $(this).closest("form").submit(function(e) {
+                e.preventDefault();
+            });
+
+            var planPrice = $('#price').val();
+
+            // Parse the value to float
+            var totalPayment = parseFloat(planPrice);
+            
+            // Trigger Razorpay payment
+            var options = {
+                "key": "rzp_test_qtHIWapeUEAAZO", // Enter the Key ID generated from the Dashboard rzp_test_qtHIWapeUEAAZO
+                "amount": (totalPayment * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                "currency": "INR",
+                "name": "VFF Group", //your business name
+                "description": "Gym Fees",
+                "image": "https://vff-group.com/static/images/logo.png",
+                // Other options...
+                handler: function(response) {
+                    //payment_id =  response.razorpay_payment_id;
+                    //order_status = "Payment Done";
+                    //payment_status = "Success";
+                    $.ajax({
+                        url: '/gym_dashboard_app/fetch_fees_plans/', // URL to fetch fees plans
+                        type: 'POST',
+                        headers: {
+                            'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+                        },
+                        contentType: 'application/json',
+                        success: function(data) {
+                            // Handle successful response and load fees plans
+                             // Get the dropdown element
+                            var feesPlanDropdown = $('#feesPlanDropdown');
+                                                
+                            // Clear existing options (if any)
+                            feesPlanDropdown.empty();
+                                                
+                            // Populate dropdown with fetched plans
+                            data.forEach(function(plan) {
+                                feesPlanDropdown.append($('<option>', {
+                                    value: plan.id,
+                                    text: plan.name
+                                }));
+                            });
+                        
+                            // Update hidden input with the default selected plan ID (optional)
+                            $('#selectedPlanId').val(data[0].id); // Set the first plan ID as default
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle error
+                            console.log(error);
+                        }
+                    });
+                },
+                "notes": {
+                    "address": "Tilakwadi"
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp = new Razorpay(options);
+            rzp.open(); // Open Razorpay payment window
+        });
+    });
+
+    // Get the CSRF token from the cookie
+function getCSRFToken() {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith("csrftoken=")) {
+            return cookie.substring("csrftoken=".length, cookie.length);
+        }
+    }
+    return null;
+  }
 </script>
 {% endblock  %}

@@ -303,6 +303,39 @@ def all_fees_plans(request):
 
     return render(request,"fees/all_fees_plans.html",context)
 
+def fetch_fees_plans(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('gym_dashboard_app:login')
+    error_msg = 'No Fees Details Found'
+    gym_branch_id = request.session.get('gym_branch_id')
+    query = "select fdetail_id,fees_type,duration_in_months,price,cardio from vff.gym_fees_detailstbl where gym_id='"+str(gym_branch_id)+"'  order by fdetail_id"
+    
+    query_result = execute_raw_query(query)
+    
+    
+        
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            data.append({
+                'id': row[0],
+                'name': row[1],
+                'duration': row[2],
+                'price': row[3],
+                'cardio': row[4],
+                
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'data':data,'current_url': current_url,'error_msg':error_msg}
+
+    return JsonResponse(context)
+
 
 def add_new_fees_plan(request):
     
@@ -386,6 +419,50 @@ def update_fees_plan(request,fees_plan_id):
     context = {'current_url': current_url,'error_msg':error_msg}
     return render(request,"fees/all_fees_plans.html",context)
     pass 
+
+
+def fees_due_details(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('gym_dashboard_app:login')
+    error_msg = 'No Due Fees Details Found'
+    gym_branch_id = request.session.get('gym_branch_id')
+    query = "select name,mobno,gym_feestbl.member_id,join_date,profile_image,fees_type as planname,feesid,member_type,gym_fees_detailstbl.duration_in_months,gym_fees_detailstbl.price,gym_fees_detailstbl.description,fees_date,last_due_date,fees_paid_date,cardio from vff.gym_memberstbl,vff.gym_feestbl,vff.gym_fees_detailstbl where gym_fees_detailstbl.fdetail_id=gym_feestbl.fees_plan_id and gym_memberstbl.memberid=gym_feestbl.member_id and gym_feestbl.gym_id='"+str(gym_branch_id)+"' and fees_date<=CURRENT_DATE"
+    
+    query_result = execute_raw_query(query)
+    
+    
+        
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            data.append({
+                'member_name': row[0],
+                'mobno': row[1],
+                'member_id': row[2],
+                'join_date': row[3],
+                'profile_img': row[4],
+                'plan_name': row[5],
+                'fees_id': row[6],
+                'member_type': row[7],
+                'duration_in_months': row[8],
+                'price': row[9],
+                'description': row[10],
+                'fees_date': row[11],
+                'last_due_date': row[12],
+                'fees_paid_date': row[13],
+                'cardio': row[14],
+                
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg}
+
+    return render(request,"fees/all_fees_plans.html",context)
 
 
 
