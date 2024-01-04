@@ -275,7 +275,7 @@ def all_fees_plans(request):
         return redirect('gym_dashboard_app:login')
     error_msg = 'No Fees Details Found'
     gym_branch_id = request.session.get('gym_branch_id')
-    query = "select fdetail_id,fees_type,duration_in_months,price,description,cardio,PT from vff.gym_fees_detailstbl where gym_id='"+str(gym_branch_id)+"'  order by fdetail_id"
+    query = "select fdetail_id,fees_type,duration_in_months,price,description,cardio from vff.gym_fees_detailstbl where gym_id='"+str(gym_branch_id)+"'  order by fdetail_id"
     
     query_result = execute_raw_query(query)
     
@@ -292,7 +292,7 @@ def all_fees_plans(request):
                 'price': row[3],
                 'description': row[4],
                 'cardio': row[5],
-                'PT': row[6],
+                
                 
             })
     else:
@@ -314,7 +314,7 @@ def add_new_fees_plan(request):
         description = request.POST.get('plan_description')
         without_cardio = request.POST.get('without_cardio')
         with_cardio = request.POST.get('with_cardio')
-        with_PT = request.POST.get('with_PT')
+        
         cardio = 0
         PT = 0
         if without_cardio:
@@ -325,15 +325,13 @@ def add_new_fees_plan(request):
             # Checkbox with cardio was checked
             cardio = 1
         
-        if with_PT:
-            # Checkbox with cardio was checked
-            PT = 1
+        
         
         gym_branch_id = request.session.get('gym_branch_id')
         
         try:
             with connection.cursor() as cursor:
-                insert_query="insert into vff.gym_fees_detailstbl(fees_type,duration_in_months,price,description,gym_id,cardio,pt) values ('"+str(fees_type)+"','"+str(duration_in_months)+"','"+str(price)+"','"+str(description)+"','"+str(gym_branch_id)+"','"+str(cardio)+"','"+str(PT)+"')"
+                insert_query="insert into vff.gym_fees_detailstbl(fees_type,duration_in_months,price,description,gym_id,cardio) values ('"+str(fees_type)+"','"+str(duration_in_months)+"','"+str(price)+"','"+str(description)+"','"+str(gym_branch_id)+"','"+str(cardio)+"')"
                 cursor.execute(insert_query)
                 connection.commit()
                 print("New Fees Plan Added Successfully.")
@@ -357,7 +355,7 @@ def update_fees_plan(request,fees_plan_id):
         description = request.POST.get('plan_description')
         without_cardio = request.POST.get('without_cardio')
         with_cardio = request.POST.get('with_cardio')
-        with_PT = request.POST.get('with_PT')
+        
         
         cardio = 0
         PT = 0
@@ -369,15 +367,13 @@ def update_fees_plan(request,fees_plan_id):
             # Checkbox with cardio was checked
             cardio = 1
         
-        if with_PT:
-            # Checkbox with cardio was checked
-            PT = 1
+        
         
         gym_branch_id = request.session.get('gym_branch_id')
         
         try:
             with connection.cursor() as cursor:
-                insert_query="update vff.gym_fees_detailstbl set fees_type='"+str(fees_type)+"',duration_in_months='"+str(duration_in_months)+"',price='"+str(price)+"',description='"+str(description)+"',cardio='"+str(cardio)+"',pt='"+str(PT)+"' where fdetail_id='"+str(fees_plan_id)+"'"
+                insert_query="update vff.gym_fees_detailstbl set fees_type='"+str(fees_type)+"',duration_in_months='"+str(duration_in_months)+"',price='"+str(price)+"',description='"+str(description)+"',cardio='"+str(cardio)+"' where fdetail_id='"+str(fees_plan_id)+"'"
                 cursor.execute(insert_query)
                 connection.commit()
                 print(" Fees Plan Updated Successfully.")

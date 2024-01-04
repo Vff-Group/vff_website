@@ -74,12 +74,7 @@
                       </div>
                     </div>
 
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="withPTCheckbox" name="with_PT">
-                      <label class="form-check-label" for="withPTCheckbox">
-                          With PT
-                      </label>
-                  </div>
+                    
 
                     <div class="form-group">
                         <label for="duration">Duration In Months</label>
@@ -134,11 +129,9 @@
                         <div class="d-flex flex-column justify-content-center">
                           <h6 class="mb-0 text-sm">{{row.fees_type}}</h6>
                           <p class="text-xs text-secondary mb-0">
-                            {% if row.cardio == 1%}
-                            {{row.duration_in_months}} [With Cardio]
-                            {% else %}
-                            {{row.duration_in_months}} [WithOut Cardio]
-                            {% endif %}
+                            
+                            {{row.duration_in_months}}
+                            
                           </p>
                         </div>
                       </div>
@@ -149,13 +142,13 @@
                       
                     </td>
                     <td class="align-middle text-center text-sm">
-                      {% if row.PT == 1 %}
+                      {% if row.cardio == 1 %}
                         <span class="badge badge-sm bg-success">
-                            PT Taken
+                            With Cardio
                         </span>
                       {% else %}
                           <span class="badge badge-sm bg-warning">
-                            PT Not Taken
+                            WithOut Cardio
                           </span>
                       {% endif %}
                         
@@ -240,12 +233,7 @@
                       </div>
                     </div>
 
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="withPTCheckbox" name="with_PT" {% if row.pt == 1 %} checked {% endif %}>
-                      <label class="form-check-label" for="withPTCheckbox">
-                          With PT
-                      </label>
-                  </div>
+                    
         
                             <div class="form-group">
                                 <label for="duration">Duration In Months</label>
