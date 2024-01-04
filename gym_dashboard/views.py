@@ -132,7 +132,7 @@ def dashboard_view(request):
     # using the 'current_url' variable to determine the active card.
     context = {'current_url': current_url,'error_msg':error_msg,'total_gym_members': total_members,}
     return render(request,"admin_pages_gym/dashboard.html",context)
-
+from datetime import datetime as dt
 def all_gym_members(request):
     isLogin = is_loggedin(request)
     if isLogin == False:
@@ -151,13 +151,13 @@ def all_gym_members(request):
             current_date = timezone.now().strftime('%Y-%m-%d')
             
             due_date = row[10]
-            print(f'due_date::{due_date}')
             
-            new_due_date = datetime.strptime(due_date, '%Y-%m-%d').date()
+            current_date_str = dt.strptime(current_date)
+            due_date_str = dt.strptime(due_date)
             fees_status = row[13]
             status = "NA"
             if fees_status !="NA":
-                if new_due_date <= current_date:
+                if due_date_str <= current_date_str:
                     status = 'Unpaid'
                 else:
                     status = 'Paid'
