@@ -466,7 +466,7 @@ var new_plan_id = "";
     
     // Example usage:
     var duration = '3 Months';  // Replace this with the selected plan's duration string
-    var futureDate = getFutureDateFromDuration(duration,'2023-12-01');
+    var futureDate = getFutureDateFromDuration(duration,'2023-12-31');
     console.log(futureDate); 
 
     function disableElements() {
@@ -491,6 +491,20 @@ function getCSRFToken() {
     return null;
   }
 
+  function convertDateFormat(dateString) {
+    var months = {
+        Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
+        Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12'
+    };
+    
+    var dateParts = dateString.split(' ');
+    var year = dateParts[2];
+    var month = months[dateParts[0].slice(0, 3)]; // Get the abbreviated month and map it to its numeric value
+    var day = dateParts[1].replace(',', ''); // Remove the comma from the day
+    
+    return year + '-' + month + '-' + ('0' + day).slice(-2);
+}
+
   $(document).ready(function() {
     $('#update-fees-form').submit(function(event) {
         // Prevent default form submission
@@ -512,7 +526,9 @@ function getCSRFToken() {
         var member_id = $('#member_id_current').val();
         var lastFeesDueDate = $('#last_fees_due_date_current').val();
         var feesTableId = $('#fees_table_id_current').val();
-        
+        var convertedDate = convertDateFormat(inputDate);
+        console.log("fees_date_converted"+convertedDate); 
+        feesDate = convertedDate;
         last_due_date = feesDate;
 
         var duration = new_plan_duration;  // Replace this with the selected plan's duration string
