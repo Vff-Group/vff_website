@@ -526,7 +526,7 @@ function getCSRFToken() {
         var member_id = $('#member_id_current').val();
         var lastFeesDueDate = $('#last_fees_due_date_current').val();
         var feesTableId = $('#fees_table_id_current').val();
-        var convertedDate = convertDateFormat(inputDate);
+        var convertedDate = convertDateFormat(feesDate);
         console.log("fees_date_converted"+convertedDate); 
         feesDate = convertedDate;
         last_due_date = feesDate;
