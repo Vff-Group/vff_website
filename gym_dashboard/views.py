@@ -465,6 +465,79 @@ def fees_due_details(request):
     return render(request,"fees/due_fees_details.html",context)
 
 
+#Update Fees Details After Payment is Done
+def update_fees_payment_details_for_member(request):
+    
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    
+    
+    error_msg = "Something Went Wrong"
+    if request.method == "POST":
+        jdict = json.loads(request.body)
+        member_id = jdict['member_id']
+        fees_date = jdict['next_fees_date']
+        
+        last_due_date = jdict['last_due_date']
+        fees_plan_id = jdict['new_plan_id']
+        new_plan_price = jdict['new_plan_price']
+        new_plan_duration = jdict['new_plan_duration']
+        fees_tbl_id = jdict['fees_tbl_id']
+        
+        paid_amount = jdict['paid_amount']
+        payment_method = jdict['payment_method']
+        razor_pay_id = jdict['razor_pay_id']
+        payment_status = jdict['payment_status']
+        
+        # Get the current date
+        current_date = timezone.now().strftime('%Y-%m-%d')
+        
+        fees_paid_date = current_date
+        
+        #OnCounter
+        gym_id = request.session.get('gym_branch_id')
+        
+        try:
+            with connection.cursor() as cursor:
+                update_member_tbl = "update vff.gym_memberstbl set fees_status='Paid',due_date='"+str(fees_date)+"' where memberid='"+str(member_id)+"'"
+                cursor.execute(update_member_tbl)
+                connection.commit()
+                
+                #update fees table
+                query_fees_tbl = "update vff.gym_feestbl set fees_date='"+str(fees_date)+"',fees_paid_date='"+str(fees_paid_date)+"',last_due_date='"+str(last_due_date)+"',fees_plan_id='"+str(fees_plan_id)+"',price='"+str(new_plan_price)+"',duration_in_months='"+str(new_plan_duration)+"' where feesid='"+str(fees_tbl_id)+"'"
+                cursor.execute(query_fees_tbl)
+                
+                connection.commit()
+                
+                #Insert record in payment table with razorpay_payment_id
+                query_payment = "insert into vff.gym_paymenttbl (member_id,amount,payment_method,razor_pay_id,payment_status,gym_id) values ('"+str(member_id)+"','"+str(paid_amount)+"','"+str(payment_method)+"','"+str(razor_pay_id)+"','"+str(payment_status)+"','"+str(gym_id)+"') returning paymentid"
+                print(f'insert payment::{query_payment}')
+                ret_payment_id = cursor.fetchone()[0]
+                cursor.execute(query_payment)
+                connection.commit()
+                
+                #Insert record in payment history table with payment_id
+                query_payment_history = "insert into vff.gym_payment_historytbl(payment_id,member_id,amount) values ('"+str(ret_payment_id)+"','"+str(member_id)+"','"+str(paid_amount)+"')"
+                print(f'insert query_payment_history::{query_payment_history}')
+                cursor.execute(query_payment_history)
+                connection.commit()
+                
+                    
+                
+                    
+
+                
+        except Exception as e:
+            print(f"Error Updateing Payment Details: {e}")
+            error_msg = 'Something went wrong'
+            return JsonResponse({'error':error_msg})
+        
+            
+
+    
+    return JsonResponse({'html':'html'})
+    #return redirect('dashboard_app:all_orders')
 
 
 

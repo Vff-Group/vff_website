@@ -130,11 +130,15 @@
                         >
                           {% csrf_token %}
                           <div class="modal-body">
-                            
+                            <input type="hidden" id="fees_date_current" name="fees_date" value="{{row.fees_date}}">
+                            <input type="hidden" id="member_id_current" name="member_id" value="{{row.member_id}}">
+                            <input type="hidden" id="last_fees_due_date_current" name="last_fees_date"  value="{{row.last_due_date}}">
+                            <input type="hidden" id="fees_table_id_current" name="fees_table_id"  value="{{row.fees_id}}">
                             
                             <div class="form-group">
                                 <label for="price">Amount to pay</label>
                                 <input type="number" class="form-control" id="price" name="plan_price" placeholder="Enter Plan Price" value="{{row.price}}"  disabled>
+                                
                             </div>
                             
                             
@@ -197,6 +201,8 @@
                 </select>
                 <!-- Hidden input for selected plan ID -->
                 <input type="hidden" id="selectedPlanId" name="selected_plan_id">
+                <input type="hidden" id="selectedPlanDuration" name="selected_plan_duration">
+                <input type="hidden" id="selectedPlanPrice" name="selected_plan_price">
             </div>
 
 
@@ -258,12 +264,21 @@
 </script>
 
 <script>
-    var payment_id = "";
+    var payment_id = "-1";
     var isOnlinePayment = false;
     var paymentSuccessful = false;
 var paymentType = "";
-var order_status = ""; // Order Status
+
 var payment_status = ""; // Payment Status
+var new_plan_id = "";
+           var new_plan_price = "";
+            var new_plan_duration = "";
+            var member_id= "";
+            var next_fees_date = "";
+            var last_due_date = "";
+            
+            var paid_amount = 0;
+            var payment_method = "";
     $(document).ready(function() {
 
         //Make Payment Button and fetch gym plans
@@ -277,6 +292,7 @@ var payment_status = ""; // Payment Status
 
             // Parse the value to float
             var totalPayment = parseFloat(planPrice);
+            paid_amount = totalPayment;
             if(isOnlinePayment === true){
             // Trigger Razorpay payment
             var options = {
@@ -353,11 +369,12 @@ var payment_status = ""; // Payment Status
         // Event listener for change in payment mode dropdown
         $('#input-paymentmode').change(function() {
             var selectedMode = $(this).val(); // Get the selected value
-    
+            payment_method = selectedMode;
             // Toggle visibility of payment ID container based on selected mode
             if (selectedMode === 'Cash') {
                 isOnlinePayment = false;
-                paymentSuccessful = true;
+                paymentSuccessful = true
+                payment_status = "Success";
                 $('#payment-id-container').hide(); // Hide container for Cash mode
                 const csrfToken = getCSRFToken();
                 $.ajax({
@@ -384,7 +401,9 @@ var payment_status = ""; // Payment Status
                             }
                             feesPlanDropdown.append($('<option>', {
                                 value: subSection.id,
-                                html: subSection.name + " [" + isCardio + "]<br> Duration: " + subSection.duration + "<br> Price: " + subSection.price
+                                html: subSection.name + " [" + isCardio + "]<br> Duration: " + subSection.duration + "<br> Price: " + subSection.price,
+                                'data-duration': subSection.duration, // Add data-duration attribute
+                                'data-price': subSection.price // Add data-price attribute
                             }));
                         });
                     
@@ -399,10 +418,50 @@ var payment_status = ""; // Payment Status
            
             } else {
                 isOnlinePayment = true;
+                
                 $('#payment-id-container').show(); // Show container for other modes
             }
         });
+
+        $('#feesPlanDropdown').change(function() {
+            var selectedOption = $(this).find(':selected'); // Get the selected option
+            var selectedId = selectedOption.val(); // Get the selected value
+            var selectedDuration = selectedOption.data('duration'); // Get the 'duration' data attribute value
+            var selectedPrice = selectedOption.data('price'); // Get the 'price' data attribute value
+        
+            // Update the hidden input values with the selected plan details
+            new_plan_id = selectedId;
+            new_plan_price = selectedPrice;
+            new_plan_duration = selectedDuration;
+            $('#selectedPlanId').val(selectedId);
+            $('#selectedPlanDuration').val(selectedDuration);
+            $('#selectedPlanPrice').val(selectedPrice);
+
+        });
+    
     });
+
+    function getFutureDateFromDuration(duration, currentFeesDate) {
+        // Extract the number of months from the duration string
+        var months = parseInt(duration.split(' ')[0]);
+    
+        // Split the currentFeesDate to get year, month, and day
+        var [year, month, day] = currentFeesDate.split('-');
+        var feesDate = new Date(year, month - 1, day); // Months are 0 indexed in JavaScript (0 - January, 1 - February, ...)
+    
+        // Calculate future date by adding months to currentFeesDate
+        feesDate.setMonth(feesDate.getMonth() + months);
+    
+        // Format the date as 'YYYY-MM-DD'
+        var formattedDate = feesDate.getFullYear() + '-' + ('0' + (feesDate.getMonth() + 1)).slice(-2) + '-' + ('0' + feesDate.getDate()).slice(-2);
+        
+        return formattedDate;  // Return the future date
+    }
+    
+    // Example usage:
+    var duration = '3 Months';  // Replace this with the selected plan's duration string
+    var futureDate = getFutureDateFromDuration(duration,'2023-12-01');
+    console.log(futureDate); 
 
     function disableElements() {
         // Disable "Pay Now" button
@@ -437,16 +496,58 @@ function getCSRFToken() {
             showToast('Alert','Payment not successful. Please try again');
             return;
         }
+        
+        //TODO:Need to fill all these variables below.
+        //fees_date_current,last_fees_due_date_current,fees_table_id_current
+        // Retrieve values using jQuery
+        var feesDate = $('#fees_date_current').val();
+        var member_id = $('#member_id_current').val();
+        var lastFeesDueDate = $('#last_fees_due_date_current').val();
+        var feesTableId = $('#fees_table_id_current').val();
+        
+        last_due_date = feesDate;
 
+        var duration = new_plan_duration;  // Replace this with the selected plan's duration string
+        var futureDate = getFutureDateFromDuration(duration,);
+        console.log("Fees Date"+feesDate); 
+        console.log("Next Due Date"+futureDate); 
+        console.log("Future Date"+futureDate); 
+
+        
+            
+        //Fees Paid date is added at backend
+        const dictMap = {
+            'member_id': member_id,
+            'next_fees_date': futureDate,
+            'last_due_date': last_due_date,
+            'new_plan_id': new_plan_id,
+            'new_plan_price': new_plan_price,
+            'new_plan_duration': new_plan_duration,
+            'fees_tbl_id': feesTableId,
+            'paid_amount': paid_amount,
+            'payment_method': payment_method,
+            'razor_pay_id': payment_id,
+            'payment_status': payment_status,
+            // Add other form fields to the JSON object
+        };
+        console.log('dictMap::'+JSON.stringify(dictMap));
         // If payment is successful, proceed with AJAX
+        const csrfToken = getCSRFToken();
         $.ajax({
-            url: 'your-backend-endpoint-url', // Replace with your backend endpoint
+            
+            url: '/gym_dashboard_app/update_fees_details/', 
             method: 'POST',
-            data: $(this).serialize(), // Serialize the form data
+            data: JSON.stringify(dictMap),
+            headers: {
+                'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+            },
+            contentType: 'application/json',
             success: function(response) {
                 // Handle the success response here
-                console.log('AJAX request successful:', response);
-                // You can perform additional actions based on the response
+                console.log('Success:'+JSON.stringify(data.html))
+
+             // Redirect to the "all counter orders" URL
+            window.location.replace('/gym_dashboard_app/fees_due_details/');
             },
             error: function(xhr, status, error) {
                 // Handle any errors that occur during the AJAX request
