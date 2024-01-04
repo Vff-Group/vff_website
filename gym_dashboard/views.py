@@ -148,19 +148,19 @@ def all_gym_members(request):
     data = []    
     if not query_result == 500:
         for row in query_result:
-            current_date = timezone.now().strftime('%Y-%m-%d')
+            # current_date = timezone.now().strftime('%Y-%m-%d')
             
-            due_date = row[10]
+            # due_date = row[10]
             
-            current_date_str = dt.strptime(current_date)
-            due_date_str = dt.strptime(due_date)
-            fees_status = row[13]
-            status = "NA"
-            if fees_status !="NA":
-                if due_date_str <= current_date_str:
-                    status = 'Unpaid'
-                else:
-                    status = 'Paid'
+            # current_date_str = dt.strptime(current_date)
+            # due_date_str = dt.strptime(due_date)
+            # fees_status = row[13]
+            # status = "NA"
+            # if fees_status !="NA":
+            #     if due_date_str <= current_date_str:
+            #         status = 'Unpaid'
+            #     else:
+            #         status = 'Paid'
             
             
             data.append({
@@ -177,7 +177,7 @@ def all_gym_members(request):
                 'due_date': row[10],
                 'goal': row[11],
                 'profile_image': row[12],
-                'fees_status': status,
+                
             })
     else:
         error_msg = 'Something Went Wrong'
