@@ -305,9 +305,9 @@ var payment_status = ""; // Payment Status
                                                 
                             // Clear existing options (if any)
                             feesPlanDropdown.empty();
-                                                
+                            console.log('data::'+data);
                             // Populate dropdown with fetched plans
-                            $.each(data.section_data, function(index, subSection) {
+                            $.each(data.fees_data, function(index, subSection) {
                                 feesPlanDropdown.append($('<option>', {
                                     value: subSection.id,
                                     text: subSection.name

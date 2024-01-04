@@ -332,7 +332,7 @@ def fetch_fees_plans(request):
         error_msg = 'Something Went Wrong'
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
-    context = {'data':data,'current_url': current_url,'error_msg':error_msg}
+    context = {'fees_data':data,'current_url': current_url,'error_msg':error_msg}
 
     return JsonResponse(context)
 
