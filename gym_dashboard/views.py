@@ -137,7 +137,7 @@ def all_gym_members(request):
         return redirect('gym_dashboard_app:login')
     error_msg = 'No Members Found'
     gym_branch_id = request.session.get('gym_branch_id')
-    query = "select memberid,name,email,mobno,date_of_birth,join_date,join_time,gender,weight,height,due_date,goal,profile_image from vff.gym_memberstbl where gymid='"+str(gym_branch_id)+"'"
+    query = "select memberid,name,email,mobno,date_of_birth,join_date,join_time,gender,weight,height,due_date,goal,profile_image,fees_status from vff.gym_memberstbl where gymid='"+str(gym_branch_id)+"'"
     
     query_result = execute_raw_query(query)
     
@@ -146,6 +146,20 @@ def all_gym_members(request):
     data = []    
     if not query_result == 500:
         for row in query_result:
+            current_date = timezone.now().strftime('%Y-%m-%d')
+            
+            due_date = row[10]
+            
+            converted_date = convert_date_format(due_date)
+            
+            fees_status = row[13]
+            status = "NA"
+            if fees_status !="NA":
+                if converted_date <= current_date:
+                    status = 'Unpaid'
+                else:
+                    status = 'Paid'
+            
             
             data.append({
                 'memberid': row[0],
@@ -161,6 +175,7 @@ def all_gym_members(request):
                 'due_date': row[10],
                 'goal': row[11],
                 'profile_image': row[12],
+                'fees_status': status,
             })
     else:
         error_msg = 'Something Went Wrong'
@@ -578,6 +593,14 @@ def upload_images2(uploaded_image):
     print(f'Uploaded Image URL: {image_url}')
     return image_url
 
+def convert_date_format(date_string):
+    # Parse the input date string into a datetime object
+    input_date = datetime.strptime(date_string, '%b. %d, %Y')
+
+    # Format the datetime object into the desired format ('YYYY-MM-DD')
+    formatted_date = input_date.strftime('%Y-%m-%d')
+
+    return formatted_date
 
 def execute_raw_query_fetch_one(query, params=None,):
     
