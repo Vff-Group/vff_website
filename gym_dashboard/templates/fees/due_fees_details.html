@@ -308,9 +308,14 @@ var payment_status = ""; // Payment Status
                             console.log('data::'+data);
                             // Populate dropdown with fetched plans
                             $.each(data.fees_data, function(index, subSection) {
+                                var cardio = subSection.cardio;
+                                var isCardio = "Without Cardio"
+                                if(cardio == 1){
+                                    isCardio ="With Cardio"
+                                }
                                 feesPlanDropdown.append($('<option>', {
                                     value: subSection.id,
-                                    text: subSection.name
+                                    text: subSection.name+" ["+isCardio+"]"+"\nDuration: "+subSection.duration+"\nPrice:"+subSection.price,
                                 }));
                             });
                         
