@@ -462,7 +462,7 @@ def fees_due_details(request):
     # using the 'current_url' variable to determine the active card.
     context = {'query_result':data,'current_url': current_url,'error_msg':error_msg}
 
-    return render(request,"fees/all_fees_plans.html",context)
+    return render(request,"fees/due_fees_details.html",context)
 
 
 
