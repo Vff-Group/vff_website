@@ -185,7 +185,7 @@
                               </div>
 
                             <div class="form-group">
-                                <button type="submit" class="btn bg-gradient-success makePaymentBtn">Make Payment</button>
+                                <button type="button" class="btn bg-gradient-success makePaymentBtn">Make Payment</button>
                             </div>
 
                              <!-- Dropdown for fees plans -->
@@ -337,6 +337,33 @@ var payment_status = ""; // Payment Status
       
     });
 
+    $(document).ready(function() {
+        // Event listener for change in payment mode dropdown
+        $('#input-paymentmode').change(function() {
+            var selectedMode = $(this).val(); // Get the selected value
+    
+            // Toggle visibility of payment ID container based on selected mode
+            if (selectedMode === 'Cash') {
+                $('#payment-id-container').hide(); // Hide container for Cash mode
+            } else {
+                $('#payment-id-container').show(); // Show container for other modes
+            }
+        });
+    });
+    // Get the CSRF token from the cookie
+function getCSRFToken() {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith("csrftoken=")) {
+            return cookie.substring("csrftoken=".length, cookie.length);
+        }
+    }
+    return null;
+  }
+</script>
+
+<!-- <script>
     var payment_id = $("#input-paymentid").val();
     // Event listener for the payment mode selection
 $('#input-paymentmode').change(function() {
@@ -414,16 +441,5 @@ $("#input-paymentmode").prop("disabled", true);
       toast.show();*/
   }
 
-    // Get the CSRF token from the cookie
-function getCSRFToken() {
-    const cookies = document.cookie.split(';');
-    for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.startsWith("csrftoken=")) {
-            return cookie.substring("csrftoken=".length, cookie.length);
-        }
-    }
-    return null;
-  }
-</script>
+</script> -->
 {% endblock  %}
