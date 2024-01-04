@@ -595,14 +595,7 @@ def upload_images2(uploaded_image):
     print(f'Uploaded Image URL: {image_url}')
     return image_url
 
-def convert_date_format(date_string):
-    # Parse the input date string into a datetime object
-    input_date = datetime.strptime(date_string, '%b. %d, %Y')
 
-    # Format the datetime object into the desired format ('YYYY-MM-DD')
-    formatted_date = input_date.strftime('%Y-%m-%d')
-
-    return formatted_date
 
 def execute_raw_query_fetch_one(query, params=None,):
     
