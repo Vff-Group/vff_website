@@ -515,8 +515,8 @@ def update_fees_payment_details_for_member(request):
                 #Insert record in payment table with razorpay_payment_id
                 query_payment = "insert into vff.gym_paymenttbl (member_id,amount,payment_method,razor_pay_id,payment_status,gym_id) values ('"+str(member_id)+"','"+str(paid_amount)+"','"+str(payment_method)+"','"+str(razor_pay_id)+"','"+str(payment_status)+"','"+str(gym_id)+"') returning paymentid"
                 print(f'insert payment::{query_payment}')
-                ret_payment_id = cursor.fetchone()[0]
                 cursor.execute(query_payment)
+                ret_payment_id = cursor.fetchone()[0]
                 connection.commit()
                 
                 #Insert record in payment history table with payment_id
@@ -531,7 +531,7 @@ def update_fees_payment_details_for_member(request):
 
                 
         except Exception as e:
-            print(f"Error Updateing Payment Details: {e}")
+            print(f"Error Updating Payment Details: {e}")
             error_msg = 'Something went wrong'
             return JsonResponse({'error':error_msg})
         
