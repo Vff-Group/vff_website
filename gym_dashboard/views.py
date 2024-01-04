@@ -152,7 +152,7 @@ def all_gym_members(request):
             
             due_date = row[10]
             
-            converted_date = convert_date_format(due_date)
+            converted_date = convert_date_format(str(due_date))
             
             fees_status = row[13]
             status = "NA"
