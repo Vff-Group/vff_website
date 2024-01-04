@@ -19,6 +19,8 @@ import re
 import os
 from django.conf import settings
 from django.http import JsonResponse
+from datetime import datetime
+from django.utils import timezone
 
 from PIL import Image  # Pillow library for image processing
 # Create your views here.
