@@ -334,7 +334,10 @@ var payment_status = ""; // Payment Status
             rzp.open(); // Open Razorpay payment window
         });
    
-        var payment_id = $("#input-paymentid").val();
+      
+    });
+
+    var payment_id = $("#input-paymentid").val();
     // Event listener for the payment mode selection
 $('#input-paymentmode').change(function() {
     var paymentMode = $(this).val();
@@ -377,9 +380,6 @@ $(".makePaymentBtn").prop("disabled", true);
 $("#input-paymentmode").prop("disabled", true);
 
 }
-    });
-
-
     
   // Function to show a toast message
   function showToast(message, bodyContent) {
