@@ -263,6 +263,7 @@ var order_status = ""; // Order Status
 var payment_status = ""; // Payment Status
     $(document).ready(function() {
 
+        //Make Payment Button and fetch gym plans
         $(".makePaymentBtn").on("click", function() {
             // Prevent form submission
             $(this).closest("form").submit(function(e) {
@@ -332,10 +333,8 @@ var payment_status = ""; // Payment Status
             var rzp = new Razorpay(options);
             rzp.open(); // Open Razorpay payment window
         });
-    });
-
-
-    var payment_id = $("#input-paymentid").val();
+   
+        var payment_id = $("#input-paymentid").val();
     // Event listener for the payment mode selection
 $('#input-paymentmode').change(function() {
     var paymentMode = $(this).val();
@@ -378,6 +377,10 @@ $(".makePaymentBtn").prop("disabled", true);
 $("#input-paymentmode").prop("disabled", true);
 
 }
+    });
+
+
+    
 
 
     // Get the CSRF token from the cookie
