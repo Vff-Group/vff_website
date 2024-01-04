@@ -377,7 +377,7 @@ def update_fees_plan(request,fees_plan_id):
         
         try:
             with connection.cursor() as cursor:
-                insert_query="update vff.gym_fees_detailstbl set fees_type='"+str(fees_type)+"',duration_in_months='"+str(duration_in_months)+"',price='"+str(price)+"',description='"+str(description)+"',cardio='"+str(cardio)+"','"+str(PT)+"' where fdetail_id='"+str(fees_plan_id)+"'"
+                insert_query="update vff.gym_fees_detailstbl set fees_type='"+str(fees_type)+"',duration_in_months='"+str(duration_in_months)+"',price='"+str(price)+"',description='"+str(description)+"',cardio='"+str(cardio)+"',pt='"+str(PT)+"' where fdetail_id='"+str(fees_plan_id)+"'"
                 cursor.execute(insert_query)
                 connection.commit()
                 print(" Fees Plan Updated Successfully.")
