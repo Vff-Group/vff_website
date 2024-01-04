@@ -153,11 +153,11 @@ def all_gym_members(request):
             due_date = row[10]
             print(f'due_date::{due_date}')
             
-            
+            new_due_date = datetime.strptime(due_date, '%Y-%m-%d').date()
             fees_status = row[13]
             status = "NA"
             if fees_status !="NA":
-                if due_date <= current_date:
+                if new_due_date <= current_date:
                     status = 'Unpaid'
                 else:
                     status = 'Paid'
