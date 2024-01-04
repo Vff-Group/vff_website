@@ -151,7 +151,7 @@ def all_gym_members(request):
             current_date = timezone.now().strftime('%Y-%m-%d')
             
             due_date = row[10]
-            
+            print(f'due_date::{due_date}')
             converted_date = convert_date_format(str(due_date))
             
             fees_status = row[13]
