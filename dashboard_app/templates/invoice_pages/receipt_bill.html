@@ -224,8 +224,8 @@
       <h1>Subtotal : ₹{{sub_total}}/-</h1>
       <h1>Add-Ons : ₹{{extra_item_sum}}/-</h1>
       {% if gst_amount != '0'  and gst_amount != '0.0' %}
-      <h1>CGST (9%) [Inclusive] : ₹{{central_gst}}/-</h1>
-      <h1>SGST (9%) [Inclusive] : ₹{{state_gst}}/-</h1>
+      <h1>CGST (9%) <small>[Inclusive]</small> : ₹{{central_gst}}/-</h1>
+      <h1>SGST (9%) <small>[Inclusive]</small> : ₹{{state_gst}}/-</h1>
       {% elif igstamount != '0' and igstamount != '0.0'%}
       <h1>IGST (18%) : ₹{{igstamount}}/-</h1>
       {% else %}
