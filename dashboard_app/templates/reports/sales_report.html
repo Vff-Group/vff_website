@@ -199,7 +199,7 @@ function getCSRFToken() {
                         // Calculate discount percentage and format it
                         discountPercentage = calculateDiscountPercentage(row.discount_price, row.price);
                         // Example:
-                        price_value = parseFloat(row.price).toFixed(2);
+                        
                         var newRow = '<tr>' +
                             '<td><p class="text-xs text-secondary mb-0">' + row.pickup_dt + '</p></td>' +
                             '<td><p class="text-xs text-secondary mb-0">ORD#' + row.orderid + '</p></td>' +
@@ -215,7 +215,7 @@ function getCSRFToken() {
                             //'<td><p class="text-xs text-secondary mb-0 text-center">Rs.' + row.addons_price + '/-</p></td>' +
                             '<td><p class="text-xs text-secondary mb-0 text-center">' + discountPercentage + '</p></td>' +
                             '<td><p class="text-xs text-secondary mb-0 text-center">Rs.' + (row.gstamount+row.igstamount) + '/-</p></td>' +
-                            '<td><h6 class="mb-0 text-sm  text-center">Rs.' + price_value + '/-</h6></td>' +
+                            '<td><h6 class="mb-0 text-sm  text-center">Rs.' + parseFloat(row.price).toFixed(2) + '/-</h6></td>' +
                             // Add other columns here
                             '</tr>';
                         $('#salesTableBody').append(newRow);
