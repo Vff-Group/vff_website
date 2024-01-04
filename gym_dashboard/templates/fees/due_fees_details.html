@@ -125,6 +125,7 @@
                             </button>
                           </div>
                           <form
+                          id="update-fees-form"
                           method="post"
                         >
                           {% csrf_token %}
@@ -258,6 +259,8 @@
 
 <script>
     var payment_id = "";
+    var isOnlinePayment = false;
+    var paymentSuccessful = false;
 var paymentType = "";
 var order_status = ""; // Order Status
 var payment_status = ""; // Payment Status
@@ -274,7 +277,7 @@ var payment_status = ""; // Payment Status
 
             // Parse the value to float
             var totalPayment = parseFloat(planPrice);
-
+            if(isOnlinePayment === true){
             // Trigger Razorpay payment
             var options = {
                 "key": "rzp_test_qtHIWapeUEAAZO", // Enter the Key ID generated from the Dashboard rzp_test_qtHIWapeUEAAZO
@@ -315,11 +318,11 @@ var payment_status = ""; // Payment Status
                                 }
                                 feesPlanDropdown.append($('<option>', {
                                     value: subSection.id,
-                                    html: subSection.id + " [" + isCardio + "]<br> Duration: " + subSection.duration + "<br> Price: " + subSection.price
+                                    html: subSection.name + " [" + isCardio + "]<br> Duration: " + subSection.duration + "<br> Price: " + subSection.price
                                     //text: subSection.name+" ["+isCardio+"]<br>Duration: "+subSection.duration+"<br>Price:"+subSection.price,
                                 }));
                             });
-                        
+                            paymentSuccessful = true;
                             // Update hidden input with the default selected plan ID (optional)
                             $('#selectedPlanId').val(data[0].id); // Set the first plan ID as default
                         },
@@ -339,6 +342,8 @@ var payment_status = ""; // Payment Status
             };
             var rzp = new Razorpay(options);
             rzp.open(); // Open Razorpay payment window
+        }
+
         });
    
       
@@ -351,6 +356,8 @@ var payment_status = ""; // Payment Status
     
             // Toggle visibility of payment ID container based on selected mode
             if (selectedMode === 'Cash') {
+                isOnlinePayment = false;
+                paymentSuccessful = true;
                 $('#payment-id-container').hide(); // Hide container for Cash mode
                 const csrfToken = getCSRFToken();
                 $.ajax({
@@ -391,6 +398,7 @@ var payment_status = ""; // Payment Status
                 });
            
             } else {
+                isOnlinePayment = true;
                 $('#payment-id-container').show(); // Show container for other modes
             }
         });
@@ -414,6 +422,70 @@ function getCSRFToken() {
         }
     }
     return null;
+  }
+
+  $(document).ready(function() {
+    $('#update-fees-form').submit(function(event) {
+        // Prevent default form submission
+        event.preventDefault();
+
+        // Perform your form validation here
+        // For example, check if payment is successful
+        
+        if (!paymentSuccessful) {
+            // Show an error message or take appropriate action
+            showToast('Alert','Payment not successful. Please try again');
+            return;
+        }
+
+        // If payment is successful, proceed with AJAX
+        $.ajax({
+            url: 'your-backend-endpoint-url', // Replace with your backend endpoint
+            method: 'POST',
+            data: $(this).serialize(), // Serialize the form data
+            success: function(response) {
+                // Handle the success response here
+                console.log('AJAX request successful:', response);
+                // You can perform additional actions based on the response
+            },
+            error: function(xhr, status, error) {
+                // Handle any errors that occur during the AJAX request
+                console.error('AJAX request error:', status, error);
+            }
+        });
+    });
+});
+
+// Function to show a toast message
+function showToast(message, bodyContent) {
+    toastr.warning(bodyContent, message, {
+      positionClass: "toast-top-right",
+      timeOut: 5e3,
+      closeButton: !0,
+      debug: !1,
+      newestOnTop: !0,
+      progressBar: !0,
+      preventDuplicates: !0,
+      onclick: null,
+      showDuration: "300",
+      hideDuration: "1000",
+      extendedTimeOut: "1000",
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut",
+      tapToDismiss: !1
+  })
+      // Get the toast element and its content
+      /*var toastElement = document.getElementById("liveToast");
+      var toastBody = toastElement.querySelector(".toast-body");
+  
+      // Update the toast content with the provided message and body content
+      toastBody.textContent = bodyContent;
+  
+      // Show the toast
+      var toast = new bootstrap.Toast(toastElement);
+      toast.show();*/
   }
 </script>
 
