@@ -342,8 +342,9 @@ var payment_status = ""; // Payment Status
 $('#input-paymentmode').change(function() {
     var paymentMode = $(this).val();
     var paymentIdContainer = $('#payment-id-container');
-    var gstContainer = $('#gst-container');
+    
     paymentType = paymentMode;
+    console.log('paymentType::'+paymentType);
     // Check if the payment mode is 'Cash' and hide the 'Pay Now' button
     if (paymentMode === 'Cash') {
     order_status = "Payment Done";
