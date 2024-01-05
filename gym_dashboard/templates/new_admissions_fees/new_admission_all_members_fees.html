@@ -120,7 +120,7 @@
                           <div class="modal-body">
                            
                             
-                            <input type="hidden" id="member_id_current" name="member_id" value="{{row.memberid}}">
+                            <input type="hidden" id="member_id_current" name="id" value="{{row.memberid}}">
                             <input type="hidden" id="last_fees_due_date_current" name="last_fees_date"  value="{{row.due_date}}">
                             
                              <!-- Dropdown for fees plans -->
@@ -437,7 +437,7 @@ var new_plan_id = "";
                 //var feesPlanDropdown = $('#feesPlanDropdown');
                 member_id = parseInt(member_id);
                 console.log('memberId::'+member_id);
-                var feesPlanDropdown = $('#feesPlanDropdown'+parseInt(member_id));
+                var feesPlanDropdown = $('#feesPlanDropdown'+2);
                                     
                 // Clear existing options (if any)
                 feesPlanDropdown.empty();
