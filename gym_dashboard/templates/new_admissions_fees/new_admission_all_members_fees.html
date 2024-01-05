@@ -435,10 +435,8 @@ var new_plan_id = "";
                 // Handle successful response and load fees plans
                  // Get the dropdown element
                 //var feesPlanDropdown = $('#feesPlanDropdown');
-                var $modalBody = $(this).closest('.modal-content').find('.modal-body');
-    var memberId = $modalBody.find('.member-id-current').val();
-    var lastFeesDueDate = $modalBody.find('.last-fees-due-date-current').val();
-                console.log('memberId::'+memberId);
+                var memberIdCurrent = $(this).closest('.modal').find('#member-id-current').val();
+                console.log('memberId::'+memberIdCurrent);
                 var feesPlanDropdown = $('#feesPlanDropdown');
                                     
                 // Clear existing options (if any)
