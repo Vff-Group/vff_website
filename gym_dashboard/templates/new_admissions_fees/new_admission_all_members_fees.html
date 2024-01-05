@@ -835,7 +835,9 @@ var new_plan_id = "";
      var convertedLastDueDate = convertDateFormat(last_due_date);
         console.log("Last_due_date_converted"+convertedLastDueDate); 
         
-      
+        var planPrice = $('#price').val();
+        
+        paid_amount = parseFloat(planPrice);
           
       //Fees Paid date is added at backend
       const dictMap = {
