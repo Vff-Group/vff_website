@@ -551,28 +551,34 @@ var new_plan_id = "";
 
   //Handling Payment Mode i.e Single or Multiple 
   document.getElementById('single-payment-checkbox').addEventListener('change', function() {
+    const multiPaymentCheckbox = document.getElementById('multi-payment-checkbox');
         if (this.checked) {
             payment_type="Single";
             document.getElementById('single-payment-container').style.display = 'block';
             document.getElementById('multi-payment-container').style.display = 'none';
             document.querySelector('.makePaymentBtn').style.display = 'block';
+            multiPaymentCheckbox.disabled = true;
         } else {
             payment_type="";
             document.getElementById('single-payment-container').style.display = 'none';
             document.querySelector('.makePaymentBtn').style.display = 'none';
+            multiPaymentCheckbox.disabled = false;
         }
     });
 
     document.getElementById('multi-payment-checkbox').addEventListener('change', function() {
+        const singlePaymentCheckbox = document.getElementById('single-payment-checkbox');
         if (this.checked) {
             payment_type="Multiple";
             document.getElementById('multi-payment-container').style.display = 'block';
             document.getElementById('single-payment-container').style.display = 'none';
             document.querySelector('.makePaymentBtn').style.display = 'block';
+            singlePaymentCheckbox.disabled = true;
         } else {
             payment_type="";
             document.getElementById('multi-payment-container').style.display = 'none';
             document.querySelector('.makePaymentBtn').style.display = 'none';
+            singlePaymentCheckbox.disabled = false;
         }
     });
 
