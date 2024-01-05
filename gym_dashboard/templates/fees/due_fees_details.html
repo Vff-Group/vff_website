@@ -456,6 +456,7 @@ var new_plan_id = "";
                             // Clear existing options (if any)
                             feesPlanDropdown.empty();
                             console.log('data::'+data);
+                            feesPlanDropdown.append('<option disabled selected>Choose a Plan</option>');
                             // Populate dropdown with fetched plans
                             $.each(data.fees_data, function(index, subSection) {
                                 var cardio = subSection.cardio;
@@ -574,6 +575,7 @@ var new_plan_id = "";
                         // Clear existing options (if any)
                         feesPlanDropdown.empty();
                         console.log('data::'+data);
+                        feesPlanDropdown.append('<option disabled selected>Choose a Plan</option>');
                         // Populate dropdown with fetched plans
                         $.each(data.fees_data, function(index, subSection) {
                             var cardio = subSection.cardio;
@@ -672,6 +674,7 @@ var new_plan_id = "";
                                 // Clear existing options (if any)
                                 feesPlanDropdown.empty();
                                 console.log('data::'+data);
+                                feesPlanDropdown.append('<option disabled selected>Choose a Plan</option>');
                                 // Populate dropdown with fetched plans
                                 $.each(data.fees_data, function(index, subSection) {
                                     var cardio = subSection.cardio;
@@ -745,6 +748,7 @@ var new_plan_id = "";
                         // Clear existing options (if any)
                         feesPlanDropdown.empty();
                         console.log('data::'+data);
+                        feesPlanDropdown.append('<option disabled selected>Choose a Plan</option>');
                         // Populate dropdown with fetched plans
                         $.each(data.fees_data, function(index, subSection) {
                             var cardio = subSection.cardio;
