@@ -763,8 +763,17 @@ var new_plan_id = "";
         showToast('Alert','Please Select Payment Mode One For Payment');
         return;
      }
+
+     if (payment_type === 'Multiple' && payment_one_id === '-1'){
+        showToast('Alert','Please Pay Payment Mode One Amount');
+        return;
+     }
      if(payment_type === 'Multiple' && payment_two_type === 'NA'){
         showToast('Alert','Please Select Payment Mode Two For Payment');
+        return;
+     }
+     if (payment_type === 'Multiple' && payment_two_id === '-1'){
+        showToast('Alert','Please Pay Payment Mode Two Amount');
         return;
      }
 
