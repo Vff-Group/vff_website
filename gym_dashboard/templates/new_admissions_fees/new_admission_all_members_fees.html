@@ -410,52 +410,54 @@ var new_plan_id = "";
           var paid_amount = 0;
           var payment_method = "";
 
+          const csrfToken = getCSRFToken();
+          $.ajax({
+              url: '/gym_dashboard_app/fetch_fees_plans/', // URL to fetch fees plans
+              type: 'POST',
+              headers: {
+                  'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+              },
+              contentType: 'application/json',
+              success: function(data) {
+                  // Handle successful response and load fees plans
+                   // Get the dropdown element
+                  var feesPlanDropdown = $('#feesPlanDropdown');
+                                      
+                  // Clear existing options (if any)
+                  feesPlanDropdown.empty();
+                  console.log('data::'+data);
+                  // Populate dropdown with fetched plans
+                  $.each(data.fees_data, function(index, subSection) {
+                      var cardio = subSection.cardio;
+                      var isCardio = "Without Cardio"
+                      if(cardio == 1){
+                          isCardio ="With Cardio"
+                      }
+                      feesPlanDropdown.append($('<option>', {
+                          value: subSection.id,
+                          html: subSection.name + " [" + isCardio + "]",
+                          'data-duration': subSection.duration, // Add data-duration attribute
+                          'data-price': subSection.price // Add data-price attribute
+                      }));
+                  });
+              
+                  // Update hidden input with the default selected plan ID (optional)
+                  $('#selectedPlanId').val(data.fees_data[0].id); // Set the first plan ID as default
+                  $('#price').val(data.fees_data[0].price);
+                  $('#duration').val(data.fees_data[0].duration);
+                  new_plan_id = data.fees_data[0].id;
+                new_plan_price = data.fees_data[0].price;
+                new_plan_duration = data.fees_data[0].duration;
+              },
+              error: function(xhr, status, error) {
+                  // Handle error
+                  console.log(error);
+              }
+          });
+      
+
   $(document).ready(function() {
 
-    const csrfToken = getCSRFToken();
-    $.ajax({
-        url: '/gym_dashboard_app/fetch_fees_plans/', // URL to fetch fees plans
-        type: 'POST',
-        headers: {
-            'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
-        },
-        contentType: 'application/json',
-        success: function(data) {
-            // Handle successful response and load fees plans
-             // Get the dropdown element
-            var feesPlanDropdown = $('#feesPlanDropdown');
-                                
-            // Clear existing options (if any)
-            feesPlanDropdown.empty();
-            console.log('data::'+data);
-            // Populate dropdown with fetched plans
-            $.each(data.fees_data, function(index, subSection) {
-                var cardio = subSection.cardio;
-                var isCardio = "Without Cardio"
-                if(cardio == 1){
-                    isCardio ="With Cardio"
-                }
-                feesPlanDropdown.append($('<option>', {
-                    value: subSection.id,
-                    html: subSection.name + " [" + isCardio + "]",
-                    'data-duration': subSection.duration, // Add data-duration attribute
-                    'data-price': subSection.price // Add data-price attribute
-                }));
-            });
-        
-            // Update hidden input with the default selected plan ID (optional)
-            $('#selectedPlanId').val(data.fees_data[0].id); // Set the first plan ID as default
-            $('#price').val(data.fees_data[0].price);
-            $('#duration').val(data.fees_data[0].duration);
-            new_plan_id = data.fees_data[0].id;
-          new_plan_price = data.fees_data[0].price;
-          new_plan_duration = data.fees_data[0].duration;
-        },
-        error: function(xhr, status, error) {
-            // Handle error
-            console.log(error);
-        }
-    });
 
 
       //Make Payment Button and fetch gym plans
