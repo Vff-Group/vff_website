@@ -752,7 +752,7 @@ var new_plan_id = "";
       // Prevent default form submission
       event.preventDefault();
 
-      
+
      if(payment_type === ''){
         showToast('Alert','Please Select Type Either Single Or Multi Payment');
         return;
@@ -764,6 +764,11 @@ var new_plan_id = "";
      }
      if(payment_type === 'Multiple' && payment_two_type === ''){
         showToast('Alert','Please Select Payment Mode Two For Payment');
+        return;
+     }
+
+     if(payment_type ==='Single' && payment_status === ''){
+        showToast('Alert','Please pay before updating');
         return;
      }
 
