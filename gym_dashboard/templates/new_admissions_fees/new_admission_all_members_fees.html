@@ -511,6 +511,7 @@ var new_plan_id = "";
   
   });
 
+  //Handling Payment Mode i.e Single or Multiple 
   document.getElementById('single-payment-checkbox').addEventListener('change', function() {
         if (this.checked) {
             document.getElementById('single-payment-container').style.display = 'block';
@@ -532,6 +533,28 @@ var new_plan_id = "";
             document.querySelector('.makePaymentBtn').style.display = 'none';
         }
     });
+
+// Handling the Payment Button for mode one or two
+document.getElementById('single-payment-checkbox').addEventListener('change', function() {
+    var singlePaymentContainer = document.getElementById('single-payment-container');
+    var paymentModeOne = document.getElementById('input-paymentmode-multi-one');
+
+    if (this.checked) {
+        singlePaymentContainer.style.display = 'block';
+
+        paymentModeOne.addEventListener('change', function() {
+            var makePaymentContainer = document.getElementsByClassName('makePaymentBtn-multi-one');
+
+            if (paymentModeOne.value !== 'Cash') {
+                makePaymentContainer.style.display = 'block';
+            } else {
+                makePaymentContainer.style.display = 'none';
+            }
+        });
+    } else {
+        singlePaymentContainer.style.display = 'none';
+    }
+});
 
   function disableElements() {
       // Disable "Pay Now" button
