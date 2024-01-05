@@ -555,6 +555,46 @@ var new_plan_id = "";
             if (selectedPaymentMode === 'Cash') {
                 makePaymentBtn.hide();
                 document.getElementById('payment-id-container-multi-two').style.display = 'none';
+                const csrfToken = getCSRFToken();
+                $.ajax({
+                    url: '/gym_dashboard_app/fetch_fees_plans/', // URL to fetch fees plans
+                    type: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+                    },
+                    contentType: 'application/json',
+                    success: function(data) {
+                        // Handle successful response and load fees plans
+                         // Get the dropdown element
+                        var feesPlanDropdown = $('#feesPlanDropdown');
+                                            
+                        // Clear existing options (if any)
+                        feesPlanDropdown.empty();
+                        console.log('data::'+data);
+                        // Populate dropdown with fetched plans
+                        $.each(data.fees_data, function(index, subSection) {
+                            var cardio = subSection.cardio;
+                            var isCardio = "Without Cardio"
+                            if(cardio == 1){
+                                isCardio ="With Cardio"
+                            }
+                            feesPlanDropdown.append($('<option>', {
+                                value: subSection.id,
+                                html: subSection.name + " [" + isCardio + "]<br> Duration: " + subSection.duration + "<br> Price: " + subSection.price,
+                                'data-duration': subSection.duration, // Add data-duration attribute
+                                'data-price': subSection.price // Add data-price attribute
+                            }));
+                        });
+                    
+                        // Update hidden input with the default selected plan ID (optional)
+                        $('#selectedPlanId').val(data[0].id); // Set the first plan ID as default
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error
+                        console.log(error);
+                    }
+                });
+           
             } else {
                 makePaymentBtn.show();
                 document.getElementById('payment-id-container-multi-two').style.display = 'block';
@@ -610,6 +650,46 @@ var new_plan_id = "";
                     handler: function(response) {
                         $('#input-paymentid-multi-two').val(response.razorpay_payment_id);
                         payment_two_id = response.razorpay_payment_id;
+                        const csrfToken = getCSRFToken();
+                        $.ajax({
+                            url: '/gym_dashboard_app/fetch_fees_plans/', // URL to fetch fees plans
+                            type: 'POST',
+                            headers: {
+                                'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+                            },
+                            contentType: 'application/json',
+                            success: function(data) {
+                                // Handle successful response and load fees plans
+                                 // Get the dropdown element
+                                var feesPlanDropdown = $('#feesPlanDropdown');
+                                                    
+                                // Clear existing options (if any)
+                                feesPlanDropdown.empty();
+                                console.log('data::'+data);
+                                // Populate dropdown with fetched plans
+                                $.each(data.fees_data, function(index, subSection) {
+                                    var cardio = subSection.cardio;
+                                    var isCardio = "Without Cardio"
+                                    if(cardio == 1){
+                                        isCardio ="With Cardio"
+                                    }
+                                    feesPlanDropdown.append($('<option>', {
+                                        value: subSection.id,
+                                        html: subSection.name + " [" + isCardio + "]<br> Duration: " + subSection.duration + "<br> Price: " + subSection.price,
+                                        'data-duration': subSection.duration, // Add data-duration attribute
+                                        'data-price': subSection.price // Add data-price attribute
+                                    }));
+                                });
+                            
+                                // Update hidden input with the default selected plan ID (optional)
+                                $('#selectedPlanId').val(data[0].id); // Set the first plan ID as default
+                            },
+                            error: function(xhr, status, error) {
+                                // Handle error
+                                console.log(error);
+                            }
+                        });
+                   
                     },
                     "notes": {
                         "address": "Tilakwadi"
