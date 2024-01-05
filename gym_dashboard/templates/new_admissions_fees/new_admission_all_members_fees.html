@@ -643,6 +643,8 @@
                     handler: function(response) {
                         $('#input-paymentid-multi-one').val(response.razorpay_payment_id);
                         payment_one_id = response.razorpay_payment_id;
+                        var makePaymentBtn = $('.makePaymentBtn-multi-one');
+                        makePaymentBtn.hide();
                     },
                     "notes": {
                         "address": "Tilakwadi"
@@ -673,6 +675,8 @@
                     handler: function(response) {
                         $('#input-paymentid-multi-two').val(response.razorpay_payment_id);
                         payment_two_id = response.razorpay_payment_id;
+                        var makePaymentBtn = $('.makePaymentBtn-multi-two');
+                        makePaymentBtn.hide();
                     },
                     "notes": {
                         "address": "Tilakwadi"

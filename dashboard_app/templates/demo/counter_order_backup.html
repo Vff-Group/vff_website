@@ -1,0 +1,2645 @@
+{% extends "common/base.html" %}
+{% load static %}
+{% block title %}On Counter Order{% endblock title%}
+{% block content %}
+
+<div class="container-fluid py-4">
+    <button type="button" class="btn btn-primary" id="liveToastBtn" style="display: none;"></button>
+
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+  <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="{% static 'img/logos/logo.png' %}" class="rounded me-2" style="width: 30px; height:30px;" alt="...">
+      <strong class="me-auto">VFF Group</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body bg-light text-dark">
+      
+    </div>
+  </div>
+</div>
+
+    <div class="row">
+      <div class="col-lg-7">
+        <div class="row">
+          <div class="col-12">
+            <div class="card mb-4">
+              <div class="card-header pb-0">
+                <form method="get">
+                    {% csrf_token %}
+                <div class="row">
+                    <!-- category start  -->
+
+                    <div class="col-lg-4">
+                    
+                        <div class="form-group">
+                            <label
+                              class="form-control-label"
+                              for="input-category"
+                              >Category</label
+                            >
+                            <select
+                              class="form-control form-control-alternative"
+                              id="input-category"
+                              name="main_category"
+                              required
+                              onchange="loadSubCategories(this)"
+                            >
+                              <option disabled selected>
+                                Choose Laundry Category
+                              </option>
+                              {% for category in category_data %}
+                              <option
+                                value="{{ category.categoryname }}"
+                                data-catids="{{ category.catid }}"
+                                data-cat_img="{{ category.cat_img }}"
+                                data-cat_name="{{ category.categoryname }}"
+                              >
+                                {{ category.categoryname }}
+                              </option>
+                              {% endfor %}
+
+                              
+                            </select>
+                          </div>
+                        
+                      </div>
+                    <!-- end category  -->
+                      
+                    <!-- Other Service Prices   -->
+                    <div class="col-lg-4" id="price_col">
+                    
+                        <div class="form-group">
+                            <label
+                              class="form-control-label"
+                              for="input-price"
+                              >Prices</label
+                            >
+                            <select
+                              class="form-control form-control-alternative"
+                              id="input-price"
+                              name="price_section"
+                              required
+                              
+                            >
+                              <option disabled selected>
+                                Choose Service Type
+                              </option>
+                              
+                              <!-- {% for category in category_data %}
+                              <option
+                                  value="{{ category.regular_prize }}"
+                                  
+                              >
+                              {{ category.regular_prize }}
+                              </option>
+                              {% endfor %} -->
+
+                              <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
+                            </select>
+                          </div>
+                        
+                      </div>
+                      <!-- End Other Service Prices  -->
+
+                       <!-- Sections category  -->
+                       <div class="col-lg-4" id="section_col">
+                    
+                        <div class="form-group">
+                            <label
+                              class="form-control-label"
+                              for="input-section"
+                              >Sub Section</label
+                            >
+                            <select
+                              class="form-control form-control-alternative"
+                              id="input-section"
+                              name="section_type_main"
+                              required
+                              onchange="loadSubCategoriesBySection(this)"
+                            >
+                              <option disabled selected>
+                                Choose Section
+                              </option>
+                              
+                              {% for section in section_data %}
+                              <option
+                                  value="{{ section.section_name }}"
+                                  data-section_id="{{ section.sectionid }}"
+                              >
+                                  {{ section.section_name }}
+                              </option>
+                              {% endfor %}
+
+                              <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
+                            </select>
+                          </div>
+                        
+                      </div>
+                      <!-- End Sections  -->
+
+                      <!-- sub category  -->
+                      <!-- <div class="col-lg-4">
+                    
+                        <div class="form-group">
+                            <label
+                              class="form-control-label"
+                              for="input-subcategory"
+                              >Sub Category</label
+                            >
+                            <select
+                              class="form-control form-control-alternative"
+                              id="input-subcategory"
+                              name="subcategory"
+                              required
+                            >
+                              <option disabled selected>
+                                Choose Sub Category
+                              </option>
+                              {% for category in data_all_categories %}
+                              <option
+                                value="{{ category.category_name }}"
+                                data-catid="{{ category.expcatid }}"
+                              >
+                                {{ category.category_name }}
+                              </option>
+                              {% endfor %} 
+
+                             
+                            </select>
+                          </div>
+                        
+                      </div> -->
+                      <!-- End sub category  -->
+                    
+
+                </div>
+            </form>
+            
+<hr>
+
+<div class="row" id="peice-wise-cart" style="display: none;">
+             
+                  
+  <div class="col-lg-6" id="if-sqft">
+    
+    <div class="form-group">
+      <label
+        for="item-per-width-sqft-price"
+        class="form-control-label text-secondary"
+        >Add Value in Square Feet Width</label
+      >
+      <input
+        class="form-control form-control-alternative"
+        type="number"
+        id="item-per-width-sqft-price"
+        name="per_width_sqft"
+        placeholder="Add Value in Square Feet Width"
+        value=""
+        required
+      />
+    </div>
+
+  </div>
+
+  <div class="col-lg-6" id="if-sqft">
+    
+    <div class="form-group">
+      <label
+        for="item-per-height-sqft-price"
+        class="form-control-label text-secondary"
+        >Add Value in Square Feet Height</label
+      >
+      <input
+        class="form-control form-control-alternative"
+        type="number"
+        id="item-per-height-sqft-price"
+        name="per_width_sqft"
+        placeholder="Add Value in Square Feet Height"
+        value=""
+        required
+      />
+    </div>
+
+  </div>
+
+</div>
+
+                <div class="row">
+             
+                  
+                  <div class="col-lg-6" id="other-then-dry-clean">
+                    
+                    <div class="form-group">
+                      <label
+                        for="item-quantity"
+                        class="form-control-label text-secondary"
+                        >Add Item Quantity in Kgs</label
+                      >
+                      <input
+                        class="form-control form-control-alternative"
+                        type="number"
+                        id="item-quantity"
+                        name="kgs_quantity"
+                        placeholder="Add Item Quantity in Kgs [5,10]"
+                        value=""
+                        required
+                      />
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+                
+                <div class="row" id="show-search" style="display: none;">
+                  
+                  <div class="col-lg-6">
+                    <form method="get">
+                      {% csrf_token %}
+                      <div class="form-group">
+                        <label class="form-control-label" for="item-name-search">Search Laundry Item</label>
+                          <input
+                              class="form-control form-control-alternative"
+                              type="search"
+                              id="item-name-search"
+                              name="itemname-search"
+                              placeholder="Search Laundry Item by name"
+                              value=""
+                              autocomplete="off"
+                              
+                          />
+                      </div>
+                  </form>
+                  </div>
+    
+                
+                </div>
+
+                <!-- Table start  -->
+                <div class="card-body px-0 pt-0 pb-2" style="height: 400px; overflow-y: scroll;">
+                <div class="table-responsive p-0">
+                    <table class="table  align-items-center mb-0  " id="subCategoryTable" style="width: 100%;">
+                      <thead class="bg-light">
+                        <tr>
+                          <th
+                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 w-50 "
+                          >
+                            Category Details
+                          </th>
+                          
+                          <!-- <th
+                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                          >
+                            Type
+                          </th> -->
+                          
+                         
+                          <th class='text-secondary opacity-7'></th>
+                          <th >
+                            <div class="col-lg-4">
+                                <button class="btn btn-primary btn-sm" id="add_to_cart" style="display: none;">Add To Cart</button>
+                            </div>
+                          </th>
+                         
+                        </tr>
+                      </thead>
+                     
+                      <tbody>
+                       <tr>
+                        
+                       </tr>
+                      </tbody>
+                      
+                    </table>
+                  </div>
+                </div>
+                <!-- Table End  -->
+
+              </div>
+              <!-- Action Buttons  -->
+
+              <!-- Action Buttons End  -->
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="card">
+          <div class="card-header pb-0 p-3">
+            <div class="row d-flex justify-content-end">
+              <div class="col-lg-12 d-flex align-items-center">
+                <div class="card w-100">
+                  <div class="card-body">
+                      <div class="mb-4">
+                          <h4 class="card-title">Customer Details</h4>
+                      </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form method="get">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input
+                                    class="form-control form-control-alternative"
+                                    type="search"
+                                    id="customer-name"
+                                    name="mobno"
+                                    placeholder="Search customer phone"
+                                    value="{{ customer_name|default:'' }}"
+                                    autocomplete="off"
+                                    
+                                />
+                            </div>
+                        </form>
+                        <div id="progress" class="progress" style="display: none;">
+                          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 100%; background-image: linear-gradient(to right, #ff8a00, #da1b60);"></div>
+                        </div>
+                        <div id="suggestion-container" style="height: 100px; overflow-y:scroll; display:none;">
+                            <ul class="navbar-nav" id="suggestion-list"></ul>
+                        </div>
+                        <input
+                            class="form-control form-control-alternative"
+                            type="hidden"
+                            id="selected-customer-id"
+                            name="selected_customer_id"
+                            value="{{ customer_id|default:'' }}"
+                        />
+                        
+                        <input
+                            class="form-control form-control-alternative"
+                            type="hidden"
+                            id="selected-mobile-no"
+                            name="selected-mobile-no"
+                            value=""
+                        />
+                        <input
+                            class="form-control form-control-alternative"
+                            type="hidden"
+                            id="selected-customer-name"
+                            name="selected-customer-name"
+                            value="{{ customer_name|default:'' }}"
+                        />
+                        
+                      </div>
+                </div>
+                </div>
+                </div>
+              </div>
+              
+          </div>
+        <div class="card-body p-3 pb-0">
+            <div class="row d-flex justify-content-end">
+                <div class="col">
+                    <a class="btn btn-facebook text-xxs" id="generate-booking-id" style="display: none;">Generate Booking ID</a>
+                    <input
+                            class="form-control form-control-alternative"
+                            type="hidden"
+                            id="selected-booking-id"
+                            name="booking-id"
+                            value="{{ booking_id|default:'' }}"
+                        />
+                  </div>
+                  <div class="col d-flex justify-content-end" id="add-customer">
+                    <a class="btn btn-primary text-xxs" href="{% url 'dashboard_app:add_customer' %}">Add New Customer</a>
+                  </div>
+                </div>
+              <!-- <div class="col-6 d-flex justify-content-end">
+                <div class="form-group">
+                    <label for="date-of-order" class="form-control-label text-secondary">Order Date</label>
+                  <input
+                    class="form-control form-control-alternative"
+                    type="date"
+                    id="date-of-order"
+                    name="dateoforder"
+                    value=""
+                    required
+                  />
+                </div>
+              </div> -->
+            </div>
+
+            
+            <!-- Table start  -->
+            <div class="row">
+                <div class="table table-responsive">
+                    <table  class="table align-items-center mb-0"  id="cartItemsTable" style="width: 100%;">
+                        <thead class="bg-light">
+                            <th class="text-start text-xs">Service Name</th>
+                            <th class="text-start text-xs">Service Type</th>
+                            <th class="text-start text-xs">Cost</th>
+                            <th class="text-start text-xs">Qty</th>
+                        </thead>
+                        <tbody>
+                           <tr></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Table end  -->
+          </div>
+          
+          <div class="card-footer px-4 pt-0 pb-2 mt-2">
+            <div class="row">
+              
+              <div class="col-lg-12">
+                <div class="row justify-content-end align-items-end">
+                    <!-- <div class="col">
+
+                        <button class="btn btn-danger text-xxs">Clear </button>
+                    </div> -->
+                    <div class="col-lg-7 align-items-end">
+
+                        <a class="btn btn-primary text-xxs" data-bs-toggle="modal" data-bs-target="#modal-default1" id="save_btn" style="display: none;">Save & Continue</a>
+                    </div>
+                </div>
+                
+                
+               
+              </div>
+            </div>
+            
+            
+            
+          </div>
+        </div>
+      </div>
+
+      <!-- Place Order Modal  -->
+      <div class="col-md-4">
+        <div
+          class="modal fade"
+          data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"
+          id="modal-default1"
+          
+        >
+          <div
+            class="modal-dialog modal- modal-dialog-centered modal-"
+            role="document"
+          >
+            <div class="modal-content">
+              <form id="order-form" method="post" action="">
+                {% csrf_token %}
+                <div class="modal-body">
+                  <h6 class="heading-small text-muted mb-4">
+                    Order Details
+                  </h6>
+                  <div class="pl-lg-4">
+                    <div class="row">
+                      <div class="col">
+                        <hr />
+                        <p class="text-small">Add Ons:</p>
+                        <div class="row">
+                            <div class="col">
+                                <div id="checkboxes"></div>
+                            </div>
+                        </div>
+                        
+                        <div id="delivery-charges-container">
+                            <hr />
+                            <!-- This is where the checkbox will be added -->
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label
+                                  for="delivery-label"
+                                  class="form-control-label"
+                                  >Delivery Charges </label
+                                >
+                                <input
+                                  class="form-control form-control-alternative"
+                                  type="number"
+                                  id="delivery-input"
+                                  name="delivery-value"
+                                  value=""
+                                  placeholder="Enter delivery charges"
+                                  autocomplete="off"
+                                />
+                              </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label
+                                for="date-of-delivery"
+                                class="form-control-label"
+                                >Estimated Delivery Date *</label
+                              >
+                              <input
+                                class="form-control form-control-alternative"
+                                type="date"
+                                id="date-of-delivery"
+                                name="dateofdelivery"
+                                value=""
+                                
+                              />
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label
+                                for="discount-label"
+                                class="form-control-label"
+                                >Discounts *</label
+                              >
+                              <input
+                                class="form-control form-control-alternative"
+                                type="number"
+                                id="discounted-input"
+                                name="discount-value"
+                                value=""
+                                placeholder="Enter if any discount"
+                                autocomplete="off"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="wantsDelivery" name="wantsDelivery">
+                                <label class="form-check-label" for="wantsDelivery">Wants Delivery</label>
+                            </div>
+                        </div>
+                        </div>
+                        <hr />
+                        <div class="container" id="gst-container">
+                          <div class="row">
+                            <div class="col-lg-5">
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="includeGST" name="includeGST">
+                                <label class="form-check-label" for="includeGST">Include GST</label>
+                              </div>
+                            </div>
+                        
+                            <div class="col-lg-2 text-center">
+                              <span class="or-label">OR</span>
+                            </div>
+                        
+                            <div class="col-lg-5">
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="includeIGST" name="includeIGST">
+                                <label class="form-check-label" for="includeIGST">Include IGST</label>
+                              </div>
+                            </div>
+                          </div>
+                          <hr />
+                        </div>
+                        
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <p class="mb-0"><small>Sub Total:</small></p>
+                            <p class="mb-0"><small>Addon:</small></p>
+                            <p class="mb-0"><small>Delivery Charges:</small></p>
+                            <p class="mb-0"><small>Discount (%):</small></p>
+                            <p class="mb-0"><small>Tax(18%):</small></p>
+                          </div>
+                          <div
+                            class="col-lg-6 d-flex flex-column align-items-end"
+                          >
+                            <p class="mb-0"><small id="sub-total">Rs.0/-</small></p>
+                            <p class="mb-0"><small id="addons-total">Rs.0/-</small></p>
+                            <p class="mb-0"><small id="delivery-charges">Rs.0/-</small></p>
+                            <p class="mb-0"><small id="discount-amount">Rs.0/-</small></p>
+                            <p class="mb-0"><small id="tax-total">Rs.0/-</small></p>
+                          </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                          <div class="col-lg-6"><h6>Gross Total</h6></div>
+                          <div
+                            class="col-lg-6 d-flex flex-column align-items-end"
+                          >
+                            <h6 id="gross-total">Rs 0</h6>
+                          </div>
+                        </div>
+
+                        <hr />
+                        <div class="row">
+                          
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label
+                                class="form-control-label"
+                                for="input-paymentmode"
+                                >Payment Mode</label
+                              >
+                              <select
+                                class="form-control form-control-alternative"
+                                id="input-paymentmode"
+                                name="payment_mode"
+                                required
+                              >
+                                <option disabled selected>
+                                  Choose Payment Mode
+                                </option>
+                                <option value="Pay Later">Pay Later</option>
+                                <option value="Cash">Cash</option>
+                                <option value="UPI">UPI</option>
+                                <option value="Card">Card</option>
+                                <option value="Cheque">Cheque</option>
+                                <option value="Bank Transfer">
+                                  Bank Transfer
+                                </option>
+                                <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-6 text-center">
+                            <div class="form-group">
+                                <button type="submit" id="pay-button" class="btn btn-primary mt-4" style="display: none;">Pay Now</button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group" id="payment-id-container" style="display: none;">
+                                    <label class="form-control-label" for="input-paymentid">Payment ID</label>
+                                    <input class="form-control form-control-alternative" type="text" id="input-paymentid" name="payment-id" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <hr />
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <h6>Balance Amount</h6>
+                          </div>
+                          <div class="col-lg-6 d-flex justify-content-end">
+                            <h6>Rs.0/-</h6>
+                          </div>
+                        </div> -->
+                        <hr />
+
+                        <div class="pl-lg-4">
+                          <div class="form-group">
+                            <label>Additional Instructions</label>
+                            <textarea
+                              rows="4"
+                              class="form-control form-control-alternative"
+                              id="additional_info"
+                              placeholder="Enter Notes"
+                              name="notes"
+                            ></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn bg-gradient-success" >
+                    Place Order
+                  </button>
+
+                  <button
+                    type="button"
+                    class="btn btn-link ml-auto"
+                    id="cancel-btn"
+                    data-bs-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                </div>
+
+                <!-- Confirmation Modal -->
+<div class="modal" id="confirmation-modal" tabindex="-1" role="dialog" aria-labelledby="confirmation-modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Do you want to cancel this order details?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" id="confirm-cancel-button">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+           </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Place Order Modal End  -->
+    </div>
+   
+  </div>
+</main>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    
+
+    <script>
+      $(document).ready(function () {
+          // Add an event listener to the search input field
+          $('#item-name-search').on('input', function () {
+              applyItemNameFilter();
+          });
+  
+          function applyItemNameFilter() {
+              // Get the user's search input
+              var itemNameSearch = $('#item-name-search').val().toLowerCase();
+              console.log('itemNameSearch::'+itemNameSearch);
+              // Loop through the table rows and hide/show them based on the filters
+              $('#subCategoryTable tbody tr').each(function () {
+                  var itemName = $(this).find('#sub_cat_name').text().toLowerCase();
+                  console.log("itemName::"+itemName);
+                  if (itemName.includes(itemNameSearch) || itemNameSearch === '') {
+                      $(this).show();
+                  } else {
+                      $(this).hide();
+                  }
+                });
+              }
+        
+      });
+  </script>
+  
+  
+  
+
+<script>
+
+  $('#wantsDelivery').change(function() {
+    wantsDelivery = $(this).prop('checked') ? 1 : 0;
+    console.log('wantsDeliveryChecked:', wantsDelivery);
+});
+    // When "Cancel" button in the main modal is clicked
+$('#modal-default1').on('show.bs.modal', function (e) {
+    var $modal = $(this);
+    var $confirmationModal = $('#confirmation-modal');
+
+    // Show the confirmation modal
+    $confirmationModal.modal('show');
+
+    // When "Yes" button in the confirmation modal is clicked
+    $('#confirm-cancel-button').click(function() {
+        // Close both modals
+        $modal.modal('hide');
+        $confirmationModal.modal('hide');
+    });
+
+    // When "No" button in the confirmation modal is clicked
+    $confirmationModal.on('hidden.bs.modal', function (e) {
+        // Close only the confirmation modal
+        $confirmationModal.modal('hide');
+    });
+});
+
+// When the main modal is hidden
+$('#modal-default1').on('hidden.bs.modal', function (e) {
+    // Reset the confirmation modal if needed
+    $('#confirmation-modal').modal('hide');
+});
+
+</script>
+
+    <script>
+
+      var selectedItems = [];
+let selectedCategoryId = null;
+let selectedCategoryName = null;
+let selectedCategoryImage = null;
+let selectedCategoryBookingID = null;
+let generated_booking_id = "";
+var save_btn = $("#save_btn");
+      // Get the booking ID value
+      var bookingId = document.getElementById('selected-booking-id').value;
+      var selected_customer_id = document.getElementById("selected-customer-id");
+      var customer_name_input = document.getElementById("customer-name");
+      //generate-booking-id,add_to_cart
+      var add_to_cart = document.getElementById("add_to_cart");
+      var generate_booking_id_btn = document.getElementById("generate-booking-id");
+      // Check if the booking ID exists
+      if (bookingId) {
+          // If booking ID exists, show the button
+          document.getElementById('generate-booking-id').style.display = 'inline-block';
+          var booking_id_input = document.getElementById("selected-booking-id");
+          booking_id_input.value = bookingId; // Set the value in the hidden input
+          generated_booking_id = bookingId;
+          orderTakenOn = "App";
+  $("#generate-booking-id").text("Booking ID: " + bookingId); // Update the button text
+  // Disable the anchor link
+  generate_booking_id_btn.classList.add("disabled"); // Add a class for styling
+  generate_booking_id_btn.removeAttribute("href"); // Remove the href attribute to make it unclickable
+  generate_booking_id_btn.style.pointerEvents = "none"; // Disable pointer events to prevent clicking
+  // Show the add_to_cart button
+  add_to_cart.style.display = "block";
+      }
+      
+      var previousDeliveryCharges = 0;
+      var currentInput = "";
+        var extraItems = [];
+        var initialGrossTotal =0;
+                var grossTotal = 0; // Total amount
+                var subTotal = 0; // Total amount
+                var grossQuantity = 0; // Total Quantity
+                var orderTakenOn = ""; // Order Taken On
+                var order_status = ""; // Order Status
+                var payment_status = ""; // Payment Status
+                var isPaymentDone = false; // Payment Done Status true or false
+                var GSTamount = 0; // Total GST
+                var IGSTamount = 0; // Total IGST
+                var addOnsTotal = 0;
+                var booking_id = -1;
+                var deliveryTotal = 0;
+                var discountAmount = 0;
+                var discountedAmount = 0;
+                var delivery_price =0;
+                var delivery_range = 0;
+                var delivery_charges = 0;
+                var totalPayment = 0;
+                var wantsDelivery = 0;
+                var payment_id = "";
+                var paymentType = "";
+
+        $(document).ready(function() {
+        // When "Pay Now" button is clicked
+    $("#pay-button").click(function(e) {
+        // Check if payment mode is not selected
+        if ($("#input-paymentmode").val() === "Choose Payment Mode") {
+            // Add the "is-invalid" class to the payment mode dropdown
+            $("#input-paymentmode").addClass("is-invalid");
+            // You can also show an error message or perform other actions
+
+            // Prevent the form submission
+             
+             e.preventDefault();
+            } else {
+                // If a valid selection is made, add the "is-valid" class
+                $("#input-paymentmode").removeClass("is-invalid").addClass("is-valid");
+            }
+    });
+
+    });
+
+    // Add custom validation method
+$.validator.addMethod('dateLessThanToday', function (value, element) {
+  var selectedDate = new Date(value);
+  var currentDate = new Date();
+  return selectedDate >= currentDate;
+}, function() {
+  // Show a toast message when validation fails
+  showToast('Alert','Please Select Estimated Date for Today or Future Date')
+  // Return false to indicate validation failure
+  return false;
+});
+
+// Initialize form validation for your form
+$('#order-form').validate({
+    rules: {
+        // Define validation rules for your form fields
+        //'dateofdelivery': {
+          //required: 'Please select a delivery date',
+          //dateLessThanToday: 'Delivery date must be today or later'
+      //},
+       'dateofdelivery': 'required',
+        'input-paymentmode': 'required',
+        // Add rules for other form fields
+    },
+    messages: {
+        // Define custom error messages if needed
+        'dateofdelivery': 'Please select a delivery date',
+        //'discount-value': 'Please enter a discount value',
+        'input-paymentmode': 'Please select a payment mode',
+        // Add custom error messages for other fields
+    },
+    errorClass: 'is-invalid',
+    validClass: 'is-valid',
+    errorElement: 'div', // Use a custom error element, e.g., div
+    errorPlacement: function(error, element) {
+        // Handle error placement as needed
+        // You can add error messages where you prefer
+        // Example: error.appendTo(element.parent());
+    },
+    highlight: function(element, errorClass, validClass) {
+        // Highlight the field with missing input
+        // Remove valid class and add invalid class
+        $(element).removeClass(validClass).addClass(errorClass);
+    },
+    unhighlight: function(element, errorClass, validClass) {
+        // Unhighlight the field with valid input
+        // Remove invalid class and add valid class
+        $(element).removeClass(errorClass).addClass(validClass);
+    },
+    submitHandler: function(form) {
+        // When the form is valid, handle the form submission here
+        event.preventDefault();
+      
+        var selected_customer_id = document.getElementById("selected-customer-id");
+    var customer_name_input = document.getElementById("customer-name");
+    var date_of_delivery = document.getElementById('date-of-delivery').value.trim();
+    var add_information = $("#additional_info").val();
+    var payment_id = $("#input-paymentid").val();
+    var selectedDate = new Date(document.getElementById("date-of-delivery").value);
+    console.log("selectedDate::"+selectedDate);
+    var todayDate = new Date();
+    var today = new Date(todayDate);
+  var selected = new Date(selectedDate);
+  today.setHours(0, 0, 0, 0); // Set hours to 0 to compare dates without time
+  selected.setHours(0, 0, 0, 0); // Set hours to 0 to compare dates without time
+
+    console.log("todayDate::"+today);
+    //today.setHours(0, 0, 0, 0); 
+
+  if (selectedDate < today) {
+    showToast('Alert','Estimated Delivery Date Can not be less then todays date');
+    return;
+  }
+  
+  var paymentModeSelect = document.getElementById('input-paymentmode');
+
+// Check if payment mode is not equal to 'Cash'
+if (paymentModeSelect.value !== 'Cash' && paymentModeSelect.value !== 'Pay Later') {
+  if (payment_id === '') {
+    showToast('Alert', 'Please Pay before placing the order as you have selected Payment Mode Other than Cash');
+    return;
+  }
+}
+
+  
+    if(add_information === ""){
+        add_information = 'NA';
+    }
+    var customer_id = selected_customer_id.value.trim()
+    var customer_name = customer_name_input.value.trim()
+    
+
+    if(customer_id === ""){
+      
+        showToast('Alert','Please Search customer before adding any items');
+        return;
+    }
+
+    if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+      totalPayment = parseFloat(discountedAmount).toFixed(0);
+  }else{
+      
+      totalPayment = parseFloat(grossTotal).toFixed(0);
+  }
+    if(totalPayment == 0){
+      showToast('Alert','Total is 0');
+        return;
+    }
+
+        // Create a JSON object with the form data
+        const dictMap = {
+            'booking_id': generated_booking_id,
+            'customer_id' : customer_id,
+            'delivery_price': delivery_charges,
+            'discount_price': discountAmount,
+            'total_price': totalPayment,
+            'total_items': grossQuantity,
+            'order_status': order_status,//"Payment Done"
+            'gstamount': GSTamount,
+            'igstamount': IGSTamount,
+            'razor_pay_id': payment_id,
+            'payment_status': payment_status,
+            'payment_type': paymentType,
+            'extra_items': extraItems,
+            'additional_instruction': add_information,
+            'dateofdelivery': date_of_delivery,
+            'wantsDelivery':wantsDelivery,
+            'orderTakenOn':orderTakenOn,
+            'payment_done':isPaymentDone,
+            // Add other form fields to the JSON object
+        };
+        console.log('dictMap::'+JSON.stringify(dictMap));
+      
+        
+        // Perform an AJAX POST request
+        
+        const csrfToken = getCSRFToken();
+        $.ajax({
+            type: 'POST',
+            url: '/admin_dashboard/place_new_order/', 
+            data: JSON.stringify(dictMap),
+        headers: {
+            'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+        },
+        contentType: 'application/json',
+            success: function (data) {
+               console.log('Success:'+JSON.stringify(data.html))
+
+               // Redirect to the "all counter orders" URL
+              window.location.replace('/admin_dashboard/all_orders');
+
+    // Open a new tab for printing
+    //var newTab = window.open();
+    //newTab.document.write(data.html);
+
+    // Listen for the beforeunload event to close the tab if canceled
+    //newTab.onbeforeunload = function (e) {
+        // Close the tab when the user tries to close it
+      //  newTab.close();
+    //};
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
+    
+        
+    }
+});
+
+// Event listener for GST checkbox
+$('#includeGST').change(function() {
+  updateTaxAmount();
+});
+
+// Event listener for IGST checkbox
+$('#includeIGST').change(function() {
+  updateTaxAmount();
+});
+
+// Function to update tax amount based on checkbox state
+function updateTaxAmount() {
+  if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+    totalPayment = parseFloat(discountedAmount).toFixed(2);
+    grossTotal = discountedAmount;
+}else{
+    
+    totalPayment = parseFloat(grossTotal).toFixed(2);
+}
+  //totalPayment = parseFloat(subTotal).toFixed(2);  
+  var gstCheckbox = $('#includeGST');
+  var igstCheckbox = $('#includeIGST');
+  var gstAmountLabel = $('#tax-total');
+  var gstTotal = 0;
+  // Check if either GST or IGST is selected 
+  if (gstCheckbox.prop('checked') || igstCheckbox.prop('checked')) {
+    
+    // Calculate GST amount
+    if(igstCheckbox.prop('checked')){
+      GSTamount = 0;
+      gstTotal = 0;
+      igstCheckbox.prop('disabled',false);
+      gstCheckbox.prop('disabled',true);
+      IGSTamount = (totalPayment * 18) / 100;  
+      gstTotal = IGSTamount;
+      //if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+        //discountedAmount -=gstTotal
+      //}else{
+        //grossTotal -= gstTotal;
+      //}
+    }else{
+      IGSTamount = 0;
+      gstTotal = 0;
+      gstCheckbox.prop('disabled',false);
+      igstCheckbox.prop('disabled',true);
+      GSTamount = (totalPayment * 18) / 100;
+      gstTotal = GSTamount;
+      //if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+        //discountedAmount -=gstTotal
+      //}else{
+        //grossTotal -= gstTotal;
+      //}
+    }
+    
+    
+    gstAmountLabel.text('Rs.' + gstTotal.toFixed(2) + '/-');
+    //$('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
+  } else {
+    gstAmountLabel.text('Rs.0/-');
+    
+    if(GSTamount !== 0){
+      IGSTamount = 0;
+      igstCheckbox.prop('disabled',false);
+      //if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+        //discountedAmount -=GSTamount;
+      //}else{
+       // grossTotal -= GSTamount;
+     // }
+    
+    }else{
+      GSTamount = 0;
+      gstCheckbox.prop('disabled',false);
+      //if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+        //discountedAmount -=IGSTamount;
+      //}else{
+        //grossTotal -= IGSTamount;
+      //}
+    }
+
+    
+    //if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+
+      //$('#gross-total').text('Rs.'+discountedAmount.toFixed(2)+'/-');
+    //}else{
+      //$('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
+    //}
+  }
+
+  
+
+  
+}
+
+// Event listener for the payment mode selection
+$('#input-paymentmode').change(function() {
+    var paymentMode = $(this).val();
+    var paymentIdContainer = $('#payment-id-container');
+    var gstContainer = $('#gst-container');
+    paymentType = paymentMode;
+    // Check if the payment mode is 'Cash' and hide the 'Pay Now' button
+    if (paymentMode === 'Cash') {
+      order_status = "Payment Done";
+      isPaymentDone = true;
+      payment_status = "Success";
+        $('#pay-button').hide();
+        //gstContainer.show();
+         // If the payment mode is "Cash," hiding the payment ID container
+         paymentIdContainer.hide();
+    } else if(paymentMode === 'Pay Later'){
+      order_status = "Payment Not Done";
+      payment_status = "Not Success";
+      isPaymentDone = false;
+    }else {
+        $('#pay-button').show();
+        //gstContainer.hide();
+        // If the payment mode is not "Cash," show the payment ID container
+        paymentIdContainer.show();
+    }
+});
+
+// Function to disable elements
+function disableElements() {
+    // Disable "Pay Now" button
+    $("#pay-button").prop("disabled", true);
+
+    // Disable payment mode select dropdown
+    $("#input-paymentmode").prop("disabled", true);
+
+    // Disable all checkboxes
+    $('input[type="checkbox"]').prop("disabled", true);
+
+     // Disable delivery date input box
+     $("#date-of-delivery").prop("disabled", true);
+
+     // Disable discount input box
+     $("#discounted-input").prop("disabled", true);
+     
+     // Disable Cancel
+     $("#cancel-btn").prop("disabled", true);
+
+     //Disable Delivery Charges Input Box
+     $("#delivery-input").prop("disabled", true);
+}
+
+//MOdal Class is triggered to show Add Ons
+$(document).ready(function() {
+    var selectedItems = {}; // Object to keep track of selected items and their prices
+    
+
+    // Attach an event listener to the modal when it is shown
+    $('#modal-default1').on('show.bs.modal', function () {
+        
+        
+        const dictMap = {
+            'booking_id':generated_booking_id
+        }
+        const csrfToken = getCSRFToken();
+        $.ajax({
+            type: 'POST',
+            url: '/admin_dashboard/load_extra_items/', 
+            data: JSON.stringify(dictMap),
+        headers: {
+            'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+        },
+        contentType: 'application/json',
+            success: function (data) {
+                extraItems = [];
+                grossTotal = 0; // Total amount
+                grossQuantity = 0;
+                addOnsTotal = 0;
+                deliveryTotal = 0;
+                discountAmount = 0;
+                discountedAmount = 0;
+                delivery_price =0;
+                delivery_range = 0;
+                delivery_charges = 0;
+                totalPayment = 0;
+                GSTamount = 0;
+                IGSTamount = 0;
+                payment_id = "";
+                
+    if(!isNaN(addOnsTotal)){
+        $('#addons-total').text('Rs.'+addOnsTotal+'/-');
+        }
+    //if(!isNaN(GSTamount)){
+      $('#tax-total').text('Rs.0/-');
+      //  }
+
+        if(!isNaN(delivery_charges)){
+            $('#delivery-charges').text('Rs.0/-');
+        }
+        $('#delivery-input').val('');
+        $('#discounted-input').val('');
+        if(!isNaN(discountAmount)){
+          $('#discount-amount').text('Rs.0/-');
+        }
+        
+                // Handle the data you received from the server
+                console.log('datata:'+JSON.stringify(data));
+                //Gets Extra Items Details
+                var extra_items_data = data.extra_items_data;
+                //TOtal Cost and Quantity
+                var sum_data = data.sum_data;
+                var delivery_data = data.delivery_charges_data;
+
+                grossTotal = sum_data[0].total_cost;
+                delivery_price = delivery_data[0].delivery_price;
+                delivery_range = delivery_data[0].delivery_range;
+
+              
+
+
+                subTotal = grossTotal;
+                $('#sub-total').text('Rs.'+subTotal.toFixed(2)+'/-');
+                $('#gross-total').text('Rs.'+grossTotal+'/-');
+                grossQuantity = sum_data[0].total_quantity;
+
+                console.log('grossTotalDB::'+grossTotal);
+
+                  //To Create delivery charges checkbox
+                // Function to create a checkbox element for the delivery charge
+                function createDeliveryCheckbox(charge) {
+                    var checkboxId = "delivery-" + charge.dcharge_id;
+                    var checkboxLabel = "Delivery Charge - Rs." + charge.delivery_price+"/-";
+                
+                    var divider = $("<hr />");
+                    var checkboxContainer = $("<div class='form-check'></div>");
+                    var checkbox = $("<input class='form-check-input' type='checkbox' id='" + checkboxId + "' data-delivery-price='" + charge.delivery_price + "'>");
+                    var label = $("<label class='form-check-label' for='" + checkboxId + "'>" + checkboxLabel + "</label>");
+                
+                    // Attach an event handler to update grossTotal when the checkbox state changes
+                    checkState = false;
+                    checkbox.on('change', function() {
+                        if (checkbox.is(':checked')) {
+                            console.log('checked no');
+                            if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+                                console.log("Add BdiscountedAmount---->"+discountedAmount);
+                                delivery_charges = charge.delivery_price;
+                                var sum = (discountedAmount += charge.delivery_price);
+                                discountedAmount = sum;
+                                
+                                $('#gross-total').text('Rs.'+discountedAmount.toFixed(2)+'/-');
+                                $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+                                checkState = true;
+                            }else if(!isNaN(grossTotal)){
+                                console.log("Add BgrossTotal---->"+grossTotal);
+                                console.log("charge.delivery_price===>"+charge.delivery_price);
+                                var sum = (grossTotal += charge.delivery_price);
+                                console.log('sumss::'+sum);
+                                delivery_charges = charge.delivery_price;
+                                grossTotal = sum;
+                                
+                                console.log("Add AgrossTotal---->"+grossTotal);
+                                $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
+                                $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+                                checkState = true;
+                            }
+                            
+                        } else {
+                            console.log('checked off');
+                            if(checkState === true){
+                                if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+                                    delivery_charges = 0;
+                                    delivery_charges = charge.delivery_price;
+                                    
+                                    var sum = (discountedAmount -= charge.delivery_price);
+                                    discountedAmount = sum;
+                                    
+                                    $('#gross-total').text('Rs.'+discountedAmount+'/-');
+                                    $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+                                    checkState = false;
+                                }else if(!isNaN(grossTotal)){
+                                    
+                                    var sum = (grossTotal -= charge.delivery_price);
+                                    
+                                    delivery_charges = 0;
+                                    
+                                    grossTotal = sum;
+                                    
+                                    
+                                    $('#gross-total').text('Rs.'+grossTotal+'/-');
+                                    $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+                                    checkState = false;
+                                    
+                                }
+                            }
+                        }
+                
+                        // Update the grossTotal display (if you have a display element)
+                        // For example: $('#grossTotal').text(grossTotal);
+                        console.log('Delivery_totalPayment::'+totalPayment);
+                    });
+                   
+                    checkboxContainer.append(divider);
+                    checkboxContainer.append(checkbox);
+                    checkboxContainer.append(label);
+                    console.log("checkboxContainer::"+checkboxContainer);
+                    return checkboxContainer;
+                }
+
+                
+                function addDeliveryCharges(deliveryCharges) {
+                  console.log('adding delivery charges::');
+                 if(deliveryCharges !==0){
+                  if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+                    console.log("Add BdiscountedAmount---->"+discountedAmount);
+                    delivery_charges = deliveryCharges;
+                    var sum = (discountedAmount += deliveryCharges);
+                    discountedAmount = sum;
+                    
+                    $('#gross-total').text('Rs.'+discountedAmount.toFixed(2)+'/-');
+                    $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+                    
+                }else if(!isNaN(grossTotal)){
+                    console.log("Add BgrossTotal---->"+grossTotal);
+                    console.log("charge.delivery_price===>"+deliveryCharges);
+                    var sum = (grossTotal += deliveryCharges);
+                    console.log('sumss::'+sum);
+                    delivery_charges = deliveryCharges;
+                    grossTotal = sum;
+                    
+                    console.log("Add AgrossTotal---->"+grossTotal);
+                    $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
+                    $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+                    
+                }
+                // Update the previous delivery charges value
+                previousDeliveryCharges = deliveryCharges;
+              }
+                  // Update the displayed values
+                  //$("#delivery-charges").text("Rs. " + deliveryCharges.toFixed(2) + "/-");
+                  //$("#gross-total").text("Rs. " + grossTotal.toFixed(2) + "/-");
+              }
+
+              function removeDeliveryCharges(deliveryCharges) {
+                  
+                console.log('removing delivery charges::');
+                 if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+                   console.log("Add BdiscountedAmount---->"+discountedAmount);
+                   delivery_charges = deliveryCharges;
+                   var sum = (discountedAmount -= deliveryCharges);
+                   discountedAmount = sum;
+                   
+                   $('#gross-total').text('Rs.'+discountedAmount.toFixed(2)+'/-');
+                   $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+                   
+               }else if(!isNaN(grossTotal)){
+                   console.log("Add BgrossTotal---->"+grossTotal);
+                   console.log("charge.delivery_price===>"+deliveryCharges);
+                   var sum = (grossTotal -= deliveryCharges);
+                   console.log('sumss::'+sum);
+                   delivery_charges = deliveryCharges;
+                   grossTotal = sum;
+                   
+                   console.log("Add AgrossTotal---->"+grossTotal);
+                   $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
+                   $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+               }
+               
+             
+                 // Update the displayed values
+                 //$("#delivery-charges").text("Rs. " + deliveryCharges.toFixed(2) + "/-");
+                 //$("#gross-total").text("Rs. " + grossTotal.toFixed(2) + "/-");
+             }
+
+                 // Function to add the delivery charge checkbox to the container
+                function addDeliveryChargeInputBox() {
+       // var deliveryChargesContainer = $("#delivery-charges-container");
+        console.log('delivery_range::'+delivery_range);
+        console.log('delivery_price::'+delivery_price);
+        
+        //if (grossTotal < delivery_range) {
+            // Only add the delivery charge checkbox if gross total is below Rs 500
+            //var charge = delivery_data[0];
+            //var checkbox = createDeliveryCheckbox(charge);
+          //  deliveryChargesContainer.show(); 
+            
+            
+            //deliveryChargesContainer.append(checkbox);
+
+            //UPDATE GROSS_TOTAL
+           // Update grossTotal here as well
+        
+
+            // Add a label for the delivery charges condition
+       // var conditionLabel = $("<div class='container mt-2'><p class='text-muted'>Delivery charges are applicable only if the gross total is below Rs "+delivery_range+".</p></div>");
+        //deliveryChargesContainer.append(conditionLabel);
+        //}else {
+            // Remove the container if the gross total is above the delivery range
+          //  deliveryChargesContainer.remove();
+        //}
+
+        
+    }
+    var deliverySum = 0;
+    
+    $('#delivery-input').on('input', function() {
+
+      delivery_charges = parseFloat($(this).val());
+      console.log('delivery_charges::'+delivery_charges);
+      // Update the discounted amount
+      
+      console.log('deliverySum::'+deliverySum);
+      if(delivery_charges === "" || isNaN(delivery_charges)){
+        delivery_charges = 0;
+          $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+          deliverySum = delivery_charges;  
+      }
+      if(!isNaN(delivery_charges)){
+        $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
+        deliverySum = delivery_charges;
+          }
+
+      if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+        discountedAmount= initialGrossTotal + delivery_charges;
+          $('#gross-total').text('Rs.'+discountedAmount.toFixed(2)+'/-');
+          }else{
+            grossTotal = initialGrossTotal +delivery_charges;
+              $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
+          }
+  });
+
+
+   
+
+                // Call the function to add the delivery charge input to the container
+                addDeliveryChargeInputBox();
+
+                //Add Ons CheckBoxes
+                var checkboxesHTML = '';
+                extra_items_data.forEach(function(item) {
+                    checkboxesHTML += '<div class="form-check">';
+                        checkboxesHTML += '<label class="form-check-label" for="checkbox-' + item.extra_item_id + '">'+item.extra_item_name+' [Rs.'+item.price+'/-]</label>';
+                    checkboxesHTML += '<input class="form-check-input" type="checkbox" id="checkbox-' + item.extra_item_id + '" data-item-id="' + item.extra_item_id + '" data-item-name="' + item.extra_item_name + '" " data-item-price="' + item.price + '">';
+                    checkboxesHTML += '</div>';
+                });
+                $('#checkboxes').html(checkboxesHTML);
+
+                // Attach an event listener to the checkboxes
+                $('input[data-item-id]').change(function() {
+                    
+                    var itemId = $(this).data('item-id');
+                    var itemPrice = parseFloat($(this).data('item-price'));
+                    var itemName = $(this).data('item-name');
+                    console.log('itemPrice::'+itemPrice);
+                    if (this.checked) {
+                        // Checkbox is checked
+                        selectedItems[itemId] = itemPrice;
+                        grossTotal += itemPrice;
+                        addOnsTotal += itemPrice;
+
+                        //Saving to Json
+                        extraItems.push({ extra_item_name: itemName, extra_item_price: itemPrice,extra_item_id:itemId });
+                        
+                    } else {
+                        // Checkbox is unchecked
+                        delete selectedItems[itemId];
+
+                        //Deleting from Json
+                        // Find and remove the item from the selectedItems array
+                        extraItems = extraItems.filter(item => item.extra_item_name !== itemName);
+
+                        grossTotal -= itemPrice;
+                        addOnsTotal -= itemPrice;
+                        
+                    }
+                    console.log('addOnsTotal::'+addOnsTotal);
+                    
+                    // Update the gross total amount
+                    
+
+                
+                if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+                  initialGrossTotal = discountedAmount;
+                $('#gross-total').text('Rs.'+discountedAmount.toFixed(2)+'/-');
+                }else{
+                  initialGrossTotal = grossTotal;
+                    $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
+                }
+                    if(!isNaN(addOnsTotal)){
+                    $('#addons-total').text('Rs.'+addOnsTotal+'/-');
+                    }
+                    
+            // Update the discounted amount
+            if(!isNaN(discountAmount)){
+            $('#discount-amount').text('Rs.'+discountAmount+'/-');
+            }
+
+                });
+
+                // Attach an event listener to the discount input
+        $('#discounted-input').on('input', function() {
+            discount = parseFloat($(this).val());
+
+            // Calculate the discounted amount
+            //discountedAmount = (grossTotal - (grossTotal * (discount / 100))).toFixed(2);
+            // Check if the discount is 100%
+    if (discount === 100.0) {
+      discountedAmount = 0; // Set the discounted amount to 0 if the discount is 100%
+  } else {
+      discountedAmount = (grossTotal - (grossTotal * (discount / 100))).toFixed(2);
+  }
+            
+            discountAmount = (grossTotal * (discount / 100)).toFixed(2);
+            discountAmount = parseFloat(discountAmount).toFixed(2);
+
+            console.log("discountAmount::"+(grossTotal * (discount / 100)));
+            // Update the discounted amount
+            discountedAmount = grossTotal - discountAmount;
+            if(discount === "" || isNaN(discount)){
+                discountAmount = 0;
+                $('#discount-amount').text('Rs.'+discountAmount+'/-');
+                
+            }
+            if(!isNaN(discountAmount)){
+                $('#discount-amount').text('Rs.'+discountAmount+'/-');
+                }
+
+            if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+              initialGrossTotal = discountedAmount;
+                $('#gross-total').text('Rs.'+discountedAmount.toFixed(2)+'/-');
+                }else{
+                  initialGrossTotal = grossTotal;
+                    $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
+                }
+        });
+
+        if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+          initialGrossTotal = discountedAmount;
+            $('#gross-total').text('Rs.'+discountedAmount.toFixed(2)+'/-');
+
+            }else{
+              initialGrossTotal = grossTotal;
+                $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
+            }
+            
+            
+            document.getElementById('pay-button').onclick = function(e){
+
+                console.log('Before_Gross_total::'+grossTotal);
+            console.log('Before_delivery_charges::'+delivery_charges);
+            console.log('Before_addOnsTotal::'+addOnsTotal);
+            if(discountedAmount !== 0 && !isNaN(discountedAmount)){
+                totalPayment = parseFloat(discountedAmount).toFixed(0);
+            }else{
+                
+                totalPayment = parseFloat(grossTotal).toFixed(0);
+            }
+            
+            // Convert the selectedItems object to JSON
+    var selectedItemsJSON = JSON.stringify(extraItems);
+    console.log('Selected Extra Items JSON: ' + selectedItemsJSON);
+               //customer-name,selected-customer-id,selected-mobile-no,selected-customer-name
+    var selected_customer_id = document.getElementById("selected-customer-id");
+    var customer_name_input = document.getElementById("selected-customer-name");
+    var customer_mobno_input = document.getElementById("selected-mobile-no");
+    
+    
+    var customer_id = selected_customer_id.value.trim()
+    var customer_name = customer_name_input.value.trim()
+    var customer_mobile_no = customer_mobno_input.value.trim()
+                payment_show(totalPayment,customer_name,customer_mobile_no);
+                //TODO:Need to save Razor Pay Payment ID.
+                console.log('razor_pay_id::'+payment_id);
+                
+                e.preventDefault();
+            }
+
+
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
+    
+    });
+});
+
+
+function payment_show(totalPayment,customerName,customerMobno){
+    console.log('PaytotalPayment::'+totalPayment);
+    var options = {
+      
+        "key": "rzp_live_SeGnLgb5JnY8Id", // Enter the Key ID generated from the Dashboard rzp_test_qtHIWapeUEAAZO
+        "amount": (totalPayment * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "currency": "INR",
+        "name": "VFF Group", //your business name
+        "description": "Laundry Service Charges",
+        "image": "https://vff-group.com/static/images/logo.png",
+        "handler": function (response){
+            payment_id =  response.razorpay_payment_id;
+            order_status = "Payment Done";
+            payment_status = "Success";
+            
+            //GSTamount = 0
+            //IGSTamount = 0
+            //GSTamount = ((totalPayment * 18)/100);
+            //var gstAmountLabel = $('#tax-total');
+            //gstAmountLabel.text('Rs.' + GSTamount.toFixed(2) + '/-');
+            
+            // Update the payment ID input
+            $('#input-paymentid').val(payment_id);
+            disableElements();
+            //alert(response.razorpay_payment_id);
+            //alert(response.razorpay_order_id);
+            //alert(response.razorpay_signature)
+        },
+        "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
+            "name": customerName, //your customer's name
+            //"email": "shahidmaniyar888@gmail.com", 
+            "contact": "+91"+customerMobno  //Provide the customer's phone number for better conversion rates 
+        },
+        "notes": {
+            "address": "Tilakwadi"
+        },
+        "theme": {
+            "color": "#3399cc"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.on('payment.failed', function (response){
+          //  alert(response.error.code);
+            alert(response.error.description);
+            //alert(response.error.source);
+            //alert(response.error.step);
+            //alert(response.error.reason);
+           // alert(response.error.metadata.order_id);
+            //alert(response.error.metadata.payment_id);
+    });
+    rzp1.open();
+    /*document.getElementById('pay-button').onclick = function(e){
+        rzp1.open();
+        e.preventDefault();
+    }*/
+}
+
+// Get the CSRF token from the cookie
+function getCSRFToken() {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith("csrftoken=")) {
+            return cookie.substring("csrftoken=".length, cookie.length);
+        }
+    }
+    return null;
+}
+
+
+
+//Create booking ID Before adding items to cart
+$("#generate-booking-id").on("click",function(){
+    var selected_customer_id = document.getElementById("selected-customer-id");
+    var customer_name_input = document.getElementById("customer-name");
+    //generate-booking-id,add_to_cart
+    var add_to_cart = document.getElementById("add_to_cart");
+    var generate_booking_id_btn = document.getElementById("generate-booking-id");
+    
+    var customer_id = selected_customer_id.value.trim()
+    var customer_name = customer_name_input.value.trim()
+
+    
+    if(customer_id === ""){
+        showToast('Alert','Please Search customer before adding any items');
+        return;
+    }
+    const dictMap = {
+        'customer_id':customer_id
+    }
+    const csrfToken = getCSRFToken();
+    $.ajax({
+        type: 'POST',
+        url: '/admin_dashboard/generate_booking_id/',  // Adjust the URL as needed
+        data: JSON.stringify(dictMap),
+        headers: {
+            'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+        },
+        contentType: 'application/json',
+        success: function (response) {
+            
+            // Handle success response
+            const bookingIDData = response.booking_id;
+// Now you can access the cartItemsData as a JavaScript object
+                   // console.log(bookingIDData);
+                //TODO:Need to save the booking ID 
+                    
+                    var booking_id_input = document.getElementById("selected-booking-id");
+                    booking_id_input.value = bookingIDData; // Set the value in the hidden input
+                    generated_booking_id = bookingIDData;
+                    orderTakenOn = "OnCounter";
+            $("#generate-booking-id").text("Booking ID: " + bookingIDData); // Update the button text
+            // Disable the anchor link
+            generate_booking_id_btn.classList.add("disabled"); // Add a class for styling
+            generate_booking_id_btn.removeAttribute("href"); // Remove the href attribute to make it unclickable
+            generate_booking_id_btn.style.pointerEvents = "none"; // Disable pointer events to prevent clicking
+            // Show the add_to_cart button
+            add_to_cart.style.display = "block";
+                    
+                   
+
+        },
+        error: function (error) {
+            console.error(error.responseJSON.message);
+            // Handle error response
+        }
+    });
+
+
+});
+
+//Add To Cart Button
+$("#add_to_cart").on("click",function(){
+
+    // Get the selected values for Category, Service Type, and Sub Section
+    var selectedCategory = $("#input-category").val();
+    var selectedServiceType = $("#input-price").val();
+    var selectedSubSection = $("#input-section").val();
+    
+    
+    var inputElement = document.getElementById("item-quantity");
+    var inputWidthPerSqft = document.getElementById("item-per-width-sqft-price");
+    var inputHeightPerSqft = document.getElementById("item-per-height-sqft-price");
+    
+    
+
+    
+    //customer-name,selected-customer-id,selected-mobile-no,selected-customer-name
+    var selected_customer_id = document.getElementById("selected-customer-id");
+    var customer_name_input = document.getElementById("customer-name");
+    var booking_id_input = document.getElementById("selected-booking-id");
+    
+    var customer_id = selected_customer_id.value.trim()
+    var customer_name = customer_name_input.value.trim()
+    var booking_id = booking_id_input.value.trim()
+
+    if(customer_id === ""){
+        showToast('Alert','Please Search customer before adding any items');
+        return;
+    }
+
+    if(booking_id === ""){
+        showToast('Alert','Please generate Booking ID Before adding any items to cart');
+        return;
+    }
+
+    var kgs_quantity = inputElement.value.trim();
+    var per_width_sqft_quantity = inputWidthPerSqft.value.trim();
+    var per_height_sqft_quantity = inputHeightPerSqft.value.trim();
+
+    console.log("per_height_sqft_quantity:"+per_height_sqft_quantity);
+    console.log("per_width_sqft_quantity:"+per_width_sqft_quantity);
+    console.log("kgs_quantity::"+kgs_quantity);
+    // Perform validation
+    if (!selectedCategory ) {
+        // Show a toast message for validation failure
+        showToast("Validation Error", "Please Select Category");
+        return; // Stop further execution
+    }
+
+    // Perform validation
+    if (!selectedServiceType && (selectedCategory !== "DRY CLEAN"  && selectedCategory !== "STEAM IRON" && selectedCategory !== "SAREE STEAM IRON" &&  selectedCategory !== "PieceWise Category")) {
+        // Show a toast message for validation failure
+        showToast("Validation Error", "Please Price Type");
+        return; // Stop further execution
+    }
+
+    // Perform validation
+    if (!selectedSubSection && (selectedCategory === "DRY CLEAN" || selectedCategory === "STEAM IRON" || selectedCategory === "SAREE STEAM IRON" || selectedCategory === "PieceWise Category")) {
+        // Show a toast message for validation failure
+        
+        showToast("Validation Error", "Sub Section.");
+        return; // Stop further execution
+    }
+
+    const dictMap = {};
+    
+    //TO Check if Quantity is added or not
+    if (selectedCategory !== "DRY CLEAN"   && selectedCategory !== "STEAM IRON" && selectedCategory !== "SAREE STEAM IRON"  && selectedCategory !== "PieceWise Category"){
+    
+    if (kgs_quantity === "") {
+        inputElement.classList.remove("is-valid");
+        inputElement.classList.add("is-invalid");
+        showToast('Alert','Please Provide the quantity in Kgs')
+        return;
+    }
+
+    if(per_width_sqft_quantity === ""){
+      per_width_sqft_quantity = 0;
+    }
+    if(per_height_sqft_quantity === ""){
+      per_height_sqft_quantity = 0;
+    }
+    //else if(kgs_quantity !== "" && kgs_quantity < 5){
+      //inputElement.classList.remove("is-valid");
+      //inputElement.classList.add("is-invalid");
+      //showToast('Alert','We accept only order above 5 Kgs')
+    //  return;
+  //}
+    else {
+        inputElement.classList.remove("is-invalid");
+        inputElement.classList.add("is-valid");
+    }
+    }
+    
+   // console.log('SelectedCategory::'+selectedCategory);
+    //console.log('selectedSubSection::'+selectedSubSection);
+    //console.log('selectedServiceType::'+selectedServiceType);
+    
+
+    jsonItems = JSON.stringify(selectedItems);
+    if (selectedItems.length === 0){
+      
+       showToast('Alert','Please select the laundry items before adding to cart')
+        return;
+    }
+    
+    if(selectedCategory !== "DRY CLEAN"  && selectedCategory !== "STEAM IRON" && selectedCategory !== "SAREE STEAM IRON"  && selectedCategory !== "PieceWise Category"){
+    const subCategoryNameList = selectedItems.map(item => `${item.sub_cat_name} (${item.item_quantity})`);
+    const subCategoryIDList = selectedItems.map(item => `${item.sub_cat_id}`);
+    const subCategoryImageList = selectedItems.map(item => `${item.sub_cat_img}`);
+
+   // console.log('subCategoryNameList::'+subCategoryNameList);
+    //console.log('subCategoryIDList::'+subCategoryIDList);
+    //console.log('subCategoryImageList::'+subCategoryImageList);
+    //console.log('customer_id::'+customer_id);
+
+    var subCategoryNames = makeCommaSeparatedList(subCategoryNameList);
+    var subCategoryID = makeCommaSeparatedList(subCategoryIDList);
+    var subCategoryImage = makeCommaSeparatedList(subCategoryImageList);
+    
+   // console.log("Item Details::"+jsonItems)
+    var totalCost = 0.0;
+    var actualCost = 0.0;
+    var regular_price = get_prize(selectedServiceType);
+    //console.log('regular_price::'+regular_price);
+    var express_price = get_prize(selectedServiceType);
+    var offer_price = get_prize(selectedServiceType);
+    if(selectedServiceType.toLowerCase().includes('Regular')){
+        totalCost = (parseFloat(regular_price) * parseFloat(kgs_quantity));
+        actualCost = parseFloat(regular_price);
+    }else if(selectedServiceType.toLowerCase().includes('Express')){
+        totalCost = (parseFloat(express_price) * parseFloat(kgs_quantity));
+        actualCost = parseFloat(express_price);
+    }else{
+        totalCost = (parseFloat(offer_price) * parseFloat(kgs_quantity));
+        actualCost = parseFloat(offer_price);
+    }
+    
+    console.log("totalCost::"+totalCost);
+
+    dictMap['cat_id'] = selectedCategoryId;
+      dictMap['customer_id'] = customer_id;
+      dictMap['booking_id'] = booking_id;
+      dictMap['key'] = 2;
+      dictMap['booking_type'] = selectedServiceType;
+      dictMap['cat_img'] = selectedCategoryImage;
+      dictMap['cat_name'] = selectedCategoryName;
+
+      dictMap['sub_cat_name'] = subCategoryNames;
+      dictMap['item_quantity'] = kgs_quantity;
+      dictMap['actual_cost'] = actualCost;
+      dictMap['cost'] = totalCost.toFixed(2);
+      dictMap['type_of'] = 'Kg'; //Kgs
+      dictMap['sub_cat_id'] = subCategoryID;
+      dictMap['sub_cat_img'] = subCategoryImage;
+      dictMap['section_type'] = "All";
+
+      //console.log('ActualCost::'+actualCost);
+      //console.log('TotalCost::'+totalCost);
+
+}
+//End of Other Laundry Services Add Item to Cart
+else{
+ 
+  
+      dictMap['cat_id'] = selectedCategoryId;
+      dictMap['booking_id'] = booking_id;
+      dictMap['customer_id'] = customer_id;
+      dictMap['item_width_per_sqft'] = parseFloat(per_width_sqft_quantity);
+      dictMap['item_height_per_sqft'] = parseFloat(per_height_sqft_quantity);
+      //dictMap['booking_type'] = "Dry Cleaning";
+      dictMap['booking_type'] = selectedCategory+" Service";
+      dictMap['cat_img'] = selectedCategoryImage;
+      dictMap['cat_name'] = selectedCategoryName;
+      dictMap['key'] = 1;
+      dictMap['all_items'] = selectedItems;
+}
+
+
+    // Get the CSRF token
+    const csrfToken = getCSRFToken();
+    $.ajax({
+        type: 'POST',
+        url: '/admin_dashboard/add_items_to_cart/',  // Adjust the URL as needed
+        data: JSON.stringify(dictMap),
+        headers: {
+            'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+        },
+        contentType: 'application/json',
+        success: function (response) {
+            save_btn.show();
+            //Empty the cart items
+            selectedItems = [];
+            $("#subCategoryTable .quantity").text("0");
+    
+            console.log(response.message);
+            // Handle success response
+            const cartItemsData = response.cart_items_data;
+        // Now you can access the cartItemsData as a JavaScript object
+                    console.log(cartItemsData);
+            // Function to populate the table with data
+        function populateCartItemsTable(data) {
+            const cartItemsTable = $('#cartItemsTable tbody');
+            cartItemsTable.empty(); // Clear existing data in the table
+            
+            
+            data.forEach(function (item) {
+                const row = $("<tr>");
+                var type = item.type;
+                var itemName = "",itemImage = "",itemsName = "";
+
+                if(type === "Kg"){
+                    itemName = item.cat_name;
+                    itemImage = item.cat_img;
+                    itemsName = item.sub_cat_name;
+                    
+                }else{
+                    itemName = item.sub_cat_name;
+                    itemImage = item.sub_cat_img;
+                    itemsName = item.section_type;
+                    
+                }
+                
+                
+                row.append("<td><div class='d-flex px-2 py-1'> <div class='d-flex px-2 py-1'><img src="+itemImage+" class='avatar avatar-sm me-3' alt='user1'> </div> <div class='d-flex flex-column justify-content-center'> <h6 class='mb-0 text-sm' id='sub_cat_name'>"+itemName+"</h6> <p class='text-xs text-secondary mb-0'>["+itemsName+"]</p> </div></div> </div> </td>");
+                row.append("<td><p class='text-xs text-secondary mb-0'>"+item.booking_type+"</p></td>");
+                row.append("<td><p class='text-xs text-secondary mb-0'> Rs."+item.item_cost+"/-</p></td>");
+                row.append("<td><p class='text-xs text-secondary mb-0'> "+item.item_quantity+" "+item.type+"</p></td>");
+
+                // Add a delete icon and attach a click event to trigger the delete
+        const deleteIcon = $("<td><i class='fas fa-trash-alt delete-icon' data-item-id='" + item.itemid + "'></i></td>");
+        row.append(deleteIcon);
+
+                cartItemsTable.append(row);
+            });
+    
+            // Add a click event handler for the delete icons
+    $(".delete-icon").click(function () {
+        const itemId = $(this).data("item-id");
+        // Perform the delete operation using AJAX, passing itemId to your delete API endpoint.
+        // You can use the itemId to identify the item you want to delete.
+        // Make an AJAX call to delete the item and then refresh the table.
+        deleteCartItem(itemId,customer_id,booking_id);
+    });
+        }
+
+
+
+        populateCartItemsTable(cartItemsData);
+                    
+                   
+
+        },
+        error: function (error) {
+            console.error(error.responseJSON.message);
+            // Handle error response
+        }
+    });
+
+    })
+
+            // Function to delete a cart item using AJAX
+function deleteCartItem(itemId,customer_id,booking_id) {
+    const csrfToken = getCSRFToken();
+
+    const dictMap = {
+        'item_id':itemId
+    };
+    $.ajax({
+        type: 'POST',
+        url: '/admin_dashboard/delete_cart_item/', // Adjust the URL as needed
+        data:JSON.stringify(dictMap),
+        headers: {
+            'X-CSRFToken': csrfToken
+        },
+        contentType: 'application/json',
+        success: function (response) {
+            console.log(response.message);
+            // Handle success response
+            // After successfully deleting the item, you can refresh the table
+            // to reflect the updated data.
+            // Reload your data and call populateCartItemsTable() again.
+            reloadCartItem(itemId,customer_id,booking_id);
+        },
+        error: function (error) {
+            console.error(error.responseJSON.message);
+            // Handle error response
+        }
+    });
+}
+
+function reloadCartItem(itemId,customer_id,booking_id) {
+    const csrfToken = getCSRFToken();
+    const dictMap = {
+        'customer_id':customer_id,
+        'booking_id':booking_id
+    };
+    $.ajax({
+        type: 'POST',
+        url: '/admin_dashboard/load_cart_items_after_deletion/',
+
+        data: JSON.stringify(dictMap),
+        headers: {
+            'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+        },
+        contentType: 'application/json',
+        success: function (response) {
+            console.log(response.message);
+            // Handle success response
+            const cartItemsData = response.cart_items_data;
+        // Now you can access the cartItemsData as a JavaScript object
+                    console.log(cartItemsData);
+                    if(cartItemsData.length === 0){
+                        save_btn.hide();
+                    }else{
+                        save_btn.show();
+                    }
+            // Function to populate the table with data
+        function populateCartItemsTable(data) {
+            const cartItemsTable = $('#cartItemsTable tbody');
+            cartItemsTable.empty(); // Clear existing data in the table
+            
+            data.forEach(function (item) {
+                const row = $("<tr>");
+                var type = item.type;
+                var itemName = "",itemImage = "",itemsName = "";
+
+                if(type === "Kg"){
+                    itemName = item.cat_name;
+                    itemImage = item.cat_img;
+                    itemsName = item.sub_cat_name;
+                    
+                }else{
+                    itemName = item.sub_cat_name;
+                    itemImage = item.sub_cat_img;
+                    itemsName = item.section_type;
+                    
+                }
+                row.append("<td><div class='d-flex px-2 py-1'> <div class='d-flex px-2 py-1'><img src="+itemImage+" class='avatar avatar-sm me-3' alt='user1'> </div> <div class='d-flex flex-column justify-content-center'> <h6 class='mb-0 text-sm' id='sub_cat_name'>"+itemName+"</h6> <p class='text-xs text-secondary mb-0'>["+itemsName+"]</p> </div></div> </div> </td>");
+                row.append("<td><p class='text-xs text-secondary mb-0'>"+item.booking_type+"</p></td>");
+                row.append("<td><p class='text-xs text-secondary mb-0'> Rs."+item.item_cost+"/-</p></td>");
+                row.append("<td><p class='text-xs text-secondary mb-0'> "+item.item_quantity+" "+item.type+"</p></td>");
+
+                // Add a delete icon and attach a click event to trigger the delete
+        const deleteIcon = $("<td><i class='fas fa-trash-alt delete-icon' data-item-id='" + item.itemid + "'></i></td>");
+        row.append(deleteIcon);
+
+                cartItemsTable.append(row);
+            });
+//cart-sub-total
+
+            // Add a click event handler for the delete icons
+    $(".delete-icon").click(function () {
+        const itemId = $(this).data("item-id");
+        // Perform the delete operation using AJAX, passing itemId to your delete API endpoint.
+        // You can use the itemId to identify the item you want to delete.
+        // Make an AJAX call to delete the item and then refresh the table.
+        deleteCartItem(itemId,customer_id,booking_id);
+    });
+        }
+
+
+
+        populateCartItemsTable(cartItemsData);
+            
+        },
+        error: function (error) {
+            console.error(error.responseJSON.message);
+            // Handle error response
+        }
+    });
+}
+
+
+    function get_prize(inputString){
+        const parts = inputString.split(' ');
+        if (parts.length >= 3) {
+            const valueAtIndex2 = parts[2];
+            console.log(valueAtIndex2); // Output: "125"
+            return valueAtIndex2
+        } else {
+            console.log("Not enough parts in the input string.");
+        }
+return 0;
+    }
+
+    function makeCommaSeparatedList(subCategoryNameList) {
+        return subCategoryNameList.join(', ');
+    }
+    
+    //To Increment of Decrement the quantity
+$("#subCategoryTable").on("click", ".increment, .decrement", function() {
+    var row = $(this).closest("tr");
+    var sub_cat_name = $(this).closest("tr").find("#sub_cat_name").text();
+    var subcatid = $(this).closest("tr").find("#sub_catid").text();
+var sub_cat_img = $(this).closest("tr").find("#sub_cat_img").text();
+var actual_cost = $(this).closest("tr").find("#cost").text();
+var type = $(this).closest("tr").find("#type").text();
+var cat_name = $(this).closest("tr").find("#cat_name").text();
+  // Get the value of the input box for cost modification
+  var inputBox = row.find("input[type='number']");
+  var updatedCost = parseFloat(inputBox.val()); // Parse the value to float or integer if needed
+
+    
+    var quantityInput = row.find(".quantity");
+    var currentQuantity = parseInt(quantityInput.text());
+
+    var total_cost = 0.0;
+    // Find the existing item in the selectedItems list with the same subcatid
+    var selectedItemIndex = selectedItems.findIndex(item => item.subcatid === subcatid);
+
+    if ($(this).hasClass("increment")) {
+        // Handle increment logic
+        quantityInput.text(currentQuantity + 1);
+        console.log('actualCost::'+actual_cost);
+        console.log('updatedCost::'+updatedCost);
+
+        if (selectedItemIndex !== -1) {
+            // Update the quantity in the selected item
+            total_cost = (updatedCost * (parseFloat(currentQuantity) + 1));
+            console.log('total_cost_added::'+total_cost);
+            selectedItems[selectedItemIndex].item_quantity = currentQuantity + 1;
+            selectedItems[selectedItemIndex].cost = total_cost;
+        } else {
+            // Create a new object and push it to the list
+            section_type_selected = 'All'
+            if(selectedCategoryName == "DRY CLEAN" || selectedCategoryName == "STEAM IRON" || selectedCategoryName == "SAREE STEAM IRON" || selectedCategoryName == "PieceWise Category"){
+                var section_type = $(this).closest("tr").find("#section_type").text();
+                section_type_selected = section_type;
+            }
+            
+            
+            total_cost = (updatedCost * (parseFloat(currentQuantity) + 1));
+            console.log('---TotalCost--::'+total_cost);
+            var newItem = {
+                sub_cat_name: sub_cat_name,
+                subcatid: subcatid,
+                item_quantity: currentQuantity + 1,
+                actual_cost: actual_cost,
+                cost: total_cost,
+                type_of: type, 
+                sub_cat_id: subcatid,
+                sub_cat_img: sub_cat_img, 
+                section_type: section_type_selected
+            };
+       
+            selectedItems.push(newItem);
+        }
+    } else if ($(this).hasClass("decrement") && currentQuantity > 0) {
+        // Handle decrement logic
+        quantityInput.text(currentQuantity - 1);
+
+        if (selectedItemIndex !== -1) {
+            // Update the quantity in the selected item
+            total_cost = updatedCost * (currentQuantity - 1);
+            selectedItems[selectedItemIndex].item_quantity = currentQuantity - 1;
+            selectedItems[selectedItemIndex].cost = total_cost;
+            //selectedItems[selectedItemIndex].item_quantity = currentQuantity - 1;
+            //selectedItems[selectedItemIndex].cost = selectedItems[selectedItemIndex].actual_cost * (currentQuantity - 1);
+            // Remove the item from the list if the quantity is 0
+            if (currentQuantity - 1 === 0) {
+                selectedItems.splice(selectedItemIndex, 1);
+            }
+        }
+    }
+
+    // Remove the item from the JSON object if it's not in the selectedItems list
+    jsonItems = selectedItems.filter(item => item.item_quantity > 0);
+
+    // Log the selected item
+   // console.log('----------------');
+   if (selectedItemIndex !== -1) {
+     //   console.log('selectedItem::' + selectedItems[selectedItemIndex].currentQuantity + "-" + selectedItems[selectedItemIndex].sub_cat_name);
+    }
+    //console.log('----------------');
+    //console.log("selectedItems: " + JSON.stringify(selectedItems));
+    //console.log('----------------');
+    //console.log('jsonItems: ' + JSON.stringify(jsonItems));
+    
+});
+
+
+// Function to show a toast message
+function showToast(message, bodyContent) {
+  toastr.warning(bodyContent, message, {
+    positionClass: "toast-top-right",
+    timeOut: 5e3,
+    closeButton: !0,
+    debug: !1,
+    newestOnTop: !0,
+    progressBar: !0,
+    preventDuplicates: !0,
+    onclick: null,
+    showDuration: "300",
+    hideDuration: "1000",
+    extendedTimeOut: "1000",
+    showEasing: "swing",
+    hideEasing: "linear",
+    showMethod: "fadeIn",
+    hideMethod: "fadeOut",
+    tapToDismiss: !1
+})
+    // Get the toast element and its content
+    /*var toastElement = document.getElementById("liveToast");
+    var toastBody = toastElement.querySelector(".toast-body");
+
+    // Update the toast content with the provided message and body content
+    toastBody.textContent = bodyContent;
+
+    // Show the toast
+    var toast = new bootstrap.Toast(toastElement);
+    toast.show();*/
+}
+
+
+
+
+
+  
+
+
+
+
+  var dataCat = {}
+
+        function loadSubCategories(categorySelect) {
+            var selectedCategory = $(categorySelect).val();
+            var cat_id = $(categorySelect).find(":selected").data("catids");
+            var cat_img = $(categorySelect).find(":selected").data("cat_img");
+            var cat_name = $(categorySelect).find(":selected").data("cat_name");
+            console.log('CatID::'+cat_id)
+            console.log('CatIMG::'+cat_img)
+            console.log('CatName::'+cat_name)
+
+            selectedCategoryId = cat_id;
+            selectedCategoryImage = cat_img;
+            selectedCategoryName = cat_name;
+            
+            selectedItems = [];
+            var sectionSelect = $('#input-section');
+            var section_column = $('#section_col');
+            var price_column = $('#price_col');
+            
+            //To Hide and 
+            
+            var only_dry_clean_column = $('#other-then-dry-clean');
+            var peice_wise_cart = $('#peice-wise-cart');
+            
+            var price_column = $('#price_col');
+            //var subCategorySelect = $('#input-subcategory');
+            var subCategoryTable = $('#subCategoryTable tbody');
+            var priceSelect = $('#input-price');
+            var showSearchLayout = $('#show-search');
+            showSearchLayout.hide();
+            peice_wise_cart.hide();
+            document.getElementById('peice-wise-cart').style.display = 'none';
+            //Extra Headers
+           // var costTh = $("<th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-25'>Cost</th>");
+            //var emptyTh = $("<th class='text-secondary opacity-7'></th>");
+            window.selectedCatId = cat_id;
+            console.log('selectedCategory::'+selectedCategory)
+            if (selectedCategory == "DRY CLEAN" || selectedCategory == "STEAM IRON" || selectedCategory == "SAREE STEAM IRON" || selectedCategory == "PieceWise Category"){
+                //Load Sections Here 
+                //$("#subCategoryTable").find("thead tr").remove(costTh);
+                //$("#subCategoryTable").find("thead tr").append(costTh);
+                //$("#subCategoryTable").find("thead tr").append(emptyTh);
+              if(selectedCategory == "PieceWise Category"){
+                //peice_wise_cart.show();
+                document.getElementById('peice-wise-cart').style.display = 'flex';
+              }else{
+                //peice_wise_cart.hide();
+                document.getElementById('peice-wise-cart').style.display = 'none';
+              }
+                subCategoryTable.empty()
+
+                section_column.show();
+                price_column.hide();
+                only_dry_clean_column.hide(); //to not show KGS Add Quantity
+               // subCategorySelect.empty();
+                //subCategorySelect.append('<option disabled selected>Choose Sub Category</option>');
+                $.get(`/admin_dashboard/load_sub_categories/${cat_id}`, function(data) {
+                   sectionSelect.empty();
+                    sectionSelect.append('<option disabled selected>Choose Section</option>');
+            console.log('sectionSelect::'+sectionSelect)
+                    $.each(data.section_data, function(index, subSection) {
+                        sectionSelect.append($('<option>', {
+                            value: subSection.section_name,
+                            text: subSection.section_name
+                        }));
+                    });
+                    
+                });
+          
+            }else{
+               // $("#subCategoryTable").find("thead tr").append(emptyTh);
+                //$("#subCategoryTable").find("thead tr").remove(costTh);
+                section_column.hide();
+                only_dry_clean_column.show();
+                price_column.show();
+            $.get(`/admin_dashboard/load_section_type_sub_categories/All`, function(data) {
+                /*subCategorySelect.empty();
+                subCategorySelect.append('<option disabled selected>Choose Sub Category</option>');
+        
+                $.each(data.sub_categories, function(index, subCategory) {
+                    subCategorySelect.append($('<option>', {
+                        value: subCategory.subcatid,
+                        text: subCategory.sub_cat_name
+                    }));
+                });*/
+
+                
+
+subCategoryTable.empty(); // Clear any existing rows
+console.log('subCategoryTable:'+subCategoryTable);
+dataCat = data.sub_categories
+$.each(data.sub_categories, function(index, subCategory) {
+  
+    
+   
+    var newRow = $("<tr>");
+        newRow.append("<td> <div id='sub_catid' style='display:none;'>"+subCategory.subcatid+"</div>"+
+        "<div id='sub_cat_img' style='display:none;'>"+subCategory.sub_cat_img+"</div>"+
+        "<div id='cost' style='display:none;'>"+subCategory.cost+"</div>"+
+        "<div id='type' style='display:none;'>"+subCategory.type+"</div>"+
+        "<div id='cat_id' style='display:none;'>"+cat_id+"</div>"+
+        "<div id='cat_img' style='display:none;'>"+cat_img+"</div>"+
+        "<div id='cat_name' style='display:none;'>"+cat_name+"</div>"+
+        "<div id='selectedCategory' style='display:none;'>"+selectedCategory+"</div> <div id='subCategory' style='display:none;'>"+subCategory+"</div>"+
+        "<div class='d-flex px-2 py-1'> <div class='d-flex px-2 py-1'><img src="+subCategory.sub_cat_img+" class='avatar avatar-sm me-3' alt='user1'> </div> <div class='d-flex flex-column justify-content-center'> <h6 class='mb-0 text-sm' id='sub_cat_name'>"+subCategory.sub_cat_name+"</h6></div></div> </div> </td>")
+    //newRow.append("<td> <p class=\"text-xs font-weight-bold mb-0\">" + subCategory.sub_cat_name + "</p></td>");
+    /* newRow.append("<td><input type='number' value='0' min='0'></td>"); 
+    newRow.append("<td>  <div class=\"d-flex px-2 py-1\"> <p class=\"mb-0 text-xxs text-center\"> " + subCategory.cost +'/ '+subCategory.type + " </p></div></td>");
+    newRow.append("<td>  <p class=\"text-xxs font-weight-bold mb-0\">" + ${subCategory.type} + "</p></td>");
+    newRow.append("<td><button class='btn btn-danger btn-sm ms-1 increment'>+</button><input class='m-2' type='number' value='0' min='0'><button class='btn btn-success btn-sm ms-1 decrement'>-</button></td>");*/
+    newRow.append("<td style=\"vertical-align: middle; \">  <div class=\"btn-group btn-group-sm mt-2\" style=\"width: 5px; display: flex; align-items: center;\" role=\"group\" aria-label=\"Basic mixed styles example\"> <button type=\"button\" class=\"btn btn-danger btn-sm decrement\" style=\"width: 10px;\" >-</button><button type=\"button\" class=\"btn btn-sm quantity\" style=\"width: 10px;\" >0</button><button type=\"button\" class=\"btn btn-success btn-sm increment\" style=\"width: 10px;\" >+</button> </td>")
+
+    subCategoryTable.append(newRow);
+
+});
+// Check if the subCategoryTable contains any rows
+if (subCategoryTable.find('tr').length > 0) {
+  // Show the searchLayout
+  showSearchLayout.show();
+} else {
+  // Hide the searchLayout
+  showSearchLayout.hide();
+}
+
+            });
+            console.log('While Loading CatID::'+cat_id)
+            $.get(`/admin_dashboard/load_other_category_wise_details/${cat_id}`, function(data) {
+                console.log("priceCategory::"+data.other_category_data);
+                priceCategory = data.other_category_data;
+
+                priceSelect.empty();
+                priceSelect.append('<option disabled selected>Choose Service Type</option>');
+                // Access and use the properties of the priceCategory object here
+                // Regular Price
+    
+    priceSelect.append($('<option>', {
+        value: `Regular Price ${priceCategory.regular_price} [${priceCategory.regular_price_type}] `,
+        text: `Regular Price ${priceCategory.regular_price} [${priceCategory.regular_price_type}] `,
+    }));
+
+    // Express Price
+   /* priceSelect.append($('<optgroup>', {
+        label: 'Express Price',
+    }));
+    */
+    priceSelect.append($('<option>', {
+        value: `Express Price ${priceCategory.express_price} [${priceCategory.express_price_type}] `,
+        text: `Express Price ${priceCategory.express_price} [${priceCategory.express_price_type}] `,
+    }));
+
+    // Offer Price
+    priceSelect.append($('<option>', {
+        value: `Offer Price ${priceCategory.offer_price} [${priceCategory.offer_price_type}] `,
+        text: `Offer Price ${priceCategory.offer_price} [${priceCategory.offer_price_type}] `,
+    }));
+
+               
+        
+       
+                
+            
+            });
+
+      
+        }
+        }
+    
+        function loadSubCategoriesBySection(sectionTypeSelect) {
+            var section_type = $(sectionTypeSelect).val();
+            var cat_id =  window.selectedCatId;
+            var categorySelect = $("#input-category").val();
+            //var cat_id = $(categorySelect).find(":selected").data("catids");
+            var section_id = $(sectionTypeSelect).find(":selected").data("section_id");
+            var cat_img = $(categorySelect).find(":selected").data("cat_img");
+            var cat_name = $(categorySelect).find(":selected").data("cat_name");
+            var showSearchLayout = $('#show-search');
+            showSearchLayout.hide();
+            selectedItems = [];
+            console.log('CatID::'+cat_id)
+            console.log('CatIMG::'+cat_img)
+            console.log('CatName::'+cat_name)
+
+            console.log('section_id::'+section_id)
+            console.log('section_type::'+section_type)
+
+            var sectionSelect = $('#input-section');
+            var subCategoryTable = $('#subCategoryTable tbody');
+            //var subCategorySelect = $('#input-subcategory');
+            
+            
+            $.get(`/admin_dashboard/load_section_type_sub_categories/${section_type}/${cat_id}`, function(data) {
+                
+
+subCategoryTable.empty(); // Clear any existing rows
+
+$.each(data.sub_categories, function(index, subCategory) {
+    var newRow = $("<tr>");
+        newRow.append("<td> <div id='sub_catid' style='display:none;'>"+subCategory.subcatid+"</div>"+
+            "<div id='sub_cat_img' style='display:none;'>"+subCategory.sub_cat_img+"</div>"+
+            "<div id='cost' style='display:none;'>"+subCategory.cost+"</div>"+
+            "<div id='type' style='display:none;'>"+subCategory.type+"</div>"+
+            "<div id='cat_id' style='display:none;'>"+cat_id+"</div>"+
+            "<div id='cat_img' style='display:none;'>"+cat_img+"</div>"+
+            "<div id='cat_name' style='display:none;'>"+cat_name+"</div>"+
+            "<div id='section_type' style='display:none;'>"+section_type+"</div>"+
+            "<div class='d-flex px-2 py-1'> <div class='d-flex px-2 py-1'><img src="+subCategory.sub_cat_img+" class='avatar avatar-sm me-3' alt='user1'> </div> <div class='d-flex flex-column justify-content-center'> <h6 class='mb-0 text-sm' id='sub_cat_name'>"+subCategory.sub_cat_name+"</h6> <p class='text-xs text-secondary mb-0'>"+subCategory.cost +'/ '+subCategory.type+"</p> <p class='text-xs text-secondary mb-0'><input type='number' class='form-control w-50 mt-2' value='"+subCategory.cost+"' min='0'></p></div></div> </div> </td>")
+   
+    //newRow.append("<td>  <div class=\"d-flex px-2 py-1\"> <p class=\"mb-0 text-xxs text-center\"> " + subCategory.cost +'/ '+subCategory.type + " </p></div></td>");
+    /* newRow.append("<td><input type='number' value='0' min='0'></td>"); 
+    newRow.append("<td>  <p class=\"text-xxs font-weight-bold mb-0\">" + ${subCategory.type} + "</p></td>");
+    newRow.append("<td><button class='btn btn-danger btn-sm ms-1 increment'>+</button><input class='m-2' type='number' value='0' min='0'><button class='btn btn-success btn-sm ms-1 decrement'>-</button></td>");*/
+    //newRow.append("<td><input type='number' class='form-control w-50' value='"+subCategory.cost+"' min='0'></td>");
+    newRow.append("<td style=\"vertical-align: middle; \">  <div class=\"btn-group btn-group-sm mt-2\" style=\"width: 5px; display: flex; align-items: center;\" role=\"group\" aria-label=\"Basic mixed styles example\"> <button type=\"button\" class=\"btn btn-danger btn-sm decrement\" style=\"width: 10px;\" >-</button><button type=\"button\" class=\"btn btn-sm quantity\" style=\"width: 10px;\" >0</button><button type=\"button\" class=\"btn btn-success btn-sm increment\" style=\"width: 10px;\" >+</button> </td>")
+
+    subCategoryTable.append(newRow);
+});
+
+// Check if the subCategoryTable contains any rows
+if (subCategoryTable.find('tr').length > 0) {
+  // Show the searchLayout
+  showSearchLayout.show();
+} else {
+  // Hide the searchLayout
+  showSearchLayout.hide();
+}
+                /*subCategorySelect.empty();
+                subCategorySelect.append('<option disabled selected>Choose Sub Category</option>');
+        
+                $.each(data.sub_categories, function(index, subCategory) {
+                    subCategorySelect.append($('<option>', {
+                        value: subCategory.subcatid,
+                        text: subCategory.sub_cat_name
+                    }));
+                });*/
+
+            });
+      
+        
+        }
+    
+    </script>
+<script>
+    $(document).ready(function() {
+    const inputField = $('#customer-name');
+    const add_customer_btn = $('#add-customer');
+    const suggestionContainer = $('#suggestion-container');
+    const suggestionList = $('#suggestion-list');
+    const selectedCustomerIdInput = $('#selected-customer-id');
+    const selectedMobileNoInput = $('#selected-mobile-no');
+    const selectedCustomerNameInput = $('#selected-customer-name');
+    //generate-booking-id,add_to_cart
+    const booking_id_btn = $('#generate-booking-id');
+    const progress = $('#progress');
+
+    inputField.on('input', function() {
+        const inputText = inputField.val();
+        suggestionContainer.show();
+        if (inputText.length > 0) {
+           // Showing the progress bar while fetching data
+            progress.show();
+            $.get(`/admin_dashboard/search_customer_to_assign_order/${inputText}/`, function(data) {
+                // Hide the progress bar on successful data retrieval
+                progress.hide();
+                const suggestions = data.suggestions;
+                suggestionList.empty();
+                add_customer_btn.hide();
+
+                if (suggestions.length > 0) {
+                    suggestions.forEach(function(suggestion) {
+                        const suggestionItem = $('<li class="nav-item">').text(suggestion.customer_name);
+                        suggestionItem.on('click', function() {
+                            // When a suggestion is clicked, set the value in the input field
+                            inputField.val(suggestion.customer_name);
+
+                            // Set the selected customer details in hidden inputs
+                            selectedCustomerIdInput.val(suggestion.consmrid);
+                            selectedMobileNoInput.val(suggestion.mobile_no);
+                            selectedCustomerNameInput.val(suggestion.customer_name);
+                            //show Generate Booking ID Button
+                            booking_id_btn.show();
+                            // Hide the suggestions list (ul)
+                            suggestionContainer.hide();
+                            add_customer_btn.show();
+                            // Hide the popover
+                            inputField.popover('hide');
+                        });
+                        suggestionList.append(suggestionItem);
+                    });
+                } else {
+                    // No customer found message
+                    const noCustomerItem = $('<li class="nav-item text-muted">').text('No customer found with this number');
+                    suggestionList.append(noCustomerItem);
+                }
+            }).fail(function(){
+              showToast('Alert','Something Went Wrong')
+              progress.hide();
+            });
+        } else {
+            suggestionList.empty();
+            booking_id_btn.hide();
+        }
+    });
+
+    inputField.focus(function() {
+        // Display the suggestions container when the input field is focused
+        suggestionContainer.show();
+        add_customer_btn.hide();
+    });
+
+    inputField.focusout(function() {
+        // Hide the popover when the input field loses focus
+        inputField.popover('hide');
+        add_customer_btn.show();
+    });
+});
+
+</script>
+<!-- <script>
+  $(document).ready(function() {
+    const inputField = $('#customer-name');
+    const suggestionContainer = $('#suggestion-container');
+    const selectedCustomerInput = $('#selected-customer');
+
+    inputField.on('input', function() {
+      const inputText = inputField.val();
+
+      if (inputText.length > 0) {
+        $.get(`/admin_dashboard/search_customer_to_assign_order/${inputText}/`, function(data) {
+            const suggestions = data.suggestions; 
+            suggestionContainer.empty();
+        
+            if (suggestions.length > 0) {
+                const suggestionList = $('<ul>');
+                suggestions.forEach(function(suggestion) {
+                    const suggestionItem = $('<li>').text(suggestion.customer_name);
+                    suggestionItem.on('click', function() {
+                        // When a suggestion is clicked, set the value in the input field
+                        selectedCustomerInput.val(suggestion.customer_name);
+                    });
+                    suggestionList.append(suggestionItem);
+                });
+                suggestionContainer.append(suggestionList);
+            }
+        });
+      } else {
+        suggestionContainer.empty();
+      }
+    });
+
+    inputField.focusout(function() {
+      // Clear suggestions when the input field loses focus.
+      suggestionContainer.empty();
+    });
+  });
+</script> -->
+
+{% endblock  %}
+
