@@ -29,21 +29,21 @@ def login(request):
             jdict = json.loads(request.body)
             password = jdict['password']
             emailid = jdict['email_id']
-            query = "select usertbl.usrid,memberid,usrname,gym_memberstbl.email,mobno,gym_memberstbl.gender,weight,height,password,gymid from vff.usertbl,vff.gym_memberstbl where gym_memberstbl.usrid=usertbl.usrid and gym_memberstbl.email='"+str(emailid)+"' and password='"+str(password)+"'"
+            query = "select memberid,name,email,mobno,gender,weight,height,password,gymid from vff.gym_memberstbl where gym_memberstbl.email='"+str(emailid)+"' and password='"+str(password)+"'"
             result = execute_raw_query_fetch_one(query)
             if result != None:
                 if result[0] != None:
-                    usrid = result[0]
-                    memberid = result[1]
-                    usrname = result[2]
-                    emailid = result[3]
-                    mobno = result[4]
-                    gender = result[5]
-                    weight = result[6]
-                    height = result[7]
-                    password = result[8]
-                    gymid = result[9]
-                return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno,'gender':gender,'usrid':usrid,'usrname':usrname,'memberid':memberid,'weight':weight,'height':height,'gymid':gymid})
+                    # usrid = result[0]
+                    memberid = result[0]
+                    usrname = result[1]
+                    emailid = result[2]
+                    mobno = result[3]
+                    gender = result[4]
+                    weight = result[5]
+                    height = result[6]
+                    password = result[7]
+                    gymid = result[8]
+                return JsonResponse({'response': 'Success', 'email_id': emailid, 'mobno': mobno,'gender':gender,'usrname':usrname,'memberid':memberid,'weight':weight,'height':height,'gymid':gymid})
         
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
