@@ -767,6 +767,8 @@ var new_plan_id = "";
 
      //Multiple Payments Only
      if(payment_type === 'Multiple'){
+        payment_method = 'Multiple'
+        payment_status = 'Success'
         var payment_one_amount = $('#multi-mode-one-price').val();
         var payment_two_amount = $('#multi-mode-two-price').val();
         console.log('payment_one_amount::'+payment_one_amount);
