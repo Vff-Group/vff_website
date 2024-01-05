@@ -435,7 +435,11 @@ var new_plan_id = "";
                 // Handle successful response and load fees plans
                  // Get the dropdown element
                 //var feesPlanDropdown = $('#feesPlanDropdown');
-                var memberIdCurrent = $(this).closest('.modal').find('#member-id-current').val();
+                // Find the associated modal for the clicked link
+    var modal = $($(this).data('bs-target'));
+
+    // Get the member_id_current value within the modal
+    var memberIdCurrent = modal.find('.member-id-current').val();
                 console.log('memberId::'+memberIdCurrent);
                 var feesPlanDropdown = $('#feesPlanDropdown');
                                     
