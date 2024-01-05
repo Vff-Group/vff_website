@@ -126,8 +126,8 @@
                             
                              <!-- Dropdown for fees plans -->
                              <div class="form-group">
-                              <label for="feesPlanDropdown">Choose a Plan</label>
-                              <select class="form-control" id="feesPlanDropdown" name="fees_plan_id">
+                                <label for="feesPlanDropdown{{row.memberid}}">Choose a Plan</label>
+                                <select class="form-control feesPlanDropdown" id="feesPlanDropdown{{row.memberid}}" name="fees_plan_id">
                                   <!-- Options will be populated dynamically -->
                               </select>
                               <!-- Hidden input for selected plan ID -->
@@ -414,7 +414,8 @@ var new_plan_id = "";
           $('.make-payment-link').on('click', function(event) {
             event.preventDefault();
             
-    
+            const rowId = $(this).data('row-id'); // Get the row ID from the link
+
             const csrfToken = getCSRFToken();
             $.ajax({
                 url: '/gym_dashboard_app/fetch_fees_plans/', // URL to fetch fees plans
@@ -426,7 +427,9 @@ var new_plan_id = "";
                 success: function(data) {
                     // Handle successful response and load fees plans
                      // Get the dropdown element
-                    var feesPlanDropdown = $('#feesPlanDropdown');
+                    //var feesPlanDropdown = $('#feesPlanDropdown');
+                    consol.log('rowId::'+rowId);
+                    var feesPlanDropdown = $('#feesPlanDropdown' + rowId);
                                         
                     // Clear existing options (if any)
                     feesPlanDropdown.empty();
