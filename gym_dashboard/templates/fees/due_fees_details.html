@@ -98,7 +98,7 @@
                         <div class="row">
                             <div class="col">
                                 
-                                <a href="" class="text-success font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.member_id}}">
+                                <a href="" class="text-success font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.member_id}}" data-member-id="{{ row.member_id }}">
                                     Make Payment
                                   </a>
                             </div>
@@ -949,7 +949,8 @@ function getCSRFToken() {
         console.log("Next Due Date"+futureDate); 
         console.log("Future Date"+futureDate); 
 
-        
+        var memberId = $(this).data('member-id');
+        console.log('memberId::'+memberId);
             
         //Fees Paid date is added at backend
         const dictMap = {
@@ -976,7 +977,7 @@ function getCSRFToken() {
         };
         console.log('dictMap::'+JSON.stringify(dictMap));
         // If payment is successful, proceed with AJAX
-        //return;
+        return;
         const csrfToken = getCSRFToken();
         $.ajax({
             
