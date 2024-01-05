@@ -959,6 +959,7 @@ function getCSRFToken() {
         };
         console.log('dictMap::'+JSON.stringify(dictMap));
         // If payment is successful, proceed with AJAX
+        return;
         const csrfToken = getCSRFToken();
         $.ajax({
             
