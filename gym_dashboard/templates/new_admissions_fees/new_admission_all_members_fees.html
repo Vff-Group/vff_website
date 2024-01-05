@@ -759,11 +759,11 @@ var new_plan_id = "";
         return;
      }
 
-     if(payment_type === 'Multiple' && payment_one_type === ''){
+     if(payment_type === 'Multiple' && payment_one_type === 'NA'){
         showToast('Alert','Please Select Payment Mode One For Payment');
         return;
      }
-     if(payment_type === 'Multiple' && payment_two_type === ''){
+     if(payment_type === 'Multiple' && payment_two_type === 'NA'){
         showToast('Alert','Please Select Payment Mode Two For Payment');
         return;
      }
