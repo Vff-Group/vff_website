@@ -1,0 +1,630 @@
+{% extends "base_gym/base.html" %}
+{% load static %}
+{% block title %}All New Admission Members{% endblock title%}
+{% block content %}
+
+  <div class="container-fluid py-4">
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header pb-0 d-flex justify-content-between">
+            <h6>All New Admission Members</h6>
+            
+          </div>
+          <!-- Action Buttons  -->
+          
+          <!-- Action Buttons End  -->
+          <div class="card-body px-0 pt-0 pb-2">
+            <div class="row ms-2">
+              <div class="col-lg-8">
+                <form method="get">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    
+                      <input
+                          class="form-control form-control-alternative"
+                          type="search"
+                          id="employee-name-search"
+                          name="employeename-search"
+                          placeholder="Search Employee by name / Mobile No"
+                          value=""
+                          autocomplete="off"
+                          
+                      />
+                  </div>
+              </form>
+              </div>
+            </div>
+            <div class="table-responsive p-0">
+              <table class="table align-items-center mb-0  table-hover">
+                <thead class="bg-light">
+                  <tr>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sl No</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Member Details</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Joining Date</th>
+                    
+                    <th class="text-secondary opacity-7"></th>
+                  </tr>
+                </thead>
+                {% if not query_result%}
+                <div class="alert alert-info alert-dismissible m-4 fade show" role="alert">
+                  <span class="alert-icon text-white"><i class="ni ni-like-2"></i></span>
+                  <span class="alert-text text-white"><strong>Info!</strong> {{error_msg}}!</span>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              {% else %}
+                <tbody >
+                  {% for row in query_result %}
+                  <tr>
+                    <td>
+                        <p class="text-xs text-secondary mb-0">{{forloop.counter}}</p>
+                    </td>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div>
+                          <img src="{{row.profile_image}}" class="avatar avatar-sm me-3" alt="user1">
+                        </div>
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">{{row.name}}</h6>
+                          <p class="text-xs text-secondary mb-0">{{row.mobno}}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">{{row.join_date}}</p>
+                      
+                    </td>
+                    
+                    
+                    
+                    
+                    <td class="align-middle">
+                        <div class="row">
+                            <div class="col">
+                              
+                                <a href="" class="text-secondary font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.memberid}}"> 
+                                    Make Payment
+                                  </a>
+                            </div>
+
+                            
+
+                        
+                        </div>
+                      
+                      
+                    </td>
+                  </tr>
+
+                 
+                  {% comment %} <div class="col-md-4">
+                    
+          
+                    <div class="modal fade" id="modal-default{{row.memberid}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h6 class="modal-title" id="modal-title-default">Making Payment For Member [{{row.member_name}}]  </h6>
+                            <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                          </div>
+                          <form
+                          id="update-fees-form"
+                          method="post"
+                        >
+                          {% csrf_token %}
+                          <div class="modal-body">
+                           
+
+                             <!-- Dropdown for fees plans -->
+                             <div class="form-group">
+                              <label for="feesPlanDropdown">Choose a Plan</label>
+                              <select class="form-control" id="feesPlanDropdown" name="fees_plan_id">
+                                  <!-- Options will be populated dynamically -->
+                              </select>
+                              <!-- Hidden input for selected plan ID -->
+                              <input type="hidden" id="selectedPlanId" name="selected_plan_id">
+                              <input type="hidden" id="selectedPlanDuration" name="selected_plan_duration">
+                              <input type="hidden" id="selectedPlanPrice" name="selected_plan_price">
+                          </div>
+                            
+                            <div class="form-group">
+                                <label for="price">Amount to pay</label>
+                                <input type="number" class="form-control" id="price" name="plan_price" placeholder="Enter Plan Price" value="{{row.price}}"  disabled>
+                                
+                            </div>
+                            
+                            
+        
+                            <div class="form-group">
+                                <label for="duration">Duration In Months</label>
+                                <input type="text" class="form-control" id="duration" name="duration_in_months"  value="{{row.duration_in_months}}"  disabled>
+                            </div>
+
+                            <div class="row">
+              
+                                <div class="col-lg-6">
+                                  <div class="form-group">
+                                    <label
+                                      class="form-control-label"
+                                      for="input-paymentmode"
+                                      >Payment Mode</label
+                                    >
+                                    <select
+                                      class="form-control form-control-alternative"
+                                      id="input-paymentmode"
+                                      name="payment_mode"
+                                      required
+                                    >
+                                      <option disabled selected>
+                                        Choose Payment Mode
+                                      </option>
+                                      <option value="Cash">Cash</option>
+                                      <option value="UPI">UPI</option>
+                                      <option value="Card">Card</option>
+                                      <option value="Cheque">Cheque</option>
+                                      <option value="Bank Transfer">
+                                        Bank Transfer
+                                      </option>
+                                     
+                                    </select>
+                                  </div>
+                                </div>
+                                
+                  
+                                </div>
+                                <div class="row">
+                                  <div class="col-lg-6">
+                                      <div class="form-group" id="payment-id-container" style="display: none;">
+                                          <label class="form-control-label" for="input-paymentid">Payment ID</label>
+                                          <input class="form-control form-control-alternative" type="text" id="input-paymentid" name="payment-id" disabled>
+                                      </div>
+                                  </div>
+                              </div>
+
+                            
+                              <div class="form-group">
+                                <button type="button" class="btn bg-gradient-success makePaymentBtn" style="display: none;">Make Payment</button>
+                            </div>
+
+
+
+                        </div>
+                          <div class="modal-footer">
+                            <button type="submit" class="btn bg-gradient-success">Update</button>
+                            <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal" id="cancel-btn">Cancel</button>
+                          </div>
+                        </form>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div> {% endcomment %}
+
+                  
+
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+</div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Add an event listener to the search input field
+        $('#employee-name-search').on('input', function () {
+            applyFilters();
+        });
+
+       
+        function applyFilters() {
+          // Get the user's search input
+          var userSearch = $('#employee-name-search').val().toLowerCase();
+      
+          // Loop through the table rows and hide/show them based on the filters
+          $('.table tbody tr').each(function () {
+              var userName = $(this).find('td:first h6').text().toLowerCase();
+              var userMobile = $(this).find('td:first p.text-xs').text();
+      
+              if (
+                  userName.includes(userSearch) || userMobile.includes(userSearch) || userSearch === ''
+              ) {
+                  $(this).show();
+              } else {
+                  $(this).hide();
+              }
+          });
+      }
+      
+      });
+</script>
+
+ <script>
+  var payment_id = "-1";
+  var isOnlinePayment = false;
+  var paymentSuccessful = false;
+var paymentType = "";
+
+var payment_status = ""; // Payment Status
+var new_plan_id = "";
+         var new_plan_price = "";
+          var new_plan_duration = "";
+          var member_id= "";
+          var next_fees_date = "";
+          var last_due_date = "";
+          
+          var paid_amount = 0;
+          var payment_method = "";
+
+  $(document).ready(function() {
+
+    const csrfToken = getCSRFToken();
+                  $.ajax({
+                      url: '/gym_dashboard_app/fetch_fees_plans/', // URL to fetch fees plans
+                      type: 'POST',
+                      headers: {
+                          'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+                      },
+                      contentType: 'application/json',
+                      success: function(data) {
+                          // Handle successful response and load fees plans
+                           // Get the dropdown element
+                          var feesPlanDropdown = $('#feesPlanDropdown');
+                                              
+                          // Clear existing options (if any)
+                          feesPlanDropdown.empty();
+                          console.log('data::'+data);
+                          // Populate dropdown with fetched plans
+                          $.each(data.fees_data, function(index, subSection) {
+                              var cardio = subSection.cardio;
+                              var isCardio = "Without Cardio"
+                              if(cardio == 1){
+                                  isCardio ="With Cardio"
+                              }
+                              feesPlanDropdown.append($('<option>', {
+                                  value: subSection.id,
+                                  html: subSection.name + " [" + isCardio + "]<br> Duration: " + subSection.duration + "<br> Price: " + subSection.price
+                                  //text: subSection.name+" ["+isCardio+"]<br>Duration: "+subSection.duration+"<br>Price:"+subSection.price,
+                              }));
+                          });
+                          paymentSuccessful = true;
+                          // Update hidden input with the default selected plan ID (optional)
+                          $('#selectedPlanId').val(data[0].id); // Set the first plan ID as default
+                      },
+                      error: function(xhr, status, error) {
+                          // Handle error
+                          console.log(error);
+                      }
+                  });
+
+      //Make Payment Button and fetch gym plans
+      $(".makePaymentBtn").on("click", function() {
+          // Prevent form submission
+          $(this).closest("form").submit(function(e) {
+              e.preventDefault();
+          });
+
+          var planPrice = $('#price').val();
+
+          // Parse the value to float
+          var totalPayment = parseFloat(planPrice);
+          paid_amount = totalPayment;
+          if(isOnlinePayment === true){
+          // Trigger Razorpay payment
+          var options = {
+              "key": "rzp_test_qtHIWapeUEAAZO", // Enter the Key ID generated from the Dashboard rzp_test_qtHIWapeUEAAZO
+              "amount": (totalPayment * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+              "currency": "INR",
+              "name": "VFF Group", //your business name
+              "description": "Gym Fees",
+              "image": "https://vff-group.com/static/images/logo.png",
+              // Other options...
+              handler: function(response) {
+                  payment_id =  response.razorpay_payment_id;
+                  order_status = "Payment Done";
+                  payment_status = "Success";
+                  $('#input-paymentid').val(payment_id);
+                  disableElements();
+                  const csrfToken = getCSRFToken();
+                  $.ajax({
+                      url: '/gym_dashboard_app/fetch_fees_plans/', // URL to fetch fees plans
+                      type: 'POST',
+                      headers: {
+                          'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+                      },
+                      contentType: 'application/json',
+                      success: function(data) {
+                          // Handle successful response and load fees plans
+                           // Get the dropdown element
+                          var feesPlanDropdown = $('#feesPlanDropdown');
+                                              
+                          // Clear existing options (if any)
+                          feesPlanDropdown.empty();
+                          console.log('data::'+data);
+                          // Populate dropdown with fetched plans
+                          $.each(data.fees_data, function(index, subSection) {
+                              var cardio = subSection.cardio;
+                              var isCardio = "Without Cardio"
+                              if(cardio == 1){
+                                  isCardio ="With Cardio"
+                              }
+                              feesPlanDropdown.append($('<option>', {
+                                  value: subSection.id,
+                                  html: subSection.name + " [" + isCardio + "]<br> Duration: " + subSection.duration + "<br> Price: " + subSection.price
+                                  //text: subSection.name+" ["+isCardio+"]<br>Duration: "+subSection.duration+"<br>Price:"+subSection.price,
+                              }));
+                          });
+                          paymentSuccessful = true;
+                          // Update hidden input with the default selected plan ID (optional)
+                          $('#selectedPlanId').val(data[0].id); // Set the first plan ID as default
+                      },
+                      error: function(xhr, status, error) {
+                          // Handle error
+                          console.log(error);
+                      }
+                  });
+             
+              },
+              "notes": {
+                  "address": "Tilakwadi"
+              },
+              "theme": {
+                  "color": "#3399cc"
+              }
+          };
+          var rzp = new Razorpay(options);
+          rzp.open(); // Open Razorpay payment window
+      }
+
+      });
+ 
+    
+  });
+
+  $(document).ready(function() {
+      // Event listener for change in payment mode dropdown
+      $('#input-paymentmode').change(function() {
+          var selectedMode = $(this).val(); // Get the selected value
+          payment_method = selectedMode;
+          // Toggle visibility of payment ID container based on selected mode
+          if (selectedMode === 'Cash') {
+              var planPrice = $('#price').val();
+              $('.makePaymentBtn').hide();
+              // Parse the value to float
+              paid_amount = parseFloat(planPrice);
+              isOnlinePayment = false;
+              paymentSuccessful = true
+              payment_status = "Success";
+              $('#payment-id-container').hide(); // Hide container for Cash mode
+              const csrfToken = getCSRFToken();
+              $.ajax({
+                  url: '/gym_dashboard_app/fetch_fees_plans/', // URL to fetch fees plans
+                  type: 'POST',
+                  headers: {
+                      'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+                  },
+                  contentType: 'application/json',
+                  success: function(data) {
+                      // Handle successful response and load fees plans
+                       // Get the dropdown element
+                      var feesPlanDropdown = $('#feesPlanDropdown');
+                                          
+                      // Clear existing options (if any)
+                      feesPlanDropdown.empty();
+                      console.log('data::'+data);
+                      // Populate dropdown with fetched plans
+                      $.each(data.fees_data, function(index, subSection) {
+                          var cardio = subSection.cardio;
+                          var isCardio = "Without Cardio"
+                          if(cardio == 1){
+                              isCardio ="With Cardio"
+                          }
+                          feesPlanDropdown.append($('<option>', {
+                              value: subSection.id,
+                              html: subSection.name + " [" + isCardio + "]",
+                              'data-duration': subSection.duration, // Add data-duration attribute
+                              'data-price': subSection.price // Add data-price attribute
+                          }));
+                      });
+                  
+                      // Update hidden input with the default selected plan ID (optional)
+                      $('#selectedPlanId').val(data[0].id); // Set the first plan ID as default
+                      $('#price').val(data[0].price);
+                      $('#duration').val(data[0].duration);
+                      
+                  },
+                  error: function(xhr, status, error) {
+                      // Handle error
+                      console.log(error);
+                  }
+              });
+         
+          } else {
+              isOnlinePayment = true;
+              $('.makePaymentBtn').show();
+              $('#payment-id-container').show(); // Show container for other modes
+          }
+      });
+
+      $('#feesPlanDropdown').change(function() {
+          var selectedOption = $(this).find(':selected'); // Get the selected option
+          var selectedId = selectedOption.val(); // Get the selected value
+          var selectedDuration = selectedOption.data('duration'); // Get the 'duration' data attribute value
+          var selectedPrice = selectedOption.data('price'); // Get the 'price' data attribute value
+      
+          // Update the hidden input values with the selected plan details
+          new_plan_id = selectedId;
+          new_plan_price = selectedPrice;
+          new_plan_duration = selectedDuration;
+          $('#selectedPlanId').val(selectedId);
+          $('#selectedPlanDuration').val(selectedDuration);
+          $('#selectedPlanPrice').val(selectedPrice);
+          $('#price').val(new_plan_price);
+          $('#duration').val(new_plan_duration);
+
+      });
+  
+  });
+
+  
+
+  function disableElements() {
+      // Disable "Pay Now" button
+      $(".makePaymentBtn").prop("disabled", true);
+      
+      // Disable payment mode select dropdown
+      $("#input-paymentmode").prop("disabled", true);
+      
+      // Disable Cancel
+      $("#cancel-btn").prop("disabled", true);
+      }
+  // Get the CSRF token from the cookie
+function getCSRFToken() {
+  const cookies = document.cookie.split(';');
+  for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith("csrftoken=")) {
+          return cookie.substring("csrftoken=".length, cookie.length);
+      }
+  }
+  return null;
+}
+
+function convertDateFormat(dateString) {
+  var months = {
+      Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
+      Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12'
+  };
+  
+  var dateParts = dateString.split(' ');
+  var year = dateParts[2];
+  var month = months[dateParts[0].slice(0, 3)]; // Get the abbreviated month and map it to its numeric value
+  var day = dateParts[1].replace(',', ''); // Remove the comma from the day
+  
+  return year + '-' + month + '-' + ('0' + day).slice(-2);
+}
+
+$(document).ready(function() {
+  $('#update-fees-form').submit(function(event) {
+      // Prevent default form submission
+      event.preventDefault();
+
+      // Perform your form validation here
+      // For example, check if payment is successful
+      
+      if (!paymentSuccessful) {
+          // Show an error message or take appropriate action
+          showToast('Alert','Payment not successful. Please try again');
+          return;
+      }
+      
+      //TODO:Need to fill all these variables below.
+      //fees_date_current,last_fees_due_date_current,fees_table_id_current
+      // Retrieve values using jQuery
+     // var feesDate = $('#fees_date_current').val();
+     // var member_id = $('#member_id_current').val();
+     // var lastFeesDueDate = $('#last_fees_due_date_current').val();
+     // var feesTableId = $('#fees_table_id_current').val();
+     // var convertedDate = convertDateFormat(feesDate);
+     // console.log("fees_date_converted"+convertedDate); 
+     // feesDate = convertedDate;
+     // last_due_date = feesDate;
+//
+     // var duration = new_plan_duration;  // Replace this with the selected plan's duration string
+     // var futureDate = getFutureDateFromDuration(duration,feesDate);
+     // console.log("Fees Date"+feesDate); 
+     // console.log("Next Due Date"+futureDate); 
+     // console.log("Future Date"+futureDate); 
+
+      
+          
+      //Fees Paid date is added at backend
+      const dictMap = {
+          'member_id': member_id,
+          'next_fees_date': futureDate,
+          'last_due_date': last_due_date,
+          'new_plan_id': new_plan_id,
+          'new_plan_price': new_plan_price,
+          'new_plan_duration': new_plan_duration,
+          'fees_tbl_id': feesTableId,
+          'paid_amount': paid_amount,
+          'payment_method': payment_method,
+          'razor_pay_id': payment_id,
+          'payment_status': payment_status,
+          // Add other form fields to the JSON object
+      };
+      console.log('dictMap::'+JSON.stringify(dictMap));
+      // If payment is successful, proceed with AJAX
+      const csrfToken = getCSRFToken();
+      $.ajax({
+          
+          url: '/gym_dashboard_app/update_fees_paid_details/', 
+          method: 'POST',
+          data: JSON.stringify(dictMap),
+          headers: {
+              'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+          },
+          contentType: 'application/json',
+          success: function(response) {
+              // Handle the success response here
+              console.log('Success:'+JSON.stringify(response.html))
+
+           // Redirect to the "all counter orders" URL
+          window.location.replace('/gym_dashboard_app/fees_due_details/');
+          },
+          error: function(xhr, status, error) {
+              // Handle any errors that occur during the AJAX request
+              console.error('AJAX request error:', status, error);
+          }
+      });
+  });
+});
+
+// Function to show a toast message
+function showToast(message, bodyContent) {
+  toastr.warning(bodyContent, message, {
+    positionClass: "toast-top-right",
+    timeOut: 5e3,
+    closeButton: !0,
+    debug: !1,
+    newestOnTop: !0,
+    progressBar: !0,
+    preventDuplicates: !0,
+    onclick: null,
+    showDuration: "300",
+    hideDuration: "1000",
+    extendedTimeOut: "1000",
+    showEasing: "swing",
+    hideEasing: "linear",
+    showMethod: "fadeIn",
+    hideMethod: "fadeOut",
+    tapToDismiss: !1
+})
+    // Get the toast element and its content
+    /*var toastElement = document.getElementById("liveToast");
+    var toastBody = toastElement.querySelector(".toast-body");
+
+    // Update the toast content with the provided message and body content
+    toastBody.textContent = bodyContent;
+
+    // Show the toast
+    var toast = new bootstrap.Toast(toastElement);
+    toast.show();*/
+}
+</script> 
+
+{% endblock  %}
