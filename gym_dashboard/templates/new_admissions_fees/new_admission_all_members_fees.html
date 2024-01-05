@@ -534,27 +534,20 @@ var new_plan_id = "";
         }
     });
 
-// Handling the Payment Button for mode one or two
-document.getElementById('single-payment-checkbox').addEventListener('change', function() {
-    var singlePaymentContainer = document.getElementById('single-payment-container');
-    var paymentModeOne = document.getElementById('input-paymentmode-multi-one');
+    //Multi Payment One Payment Method handling Cash or Online to show Make Payment button
+    $(document).ready(function() {
+        $('#input-paymentmode-multi-one').change(function() {
+            var selectedPaymentMode = $(this).val();
+            var makePaymentBtn = $('.makePaymentBtn-multi-one');
 
-    if (this.checked) {
-        singlePaymentContainer.style.display = 'block';
-
-        paymentModeOne.addEventListener('change', function() {
-            var makePaymentContainer = document.getElementsByClassName('makePaymentBtn-multi-one');
-
-            if (paymentModeOne.value !== 'Cash') {
-                makePaymentContainer.style.display = 'block';
+            if (selectedPaymentMode === 'Cash') {
+                makePaymentBtn.hide();
             } else {
-                makePaymentContainer.style.display = 'none';
+                makePaymentBtn.show();
             }
         });
-    } else {
-        singlePaymentContainer.style.display = 'none';
-    }
-});
+    });
+
 
   function disableElements() {
       // Disable "Pay Now" button
