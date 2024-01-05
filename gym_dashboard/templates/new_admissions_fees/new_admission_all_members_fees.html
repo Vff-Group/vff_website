@@ -414,7 +414,7 @@ var new_plan_id = "";
           $('.make-payment-link').on('click', function(event) {
             event.preventDefault();
             
-            const rowId = $(this).data('row-id'); // Get the row ID from the link
+            var member_id = $('#member_id_current').val();
 
             const csrfToken = getCSRFToken();
             $.ajax({
@@ -428,8 +428,8 @@ var new_plan_id = "";
                     // Handle successful response and load fees plans
                      // Get the dropdown element
                     //var feesPlanDropdown = $('#feesPlanDropdown');
-                    console.log('rowId::'+rowId);
-                    var feesPlanDropdown = $('#feesPlanDropdown' + rowId);
+                    console.log('rowId::'+member_id);
+                    var feesPlanDropdown = $('#feesPlanDropdown' + member_id);
                                         
                     // Clear existing options (if any)
                     feesPlanDropdown.empty();
