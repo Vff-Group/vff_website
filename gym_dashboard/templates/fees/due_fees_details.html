@@ -669,7 +669,11 @@ var new_plan_id = "";
                                 // Handle successful response and load fees plans
                                  // Get the dropdown element
                                 var feesPlanDropdown = $('#feesPlanDropdown');
-                                                    
+                                var memberId = $(this).data('member-id');
+                                var modalId = $(this).data('bs-target');
+                                console.log('memberId::'+memberId);
+                                console.log('modalId::'+modalId);
+                                                                            
                                 // Clear existing options (if any)
                                 feesPlanDropdown.empty();
                                 console.log('data::'+data);
@@ -950,7 +954,9 @@ function getCSRFToken() {
         console.log("Future Date"+futureDate); 
 
         var memberId = $(this).data('member-id');
+        var modalId = $(this).data('bs-target');
         console.log('memberId::'+memberId);
+        console.log('modalId::'+modalId);
             
         //Fees Paid date is added at backend
         const dictMap = {
