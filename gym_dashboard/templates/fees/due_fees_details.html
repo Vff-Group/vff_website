@@ -927,6 +927,11 @@ function getCSRFToken() {
         payment_two_amount = parseFloat(payment_two_amount);
 
      }
+
+     if(new_plan_id === ''){
+        showToast('Alert','Please Select the Next Renewal Plan');
+        return;
+     }
         
         //TODO:Need to fill all these variables below.
         //fees_date_current,last_fees_due_date_current,fees_table_id_current
