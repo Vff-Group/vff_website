@@ -149,50 +149,170 @@
                                 <input type="text" class="form-control" id="duration" name="duration_in_months"  value="{{row.duration_in_months}}"  disabled>
                             </div>
 
-                            <div class="row">
-              
-                                <div class="col-lg-6">
-                                  <div class="form-group">
-                                    <label
-                                      class="form-control-label"
-                                      for="input-paymentmode"
-                                      >Payment Mode</label
-                                    >
-                                    <select
-                                      class="form-control form-control-alternative"
-                                      id="input-paymentmode"
-                                      name="payment_mode"
-                                      required
-                                    >
-                                      <option disabled selected>
-                                        Choose Payment Mode
-                                      </option>
-                                      <option value="Cash">Cash</option>
-                                      <option value="UPI">UPI</option>
-                                      <option value="Card">Card</option>
-                                      <option value="Cheque">Cheque</option>
-                                      <option value="Bank Transfer">
-                                        Bank Transfer
-                                      </option>
-                                      <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
-                                    </select>
-                                  </div>
-                                </div>
-                                
-                  
-                                </div>
-                                <div class="row">
-                                  <div class="col-lg-6">
-                                      <div class="form-group" id="payment-id-container" style="display: none;">
-                                          <label class="form-control-label" for="input-paymentid">Payment ID</label>
-                                          <input class="form-control form-control-alternative" type="text" id="input-paymentid" name="payment-id" disabled>
-                                      </div>
-                                  </div>
-                              </div>
+                            <!-- adding payment options start  -->
+                            <hr>
 
                             <div class="form-group">
+                                <label for="single-payment-checkbox">
+                                    <input type="checkbox" id="single-payment-checkbox"> Single Payment
+                                </label>
+                                
+                            </div>
+
+                            <div class="form-group">
+                            <label for="multi-payment-checkbox">
+                                <input type="checkbox" id="multi-payment-checkbox"> Multi Payment 
+                            </label>
+                        </div>
+
+                            
+
+                            <div id="multi-payment-container"  style="display: none;">
+                                <hr>
+                                        
+                                            <!-- Payment Mode Multi One  -->
+                                            
+                                              <div class="form-group">
+                                                <label
+                                                  class="form-control-label"
+                                                  for="input-paymentmode-multi-one"
+                                                  >Payment Mode One</label
+                                                >
+                                                <select
+                                                  class="form-control form-control-alternative"
+                                                  id="input-paymentmode-multi-one"
+                                                  name="payment_mode_multi_one"
+                                                  required
+                                                >
+                                                  <option disabled selected>
+                                                    Choose Payment Mode One
+                                                  </option>
+                                                  <option value="Cash">Cash</option>
+                                                  <option value="UPI">UPI</option>
+                                                  <option value="Card">Card</option>
+                                                  <option value="Cheque">Cheque</option>
+                                                  <option value="Bank Transfer">
+                                                    Bank Transfer
+                                                  </option>
+                                                 
+                                                </select>
+                                              </div>
+                                              <div class="form-group">
+                                                <label for="multi-mode-one-price">Amount to pay [Mode 1]</label>
+                                                <input type="number" class="form-control" id="multi-mode-one-price" name="multi_mode_one_price" placeholder="Enter Amount for Payment Mode One" >
+                                                </div>
+
+                                                <div class="form-group" id="payment-id-container-multi-one" style="display: none;">
+                                                    <label class="form-control-label" for="input-paymentid">Payment ID</label>
+                                                    <input class="form-control form-control-alternative" type="text" id="input-paymentid-multi-one" name="payment-id" disabled>
+                                                </div>
+                                            
+                                              <div class="form-group">
+                                                <button type="button" class="btn bg-gradient-success makePaymentBtn-multi-one" style="display: none;">Make Payment One</button>
+                                            </div>
+
+                                            
+                                            
+
+                                            <!-- Payment Mode Multi Two  -->
+                                            <hr>
+                                                <div class="form-group">
+                                                  <label
+                                                    class="form-control-label"
+                                                    for="input-paymentmode-multi-two"
+                                                    >Payment Mode Two</label
+                                                  >
+                                                  <select
+                                                    class="form-control form-control-alternative"
+                                                    id="input-paymentmode-multi-two"
+                                                    name="payment_mode_multi_two"
+                                                    required
+                                                  >
+                                                    <option disabled selected>
+                                                      Choose Payment Mode Two
+                                                    </option>
+                                                    <option value="Cash">Cash</option>
+                                                    <option value="UPI">UPI</option>
+                                                    <option value="Card">Card</option>
+                                                    <option value="Cheque">Cheque</option>
+                                                    <option value="Bank Transfer">
+                                                      Bank Transfer
+                                                    </option>
+                                                   
+                                                  </select>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="multi-mode-two-price">Amount to pay [Mode 1]</label>
+                                                    <input type="number" class="form-control" id="multi-mode-two-price" name="multi_mode_two_price" placeholder="Enter Amount for Payment Mode Two" >
+                                                    
+                                                </div>
+
+                                                <div class="form-group" id="payment-id-container-multi-two" style="display: none;">
+                                                    <label class="form-control-label" for="input-paymentid">Payment ID</label>
+                                                    <input class="form-control form-control-alternative" type="text" id="input-paymentid-multi-two" name="payment-id" disabled>
+                                                </div>
+
+                                                <div class="form-group">
+                                                  <button type="button" class="btn bg-gradient-success makePaymentBtn-multi-two" style="display: none;">Make Payment Two</button>
+                                              </div>
+                                             
+                                              
+                                                  
+                                              
+                                          
+                                    
+                                
+                            </div>
+
+                            <div id="single-payment-container" style="display: none;">
+                                <hr>
+                                      <div class="form-group">
+                                        <label
+                                          class="form-control-label"
+                                          for="input-paymentmode"
+                                          >Payment Mode</label
+                                        >
+                                        <select
+                                          class="form-control form-control-alternative"
+                                          id="input-paymentmode"
+                                          name="payment_mode"
+                                          required
+                                        >
+                                          <option disabled selected>
+                                            Choose Payment Mode
+                                          </option>
+                                          <option value="Cash">Cash</option>
+                                          <option value="UPI">UPI</option>
+                                          <option value="Card">Card</option>
+                                          <option value="Cheque">Cheque</option>
+                                          <option value="Bank Transfer">
+                                            Bank Transfer
+                                          </option>
+                                         
+                                        </select>
+                                      </div>
+                                    
+                                    
+                      
+                                    
+                                    
+                                      
+                                          <div class="form-group" id="payment-id-container" style="display: none;">
+                                              <label class="form-control-label" for="input-paymentid">Payment ID</label>
+                                              <input class="form-control form-control-alternative" type="text" id="input-paymentid" name="payment-id" disabled>
+                                          </div>
+                                      
+                                  
+                            
+
+                            
+                              <div class="form-group">
                                 <button type="button" class="btn bg-gradient-success makePaymentBtn" style="display: none;">Make Payment</button>
                             </div>
+
+                        </div>
+                            <!-- adding payment options end  -->
 
                              <!-- Dropdown for fees plans -->
             <div class="form-group">
@@ -266,6 +386,8 @@
 
 <script>
     var payment_id = "-1";
+    var payment_one_id = "-1";
+  var payment_two_id = "-1";
     var isOnlinePayment = false;
     var paymentSuccessful = false;
 var paymentType = "";
@@ -280,6 +402,10 @@ var new_plan_id = "";
             
             var paid_amount = 0;
             var payment_method = "";
+
+            var payment_type = "";
+          var payment_one_type = "NA";
+          var payment_two_type = "NA";
 
     $(document).ready(function() {
 
@@ -366,6 +492,137 @@ var new_plan_id = "";
    
       
     });
+
+      //Handling Payment Mode i.e Single or Multiple 
+  document.getElementById('single-payment-checkbox').addEventListener('change', function() {
+    const multiPaymentCheckbox = document.getElementById('multi-payment-checkbox');
+        if (this.checked) {
+            payment_type="Single";
+            document.getElementById('single-payment-container').style.display = 'block';
+            document.getElementById('multi-payment-container').style.display = 'none';
+            document.querySelector('.makePaymentBtn').style.display = 'block';
+            multiPaymentCheckbox.disabled = true;
+        } else {
+            payment_type="";
+            document.getElementById('single-payment-container').style.display = 'none';
+            document.querySelector('.makePaymentBtn').style.display = 'none';
+            multiPaymentCheckbox.disabled = false;
+        }
+    });
+
+    document.getElementById('multi-payment-checkbox').addEventListener('change', function() {
+        const singlePaymentCheckbox = document.getElementById('single-payment-checkbox');
+        if (this.checked) {
+            payment_type="Multiple";
+            document.getElementById('multi-payment-container').style.display = 'block';
+            document.getElementById('single-payment-container').style.display = 'none';
+            document.querySelector('.makePaymentBtn').style.display = 'block';
+            singlePaymentCheckbox.disabled = true;
+        } else {
+            payment_type="";
+            document.getElementById('multi-payment-container').style.display = 'none';
+            document.querySelector('.makePaymentBtn').style.display = 'none';
+            singlePaymentCheckbox.disabled = false;
+        }
+    });
+
+    //Multi Payment One Payment Method handling Cash or Online to show Make Payment button
+    $(document).ready(function() {
+        $('#input-paymentmode-multi-one').change(function() {
+            var selectedPaymentMode = $(this).val();
+            var makePaymentBtn = $('.makePaymentBtn-multi-one');
+            payment_one_type = selectedPaymentMode;
+
+            if (selectedPaymentMode === 'Cash') {
+                
+                makePaymentBtn.hide();
+                document.getElementById('payment-id-container-multi-one').style.display = 'none';
+            } else {
+                makePaymentBtn.show();
+                
+                document.getElementById('payment-id-container-multi-one').style.display = 'block';
+            }
+        });
+    });
+
+    //Multi Payment Two Payment Method handling Cash or Online to show Make Payment button
+    $(document).ready(function() {
+        $('#input-paymentmode-multi-two').change(function() {
+            var selectedPaymentMode = $(this).val();
+            var makePaymentBtn = $('.makePaymentBtn-multi-two');
+            payment_two_type = selectedPaymentMode;
+
+            if (selectedPaymentMode === 'Cash') {
+                makePaymentBtn.hide();
+                document.getElementById('payment-id-container-multi-two').style.display = 'none';
+            } else {
+                makePaymentBtn.show();
+                document.getElementById('payment-id-container-multi-two').style.display = 'block';
+            }
+        });
+    });
+
+
+    //to make button one payment 
+        $(document).ready(function() {
+            $('.makePaymentBtn-multi-one').click(function() {
+                var amount = $('#multi-mode-one-price').val(); // Amount in paise/cents
+                amount = parseFloat(amount);
+
+
+                var options = {
+                    "key": "rzp_test_qtHIWapeUEAAZO", // Enter the Key ID generated from the Dashboard      rzp_test_qtHIWapeUEAAZO
+                    "amount": (amount * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000      refers to 50000 paise
+                    "currency": "INR",
+                    "name": "Velvet Royal Gym", //your business name
+                    "description": "Gym Renewal Fees",
+                    "image": "https://vff-group.com/static/images/logo.png",
+                    handler: function(response) {
+                        $('#input-paymentid-multi-one').val(response.razorpay_payment_id);
+                        payment_one_id = response.razorpay_payment_id;
+                    },
+                    "notes": {
+                        "address": "Tilakwadi"
+                    },
+                    theme: {
+                        color: '#F37254'
+                    }
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.open();
+            });
+        });
+
+        //to make button two payment
+        $(document).ready(function() {
+            $('.makePaymentBtn-multi-two').click(function() {
+                var amount = $('#multi-mode-two-price').val(); // Amount in paise/cents
+                amount = parseFloat(amount);
+
+
+                var options = {
+                    "key": "rzp_test_qtHIWapeUEAAZO", // Enter the Key ID generated from the Dashboard      rzp_test_qtHIWapeUEAAZO
+                    "amount": (amount * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000      refers to 50000 paise
+                    "currency": "INR",
+                    "name": "Velvet Royal Gym", //your business name
+                    "description": "Gym Renewal Fees",
+                    "image": "https://vff-group.com/static/images/logo.png",
+                    handler: function(response) {
+                        $('#input-paymentid-multi-two').val(response.razorpay_payment_id);
+                        payment_two_id = response.razorpay_payment_id;
+                    },
+                    "notes": {
+                        "address": "Tilakwadi"
+                    },
+                    theme: {
+                        color: '#F37254'
+                    }
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.open();
+            });
+        });
+
 
     $(document).ready(function() {
         // Event listener for change in payment mode dropdown
@@ -513,11 +770,69 @@ function getCSRFToken() {
         // Perform your form validation here
         // For example, check if payment is successful
         
-        if (!paymentSuccessful) {
+        //Multiple Payments Only
+     if(payment_type === 'Multiple'){
+        payment_method = 'Multiple'
+        payment_status = 'Success'
+        var payment_one_amount = $('#multi-mode-one-price').val();
+        var payment_two_amount = $('#multi-mode-two-price').val();
+        console.log('payment_one_amount::'+payment_one_amount);
+
+        if(payment_one_type === 'NA'){
+            showToast('Alert','Please Select Payment Mode One For Payment');
+            return;
+         }
+    
+         if (payment_one_amount === '' || payment_one_amount === undefined){
+            showToast('Alert','Please Add The Payment One Amount');
+            return;
+         }
+    
+         if (payment_one_id === '-1' && payment_one_type !== 'Cash'){
+            showToast('Alert','Please Pay Payment Mode One Amount');
+            return;
+         }
+         if(payment_two_type === 'NA'){
+            showToast('Alert','Please Select Payment Mode Two For Payment');
+            return;
+         }
+    
+         if (payment_two_amount === '' || payment_two_amount === undefined){
+            showToast('Alert','Please Add The Payment Two Amount');
+            return;
+         }
+    
+         if (payment_two_id === '-1' && payment_two_type !== 'Cash'){
+            showToast('Alert','Please Pay Payment Mode Two Amount');
+            return;
+         }
+
+     }
+
+     //Single Payments Only
+     if(payment_type ==='Single' && payment_status === ''){
+        showToast('Alert','Please pay before updating');
+        return;
+     }
+
+        if (payment_type ==='Single' && !paymentSuccessful) {
             // Show an error message or take appropriate action
             showToast('Alert','Payment not successful. Please try again');
             return;
         }
+
+        var payment_one_amount = '0'
+     var payment_two_amount = '0'
+     if(payment_type === 'Multiple'){
+        //First Amount
+        payment_one_amount = $('#multi-mode-one-price').val();
+        payment_one_amount = parseFloat(payment_one_amount);
+
+        //Second Amount
+        payment_two_amount = $('#multi-mode-two-price').val();
+        payment_two_amount = parseFloat(payment_two_amount);
+
+     }
         
         //TODO:Need to fill all these variables below.
         //fees_date_current,last_fees_due_date_current,fees_table_id_current
@@ -552,6 +867,14 @@ function getCSRFToken() {
             'payment_method': payment_method,
             'razor_pay_id': payment_id,
             'payment_status': payment_status,
+
+            'payment_type': payment_type, //Single or Multi Payments
+            'payment_one_amount': payment_one_amount, //Payment One Amount
+            'payment_two_amount': payment_two_amount, //Payment Two Amount
+            'payment_one_id': payment_one_id, //Payment One Amount
+            'payment_two_id': payment_two_id, //Payment Two Amount
+            'payment_one_type': payment_one_type, //Payment One Amount
+            'payment_two_type': payment_two_type, //Payment Two Amount
             // Add other form fields to the JSON object
         };
         console.log('dictMap::'+JSON.stringify(dictMap));
@@ -614,83 +937,5 @@ function showToast(message, bodyContent) {
   }
 </script>
 
-<!-- <script>
-    var payment_id = $("#input-paymentid").val();
-    // Event listener for the payment mode selection
-$('#input-paymentmode').change(function() {
-    var paymentMode = $(this).val();
-    var paymentIdContainer = $('#payment-id-container');
-    
-    paymentType = paymentMode;
-    console.log('paymentType::'+paymentType);
-    // Check if the payment mode is 'Cash' and hide the 'Pay Now' button
-    if (paymentMode === 'Cash') {
-    order_status = "Payment Done";
-    
-    payment_status = "Success";
-    //$('#pay-button').hide();
-    //gstContainer.show();
-    // If the payment mode is "Cash," hiding the payment ID container
-    paymentIdContainer.hide();
-    }else {
-    //$('#pay-button').show();
-    //gstContainer.hide();
-    // If the payment mode is not "Cash," show the payment ID container
-    paymentIdContainer.show();
-    }
-    });
-    
-    var paymentModeSelect = document.getElementById('input-paymentmode');
 
-// Check if payment mode is not equal to 'Cash'
-if (paymentModeSelect.value !== 'Cash' ) {
-if (payment_id === '') {
-  showToast('Alert', 'Please Pay before placing the order as you have selected Payment Mode Other than Cash');
-  return;
-}
-}
-
-// Function to disable elements
-function disableElements() {
-// Disable "Pay Now" button
-$(".makePaymentBtn").prop("disabled", true);
-
-// Disable payment mode select dropdown
-$("#input-paymentmode").prop("disabled", true);
-
-}
-    
-  // Function to show a toast message
-  function showToast(message, bodyContent) {
-    toastr.warning(bodyContent, message, {
-      positionClass: "toast-top-right",
-      timeOut: 5e3,
-      closeButton: !0,
-      debug: !1,
-      newestOnTop: !0,
-      progressBar: !0,
-      preventDuplicates: !0,
-      onclick: null,
-      showDuration: "300",
-      hideDuration: "1000",
-      extendedTimeOut: "1000",
-      showEasing: "swing",
-      hideEasing: "linear",
-      showMethod: "fadeIn",
-      hideMethod: "fadeOut",
-      tapToDismiss: !1
-  })
-      // Get the toast element and its content
-      /*var toastElement = document.getElementById("liveToast");
-      var toastBody = toastElement.querySelector(".toast-body");
-  
-      // Update the toast content with the provided message and body content
-      toastBody.textContent = bodyContent;
-  
-      // Show the toast
-      var toast = new bootstrap.Toast(toastElement);
-      toast.show();*/
-  }
-
-</script> -->
 {% endblock  %}
