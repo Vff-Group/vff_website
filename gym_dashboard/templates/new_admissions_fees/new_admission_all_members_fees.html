@@ -161,7 +161,7 @@
                             
 
                             <div id="multi-payment-container"  style="display: none;">
-                                
+                                <hr>
                                         
                                             <!-- Payment Mode Multi One  -->
                                             
@@ -201,7 +201,7 @@
                                             
 
                                             <!-- Payment Mode Multi Two  -->
-                                            
+                                            <hr>
                                                 <div class="form-group">
                                                   <label
                                                     class="form-control-label"
@@ -250,7 +250,7 @@
                             </div>
 
                             <div id="single-payment-container" style="display: none;">
-                                
+                                <hr>
                                       <div class="form-group">
                                         <label
                                           class="form-control-label"
@@ -539,11 +539,14 @@ var new_plan_id = "";
         $('#input-paymentmode-multi-one').change(function() {
             var selectedPaymentMode = $(this).val();
             var makePaymentBtn = $('.makePaymentBtn-multi-one');
+            var paymentIDContainer = $('#payment-id-container-multi-one');
 
             if (selectedPaymentMode === 'Cash') {
                 makePaymentBtn.hide();
+                paymentIDContainer.hide();
             } else {
                 makePaymentBtn.show();
+                paymentIDContainer.show();
             }
         });
     });
@@ -553,11 +556,14 @@ var new_plan_id = "";
         $('#input-paymentmode-multi-two').change(function() {
             var selectedPaymentMode = $(this).val();
             var makePaymentBtn = $('.makePaymentBtn-multi-two');
+            var paymentIDContainer = $('#payment-id-container-multi-two');
 
             if (selectedPaymentMode === 'Cash') {
                 makePaymentBtn.hide();
+                paymentIDContainer.hide();
             } else {
                 makePaymentBtn.show();
+                paymentIDContainer.show();
             }
         });
     });
