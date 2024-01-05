@@ -128,13 +128,13 @@
                              <!-- Dropdown for fees plans -->
                              <div class="form-group">
                                 <label for="feesPlanDropdown{{row.memberid}}">Choose a Plan</label>
-                                <select class="form-control feesPlanDropdownCls" id="feesPlanDropdown{{row.memberid}}" name="fees_plan_id">
+                                <select class="form-control" id="feesPlanDropdown{{row.memberid}}" name="fees_plan_id">
                                   <!-- Options will be populated dynamically -->
                               </select>
                               <!-- Hidden input for selected plan ID -->
-                              <input type="hidden" id="selectedPlanId{{row.memberid}}" name="selected_plan_id">
-                              <input type="hidden" id="selectedPlanDuration{{row.memberid}}" name="selected_plan_duration">
-                              <input type="hidden" id="selectedPlanPrice{{row.memberid}}" name="selected_plan_price">
+                              <input type="hidden" id="selectedPlanId" name="selected_plan_id">
+                              <input type="hidden" id="selectedPlanDuration" name="selected_plan_duration">
+                              <input type="hidden" id="selectedPlanPrice" name="selected_plan_price">
                           </div>
                             
                             <div class="form-group">
@@ -437,7 +437,8 @@ var new_plan_id = "";
                 // Handle successful response and load fees plans
                  // Get the dropdown element
                 //var feesPlanDropdown = $('#feesPlanDropdown');
-                
+                member_id = parseInt(member_id);
+                console.log('memberId::'+member_id);
                 var feesPlanDropdown = $('#feesPlanDropdown'+parseInt(member_id));
                                     
                 // Clear existing options (if any)
@@ -459,9 +460,9 @@ var new_plan_id = "";
                 });
             
                 // Update hidden input with the default selected plan ID (optional)
-                $('#selectedPlanId'+parseInt(member_id)).val(data.fees_data[0].id); // Set the first plan ID as default
-                $('#price'+parseInt(member_id)).val(data.fees_data[0].price);
-                $('#duration'+parseInt(member_id)).val(data.fees_data[0].duration);
+                $('#selectedPlanId').val(data.fees_data[0].id); // Set the first plan ID as default
+                $('#price').val(data.fees_data[0].price);
+                $('#duration').val(data.fees_data[0].duration);
                 new_plan_id = data.fees_data[0].id;
               new_plan_price = data.fees_data[0].price;
               new_plan_duration = data.fees_data[0].duration;
