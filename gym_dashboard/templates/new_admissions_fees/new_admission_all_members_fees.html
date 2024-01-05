@@ -776,7 +776,7 @@ var new_plan_id = "";
             return;
          }
     
-         if (payment_one_amount === null){
+         if (payment_one_amount === '' || payment_one_amount === undefined){
             showToast('Alert','Please Add The Payment One Amount');
             return;
          }
@@ -790,7 +790,7 @@ var new_plan_id = "";
             return;
          }
     
-         if (payment_two_amount === null){
+         if (payment_two_amount === '' || payment_two_amount === undefined){
             showToast('Alert','Please Add The Payment Two Amount');
             return;
          }
