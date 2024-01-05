@@ -647,30 +647,18 @@ def add_new_admission_fees_details(request):
                 
                 #Insert record in payment table with razorpay_payment_id
                 if payment_type == 'Multiple':
-                    if payment_one_type !='NA':
-                        query_payment = "insert into vff.gym_paymenttbl (member_id,amount,payment_method,razor_pay_id,payment_status,gym_id) values ('"+str(member_id)+"','"+str(payment_one_amount)+"','"+str(payment_one_type)+"','"+str(payment_one_id)+"','Success','"+str(gym_id)+"') returning paymentid"
-                        print(f'insert payment 1 ::{query_payment}')
-                        cursor.execute(query_payment)
-                        ret_payment_id = cursor.fetchone()[0]
-                        connection.commit()
+                    query_payment = "insert into vff.gym_paymenttbl (member_id,amount,payment_method,razor_pay_id,payment_status,gym_id,payment_one_type,payment_one_amount,payment_one_id,payment_two_type,payment_two_amount,payment_two_id) values ('"+str(member_id)+"','"+str(paid_amount)+"','"+str(payment_method)+"','"+str(razor_pay_id)+"','Success','"+str(gym_id)+"','"+str(payment_one_type)+"','"+str(payment_one_amount)+"','"+str(payment_one_id)+"','"+str(payment_two_type)+"','"+str(payment_two_amount)+"','"+str(payment_two_id)+"')returning paymentid"
+                    print(f'insert payment multi query ::{query_payment}')
+                    cursor.execute(query_payment)
+                    ret_payment_id = cursor.fetchone()[0]
+                    connection.commit()
                 
-                        #Insert record in payment history table with payment_id
-                        query_payment_history = "insert into vff.gym_payment_historytbl(payment_id,member_id,amount) values ('"+str(ret_payment_id)+"','"+str(member_id)+"','"+str(payment_one_amount)+"')"
-                        print(f'insert query_payment_history 1::{query_payment_history}')
-                        cursor.execute(query_payment_history)
-                        connection.commit()
-                    if payment_one_type !='NA':
-                        query_payment = "insert into vff.gym_paymenttbl (member_id,amount,payment_method,razor_pay_id,payment_status,gym_id) values ('"+str(member_id)+"','"+str(payment_two_amount)+"','"+str(payment_two_type)+"','"+str(payment_two_id)+"','Success','"+str(gym_id)+"') returning paymentid"
-                        print(f'insert payment 2 ::{query_payment}')
-                        cursor.execute(query_payment)
-                        ret_payment_id_two = cursor.fetchone()[0]
-                        connection.commit()
-                
-                        #Insert record in payment history table with payment_id
-                        query_payment_history = "insert into vff.gym_payment_historytbl(payment_id,member_id,amount) values ('"+str(ret_payment_id_two)+"','"+str(member_id)+"','"+str(payment_two_amount)+"')"
-                        print(f'insert query_payment_history 2::{query_payment_history}')
-                        cursor.execute(query_payment_history)
-                        connection.commit()
+                    #Insert record in payment history table with payment_id
+                    query_payment_history = "insert into vff.gym_payment_historytbl(payment_id,member_id,amount)values ('"+str(ret_payment_id)+"','"+str(member_id)+"','"+str(paid_amount)+"')"
+                    print(f'insert query_payment_history 1::{query_payment_history}')
+                    cursor.execute(query_payment_history)
+                    connection.commit()
+                    
                 else:
                     query_payment = "insert into vff.gym_paymenttbl (member_id,amount,payment_method,razor_pay_id,payment_status,gym_id) values ('"+str(member_id)+"','"+str(paid_amount)+"','"+str(payment_method)+"','"+str(razor_pay_id)+"','"+str(payment_status)+"','"+str(gym_id)+"') returning paymentid"
                     print(f'insert payment Single::{query_payment}')
