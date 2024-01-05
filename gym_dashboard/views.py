@@ -590,6 +590,112 @@ def all_new_admissions_members_details(request):
     return render(request,"new_admissions_fees/new_admission_all_members_fees.html",context)
 
 
+#New Admission Fees Details Update
+def add_new_admission_fees_details(request):
+    
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('dashboard_app:login')
+    
+    
+    error_msg = "Something Went Wrong"
+    if request.method == "POST":
+        jdict = json.loads(request.body)
+        member_id = jdict['member_id']
+        next_fees_date = jdict['next_fees_date']
+        fees_date = jdict['fees_date']
+        
+        last_due_date = jdict['last_due_date']
+        payment_type = jdict['payment_type'] # Single or Multi
+        payment_one_amount = jdict['payment_one_amount'] # 2 Amount
+        payment_two_amount = jdict['payment_two_amount'] #1 Amount
+        payment_one_id = jdict['payment_one_id'] # Type ID 1 Cash or Online
+        payment_two_id = jdict['payment_two_id'] # Type ID 2 Cash or Online
+        payment_one_type = jdict['payment_one_type'] # Type 1 Cash or Online
+        payment_two_type = jdict['payment_two_type'] # Type 2 Cash or Online
+        plan_price = jdict['plan_price']
+        plan_duration = jdict['plan_duration']
+        
+        
+        paid_amount = jdict['paid_amount']
+        payment_method = jdict['payment_method']
+        razor_pay_id = jdict['razor_pay_id']
+        payment_status = jdict['payment_status']
+        
+        
+        
+        #OnCounter
+        gym_id = request.session.get('gym_branch_id')
+        
+        try:
+            with connection.cursor() as cursor:
+                update_member_tbl = "update vff.gym_memberstbl set fees_status='Paid',due_date='"+str(next_fees_date)+"' where memberid='"+str(member_id)+"'"
+                print(f'members Table Queyr::{update_member_tbl}')
+                cursor.execute(update_member_tbl)
+                connection.commit()
+                
+                #Insert fees table
+                query_fees_tbl = "insert into vff.gym_feestbl (member_type,duration_in_months,price,member_id,fees_date,last_due_date,fees_paid_date,gym_id,cash_payment,online_payment,payment_type)"
+                +" values ('Regular Member','"+str(plan_duration)+"','"+str(plan_price)+"','"+str(member_id)+"','"+str(fees_date)+"','"+str(last_due_date)+"','"+str(feed_paid_date)+"','"+str(gym_id)+"','"+str(cash_payment)+"','"+str(online_payment)+"','"+str(payment_type)+"')"
+                print(f'Fees Table Insert Queyr::{query_fees_tbl}')
+                cursor.execute(query_fees_tbl)
+                
+                connection.commit()
+                
+                #Insert record in payment table with razorpay_payment_id
+                if payment_type == 'Multiple':
+                    if payment_one_type !='NA':
+                        query_payment = "insert into vff.gym_paymenttbl (member_id,amount,payment_method,razor_pay_id,payment_status,gym_id) values ('"+str(member_id)+"','"+str(payment_one_amount)+"','"+str(payment_one_type)+"','"+str(payment_one_id)+"','Success','"+str(gym_id)+"') returning paymentid"
+                        print(f'insert payment 1 ::{query_payment}')
+                        cursor.execute(query_payment)
+                        ret_payment_id = cursor.fetchone()[0]
+                        connection.commit()
+                
+                        #Insert record in payment history table with payment_id
+                        query_payment_history = "insert into vff.gym_payment_historytbl(payment_id,member_id,amount) values ('"+str(ret_payment_id)+"','"+str(member_id)+"','"+str(payment_one_amount)+"')"
+                        print(f'insert query_payment_history 1::{query_payment_history}')
+                        cursor.execute(query_payment_history)
+                        connection.commit()
+                    if payment_one_type !='NA':
+                        query_payment = "insert into vff.gym_paymenttbl (member_id,amount,payment_method,razor_pay_id,payment_status,gym_id) values ('"+str(member_id)+"','"+str(payment_two_amount)+"','"+str(payment_two_type)+"','"+str(payment_two_id)+"','Success','"+str(gym_id)+"') returning paymentid"
+                        print(f'insert payment 2 ::{query_payment}')
+                        cursor.execute(query_payment)
+                        ret_payment_id_two = cursor.fetchone()[0]
+                        connection.commit()
+                
+                        #Insert record in payment history table with payment_id
+                        query_payment_history = "insert into vff.gym_payment_historytbl(payment_id,member_id,amount) values ('"+str(ret_payment_id_two)+"','"+str(member_id)+"','"+str(payment_two_amount)+"')"
+                        print(f'insert query_payment_history 2::{query_payment_history}')
+                        cursor.execute(query_payment_history)
+                        connection.commit()
+                else:
+                    query_payment = "insert into vff.gym_paymenttbl (member_id,amount,payment_method,razor_pay_id,payment_status,gym_id) values ('"+str(member_id)+"','"+str(paid_amount)+"','"+str(payment_method)+"','"+str(razor_pay_id)+"','"+str(payment_status)+"','"+str(gym_id)+"') returning paymentid"
+                    print(f'insert payment Single::{query_payment}')
+                    cursor.execute(query_payment)
+                    ret_payment_id = cursor.fetchone()[0]
+                    connection.commit()
+                
+                    #Insert record in payment history table with payment_id
+                    query_payment_history = "insert into vff.gym_payment_historytbl(payment_id,member_id,amount) values ('"+str(ret_payment_id)+"','"+str(member_id)+"','"+str(paid_amount)+"')"
+                    print(f'insert query_payment_history Single::{query_payment_history}')
+                    cursor.execute(query_payment_history)
+                    connection.commit() 
+                
+                    
+                
+                    
+
+                
+        except Exception as e:
+            print(f"Error Updating Payment Details: {e}")
+            error_msg = 'Something went wrong'
+            return JsonResponse({'error':error_msg})
+        
+            
+
+    
+    return JsonResponse({'html':'html'})
+    #return redirect('dashboard_app:all_orders')
 
 
 

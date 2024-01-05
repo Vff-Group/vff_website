@@ -48,6 +48,9 @@ urlpatterns = [
     #All New Admissions
     path('all_new_admissions_members_details/',views.all_new_admissions_members_details,name='all_new_admissions_members_details'),
    
+    #New Admission Fees Details Add and Update
+    path('add_new_admission_fees_details/',views.add_new_admission_fees_details,name='add_new_admission_fees_details'),
+   
    
     
    

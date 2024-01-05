@@ -119,7 +119,10 @@
                           {% csrf_token %}
                           <div class="modal-body">
                            
-
+                            
+                            <input type="hidden" id="member_id_current" name="member_id" value="{{row.memberid}}">
+                            <input type="hidden" id="last_fees_due_date_current" name="last_fees_date"  value="{{row.due_date}}">
+                            
                              <!-- Dropdown for fees plans -->
                              <div class="form-group">
                               <label for="feesPlanDropdown">Choose a Plan</label>
@@ -144,6 +147,25 @@
                                 <label for="duration">Duration In Months</label>
                                 <input type="text" class="form-control" id="duration" name="duration_in_months"  value="{{row.duration_in_months}}"  disabled>
                             </div>
+
+
+                            <div class="form-group">
+                                <label
+                                  for="fees-date"
+                                  class="form-control-label"
+                                  >Fees Date *</label
+                                >
+                                <input
+                                  class="form-control form-control-alternative"
+                                  type="date"
+                                  id="fees-date"
+                                  name="fees_date"
+                                  value=""
+                                  required
+                                />
+                              </div>
+
+                            <hr>
 
                             <div class="form-group">
                                 <label for="single-payment-checkbox">
@@ -382,7 +404,9 @@ var new_plan_id = "";
           var member_id= "";
           var next_fees_date = "";
           var last_due_date = "";
-          
+          var payment_type = "";
+          var payment_one_type = "NA";
+          var payment_two_type = "NA";
           var paid_amount = 0;
           var payment_method = "";
 
@@ -423,7 +447,9 @@ var new_plan_id = "";
             $('#selectedPlanId').val(data.fees_data[0].id); // Set the first plan ID as default
             $('#price').val(data.fees_data[0].price);
             $('#duration').val(data.fees_data[0].duration);
-            
+            new_plan_id = data.fees_data[0].id;
+          new_plan_price = data.fees_data[0].price;
+          new_plan_duration = data.fees_data[0].duration;
         },
         error: function(xhr, status, error) {
             // Handle error
@@ -525,10 +551,12 @@ var new_plan_id = "";
   //Handling Payment Mode i.e Single or Multiple 
   document.getElementById('single-payment-checkbox').addEventListener('change', function() {
         if (this.checked) {
+            payment_type="Single";
             document.getElementById('single-payment-container').style.display = 'block';
             document.getElementById('multi-payment-container').style.display = 'none';
             document.querySelector('.makePaymentBtn').style.display = 'block';
         } else {
+            payment_type="";
             document.getElementById('single-payment-container').style.display = 'none';
             document.querySelector('.makePaymentBtn').style.display = 'none';
         }
@@ -536,10 +564,12 @@ var new_plan_id = "";
 
     document.getElementById('multi-payment-checkbox').addEventListener('change', function() {
         if (this.checked) {
+            payment_type="Multiple";
             document.getElementById('multi-payment-container').style.display = 'block';
             document.getElementById('single-payment-container').style.display = 'none';
             document.querySelector('.makePaymentBtn').style.display = 'block';
         } else {
+            payment_type="";
             document.getElementById('multi-payment-container').style.display = 'none';
             document.querySelector('.makePaymentBtn').style.display = 'none';
         }
@@ -550,13 +580,15 @@ var new_plan_id = "";
         $('#input-paymentmode-multi-one').change(function() {
             var selectedPaymentMode = $(this).val();
             var makePaymentBtn = $('.makePaymentBtn-multi-one');
-            
+            payment_one_type = selectedPaymentMode;
 
             if (selectedPaymentMode === 'Cash') {
+                
                 makePaymentBtn.hide();
                 document.getElementById('payment-id-container-multi-one').style.display = 'none';
             } else {
                 makePaymentBtn.show();
+                
                 document.getElementById('payment-id-container-multi-one').style.display = 'block';
             }
         });
@@ -567,7 +599,7 @@ var new_plan_id = "";
         $('#input-paymentmode-multi-two').change(function() {
             var selectedPaymentMode = $(this).val();
             var makePaymentBtn = $('.makePaymentBtn-multi-two');
-            
+            payment_two_type = selectedPaymentMode;
 
             if (selectedPaymentMode === 'Cash') {
                 makePaymentBtn.hide();
@@ -641,7 +673,7 @@ var new_plan_id = "";
         });
 
 
-  function disableElements() {
+    function disableElements() {
       // Disable "Pay Now" button
       $(".makePaymentBtn").prop("disabled", true);
       
@@ -652,18 +684,37 @@ var new_plan_id = "";
       $("#cancel-btn").prop("disabled", true);
       }
   // Get the CSRF token from the cookie
-function getCSRFToken() {
-  const cookies = document.cookie.split(';');
-  for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.startsWith("csrftoken=")) {
-          return cookie.substring("csrftoken=".length, cookie.length);
+    function getCSRFToken() {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.startsWith("csrftoken=")) {
+              return cookie.substring("csrftoken=".length, cookie.length);
+          }
       }
-  }
-  return null;
-}
+      return null;
+    }
 
-function convertDateFormat(dateString) {
+    function getFormattedDate() {
+        // Create a new Date object for today
+        const today = new Date();
+      
+        // Get the year, month, and day from the date object
+        const year = today.getFullYear();
+        let month = today.getMonth() + 1; // Adding 1 because getMonth returns zero-based months
+        let day = today.getDate();
+      
+        // Prefix '0' if month or day is less than 10 to ensure a 2-digit format
+        month = month < 10 ? '0' + month : month;
+        day = day < 10 ? '0' + day : day;
+      
+        // Form the yyyy-mm-dd string format
+        const formattedDate = `${year}-${month}-${day}`;
+      
+        return formattedDate;
+      }
+
+    function convertDateFormat(dateString) {
   var months = {
       Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
       Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12'
@@ -677,43 +728,44 @@ function convertDateFormat(dateString) {
   return year + '-' + month + '-' + ('0' + day).slice(-2);
 }
 
-$(document).ready(function() {
+//Update Fees Form 
+    $(document).ready(function() {
   $('#update-fees-form').submit(function(event) {
       // Prevent default form submission
       event.preventDefault();
 
-      // Perform your form validation here
-      // For example, check if payment is successful
       
-      if (!paymentSuccessful) {
-          // Show an error message or take appropriate action
-          showToast('Alert','Payment not successful. Please try again');
-          return;
-      }
-      
-      //TODO:Need to fill all these variables below.
-      //fees_date_current,last_fees_due_date_current,fees_table_id_current
-      // Retrieve values using jQuery
-     
+     if(payment_type === ''){
+        showToast('Alert','Please Select Type Either Single Or Multi Payment');
+        return;
+     }
+
+     if(payment_type === 'Multiple' && payment_one_type === ''){
+        showToast('Alert','Please Select Payment Mode One For Payment');
+        return;
+     }
+     if(payment_type === 'Multiple' && payment_two_type === ''){
+        showToast('Alert','Please Select Payment Mode Two For Payment');
+        return;
+     }
+
      var member_id = $('#member_id_current').val();
+     var fees_date = $('#fees-date').val();
      var lastFeesDueDate = $('#last_fees_due_date_current').val();
-     var feesTableId = $('#fees_table_id_current').val();
-     var convertedDate = convertDateFormat(feesDate);
-     console.log("fees_date_converted"+convertedDate); 
-     feesDate = convertedDate;
-     last_due_date = feesDate;
+     
+     
+     last_due_date = lastFeesDueDate;
 //
      var duration = new_plan_duration;  // Replace this with the selected plan's duration string
-     var futureDate = getFutureDateFromDuration(duration,feesDate);
-     console.log("Fees Date"+feesDate); 
-     console.log("Next Due Date"+futureDate); 
-     console.log("Future Date"+futureDate); 
+     var futureDate = getFutureDateFromDuration(duration,fees_date);
+     
 
       
           
       //Fees Paid date is added at backend
       const dictMap = {
           'member_id': member_id,
+          'fees_date': fees_date,
           'next_fees_date': futureDate,
           'last_due_date': last_due_date,
           'plan_id': new_plan_id,
@@ -723,14 +775,22 @@ $(document).ready(function() {
           'payment_method': payment_method,
           'razor_pay_id': payment_id,
           'payment_status': payment_status,
+          'payment_type': payment_type, //Single or Multi Payments
+          'payment_one_amount': payment_one_amount, //Payment One Amount
+          'payment_two_amount': payment_two_amount, //Payment Two Amount
+          'payment_one_id': payment_one_id, //Payment One Amount
+          'payment_two_id': payment_two_id, //Payment Two Amount
+          'payment_one_type': payment_one_type, //Payment One Amount
+          'payment_two_type': payment_two_type, //Payment Two Amount
           // Add other form fields to the JSON object
       };
       console.log('dictMap::'+JSON.stringify(dictMap));
+      return;
       // If payment is successful, proceed with AJAX
       const csrfToken = getCSRFToken();
       $.ajax({
           
-          url: '/gym_dashboard_app/update_fees_paid_details/', 
+          url: '/gym_dashboard_app/add_new_admission_fees_details/', 
           method: 'POST',
           data: JSON.stringify(dictMap),
           headers: {
@@ -753,9 +813,9 @@ $(document).ready(function() {
 });
 
 // Function to show a toast message
-function showToast(message, bodyContent) {
+    function showToast(message, bodyContent) {
   toastr.warning(bodyContent, message, {
-    positionClass: "toast-top-right",
+    positionClass: "toast-top-center",
     timeOut: 5e3,
     closeButton: !0,
     debug: !1,
