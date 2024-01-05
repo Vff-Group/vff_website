@@ -413,7 +413,7 @@ var new_plan_id = "";
 
           $('.make-payment-link').on('click', function(event) {
             event.preventDefault();
-            const modalId = $(this).data('modal-id'); // Get the ID of the corresponding modal
+            
     
             const csrfToken = getCSRFToken();
             $.ajax({
@@ -426,7 +426,7 @@ var new_plan_id = "";
                 success: function(data) {
                     // Handle successful response and load fees plans
                      // Get the dropdown element
-                     var feesPlanDropdown = $('#feesPlanDropdown' + modalId); // Target the dropdown in the specific modal
+                    var feesPlanDropdown = $('#feesPlanDropdown');
                                         
                     // Clear existing options (if any)
                     feesPlanDropdown.empty();
