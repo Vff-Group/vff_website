@@ -638,8 +638,7 @@ def add_new_admission_fees_details(request):
                 connection.commit()
                 
                 #Insert fees table
-                query_fees_tbl = "insert into vff.gym_feestbl (member_type,duration_in_months,price,member_id,fees_date,last_due_date,fees_paid_date,gym_id,payment_type)"
-                +" values ('Regular Member','"+str(plan_duration)+"','"+str(plan_price)+"','"+str(member_id)+"','"+str(fees_date)+"','"+str(last_due_date)+"','"+str(fees_paid_date)+"','"+str(gym_id)+"','"+str(payment_type)+"')"
+                query_fees_tbl = "insert into vff.gym_feestbl (member_type,duration_in_months,price,member_id,fees_date,last_due_date,fees_paid_date,gym_id,payment_type) values ('Regular Member','"+str(plan_duration)+"','"+str(plan_price)+"','"+str(member_id)+"','"+str(fees_date)+"','"+str(last_due_date)+"','"+str(fees_paid_date)+"','"+str(gym_id)+"','"+str(payment_type)+"')"
                 print(f'Fees Table Insert Queyr::{query_fees_tbl}')
                 cursor.execute(query_fees_tbl)
                 
