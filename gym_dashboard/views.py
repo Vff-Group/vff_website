@@ -140,7 +140,7 @@ def all_gym_members(request):
         return redirect('gym_dashboard_app:login')
     error_msg = 'No Members Found'
     gym_branch_id = request.session.get('gym_branch_id')
-    query = "select memberid,name,email,mobno,date_of_birth,join_date,join_time,gender,weight,height,due_date,goal,profile_image,fees_status from vff.gym_memberstbl where gymid='"+str(gym_branch_id)+"'"
+    query = "select memberid,name,email,mobno,date_of_birth,join_date,join_time,gender,weight,height,due_date,goal,profile_image,fees_status from vff.gym_memberstbl where gymid='"+str(gym_branch_id)+"' order by memberid desc"
     
     query_result = execute_raw_query(query)
     
