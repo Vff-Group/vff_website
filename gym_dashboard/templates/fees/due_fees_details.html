@@ -949,6 +949,7 @@ function getCSRFToken() {
         last_due_date = feesDate;
 
         var duration = new_plan_duration;  // Replace this with the selected plan's duration string
+        console.log('duration ::'+duration);
         var futureDate = getFutureDateFromDuration(duration,feesDate);
         console.log("Fees Date"+feesDate); 
         console.log("Next Due Date"+futureDate); 
