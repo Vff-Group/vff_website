@@ -421,7 +421,7 @@ var new_plan_id = "";
             
         event.preventDefault(); 
 
-        var member_id = $('#member_id_current').val();
+        
 
         const csrfToken = getCSRFToken();
         $.ajax({
@@ -436,10 +436,12 @@ var new_plan_id = "";
                  // Get the dropdown element
                 //var feesPlanDropdown = $('#feesPlanDropdown');
                 // Find the associated modal for the clicked link
-    var modal = $($(this).data('bs-target'));
+                // Find the associated modal for the clicked link
+        var modalId = $(this).data('bs-target');
+        var modal = $(modalId);
 
-    // Get the member_id_current value within the modal
-    var memberIdCurrent = modal.find('.member-id-current').val();
+        // Get the member_id_current and last_fees_due_date_current values within the modal
+        var memberIdCurrent = modal.find('#member_id_current').val();
                 console.log('memberId::'+memberIdCurrent);
                 var feesPlanDropdown = $('#feesPlanDropdown');
                                     
