@@ -622,7 +622,10 @@ def add_new_admission_fees_details(request):
         razor_pay_id = jdict['razor_pay_id']
         payment_status = jdict['payment_status']
         
+        # Get the current date
+        current_date = timezone.now().strftime('%Y-%m-%d')
         
+        fees_paid_date = current_date
         
         #OnCounter
         gym_id = request.session.get('gym_branch_id')
@@ -635,8 +638,8 @@ def add_new_admission_fees_details(request):
                 connection.commit()
                 
                 #Insert fees table
-                query_fees_tbl = "insert into vff.gym_feestbl (member_type,duration_in_months,price,member_id,fees_date,last_due_date,fees_paid_date,gym_id,cash_payment,online_payment,payment_type)"
-                +" values ('Regular Member','"+str(plan_duration)+"','"+str(plan_price)+"','"+str(member_id)+"','"+str(fees_date)+"','"+str(last_due_date)+"','"+str(feed_paid_date)+"','"+str(gym_id)+"','"+str(cash_payment)+"','"+str(online_payment)+"','"+str(payment_type)+"')"
+                query_fees_tbl = "insert into vff.gym_feestbl (member_type,duration_in_months,price,member_id,fees_date,last_due_date,fees_paid_date,gym_id,payment_type)"
+                +" values ('Regular Member','"+str(plan_duration)+"','"+str(plan_price)+"','"+str(member_id)+"','"+str(fees_date)+"','"+str(last_due_date)+"','"+str(fees_paid_date)+"','"+str(gym_id)+"','"+str(payment_type)+"')"
                 print(f'Fees Table Insert Queyr::{query_fees_tbl}')
                 cursor.execute(query_fees_tbl)
                 
