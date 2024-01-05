@@ -428,7 +428,7 @@ var new_plan_id = "";
                                         
                     // Clear existing options (if any)
                     feesPlanDropdown.empty();
-                    console.log('data::'+data);
+                    console.log('data::'+data.fees_data);
                     // Populate dropdown with fetched plans
                     $.each(data.fees_data, function(index, subSection) {
                         var cardio = subSection.cardio;
