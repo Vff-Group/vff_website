@@ -788,6 +788,10 @@ var new_plan_id = "";
         payment_two_amount = parseFloat(payment_two_amount);
 
      }
+
+     var convertedLastDueDate = convertDateFormat(last_due_date);
+        console.log("Last_due_date_converted"+convertedDate); 
+        
       
           
       //Fees Paid date is added at backend
@@ -795,7 +799,7 @@ var new_plan_id = "";
           'member_id': member_id,
           'fees_date': fees_date,
           'next_fees_date': futureDate,
-          'last_due_date': last_due_date,
+          'last_due_date': convertedLastDueDate,
           'plan_id': new_plan_id,
           'plan_price': new_plan_price,
           'plan_duration': new_plan_duration,
