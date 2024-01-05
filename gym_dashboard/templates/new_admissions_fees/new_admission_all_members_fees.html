@@ -548,6 +548,20 @@ var new_plan_id = "";
         });
     });
 
+    //Multi Payment Two Payment Method handling Cash or Online to show Make Payment button
+    $(document).ready(function() {
+        $('#input-paymentmode-multi-two').change(function() {
+            var selectedPaymentMode = $(this).val();
+            var makePaymentBtn = $('.makePaymentBtn-multi-two');
+
+            if (selectedPaymentMode === 'Cash') {
+                makePaymentBtn.hide();
+            } else {
+                makePaymentBtn.show();
+            }
+        });
+    });
+
 
   function disableElements() {
       // Disable "Pay Now" button
