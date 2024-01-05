@@ -466,14 +466,14 @@ var new_plan_id = "";
                                 }
                                 feesPlanDropdown.append($('<option>', {
                                     value: subSection.id,
-                                    html: subSection.name + " [" + isCardio + "]<br> Duration: " + subSection.duration + "<br> Price: " + subSection.price
-                                    //text: subSection.name+" ["+isCardio+"]<br>Duration: "+subSection.duration+"<br>Price:"+subSection.price,
+                                    html: subSection.name + " [" + isCardio + "]<br> Duration: " + subSection.duration + "<br> Price: " + subSection.price,
+                                    'data-duration': subSection.duration, // Add data-duration attribute
+                                    'data-price': subSection.price // Add data-price attribute
                                 }));
                             });
-                            paymentSuccessful = true;
+                        
                             // Update hidden input with the default selected plan ID (optional)
                             $('#selectedPlanId').val(data[0].id); // Set the first plan ID as default
-                            
                         },
                         error: function(xhr, status, error) {
                             // Handle error
