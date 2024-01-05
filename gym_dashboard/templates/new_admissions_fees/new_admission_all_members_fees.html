@@ -125,8 +125,8 @@
                             
                              <!-- Dropdown for fees plans -->
                              <div class="form-group">
-                                <label for="feesPlanDropdown{{row.memberid}}">Choose a Plan</label>
-                                <select class="form-control" id="feesPlanDropdown{{row.memberid}}" name="fees_plan_id{{row.memberid}}">
+                                <label for="feesPlanDropdown">Choose a Plan</label>
+                                <select class="form-control" id="feesPlanDropdown" name="fees_plan_id">
                                   <!-- Options will be populated dynamically -->
                               </select>
                               <!-- Hidden input for selected plan ID -->
@@ -387,10 +387,9 @@
   var payment_two_id = "-1";
   var isOnlinePayment = false;
   var paymentSuccessful = false;
-var paymentType = "";
-
-var payment_status = ""; // Payment Status
-var new_plan_id = "";
+    var paymentType = "";
+    var payment_status = ""; // Payment Status
+    var new_plan_id = "";
          var new_plan_price = "";
           var new_plan_duration = "";
           var member_id= "";
@@ -429,7 +428,7 @@ var new_plan_id = "";
                 //var feesPlanDropdown = $('#feesPlanDropdown');
         
                 console.log('memberId::'+member_id);
-                var feesPlanDropdown = $('#feesPlanDropdown'+member_id);
+                var feesPlanDropdown = $('#feesPlanDropdown');
                                     
                 // Clear existing options (if any)
                 feesPlanDropdown.empty();
