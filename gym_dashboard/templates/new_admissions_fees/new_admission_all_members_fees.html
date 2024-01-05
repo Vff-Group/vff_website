@@ -510,6 +510,7 @@ var new_plan_id = "";
       $('#input-paymentmode').change(function() {
           var selectedMode = $(this).val(); // Get the selected value
           payment_method = selectedMode;
+          payment_status = '';
           // Toggle visibility of payment ID container based on selected mode
           if (selectedMode === 'Cash') {
               var planPrice = $('#price').val();
