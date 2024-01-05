@@ -776,6 +776,15 @@ var new_plan_id = "";
         showToast('Alert','Please Pay Payment Mode Two Amount');
         return;
      }
+     if (payment_type === 'Multiple' && payment_one_amount === ''){
+        showToast('Alert','Please Add The Payment One Amount');
+        return;
+     }
+
+     if (payment_type === 'Multiple' && payment_two_amount === ''){
+        showToast('Alert','Please Add The Payment Two Amount');
+        return;
+     }
 
      if(payment_type ==='Single' && payment_status === ''){
         showToast('Alert','Please pay before updating');
