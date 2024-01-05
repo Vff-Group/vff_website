@@ -102,7 +102,7 @@
                                 </span>
                                 {% else %}
                                 <span class="badge badge-sm bg-danger">
-                                  Need To Pay
+                                  New Admissions
                                 </span>
                             {% endif %}
                               
@@ -279,7 +279,8 @@
       
           // Loop through the table rows and hide/show them based on the filters
           $('.table tbody tr').each(function () {
-              var userName = $(this).find('td:first h6').text().toLowerCase();
+              //var userName = $(this).find('td:first h6').text().toLowerCase();
+              var userName = $(this).find('td:nth-child(2) h6').text().toLowerCase();
               var userMobile = $(this).find('td:first p.text-xs').text();
       
               if (
