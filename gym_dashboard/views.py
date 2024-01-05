@@ -148,9 +148,12 @@ def all_gym_members(request):
     data = []    
     if not query_result == 500:
         for row in query_result:
-            
-            
-            
+            due_date = row[10]
+            fees_status = row[13]
+            today = date.today()
+            formatted_date = today.strftime("%Y-%m-%d")
+            print(f'todays_date::'+formatted_date)
+            print(f'due_date::'+due_date)
             data.append({
                 'memberid': row[0],
                 'name': row[1],
@@ -165,6 +168,7 @@ def all_gym_members(request):
                 'due_date': row[10],
                 'goal': row[11],
                 'profile_image': row[12],
+                'fees_status': fees_status,
                 
             })
     else:

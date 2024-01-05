@@ -49,7 +49,7 @@
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sl No</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Member Details</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Joining Date</th>
-                    {% comment %} <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Fees Status</th> {% endcomment %}
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Fees Status</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Next Due Date</th>
                     <th class="text-secondary opacity-7"></th>
                   </tr>
@@ -85,7 +85,7 @@
                       
                     </td>
                     
-                    {% comment %} <td>
+                     <td>
                       <div class="d-flex px-2 py-1">
                         
                         <div class="d-flex flex-column justify-content-center">
@@ -101,7 +101,7 @@
                                   UnPaid
                                 </span>
                                 {% else %}
-                                <span class="badge badge-sm bg-warning">
+                                <span class="badge badge-sm bg-danger">
                                   Need To Pay
                                 </span>
                             {% endif %}
@@ -109,7 +109,7 @@
                           </p>
                         </div>
                       </div>
-                    </td> {% endcomment %}
+                    </td> 
 
                       <td>
                         <p class="text-xs font-weight-bold mb-0 text-center">{{row.due_date}}</p>
