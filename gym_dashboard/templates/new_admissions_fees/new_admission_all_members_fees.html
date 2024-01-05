@@ -759,44 +759,50 @@ var new_plan_id = "";
       // Prevent default form submission
       event.preventDefault();
 
-
+    
      if(payment_type === ''){
         showToast('Alert','Please Select Type Either Single Or Multi Payment');
         return;
      }
 
-     if(payment_type === 'Multiple' && payment_one_type === 'NA'){
-        showToast('Alert','Please Select Payment Mode One For Payment');
-        return;
+     //Multiple Payments Only
+     if(payment_type === 'Multiple'){
+        var payment_one_amount = $('#multi-mode-one-price').val();
+        var payment_two_amount = $('#multi-mode-two-price').val();
+        console.log('payment_one_amount::'+payment_one_amount);
+
+        if(payment_one_type === 'NA'){
+            showToast('Alert','Please Select Payment Mode One For Payment');
+            return;
+         }
+    
+         if (payment_one_amount === null){
+            showToast('Alert','Please Add The Payment One Amount');
+            return;
+         }
+    
+         if (payment_one_id === '-1' && payment_one_type !== 'Cash'){
+            showToast('Alert','Please Pay Payment Mode One Amount');
+            return;
+         }
+         if(payment_two_type === 'NA'){
+            showToast('Alert','Please Select Payment Mode Two For Payment');
+            return;
+         }
+    
+         if (payment_two_amount === null){
+            showToast('Alert','Please Add The Payment Two Amount');
+            return;
+         }
+    
+         if (payment_two_id === '-1' && payment_two_type !== 'Cash'){
+            showToast('Alert','Please Pay Payment Mode Two Amount');
+            return;
+         }
+
      }
 
-     if (payment_type === 'Multiple' && payment_one_amount === '0'){
-        showToast('Alert','Please Add The Payment One Amount');
-        return;
-     }
-
-     if (payment_type === 'Multiple' && payment_one_id === '-1' && payment_one_type !== 'Cash'){
-        showToast('Alert','Please Pay Payment Mode One Amount');
-        return;
-     }
-     if(payment_type === 'Multiple' && payment_two_type === 'NA'){
-        showToast('Alert','Please Select Payment Mode Two For Payment');
-        return;
-     }
-
-     if (payment_type === 'Multiple' && payment_two_amount === '0'){
-        showToast('Alert','Please Add The Payment Two Amount');
-        return;
-     }
-
-     if (payment_type === 'Multiple' && payment_two_id === '-1' && payment_two_type !== 'Cash'){
-        showToast('Alert','Please Pay Payment Mode Two Amount');
-        return;
-     }
-     
-
-     
-
+     //Single Payments Only
      if(payment_type ==='Single' && payment_status === ''){
         showToast('Alert','Please pay before updating');
         return;
