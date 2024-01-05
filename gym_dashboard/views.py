@@ -547,11 +547,11 @@ def update_fees_payment_details_for_member(request):
     #return redirect('dashboard_app:all_orders')
 
 
-def all_gym_members(request):
+def all_new_admissions_members_details(request):
     isLogin = is_loggedin(request)
     if isLogin == False:
         return redirect('gym_dashboard_app:login')
-    error_msg = 'No Members Found'
+    error_msg = 'No New Admission Found'
     gym_branch_id = request.session.get('gym_branch_id')
     query = "select memberid,name,email,mobno,date_of_birth,join_date,join_time,gender,weight,height,due_date,goal,profile_image,fees_status from vff.gym_memberstbl where fees_status='NA' and gymid='"+str(gym_branch_id)+"'"
     
