@@ -198,6 +198,11 @@
                                               <div class="form-group">
                                                 <button type="button" class="btn bg-gradient-success makePaymentBtn-multi-one" style="display: none;">Make Payment One</button>
                                             </div>
+
+                                            <div class="form-group" id="payment-id-container-multi-one" style="display: none;">
+                                                <label class="form-control-label" for="input-paymentid">Payment ID</label>
+                                                <input class="form-control form-control-alternative" type="text" id="input-paymentid-multi-one" name="payment-id" disabled>
+                                            </div>
                                             
 
                                             <!-- Payment Mode Multi Two  -->
@@ -239,9 +244,9 @@
                                               </div>
                                              
                                               
-                                                  <div class="form-group" id="payment-id-container-multi-one" style="display: none;">
+                                                  <div class="form-group" id="payment-id-container-multi-two" style="display: none;">
                                                       <label class="form-control-label" for="input-paymentid">Payment ID</label>
-                                                      <input class="form-control form-control-alternative" type="text" id="input-paymentid-multi-one" name="payment-id" disabled>
+                                                      <input class="form-control form-control-alternative" type="text" id="input-paymentid-multi-two" name="payment-id" disabled>
                                                   </div>
                                               
                                           
@@ -539,14 +544,14 @@ var new_plan_id = "";
         $('#input-paymentmode-multi-one').change(function() {
             var selectedPaymentMode = $(this).val();
             var makePaymentBtn = $('.makePaymentBtn-multi-one');
-            var paymentIDContainer = $('#payment-id-container-multi-one');
+            
 
             if (selectedPaymentMode === 'Cash') {
                 makePaymentBtn.hide();
-                paymentIDContainer.hide();
+                document.getElementById('payment-id-container-multi-one').style.display = 'none';
             } else {
                 makePaymentBtn.show();
-                paymentIDContainer.show();
+                document.getElementById('payment-id-container-multi-one').style.display = 'block';
             }
         });
     });
@@ -556,14 +561,14 @@ var new_plan_id = "";
         $('#input-paymentmode-multi-two').change(function() {
             var selectedPaymentMode = $(this).val();
             var makePaymentBtn = $('.makePaymentBtn-multi-two');
-            var paymentIDContainer = $('#payment-id-container-multi-two');
+            
 
             if (selectedPaymentMode === 'Cash') {
                 makePaymentBtn.hide();
-                paymentIDContainer.hide();
+                document.getElementById('payment-id-container-multi-two').style.display = 'none';
             } else {
                 makePaymentBtn.show();
-                paymentIDContainer.show();
+                document.getElementById('payment-id-container-multi-two').style.display = 'block';
             }
         });
     });
