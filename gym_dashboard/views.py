@@ -153,7 +153,9 @@ def all_gym_members(request):
             fees_status = row[13]
             today = date.today()
             formatted_date = today.strftime("%Y-%m-%d")
-            if due_date <= formatted_date:
+            year, month, day = due_date.split('-')
+            due_date_new = date(year,month,day)
+            if due_date_new <= formatted_date:
                 fees_status = 'UnPaid'
             data.append({
                 'memberid': row[0],
