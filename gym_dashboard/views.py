@@ -151,12 +151,10 @@ def all_gym_members(request):
         for row in query_result:
             due_date = row[10]
             fees_status = row[13]
-            today = date.today()
             
-            
+            #current date
             current_date = datetime.now().date()
-            print(type(due_date))
-            print(type(current_date))
+            
             
             if due_date <= current_date:
                 fees_status = 'UnPaid'
