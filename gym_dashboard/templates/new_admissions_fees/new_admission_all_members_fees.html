@@ -304,9 +304,9 @@ var new_plan_id = "";
             });
         
             // Update hidden input with the default selected plan ID (optional)
-            $('#selectedPlanId').val(data[0].id); // Set the first plan ID as default
-            $('#price').val(data[0].price);
-            $('#duration').val(data[0].duration);
+            $('#selectedPlanId').val(data.fees_data[0].id); // Set the first plan ID as default
+            $('#price').val(data.fees_data[0].price);
+            $('#duration').val(data.fees_data[0].duration);
             
         },
         error: function(xhr, status, error) {
