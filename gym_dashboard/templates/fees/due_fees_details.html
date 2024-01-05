@@ -163,7 +163,7 @@
                             <label for="multi-payment-checkbox">
                                 <input type="checkbox" id="multi-payment-checkbox"> Multi Payment 
                             </label>
-                        </div>
+                            </div>
 
                             
 
@@ -311,23 +311,23 @@
                                 <button type="button" class="btn bg-gradient-success makePaymentBtn" style="display: none;">Make Payment</button>
                             </div>
 
-                        </div>
+                        
                             <!-- adding payment options end  -->
 
                              <!-- Dropdown for fees plans -->
-            <div class="form-group">
-                <label for="feesPlanDropdown">Choose a Renewal Plan</label>
-                <select class="form-control" id="feesPlanDropdown" name="fees_plan_id" required>
-                    <option disabled selected>
-                        Choose a Plan
-                      </option>
-                    <!-- Options will be populated dynamically -->
-                </select>
-                <!-- Hidden input for selected plan ID -->
-                <input type="hidden" id="selectedPlanId" name="selected_plan_id">
-                <input type="hidden" id="selectedPlanDuration" name="selected_plan_duration">
-                <input type="hidden" id="selectedPlanPrice" name="selected_plan_price">
-            </div>
+                            <div class="form-group">
+                                <label for="feesPlanDropdown">Choose a Renewal Plan</label>
+                                <select class="form-control" id="feesPlanDropdown" name="fees_plan_id" required>
+                                    <option disabled selected>
+                                        Choose a Plan
+                                      </option>
+                                    <!-- Options will be populated dynamically -->
+                                </select>
+                                <!-- Hidden input for selected plan ID -->
+                                <input type="hidden" id="selectedPlanId" name="selected_plan_id">
+                                <input type="hidden" id="selectedPlanDuration" name="selected_plan_duration">
+                                <input type="hidden" id="selectedPlanPrice" name="selected_plan_price">
+                            </div>
 
 
                         </div>
@@ -673,7 +673,7 @@ var new_plan_id = "";
                                 var modalId = $(this).data('bs-target');
                                 console.log('memberId::'+memberId);
                                 console.log('modalId::'+modalId);
-                                                                            
+
                                 // Clear existing options (if any)
                                 feesPlanDropdown.empty();
                                 console.log('data::'+data);
