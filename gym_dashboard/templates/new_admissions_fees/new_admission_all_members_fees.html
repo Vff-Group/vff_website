@@ -160,7 +160,7 @@
 
                             
 
-                            <div id="multi-payment-container">
+                            <div id="multi-payment-container"  style="display: none;">
                                 
                                         
                                             <!-- Payment Mode Multi One  -->
@@ -249,7 +249,7 @@
                                 
                             </div>
 
-                            <div id="single-payment-container">
+                            <div id="single-payment-container" style="display: none;">
                                 
                                       <div class="form-group">
                                         <label
@@ -328,6 +328,7 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
+
     $(document).ready(function () {
         // Add an event listener to the search input field
         $('#employee-name-search').on('input', function () {
@@ -510,7 +511,27 @@ var new_plan_id = "";
   
   });
 
-  
+  document.getElementById('single-payment-checkbox').addEventListener('change', function() {
+        if (this.checked) {
+            document.getElementById('single-payment-container').style.display = 'block';
+            document.getElementById('multi-payment-container').style.display = 'none';
+            document.querySelector('.makePaymentBtn').style.display = 'block';
+        } else {
+            document.getElementById('single-payment-container').style.display = 'none';
+            document.querySelector('.makePaymentBtn').style.display = 'none';
+        }
+    });
+
+    document.getElementById('multi-payment-checkbox').addEventListener('change', function() {
+        if (this.checked) {
+            document.getElementById('multi-payment-container').style.display = 'block';
+            document.getElementById('single-payment-container').style.display = 'none';
+            document.querySelector('.makePaymentBtn').style.display = 'block';
+        } else {
+            document.getElementById('multi-payment-container').style.display = 'none';
+            document.querySelector('.makePaymentBtn').style.display = 'none';
+        }
+    });
 
   function disableElements() {
       // Disable "Pay Now" button
