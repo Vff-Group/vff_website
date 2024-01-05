@@ -770,6 +770,11 @@ var new_plan_id = "";
         return;
      }
 
+     if (payment_type === 'Multiple' && payment_one_amount === ''){
+        showToast('Alert','Please Add The Payment One Amount');
+        return;
+     }
+
      if (payment_type === 'Multiple' && payment_one_id === '-1' && payment_one_type !== 'Cash'){
         showToast('Alert','Please Pay Payment Mode One Amount');
         return;
@@ -778,19 +783,19 @@ var new_plan_id = "";
         showToast('Alert','Please Select Payment Mode Two For Payment');
         return;
      }
-     if (payment_type === 'Multiple' && payment_two_id === '-1' && payment_two_type !== 'Cash'){
-        showToast('Alert','Please Pay Payment Mode Two Amount');
-        return;
-     }
-     if (payment_type === 'Multiple' && payment_one_amount === ''){
-        showToast('Alert','Please Add The Payment One Amount');
-        return;
-     }
 
      if (payment_type === 'Multiple' && payment_two_amount === ''){
         showToast('Alert','Please Add The Payment Two Amount');
         return;
      }
+     
+     if (payment_type === 'Multiple' && payment_two_id === '-1' && payment_two_type !== 'Cash'){
+        showToast('Alert','Please Pay Payment Mode Two Amount');
+        return;
+     }
+     
+
+     
 
      if(payment_type ==='Single' && payment_status === ''){
         showToast('Alert','Please pay before updating');
