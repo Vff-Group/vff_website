@@ -420,7 +420,7 @@ var new_plan_id = "";
       $('.make-payment-link').on('click', function(event) {
             
         event.preventDefault(); 
-
+        var member_id = $('#member_id_current').val();
         
 
         const csrfToken = getCSRFToken();
@@ -435,15 +435,9 @@ var new_plan_id = "";
                 // Handle successful response and load fees plans
                  // Get the dropdown element
                 //var feesPlanDropdown = $('#feesPlanDropdown');
-                // Find the associated modal for the clicked link
-                // Find the associated modal for the clicked link
-        var modalId = $(this).data('bs-target');
-        var modal = $(modalId);
-
-        // Get the member_id_current and last_fees_due_date_current values within the modal
-        var memberIdCurrent = modal.find('#member_id_current').val();
-                console.log('memberId::'+memberIdCurrent);
-                var feesPlanDropdown = $('#feesPlanDropdown');
+        
+                console.log('memberId::'+member_id);
+                var feesPlanDropdown = $('#feesPlanDropdown'+member_id);
                                     
                 // Clear existing options (if any)
                 feesPlanDropdown.empty();
