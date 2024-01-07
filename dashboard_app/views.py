@@ -1834,6 +1834,7 @@ def update_order_status_new(request,order_id,booking_id):
         if ((order_status == "Out for Delivery" and order_taken_on == 'App') or (wants_delivery == '1' and order_taken_on == 'OnCounter' and order_status == "Out for Delivery")):   
             print('Entering Here Now to send notification to delivery boy')
             #To Send for Delivery Boy
+            store_address = request.session.get('branch_address')
             if order_status !="Processing":
                 title = "VFF Group"
                 msg = "Delivery Package is ready pick it up from store"
@@ -1849,7 +1850,7 @@ def update_order_status_new(request,order_id,booking_id):
                     title = "Reached Store"
                     msg = "Now you are ready to Receive New Orders."
                 else:
-                    msg = "Order ID #"+str(order_id)+" Assigned.\nDelivery Package is ready pick it up from store"
+                    msg = "Order ID #"+str(order_id)+" Assigned.\nDelivery Package is ready pick it up from [ "+str(store_address)+" ] store"
 
                 data = {
 
@@ -1922,27 +1923,28 @@ def update_order_status_new(request,order_id,booking_id):
                 
             
         #To send to customer
+        store_address = request.session.get('branch_address')
         title = "VFF Group"
         if order_status == "Completed":
             title = "Order Completed"
-            msg = "Laundry Package Delivery Successfully for Order ID : #"+str(order_id)+" . Keep Ordering with Velvet Wash"
+            msg = "Laundry Package Delivery Successfully for Order ID : #"+str(order_id)+" \n.By [ "+str(store_address)+" Store ].\n Keep Ordering with Velvet Wash"
         elif order_status == "Processing":
             title = "Processing Status"
-            msg = "Processing has been started for your Order ID : #"+str(order_id)+""
+            msg = "Processing has been started for your Order ID : #"+str(order_id)+" at [ "+str(store_address)+" Store ]."
         elif order_status == "Pick Up Done":
             title = "Pick Up Done"
             msg = "Laundry PickUp Done for Order ID : #"+str(order_id)+""
         elif order_status == "Reached Store":
             title = "Reached Store"
-            msg = "Your Laundry has arrived at Store for Order ID : #"+str(order_id)+".\nWe will ping you once the processing has been started Thank you."
+            msg = "Your Laundry has arrived at  [ "+str(store_address)+" Store ] for Order ID : #"+str(order_id)+".\nWe will ping you once the processing has been started Thank you."
         elif order_status == "Ready for Delivery":
             title = "Ready For Delivery"
-            msg = "Your Laundry Package is Ready For Delivery for Order ID : #"+str(order_id)+".\nThank you."
+            msg = "Your Laundry Package is Ready For Delivery At  [ "+str(store_address)+" Store ] for Order ID : #"+str(order_id)+".\nThank you."
         elif order_status == "Returned Delivery":
             title = "Returned Delivery"
-            msg = "Your Laundry Package has successfully Returned Store For Re-Processing Order ID : #"+str(order_id)+".\nWe are sorry for the inconvenience."
+            msg = "Your Laundry Package has successfully Returned To  [ "+str(store_address)+" Store ] For Re-Processing Order ID : #"+str(order_id)+".\nWe are sorry for the inconvenience."
         else:
-            msg = "Your Laundry Package is on its way to deliver for Order ID : #"+str(order_id)+""
+            msg = "Your Laundry Package is on its way to deliver for Order ID : #"+str(order_id)+" From  [ "+str(store_address)+" Store ]."
         data = {
              'intent':'MainRoute',
              }
