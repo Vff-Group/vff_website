@@ -30,6 +30,15 @@ urlpatterns = [
     #Add New Products
     path('add_new_product/',views.add_new_product,name='add_new_product'),
    
+    #Update Main Category Details
+    path('update_main_category_details/',views.update_main_category_details,name='update_main_category_details'),
+   
+    #Update Category Details
+    path('update_category_details/<int:main_cat_id>/',views.update_category_details,name='update_category_details'),
+   
+    #Update Sub Category Details
+    path('update_sub_category_details/<int:main_cat_id>/<int:cat_id>/',views.update_sub_category_details,name='update_sub_category_details'),
+   
 ]
 
 if settings.DEBUG:

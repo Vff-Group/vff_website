@@ -189,6 +189,79 @@ def all_products_details(request,main_cat_id,cat_id,sub_cat_id):
 def add_new_product(request):
     return render(request,"all_products/add_new_product.html")
 
+
+def update_main_category_details(request):
+    
+    error_msg = 'No Main Category Details Found'
+    if request.method == "POST":
+        main_category_name = request.POST.get('main_category_name')
+        uploaded_image = request.FILES.get('profile-image1')
+
+        # image_url='NA'
+        if uploaded_image:
+            image_url = upload_images2(uploaded_image)
+        
+        # try:
+        #     with connection.cursor() as cursor:
+        #         insert_query="update vff.gym_fees_detailstbl set fees_type='"+str(fees_type)+"',duration_in_months='"+str(duration_in_months)+"',price='"+str(price)+"',description='"+str(description)+"',cardio='"+str(cardio)+"' where fdetail_id='"+str(fees_plan_id)+"'"
+        #         cursor.execute(insert_query)
+        #         connection.commit()
+        #         print(" Fees Plan Updated Successfully.")
+        #         return redirect('gym_dashboard_app:all_fees_plans')
+        # except Exception as e:
+        #     print(f"Error loading data: {e}")
+            
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"categories/all_main_categories.html",context)
+    
+def update_category_details(request,main_cat_id):
+    
+    error_msg = 'No  Category Details Found'
+    if request.method == "POST":
+        main_category_name = request.POST.get('main_category_name')
+        
+        
+        # try:
+        #     with connection.cursor() as cursor:
+        #         insert_query="update vff.gym_fees_detailstbl set fees_type='"+str(fees_type)+"',duration_in_months='"+str(duration_in_months)+"',price='"+str(price)+"',description='"+str(description)+"',cardio='"+str(cardio)+"' where fdetail_id='"+str(fees_plan_id)+"'"
+        #         cursor.execute(insert_query)
+        #         connection.commit()
+        #         print(" Fees Plan Updated Successfully.")
+        #         return redirect('gym_dashboard_app:all_fees_plans')
+        # except Exception as e:
+        #     print(f"Error loading data: {e}")
+            
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"categories/all_categories.html",context)
+
+def update_sub_category_details(request,main_cat_id,cat_id):
+    
+    error_msg = 'No Sub Category Details Found'
+    if request.method == "POST":
+        main_category_name = request.POST.get('main_category_name')
+        
+        
+        # try:
+        #     with connection.cursor() as cursor:
+        #         insert_query="update vff.gym_fees_detailstbl set fees_type='"+str(fees_type)+"',duration_in_months='"+str(duration_in_months)+"',price='"+str(price)+"',description='"+str(description)+"',cardio='"+str(cardio)+"' where fdetail_id='"+str(fees_plan_id)+"'"
+        #         cursor.execute(insert_query)
+        #         connection.commit()
+        #         print(" Fees Plan Updated Successfully.")
+        #         return redirect('gym_dashboard_app:all_fees_plans')
+        # except Exception as e:
+        #     print(f"Error loading data: {e}")
+            
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"categories/all_categories.html",context)
+    
+
+
 def epochToDateTime(epoch):
     datetime_obj = datetime.utcfromtimestamp(epoch)
     gmt_plus_0530 = pytz.timezone('Asia/Kolkata')
