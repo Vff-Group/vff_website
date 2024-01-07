@@ -254,6 +254,14 @@
                       <div class="col">
                         {% if wants_delivery == 1 %}
                         <small>Requested Delivery : <span class="badge badge-sm bg-success">Yes</span></small>
+                        {% if pickup_done_delivery_boy_name != "" %}
+                        <small>Pickup Done By : <span class="badge badge-sm bg-dark">{{pickup_done_delivery_boy_name}}</span></small>
+                        {% endif %}
+                        {% if drop_done_delivery_boy_name != "" %}
+                        <small>Drop Done By : <span class="badge badge-sm bg-success">{{drop_done_delivery_boy_name}}</span></small>
+                        {% endif %}
+                        <small>Requested Delivery : <span class="badge badge-sm bg-success">Yes</span></small>
+
                         {% else %}
                         <small>Requested Delivery : <span class="badge badge-sm bg-warning">No</span></small>
                         {% endif %}

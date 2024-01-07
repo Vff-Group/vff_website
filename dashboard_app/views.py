@@ -1248,6 +1248,29 @@ def view_order_detail(request,orderid):
                
             })
         delivery_price_taken = data[0]['delivery_price_taken'] if data else ''
+        booking_id_for_order = data[0]['booking_id'] if data else ''
+        
+        #To Check Order Pick up  Delivery Agent Details
+        pickup_done_delivery_boy_name=""
+        query_check_whom_assigned="select name,laundry_order_assignmenttbl.delivery_boy_id,order_id,type_of_order,timing,dt,order_delivered from vff.laundry_order_assignmenttbl,vff.laundry_delivery_boytbl where laundry_order_assignmenttbl.delivery_boy_id=laundry_delivery_boytbl.delivery_boy_id and   booking_id='"+str(booking_id_for_order)+"' and pickup_done='1'"
+        query_result_pickup = execute_raw_query_fetch_one(query_check_whom_assigned)
+        print(f'Pickup Done Details:::{query_result_pickup}')
+        if query_result_pickup:   
+            pickup_done_delivery_boy_name = query_result_pickup[0]
+            pickup_done_delivery_boy_id = query_result_pickup[1]
+            
+        
+        #To Check Order Delivery Done  Delivery Agent Details
+        drop_done_delivery_boy_name=""
+        query_check_whom_assigned2="select name,laundry_order_assignmenttbl.delivery_boy_id,order_id,type_of_order,timing,dt from vff.laundry_order_assignmenttbl,vff.laundry_delivery_boytbl where laundry_order_assignmenttbl.delivery_boy_id=laundry_delivery_boytbl.delivery_boy_id and   booking_id='"+str(booking_id_for_order)+"' and order_delivered='1'"
+        query_result_drop = execute_raw_query_fetch_one(query_check_whom_assigned2)
+        print(f'Drop Done By DBoy Details:::{query_result_drop}')
+        if query_result_drop:   
+            drop_done_delivery_boy_name = query_result_drop[0]
+            drop_done_delivery_boy_id = query_result_drop[1]
+  
+        
+        
         
         #Check if Payment Done or Not
         query_payment_status = "select payment_done,order_status from vff.laundry_ordertbl where orderid='"+str(orderid)+"'"
@@ -1396,7 +1419,7 @@ def view_order_detail(request,orderid):
         error_msg = 'Something Went Wrong'
     
     context ={'query_result':data,'extra_data':extra_data,'error_msg':error_msg,'payment_id':payment_id,'order_id':first_order_id,'customer_name':customer_name
-              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':round(total_cost,2),'extra_error':extra_error,'range_price':range_price,'alert_delivery_boy':alert_delivery_boy,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':round(discount_amount,2),'sub_total':round(sub_total,2),'additional_instruction':additional_instruction,'order_taken_on':order_taken_on,'delivery_price_taken':delivery_price_taken,'wants_delivery':wants_delivery,'state_gst':round(state_gst,2),'central_gst':round(central_gst,2),'igstamount':igstamount,'payment_done':payment_done,'payment_order_status':payment_order_status}
+              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':round(total_cost,2),'extra_error':extra_error,'range_price':range_price,'alert_delivery_boy':alert_delivery_boy,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':round(discount_amount,2),'sub_total':round(sub_total,2),'additional_instruction':additional_instruction,'order_taken_on':order_taken_on,'delivery_price_taken':delivery_price_taken,'wants_delivery':wants_delivery,'state_gst':round(state_gst,2),'central_gst':round(central_gst,2),'igstamount':igstamount,'payment_done':payment_done,'payment_order_status':payment_order_status,'pickup_done_delivery_boy_name':pickup_done_delivery_boy_name,'drop_done_delivery_boy_name':pickup_done_delivery_boy_name}
     
     return render(request,'order_pages/order_details.html',context)
 
