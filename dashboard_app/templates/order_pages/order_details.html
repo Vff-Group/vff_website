@@ -1273,33 +1273,39 @@ $("#input-paymentmode").removeClass("is-invalid").addClass("is-valid");
 
 
 
-// Event listener for the payment mode selection
+// Event listener for the payment mode selection for single payment
 $('#input-paymentmode').change(function() {
-var paymentMode = $(this).val();
-var paymentIdContainer = $('#payment-id-container');
-var gstContainer = $('#gst-container');
-paymentType = paymentMode;
-// Check if the payment mode is 'Cash' and hide the 'Pay Now' button
-if (paymentMode === 'Cash' || paymentMode === 'Cheque') {
-order_status = "Payment Done";
-isOnlinePayment = false;
-paymentSuccessful = true;
-payment_status = "Success";
-$('#pay-button').hide();
-//gstContainer.show();
-// If the payment mode is "Cash," hiding the payment ID container
-paymentIdContainer.hide();
-} else if(paymentMode === 'Pay Later'){
-order_status = "Payment Not Done";
-payment_status = "Not Success";
-
-}else {
-$('#pay-button').show();
-//gstContainer.hide();
-// If the payment mode is not "Cash," show the payment ID container
-paymentIdContainer.show();
-}
-});
+  var paymentMode = $(this).val();
+  var paymentIdContainer = $('#payment-id-container');
+  var gstContainer = $('#gst-container');
+  paymentType = paymentMode;
+  // Check if the payment mode is 'Cash' and hide the 'Pay Now' button
+  if (paymentMode === 'Cash' || paymentMode === 'Cheque') {
+    order_status = "Payment Done";
+    isPaymentDone = true;
+    payment_status = "Success";
+  isOnlinePayment = false;
+  paymentSuccessful = true;
+  
+  $('#pay-button').hide();
+  //gstContainer.show();
+  // If the payment mode is "Cash," hiding the payment ID container
+  paymentIdContainer.hide();
+  } else if(paymentMode === 'Pay Later'){
+    order_status = "Payment Not Done";
+    payment_status = "Not Success";
+    isPaymentDone = false;
+    //Hide Payment Container
+    $('#pay-button').hide();
+    paymentIdContainer.hide();
+  
+  }else {
+  $('#pay-button').show();
+  //gstContainer.hide();
+  // If the payment mode is not "Cash," show the payment ID container
+  paymentIdContainer.show();
+  }
+  });
 
 // Function to disable elements
 function disableElements() {
@@ -1360,13 +1366,7 @@ $('#order-form').validate({
 
 var paymentModeSelect = document.getElementById('input-paymentmode');
 
-// Check if payment mode is not equal to 'Cash'
-if (paymentModeSelect.value !== 'Cash' ) {
-if (payment_id === '') {
-  showToast('Alert', 'Please Pay before placing the order as you have selected Payment Mode Other than Cash');
-  return;
-}
-}
+
 
 if(order_id ==='-1'){
   showToast('Alert', 'Order ID Not Found Please Refresh the page');
@@ -1386,6 +1386,9 @@ if(order_id ==='-1'){
     showToast('Alert','Total is 0');
       return;
   }
+
+  var payment_one_amount = '0'
+    var payment_two_amount = '0'
 
      //Multiple Payments Only
      if(payment_type === 'Multiple'){
@@ -1424,6 +1427,17 @@ if(order_id ==='-1'){
           return;
        }
 
+   }
+
+   //Single Payment Only
+   if(payment_type === 'Single'){
+    // Check if payment mode is not equal to 'Cash'
+if (paymentModeSelect.value !== 'Cash' && paymentModeSelect.value !== 'Cheque' ) {
+  if (payment_id === '') {
+    showToast('Alert', 'Please Pay before placing the order as you have selected Payment Mode Other than Cash');
+    return;
+  }
+  }
    }
 
    //Single Payments Only
@@ -1498,6 +1512,152 @@ if(order_id ==='-1'){
       
   }
 });
+
+//New Payment Handling Setup 
+  //Handling Payment Mode i.e Single or Multiple 
+  document.getElementById('single-payment-checkbox').addEventListener('change', function() {
+    const multiPaymentCheckbox = document.getElementById('multi-payment-checkbox');
+        if (this.checked) {
+            payment_type="Single";
+            document.getElementById('single-payment-container').style.display = 'block';
+            document.getElementById('multi-payment-container').style.display = 'none';
+            document.querySelector('.makePaymentBtn').style.display = 'block';
+            multiPaymentCheckbox.disabled = true;
+        } else {
+            payment_type="";
+            document.getElementById('single-payment-container').style.display = 'none';
+            document.querySelector('.makePaymentBtn').style.display = 'none';
+            multiPaymentCheckbox.disabled = false;
+        }
+    });
+
+    document.getElementById('multi-payment-checkbox').addEventListener('change', function() {
+        const singlePaymentCheckbox = document.getElementById('single-payment-checkbox');
+        if (this.checked) {
+            payment_type="Multiple";
+            document.getElementById('multi-payment-container').style.display = 'block';
+            document.getElementById('single-payment-container').style.display = 'none';
+            document.querySelector('.makePaymentBtn').style.display = 'block';
+            singlePaymentCheckbox.disabled = true;
+        } else {
+            payment_type="";
+            document.getElementById('multi-payment-container').style.display = 'none';
+            document.querySelector('.makePaymentBtn').style.display = 'none';
+            singlePaymentCheckbox.disabled = false;
+        }
+    });
+
+    //Multi Payment One Payment Method handling Cash or Online to show Make Payment button
+    $(document).ready(function() {
+        $('#input-paymentmode-multi-one').change(function() {
+            var selectedPaymentMode = $(this).val();
+            var makePaymentBtn = $('.makePaymentBtn-multi-one');
+            payment_one_type = selectedPaymentMode;
+
+            if (selectedPaymentMode === 'Cash' || selectedPaymentMode === 'Cheque') {
+              order_status = "Payment Done";
+              isPaymentDone = true;
+              payment_status = "Success";
+              isOnlinePayment = false;
+              paymentSuccessful = true;
+                makePaymentBtn.hide();
+                document.getElementById('payment-id-container-multi-one').style.display = 'none';
+            } else {
+                makePaymentBtn.show();
+                
+                document.getElementById('payment-id-container-multi-one').style.display = 'block';
+            }
+        });
+    });
+
+    //Multi Payment Two Payment Method handling Cash or Online to show Make Payment button
+    $(document).ready(function() {
+        $('#input-paymentmode-multi-two').change(function() {
+            var selectedPaymentMode = $(this).val();
+            var makePaymentBtn = $('.makePaymentBtn-multi-two');
+            payment_two_type = selectedPaymentMode;
+
+            if (selectedPaymentMode === 'Cash' || selectedPaymentMode === 'Cheque') {
+                order_status = "Payment Done";
+                isPaymentDone = true;
+                payment_status = "Success";
+                isOnlinePayment = false;
+                paymentSuccessful = true;
+                makePaymentBtn.hide();
+                document.getElementById('payment-id-container-multi-two').style.display = 'none';
+           
+            } else {
+                makePaymentBtn.show();
+                document.getElementById('payment-id-container-multi-two').style.display = 'block';
+            }
+        });
+    });
+
+
+    //to make button one payment 
+        $(document).ready(function() {
+            $('.makePaymentBtn-multi-one').click(function() {
+                var amount = $('#multi-mode-one-price').val(); // Amount in paise/cents
+                amount = parseFloat(amount);
+
+
+                var options = {
+                    "key": "rzp_test_qtHIWapeUEAAZO", // Enter the Key ID generated from the Dashboard      rzp_test_qtHIWapeUEAAZO
+                    "amount": (amount * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000      refers to 50000 paise
+                    "currency": "INR",
+                    "name": "Velvet Wash Laundry", //your business name
+                    "description": "Laundry Service Charge",
+                    "image": "https://vff-group.com/static/images/logo.png",
+                    handler: function(response) {
+                        $('#input-paymentid-multi-one').val(response.razorpay_payment_id);
+                        payment_one_id = response.razorpay_payment_id;
+                    },
+                    "notes": {
+                        "address": "Tilakwadi"
+                    },
+                    theme: {
+                        color: '#F37254'
+                    }
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.open();
+            });
+        });
+
+        //to make button two payment
+        $(document).ready(function() {
+            $('.makePaymentBtn-multi-two').click(function() {
+                var amount = $('#multi-mode-two-price').val(); // Amount in paise/cents
+                amount = parseFloat(amount);
+
+
+                var options = {
+                    "key": "rzp_test_qtHIWapeUEAAZO", // Enter the Key ID generated from the Dashboard      rzp_test_qtHIWapeUEAAZO
+                    "amount": (amount * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000      refers to 50000 paise
+                    "currency": "INR",
+                    "name": "Velvet Wash Laundry", //your business name
+                    "description": "Laundry Service Charge",
+                    "image": "https://vff-group.com/static/images/logo.png",
+                    handler: function(response) {
+                        $('#input-paymentid-multi-two').val(response.razorpay_payment_id);
+                        payment_two_id = response.razorpay_payment_id;
+                        disableElements();
+                    },
+                    "notes": {
+                        "address": "Tilakwadi"
+                    },
+                    theme: {
+                        color: '#F37254'
+                    }
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.open();
+            });
+        });
+
+
+   
+    //new payment handling setup End 
 
 // Get the CSRF token from the cookie
 function getCSRFToken() {
