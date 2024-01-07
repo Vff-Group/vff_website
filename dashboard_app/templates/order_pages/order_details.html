@@ -1373,7 +1373,14 @@ if(order_id ==='-1'){
   return;
 }
 
+if(payment_id === ""){
+  payment_id = '-1';
+}
 
+if(payment_type === ''){
+  showToast('Alert','Please Select Payment Type Single or Multi Payment');
+  return;
+}
   
 
   if(discountedAmount !== 0 && !isNaN(discountedAmount)){
