@@ -1120,7 +1120,7 @@ $('#order-form').validate({
 
      //Multiple Payments Only
      if(payment_type === 'Multiple'){
-      payment_method = 'Multiple'
+      paymentType = 'Multiple'
       payment_status = 'Success'
       var payment_one_amount = $('#multi-mode-one-price').val();
       var payment_two_amount = $('#multi-mode-two-price').val();
@@ -1210,7 +1210,7 @@ if (paymentModeSelect.value !== 'Cash' && paymentModeSelect.value !== 'Pay Later
         };
         console.log('dictMap::'+JSON.stringify(dictMap));
       
-        return;
+        //return;
         // Perform an AJAX POST request
         
         const csrfToken = getCSRFToken();
