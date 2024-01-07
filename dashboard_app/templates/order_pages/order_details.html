@@ -1278,9 +1278,10 @@ var paymentIdContainer = $('#payment-id-container');
 var gstContainer = $('#gst-container');
 paymentType = paymentMode;
 // Check if the payment mode is 'Cash' and hide the 'Pay Now' button
-if (paymentMode === 'Cash') {
+if (paymentMode === 'Cash' || paymentMode === 'Cheque') {
 order_status = "Payment Done";
-
+isOnlinePayment = false;
+paymentSuccessful = true;
 payment_status = "Success";
 $('#pay-button').hide();
 //gstContainer.show();
@@ -1549,7 +1550,7 @@ function getCSRFToken() {
             var makePaymentBtn = $('.makePaymentBtn-multi-one');
             payment_one_type = selectedPaymentMode;
 
-            if (selectedPaymentMode === 'Cash') {
+            if (selectedPaymentMode === 'Cash' || selectedPaymentMode === 'Cheque') {
                 
                 makePaymentBtn.hide();
                 document.getElementById('payment-id-container-multi-one').style.display = 'none';
@@ -1568,50 +1569,9 @@ function getCSRFToken() {
             var makePaymentBtn = $('.makePaymentBtn-multi-two');
             payment_two_type = selectedPaymentMode;
 
-            if (selectedPaymentMode === 'Cash') {
+            if (selectedPaymentMode === 'Cash' || selectedPaymentMode === 'Cheque') {
                 makePaymentBtn.hide();
                 document.getElementById('payment-id-container-multi-two').style.display = 'none';
-                const csrfToken = getCSRFToken();
-                $.ajax({
-                    url: '/gym_dashboard_app/fetch_fees_plans/', // URL to fetch fees plans
-                    type: 'POST',
-                    headers: {
-                        'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
-                    },
-                    contentType: 'application/json',
-                    success: function(data) {
-                        // Handle successful response and load fees plans
-                         // Get the dropdown element
-                        var feesPlanDropdown = $('#feesPlanDropdown');
-                                            
-                        // Clear existing options (if any)
-                        feesPlanDropdown.empty();
-                        console.log('data::'+data);
-                        feesPlanDropdown.append('<option disabled selected>Choose a Plan</option>');
-                        // Populate dropdown with fetched plans
-                        $.each(data.fees_data, function(index, subSection) {
-                            var cardio = subSection.cardio;
-                            var isCardio = "Without Cardio"
-                            if(cardio == 1){
-                                isCardio ="With Cardio"
-                            }
-                            feesPlanDropdown.append($('<option>', {
-                                value: subSection.id,
-                                html: subSection.name + " [" + isCardio + "]<br> Duration: " + subSection.duration + "<br> Price: " + subSection.price,
-                                'data-duration': subSection.duration, // Add data-duration attribute
-                                'data-price': subSection.price // Add data-price attribute
-                            }));
-                        });
-                    
-                        // Update hidden input with the default selected plan ID (optional)
-                        $('#selectedPlanId').val(data[0].id); // Set the first plan ID as default
-                        
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle error
-                        console.log(error);
-                    }
-                });
            
             } else {
                 makePaymentBtn.show();
@@ -1683,32 +1643,7 @@ function getCSRFToken() {
         });
 
 
-    $(document).ready(function() {
-        // Event listener for change in payment mode dropdown
-        $('#input-paymentmode').change(function() {
-            var selectedMode = $(this).val(); // Get the selected value
-            payment_method = selectedMode;
-            // Toggle visibility of payment ID container based on selected mode
-            if (selectedMode === 'Cash' || selectedMode === 'Cheque') {
-                var planPrice = $('#price').val();
-                $('.makePaymentBtn').hide();
-                // Parse the value to float
-                paid_amount = parseFloat(planPrice);
-                isOnlinePayment = false;
-                paymentSuccessful = true
-                payment_status = "Success";
-           
-            } else {
-                isOnlinePayment = true;
-                $('.makePaymentBtn').show();
-                $('#payment-id-container').show(); // Show container for other modes
-            }
-        });
-
-        
-    
-    });
-
+   
     //new payment handling setup End 
 
 </script>
