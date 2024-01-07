@@ -280,57 +280,13 @@
 
            
              <div class="form-group">
-               <button type="button" class="btn bg-gradient-success makePaymentBtn" style="display: none;">Make Payment</button>
+               <button type="button" class="btn bg-gradient-success" id="pay-button" style="display: none;">Make Payment</button>
            </div>
 
              
              <!-- adding new payment mode end  -->
 
-            <hr />
-            <div class="row">
-              
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label
-                    class="form-control-label"
-                    for="input-paymentmode"
-                    >Payment Mode</label
-                  >
-                  <select
-                    class="form-control form-control-alternative"
-                    id="input-paymentmode"
-                    name="payment_mode"
-                    required
-                  >
-                    <option disabled selected>
-                      Choose Payment Mode
-                    </option>
-                    <option value="Cash">Cash</option>
-                    <option value="UPI">UPI</option>
-                    <option value="Card">Card</option>
-                    <option value="Cheque">Cheque</option>
-                    <option value="Bank Transfer">
-                      Bank Transfer
-                    </option>
-                    <!-- <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Other</option> -->
-                  </select>
-                </div>
-              </div>
-              <div class="col-lg-6 text-center">
-                <div class="form-group">
-                    <button type="submit" id="pay-button" class="btn btn-primary mt-4" style="display: none;">Pay Now</button>
-                </div>
-              </div>
-
-              </div>
-              <div class="row">
-                <div class="col-lg-6">
-                    <div class="form-group" id="payment-id-container" style="display: none;">
-                        <label class="form-control-label" for="input-paymentid">Payment ID</label>
-                        <input class="form-control form-control-alternative" type="text" id="input-paymentid" name="payment-id" disabled>
-                    </div>
-                </div>
-            </div>
+            
 
             </div>
 </div>
