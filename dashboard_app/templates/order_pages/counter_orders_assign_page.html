@@ -1158,14 +1158,16 @@ $('#input-paymentmode').change(function() {
       order_status = "Payment Done";
       isPaymentDone = true;
       payment_status = "Success";
+      //Hide Payment Container
         $('#pay-button').hide();
-        //gstContainer.show();
-         // If the payment mode is "Cash," hiding the payment ID container
          paymentIdContainer.hide();
     } else if(paymentMode === 'Pay Later'){
       order_status = "Payment Not Done";
       payment_status = "Not Success";
       isPaymentDone = false;
+      //Hide Payment Container
+      $('#pay-button').hide();
+      paymentIdContainer.hide();
     }else {
         $('#pay-button').show();
         //gstContainer.hide();
