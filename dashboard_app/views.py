@@ -1833,8 +1833,7 @@ def update_order_status_new(request,order_id,booking_id):
                      'order_id_pickup':order_id
                      }
                 notifyDeliveryBoy,deliveryBoyID,deliveryBOYName = send_notification_to_delivery_boy(order_id,title,msg,data,order_status,delivery_boy_id_default)
-                if delivery_boy_id_default != '-1':
-                    deliveryBoyID = delivery_boy_id_default
+                
                 print(f'deliveryBoyID::{deliveryBoyID}')
                 print(f"notifyDeliveryBoy::{notifyDeliveryBoy}")
                 
