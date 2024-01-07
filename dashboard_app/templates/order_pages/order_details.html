@@ -232,7 +232,7 @@
                       
                     </div>
                     <div class="col-6 d-flex flex-column justify-content-end align-items-end">
-                      <h6 class="mb-2"><span class="badge badge-sm bg-info">Order ID:#{{order_id}}</span></h6>
+                      <h6 class="mb-2"><span class="badge badge-sm bg-dark">Order ID:#{{order_id}}</span></h6>
                       <div class="col">
                         <small>Order Date :{{order_date}}</small>
                       </div>
@@ -255,10 +255,10 @@
                         {% if wants_delivery == 1 %}
                         <small>Requested Delivery : <span class="badge badge-sm bg-success">Yes</span></small>
                         {% if pickup_done_delivery_boy_name != "" %}
-                        <p class=" text-xxs mt-1">Pickup Done By : <span class="badge badge-sm bg-dark">{{pickup_done_delivery_boy_name}}</span></p>
+                        <p class=" text-sm m-1">Pickup Done By : <span class="badge badge-sm bg-dark">{{pickup_done_delivery_boy_name}}</span></p>
                         {% endif %}
                         {% if drop_done_delivery_boy_name != "" %}
-                        <p  class=" text-xxs mt-1">Drop Done By : <span class="badge badge-sm bg-success">{{drop_done_delivery_boy_name}}</span></p>
+                        <p  class=" text-sm m-1">Drop Done By : <span class="badge badge-sm bg-primary">{{drop_done_delivery_boy_name}}</span></p>
                         {% endif %}
                         <small>Requested Delivery : <span class="badge badge-sm bg-success">Yes</span></small>
 
