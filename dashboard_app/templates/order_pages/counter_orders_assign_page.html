@@ -861,11 +861,11 @@
           function applyItemNameFilter() {
               // Get the user's search input
               var itemNameSearch = $('#item-name-search').val().toLowerCase();
-              console.log('itemNameSearch::'+itemNameSearch);
+              //console.log('itemNameSearch::'+itemNameSearch);
               // Loop through the table rows and hide/show them based on the filters
               $('#subCategoryTable tbody tr').each(function () {
                   var itemName = $(this).find('#sub_cat_name').text().toLowerCase();
-                  console.log("itemName::"+itemName);
+                  //console.log("itemName::"+itemName);
                   if (itemName.includes(itemNameSearch) || itemNameSearch === '') {
                       $(this).show();
                   } else {
@@ -884,7 +884,7 @@
 
   $('#wantsDelivery').change(function() {
     wantsDelivery = $(this).prop('checked') ? 1 : 0;
-    console.log('wantsDeliveryChecked:', wantsDelivery);
+    //console.log('wantsDeliveryChecked:', wantsDelivery);
 });
     // When "Cancel" button in the main modal is clicked
 $('#modal-default1').on('show.bs.modal', function (e) {
@@ -1066,14 +1066,14 @@ $('#order-form').validate({
     var add_information = $("#additional_info").val();
     var payment_id = $("#input-paymentid").val();
     var selectedDate = new Date(document.getElementById("date-of-delivery").value);
-    console.log("selectedDate::"+selectedDate);
+    //console.log("selectedDate::"+selectedDate);
     var todayDate = new Date();
     var today = new Date(todayDate);
   var selected = new Date(selectedDate);
   today.setHours(0, 0, 0, 0); // Set hours to 0 to compare dates without time
   selected.setHours(0, 0, 0, 0); // Set hours to 0 to compare dates without time
 
-    console.log("todayDate::"+today);
+    //console.log("todayDate::"+today);
     //today.setHours(0, 0, 0, 0); 
 
   if (selectedDate < today) {
@@ -1116,7 +1116,8 @@ $('#order-form').validate({
       showToast('Alert','Total is 0');
         return;
     }
-
+    var payment_one_amount = '0'
+    var payment_two_amount = '0'
 
      //Multiple Payments Only
      if(payment_type === 'Multiple'){
@@ -1124,7 +1125,7 @@ $('#order-form').validate({
       payment_status = 'Success'
       var payment_one_amount = $('#multi-mode-one-price').val();
       var payment_two_amount = $('#multi-mode-two-price').val();
-      console.log('payment_one_amount::'+payment_one_amount);
+      //console.log('payment_one_amount::'+payment_one_amount);
 
       if(payment_one_type === 'NA'){
           showToast('Alert','Please Select Payment Mode One For Payment');
@@ -1208,9 +1209,9 @@ if (paymentModeSelect.value !== 'Cash' && paymentModeSelect.value !== 'Pay Later
             'payment_two_type': payment_two_type, //Payment Two Amount
             // Add other form fields to the JSON object
         };
-        console.log('dictMap::'+JSON.stringify(dictMap));
+        //console.log('dictMap::'+JSON.stringify(dictMap));
       
-        //return;
+        return;
         // Perform an AJAX POST request
         
         const csrfToken = getCSRFToken();
@@ -1223,7 +1224,7 @@ if (paymentModeSelect.value !== 'Cash' && paymentModeSelect.value !== 'Pay Later
         },
         contentType: 'application/json',
             success: function (data) {
-               console.log('Success:'+JSON.stringify(data.html))
+               //console.log('Success:'+JSON.stringify(data.html))
 
                // Redirect to the "all counter orders" URL
               window.location.replace('/admin_dashboard/all_orders');
@@ -1239,7 +1240,7 @@ if (paymentModeSelect.value !== 'Cash' && paymentModeSelect.value !== 'Pay Later
     //};
             },
             error: function (error) {
-                console.error('Error:', error);
+                //console.error('Error:', error);
             }
         });
     
@@ -1599,7 +1600,7 @@ $(document).ready(function() {
         }
         
                 // Handle the data you received from the server
-                console.log('datata:'+JSON.stringify(data));
+                //console.log('datata:'+JSON.stringify(data));
                 //Gets Extra Items Details
                 var extra_items_data = data.extra_items_data;
                 //TOtal Cost and Quantity
@@ -1618,7 +1619,7 @@ $(document).ready(function() {
                 $('#gross-total').text('Rs.'+grossTotal+'/-');
                 grossQuantity = sum_data[0].total_quantity;
 
-                console.log('grossTotalDB::'+grossTotal);
+                //console.log('grossTotalDB::'+grossTotal);
 
                   //To Create delivery charges checkbox
                 // Function to create a checkbox element for the delivery charge
@@ -1635,9 +1636,9 @@ $(document).ready(function() {
                     checkState = false;
                     checkbox.on('change', function() {
                         if (checkbox.is(':checked')) {
-                            console.log('checked no');
+                            //console.log('checked no');
                             if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-                                console.log("Add BdiscountedAmount---->"+discountedAmount);
+                                //console.log("Add BdiscountedAmount---->"+discountedAmount);
                                 delivery_charges = charge.delivery_price;
                                 var sum = (discountedAmount += charge.delivery_price);
                                 discountedAmount = sum;
@@ -1646,21 +1647,21 @@ $(document).ready(function() {
                                 $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
                                 checkState = true;
                             }else if(!isNaN(grossTotal)){
-                                console.log("Add BgrossTotal---->"+grossTotal);
-                                console.log("charge.delivery_price===>"+charge.delivery_price);
+                                //console.log("Add BgrossTotal---->"+grossTotal);
+                                //console.log("charge.delivery_price===>"+charge.delivery_price);
                                 var sum = (grossTotal += charge.delivery_price);
-                                console.log('sumss::'+sum);
+                                //console.log('sumss::'+sum);
                                 delivery_charges = charge.delivery_price;
                                 grossTotal = sum;
                                 
-                                console.log("Add AgrossTotal---->"+grossTotal);
+                                //console.log("Add AgrossTotal---->"+grossTotal);
                                 $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
                                 $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
                                 checkState = true;
                             }
                             
                         } else {
-                            console.log('checked off');
+                            //console.log('checked off');
                             if(checkState === true){
                                 if(discountedAmount !== 0 && !isNaN(discountedAmount)){
                                     delivery_charges = 0;
@@ -1691,22 +1692,22 @@ $(document).ready(function() {
                 
                         // Update the grossTotal display (if you have a display element)
                         // For example: $('#grossTotal').text(grossTotal);
-                        console.log('Delivery_totalPayment::'+totalPayment);
+                        //console.log('Delivery_totalPayment::'+totalPayment);
                     });
                    
                     checkboxContainer.append(divider);
                     checkboxContainer.append(checkbox);
                     checkboxContainer.append(label);
-                    console.log("checkboxContainer::"+checkboxContainer);
+                    //console.log("checkboxContainer::"+checkboxContainer);
                     return checkboxContainer;
                 }
 
                 
                 function addDeliveryCharges(deliveryCharges) {
-                  console.log('adding delivery charges::');
+                  //console.log('adding delivery charges::');
                  if(deliveryCharges !==0){
                   if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-                    console.log("Add BdiscountedAmount---->"+discountedAmount);
+                    //console.log("Add BdiscountedAmount---->"+discountedAmount);
                     delivery_charges = deliveryCharges;
                     var sum = (discountedAmount += deliveryCharges);
                     discountedAmount = sum;
@@ -1715,14 +1716,14 @@ $(document).ready(function() {
                     $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
                     
                 }else if(!isNaN(grossTotal)){
-                    console.log("Add BgrossTotal---->"+grossTotal);
-                    console.log("charge.delivery_price===>"+deliveryCharges);
+                    //console.log("Add BgrossTotal---->"+grossTotal);
+                    //console.log("charge.delivery_price===>"+deliveryCharges);
                     var sum = (grossTotal += deliveryCharges);
-                    console.log('sumss::'+sum);
+                    //console.log('sumss::'+sum);
                     delivery_charges = deliveryCharges;
                     grossTotal = sum;
                     
-                    console.log("Add AgrossTotal---->"+grossTotal);
+                    //console.log("Add AgrossTotal---->"+grossTotal);
                     $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
                     $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
                     
@@ -1737,9 +1738,9 @@ $(document).ready(function() {
 
               function removeDeliveryCharges(deliveryCharges) {
                   
-                console.log('removing delivery charges::');
+                //console.log('removing delivery charges::');
                  if(discountedAmount !== 0 && !isNaN(discountedAmount)){
-                   console.log("Add BdiscountedAmount---->"+discountedAmount);
+                   //console.log("Add BdiscountedAmount---->"+discountedAmount);
                    delivery_charges = deliveryCharges;
                    var sum = (discountedAmount -= deliveryCharges);
                    discountedAmount = sum;
@@ -1748,14 +1749,14 @@ $(document).ready(function() {
                    $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
                    
                }else if(!isNaN(grossTotal)){
-                   console.log("Add BgrossTotal---->"+grossTotal);
-                   console.log("charge.delivery_price===>"+deliveryCharges);
+                   //console.log("Add BgrossTotal---->"+grossTotal);
+                   //console.log("charge.delivery_price===>"+deliveryCharges);
                    var sum = (grossTotal -= deliveryCharges);
-                   console.log('sumss::'+sum);
+                   //console.log('sumss::'+sum);
                    delivery_charges = deliveryCharges;
                    grossTotal = sum;
                    
-                   console.log("Add AgrossTotal---->"+grossTotal);
+                   //console.log("Add AgrossTotal---->"+grossTotal);
                    $('#gross-total').text('Rs.'+grossTotal.toFixed(2)+'/-');
                    $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
                }
@@ -1769,8 +1770,8 @@ $(document).ready(function() {
                  // Function to add the delivery charge checkbox to the container
                 function addDeliveryChargeInputBox() {
        // var deliveryChargesContainer = $("#delivery-charges-container");
-        console.log('delivery_range::'+delivery_range);
-        console.log('delivery_price::'+delivery_price);
+        //console.log('delivery_range::'+delivery_range);
+        //console.log('delivery_price::'+delivery_price);
         
         //if (grossTotal < delivery_range) {
             // Only add the delivery charge checkbox if gross total is below Rs 500
@@ -1800,10 +1801,10 @@ $(document).ready(function() {
     $('#delivery-input').on('input', function() {
 
       delivery_charges = parseFloat($(this).val());
-      console.log('delivery_charges::'+delivery_charges);
+      //console.log('delivery_charges::'+delivery_charges);
       // Update the discounted amount
       
-      console.log('deliverySum::'+deliverySum);
+      //console.log('deliverySum::'+deliverySum);
       if(delivery_charges === "" || isNaN(delivery_charges)){
         delivery_charges = 0;
           $('#delivery-charges').text('Rs.'+delivery_charges+'/-');
@@ -1845,7 +1846,7 @@ $(document).ready(function() {
                     var itemId = $(this).data('item-id');
                     var itemPrice = parseFloat($(this).data('item-price'));
                     var itemName = $(this).data('item-name');
-                    console.log('itemPrice::'+itemPrice);
+                    //console.log('itemPrice::'+itemPrice);
                     if (this.checked) {
                         // Checkbox is checked
                         selectedItems[itemId] = itemPrice;
@@ -1867,7 +1868,7 @@ $(document).ready(function() {
                         addOnsTotal -= itemPrice;
                         
                     }
-                    console.log('addOnsTotal::'+addOnsTotal);
+                    //console.log('addOnsTotal::'+addOnsTotal);
                     
                     // Update the gross total amount
                     
@@ -1907,7 +1908,7 @@ $(document).ready(function() {
             discountAmount = (grossTotal * (discount / 100)).toFixed(2);
             discountAmount = parseFloat(discountAmount).toFixed(2);
 
-            console.log("discountAmount::"+(grossTotal * (discount / 100)));
+            //console.log("discountAmount::"+(grossTotal * (discount / 100)));
             // Update the discounted amount
             discountedAmount = grossTotal - discountAmount;
             if(discount === "" || isNaN(discount)){
@@ -1940,9 +1941,9 @@ $(document).ready(function() {
             
             document.getElementById('pay-button').onclick = function(e){
 
-                console.log('Before_Gross_total::'+grossTotal);
-            console.log('Before_delivery_charges::'+delivery_charges);
-            console.log('Before_addOnsTotal::'+addOnsTotal);
+                //console.log('Before_Gross_total::'+grossTotal);
+            //console.log('Before_delivery_charges::'+delivery_charges);
+            //console.log('Before_addOnsTotal::'+addOnsTotal);
             if(discountedAmount !== 0 && !isNaN(discountedAmount)){
                 totalPayment = parseFloat(discountedAmount).toFixed(0);
             }else{
@@ -1952,7 +1953,7 @@ $(document).ready(function() {
             
             // Convert the selectedItems object to JSON
     var selectedItemsJSON = JSON.stringify(extraItems);
-    console.log('Selected Extra Items JSON: ' + selectedItemsJSON);
+    //console.log('Selected Extra Items JSON: ' + selectedItemsJSON);
                //customer-name,selected-customer-id,selected-mobile-no,selected-customer-name
     var selected_customer_id = document.getElementById("selected-customer-id");
     var customer_name_input = document.getElementById("selected-customer-name");
@@ -1964,7 +1965,7 @@ $(document).ready(function() {
     var customer_mobile_no = customer_mobno_input.value.trim()
                 payment_show(totalPayment,customer_name,customer_mobile_no);
                 //TODO:Need to save Razor Pay Payment ID.
-                console.log('razor_pay_id::'+payment_id);
+                //console.log('razor_pay_id::'+payment_id);
                 
                 e.preventDefault();
             }
@@ -1972,7 +1973,7 @@ $(document).ready(function() {
 
             },
             error: function (error) {
-                console.error('Error:', error);
+                //console.error('Error:', error);
             }
         });
     
@@ -1981,7 +1982,7 @@ $(document).ready(function() {
 
 
 function payment_show(totalPayment,customerName,customerMobno){
-    console.log('PaytotalPayment::'+totalPayment);
+    //console.log('PaytotalPayment::'+totalPayment);
     var options = {
 
         "key": "rzp_test_qtHIWapeUEAAZO",//Live rzp_live_SeGnLgb5JnY8Id // Enter the Key ID generated from the Dashboard rzp_test_qtHIWapeUEAAZO
@@ -2084,7 +2085,7 @@ $("#generate-booking-id").on("click",function(){
             // Handle success response
             const bookingIDData = response.booking_id;
 // Now you can access the cartItemsData as a JavaScript object
-                   // console.log(bookingIDData);
+                   // //console.log(bookingIDData);
                 //TODO:Need to save the booking ID 
                     
                     var booking_id_input = document.getElementById("selected-booking-id");
@@ -2103,7 +2104,7 @@ $("#generate-booking-id").on("click",function(){
 
         },
         error: function (error) {
-            console.error(error.responseJSON.message);
+            //console.error(error.responseJSON.message);
             // Handle error response
         }
     });
@@ -2150,9 +2151,9 @@ $("#add_to_cart").on("click",function(){
     var per_width_sqft_quantity = inputWidthPerSqft.value.trim();
     var per_height_sqft_quantity = inputHeightPerSqft.value.trim();
 
-    console.log("per_height_sqft_quantity:"+per_height_sqft_quantity);
-    console.log("per_width_sqft_quantity:"+per_width_sqft_quantity);
-    console.log("kgs_quantity::"+kgs_quantity);
+    //console.log("per_height_sqft_quantity:"+per_height_sqft_quantity);
+    //console.log("per_width_sqft_quantity:"+per_width_sqft_quantity);
+    //console.log("kgs_quantity::"+kgs_quantity);
     // Perform validation
     if (!selectedCategory ) {
         // Show a toast message for validation failure
@@ -2205,9 +2206,9 @@ $("#add_to_cart").on("click",function(){
     }
     }
     
-   // console.log('SelectedCategory::'+selectedCategory);
-    //console.log('selectedSubSection::'+selectedSubSection);
-    //console.log('selectedServiceType::'+selectedServiceType);
+   // //console.log('SelectedCategory::'+selectedCategory);
+    ////console.log('selectedSubSection::'+selectedSubSection);
+    ////console.log('selectedServiceType::'+selectedServiceType);
     
 
     jsonItems = JSON.stringify(selectedItems);
@@ -2222,20 +2223,20 @@ $("#add_to_cart").on("click",function(){
     const subCategoryIDList = selectedItems.map(item => `${item.sub_cat_id}`);
     const subCategoryImageList = selectedItems.map(item => `${item.sub_cat_img}`);
 
-   // console.log('subCategoryNameList::'+subCategoryNameList);
-    //console.log('subCategoryIDList::'+subCategoryIDList);
-    //console.log('subCategoryImageList::'+subCategoryImageList);
-    //console.log('customer_id::'+customer_id);
+   // //console.log('subCategoryNameList::'+subCategoryNameList);
+    ////console.log('subCategoryIDList::'+subCategoryIDList);
+    ////console.log('subCategoryImageList::'+subCategoryImageList);
+    ////console.log('customer_id::'+customer_id);
 
     var subCategoryNames = makeCommaSeparatedList(subCategoryNameList);
     var subCategoryID = makeCommaSeparatedList(subCategoryIDList);
     var subCategoryImage = makeCommaSeparatedList(subCategoryImageList);
     
-   // console.log("Item Details::"+jsonItems)
+   // //console.log("Item Details::"+jsonItems)
     var totalCost = 0.0;
     var actualCost = 0.0;
     var regular_price = get_prize(selectedServiceType);
-    //console.log('regular_price::'+regular_price);
+    ////console.log('regular_price::'+regular_price);
     var express_price = get_prize(selectedServiceType);
     var offer_price = get_prize(selectedServiceType);
     if(selectedServiceType.toLowerCase().includes('Regular')){
@@ -2249,7 +2250,7 @@ $("#add_to_cart").on("click",function(){
         actualCost = parseFloat(offer_price);
     }
     
-    console.log("totalCost::"+totalCost);
+    //console.log("totalCost::"+totalCost);
 
     dictMap['cat_id'] = selectedCategoryId;
       dictMap['customer_id'] = customer_id;
@@ -2268,8 +2269,8 @@ $("#add_to_cart").on("click",function(){
       dictMap['sub_cat_img'] = subCategoryImage;
       dictMap['section_type'] = "All";
 
-      //console.log('ActualCost::'+actualCost);
-      //console.log('TotalCost::'+totalCost);
+      ////console.log('ActualCost::'+actualCost);
+      ////console.log('TotalCost::'+totalCost);
 
 }
 //End of Other Laundry Services Add Item to Cart
@@ -2306,11 +2307,11 @@ else{
             selectedItems = [];
             $("#subCategoryTable .quantity").text("0");
     
-            console.log(response.message);
+            //console.log(response.message);
             // Handle success response
             const cartItemsData = response.cart_items_data;
         // Now you can access the cartItemsData as a JavaScript object
-                    console.log(cartItemsData);
+                    //console.log(cartItemsData);
             // Function to populate the table with data
         function populateCartItemsTable(data) {
             const cartItemsTable = $('#cartItemsTable tbody');
@@ -2365,7 +2366,7 @@ else{
 
         },
         error: function (error) {
-            console.error(error.responseJSON.message);
+            //console.error(error.responseJSON.message);
             // Handle error response
         }
     });
@@ -2388,7 +2389,7 @@ function deleteCartItem(itemId,customer_id,booking_id) {
         },
         contentType: 'application/json',
         success: function (response) {
-            console.log(response.message);
+            //console.log(response.message);
             // Handle success response
             // After successfully deleting the item, you can refresh the table
             // to reflect the updated data.
@@ -2396,7 +2397,7 @@ function deleteCartItem(itemId,customer_id,booking_id) {
             reloadCartItem(itemId,customer_id,booking_id);
         },
         error: function (error) {
-            console.error(error.responseJSON.message);
+            //console.error(error.responseJSON.message);
             // Handle error response
         }
     });
@@ -2418,11 +2419,11 @@ function reloadCartItem(itemId,customer_id,booking_id) {
         },
         contentType: 'application/json',
         success: function (response) {
-            console.log(response.message);
+            //console.log(response.message);
             // Handle success response
             const cartItemsData = response.cart_items_data;
         // Now you can access the cartItemsData as a JavaScript object
-                    console.log(cartItemsData);
+                    //console.log(cartItemsData);
                     if(cartItemsData.length === 0){
                         save_btn.hide();
                     }else{
@@ -2478,7 +2479,7 @@ function reloadCartItem(itemId,customer_id,booking_id) {
             
         },
         error: function (error) {
-            console.error(error.responseJSON.message);
+            //console.error(error.responseJSON.message);
             // Handle error response
         }
     });
@@ -2489,10 +2490,10 @@ function reloadCartItem(itemId,customer_id,booking_id) {
         const parts = inputString.split(' ');
         if (parts.length >= 3) {
             const valueAtIndex2 = parts[2];
-            console.log(valueAtIndex2); // Output: "125"
+            //console.log(valueAtIndex2); // Output: "125"
             return valueAtIndex2
         } else {
-            console.log("Not enough parts in the input string.");
+            //console.log("Not enough parts in the input string.");
         }
 return 0;
     }
@@ -2525,13 +2526,13 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
     if ($(this).hasClass("increment")) {
         // Handle increment logic
         quantityInput.text(currentQuantity + 1);
-        console.log('actualCost::'+actual_cost);
-        console.log('updatedCost::'+updatedCost);
+        //console.log('actualCost::'+actual_cost);
+        //console.log('updatedCost::'+updatedCost);
 
         if (selectedItemIndex !== -1) {
             // Update the quantity in the selected item
             total_cost = (updatedCost * (parseFloat(currentQuantity) + 1));
-            console.log('total_cost_added::'+total_cost);
+            //console.log('total_cost_added::'+total_cost);
             selectedItems[selectedItemIndex].item_quantity = currentQuantity + 1;
             selectedItems[selectedItemIndex].cost = total_cost;
         } else {
@@ -2544,7 +2545,7 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
             
             
             total_cost = (updatedCost * (parseFloat(currentQuantity) + 1));
-            console.log('---TotalCost--::'+total_cost);
+            //console.log('---TotalCost--::'+total_cost);
             var newItem = {
                 sub_cat_name: sub_cat_name,
                 subcatid: subcatid,
@@ -2581,14 +2582,14 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
     jsonItems = selectedItems.filter(item => item.item_quantity > 0);
 
     // Log the selected item
-   // console.log('----------------');
+   // //console.log('----------------');
    if (selectedItemIndex !== -1) {
-     //   console.log('selectedItem::' + selectedItems[selectedItemIndex].currentQuantity + "-" + selectedItems[selectedItemIndex].sub_cat_name);
+     //   //console.log('selectedItem::' + selectedItems[selectedItemIndex].currentQuantity + "-" + selectedItems[selectedItemIndex].sub_cat_name);
     }
-    //console.log('----------------');
-    //console.log("selectedItems: " + JSON.stringify(selectedItems));
-    //console.log('----------------');
-    //console.log('jsonItems: ' + JSON.stringify(jsonItems));
+    ////console.log('----------------');
+    ////console.log("selectedItems: " + JSON.stringify(selectedItems));
+    ////console.log('----------------');
+    ////console.log('jsonItems: ' + JSON.stringify(jsonItems));
     
 });
 
@@ -2641,9 +2642,9 @@ function showToast(message, bodyContent) {
             var cat_id = $(categorySelect).find(":selected").data("catids");
             var cat_img = $(categorySelect).find(":selected").data("cat_img");
             var cat_name = $(categorySelect).find(":selected").data("cat_name");
-            console.log('CatID::'+cat_id)
-            console.log('CatIMG::'+cat_img)
-            console.log('CatName::'+cat_name)
+            //console.log('CatID::'+cat_id)
+            //console.log('CatIMG::'+cat_img)
+            //console.log('CatName::'+cat_name)
 
             selectedCategoryId = cat_id;
             selectedCategoryImage = cat_img;
@@ -2671,7 +2672,7 @@ function showToast(message, bodyContent) {
            // var costTh = $("<th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-25'>Cost</th>");
             //var emptyTh = $("<th class='text-secondary opacity-7'></th>");
             window.selectedCatId = cat_id;
-            console.log('selectedCategory::'+selectedCategory)
+            //console.log('selectedCategory::'+selectedCategory)
             if (selectedCategory == "DRY CLEAN" || selectedCategory == "STEAM IRON" || selectedCategory == "SAREE STEAM IRON" || selectedCategory == "PieceWise Category"){
                 //Load Sections Here 
                 //$("#subCategoryTable").find("thead tr").remove(costTh);
@@ -2694,7 +2695,7 @@ function showToast(message, bodyContent) {
                 $.get(`/admin_dashboard/load_sub_categories/${cat_id}`, function(data) {
                    sectionSelect.empty();
                     sectionSelect.append('<option disabled selected>Choose Section</option>');
-            console.log('sectionSelect::'+sectionSelect)
+            //console.log('sectionSelect::'+sectionSelect)
                     $.each(data.section_data, function(index, subSection) {
                         sectionSelect.append($('<option>', {
                             value: subSection.section_name,
@@ -2724,7 +2725,7 @@ function showToast(message, bodyContent) {
                 
 
 subCategoryTable.empty(); // Clear any existing rows
-console.log('subCategoryTable:'+subCategoryTable);
+//console.log('subCategoryTable:'+subCategoryTable);
 dataCat = data.sub_categories
 $.each(data.sub_categories, function(index, subCategory) {
   
@@ -2760,9 +2761,9 @@ if (subCategoryTable.find('tr').length > 0) {
 }
 
             });
-            console.log('While Loading CatID::'+cat_id)
+            //console.log('While Loading CatID::'+cat_id)
             $.get(`/admin_dashboard/load_other_category_wise_details/${cat_id}`, function(data) {
-                console.log("priceCategory::"+data.other_category_data);
+                //console.log("priceCategory::"+data.other_category_data);
                 priceCategory = data.other_category_data;
 
                 priceSelect.empty();
@@ -2813,12 +2814,12 @@ if (subCategoryTable.find('tr').length > 0) {
             var showSearchLayout = $('#show-search');
             showSearchLayout.hide();
             selectedItems = [];
-            console.log('CatID::'+cat_id)
-            console.log('CatIMG::'+cat_img)
-            console.log('CatName::'+cat_name)
+            //console.log('CatID::'+cat_id)
+            //console.log('CatIMG::'+cat_img)
+            //console.log('CatName::'+cat_name)
 
-            console.log('section_id::'+section_id)
-            console.log('section_type::'+section_type)
+            //console.log('section_id::'+section_id)
+            //console.log('section_type::'+section_type)
 
             var sectionSelect = $('#input-section');
             var subCategoryTable = $('#subCategoryTable tbody');
