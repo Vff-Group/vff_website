@@ -3222,13 +3222,22 @@ def place_new_order(request):
         order_status = jdict['order_status']
         razor_pay_id = jdict['razor_pay_id']
         payment_status = jdict['payment_status']
-        payment_type = jdict['payment_type']
+        payment_mode = jdict['payment_mode']
         extra_item_dict = jdict['extra_items']
         additional_instruction = jdict['additional_instruction']
         dateofdelivery = jdict['dateofdelivery']
         wantsDelivery = jdict['wantsDelivery']
         orderTakenOn = jdict['orderTakenOn']
         isPaymentDone = jdict['payment_done']
+        
+        payment_type = jdict['payment_type']
+        payment_one_amount = jdict['payment_one_amount']
+        payment_two_amount = jdict['payment_two_amount']
+        payment_one_id = jdict['payment_one_id']
+        payment_two_id = jdict['payment_two_id']
+        payment_one_type = jdict['payment_one_type']
+        payment_two_type = jdict['payment_two_type']
+        
         payment_status_record = '0'
         if isPaymentDone == True:
             payment_status_record = '1';
@@ -3239,18 +3248,24 @@ def place_new_order(request):
             with connection.cursor() as cursor:
                 #Insert Record into Order Table First to Generate Order ID
                 #Adding delivery_boyid = 1 for counter orders only
-                query_order = "insert into vff.laundry_ordertbl(customerid,quantity,price,order_status,additional_instruction,booking_id,delivery_price,discount_price,delivery,delivery_boyid,gstamount,igstamount,branch_id,order_taken_on,wants_delivery,payment_done) values ('"+str(customer_id)+"','"+str(total_items)+"','"+str(total_price)+"','"+str(order_status)+"','"+str(additional_instruction)+"','"+str(booking_id)+"','"+str(delivery_price)+"','"+str(discount_price)+"','"+str(dateofdelivery)+"','1','"+str(gstamount)+"','"+str(igstamount)+"','"+str(branch_id)+"','"+str(orderTakenOn)+"','"+str(wantsDelivery)+"','"+str(payment_status_record)+"') returning orderid"
+                query_order = "insert into vff.laundry_ordertbl(customerid,quantity,price,order_status,additional_instruction,booking_id,delivery_price,discount_price,delivery,delivery_boyid,gstamount,igstamount,branch_id,order_taken_on,wants_delivery,payment_done,payment_type) values ('"+str(customer_id)+"','"+str(total_items)+"','"+str(total_price)+"','"+str(order_status)+"','"+str(additional_instruction)+"','"+str(booking_id)+"','"+str(delivery_price)+"','"+str(discount_price)+"','"+str(dateofdelivery)+"','1','"+str(gstamount)+"','"+str(igstamount)+"','"+str(branch_id)+"','"+str(orderTakenOn)+"','"+str(wantsDelivery)+"','"+str(payment_status_record)+"','"+str(payment_type)+"') returning orderid"
                 cursor.execute(query_order)
                 order_id = cursor.fetchone()[0]
                 print(f'Retuning BOOKING ID-------->{order_id}')
                 connection.commit()
                 
                 #Insert record in payment table with razorpay_payment_id
-                if payment_status == "Success":
-                    query_payment = "insert into vff.laundry_payment_tbl(order_id,razor_pay_payment_id,status,payment_type,branch_id) values ('"+str(order_id)+"','"+str(razor_pay_id)+"','"+str(payment_status)+"','"+str(payment_type)+"','"+str(branch_id)+"')"
-                    print(f'insert payment::{query_payment}')
+                if payment_type == 'Multiple' and payment_status == "Success":
+                    query_payment = "insert into vff.laundry_payment_tbl(order_id,razor_pay_payment_id,status,payment_type,branch_id,,payment_one_type,payment_one_amount,payment_one_id,payment_two_type,payment_two_amount,payment_two_id) values ('"+str(order_id)+"','"+str(razor_pay_id)+"','"+str(payment_status)+"','"+str(payment_mode)+"','"+str(branch_id)+"','"+str(payment_one_type)+"','"+str(payment_one_amount)+"','"+str(payment_one_id)+"','"+str(payment_two_type)+"','"+str(payment_two_amount)+"','"+str(payment_two_id)+"')"
+                    print(f'insert Multi payment Method::{query_payment}')
                     cursor.execute(query_payment)
                     connection.commit()
+                else:
+                    if payment_status == "Success":
+                        query_payment = "insert into vff.laundry_payment_tbl(order_id,razor_pay_payment_id,status,payment_type,branch_id) values ('"+str(order_id)+"','"+str(razor_pay_id)+"','"+str(payment_status)+"','"+str(payment_mode)+"','"+str(branch_id)+"')"
+                        print(f'insert Single payment::{query_payment}')
+                        cursor.execute(query_payment)
+                        connection.commit()
                 
                 #Adding all cart items into active order table 
                 query_active_orders="insert into vff.laundry_active_orders_tbl(order_id,booking_id,categoryid,subcategoryid,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type,square_width,square_height) select "+str(order_id)+" as order_id,booking_id,catid,subcatid,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type,square_width,square_height from vff.laundry_cart_items where customer_id='"+str(customer_id)+"' and booking_id='"+str(booking_id)+"'"
