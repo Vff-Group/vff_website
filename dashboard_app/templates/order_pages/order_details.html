@@ -961,8 +961,14 @@ var delivery_charges = 0;
 var totalPayment = 0;
 var wantsDelivery = 0;
 var order_id = '-1';
-var payment_id = "";
+
+var payment_id = "-1";
+var payment_one_id = "-1";
+var payment_two_id = "-1";
 var paymentType = "";
+var payment_type = "";
+var payment_one_type = "NA";
+var payment_two_type = "NA";
 
 //Make Payment Controls
 $(document).ready(function() {
@@ -1378,6 +1384,57 @@ if(order_id ==='-1'){
       return;
   }
 
+     //Multiple Payments Only
+     if(payment_type === 'Multiple'){
+      payment_method = 'Multiple'
+      payment_status = 'Success'
+      var payment_one_amount = $('#multi-mode-one-price').val();
+      var payment_two_amount = $('#multi-mode-two-price').val();
+      console.log('payment_one_amount::'+payment_one_amount);
+
+      if(payment_one_type === 'NA'){
+          showToast('Alert','Please Select Payment Mode One For Payment');
+          return;
+       }
+  
+       if (payment_one_amount === '' || payment_one_amount === undefined){
+          showToast('Alert','Please Add The Payment One Amount');
+          return;
+       }
+  
+       if (payment_one_id === '-1' && payment_one_type !== 'Cash'){
+          showToast('Alert','Please Pay Payment Mode One Amount');
+          return;
+       }
+       if(payment_two_type === 'NA'){
+          showToast('Alert','Please Select Payment Mode Two For Payment');
+          return;
+       }
+  
+       if (payment_two_amount === '' || payment_two_amount === undefined){
+          showToast('Alert','Please Add The Payment Two Amount');
+          return;
+       }
+  
+       if (payment_two_id === '-1' && payment_two_type !== 'Cash'){
+          showToast('Alert','Please Pay Payment Mode Two Amount');
+          return;
+       }
+
+   }
+
+   //Single Payments Only
+   if(payment_type ==='Single' && payment_status === ''){
+    showToast('Alert','Please pay before updating');
+    return;
+ }
+
+    if (payment_type ==='Single' && !paymentSuccessful) {
+        // Show an error message or take appropriate action
+        showToast('Alert','Payment not successful. Please try again');
+        return;
+    }
+
       // Create a JSON object with the form data
       const dictMap = {
           'order_id': order_id,
@@ -1389,8 +1446,15 @@ if(order_id ==='-1'){
           'igstamount': IGSTamount,
           'razor_pay_id': payment_id,
           'payment_status': payment_status,
-          'payment_type': paymentType,
+          'payment_mode': paymentType,//If Single Payment Mode Cash or UPI
           
+            'payment_type': payment_type, //Single or Multi Payments
+            'payment_one_amount': payment_one_amount, //Payment One Amount
+            'payment_two_amount': payment_two_amount, //Payment Two Amount
+            'payment_one_id': payment_one_id, //Payment One Amount
+            'payment_two_id': payment_two_id, //Payment Two Amount
+            'payment_one_type': payment_one_type, //Payment One Amount
+            'payment_two_type': payment_two_type, //Payment Two Amount
           // Add other form fields to the JSON object
       };
       console.log('dictMap::'+JSON.stringify(dictMap));
@@ -1568,8 +1632,8 @@ function getCSRFToken() {
                     "key": "rzp_test_qtHIWapeUEAAZO", // Enter the Key ID generated from the Dashboard      rzp_test_qtHIWapeUEAAZO
                     "amount": (amount * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000      refers to 50000 paise
                     "currency": "INR",
-                    "name": "Velvet Royal Gym", //your business name
-                    "description": "Gym Renewal Fees",
+                    "name": "Velvet Wash Laundry", //your business name
+                    "description": "Laundry Service Charge",
                     "image": "https://vff-group.com/static/images/logo.png",
                     handler: function(response) {
                         $('#input-paymentid-multi-one').val(response.razorpay_payment_id);
@@ -1598,58 +1662,12 @@ function getCSRFToken() {
                     "key": "rzp_test_qtHIWapeUEAAZO", // Enter the Key ID generated from the Dashboard      rzp_test_qtHIWapeUEAAZO
                     "amount": (amount * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000      refers to 50000 paise
                     "currency": "INR",
-                    "name": "Velvet Royal Gym", //your business name
-                    "description": "Gym Renewal Fees",
+                    "name": "Velvet Wash Laundry", //your business name
+                    "description": "Laundry Service Charge",
                     "image": "https://vff-group.com/static/images/logo.png",
                     handler: function(response) {
                         $('#input-paymentid-multi-two').val(response.razorpay_payment_id);
                         payment_two_id = response.razorpay_payment_id;
-                        const csrfToken = getCSRFToken();
-                        $.ajax({
-                            url: '/gym_dashboard_app/fetch_fees_plans/', // URL to fetch fees plans
-                            type: 'POST',
-                            headers: {
-                                'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
-                            },
-                            contentType: 'application/json',
-                            success: function(data) {
-                                // Handle successful response and load fees plans
-                                 // Get the dropdown element
-                                var feesPlanDropdown = $('#feesPlanDropdown');
-                                var memberId = $(this).data('member-id');
-                                var modalId = $(this).data('bs-target');
-                                console.log('memberId::'+memberId);
-                                console.log('modalId::'+modalId);
-
-                                // Clear existing options (if any)
-                                feesPlanDropdown.empty();
-                                console.log('data::'+data);
-                                feesPlanDropdown.append('<option disabled selected>Choose a Plan</option>');
-                                // Populate dropdown with fetched plans
-                                $.each(data.fees_data, function(index, subSection) {
-                                    var cardio = subSection.cardio;
-                                    var isCardio = "Without Cardio"
-                                    if(cardio == 1){
-                                        isCardio ="With Cardio"
-                                    }
-                                    feesPlanDropdown.append($('<option>', {
-                                        value: subSection.id,
-                                        html: subSection.name + " [" + isCardio + "]<br> Duration: " + subSection.duration + "<br> Price: " + subSection.price,
-                                        'data-duration': subSection.duration, // Add data-duration attribute
-                                        'data-price': subSection.price // Add data-price attribute
-                                    }));
-                                });
-                            
-                                // Update hidden input with the default selected plan ID (optional)
-                                $('#selectedPlanId').val(data[0].id);
-                                 // Set the first plan ID as default
-                                
-                            },
-                            error: function(xhr, status, error) {
-                                // Handle error
-                                console.log(error);
-                            }
-                        });
                    
                     },
                     "notes": {
@@ -1671,7 +1689,7 @@ function getCSRFToken() {
             var selectedMode = $(this).val(); // Get the selected value
             payment_method = selectedMode;
             // Toggle visibility of payment ID container based on selected mode
-            if (selectedMode === 'Cash') {
+            if (selectedMode === 'Cash' || selectedMode === 'Cheque') {
                 var planPrice = $('#price').val();
                 $('.makePaymentBtn').hide();
                 // Parse the value to float
@@ -1679,47 +1697,6 @@ function getCSRFToken() {
                 isOnlinePayment = false;
                 paymentSuccessful = true
                 payment_status = "Success";
-                $('#payment-id-container').hide(); // Hide container for Cash mode
-                const csrfToken = getCSRFToken();
-                $.ajax({
-                    url: '/gym_dashboard_app/fetch_fees_plans/', // URL to fetch fees plans
-                    type: 'POST',
-                    headers: {
-                        'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
-                    },
-                    contentType: 'application/json',
-                    success: function(data) {
-                        // Handle successful response and load fees plans
-                         // Get the dropdown element
-                        var feesPlanDropdown = $('#feesPlanDropdown');
-                                            
-                        // Clear existing options (if any)
-                        feesPlanDropdown.empty();
-                        console.log('data::'+data);
-                        feesPlanDropdown.append('<option disabled selected>Choose a Plan</option>');
-                        // Populate dropdown with fetched plans
-                        $.each(data.fees_data, function(index, subSection) {
-                            var cardio = subSection.cardio;
-                            var isCardio = "Without Cardio"
-                            if(cardio == 1){
-                                isCardio ="With Cardio"
-                            }
-                            feesPlanDropdown.append($('<option>', {
-                                value: subSection.id,
-                                html: subSection.name + " [" + isCardio + "]<br> Duration: " + subSection.duration + "<br> Price: " + subSection.price,
-                                'data-duration': subSection.duration, // Add data-duration attribute
-                                'data-price': subSection.price // Add data-price attribute
-                            }));
-                        });
-                    
-                        // Update hidden input with the default selected plan ID (optional)
-                        $('#selectedPlanId').val(data[0].id); // Set the first plan ID as default
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle error
-                        console.log(error);
-                    }
-                });
            
             } else {
                 isOnlinePayment = true;
@@ -1728,21 +1705,7 @@ function getCSRFToken() {
             }
         });
 
-        $('#feesPlanDropdown').change(function() {
-            var selectedOption = $(this).find(':selected'); // Get the selected option
-            var selectedId = selectedOption.val(); // Get the selected value
-            var selectedDuration = selectedOption.data('duration'); // Get the 'duration' data attribute value
-            var selectedPrice = selectedOption.data('price'); // Get the 'price' data attribute value
         
-            // Update the hidden input values with the selected plan details
-            new_plan_id = selectedId;
-            new_plan_price = selectedPrice;
-            new_plan_duration = selectedDuration;
-            $('#selectedPlanId').val(selectedId);
-            $('#selectedPlanDuration').val(selectedDuration);
-            $('#selectedPlanPrice').val(selectedPrice);
-            console.log('new_plan_duration::'+new_plan_duration);
-        });
     
     });
 
