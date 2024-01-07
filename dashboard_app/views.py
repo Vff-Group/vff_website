@@ -3211,6 +3211,7 @@ def place_new_order(request):
     error_msg = "Something Went Wrong"
     if request.method == "POST":
         jdict = json.loads(request.body)
+        print(f'PLace Order Recieved Data::{jdict}')
         booking_id = jdict['booking_id']
         delivery_price = jdict['delivery_price']
         discount_price = jdict['discount_price']
