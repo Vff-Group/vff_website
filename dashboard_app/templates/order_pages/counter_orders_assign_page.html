@@ -1089,7 +1089,9 @@ $('#order-form').validate({
   var paymentModeSelect = document.getElementById('input-paymentmode');
 
 
-
+    if(payment_id === ""){
+      payment_id = '-1';
+    }
   
     if(add_information === ""){
         add_information = 'NA';
