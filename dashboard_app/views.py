@@ -3257,7 +3257,7 @@ def place_new_order(request):
                 
                 #Insert record in payment table with razorpay_payment_id
                 if payment_type == 'Multiple' and payment_status == "Success":
-                    query_payment = "insert into vff.laundry_payment_tbl(order_id,razor_pay_payment_id,status,payment_type,branch_id,,payment_one_type,payment_one_amount,payment_one_id,payment_two_type,payment_two_amount,payment_two_id) values ('"+str(order_id)+"','"+str(razor_pay_id)+"','"+str(payment_status)+"','"+str(payment_mode)+"','"+str(branch_id)+"','"+str(payment_one_type)+"','"+str(payment_one_amount)+"','"+str(payment_one_id)+"','"+str(payment_two_type)+"','"+str(payment_two_amount)+"','"+str(payment_two_id)+"')"
+                    query_payment = "insert into vff.laundry_payment_tbl(order_id,razor_pay_payment_id,status,payment_type,branch_id,payment_one_type,payment_one_amount,payment_one_id,payment_two_type,payment_two_amount,payment_two_id) values ('"+str(order_id)+"','"+str(razor_pay_id)+"','"+str(payment_status)+"','"+str(payment_mode)+"','"+str(branch_id)+"','"+str(payment_one_type)+"','"+str(payment_one_amount)+"','"+str(payment_one_id)+"','"+str(payment_two_type)+"','"+str(payment_two_amount)+"','"+str(payment_two_id)+"')"
                     print(f'insert Multi payment Method::{query_payment}')
                     cursor.execute(query_payment)
                     connection.commit()
