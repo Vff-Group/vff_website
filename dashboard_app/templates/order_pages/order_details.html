@@ -226,6 +226,9 @@
                       <div class="col">
                         <small>{{branch_city}},{{branch_state}} - {{branch_pincode}}</small>
                       </div>
+                      <div class="col">
+                        <small>Order Taken On : {{order_taken_on}}</small>
+                    </div>
                      <div class="col">
 
                      </div>
@@ -251,6 +254,7 @@
                       <div class="col">
                           <small>Delivery Date : {{delivery_date}}</small>
                       </div>
+                      
                       <div class="col">
                         {% if wants_delivery == 1 %}
                         <small>Requested Delivery : <span class="badge badge-sm bg-success">Yes</span></small>
