@@ -956,6 +956,8 @@ var previousDeliveryCharges = 0;
                 var payment_type = "";
                 var payment_one_type = "NA";
                 var payment_two_type = "NA";
+                var isOnlinePayment = false;
+                var paymentSuccessful = true;
 
 var save_btn = $("#save_btn");
       // Get the booking ID value
@@ -1963,8 +1965,8 @@ $(document).ready(function() {
 function payment_show(totalPayment,customerName,customerMobno){
     console.log('PaytotalPayment::'+totalPayment);
     var options = {
-      
-        "key": "rzp_live_SeGnLgb5JnY8Id", // Enter the Key ID generated from the Dashboard rzp_test_qtHIWapeUEAAZO
+
+        "key": "rzp_test_qtHIWapeUEAAZO",//Live rzp_live_SeGnLgb5JnY8Id // Enter the Key ID generated from the Dashboard rzp_test_qtHIWapeUEAAZO
         "amount": (totalPayment * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         "currency": "INR",
         "name": "VFF Group", //your business name
