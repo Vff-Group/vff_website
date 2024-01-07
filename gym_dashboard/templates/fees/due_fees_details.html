@@ -832,7 +832,8 @@ var new_plan_id = "";
         $("#cancel-btn").prop("disabled", true);
         }
     // Get the CSRF token from the cookie
-function getCSRFToken() {
+
+    function getCSRFToken() {
     const cookies = document.cookie.split(';');
     for (let i = 0; i < cookies.length; i++) {
         const cookie = cookies[i].trim();
@@ -841,6 +842,7 @@ function getCSRFToken() {
         }
     }
     return null;
+  
   }
 
   function convertDateFormat(dateString) {

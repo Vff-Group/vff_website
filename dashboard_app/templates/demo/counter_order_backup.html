@@ -810,6 +810,33 @@ let selectedCategoryName = null;
 let selectedCategoryImage = null;
 let selectedCategoryBookingID = null;
 let generated_booking_id = "";
+
+var previousDeliveryCharges = 0;
+      var currentInput = "";
+        var extraItems = [];
+        var initialGrossTotal =0;
+                var grossTotal = 0; // Total amount
+                var subTotal = 0; // Total amount
+                var grossQuantity = 0; // Total Quantity
+                var orderTakenOn = ""; // Order Taken On
+                var order_status = ""; // Order Status
+                var payment_status = ""; // Payment Status
+                var isPaymentDone = false; // Payment Done Status true or false
+                var GSTamount = 0; // Total GST
+                var IGSTamount = 0; // Total IGST
+                var addOnsTotal = 0;
+                var booking_id = -1;
+                var deliveryTotal = 0;
+                var discountAmount = 0;
+                var discountedAmount = 0;
+                var delivery_price =0;
+                var delivery_range = 0;
+                var delivery_charges = 0;
+                var totalPayment = 0;
+                var wantsDelivery = 0;
+                var payment_id = "";
+                var paymentType = "";
+
 var save_btn = $("#save_btn");
       // Get the booking ID value
       var bookingId = document.getElementById('selected-booking-id').value;
@@ -835,31 +862,7 @@ var save_btn = $("#save_btn");
   add_to_cart.style.display = "block";
       }
       
-      var previousDeliveryCharges = 0;
-      var currentInput = "";
-        var extraItems = [];
-        var initialGrossTotal =0;
-                var grossTotal = 0; // Total amount
-                var subTotal = 0; // Total amount
-                var grossQuantity = 0; // Total Quantity
-                var orderTakenOn = ""; // Order Taken On
-                var order_status = ""; // Order Status
-                var payment_status = ""; // Payment Status
-                var isPaymentDone = false; // Payment Done Status true or false
-                var GSTamount = 0; // Total GST
-                var IGSTamount = 0; // Total IGST
-                var addOnsTotal = 0;
-                var booking_id = -1;
-                var deliveryTotal = 0;
-                var discountAmount = 0;
-                var discountedAmount = 0;
-                var delivery_price =0;
-                var delivery_range = 0;
-                var delivery_charges = 0;
-                var totalPayment = 0;
-                var wantsDelivery = 0;
-                var payment_id = "";
-                var paymentType = "";
+      
 
         $(document).ready(function() {
         // When "Pay Now" button is clicked
@@ -1155,14 +1158,16 @@ $('#input-paymentmode').change(function() {
       order_status = "Payment Done";
       isPaymentDone = true;
       payment_status = "Success";
+      //Hide Payment Container
         $('#pay-button').hide();
-        //gstContainer.show();
-         // If the payment mode is "Cash," hiding the payment ID container
          paymentIdContainer.hide();
     } else if(paymentMode === 'Pay Later'){
       order_status = "Payment Not Done";
       payment_status = "Not Success";
       isPaymentDone = false;
+      //Hide Payment Container
+      $('#pay-button').hide();
+      paymentIdContainer.hide();
     }else {
         $('#pay-button').show();
         //gstContainer.hide();
