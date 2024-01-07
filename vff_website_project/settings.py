@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'dashboard_app',
     'gym_mobile_app',
     'clothing_mobile_app',
+    'laundry_mobile_app',
     'clothing_dashboard',
     'gym_dashboard',
 ]
