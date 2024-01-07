@@ -1078,15 +1078,14 @@ $('#order-form').validate({
     return;
   }
   
-  var paymentModeSelect = document.getElementById('input-paymentmode');
-
-// Check if payment mode is not equal to 'Cash'
-if (paymentModeSelect.value !== 'Cash' && paymentModeSelect.value !== 'Pay Later') {
-  if (payment_id === '') {
-    showToast('Alert', 'Please Pay before placing the order as you have selected Payment Mode Other than Cash');
+  if(payment_type === ''){
+    showToast('Alert','Please Select Payment Type Single or Multi Payment');
     return;
   }
-}
+
+  var paymentModeSelect = document.getElementById('input-paymentmode');
+
+
 
   
     if(add_information === ""){
@@ -1153,6 +1152,15 @@ if (paymentModeSelect.value !== 'Cash' && paymentModeSelect.value !== 'Pay Later
 
    }
 
+   if(payment_type === 'Single'){
+    // Check if payment mode is not equal to 'Cash'
+if (paymentModeSelect.value !== 'Cash' && paymentModeSelect.value !== 'Pay Later') {
+  if (payment_id === '') {
+    showToast('Alert', 'Please Pay before placing the order as you have selected Payment Mode Other than Cash');
+    return;
+  }
+}
+   }
    //Single Payments Only
    if(payment_type ==='Single' && payment_status === ''){
     showToast('Alert','Please pay before updating');
@@ -1467,32 +1475,31 @@ function updateTaxAmount() {
 
 // Event listener for the payment mode selection
 $('#input-paymentmode').change(function() {
-    var paymentMode = $(this).val();
-    var paymentIdContainer = $('#payment-id-container');
-    var gstContainer = $('#gst-container');
-    paymentType = paymentMode;
-    // Check if the payment mode is 'Cash' and hide the 'Pay Now' button
-    if (paymentMode === 'Cash') {
-      order_status = "Payment Done";
-      isPaymentDone = true;
-      payment_status = "Success";
-      //Hide Payment Container
-        $('#pay-button').hide();
-         paymentIdContainer.hide();
-    } else if(paymentMode === 'Pay Later'){
-      order_status = "Payment Not Done";
-      payment_status = "Not Success";
-      isPaymentDone = false;
-      //Hide Payment Container
-      $('#pay-button').hide();
-      paymentIdContainer.hide();
-    }else {
-        $('#pay-button').show();
-        //gstContainer.hide();
-        // If the payment mode is not "Cash," show the payment ID container
-        paymentIdContainer.show();
-    }
-});
+  var paymentMode = $(this).val();
+  var paymentIdContainer = $('#payment-id-container');
+  var gstContainer = $('#gst-container');
+  paymentType = paymentMode;
+  // Check if the payment mode is 'Cash' and hide the 'Pay Now' button
+  if (paymentMode === 'Cash' || paymentMode === 'Cheque') {
+  order_status = "Payment Done";
+  isOnlinePayment = false;
+  paymentSuccessful = true;
+  payment_status = "Success";
+  $('#pay-button').hide();
+  //gstContainer.show();
+  // If the payment mode is "Cash," hiding the payment ID container
+  paymentIdContainer.hide();
+  } else if(paymentMode === 'Pay Later'){
+  order_status = "Payment Not Done";
+  payment_status = "Not Success";
+  
+  }else {
+  $('#pay-button').show();
+  //gstContainer.hide();
+  // If the payment mode is not "Cash," show the payment ID container
+  paymentIdContainer.show();
+  }
+  });
 
 // Function to disable elements
 function disableElements() {
@@ -2569,7 +2576,7 @@ var cat_name = $(this).closest("tr").find("#cat_name").text();
 // Function to show a toast message
 function showToast(message, bodyContent) {
   toastr.warning(bodyContent, message, {
-    positionClass: "toast-top-right",
+    positionClass: "toast-top-center",
     timeOut: 5e3,
     closeButton: !0,
     debug: !1,
