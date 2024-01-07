@@ -229,9 +229,11 @@
                       <div class="col">
                         <small>Order Taken On : <span class="badge badge-sm bg-gradient-dark">{{order_taken_on}}</span></small>
                     </div>
+                    {% if payment_type != 'NA' %}
                       <div class="col">
                         <small>Transaction Type - <span class="badge badge-sm bg-success">{{payment_type}}</span></small>
                     </div>
+                    {% endif %}
                      <div class="col">
 
                      </div>
