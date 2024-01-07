@@ -744,6 +744,7 @@
                                     <option disabled selected>
                                       Choose Payment Mode
                                     </option>
+                                    <option value="Pay Later">Pay Later</option>
                                     <option value="Cash">Cash</option>
                                     <option value="UPI">UPI</option>
                                     <option value="Card">Card</option>
@@ -1380,7 +1381,11 @@ function updateTaxAmount() {
             payment_one_type = selectedPaymentMode;
 
             if (selectedPaymentMode === 'Cash' || selectedPaymentMode === 'Cheque') {
-                
+              order_status = "Payment Done";
+              isPaymentDone = true;
+              payment_status = "Success";
+              isOnlinePayment = false;
+              paymentSuccessful = true;
                 makePaymentBtn.hide();
                 document.getElementById('payment-id-container-multi-one').style.display = 'none';
             } else {
@@ -1399,6 +1404,11 @@ function updateTaxAmount() {
             payment_two_type = selectedPaymentMode;
 
             if (selectedPaymentMode === 'Cash' || selectedPaymentMode === 'Cheque') {
+                order_status = "Payment Done";
+                isPaymentDone = true;
+                payment_status = "Success";
+                isOnlinePayment = false;
+                paymentSuccessful = true;
                 makePaymentBtn.hide();
                 document.getElementById('payment-id-container-multi-two').style.display = 'none';
            
@@ -1483,17 +1493,23 @@ $('#input-paymentmode').change(function() {
   paymentType = paymentMode;
   // Check if the payment mode is 'Cash' and hide the 'Pay Now' button
   if (paymentMode === 'Cash' || paymentMode === 'Cheque') {
-  order_status = "Payment Done";
+    order_status = "Payment Done";
+    isPaymentDone = true;
+    payment_status = "Success";
   isOnlinePayment = false;
   paymentSuccessful = true;
-  payment_status = "Success";
+  
   $('#pay-button').hide();
   //gstContainer.show();
   // If the payment mode is "Cash," hiding the payment ID container
   paymentIdContainer.hide();
   } else if(paymentMode === 'Pay Later'){
-  order_status = "Payment Not Done";
-  payment_status = "Not Success";
+    order_status = "Payment Not Done";
+    payment_status = "Not Success";
+    isPaymentDone = false;
+    //Hide Payment Container
+    $('#pay-button').hide();
+    paymentIdContainer.hide();
   
   }else {
   $('#pay-button').show();
@@ -1562,7 +1578,7 @@ $(document).ready(function() {
                 totalPayment = 0;
                 GSTamount = 0;
                 IGSTamount = 0;
-                payment_id = "";
+                payment_id = "-1";
                 
     if(!isNaN(addOnsTotal)){
         $('#addons-total').text('Rs.'+addOnsTotal+'/-');
