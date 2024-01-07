@@ -127,6 +127,165 @@
               </div>
             </div>
 
+             <!-- adding payment options start  -->
+             <hr>
+
+             <div class="form-group">
+                 <label for="single-payment-checkbox">
+                     <input type="checkbox" id="single-payment-checkbox"> Single Payment
+                 </label>
+                 
+             </div>
+
+             <div class="form-group">
+             <label for="multi-payment-checkbox">
+                 <input type="checkbox" id="multi-payment-checkbox"> Multi Payment 
+             </label>
+             </div>
+
+             
+
+             <div id="multi-payment-container"  style="display: none;">
+                 <hr>
+                         
+                             <!-- Payment Mode Multi One  -->
+                             
+                               <div class="form-group">
+                                 <label
+                                   class="form-control-label"
+                                   for="input-paymentmode-multi-one"
+                                   >Payment Mode One</label
+                                 >
+                                 <select
+                                   class="form-control form-control-alternative"
+                                   id="input-paymentmode-multi-one"
+                                   name="payment_mode_multi_one"
+                                   required
+                                 >
+                                   <option disabled selected>
+                                     Choose Payment Mode One
+                                   </option>
+                                   <option value="Cash">Cash</option>
+                                   <option value="UPI">UPI</option>
+                                   <option value="Card">Card</option>
+                                   <option value="Cheque">Cheque</option>
+                                   <option value="Bank Transfer">
+                                     Bank Transfer
+                                   </option>
+                                  
+                                 </select>
+                               </div>
+                               <div class="form-group">
+                                 <label for="multi-mode-one-price">Amount to pay [Mode 1]</label>
+                                 <input type="number" class="form-control" id="multi-mode-one-price" name="multi_mode_one_price" placeholder="Enter Amount for Payment Mode One" >
+                                 </div>
+
+                                 <div class="form-group" id="payment-id-container-multi-one" style="display: none;">
+                                     <label class="form-control-label" for="input-paymentid">Payment ID</label>
+                                     <input class="form-control form-control-alternative" type="text" id="input-paymentid-multi-one" name="payment-id" disabled>
+                                 </div>
+                             
+                               <div class="form-group">
+                                 <button type="button" class="btn bg-gradient-success makePaymentBtn-multi-one" style="display: none;">Make Payment One</button>
+                             </div>
+
+                             
+                             
+
+                             <!-- Payment Mode Multi Two  -->
+                             <hr>
+                                 <div class="form-group">
+                                   <label
+                                     class="form-control-label"
+                                     for="input-paymentmode-multi-two"
+                                     >Payment Mode Two</label
+                                   >
+                                   <select
+                                     class="form-control form-control-alternative"
+                                     id="input-paymentmode-multi-two"
+                                     name="payment_mode_multi_two"
+                                     required
+                                   >
+                                     <option disabled selected>
+                                       Choose Payment Mode Two
+                                     </option>
+                                     <option value="Cash">Cash</option>
+                                     <option value="UPI">UPI</option>
+                                     <option value="Card">Card</option>
+                                     <option value="Cheque">Cheque</option>
+                                     <option value="Bank Transfer">
+                                       Bank Transfer
+                                     </option>
+                                    
+                                   </select>
+                                 </div>
+
+                                 <div class="form-group">
+                                     <label for="multi-mode-two-price">Amount to pay [Mode 1]</label>
+                                     <input type="number" class="form-control" id="multi-mode-two-price" name="multi_mode_two_price" placeholder="Enter Amount for Payment Mode Two" >
+                                     
+                                 </div>
+
+                                 <div class="form-group" id="payment-id-container-multi-two" style="display: none;">
+                                     <label class="form-control-label" for="input-paymentid">Payment ID</label>
+                                     <input class="form-control form-control-alternative" type="text" id="input-paymentid-multi-two" name="payment-id" disabled>
+                                 </div>
+
+                                 <div class="form-group">
+                                   <button type="button" class="btn bg-gradient-success makePaymentBtn-multi-two" style="display: none;">Make Payment Two</button>
+                               </div>
+                              
+             </div>
+
+             <div id="single-payment-container" style="display: none;">
+               <hr>
+                     <div class="form-group">
+                       <label
+                         class="form-control-label"
+                         for="input-paymentmode"
+                         >Payment Mode</label
+                       >
+                       <select
+                         class="form-control form-control-alternative"
+                         id="input-paymentmode"
+                         name="payment_mode"
+                         required
+                       >
+                         <option disabled selected>
+                           Choose Payment Mode
+                         </option>
+                         <option value="Cash">Cash</option>
+                         <option value="UPI">UPI</option>
+                         <option value="Card">Card</option>
+                         <option value="Cheque">Cheque</option>
+                         <option value="Bank Transfer">
+                           Bank Transfer
+                         </option>
+                        
+                       </select>
+                     </div>
+                   
+                   
+     
+                   
+                   
+                     
+                         <div class="form-group" id="payment-id-container" style="display: none;">
+                             <label class="form-control-label" for="input-paymentid">Payment ID</label>
+                             <input class="form-control form-control-alternative" type="text" id="input-paymentid" name="payment-id" disabled>
+                         </div>
+                     
+                 
+           
+
+           
+             <div class="form-group">
+               <button type="button" class="btn bg-gradient-success makePaymentBtn" style="display: none;">Make Payment</button>
+           </div>
+
+             
+             <!-- adding new payment mode end  -->
+
             <hr />
             <div class="row">
               
@@ -1327,6 +1486,310 @@ function getCSRFToken() {
   }
   return null;
 }
+
+//New Payment Handling Setup 
+  //Handling Payment Mode i.e Single or Multiple 
+  document.getElementById('single-payment-checkbox').addEventListener('change', function() {
+    const multiPaymentCheckbox = document.getElementById('multi-payment-checkbox');
+        if (this.checked) {
+            payment_type="Single";
+            document.getElementById('single-payment-container').style.display = 'block';
+            document.getElementById('multi-payment-container').style.display = 'none';
+            document.querySelector('.makePaymentBtn').style.display = 'block';
+            multiPaymentCheckbox.disabled = true;
+        } else {
+            payment_type="";
+            document.getElementById('single-payment-container').style.display = 'none';
+            document.querySelector('.makePaymentBtn').style.display = 'none';
+            multiPaymentCheckbox.disabled = false;
+        }
+    });
+
+    document.getElementById('multi-payment-checkbox').addEventListener('change', function() {
+        const singlePaymentCheckbox = document.getElementById('single-payment-checkbox');
+        if (this.checked) {
+            payment_type="Multiple";
+            document.getElementById('multi-payment-container').style.display = 'block';
+            document.getElementById('single-payment-container').style.display = 'none';
+            document.querySelector('.makePaymentBtn').style.display = 'block';
+            singlePaymentCheckbox.disabled = true;
+        } else {
+            payment_type="";
+            document.getElementById('multi-payment-container').style.display = 'none';
+            document.querySelector('.makePaymentBtn').style.display = 'none';
+            singlePaymentCheckbox.disabled = false;
+        }
+    });
+
+    //Multi Payment One Payment Method handling Cash or Online to show Make Payment button
+    $(document).ready(function() {
+        $('#input-paymentmode-multi-one').change(function() {
+            var selectedPaymentMode = $(this).val();
+            var makePaymentBtn = $('.makePaymentBtn-multi-one');
+            payment_one_type = selectedPaymentMode;
+
+            if (selectedPaymentMode === 'Cash') {
+                
+                makePaymentBtn.hide();
+                document.getElementById('payment-id-container-multi-one').style.display = 'none';
+            } else {
+                makePaymentBtn.show();
+                
+                document.getElementById('payment-id-container-multi-one').style.display = 'block';
+            }
+        });
+    });
+
+    //Multi Payment Two Payment Method handling Cash or Online to show Make Payment button
+    $(document).ready(function() {
+        $('#input-paymentmode-multi-two').change(function() {
+            var selectedPaymentMode = $(this).val();
+            var makePaymentBtn = $('.makePaymentBtn-multi-two');
+            payment_two_type = selectedPaymentMode;
+
+            if (selectedPaymentMode === 'Cash') {
+                makePaymentBtn.hide();
+                document.getElementById('payment-id-container-multi-two').style.display = 'none';
+                const csrfToken = getCSRFToken();
+                $.ajax({
+                    url: '/gym_dashboard_app/fetch_fees_plans/', // URL to fetch fees plans
+                    type: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+                    },
+                    contentType: 'application/json',
+                    success: function(data) {
+                        // Handle successful response and load fees plans
+                         // Get the dropdown element
+                        var feesPlanDropdown = $('#feesPlanDropdown');
+                                            
+                        // Clear existing options (if any)
+                        feesPlanDropdown.empty();
+                        console.log('data::'+data);
+                        feesPlanDropdown.append('<option disabled selected>Choose a Plan</option>');
+                        // Populate dropdown with fetched plans
+                        $.each(data.fees_data, function(index, subSection) {
+                            var cardio = subSection.cardio;
+                            var isCardio = "Without Cardio"
+                            if(cardio == 1){
+                                isCardio ="With Cardio"
+                            }
+                            feesPlanDropdown.append($('<option>', {
+                                value: subSection.id,
+                                html: subSection.name + " [" + isCardio + "]<br> Duration: " + subSection.duration + "<br> Price: " + subSection.price,
+                                'data-duration': subSection.duration, // Add data-duration attribute
+                                'data-price': subSection.price // Add data-price attribute
+                            }));
+                        });
+                    
+                        // Update hidden input with the default selected plan ID (optional)
+                        $('#selectedPlanId').val(data[0].id); // Set the first plan ID as default
+                        
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error
+                        console.log(error);
+                    }
+                });
+           
+            } else {
+                makePaymentBtn.show();
+                document.getElementById('payment-id-container-multi-two').style.display = 'block';
+            }
+        });
+    });
+
+
+    //to make button one payment 
+        $(document).ready(function() {
+            $('.makePaymentBtn-multi-one').click(function() {
+                var amount = $('#multi-mode-one-price').val(); // Amount in paise/cents
+                amount = parseFloat(amount);
+
+
+                var options = {
+                    "key": "rzp_test_qtHIWapeUEAAZO", // Enter the Key ID generated from the Dashboard      rzp_test_qtHIWapeUEAAZO
+                    "amount": (amount * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000      refers to 50000 paise
+                    "currency": "INR",
+                    "name": "Velvet Royal Gym", //your business name
+                    "description": "Gym Renewal Fees",
+                    "image": "https://vff-group.com/static/images/logo.png",
+                    handler: function(response) {
+                        $('#input-paymentid-multi-one').val(response.razorpay_payment_id);
+                        payment_one_id = response.razorpay_payment_id;
+                    },
+                    "notes": {
+                        "address": "Tilakwadi"
+                    },
+                    theme: {
+                        color: '#F37254'
+                    }
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.open();
+            });
+        });
+
+        //to make button two payment
+        $(document).ready(function() {
+            $('.makePaymentBtn-multi-two').click(function() {
+                var amount = $('#multi-mode-two-price').val(); // Amount in paise/cents
+                amount = parseFloat(amount);
+
+
+                var options = {
+                    "key": "rzp_test_qtHIWapeUEAAZO", // Enter the Key ID generated from the Dashboard      rzp_test_qtHIWapeUEAAZO
+                    "amount": (amount * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000      refers to 50000 paise
+                    "currency": "INR",
+                    "name": "Velvet Royal Gym", //your business name
+                    "description": "Gym Renewal Fees",
+                    "image": "https://vff-group.com/static/images/logo.png",
+                    handler: function(response) {
+                        $('#input-paymentid-multi-two').val(response.razorpay_payment_id);
+                        payment_two_id = response.razorpay_payment_id;
+                        const csrfToken = getCSRFToken();
+                        $.ajax({
+                            url: '/gym_dashboard_app/fetch_fees_plans/', // URL to fetch fees plans
+                            type: 'POST',
+                            headers: {
+                                'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+                            },
+                            contentType: 'application/json',
+                            success: function(data) {
+                                // Handle successful response and load fees plans
+                                 // Get the dropdown element
+                                var feesPlanDropdown = $('#feesPlanDropdown');
+                                var memberId = $(this).data('member-id');
+                                var modalId = $(this).data('bs-target');
+                                console.log('memberId::'+memberId);
+                                console.log('modalId::'+modalId);
+
+                                // Clear existing options (if any)
+                                feesPlanDropdown.empty();
+                                console.log('data::'+data);
+                                feesPlanDropdown.append('<option disabled selected>Choose a Plan</option>');
+                                // Populate dropdown with fetched plans
+                                $.each(data.fees_data, function(index, subSection) {
+                                    var cardio = subSection.cardio;
+                                    var isCardio = "Without Cardio"
+                                    if(cardio == 1){
+                                        isCardio ="With Cardio"
+                                    }
+                                    feesPlanDropdown.append($('<option>', {
+                                        value: subSection.id,
+                                        html: subSection.name + " [" + isCardio + "]<br> Duration: " + subSection.duration + "<br> Price: " + subSection.price,
+                                        'data-duration': subSection.duration, // Add data-duration attribute
+                                        'data-price': subSection.price // Add data-price attribute
+                                    }));
+                                });
+                            
+                                // Update hidden input with the default selected plan ID (optional)
+                                $('#selectedPlanId').val(data[0].id);
+                                 // Set the first plan ID as default
+                                
+                            },
+                            error: function(xhr, status, error) {
+                                // Handle error
+                                console.log(error);
+                            }
+                        });
+                   
+                    },
+                    "notes": {
+                        "address": "Tilakwadi"
+                    },
+                    theme: {
+                        color: '#F37254'
+                    }
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.open();
+            });
+        });
+
+
+    $(document).ready(function() {
+        // Event listener for change in payment mode dropdown
+        $('#input-paymentmode').change(function() {
+            var selectedMode = $(this).val(); // Get the selected value
+            payment_method = selectedMode;
+            // Toggle visibility of payment ID container based on selected mode
+            if (selectedMode === 'Cash') {
+                var planPrice = $('#price').val();
+                $('.makePaymentBtn').hide();
+                // Parse the value to float
+                paid_amount = parseFloat(planPrice);
+                isOnlinePayment = false;
+                paymentSuccessful = true
+                payment_status = "Success";
+                $('#payment-id-container').hide(); // Hide container for Cash mode
+                const csrfToken = getCSRFToken();
+                $.ajax({
+                    url: '/gym_dashboard_app/fetch_fees_plans/', // URL to fetch fees plans
+                    type: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+                    },
+                    contentType: 'application/json',
+                    success: function(data) {
+                        // Handle successful response and load fees plans
+                         // Get the dropdown element
+                        var feesPlanDropdown = $('#feesPlanDropdown');
+                                            
+                        // Clear existing options (if any)
+                        feesPlanDropdown.empty();
+                        console.log('data::'+data);
+                        feesPlanDropdown.append('<option disabled selected>Choose a Plan</option>');
+                        // Populate dropdown with fetched plans
+                        $.each(data.fees_data, function(index, subSection) {
+                            var cardio = subSection.cardio;
+                            var isCardio = "Without Cardio"
+                            if(cardio == 1){
+                                isCardio ="With Cardio"
+                            }
+                            feesPlanDropdown.append($('<option>', {
+                                value: subSection.id,
+                                html: subSection.name + " [" + isCardio + "]<br> Duration: " + subSection.duration + "<br> Price: " + subSection.price,
+                                'data-duration': subSection.duration, // Add data-duration attribute
+                                'data-price': subSection.price // Add data-price attribute
+                            }));
+                        });
+                    
+                        // Update hidden input with the default selected plan ID (optional)
+                        $('#selectedPlanId').val(data[0].id); // Set the first plan ID as default
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error
+                        console.log(error);
+                    }
+                });
+           
+            } else {
+                isOnlinePayment = true;
+                $('.makePaymentBtn').show();
+                $('#payment-id-container').show(); // Show container for other modes
+            }
+        });
+
+        $('#feesPlanDropdown').change(function() {
+            var selectedOption = $(this).find(':selected'); // Get the selected option
+            var selectedId = selectedOption.val(); // Get the selected value
+            var selectedDuration = selectedOption.data('duration'); // Get the 'duration' data attribute value
+            var selectedPrice = selectedOption.data('price'); // Get the 'price' data attribute value
+        
+            // Update the hidden input values with the selected plan details
+            new_plan_id = selectedId;
+            new_plan_price = selectedPrice;
+            new_plan_duration = selectedDuration;
+            $('#selectedPlanId').val(selectedId);
+            $('#selectedPlanDuration').val(selectedDuration);
+            $('#selectedPlanPrice').val(selectedPrice);
+            console.log('new_plan_duration::'+new_plan_duration);
+        });
+    
+    });
+
+    //new payment handling setup End 
 
 </script>
 
