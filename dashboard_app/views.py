@@ -3333,7 +3333,18 @@ def update_payment_details_for_order(request):
         order_status = jdict['order_status']
         razor_pay_id = jdict['razor_pay_id']
         payment_status = jdict['payment_status']
+        payment_mode = jdict['payment_mode']
+        
         payment_type = jdict['payment_type']
+        payment_one_amount = jdict['payment_one_amount']
+        payment_two_amount = jdict['payment_two_amount']
+        payment_one_id = jdict['payment_one_id']
+        payment_two_id = jdict['payment_two_id']
+        payment_one_type = jdict['payment_one_type']
+        payment_two_type = jdict['payment_two_type']
+        
+        
+        
         
         #OnCounter
         branch_id = request.session.get('branchid')
@@ -3342,17 +3353,28 @@ def update_payment_details_for_order(request):
             with connection.cursor() as cursor:
                 #Insert Record into Order Table First to Generate Order ID
                 #Adding delivery_boyid = 1 for counter orders only
-                query_order = "update vff.laundry_ordertbl set price='"+str(total_price)+"',order_status='"+str(order_status)+"',delivery_price='"+str(delivery_price)+"',discount_price='"+str(discount_price)+"',gstamount='"+str(gstamount)+"',igstamount='"+str(igstamount)+"',payment_done='1' where orderid='"+str(order_id)+"'"
+                query_order = "update vff.laundry_ordertbl set price='"+str(total_price)+"',order_status='"+str(order_status)+"',delivery_price='"+str(delivery_price)+"',discount_price='"+str(discount_price)+"',gstamount='"+str(gstamount)+"',igstamount='"+str(igstamount)+"',payment_done='1',payment_type='"+str(payment_type)+"' where orderid='"+str(order_id)+"'"
                 cursor.execute(query_order)
                 
                 connection.commit()
                 
-                #Insert record in payment table with razorpay_payment_id
                 
-                query_payment = "insert into vff.laundry_payment_tbl(order_id,razor_pay_payment_id,status,payment_type,branch_id) values ('"+str(order_id)+"','"+str(razor_pay_id)+"','"+str(payment_status)+"','"+str(payment_type)+"','"+str(branch_id)+"')"
-                print(f'insert payment::{query_payment}')
-                cursor.execute(query_payment)
-                connection.commit()
+                #Insert record in payment table with razorpay_payment_id
+                if payment_type == 'Multiple':
+                    query_payment = "insert into vff.laundry_payment_tbl(order_id,razor_pay_payment_id,status,payment_type,branch_id,payment_one_type,payment_one_amount,payment_one_id,payment_two_type,payment_two_amount,payment_two_id) values ('"+str(order_id)+"','"+str(razor_pay_id)+"','"+str(payment_status)+"','"+str(payment_mode)+"','"+str(branch_id)+"','"+str(payment_one_type)+"','"+str(payment_one_amount)+"','"+str(payment_one_id)+"','"+str(payment_two_type)+"','"+str(payment_two_amount)+"','"+str(payment_two_id)+"')"
+                    print(f'insert Multi payment Method::{query_payment}')
+                    cursor.execute(query_payment)
+                    connection.commit()
+                else:
+                    if payment_status == "Success":
+                        query_payment = "insert into vff.laundry_payment_tbl(order_id,razor_pay_payment_id,status,payment_type,branch_id) values ('"+str(order_id)+"','"+str(razor_pay_id)+"','"+str(payment_status)+"','"+str(payment_mode)+"','"+str(branch_id)+"')"
+                        print(f'insert Single payment::{query_payment}')
+                        cursor.execute(query_payment)
+                        connection.commit()
+                # query_payment = "insert into vff.laundry_payment_tbl(order_id,razor_pay_payment_id,status,payment_type,branch_id) values ('"+str(order_id)+"','"+str(razor_pay_id)+"','"+str(payment_status)+"','"+str(payment_type)+"','"+str(branch_id)+"')"
+                # print(f'insert payment::{query_payment}')
+                # cursor.execute(query_payment)
+                # connection.commit()
                 
                     
                 #Update Order status

@@ -1399,7 +1399,7 @@ if(payment_type === ''){
 
      //Multiple Payments Only
      if(payment_type === 'Multiple'){
-      payment_method = 'Multiple'
+      paymentType = 'Multiple'
       payment_status = 'Success'
       var payment_one_amount = $('#multi-mode-one-price').val();
       var payment_two_amount = $('#multi-mode-two-price').val();
@@ -1499,7 +1499,7 @@ if (paymentModeSelect.value !== 'Cash' && paymentModeSelect.value !== 'Cheque' )
              console.log('Success:'+JSON.stringify(data.html))
 
              // Redirect to the "all counter orders" URL
-            window.location.replace('/admin_dashboard/all_orders/');
+            window.location.replace(`/admin_dashboard/all_orders/order_details/${order_id}`);
 
   // Open a new tab for printing
   //var newTab = window.open();
