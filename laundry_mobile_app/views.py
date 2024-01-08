@@ -49,7 +49,7 @@ def execute_query_and_get_result(query):
     
         recs=cursor.fetchall()
         rows=len(recs)
-        print("ROWS:"+str(rows))
+        print(f"{Fore.BLUE}==** Selected ROWS : {rows} **=={e}{Style.RESET_ALL}")
         if len(recs) ==0 :
             reply_data="ErrorCode#2"
             print('Error Code 2')
@@ -202,6 +202,7 @@ def login(request):
 @csrf_exempt
 def load_laundry_all_categories(request):
     global reply_data 
+    reply_data = {'ErrorCode#0': 'ErrorCode#0'}
     if request.method == "POST":
         try:
             jdict = json.loads(request.body)
@@ -251,6 +252,7 @@ def load_laundry_all_categories(request):
                             "min_hours":str(min_hoursstr),
                             }
                     reply_data=json.dumps(jdict)
+                    print(f'reply_data::{reply_data}')
                     return JsonResponse(reply_data,safe=False)
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
@@ -262,7 +264,7 @@ def load_laundry_all_categories(request):
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
             return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
 
-    return JsonResponse({'ErrorCode#0': 'ErrorCode#0'})
+    return JsonResponse(reply_data,safe=False)
 
 
 @csrf_exempt
