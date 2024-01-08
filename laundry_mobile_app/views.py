@@ -33,7 +33,7 @@ def execute_query_and_get_result(query):
     
     try:
         with connection.cursor() as cursor:
-            cursor.set_client_encoding('utf-8')
+            
             print('========** Executing query-->'+str(query))
    #         print(cur)
             reply_data="ErrorCode#0"
