@@ -441,7 +441,7 @@ def update_user_device_token(request):
 @csrf_exempt
 def delivery_boy_login(request):
     global reply_data
-    reply_data = "ErrorCode#2"
+    
     if request.method == "POST":
         try:
             jdict = json.loads(request.body)
