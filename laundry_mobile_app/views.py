@@ -841,7 +841,8 @@ def send_notification_to_delivery_boy(request,booking_id,senderid,mtitle,mbody,m
             delivery_boy_id_str=delivery_boy_id[0]
             delivery_boy_branch_id_str=delivery_boy_branch_id[0]
             print(f'delivery_id::{delivery_boy_id_str}')
-
+        elif reply_data == "ErrorCode#2":
+            return JsonResponse(reply_data,safe=False)
         else:
             print('No Delivery Boy is Free or There are no Delivery Boys for this Branch ID'+str(booking_id))
             title='Pickup Request'
