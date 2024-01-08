@@ -266,6 +266,51 @@ def load_laundry_all_categories(request):
 
 
 @csrf_exempt
+def load_laundry_customer_address(request):
+    global reply_data
+    if request.method == "POST":
+        try:
+            jdict = json.load(request.body)
+            usrid = jdict['usrid']
+            query = "select houseno,address,city,pincode,landmark from vff.usertbl where usrid='"+str(usrid)+"'"
+            if query != "":
+                reply_data = "ErrorCode#0"
+            mapVal = execute_query_and_get_result(obj,query)
+
+            if mapVal != None:
+                buildingNo = mapVal["1"]
+                streetAddress=mapVal["2"]
+                cityName=mapVal["3"]
+                zipCode=mapVal["4"]
+                landMark=mapVal["5"]
+                buildingno_str = lst_to_str(buildingNo)
+                street_str = lst_to_str(streetAddress)
+                cityname_str = lst_to_str(cityName)
+                zipcode_str = lst_to_str(zipCode)
+                landmark_str = lst_to_str(landMark)
+
+                jdict={
+                        'buildingNo':str(buildingno_str),
+                        'streetAddress':str(street_str),
+                        'cityName':str(cityname_str),
+                        'zipCode':str(zipcode_str),
+                        'landMark':str(landmark_str),
+
+                }
+                return JsonResponse(jdict,safe=False)
+        except KeyError as e:
+            print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except json.JSONDecodeError as e:
+            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except Exception as ex:
+            print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+
+    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+
+@csrf_exempt
 def request_pickup_laundry_customer(request):
     global reply_data
     if request.method == "POST":

@@ -12,6 +12,12 @@ urlpatterns = [
     #Loading all Categories
     path('load_laundry_all_categories/', views.load_laundry_all_categories,name='load_laundry_all_categories'),
     
+    #Loading customer Address
+    path('load_laundry_customer_address/', views.load_laundry_customer_address,name='load_laundry_customer_address'),
+    
+    #Request Pickup Laundry Customer
+    path('request_pickup_laundry_customer/', views.request_pickup_laundry_customer,name='request_pickup_laundry_customer'),
+    
     
     
     
