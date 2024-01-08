@@ -268,7 +268,7 @@ def load_laundry_all_categories(request):
 @csrf_exempt
 def load_laundry_customer_address(request):
     global reply_data
-    
+    reply_data = {'ErrorCode#2': 'ErrorCode#2'}
     if request.method == "POST":
         try:
             jdict = json.load(request.body)
