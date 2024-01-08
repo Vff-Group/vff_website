@@ -273,6 +273,7 @@ def load_laundry_customer_address(request):
         try:
             jdict = json.load(request.body)
             usrid = jdict['usrid']
+            print(jdict)
             query = "select houseno,address,city,pincode,landmark from vff.usertbl where usrid='"+str(usrid)+"'"
             if query != "":
                 reply_data = "ErrorCode#0"
@@ -306,7 +307,7 @@ def load_laundry_customer_address(request):
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
             return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
-            print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
+            print(f"{Style.RESET_ALL}Error fetching data address: {ex}{Style.RESET_ALL}")
             return JsonResponse('ErrorCode#8',safe=False)
 
     return JsonResponse(reply_data,safe=False)
