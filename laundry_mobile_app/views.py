@@ -253,7 +253,7 @@ def load_laundry_all_categories(request):
                             }
                     #reply_data=json.dumps(jdict)
                     #print(f'reply_data::{reply_data}')
-                    return JsonResponse(reply_data,safe=False)
+                    return JsonResponse(jdict,safe=False)
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
             return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
