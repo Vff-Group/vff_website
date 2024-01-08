@@ -409,7 +409,7 @@ def update_user_device_token(request):
     global reply_data
     if request.method == "POST":
         try:
-            jdict=json.loads(val)
+            jdict=json.loads(request.body)
             deviceToken = jdict['deviceToken']
             usrid = jdict['usrid']
 
