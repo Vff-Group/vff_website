@@ -268,6 +268,7 @@ def load_laundry_all_categories(request):
 @csrf_exempt
 def load_laundry_customer_address(request):
     global reply_data
+    
     if request.method == "POST":
         try:
             jdict = json.load(request.body)
@@ -275,7 +276,7 @@ def load_laundry_customer_address(request):
             query = "select houseno,address,city,pincode,landmark from vff.usertbl where usrid='"+str(usrid)+"'"
             if query != "":
                 reply_data = "ErrorCode#0"
-            mapVal = execute_query_and_get_result(obj,query)
+            mapVal = execute_query_and_get_result(query)
 
             if mapVal != None:
                 buildingNo = mapVal["1"]
@@ -308,7 +309,7 @@ def load_laundry_customer_address(request):
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
             return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse(reply_data)
 
 @csrf_exempt
 def request_pickup_laundry_customer(request):
