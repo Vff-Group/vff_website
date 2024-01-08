@@ -1440,6 +1440,7 @@ function updateTaxAmount() {
                     handler: function(response) {
                         $('#input-paymentid-multi-one').val(response.razorpay_payment_id);
                         payment_one_id = response.razorpay_payment_id;
+                        isPaymentDone = true;
                     },
                     "notes": {
                         "address": "Tilakwadi"
@@ -1470,7 +1471,7 @@ function updateTaxAmount() {
                     handler: function(response) {
                         $('#input-paymentid-multi-two').val(response.razorpay_payment_id);
                         payment_two_id = response.razorpay_payment_id;
-                   
+                        isPaymentDone = true;
                     },
                     "notes": {
                         "address": "Tilakwadi"
@@ -1988,14 +1989,14 @@ function payment_show(totalPayment,customerName,customerMobno){
         "key": "rzp_test_qtHIWapeUEAAZO",//Live rzp_live_SeGnLgb5JnY8Id // Enter the Key ID generated from the Dashboard rzp_test_qtHIWapeUEAAZO
         "amount": (totalPayment * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         "currency": "INR",
-        "name": "VFF Group", //your business name
+        "name": "Velvet Wash Laundry", //your business name
         "description": "Laundry Service Charges",
         "image": "https://vff-group.com/static/images/logo.png",
         "handler": function (response){
             payment_id =  response.razorpay_payment_id;
             order_status = "Payment Done";
             payment_status = "Success";
-            
+            isPaymentDone = true;
             //GSTamount = 0
             //IGSTamount = 0
             //GSTamount = ((totalPayment * 18)/100);
