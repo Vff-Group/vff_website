@@ -31,24 +31,23 @@ def execute_query_and_get_result(query):
         qtype=2
  #   print('qtype->'+str(qtype))
     
-    try:
-        with connection.cursor() as cursor:
-            print(f"{Fore.GREEN}Query Executed: {query}{Style.RESET_ALL}")
-   #         print(cur)
-            reply_data="ErrorCode#0"
-            cursor.execute(query) #exception should be handled
-            if qtype == 2:
-                cursor.commit()
-                return None
-            elif qtype == 1:
-                cursor.commit()
-            cursor.close()  # Close the cursor after processing the data
-    except Exception as e:
-        print(f"{Fore.RED}Query Execution Error:: {e}{Style.RESET_ALL}")
-        reply_data="ErrorCode#8"
-        return None
-    with connection.cursor() as cur:
-        recs=cur.fetchall()
+    with connection.cursor() as cursor:
+        try:
+                print(f"{Fore.GREEN}Query Executed: {query}{Style.RESET_ALL}")
+   #             print(cur)
+                reply_data="ErrorCode#0"
+                cursor.execute(query) #exception should be handled
+                if qtype == 2:
+                    cursor.commit()
+                    return None
+                elif qtype == 1:
+                    cursor.commit()
+        except Exception as e:
+            print(f"{Fore.RED}Query Execution Error:: {e}{Style.RESET_ALL}")
+            reply_data="ErrorCode#8"
+            return None
+    
+        recs=cursor.fetchall()
         rows=len(recs)
         print("ROWS:"+str(rows))
         if len(recs) ==0 :
@@ -67,7 +66,6 @@ def execute_query_and_get_result(query):
                 j=j+1
             i=i+1
             retMap[str(i)]=lst
-            cur.close()  # Close the cursor after processing the data
     return retMap
 
 def lst_to_str(lst):
