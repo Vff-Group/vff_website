@@ -76,10 +76,10 @@ def execute_query_and_get_result(query):
                 reply_data="ErrorCode#0"
                 cursor.execute(query) #exception should be handled
                 if qtype == 2:
-                    cursor.commit()
+                    connection.commit()
                     return None
                 elif qtype == 1:
-                    cursor.commit()
+                    connection.commit()
         except Exception as e:
             print(f"{Fore.RED}Query Execution Error:: {e}{Style.RESET_ALL}")
             reply_data="ErrorCode#8"
@@ -87,7 +87,7 @@ def execute_query_and_get_result(query):
     
         recs=cursor.fetchall()
         rows=len(recs)
-        print(f"{Fore.BLUE}==** Selected ROWS : {rows} **==")
+        print(f"{Fore.YELLOW}==** Selected ROWS : {rows} **==")
         if len(recs) ==0 :
             reply_data="ErrorCode#2"
             print('Error Code 2')
@@ -136,7 +136,7 @@ def login(request):
                     try:
                         with connection.cursor() as cursor:
                             cursor.execute(query)
-                            cursor.commit()
+                            connection.commit()
                             data=cursor.fetchall()
                             if len(data) !=0:
                                 rusrid=str(data[0][0])
@@ -145,7 +145,7 @@ def login(request):
                                 query="insert into vff.laundry_customertbl (usrid,customer_name,is_online) values ('"+str(rusrid)+"','"+str(uname)+"','1')"
                                 try:
                                     cursor.execute(query)
-                                    cursor.commit()
+                                    connection.commit()
                                     query = "select usertbl.usrid,usrname,consmrid,gender,token,created_date,profile_img,email from vff.laundry_customertbl,vff.usertbl where laundry_customertbl.usrid=usertbl.usrid and mobile_no='"+str(mobno)+"'"
                                     reply_data="ErrorCode#0"
                                     mapVal = execute_query_and_get_result(query)
@@ -370,11 +370,11 @@ def request_pickup_laundry_customer(request):
             query2="insert into vff.laundry_order_bookingtbl(customerid,address,city,pincode,landmark,clat,clng,branch_id) values ('"+str(customerId)+"','"+str(streetAddress)+"','"+str(cityName)+"','"+str(zipCode)+"','"+str(landMark)+"',"+str(clat)+","+str(clng)+",'"+str(branch_id)+"') returning bookingid"
             with connection.cursor() as cursor:
                 cursor.execute(query)
-                cursor.commit()
+                connection.commit()
                 reply_data="ErrorCode#0"
                 try:
                     cursor.execute(query2)
-                    cursor.commit()
+                    connection.commit()
                     data = cursor.fetchall()
                     if len(data) !=0:
                         booking_id=str(data[0][0])
@@ -418,7 +418,7 @@ def update_user_device_token(request):
             try:
                 with connection.cursor() as cursor:
                     cursor.execute(query)
-                    cursor.commit()
+                    connection.commit()
                     reply_data="ErrorCode#0"
                     
             except Exception as e:
@@ -466,7 +466,7 @@ def delivery_boy_login(request):
                     try:
                         with connection.cursor() as cursor:
                             cursor.execute(query2)
-                            cursor.commit()
+                            connection.commit()
                     except Exception as e:
                         print('Failed Updating delivery Boy Token');
                         print(e)
@@ -583,21 +583,21 @@ def accept_or_reject_order_delivery_boy(request):
             try:
                 with connection.cursor() as cursor:
                     cursor.execute(query)
-                    cursor.commit()
+                    connection.commit()
                     reply_data="ErrorCode#0"
                     if status !='Rejected':
                         query2="update vff.laundry_order_bookingtbl set delivery_boy_id='"+str(delivery_boy_id)+"',booking_status='"+str(status)+"' where bookingid='"+str(booking_id)+"'"
                         try:
                             with connection.cursor() as cursor:
                                 cursor.execute(query2)
-                                cursor.commit()
+                                connection.commit()
                                 reply_data="ErrorCode#0"
 
                                 query3="update vff.laundry_delivery_boytbl set status='Busy' where delivery_boy_id='"+str(delivery_boy_id)+"'"
                             try:
                                 with connection.cursor() as cursor:
                                     cursor.execute(query3)
-                                    cursor.commit()
+                                    connection.commit()
                                     reply_data="ErrorCode#0"
                             except Exception as e:
                                 print(e)
@@ -609,7 +609,7 @@ def accept_or_reject_order_delivery_boy(request):
                                 try:
                                     with connection.cursor() as cursor:
                                         cursor.execute(query5)
-                                        cursor.commit()
+                                        connection.commit()
                                         reply_data="ErrorCode#0"
                                 except Exception as e:
                                     print(e)
@@ -633,7 +633,7 @@ def accept_or_reject_order_delivery_boy(request):
                         try:
                             with connection.cursor() as cursor:
                                 cursor.execute(query4)
-                                cursor.commit()
+                                connection.commit()
                                 reply_data="ErrorCode#0"
                         except Exception as e:
                             print(e)
@@ -796,7 +796,7 @@ def send_notification_to_dashboard_without_delivery_boy(request,booking_id,sende
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query)
-                cursor.commit()
+                connection.commit()
         except Exception as e:
              print('Error Inserting Notification for send_notification_to_dashboard_without_delivery_boy')
              print(e)
@@ -813,7 +813,7 @@ def send_notification_to_dashboard(request,booking_id,senderid,mtitle,mbody,mint
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query)
-                cursor.commit()
+                connection.commit()
         except Exception as e:
              print('Error Inserting Notification record for delivery boy')
              print(e)
@@ -859,7 +859,7 @@ def send_notification_to_delivery_boy(request,booking_id,senderid,mtitle,mbody,m
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query)
-                cursor.commit()
+                connection.commit()
                 #send notification to Delivery Boy
                 title='Pickup Request'
                 send_notification_to_dashboard(request,booking_id,senderid,title,body,intent,mdata,branch_id,delivery_boy_id_str)
@@ -885,7 +885,7 @@ def update_order_status(request,order_id,status):
     try:
         with connection.cursor() as cursor:
             cursor.execute(query)
-            cursor.commit()
+            connection.commit()
             print(f'Order Status Updated Successfully for OrderID:{order_id} Status:{status}')
     except Exception as e:
         print('Error Updating Order Status')
@@ -899,7 +899,7 @@ def update_booking_status(request,booking_id,status):
     try:
         with connection.cursor() as cursor:
             cursor.execute(query)
-            cursor.commit()
+            connection.commit()
         print(f'Booking Status Updated Successfully for BookingID:{booking_id} Status:{status}')
     except Exception as e:
         print('Error Updating Booking Status')
@@ -1345,7 +1345,7 @@ def add_laundry_items_to_cart(request):
 
                         with connection.cursor() as cursor:
                             cursor.execute(query)
-                            cursor.commit()
+                            connection.commit()
                             reply_data="ErrorCode#0"
                 except Exception as e:
                     print(e)
@@ -1364,7 +1364,7 @@ def add_laundry_items_to_cart(request):
                 try:
                     with connection.cursor() as cursor:
                         cursor.execute(query2)
-                        cursor.commit()
+                        connection.commit()
                         reply_data="ErrorCode#0"
                 except Exception as e:
                     print(e)
@@ -1395,7 +1395,7 @@ def delete_laundry_cart_item(request):
             try:
                 with connection.cursor() as cursor:
                     cursor.execute(query)
-                    cursor.commit()
+                    connection.commit()
                     reply_data="ErrorCode#0"
             except Exception as e:
                 print(e)
@@ -1603,7 +1603,7 @@ def place_order_laundry(request):
                     try:
                         with connection.cursor() as cursor:
                             cursor.execute(query_order)
-                            cursor.commit()
+                            connection.commit()
                             data = cursor.fetchall()
                         if len(data) !=0:
                             order_id=str(data[0][0])
@@ -1614,7 +1614,7 @@ def place_order_laundry(request):
                             try:
                                 with connection.cursor() as cursor:
                                     cursor.execute(query)
-                                    cursor.commit()
+                                    connection.commit()
                                 #obj.reply_data="ErrorCode#0"
                                 #Adding all cart items into active order table 
                                 query2="insert into vff.laundry_active_orders_tbl(order_id,booking_id,categoryid,subcategoryid,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type) select "+str(order_id)+" as order_id,booking_id,catid,subcatid,booking_type,item_cost,item_quantity,type,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,section_type from vff.laundry_cart_items where customer_id='"+str(customer_id)+"' and booking_id='"+str(booking_id)+"'"
@@ -1622,7 +1622,7 @@ def place_order_laundry(request):
                                 try:
                                     with connection.cursor() as cursor:
                                         cursor.execute(query2)
-                                        cursor.commit()
+                                        connection.commit()
                                  #   obj.reply_data="ErrorCode#0"
                                 except Exception as e:
                                     print(e)
@@ -1633,7 +1633,7 @@ def place_order_laundry(request):
                                 try:
                                     with connection.cursor() as cursor:
                                         cursor.execute(query_assignment_update)
-                                        cursor.commit()
+                                        connection.commit()
                                  #   obj.reply_data="ErrorCode#0"
                                 except Exception as e:
                                     print(e)
@@ -1652,7 +1652,7 @@ def place_order_laundry(request):
                                         print(f"Qeury3:::{query3}")
                                         with connection.cursor() as cursor:
                                             cursor.execute(query3)
-                                            cursor.commit()
+                                            connection.commit()
                                   #  obj.reply_data="ErrorCode#0"
                                 except Exception as e:
                                     print(e)
@@ -1704,14 +1704,14 @@ def cancel_laundry_order(request):
             try:
                 with connection.cursor() as cursor:
                     cursor.execute(query)
-                    cursor.commit()
+                    connection.commit()
                     reply_data="ErrorCode#0"
                     status = 'Cancelled'
                     query3="update vff.laundry_order_assignmenttbl set type_of_order='Cancelled' where booking_id='"+str(booking_id)+"'"
                     try:
                         with connection.cursor() as cursor:
                             cursor.execute(query3)
-                            cursor.commit()
+                            connection.commit()
                     except Exception as e:
                         print(e)
                         reply_data ="ErrorCode#8"
@@ -1719,7 +1719,7 @@ def cancel_laundry_order(request):
                     try:
                         with connection.cursor() as cursor:
                             cursor.execute(query2)
-                            cursor.commit()
+                            connection.commit()
                         #TODO:Need to send notification to delivery boy that the order is cancelled
                         title ="Booking Cancelled"
                         body = "Booking for Pickup Request was cancelled by Customer for Booking ID:#"+str(booking_id)+". You are free to accept New Orders Thank You"
@@ -1763,7 +1763,7 @@ def feedback_laundry_order(request):
             try:
                 with connection.cursor() as cursor:
                     cursor.execute(query)
-                    cursor.commit()
+                    connection.commit()
                     reply_data="ErrorCode#0"
             except Exception as e:
                 print(e)
@@ -1798,7 +1798,7 @@ def mark_delivery_boy_as_online(request):
             try:
                 with connection.cursor() as cursor:
                     cursor.execute(query)
-                    cursor.commit()
+                    connection.commit()
                 #obj.reply_data="ErrorCode#0"
                 get_query = "select status from vff.laundry_delivery_boytbl where delivery_boy_id='"+str(delivery_boy_id)+"'"
                 print(f'get_query:{get_query}')
@@ -2183,7 +2183,7 @@ def send_notification_to_assigned_delivery_boy_for_booking(request,sender_id,mti
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query2)
-                cursor.commit()
+                connection.commit()
                 #send notification to Delivery Boy
                 try:
                     print('Sending Notification to delivery boy')
@@ -2219,7 +2219,7 @@ def send_notification_to_assigned_delivery_boy(request,sender_id,mtitle,mbody,mi
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query)
-                cursor.commit()
+                connection.commit()
                 #send notification to Delivery Boy
                 try:
                     print('Sending Notification to delivery boy')
@@ -2254,7 +2254,7 @@ def send_notification_to_customer_with_bookingid(request,sender_id,mtitle,mbody,
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query2)
-                cursor.commit()
+                connection.commit()
                 #send Customer Notification
                 try:
                     print('Sending Notification to customer')
@@ -2290,7 +2290,7 @@ def send_notification_to_customer(request,sender_id,mtitle,mbody,mintent,orderid
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query2)
-                cursor.commit()
+                connection.commit()
                  #send Customer Notification
                 try:
                      print('Sending Notification to customer')
@@ -2322,7 +2322,7 @@ def update_current_order_status(request):
         try:
             with connection.cursor() as cursor:
                 cursor.execute(update_order_details)
-                cursor.commit()
+                connection.commit()
         except Exception as e:
             print(e)
             print('Error while updating pickup status')
@@ -2332,7 +2332,7 @@ def update_current_order_status(request):
         try:
             with connection.cursor() as cursor:
                 cursor.execute(update_completed_details)
-                cursor.commit()
+                connection.commit()
         except Exception as e:
             print(e)
             print('Error while updating drop order status')
@@ -2346,7 +2346,7 @@ def update_current_order_status(request):
     try:
         with connection.cursor() as cursor:
             cursor.execute(query)
-            cursor.commit()
+            connection.commit()
         #obj.reply_data="ErrorCode#0"
         #Updates in Order history table as well
         orderid = order_id
@@ -2369,7 +2369,7 @@ def update_current_order_status(request):
             try:
                 with connection.cursor() as cursor:
                     cursor.execute(query4)
-                    cursor.commit()
+                    connection.commit()
                 reply_data="ErrorCode#0"
             except Exception as e:
                 print(e)
@@ -2387,7 +2387,7 @@ def update_current_order_status(request):
             try:
                 with connection.cursor() as cursor:
                     cursor.execute(query5)
-                    cursor.commit()
+                    connection.commit()
                     reply_data="ErrorCode#0"
             except Exception as e:
                 print(e)
@@ -2428,7 +2428,7 @@ def update_current_new_booking_status(request):
         try:
             with connection.cursor() as cursor:
                 cursor.execute(update_order_details)
-                cursor.commit()
+                connection.commit()
         except Exception as e:
             print(e)
             print('Error while updating pickup status')
@@ -2438,7 +2438,7 @@ def update_current_new_booking_status(request):
         try:
             with connection.cursor() as cursor:
                 cursor.execute(update_completed_details)
-                cursor.commit()
+                connection.commit()
         except Exception as e:
             print(e)
             print('Error while updating drop order status')
@@ -2456,7 +2456,7 @@ def update_current_new_booking_status(request):
             try:
                 with connection.cursor() as cursor:
                     cursor.execute(query5)
-                    cursor.commit()
+                    connection.commit()
                     reply_data="ErrorCode#0"
             except Exception as e:
                 print(e)
