@@ -269,11 +269,12 @@ def load_laundry_all_categories(request):
 def load_laundry_customer_address(request):
     global reply_data
     reply_data = 'ErrorCode#2'
+    print(reply_data)
     if request.method == "POST":
         try:
             jdict = json.load(request.body)
-            print(jdict)
-            usrid = jdict['usri']
+            
+            usrid = jdict['usrid']
             query = "select houseno,address,city,pincode,landmark from vff.usertbl where usrid='"+str(usrid)+"'"
             if query != "":
                 reply_data = "ErrorCode#0"
