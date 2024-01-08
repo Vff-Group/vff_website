@@ -9,6 +9,9 @@ urlpatterns = [
     #Login
     path('login/', views.login,name='login'),
     
+    #Loading all Categories
+    path('load_laundry_all_categories/', views.load_laundry_all_categories,name='load_laundry_all_categories'),
+    
     
     
     
