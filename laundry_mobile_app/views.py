@@ -264,7 +264,7 @@ def load_laundry_all_categories(request):
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
             return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse({'ErrorCode#0': 'ErrorCode#0'})
 
 
 @csrf_exempt
