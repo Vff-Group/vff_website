@@ -49,7 +49,7 @@ def execute_query_and_get_result(query):
     
         recs=cursor.fetchall()
         rows=len(recs)
-        print(f"{Fore.BLUE}==** Selected ROWS : {rows} **=={e}{Style.RESET_ALL}")
+        print(f"{Fore.BLUE}==** Selected ROWS : {rows} **==")
         if len(recs) ==0 :
             reply_data="ErrorCode#2"
             print('Error Code 2')
