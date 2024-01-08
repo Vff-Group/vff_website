@@ -272,8 +272,8 @@ def load_laundry_customer_address(request):
     if request.method == "POST":
         try:
             jdict = json.load(request.body)
-            usrid = jdict.get('usrid')
             print(jdict)
+            usrid = jdict['usrid']
             query = "select houseno,address,city,pincode,landmark from vff.usertbl where usrid='"+str(usrid)+"'"
             if query != "":
                 reply_data = "ErrorCode#0"
