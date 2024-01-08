@@ -251,7 +251,7 @@ def load_laundry_all_categories(request):
                             "min_hours":str(min_hoursstr),
                             }
                     reply_data=json.dumps(jdict)
-                    return JsonResponse(reply_data,safe=False)
+                    return JsonResponse(reply_data)
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
             return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
