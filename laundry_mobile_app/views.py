@@ -196,7 +196,7 @@ def login(request):
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
             return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
 
-    return JsonResponse({'ErrorCode#0': 'ErrorCode#0'})
+    return JsonResponse(reply_data,safe=False)
 
 @csrf_exempt
 def load_laundry_all_categories(request):
@@ -268,7 +268,7 @@ def load_laundry_all_categories(request):
 @csrf_exempt
 def load_laundry_customer_address(request):
     global reply_data
-    reply_data = {'ErrorCode#2': 'ErrorCode#2'}
+    reply_data = 'ErrorCode#2'
     if request.method == "POST":
         try:
             jdict = json.load(request.body)
@@ -309,7 +309,7 @@ def load_laundry_customer_address(request):
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
             return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
 
-    return JsonResponse(reply_data)
+    return JsonResponse(reply_data,safe=False)
 
 @csrf_exempt
 def request_pickup_laundry_customer(request):
