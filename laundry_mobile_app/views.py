@@ -33,8 +33,7 @@ def execute_query_and_get_result(query):
     
     try:
         with connection.cursor() as cursor:
-            
-            print('========** Executing query-->'+str(query))
+            print(f"{Fore.GREEN}Query Executed: {query}{Style.RESET_ALL}")
    #         print(cur)
             reply_data="ErrorCode#0"
             cursor.execute(query) #exception should be handled
@@ -44,8 +43,7 @@ def execute_query_and_get_result(query):
             elif qtype == 1:
                 cursor.commit()
     except Exception as e:
-        print('query fetch Exception-->')
-        print(e)
+        print(f"{Fore.RED}Query Execution Error:: {e}{Style.RESET_ALL}")
         reply_data="ErrorCode#8"
         return None
 
