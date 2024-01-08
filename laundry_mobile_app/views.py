@@ -42,30 +42,32 @@ def execute_query_and_get_result(query):
                 return None
             elif qtype == 1:
                 cursor.commit()
+            cursor.close()  # Close the cursor after processing the data
     except Exception as e:
         print(f"{Fore.RED}Query Execution Error:: {e}{Style.RESET_ALL}")
         reply_data="ErrorCode#8"
         return None
-
-    recs=cursor.fetchall()
-    rows=len(recs)
-    print("ROWS:"+str(rows))
-    if len(recs) ==0 :
-        reply_data="ErrorCode#2"
-        print('Error Code 2')
-        return None
-    cols=len(recs[0])
-    retMap={}
-    i=0
-    while i<cols:
-        j=0
-        lst=[]
-        while j<rows:
-            val=recs[j][i]
-            lst.append(str(val))
-            j=j+1
-        i=i+1
-        retMap[str(i)]=lst
+    with connection.cursor() as cur:
+        recs=cur.fetchall()
+        rows=len(recs)
+        print("ROWS:"+str(rows))
+        if len(recs) ==0 :
+            reply_data="ErrorCode#2"
+            print('Error Code 2')
+            return None
+        cols=len(recs[0])
+        retMap={}
+        i=0
+        while i<cols:
+            j=0
+            lst=[]
+            while j<rows:
+                val=recs[j][i]
+                lst.append(str(val))
+                j=j+1
+            i=i+1
+            retMap[str(i)]=lst
+            cur.close()  # Close the cursor after processing the data
     return retMap
 
 def lst_to_str(lst):
