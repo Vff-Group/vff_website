@@ -188,20 +188,20 @@ def login(request):
                     return JsonResponse(jdict, safe=False)#safe because jdict is already serialized and to avoid dict confusion
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
     return JsonResponse(reply_data,safe=False)
 
 @csrf_exempt
 def load_laundry_all_categories(request):
     global reply_data 
-    reply_data = {'ErrorCode#0': 'ErrorCode#0'}
+    reply_data = 'ErrorCode#0'
     if request.method == "POST":
         try:
             jdict = json.loads(request.body)
@@ -254,13 +254,13 @@ def load_laundry_all_categories(request):
                     return JsonResponse(jdict,safe=False)
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
     return JsonResponse(reply_data,safe=False)
 
@@ -301,13 +301,13 @@ def load_laundry_customer_address(request):
                 return JsonResponse(jdict,safe=False)
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
     return JsonResponse(reply_data,safe=False)
 
@@ -319,15 +319,15 @@ def request_pickup_laundry_customer(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 @csrf_exempt
@@ -338,15 +338,15 @@ def update_user_device_token(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 @csrf_exempt
@@ -357,15 +357,15 @@ def delivery_boy_login(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 @csrf_exempt
@@ -377,15 +377,15 @@ def load_new_orders_requested_to_delivery_boy(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -397,15 +397,15 @@ def accept_or_reject_order_delivery_boy(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 '''
@@ -424,15 +424,15 @@ def load_customer_new_orders(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -444,15 +444,15 @@ def send_notification_to_dashboard_without_delivery_boy(request,booking_id,sende
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -464,15 +464,15 @@ def send_notification_to_dashboard(request,booking_id,senderid,mtitle,mbody,mint
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -484,15 +484,15 @@ def send_notification_to_delivery_boy(request,booking_id,senderid,mtitle,mbody,m
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 '''
@@ -506,15 +506,15 @@ def update_order_status(request,order_id,status):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -526,15 +526,15 @@ def update_booking_status(request,booking_id,status):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 '''
@@ -548,15 +548,15 @@ def load_customer_active_order_details(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -568,15 +568,15 @@ def load_selected_order_items_order_detail(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -588,15 +588,15 @@ def load_category_wise_details(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -608,15 +608,15 @@ def load_sub_category_wise_details(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -628,15 +628,15 @@ def load_sub_category_section_wise_details(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -648,15 +648,15 @@ def add_laundry_items_to_cart(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -668,15 +668,15 @@ def delete_laundry_cart_item(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -688,15 +688,15 @@ def load_cart_items_selected(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -708,15 +708,15 @@ def load_extra_items_details(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 @csrf_exempt
@@ -727,15 +727,15 @@ def place_order_laundry(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -747,15 +747,15 @@ def cancel_laundry_order(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -767,15 +767,15 @@ def feedback_laundry_order(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -787,15 +787,15 @@ def mark_delivery_boy_as_online(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -807,15 +807,15 @@ def load_all_orders_tab_details(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -827,15 +827,15 @@ def load_delivery_boy_all_orders_tab_details(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -847,15 +847,15 @@ def delivery_boycurrent_active_order_details(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -867,15 +867,15 @@ def send_notification_to_assigned_delivery_boy_for_booking(request,sender_id,mti
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -887,15 +887,15 @@ def send_notification_to_assigned_delivery_boy(request,sender_id,mtitle,mbody,mi
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -907,15 +907,15 @@ def send_notification_to_customer_with_bookingid(request,sender_id,mtitle,mbody,
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -927,15 +927,15 @@ def send_notification_to_customer(request,sender_id,mtitle,mbody,mintent,orderid
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -947,15 +947,15 @@ def update_current_order_status(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -967,15 +967,15 @@ def update_current_new_booking_status(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -988,15 +988,15 @@ def load_todays_notifications(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -1008,15 +1008,15 @@ def delivery_boy_stats(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -1028,15 +1028,15 @@ def load_all_branches(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -1049,15 +1049,15 @@ def load_all_pickup_order(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -1070,15 +1070,15 @@ def load_all_drop_order(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 @csrf_exempt
@@ -1089,15 +1089,15 @@ def load_all_pickup_or_drop_booking_details(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
@@ -1111,15 +1111,15 @@ def load_all_offers(request):
             pass
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except json.JSONDecodeError as e:
             print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
         except Exception as ex:
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            return JsonResponse('ErrorCode#8',safe=False)
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse('ErrorCode#8',safe=False)
 
 
 
