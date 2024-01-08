@@ -251,8 +251,8 @@ def load_laundry_all_categories(request):
                             "catname":str(catnamestr),
                             "min_hours":str(min_hoursstr),
                             }
-                    reply_data=json.dumps(jdict)
-                    print(f'reply_data::{reply_data}')
+                    #reply_data=json.dumps(jdict)
+                    #print(f'reply_data::{reply_data}')
                     return JsonResponse(reply_data,safe=False)
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
