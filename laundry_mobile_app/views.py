@@ -141,10 +141,9 @@ def login(request):
                                             "profile_img":str(profile_imgstr),
                                             "email":str(email_str),
                                             }
-                                        print('jdict:: '+str(jdict))
-                                        reply_data = json.dumps(jdict)
-                                        # Return the data as a JSON response
-                                        return JsonResponse(reply_data, safe=False)#safe because jdict is already serialized and to avoid dict confusion
+                                        
+                                        # Returning the data as a JSON response
+                                        return JsonResponse(jdict, safe=False)#safe because jdict is already serialized and to avoid dict confusion
 
                                 except Exception as e:
                                     print(e)
@@ -184,9 +183,9 @@ def login(request):
                         "email":str(email_str),
                         }
                     print(jdict)
-                    reply_data = json.dumps(jdict)
-                    # Return the data as a JSON response
-                    return JsonResponse(reply_data, safe=False)#safe because jdict is already serialized and to avoid dict confusion
+                    
+                    # Returning the data as a JSON response
+                    return JsonResponse(jdict, safe=False)#safe because jdict is already serialized and to avoid dict confusion
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
             return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
@@ -197,7 +196,7 @@ def login(request):
             print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
             return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
 
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse({'ErrorCode#0': 'ErrorCode#0'})
 
 @csrf_exempt
 def load_laundry_all_categories(request):
@@ -251,8 +250,7 @@ def load_laundry_all_categories(request):
                             "catname":str(catnamestr),
                             "min_hours":str(min_hoursstr),
                             }
-                    #reply_data=json.dumps(jdict)
-                    #print(f'reply_data::{reply_data}')
+                    
                     return JsonResponse(jdict,safe=False)
         except KeyError as e:
             print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
