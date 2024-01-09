@@ -10,6 +10,7 @@ urlpatterns = [
     path('franchise/',views.franchise,name="franchise"),
     path('contactus/',views.contactus,name="contactus"),
     path('privacy_policy/',views.privacy,name="privacy"),
+    path('gym_home/',views.gym_home,name="gym_home"),
     path('terms_of_service/',views.terms_of_service,name="terms_of_service"),
     path('contact_form_submit/',views.contact_form_submit,name="contact_form_submit"),
     #  path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),

@@ -28,6 +28,10 @@ def privacy(request):
     current_url = request.get_full_path()
     return render(request,"privacy.html",{'current_url': current_url})
 
+def gym_home(request):
+    current_url = request.get_full_path()
+    return render(request,"gym_index.html",{'current_url': current_url})
+
 def terms_of_service(request):
     current_url = request.get_full_path()
     return render(request,"terms_of_service.html",{'current_url': current_url})
