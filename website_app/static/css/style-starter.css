@@ -19369,8 +19369,8 @@ h5.sub-title:before {
 /* Whatsapp Button */
 .whatsapp-button {
   position: fixed;
-  bottom: 20px; /* Adjust vertical position from bottom */
-  right: 20px; /* Adjust horizontal position from right */
+  bottom: 100px; /* Adjust vertical position from bottom */
+  right: 100px; /* Adjust horizontal position from right */
   z-index: 9999; /* Ensure it's above other elements */
 }
 
@@ -19381,7 +19381,7 @@ h5.sub-title:before {
 }
 
 .whatsapp-button img:hover {
-  transform: scale(1.1); /* Enlarge the icon on hover */
+  transform: scale(1.5); /* Enlarge the icon on hover */
 }
 /* Whatsapp Button End*/
 
