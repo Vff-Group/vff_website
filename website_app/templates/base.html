@@ -194,16 +194,12 @@
 </div>
 <!-- Modal -->
 <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <!-- <h6 class="modal-title" id="modal-title-default">Find Your Nearest Laundry Store</h6> -->
-        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
+  <div class="modal-dialog modal-fullscreen" role="document">
+    <div class="modal-content border-0">
+      <div class="modal-body p-0">
         <div class="modal-background-image">
           <!-- Your background image here -->
-          <img src="{% static 'images/order_now_bg.jpg' %}" alt="Background Image" />
+          <img src="{% static 'images/order_now_bg.jpg' %}" alt="Background Image" class="img-fluid" />
           <!-- Overlay for text content -->
           <div class="overlay">
             <h3 class="text-white">Find Your Nearest Laundry Store</h3>
@@ -229,6 +225,7 @@
     </div>
   </div>
 </div>
+
 
 
     <!-- footer -->

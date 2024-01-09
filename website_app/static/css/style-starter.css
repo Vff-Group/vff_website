@@ -19369,28 +19369,32 @@ h5.sub-title:before {
 /* For Order Now Modal*/
 
 
+.modal-fullscreen {
+  margin: 0;
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-content {
+  border: none;
+}
+
 .modal-background-image {
   position: relative;
 }
 
 .modal-background-image img {
   width: 100%;
-  height: auto;
-  margin: 0;
-  object-fit: cover; /* Ensure the image covers the modal */
+  height: 100%;
+  object-fit: cover;
 }
 
 .overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
 }
 
@@ -19405,6 +19409,7 @@ h5.sub-title:before {
   width: 50px; /* Set icon size */
   height: 50px;
 }
+
 
 /* For Order Now Modal End*/
 
