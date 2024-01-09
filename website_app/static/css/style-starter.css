@@ -20764,9 +20764,10 @@ button.owl-next {
 }
 
 .store-img {
-  width: 100px; /* Adjust size as needed */
+  width: 200px; /* Adjust size as needed */
   height: 100px; /* Adjust size as needed */
   margin: 10px;
+  object-fit: contain;
 }
 
 .store-img:hover {
