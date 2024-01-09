@@ -19368,7 +19368,7 @@ h5.sub-title:before {
 
 /* about section */
 .image-box.inverse .image-box__static {
-  z-index: -1;
+  z-index: 2;
   transition: transform .5s ease;
 }
 
@@ -19388,26 +19388,18 @@ h5.sub-title:before {
 
 
 .image-box:hover .image-box__static {
-  transform: translateY(50px);
+  transform: translateY(50px) ;
+  z-index: 3; /* Set a higher z-index on hover to bring it forward */
 }
 
 
 
 .image-box.inverse:hover .image-box__float {
   transform: translate(-15px, 0);
+  z-index: 1; /* Set a lower z-index on hover to push it backward */
 }
 
-.image-box__static {
-  z-index: 1; /* Initial z-index for static image */
-}
 
-.image-box:hover .image-box__static {
-  z-index: -1; /* Send static image to back on hover */
-}
-
-.image-box:hover .image-box__float {
-  z-index: 1; /* Bring floating image to front on hover */
-}
 
 .image-box img {
   border-radius: var(--border-radius);
