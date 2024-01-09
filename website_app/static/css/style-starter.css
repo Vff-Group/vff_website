@@ -19499,6 +19499,25 @@ ul.list-style-lis li i {
 
 /* //about section */
 
+/* download section  */
+.responsive-section {
+  height: 150px; /* Set initial height */
+  background-color: #f0f0f0; /* Example background color */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Media query for mobile screens */
+@media screen and (max-width: 767px) {
+  .responsive-section {
+    height: 100px; /* Adjust height for mobile screens */
+  }
+}
+
+/* download section end */
+
 /* services section */
 .w3l-grids-block-5 .content-main-top h4 a {
   color: var(--heading-color);
