@@ -20762,3 +20762,13 @@ button.owl-next {
       height: auto;
   }
 }
+
+.store-img {
+  width: 120px; /* Adjust size as needed */
+  height: 120px; /* Adjust size as needed */
+  margin: 10px;
+}
+
+.store-img:hover {
+  opacity: 0.8; /* Change opacity on hover as desired */
+}
