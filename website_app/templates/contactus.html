@@ -28,15 +28,18 @@
                         <form id="contactForm"  class="main-input" onsubmit="sendEmail(); reset(); return false;">
                             {% csrf_token %}
                             <div class="row top-inputs">
-                                <div class="col-md-6">
-                                    <input type="text" placeholder="Name" name="w3lName" id="w3lName" required="">
+                                <div class="col-md-4">
+                                    <input type="text" placeholder="Name" name="w3lName" id="sender_name" required="">
                                 </div>
-                                <div class="col-md-6">
-                                    <input type="email" name="email" placeholder="Email" id="w3lSender" required="">
+                                <div class="col-md-4">
+                                    <input type="email" name="email" placeholder="Email" id="sender_email" required="">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" name="subject" placeholder="Subject" id="subject_id" required="">
                                 </div>
                             </div>
                             
-                            <textarea placeholder="Message" name="w3lMessage" id="w3lMessage" required=""></textarea>
+                            <textarea placeholder="Message" name="w3lMessage" id="body_msg" required=""></textarea>
                             <div class="text-end">
                                 <button type="submit" class="btn btn-style">Send Now</button>
                             </div>
@@ -98,13 +101,13 @@
 
     function sendEmail(){
         Email.send({
-            Host : "smtp.elasticemail.com",
-            Username : "username",
-            Password : "password",
-            To : 'them@website.com',
-            From : "you@isp.com",
-            Subject : "This is the subject",
-            Body : "And this is the body"
+            Host : "smtp.gmail.com",
+            Username : "shahidmaniyar888@gmail.com",
+            Password : "8105604377",
+            To : 'info@vff-group.com',
+            From : document.getElementById("sender_email").value,
+            Subject : document.getElementById("subject_id").value,
+            Body : document.getElementById("body_msg").value
         }).then(
           message => alert(message)
         );
