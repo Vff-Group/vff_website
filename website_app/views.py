@@ -27,7 +27,7 @@ def privacy(request):
 @csrf_exempt
 def contact_form_submit(request):
     if request.method == 'POST':
-        name = request.POST.get('w3lName')
+        name = request.POST.get('name')
         email = request.POST.get('email')
         
         message = request.POST.get('w3lMessage')
