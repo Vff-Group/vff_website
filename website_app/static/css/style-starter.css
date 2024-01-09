@@ -19383,17 +19383,22 @@ h5.sub-title:before {
   top: 0;
   transform: translate(-15px, 50px);
   transition: transform .5s ease;
-  z-index:100;
 }
 
 .image-box:hover .image-box__static {
   transform: translateY(50px);
-  z-index:100;
+}
+
+.image-box__static:hover{
+  z-index: 1;
+}
+
+.image-box__float:hover{
+  z-index: 1;
 }
 
 .image-box.inverse:hover .image-box__float {
   transform: translate(-15px, 0);
-  z-index:-1;
 }
 
 .image-box img {
