@@ -28,6 +28,10 @@ def privacy(request):
     current_url = request.get_full_path()
     return render(request,"privacy.html",{'current_url': current_url})
 
+def terms_of_service(request):
+    current_url = request.get_full_path()
+    return render(request,"terms_of_service.html",{'current_url': current_url})
+
 @csrf_exempt
 def contact_form_submit(request):
     if request.method == 'POST':
