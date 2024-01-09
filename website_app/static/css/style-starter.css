@@ -19368,10 +19368,29 @@ h5.sub-title:before {
 
 /* For Order Now Modal*/
 
+
+.modal-background-image {
+  position: relative;
+}
+
 .modal-background-image img {
   width: 100%;
   height: auto;
   object-fit: cover; /* Ensure the image covers the modal */
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
 }
 
 .modal-icons {
@@ -19385,6 +19404,7 @@ h5.sub-title:before {
   width: 50px; /* Set icon size */
   height: 50px;
 }
+
 /* For Order Now Modal End*/
 
 /* Whatsapp Button */

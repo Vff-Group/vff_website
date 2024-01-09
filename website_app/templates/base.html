@@ -204,26 +204,32 @@
         <div class="modal-background-image">
           <!-- Your background image here -->
           <img src="{% static 'images/order_now_bg.jpg' %}" alt="Background Image" />
+          <!-- Overlay for text content -->
+          <div class="overlay">
+            <h3>Find Your Nearest Laundry Store</h3>
+            <!-- Icons and text -->
+            <div class="modal-icons">
+              <!-- WhatsApp icon -->
+              <a href="https://wa.me/1234567890" target="_blank">
+                <img src="{% static 'images/whatsapp_icon.png' %}" alt="WhatsApp" class="icon" />
+              </a>
+              <!-- Play Store icon -->
+              <a href="https://play.google.com/store/apps/details?id=com.vffgroup.vffgroup" target="_blank">
+                <img src="{% static 'images/play_store_logo.png' %}" alt="Play Store" class="icon" />
+              </a>
+              <!-- App Store icon -->
+              <a href="https://apps.apple.com/dk/app/vff-group/id6469453683" target="_blank">
+                <img src="{% static 'images/app_store_logo.jpg' %}" alt="App Store" class="icon" />
+              </a>
+            </div>
+            <p class="text-center">Download Now</p>
+          </div>
         </div>
-        <div class="modal-icons">
-          <!-- WhatsApp icon -->
-          <a href="https://wa.me/1234567890" target="_blank">
-            <img src="{% static 'images/whatsapp_icon.png' %}" alt="WhatsApp" class="icon" />
-          </a>
-          <!-- Play Store icon -->
-          <a href="https://play.google.com/store/apps/details?id=com.vffgroup.vffgroup" target="_blank">
-            <img src="{% static 'images/play_store_logo.png' %}" alt="Play Store" class="icon" />
-          </a>
-          <!-- App Store icon -->
-          <a href="https://apps.apple.com/dk/app/vff-group/id6469453683" target="_blank">
-            <img src="{% static 'images/app_store_logo.jpg' %}" alt="App Store" class="icon" />
-          </a>
-        </div>
-        <p class="text-center">Download Now</p>
       </div>
     </div>
   </div>
 </div>
+
 
     <!-- footer -->
     <footer class="w3l-footer-29-main">
