@@ -16,6 +16,10 @@ def services(request):
     current_url = request.get_full_path()
     return render(request,"services.html",{'current_url': current_url})
 
+def franchise(request):
+    current_url = request.get_full_path()
+    return render(request,"franchise.html",{'current_url': current_url})
+
 def contactus(request):
     current_url = request.get_full_path()
     return render(request,"contactus.html",{'current_url': current_url})
