@@ -400,6 +400,45 @@ def save_gym_fees(request):
 
     return JsonResponse(errorRet)
 
+@csrf_exempt
+def update_notification_token(request):
+    errorRet={'ErrorCode#2':'ErrorCode#2'}
+    if request.method == "POST":
+        # Parsing and printing JSON body
+        try:
+            jdict = json.loads(request.body)
+            memberid = jdict['memberid']
+            device_token = jdict['device_token']
+            
+            
+            
+            try:
+                with connection.cursor() as cursor:
+                    # Inserting into Payment Table
+                    insert_query=" update vff.gym_memberstbl set device_token='"+str(device_token)+"' where memberid='"+str(memberid)+"'"
+                    cursor.execute(insert_query)
+                    
+                   
+                    
+                    connection.commit()
+                    
+                    return JsonResponse({'response': 'Success'})
+            except Exception as e:
+                print(f"Error loading data: {e}")
+                return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+            
+            
+                
+            
+        except json.JSONDecodeError as e:
+            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except Exception as ex:
+            print(f"Error fetching data: {ex}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+
+    return JsonResponse(errorRet)
+
 def execute_raw_query(query, params=None,):
     
     result = []
