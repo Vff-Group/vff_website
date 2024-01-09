@@ -194,38 +194,37 @@
 </div>
 <!-- Modal -->
 <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal- modal-dialog-centered modal-"   role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title" id="modal-title-default">Get Your Clothes Cleaned!</h5>
-        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
-          
-        </button>
+        <h6 class="modal-title" id="modal-title-default">Find Your Nearest Laundry Store</h6>
+        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-       
-      <div class="row">
-        <p class=" text-sm-center m1-1 text-secondary text-spacing"  style="font-size: 26px;">Available on Play Store and IOS App Store</p>
-        
-      </div>
-    
-      <div class="row">
-        <div class="col-lg-6 d-flex justify-content-center">
+        <div class="modal-background-image">
+          <!-- Your background image here -->
+          <img src="{% static 'images/order_now_bg.jpg' %}" alt="Background Image" />
+        </div>
+        <div class="modal-icons">
+          <!-- WhatsApp icon -->
+          <a href="https://wa.me/1234567890" target="_blank">
+            <img src="{% static 'images/whatsapp_icon.png' %}" alt="WhatsApp" class="icon" />
+          </a>
+          <!-- Play Store icon -->
           <a href="https://play.google.com/store/apps/details?id=com.vffgroup.vffgroup" target="_blank">
-            <img src="{% static 'images/play_store_logo.png' %}" alt="Play Store" class="store-img" />
+            <img src="{% static 'images/play_store_logo.png' %}" alt="Play Store" class="icon" />
           </a>
-        </div>
-        <div class="col-lg-6 d-flex justify-content-center">
+          <!-- App Store icon -->
           <a href="https://apps.apple.com/dk/app/vff-group/id6469453683" target="_blank">
-            <img src="{% static 'images/app_store_logo.jpg' %}" alt="App Store" class="store-img" />
+            <img src="{% static 'images/app_store_logo.jpg' %}" alt="App Store" class="icon" />
           </a>
         </div>
-      </div>
-      
+        <p class="text-center">Download Now</p>
       </div>
     </div>
   </div>
 </div>
+
     <!-- footer -->
     <footer class="w3l-footer-29-main">
       <div class="footer-29-w3l py-5">

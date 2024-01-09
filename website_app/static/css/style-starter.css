@@ -19366,6 +19366,27 @@ h5.sub-title:before {
 
 /* //banner bottom section */
 
+/* For Order Now Modal*/
+
+.modal-background-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover; /* Ensure the image covers the modal */
+}
+
+.modal-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Adjust spacing between icons */
+}
+
+.modal-icons .icon {
+  width: 50px; /* Set icon size */
+  height: 50px;
+}
+/* For Order Now Modal End*/
+
 /* Whatsapp Button */
 .whatsapp-button {
   position: fixed;
