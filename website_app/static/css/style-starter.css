@@ -19376,6 +19376,7 @@ h5.sub-title:before {
 .modal-background-image img {
   width: 100%;
   height: auto;
+  margin: 0;
   object-fit: cover; /* Ensure the image covers the modal */
 }
 
