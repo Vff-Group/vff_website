@@ -19366,6 +19366,25 @@ h5.sub-title:before {
 
 /* //banner bottom section */
 
+/* Whatsapp Button */
+.whatsapp-button {
+  position: fixed;
+  bottom: 20px; /* Adjust vertical position from bottom */
+  right: 20px; /* Adjust horizontal position from right */
+  z-index: 9999; /* Ensure it's above other elements */
+}
+
+.whatsapp-button img {
+  border-radius: 50%; /* Makes the image round */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add a shadow for visual effect */
+  transition: transform 0.3s ease-in-out; /* Smooth hover effect */
+}
+
+.whatsapp-button img:hover {
+  transform: scale(1.1); /* Enlarge the icon on hover */
+}
+/* Whatsapp Button End*/
+
 /* about section */
 .image-box.inverse .image-box__static {
   z-index: 2;
