@@ -11794,7 +11794,8 @@ fieldset:disabled .btn {
 }
 
 [data-theme="dark"] {
-  --primary-color: #54b963;
+  /* --primary-color: #54b963; */
+  --primary-color: #5DADEC;
   --primary-dark: #080a09;
   --font-color: #b7b7b7;
   --bg-color: #19211e;
