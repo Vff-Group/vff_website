@@ -19367,10 +19367,10 @@ h5.sub-title:before {
 /* //banner bottom section */
 
 /* about section */
-/* .image-box.inverse .image-box__static {
-  z-index: 2;
+.image-box.inverse .image-box__static {
+  z-index: -1;
   transition: transform .5s ease;
-} */
+}
 
 .image-box {
   justify-content: flex-start;
@@ -19385,13 +19385,7 @@ h5.sub-title:before {
   transition: transform .5s ease;
 }
 
-.image-box__static,
-.image-box__float {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transition: z-index 0.3s ease; /* Smooth transition for z-index */
-}
+
 
 .image-box:hover .image-box__static {
   transform: translateY(50px);
