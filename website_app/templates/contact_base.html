@@ -99,6 +99,13 @@
               </li>
               <li class="nav-item">
                 <a
+                  class="nav-link {% if current_url == '/franchise/' %}active {% endif %}"
+                  href="{% url 'website_app:franchise' %}"
+                  >Franchise</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
                   class="nav-link {% if current_url == '/contactus/' %}active {% endif %}"
                   href="{% url 'website_app:contactus' %}"
                   >Contact</a
