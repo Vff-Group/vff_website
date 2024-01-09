@@ -174,8 +174,9 @@
               </li>
               <li>
                 <a
-                  href="{% url 'website_app:contactus' %}"
+                  href="#"
                   class="btn btn-style mt-sm-0 mt-3"
+                  data-toggle="modal" data-target="#orderModal"
                   >Order Now</a
                 >
               </li>
@@ -185,7 +186,29 @@
       </div>
     </section>
     <!-- //call section -->
-
+<!-- Modal -->
+<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orderModalLabel">Get Your Clothes Cleaned!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Schedule Pickup</p>
+        <p>Track Order Status</p>
+        <p>Pay Online</p>
+        <p>Available on Play Store and App Store</p>
+        <div class="app-buttons">
+          <a href="link_to_play_store" class="store-btn" target="_blank">Play Store</a>
+          <a href="link_to_app_store" class="store-btn" target="_blank">App Store</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
     <!-- footer -->
     <footer class="w3l-footer-29-main">
       <div class="footer-29-w3l py-5">
