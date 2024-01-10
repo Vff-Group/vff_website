@@ -87,13 +87,13 @@
                         </div><!-- End .header-search -->
                     </div>
                     <div class="header-center">
-                        <a href="index.html" class="logo">
+                        <a href="{% url 'united_armor:home' %}" class="logo">
                             <img src="{% static 'assets/images/demos/demo-9/logo.png' %}" alt="United Armor Logo" width="50" height="20">
                         </a>
                     </div><!-- End .header-left -->
 
                     <div class="header-right">
-                        <a href="wishlist.html" class="wishlist-link">
+                        <a href="{% url 'united_armor:home' %}" class="wishlist-link">
                             <i class="icon-heart-o"></i>
                             <span class="wishlist-count">3</span>
                             <span class="wishlist-txt">My Wishlist</span>
@@ -111,7 +111,7 @@
                                     <div class="product">
                                         <div class="product-cart-details">
                                             <h4 class="product-title">
-                                                <a href="product.html">UARM runner shoes</a>
+                                                <a href="{% url 'united_armor:product' %}">UARM runner shoes</a>
                                             </h4>
 
                                             <span class="cart-product-info">
@@ -121,7 +121,7 @@
                                         </div><!-- End .product-cart-details -->
 
                                         <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
+                                            <a href="{% url 'united_armor:product' %}" class="product-image">
                                                 <img src="{% static 'assets/images/products/cart/product-1.jpg' %}" alt="product">
                                             </a>
                                         </figure>
@@ -131,7 +131,7 @@
                                     <div class="product">
                                         <div class="product-cart-details">
                                             <h4 class="product-title">
-                                                <a href="product.html">UARM Wear</a>
+                                                <a href="{% url 'united_armor:product' %}">UARM Wear</a>
                                             </h4>
 
                                             <span class="cart-product-info">
@@ -141,7 +141,7 @@
                                         </div><!-- End .product-cart-details -->
 
                                         <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
+                                            <a href="{% url 'united_armor:product' %}" class="product-image">
                                                 <img src="{% static 'assets/images/products/cart/product-2.jpg' %}" alt="product">
                                             </a>
                                         </figure>
@@ -176,7 +176,7 @@
                                     
                                 </li>
                                 <li>
-                                    <a href="category.html" class="sf-with-ul">Men</a>
+                                    <a href="{% url 'united_armor:all_products' %}" class="sf-with-ul">Men</a>
 
                                     <div class="megamenu megamenu-md">
                                         <div class="row no-gutters">
@@ -186,7 +186,7 @@
                                                         <div class="col-md-6">
                                                             <div class="menu-title">Shop By Category</div><!-- End .menu-title -->
                                                             <ul>
-                                                                <li><a href="category.html">Tops</a></li>
+                                                                <li><a href="{% url 'united_armor:all_products' %}">Tops</a></li>
                                                                 <li><a href="">Leggings</a></li>
                                                                
                                                             </ul>
@@ -209,7 +209,7 @@
 
                                             <div class="col-md-4">
                                                 <div class="banner banner-overlay">
-                                                    <a href="category.html" class="banner banner-menu">
+                                                    <a href="{% url 'united_armor:all_products' %}" class="banner banner-menu">
                                                         <img src="https://www.underarmour.in/media/scandipwa_menuorganizer_item_images/FW23_TRN_ProjectRock_Q4_Site_1_1_M.jpg" alt="Banner">
 
                                                         <div class="banner-content banner-content-top">
@@ -222,7 +222,7 @@
                                     </div><!-- End .megamenu megamenu-md -->
                                 </li>
                                 <li>
-                                    <a href="category.html" class="sf-with-ul">Women</a>
+                                    <a href="{% url 'united_armor:all_products' %}" class="sf-with-ul">Women</a>
 
                                     <div class="megamenu megamenu-md">
                                         <div class="row no-gutters">
@@ -255,7 +255,7 @@
 
                                             <div class="col-md-4">
                                                 <div class="banner banner-overlay">
-                                                    <a href="category.html" class="banner banner-menu">
+                                                    <a href="{% url 'united_armor:all_products' %}" class="banner banner-menu">
                                                         <img src="https://www.underarmour.in/media/scandipwa_menuorganizer_item_images/cq5dam.web.1280.1280_-_2023-10-27T151741.276.jpeg" alt="Banner">
 
                                                         <div class="banner-content banner-content-top">
@@ -268,7 +268,7 @@
                                     </div><!-- End .megamenu megamenu-md -->
                                 </li>
                                 <li>
-                                    <a href="category.html" class="sf-with-ul">Kids</a>
+                                    <a href="{% url 'united_armor:all_products' %}" class="sf-with-ul">Kids</a>
 
                                     <div class="megamenu megamenu-md">
                                         <div class="row no-gutters">
@@ -301,7 +301,7 @@
 
                                             <div class="col-md-4">
                                                 <div class="banner banner-overlay">
-                                                    <a href="category.html" class="banner banner-menu">
+                                                    <a href="{% url 'united_armor:all_products' %}" class="banner banner-menu">
                                                         <img src="https://www.underarmour.in/media/scandipwa_menuorganizer_item_images/cq5dam.web.1280.1280_-_2023-10-27T151932.940.jpeg" alt="Banner">
 
                                                         <div class="banner-content banner-content-top">
