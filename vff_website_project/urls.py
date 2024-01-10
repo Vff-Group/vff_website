@@ -48,5 +48,5 @@ urlpatterns = [
 handler404 = custom_404_view_united
 handler500 = custom_500_view_united
 
-handler404 = custom_404_view
-handler500 = custom_500_view
+# handler404 = custom_404_view
+# handler500 = custom_500_view
