@@ -20,6 +20,7 @@ from dashboard_app.views import *
 from website_app.sitemaps import PostSitemap,StaticViewSitemap
 from django.contrib.sitemaps.views import sitemap
 from website_app.views import custom_404_view,custom_500_view
+from united_armor_website.views import custom_404_view_united,custom_500_view_united
 
 sitemaps = {
     'static':StaticViewSitemap,
@@ -44,8 +45,8 @@ urlpatterns = [
 ]
 
 # For united_armor app
-handler404 = 'united_armor_website.views.custom_404_view'
-handler500 = 'united_armor_website.views.custom_500_view'
+handler404 = custom_404_view_united
+handler500 = custom_500_view_united
 
 handler404 = custom_404_view
 handler500 = custom_500_view
