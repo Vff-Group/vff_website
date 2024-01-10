@@ -11772,7 +11772,8 @@ fieldset:disabled .btn {
 
 /* css style */
 :root {
-  --primary-color: #54b963;
+  
+  --primary-color: #5DADEC;
   --primary-dark: #021048;
   --font-color: #707070;
   --bg-color: #fff;
@@ -11793,7 +11794,7 @@ fieldset:disabled .btn {
 }
 
 [data-theme="dark"] {
-  --primary-color: #54b963;
+  --primary-color: #5DADEC;
   --primary-dark: #080a09;
   --font-color: #b7b7b7;
   --bg-color: #19211e;
@@ -19365,6 +19366,77 @@ h5.sub-title:before {
 
 /* //banner bottom section */
 
+/* For Order Now Modal*/
+
+
+.modal-fullscreen {
+  margin: 0;
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-content {
+  border: none;
+}
+
+.modal-background-image {
+  position: relative;
+}
+
+.modal-background-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+
+.modal-background-image img:hover {
+  transform: scale(0.9); /* Adjust the scale value as needed */
+}
+
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.modal-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Adjust spacing between icons */
+}
+
+.modal-icons .icon {
+  width: 50px; /* Set icon size */
+  height: 50px;
+}
+
+
+/* For Order Now Modal End*/
+
+/* Whatsapp Button */
+.whatsapp-button {
+  position: fixed;
+  bottom: 20px; /* Adjust vertical position from bottom */
+  right: 20px; /* Adjust horizontal position from right */
+  z-index: 9999; /* Ensure it's above other elements */
+}
+
+.whatsapp-button img {
+  border-radius: 50%; /* Makes the image round */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add a shadow for visual effect */
+  transition: transform 0.3s ease-in-out; /* Smooth hover effect */
+}
+
+.whatsapp-button img:hover {
+  transform: scale(1.5); /* Enlarge the icon on hover */
+}
+/* Whatsapp Button End*/
+
 /* about section */
 .image-box.inverse .image-box__static {
   z-index: 2;
@@ -19384,13 +19456,21 @@ h5.sub-title:before {
   transition: transform .5s ease;
 }
 
+
+
 .image-box:hover .image-box__static {
-  transform: translateY(50px);
+  transform: translateY(50px) ;
+  z-index: 3; /* Set a higher z-index on hover to bring it forward */
 }
+
+
 
 .image-box.inverse:hover .image-box__float {
   transform: translate(-15px, 0);
+  z-index: 1; /* Set a lower z-index on hover to push it backward */
 }
+
+
 
 .image-box img {
   border-radius: var(--border-radius);
@@ -19423,6 +19503,21 @@ ul.list-style-lis li i {
 }
 
 /* //about section */
+
+/* download section  */
+.responsive-section {
+  height: 250px; /* Set initial height */
+  
+}
+
+/* Media query for mobile screens */
+@media screen and (max-width: 767px) {
+  .responsive-section {
+    height: 150px; /* Adjust height for mobile screens */
+  }
+}
+
+/* download section end */
 
 /* services section */
 .w3l-grids-block-5 .content-main-top h4 a {
@@ -20760,4 +20855,15 @@ button.owl-next {
       width: 100%;
       height: auto;
   }
+}
+
+.store-img {
+  width: 200px; /* Adjust size as needed */
+  height: 100px; /* Adjust size as needed */
+  margin: 10px;
+  object-fit: contain;
+}
+
+.store-img:hover {
+  opacity: 0.8; /* Change opacity on hover as desired */
 }
