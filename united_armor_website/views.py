@@ -45,6 +45,7 @@ def cart_details(request):
 #Checkout Page
 def checkout(request):
     current_url = request.get_full_path()
+    return render(request,"checkout_pages/checkout.html",{'current_url': current_url})
 
 #4 0 4 Page
 def custom_404_view(request):
