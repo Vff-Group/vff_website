@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'laundry_mobile_app',
     'clothing_dashboard',
     'gym_dashboard',
+    'united_armor_website',
 ]
 
 SITE_ID = 1
