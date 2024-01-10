@@ -25,7 +25,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-8 contacts12-main">
-                        <form id="contactForm"  class="main-input" action="https://formsubmit.co/shahidmaniyar888@email.com" method="POST">
+                        <form id="contactForm"  class="main-input"  method="POST">
                             {% csrf_token %}
                             <div class="row top-inputs">
                                 <div class="col-md-4">
@@ -41,7 +41,10 @@
                             
                             <textarea placeholder="Message" name="message" name="w3lMessage" id="body_msg" required=""></textarea>
                             <div class="text-end">
-                                <button type="submit" class="btn btn-style">Send Now</button>
+                                {% comment %} <button type="submit" class="btn btn-style">Send Now</button> {% endcomment %}
+                                <a href="mailto:info@vff-group.com" class="mail"
+                    >Send Now</a
+                  >
                             </div>
                         </form>
                     </div>
@@ -122,6 +125,7 @@
                 error: function (error) {
                     // Show error toast or message
                     // Replace this with your preferred method (e.g., Bootstrap Toast)
+                    $('#contactForm')[0].reset();
                     alert('Message sent successfully!');
                 }
             });
