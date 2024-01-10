@@ -43,5 +43,9 @@ urlpatterns = [
     
 ]
 
+# For united_armor app
+handler404 = 'united_armor_website.views.custom_404_view'
+handler500 = 'united_armor_website.views.custom_500_view'
+
 handler404 = custom_404_view
 handler500 = custom_500_view

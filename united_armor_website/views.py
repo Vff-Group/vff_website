@@ -45,4 +45,13 @@ def cart_details(request):
 #Checkout Page
 def checkout(request):
     current_url = request.get_full_path()
-    return render(request,"checkout_pages/checkout.html",{'current_url': current_url})
+
+#4 0 4 Page
+def custom_404_view(request):
+    current_url = request.get_full_path()
+    return render(request, 'error_pages/404.html', status=404)
+
+#5 0 0 Page
+def custom_500_view(request):
+    current_url = request.get_full_path()
+    return render(request, 'error_pages/500.html', status=500)
