@@ -42,7 +42,8 @@
                             <textarea placeholder="Message" name="message" name="w3lMessage" id="body_msg" required=""></textarea>
                             <div class="text-end">
                                 {% comment %} <button type="submit" class="btn btn-style">Send Now</button> {% endcomment %}
-                                <a href="mailto:info@vff-group.com?subject=Subject%20Here&body=Your%20message%20here" class="mail btn btn-style">Send Now</a>
+                                {% comment %} <a href="mailto:info@vff-group.com?subject=Subject%20Here&body=Your%20message%20here" class="mail btn btn-style">Send Now</a> {% endcomment %}
+                                <a href="" class="mail btn btn-style" id="sendMailBtn">Send Now</a>
                             </div>
                         </form>
                     </div>
@@ -100,6 +101,21 @@
         return null;
     }
 
+    document.getElementById('sendMailBtn').addEventListener('click', function(event) {
+        event.preventDefault();
+        
+        var name = document.getElementById('sender_name').value;
+        var email = document.getElementById('sender_email').value;
+        var subject = document.getElementById('subject_id').value;
+        var message = document.getElementById('body_msg').value;
+    
+        var mailtoLink = 'mailto:info@vff-group.com'
+            + '?subject=' + encodeURIComponent(subject)
+            + '&body=' + encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\nSubject: ' + subject + '\nMessage: ' + message);
+    
+        window.location.href = mailtoLink;
+    });
+    
     $(document).ready(function () {
         const csrfToken = getCSRFToken();
         $('#contactForm').submit(function (e) {
