@@ -4,10 +4,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Activitar Template">
-    <meta name="keywords" content="Activitar, unica, creative, html">
+    <meta name="description" content="Velvet Royal Gym offers a premium fitness experience, providing state-of-the-art equipment, expert trainers, and tailored workout programs. Elevate your fitness journey with our diverse range of classes and personalized training sessions, designed to help you achieve your health goals effectively.">
+    <meta name="keywords" content="Fitness center, Gymnasium, Personal training, Group fitness classes, Cardio, Strength training, Health club, Wellness, Exercise programs, Gym membership, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <link rel="icon" type="image/ico" href="{% static 'logos/favicon.ico' %}">
     <title>Velvet Royal Gym - Fitness</title>
 
     <!-- Google Font -->
@@ -42,8 +45,8 @@
                         <div class="col-lg-12">
                             <div class="hero-text">
                                 <h2>Unleash Your Inner Strength</h2>
-                                <h1>Velvet Royal </h1>
-                                <a href="#" class="primary-btn">Read More</a>
+                                <h1>Velvet Royal Gym</h1>
+                                {% comment %} <a href="#" class="primary-btn">Contact Now</a> {% endcomment %}
                             </div>
                         </div>
                     </div>
@@ -56,7 +59,7 @@
                             <div class="hero-text">
                                 <h2>Elevate Fitness</h2>
                                 <h1>Velvet Royal </h1>
-                                <a href="#" class="primary-btn">Read More</a>
+                                {% comment %} <a href="#" class="primary-btn">Contact Now</a> {% endcomment %}
                             </div>
                         </div>
                     </div>
@@ -69,7 +72,7 @@
                             <div class="hero-text">
                                 <h2>Join Strong</h2>
                                 <h1>FITNESS & SPORT</h1>
-                                <a href="#" class="primary-btn">Read More</a>
+                                {% comment %} <a href="#" class="primary-btn">Contact Now</a> {% endcomment %}
                             </div>
                         </div>
                     </div>
@@ -87,21 +90,21 @@
                     <div class="feature-item set-bg" data-setbg="{% static 'gym_styles/img/feature/feature-1.jpg' %}">
                         <h3>GROUP CLASSES</h3>
                         <p>Join our dynamic group classes for motivating sessions<br>and progress</p>
-                        <a href="#" class="primary-btn f-btn">Read More</a>
+                        {% comment %} <a href="#" class="primary-btn f-btn">Contact Now</a> {% endcomment %}
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="feature-item set-bg" data-setbg="{% static 'gym_styles/img/feature/feature-2.jpg' %}">
                         <h3>PERSONAL TRAINING</h3>
                         <p>Experience transformation with personalized guidance <br> from our expert personal trainers</p>
-                        <a href="#" class="primary-btn f-btn">Read More</a>
+                        {% comment %} <a href="#" class="primary-btn f-btn">Contact Now</a> {% endcomment %}
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="feature-item set-bg" data-setbg="{% static 'gym_styles/img/feature/feature-3.jpg' %}">
                         <h3>Sports Nutrition</h3>
                         <p>Elevate your game with tailored sports nutrition strategies <br> for peak results.</p>
-                        <a href="#" class="primary-btn f-btn">Read More</a>
+                        {% comment %} <a href="#" class="primary-btn f-btn">Contact Now</a> {% endcomment %}
                     </div>
                 </div>
             </div>
@@ -117,10 +120,18 @@
                     <div class="about-text">
                         <h2>WELCOME TO VELVET ROYAL GYM</h2>
                         <p class="short-details">Welcome to Velvet Royal  Gym, where your fitness journey begins and excelling becomes second nature.</p>
-                        <p class="long-details">Your ultimate fitness destination for comprehensive training, expert coaching, and transformational results,
-                        Where strength, health, and vitality converge for your fitness success.
+                        <p class="long-details">VELVET ROYAL GYM provides a 24/7 Fitness facility to residents of BELAGAUM as well as surrounding areas to help people reach and maintain their fitness goals. We combine different types of latest fitness equipment to meet different fitness needs and levels. 
+                            At VELVET ROYAL GYM you’ll find all the latest strength and cardio equipment along with an energetic group exercise program that includes Heavy weight, fitness, Personal training, Muscle Building and many other cardio classes. You’ll find a supportive environment with all kinds of people who are working just as hard as you to meet their goals.
                         </p>
-                        <a href="/about-us" class="primary-btn about-btn">Learn More</a>
+                        <p class="long-details">
+                            Our trainer is committed to offer our members a great fitness experience. We can ensure that we will help you to build a proper body shape, according your preference.
+                        </p>
+                        <h2>HOW WILL WE HELP YOU ?</h2>
+                        <p class="long-details">
+                            Regular physical activity is one of the most important things you can do for your health. Being physically active can improve your mental health, reduce the risk of getting affected by a disease, build strength, and improve your ability to do day to day activities.
+By joining a gym you can increase your confidence, build a strong mindset, refresh your mind and be a better version of yourself.  
+                        </p>
+                        <!-- <a href="/about-us" class="primary-btn about-btn">Learn More</a> -->
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -144,7 +155,8 @@
                 <div class="col-lg-12">
                     <div class="section-title">
                         <h2>PLAN PRICE CHART</h2>
-                        <p>Explore flexible pricing options tailored to your fitness goals and preferences at our gym.</p>
+                        <p>Explore flexible pricing options tailored to your fitness goals and preferences at our gym.<br/>
+                        Price can vary depending upon your fitness goals.</p>
                     </div>
                     
                 </div>
@@ -154,12 +166,12 @@
                     <div class="single-price-plan">
                         <h4>Basic</h4>
                         <div class="price-plan">
-                            <h2>1000 <span>₹</span></h2>
+                            <h2>700 <span>₹</span></h2>
                             <p>Monthly</p>
                         </div>
                         <ul>
                             <li>Unlimited access to the gym</li>
-                            <li>1 classes per week</li>
+                            <!-- <li>1 classes per week</li> -->
                             <li>FREE drinking package</li>
                             
                         </ul>
@@ -170,12 +182,12 @@
                     <div class="single-price-plan">
                         <h4>Professional</h4>
                         <div class="price-plan">
-                            <h2>3000<span>₹</span></h2>
-                            <p>Monthly</p>
+                            <h2>7600<span>₹</span></h2>
+                            <p>Yearly</p>
                         </div>
                         <ul>
                             <li>Unlimited access to the gym</li>
-                            <li>3 cadio classes per week</li>
+                            <li>3 cardio classes per week</li>
                             <li>FREE drinking package</li>
                             <li>1 Free personal training</li>
                         </ul>
@@ -189,13 +201,14 @@
                     <div class="single-price-plan">
                         <h4>Self</h4>
                         <div class="price-plan">
-                            <h2>2300<span>₹</span></h2>
-                            <p>Monthly</p>
+                            <h2>5500<span>₹</span></h2>
+                            <p>Quarterly</p>
                         </div>
                         <ul>
                             <li>Unlimited access to the gym</li>
-                            <li>1 classes per week</li>
+                            <li>3 cardio classes per week</li>
                             <li>FREE drinking package</li>
+                            <li>1 Free personal training</li>
                             
                         </ul>
                         <a href="#" class="primary-btn price-btn">Get Started</a>
@@ -302,18 +315,18 @@
 
     <!-- Map Section Begin -->
     <div class="map">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3837.705603929648!2d74.526455!3d15.872062900000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbf677d5c45b0bf%3A0x815d1f4a96e08649!2sBODY%20POWER%20FITNESS%20CLUB%20GYM!5e0!3m2!1sen!2sin!4v1691923225802!5m2!1sen!2sin"
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15349.363324280319!2d74.52040995280056!3d15.891205243963695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbf61f6d6bb85bb%3A0x416ba50b59a6b734!2sVELVET%20WASH%20%26%20DRY%20CLEANING*21*21%20(%20a%20member%20of%20VFF%20GROUP%20INDIA)!5e0!3m2!1sen!2sin!4v1704860397275!5m2!1sen!2sin"
         height="590" style="border: 0" allowfullscreen=""></iframe>
         <div class="map-contact-detalis">
             <div class="open-time">
                 <h5>Weekday:</h5>
                 <ul>
-                    <li>Weekday: <span>06:00 - 22:00</span></li>
-                    <li>Saturday: <span>06:00 - 22:00</span></li>
+                    <li>Weekday: <span>06:00 AM - 9:00 PM</span></li>
+                    <li>Saturday: <span>06:00 AM - 9:00 PM</span></li>
                     <li>Sunday: <span>Closed</span></li>
                 </ul>
             </div>
-            <div class="map-contact-form">
+            <!-- <div class="map-contact-form">
                 <h5>Contact Us</h5>
                 <form action="/">
                     <input type="text" placeholder="Name">
@@ -321,7 +334,7 @@
                     <textarea placeholder="Message"></textarea>
                     <button type="submit" class="site-btn">Submit Now</button>
                 </form>
-            </div>
+            </div> -->
         </div>
     </div>
     <!-- Map Section End -->
@@ -349,20 +362,22 @@
             </div>
             <div class="col-lg-3 offset-lg-1">
                 <div class="footer-widget">
-                    <h5>Our Blog</h5>
+                    <h5>Our Branches</h5>
                     <div class="footer-blog">
                         <a href="/" class="fb-item">
-                            <h6>#rd Brand Coming Soon</h6>
-                            <span class="blog-time"><i class="fa fa-clock-o"></i> Aug 08, 2023</span>
+                            <h6>#Tilakwadi Branch :PLOT NO 198, VFF Group, Saraf Colony, Ranade Colony,
+                                Tilakwadi, <br />
+                                Belagavi, Karnataka 590006-India.</h6>
+                            <!-- <span class="blog-time"><i class="fa fa-clock-o"></i> Aug 08, 2023</span> -->
                         </a>
                         <a href="#" class="fb-item">
-                            <h6>Opened 2nd Branch At Dharamnath Circle</h6>
-                            <span class="blog-time"><i class="fa fa-clock-o"></i> June 06, 2023</span>
+                            <h6>#Auto Nagar Branch : Plot no. 516, Main Road, Ramteerth Nagar, Lakshmipuri Layout, Auto Nagar,<br/> Belagavi, Karnataka 590015 - India.</h6>
+                            <!-- <span class="blog-time"><i class="fa fa-clock-o"></i> June 06, 2023</span> -->
                         </a>
-                        <a href="#" class="fb-item">
+                        <!-- <a href="#" class="fb-item">
                             <h6>Planning to open 2nd Branch</h6>
                             <span class="blog-time"><i class="fa fa-clock-o"></i> Sep 02, 2022</span>
-                        </a>
+                        </a> -->
                     </div>
                 </div>
             </div>
@@ -385,20 +400,22 @@
                         <li>
                             <i class="fa fa-phone"></i>
                             <span>Phone:</span>
-                            (+91)-
+                            <a href="tel:+(91) 06364912877">+(91) 06364912877</a>
                         </li>
                         <li>
                             <i class="fa fa-envelope-o"></i>
                             <span>Email:</span>
-                            bodypower@info.in
+                            <a href="mailto:info@vff-group.com" class="mail"
+                    >info@vff-group.com</a
+                  >
                         </li>
-                        <li>
+                        <!-- <li>
                             <i class="fa fa-map-marker"></i>
                             <span>Address</span>
-                            Zeeshan manzil beside ESI hospital ,near kaif masjid. 
-                            <br>Asad Khan Society <br>
-                            Belagavi, Karnataka 590016,India.
-                        </li>
+                            <h6>#Tilakwadi Branch :PLOT NO 198, VFF Group, Saraf Colony, Ranade Colony,
+                                Tilakwadi, <br />
+                                Belagavi, Karnataka 590006-India.</h6>
+                        </li> -->
                     </ul>
                 </div>
             </div>
