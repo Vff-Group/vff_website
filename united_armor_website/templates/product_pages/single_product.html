@@ -6,7 +6,7 @@
 <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
     <div class="container d-flex align-items-center">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'united_armor:home' %}">Home</a></li>
             <li class="breadcrumb-item"><a href="#">Products</a></li>
             <li class="breadcrumb-item active" aria-current="page">Extended Description</li>
         </ol>
@@ -21,7 +21,7 @@
                 <div class="col-md-6">
                     <div class="product-gallery">
                         <figure class="product-main-image">
-                            <img src="assets/images/products/single/extended/3.webp"  alt="product image">
+                            <img src="{% static 'assets/images/products/single/extended/3.webp' %}"  alt="product image">
 
                             <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                 <i class="icon-arrows"></i>
@@ -31,12 +31,12 @@
                         <div id="product-zoom-gallery" class="product-image-gallery">
                             
 
-                            <a class="product-gallery-item active" href="#" data-image="assets/images/products/single/extended/3.webp" >
-                                <img src="assets/images/products/single/extended/3.webp" alt="product with model">
+                            <a class="product-gallery-item active" href="#" data-image="{% static 'assets/images/products/single/extended/3.webp' %}" >
+                                <img src="{% static 'assets/images/products/single/extended/3.webp' %}" alt="product with model">
                             </a>
 
-                            <a class="product-gallery-item " href="#" data-image="assets/images/products/single/extended/3-back.webp" >
-                                <img src="assets/images/products/single/extended/3-back.webp" alt="product with model">
+                            <a class="product-gallery-item " href="#" data-image="{% static 'assets/images/products/single/extended/3-back.webp' %}" >
+                                <img src="{% static 'assets/images/products/single/extended/3-back.webp' %}" alt="product with model">
                             </a>
 
                             
@@ -50,7 +50,7 @@
                         <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
                             <div class="container d-flex align-items-center">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html">Men</a></li>
+                                    <li class="breadcrumb-item"><a href="{% url 'united_armor:home' %}">Men</a></li>
                                     <li class="breadcrumb-item"><a href="#">Shop By Category</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">Tops</li>
                                 </ol>
