@@ -114,6 +114,12 @@
             + '&body=' + encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\nSubject: ' + subject + '\nMessage: ' + message);
     
         window.location.href = mailtoLink;
+        // Clear form fields
+    document.getElementById('sender_name').value = '';
+    document.getElementById('sender_email').value = '';
+    document.getElementById('subject_id').value = '';
+    document.getElementById('body_msg').value = '';
+    
     });
     
     $(document).ready(function () {
