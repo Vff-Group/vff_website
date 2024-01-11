@@ -345,14 +345,53 @@
                       <div class="col">
                         <small>Order Taken On : <span class="badge badge-sm bg-gradient-dark">{{order_taken_on}}</span></small>
                     </div>
-                    {% if payment_type != 'NA' %}
+                    {% comment %} {% if payment_type != 'NA' %}
                       <div class="col">
                         <small>Transaction Type - <span class="badge badge-sm bg-success">{{payment_type}}</span></small>
                     </div>
-                    {% endif %}
-                     <div class="col">
+                    {% endif %} {% endcomment %}
 
+                    {% if payment_type_order_tbl == 'Single' && payment_done == 1%}
+
+                    <div class="col">
+                      <small>Transaction Type - <span class="badge badge-sm bg-success">{{payment_type_order_tbl}}</span></small>
+                  </div>
+
+                     <div class="col">
+                        {% if payment_type != 'Cash' || payment_type != 'Cheque' %}  
+                        <small>Transaction ID - {{payment_id}}</small>
+                        <p class="text-sm mt-1">Transaction Type - <span class="badge badge-sm bg-success">{{payment_type}}</span></p>
+                        {% else %}
+                        <small>Transaction Type - <span class="badge badge-sm bg-success">{{payment_type}}</span></small>
+                        {% endif %}  
                      </div>
+                     {% endif %}
+
+                     {% if payment_type_order_tbl == 'Multiple' && payment_done == 1%}
+
+                    <div class="col">
+                      <small>Transaction Type - <span class="badge badge-sm bg-success">{{payment_type_order_tbl}}</span></small>
+                  </div>
+
+                     <div class="col">
+                        {% if payment_one_type != 'Cash' || payment_one_type != 'Cheque' %}  
+                        <small>Transaction ID 1 - {{payment_one_id}}</small>
+                        <p class="text-sm mt-1">Payment Method 1 - <span class="badge badge-sm bg-success">{{payment_one_type}}</span></p>
+                        {% else %}
+                        <small>Payment Method 1 - <span class="badge badge-sm bg-success">{{payment_one_type}}</span></small>
+                        {% endif %}  
+                     </div>
+
+
+                     <div class="col mt-1">
+                      {% if payment_two_type != 'Cash' || payment_two_type != 'Cheque' %}  
+                      <small>Transaction ID 2 - {{payment_two_id}}</small>
+                      <p class="text-sm mt-1">Payment Method 2 - <span class="badge badge-sm bg-success">{{payment_two_type}}</span></p>
+                      {% else %}
+                      <small>Payment Method 2 - <span class="badge badge-sm bg-success">{{payment_two_type}}</span></small>
+                      {% endif %}  
+                   </div>
+                     {% endif %}
                       
                     </div>
                     <div class="col-6 d-flex flex-column justify-content-end align-items-end">
@@ -361,7 +400,7 @@
                         <small>Order Date :{{order_date}}</small>
                       </div>
                       
-                      {% if payment_done == 1%}
+                      {% comment %} {% if payment_done == 1%}
                       <div class="col mt-1">
                         {% if payment_type != 'Cash' %}  
                         <small>Transaction ID - {{payment_id}}</small>
@@ -369,7 +408,7 @@
                         <small>Transaction Type - <span class="badge badge-sm bg-success">{{payment_type}}</span></small>
                         {% endif %}  
                       </div>
-                      {% endif %}  
+                      {% endif %}   {% endcomment %}
 
                       
                       <div class="col">
