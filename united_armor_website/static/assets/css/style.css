@@ -16354,6 +16354,10 @@ button:focus {
   right: 0;
 }
 
+.mobile-canvas.close{
+  right: -100%;
+}
+
 
 
 .btn-filter {
