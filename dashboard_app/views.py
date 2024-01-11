@@ -1243,7 +1243,7 @@ def view_order_detail(request,orderid):
                 'square_width': row[48],
                 'square_height': row[49],
                 'total_square_feet':total_square_feet,
-                'payment_type_order_tbl':row[51]
+                'payment_type_order_tbl':row[50]
                 
                 
                
