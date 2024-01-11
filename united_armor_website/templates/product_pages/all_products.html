@@ -30,7 +30,7 @@
 
                     <div class="toolbox-right">
                         <!-- Add this button only for mobile screens -->
-                        <button class="btn btn-filter d-lg-none" id="filterBtn">
+                        <button class="btn btn-filter d-lg-none" id="filterBtn" type="button">
                             <i class="fas fa-filter"></i> Filter
                         </button>
                         <div class="toolbox-sort">
@@ -709,16 +709,20 @@
         var mobileCanvas = document.querySelector('.mobile-canvas');
     
         // Add click event listener to the filter button
-        filterBtn.addEventListener('click', function () {
+        filterBtn.addEventListener('click', function (event) {
+            event.stopPropagation(); // Prevent the event from reaching the document click listener
             // Toggle the 'open' class on the mobile canvas
             mobileCanvas.classList.toggle('open');
         });
     
         // Close the mobile canvas when clicking outside it
-        document.addEventListener('click', function (event) {
-            if (!mobileCanvas.contains(event.target) && !filterBtn.contains(event.target)) {
-                mobileCanvas.classList.remove('open');
-            }
+        document.addEventListener('click', function () {
+            mobileCanvas.classList.remove('open');
+        });
+    
+        // Prevent the mobile canvas from closing when clicking inside it
+        mobileCanvas.addEventListener('click', function (event) {
+            event.stopPropagation(); // Prevent the event from reaching the document click listener
         });
     });
 </script>
