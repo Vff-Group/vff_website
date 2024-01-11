@@ -65,21 +65,4 @@ jQuery(window).on('load', function() {
 	});
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    // Get the filter button and mobile canvas elements
-    var filterBtn = document.getElementById('filterBtn');
-    var mobileCanvas = document.querySelector('.mobile-canvas');
 
-    // Add click event listener to the filter button
-    filterBtn.addEventListener('click', function () {
-        // Toggle the 'open' class on the mobile canvas
-        mobileCanvas.classList.toggle('open');
-    });
-
-    // Close the mobile canvas when clicking outside it
-    document.addEventListener('click', function (event) {
-        if (!mobileCanvas.contains(event.target) && !filterBtn.contains(event.target)) {
-            mobileCanvas.classList.remove('open');
-        }
-    });
-});
