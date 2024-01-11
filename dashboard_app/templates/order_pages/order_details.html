@@ -358,7 +358,7 @@
                   </div>
 
                      <div class="col">
-                        {% if payment_type != 'Cash' or payment_type != 'Cheque' %}  
+                        {% if payment_type != 'Cash' and payment_type != 'Cheque' %}  
                         <small>Transaction ID - {{payment_id}}</small>
                         <p class="text-sm mt-1">Transaction Type - <span class="badge badge-sm bg-success">{{payment_type}}</span></p>
                         {% else %}
@@ -374,7 +374,7 @@
                   </div>
 
                      <div class="col">
-                        {% if payment_one_type != 'Cash' or payment_one_type != 'Cheque' %}  
+                        {% if payment_one_type != 'Cash' and payment_one_type != 'Cheque' %}  
                         <small>Transaction ID 1 - {{payment_one_id}}</small>
                         <p class="text-sm mt-1">Payment Method 1 - <span class="badge badge-sm bg-success">{{payment_one_type}}</span></p>
                         {% else %}
