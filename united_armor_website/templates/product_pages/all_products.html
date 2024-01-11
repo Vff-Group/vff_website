@@ -725,6 +725,23 @@
             mobileCanvas.classList.add('close');
             
         });
+
+           // Close the mobile canvas when clicking outside it
+    document.addEventListener('click', function () {
+        mobileCanvas.classList.remove('open');
+        mobileCanvas.classList.add('close');
+    });
+
+    
+
+    // Close the mobile canvas on outside touch
+    document.addEventListener('touchstart', function (event) {
+        // Check if the touch event target is outside the mobile canvas
+        if (!mobileCanvas.contains(event.target) && mobileCanvas.classList.contains('open')) {
+            mobileCanvas.classList.remove('open');
+            mobileCanvas.classList.add('close');
+        }
+    });
     
         // Prevent the mobile canvas from closing when clicking inside it
         mobileCanvas.addEventListener('click', function (event) {
