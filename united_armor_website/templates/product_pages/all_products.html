@@ -714,8 +714,9 @@
         filterBtn.addEventListener('click', function (event) {
             event.stopPropagation(); // Prevent the event from reaching the document click listener
             // Toggle the 'open' class on the mobile canvas
-            mobileCanvas.classList.add('open');
             mobileCanvas.classList.remove('close');
+            mobileCanvas.classList.add('open');
+            
             
         });
     
