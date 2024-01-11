@@ -713,11 +713,13 @@
             event.stopPropagation(); // Prevent the event from reaching the document click listener
             // Toggle the 'open' class on the mobile canvas
             mobileCanvas.classList.toggle('open');
+            console.log('filter Clicking')
         });
     
         // Close the mobile canvas when clicking outside it
         document.addEventListener('click', function () {
             mobileCanvas.classList.remove('open');
+            console.log('trying to remove')
         });
     
         // Prevent the mobile canvas from closing when clicking inside it
