@@ -16372,7 +16372,7 @@ button:focus {
   #desktop{
     display: none;
   }
-  .mobile-canvas {
+  /* .mobile-canvas {
       right: 0;
-  }
+  } */
 }
