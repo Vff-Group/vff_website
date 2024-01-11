@@ -16365,7 +16365,7 @@ button:focus {
   display: none; /* Hide the filter button by default */
 }
 
-@media (max-width: 767.98px) and (max-width: 999px){
+@media (max-width: 767.98px) or (max-width: 980px){
   .btn-filter {
       display: inline-block; /* Show the filter button on mobile screens */
   }
