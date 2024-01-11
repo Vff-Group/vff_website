@@ -1284,6 +1284,12 @@ def view_order_detail(request,orderid):
         #Payment Details
         payment_id = '-1'
         payment_type = 'NA'
+        payment_one_type = 'NA'
+        payment_one_amount = 'NA'
+        payment_one_id = 'NA'
+        payment_two_id = 'NA'
+        payment_two_type = 'NA'
+        payment_two_amount = 'NA'
         query_payment = "select razor_pay_payment_id,status,time,dt,payment_type,payment_one_type,payment_one_amount,payment_one_id,payment_two_id,payment_two_type,payment_two_amount from vff.laundry_payment_tbl where order_id='"+str(orderid)+"'"
         # query_payment = "select razor_pay_payment_id,status,time,dt,payment_type from vff.laundry_payment_tbl where order_id='"+str(orderid)+"'"
         pay_result = execute_raw_query_fetch_one(query_payment)
