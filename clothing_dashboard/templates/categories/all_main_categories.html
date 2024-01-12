@@ -161,11 +161,18 @@
             <!-- Hidden input for category ID -->
             <input type="hidden" name="category_id" value="{{row.main_cat_id}}">
             
+            <!-- Previous Image -->
+            <div class="mb-3">
+              <label for="previousImage{{row.main_cat_id}}" class="form-label">Previous Image</label>
+              <img src="{{ row.images }}" alt="Previous Image" id="previousImage{{row.main_cat_id}}" class="img-thumbnail" style="max-width: 100px;">
+            </div>
+
             <!-- Image upload input -->
             <div class="mb-3">
-              <label for="categoryImage{{row.main_cat_id}}" class="form-label">Category Image</label>
-              <input type="file" class="form-control" id="categoryImage{{row.main_cat_id}}" name="category_image">
+              <label for="categoryImage{{row.main_cat_id}}" class="form-label">New Image</label>
+              <input type="file" class="form-control" id="categoryImage{{row.main_cat_id}}" name="category_image" onchange="previewImage(this, 'previousImage{{row.main_cat_id}}')">
             </div>
+
 
             <!-- Text input for category name -->
             <div class="mb-3">
@@ -260,24 +267,17 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-  const imageInput = document.getElementById("image_upload");
-  const imageDiv = document.getElementById("input-profile");
-
-  imageDiv.addEventListener("click", () => {
-    // imageInput.click();
-  });
-
-  imageInput.addEventListener("change", (e) => {
-    const file = e.target.files[0];
-    // Optionally display the selected image, e.g., for preview
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        imageDiv.getElementsByTagName("img")[0].src = event.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
-  });
+ // Function to preview the selected image
+ function previewImage(input, imgId) {
+  var imgElement = document.getElementById(imgId);
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      imgElement.src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
 
   
 </script>
