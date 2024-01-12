@@ -142,7 +142,35 @@
                     </div>
                 </div>
             </form>
+            <hr>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- Other form fields here -->
             
+                <!-- FOB Costs Table -->
+                <div class="pl-lg-4 m-4">
+                    <table class="table table-bordered" id="fob-costs-table">
+                        <thead>
+                            <tr>
+                                <th>Fabric Supplier</th>
+                                <th>Reference</th>
+                                <th>Quality</th>
+                                <th>Origin</th>
+                                <th>Width/Weight</th>
+                                <th>Cost/Unit</th>
+                                <th>Usage</th>
+                                <th>Total Cost</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Existing rows will be dynamically added here -->
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-primary" id="add-row-btn">Add Row</button>
+                </div>
+            </form>
+
         </div>
         </div>
       </div>
@@ -151,6 +179,38 @@
 </main>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var tableBody = document.getElementById('fob-costs-table').getElementsByTagName('tbody')[0];
+        var addRowButton = document.getElementById('add-row-btn');
+
+        addRowButton.addEventListener('click', function () {
+            var newRow = tableBody.insertRow(tableBody.rows.length);
+            var cellIndex = 0;
+
+            // Add cells with input fields
+            for (cellIndex; cellIndex < 8; cellIndex++) {
+                var cell = newRow.insertCell(cellIndex);
+                var input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'form-control';
+                cell.appendChild(input);
+            }
+
+            // Add delete button
+            var deleteCell = newRow.insertCell(cellIndex);
+            var deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.className = 'btn btn-danger btn-sm';
+            deleteButton.textContent = 'Delete';
+            deleteButton.addEventListener('click', function () {
+                tableBody.deleteRow(newRow.rowIndex);
+            });
+            deleteCell.appendChild(deleteButton);
+        });
+    });
+</script>
 
 <script>
     $(document).ready(function () {
