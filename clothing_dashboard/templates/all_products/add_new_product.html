@@ -21,15 +21,15 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label class="form-control-label" for="input-images">Product Images</label>
-                            <div class="dropzone" id="image-dropzone">
+                            <div id="image-dropzone" class="dropzone">
                                 <input type="file" id="input-images" class="form-control form-control-alternative" name="product_images[]" multiple accept="image/*" style="display:none;">
-                                <div class="dz-message needsclick">
+                                <div class="dz-message needsclick" onclick="document.getElementById('input-images').click()">
                                     <i class="fas fa-cloud-upload-alt"></i>
-                                    <h5>Drop files here or click to upload</h5>
+                                    <h5>Click or drag to upload images</h5>
                                 </div>
-                                <!-- Preview container for images -->
-                                <div id="image-preview-container" class="mt-3"></div>
                             </div>
+                            <!-- Preview container for images -->
+                            <div id="image-preview-container" class="mt-3"></div>
                         </div>
                     </div>
                     
@@ -154,6 +154,44 @@
         <script src="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/dropzone.js"></script>
 
         <script>
+            function previewImages(input) {
+                var previewContainer = document.getElementById('image-preview-container');
+                previewContainer.innerHTML = ''; // Clear previous previews
+        
+                var files = input.files;
+                for (var i = 0; i < files.length; i++) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var imageElement = document.createElement('img');
+                        imageElement.src = e.target.result;
+                        imageElement.className = 'preview-image';
+                        previewContainer.appendChild(imageElement);
+                    };
+                    reader.readAsDataURL(files[i]);
+                }
+            }
+        </script>
+        
+        <style>
+            .dropzone {
+                border: 2px dashed #cccccc;
+                padding: 20px;
+                text-align: center;
+                cursor: pointer;
+            }
+        
+            .dz-message {
+                margin: 15px;
+            }
+        
+            .preview-image {
+                max-width: 100px;
+                max-height: 100px;
+                margin-right: 10px;
+            }
+        </style>
+        
+        <!-- <script>
             // Customize the appearance and behavior of Dropzone
             Dropzone.autoDiscover = false;
         
@@ -191,7 +229,7 @@
                     });
                 },
             });
-        </script>
+        </script> -->
         
         <script>
            // Function to preview selected images
