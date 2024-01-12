@@ -205,7 +205,7 @@
             deleteButton.className = 'btn btn-danger btn-sm';
             deleteButton.textContent = 'Delete';
             deleteButton.addEventListener('click', function () {
-                tableBody.deleteRow(newRow.rowIndex);
+                tableBody.deleteRow(deleteCell.rowIndex);
             });
             deleteCell.appendChild(deleteButton);
         });
