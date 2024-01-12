@@ -130,28 +130,30 @@
         </div>
         
         <script>
-            // Function to preview selected images
-            function previewImages(input) {
-                var previewContainer = document.getElementById('image-preview-container');
-                previewContainer.innerHTML = ''; // Clear previous previews
-        
-                if (input.files) {
-                    for (var i = 0; i < input.files.length; i++) {
-                        var reader = new FileReader();
-                        reader.onload = function (e) {
-                            var imgElement = document.createElement('img');
-                            imgElement.src = e.target.result;
-                            imgElement.className = 'img-thumbnail';
-                            previewContainer.appendChild(imgElement);
-                        };
-                        reader.readAsDataURL(input.files[i]);
-                    }
-                }
-            }
-        
-            // Attach the previewImages function to the change event of the image input
-            document.getElementById('input-images').addEventListener('change', function () {
-                previewImages(this);
-            });
+           // Function to preview selected images
+           function previewImages(input) {
+               var previewContainer = document.getElementById('image-preview-container');
+               previewContainer.innerHTML = ''; // Clear previous previews
+
+               if (input.files) {
+                   for (var i = 0; i < input.files.length; i++) {
+                       var reader = new FileReader();
+                       reader.onload = function (e) {
+                           var imgElement = document.createElement('img');
+                           imgElement.src = e.target.result;
+                           imgElement.className = 'img-thumbnail';
+                           imgElement.style.width = '100px'; // Set the fixed width
+                           imgElement.style.height = '100px'; // Set the fixed height
+                           previewContainer.appendChild(imgElement);
+                       };
+                       reader.readAsDataURL(input.files[i]);
+                   }
+               }
+           }
+
+           // Attach the previewImages function to the change event of the image input
+           document.getElementById('input-images').addEventListener('change', function () {
+               previewImages(this);
+           });
         </script>
     {% endblock  %}        
