@@ -5,7 +5,7 @@
 
 <style>
     .dropzone {
-        border: 2px dashed #cccccc;
+        border: 2px dotted #cccccc;
         padding: 20px;
         text-align: center;
         cursor: pointer;
@@ -44,7 +44,7 @@
                                 <input type="file" id="input-images" class="form-control form-control-alternative" name="product_images[]" multiple accept="image/*" style="display:none;">
                                 <div class="dz-message needsclick" onclick="document.getElementById('input-images').click()">
                                     <i class="fas fa-cloud-upload-alt"></i>
-                                    <h5>Click or drag to upload images</h5>
+                                    <h5>Click to upload product images</h5>
                                 </div>
                             </div>
                             <!-- Preview container for images -->
@@ -197,6 +197,10 @@
         <script src="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/dropzone.js"></script>
 
         <script>
+            document.getElementById('input-images').addEventListener('change', function () {
+                previewImages(this);
+            });
+        
             function previewImages(input) {
                 var previewContainer = document.getElementById('image-preview-container');
                 previewContainer.innerHTML = ''; // Clear previous previews
