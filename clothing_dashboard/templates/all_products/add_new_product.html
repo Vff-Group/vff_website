@@ -1,6 +1,6 @@
 {% extends "base/base.html" %}
 {% load static %}
-{% block title %}Add New Purchase Order{% endblock title%}
+{% block title %}Add New input-product-description{% endblock title%}
 {% block content %}
 
   <div class="container-fluid py-4">
@@ -9,7 +9,7 @@
       <div class="col-12">
         <div class="card mb-4">
           <div class="card-header pb-0 d-flex justify-content-between">
-            <h6>Add New Purchase Order</h6>
+            <h6>Add New Product</h6>
             
           </div>
 
@@ -18,18 +18,32 @@
                 {% csrf_token %}
                 <div class="pl-lg-4 m-4">
                     <!-- Existing form fields... -->
-        
-                    <!-- New fields for multiple images, product name, description, fit and care, and return policy -->
-                    <div class="row mb-4">
-                        <!-- Multiple Images Upload -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label" for="input-images">Product Images</label>
-                                <input type="file" id="input-images" class="form-control form-control-alternative" name="product_images[]" multiple accept="image/*">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-images">Product Images</label>
+                            <div class="dropzone" id="image-dropzone">
+                                <input type="file" id="input-images" class="form-control form-control-alternative" name="product_images[]" multiple accept="image/*" style="display:none;">
+                                <div class="dz-message needsclick">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <h5>Drop files here or click to upload</h5>
+                                </div>
                                 <!-- Preview container for images -->
                                 <div id="image-preview-container" class="mt-3"></div>
                             </div>
                         </div>
+                    </div>
+                    
+                    <!-- New fields for multiple images, product name, description, fit and care, and return policy -->
+                    <div class="row mb-4">
+                        <!-- Multiple Images Upload -->
+                        <!-- <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-images">Product Images</label>
+                                <input type="file" id="input-images" class="form-control form-control-alternative" name="product_images[]" multiple accept="image/*">
+                                Preview container for images
+                                <div id="image-preview-container" class="mt-3"></div>
+                            </div>
+                        </div> -->
         
                         <!-- Product Name -->
                         <div class="col-lg-4">
@@ -135,34 +149,77 @@
 
         <!-- Include jscolor library from CDN -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"></script>
+        <!-- Include Dropzone.js library -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/dropzone.css">
+        <script src="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/dropzone.js"></script>
+
+        <script>
+            // Customize the appearance and behavior of Dropzone
+            Dropzone.autoDiscover = false;
+        
+            // Initialize Dropzone on the specified element
+            var myDropzone = new Dropzone("#image-dropzone", {
+                url: "/your-upload-endpoint",
+                paramName: "file", // The name that will be used to transfer the file
+                maxFilesize: 5, // MB
+                maxFiles: 10,
+                acceptedFiles: "image/*",
+                addRemoveLinks: true, // Add remove links for uploaded files
+                dictRemoveFile: "Remove", // Label for the remove link
+                init: function () {
+                    this.on("addedfile", function (file) {
+                        // Display the file preview in the preview container
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            var imageElement = document.createElement("img");
+                            imageElement.src = e.target.result;
+                            document.getElementById("image-preview-container").appendChild(imageElement);
+                        };
+                        reader.readAsDataURL(file);
+                    });
+        
+                    this.on("removedfile", function (file) {
+                        // Remove the file preview from the preview container
+                        var previewContainer = document.getElementById("image-preview-container");
+                        var previews = previewContainer.getElementsByTagName("img");
+                        for (var i = 0; i < previews.length; i++) {
+                            if (previews[i].src.includes(file.dataURL)) {
+                                previewContainer.removeChild(previews[i]);
+                                break;
+                            }
+                        }
+                    });
+                },
+            });
+        </script>
         
         <script>
            // Function to preview selected images
-           function previewImages(input) {
-               var previewContainer = document.getElementById('image-preview-container');
-               previewContainer.innerHTML = ''; // Clear previous previews
+          //function previewImages(input) {
+          //    var previewContainer = document.getElementById('image-preview-container');
+          //    previewContainer.innerHTML = ''; // Clear previous previews
 
-               if (input.files) {
-                   for (var i = 0; i < input.files.length; i++) {
-                       var reader = new FileReader();
-                       reader.onload = function (e) {
-                           var imgElement = document.createElement('img');
-                           imgElement.src = e.target.result;
-                           imgElement.className = 'img-thumbnail';
-                           imgElement.style.width = '100px'; // Set the fixed width
-                           imgElement.style.height = '100px'; // Set the fixed height
-                           imgElement.style.marginRight = '5px'; // Set the fixed height
-                           previewContainer.appendChild(imgElement);
-                       };
-                       reader.readAsDataURL(input.files[i]);
-                   }
-               }
-           }
+          //    if (input.files) {
+          //        for (var i = 0; i < input.files.length; i++) {
+          //            var reader = new FileReader();
+          //            reader.onload = function (e) {
+          //                var imgElement = document.createElement('img');
+          //                imgElement.src = e.target.result;
+          //                imgElement.className = 'img-thumbnail';
+          //                imgElement.style.width = '100px'; // Set the fixed width
+          //                imgElement.style.height = '100px'; // Set the fixed height
+          //                imgElement.style.marginRight = '5px'; // Set the fixed height
+          //                previewContainer.appendChild(imgElement);
+          //            };
+          //            reader.readAsDataURL(input.files[i]);
+          //        }
+          //    }
+          //}
 
-           // Attach the previewImages function to the change event of the image input
-           document.getElementById('input-images').addEventListener('change', function () {
-               previewImages(this);
-           });
+          //// Attach the previewImages function to the change event of the image input
+          //document.getElementById('input-images').addEventListener('change', function () {
+          //    previewImages(this);
+          //});
 
            
             // Function to add a new color input field
