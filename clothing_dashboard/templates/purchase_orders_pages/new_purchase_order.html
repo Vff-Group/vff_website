@@ -16,10 +16,56 @@
           
           <!-- Action Buttons End  -->
           <div class="card-body px-0 pt-0 pb-2">
-            <div class="row ms-2">
-              
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+            <div class="pl-lf-4">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-kimbalno">Kimball No</label>
+                          <input type="text" id="input-kimbalno" class="form-control form-control-alternative" placeholder="Enter Kimball No" name="kimbalno" autocomplete="off" value="{{ data.kimbalno|default:'' }}"  required>
+                        </div>
+                      </div>
+                      <div class="col-lg-3">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-styleref">Style Reference</label>
+                          <input type="text" id="input-styleref" class="form-control form-control-alternative" placeholder="Style Reference ID" name="styleref" autocomplete="off" value="{{ data.styleref|default:'' }}"  required>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-productdsc">Product Description</label>
+                          <input type="text" id="input-productdsc" class="form-control form-control-alternative" placeholder="Enter Product Description" name="productdsc" autocomplete="off" value="{{ data.productdsc|default:'' }}"  required>
+                        </div>
+                      </div>
+                  
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-department">Department</label>
+                          <input type="text" id="input-department" class="form-control form-control-alternative" placeholder="Enter Department" name="department" autocomplete="off" value="{{ data.department|default:'' }}"  required>
+                        </div>
+                      </div>
+                      <div class="col-lg-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control form-control-alternative" placeholder="Section" name="section" autocomplete="off" value="{{ data.section|default:'' }}" required>
+                            <input type="text" class="form-control form-control-alternative" placeholder="Small Width" name="smallWidth" autocomplete="off" style="width: 50px;" value="{{ data.smallWidth|default:'' }}" required>
+                        </div>
+                    </div>
+                    
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-productdsc">Product Description</label>
+                          <input type="text" id="input-productdsc" class="form-control form-control-alternative" placeholder="Enter Product Description" name="productdsc" autocomplete="off" value="{{ data.productdsc|default:'' }}"  required>
+                        </div>
+                      </div>
+                  
+                </div>
+
             </div>
-            
+            </form>
         </div>
         </div>
       </div>
