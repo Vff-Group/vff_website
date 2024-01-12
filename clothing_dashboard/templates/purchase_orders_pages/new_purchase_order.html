@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="col-lg-2 ms-1">
                                     <label class="form-control-label" for="input-size">EZ/UK</label>
-                                    <input type="text" id="input-size" class="form-control form-control-alternative" placeholder="Enter EZ/UK" name="size" autocomplete="off" style="width: 50px;" value="{{ data.size|default:'' }}" required>
+                                    <input type="text" id="input-size" class="form-control form-control-alternative" placeholder="EZ/UK" name="size" autocomplete="off" style="width: 50px;" value="{{ data.size|default:'' }}" required>
                                 </div>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label" for="input-costingdate">Costing Date</label>
-                                <input type="text" id="input-costingdate" class="form-control form-control-alternative" placeholder="10/18/2019" name="costingdate" autocomplete="off" value="{{ data.costingdate|default:'' }}" required>
+                                <input class="form-control form-control-alternative" type="date"  id="input-costingdate" name="costingdate" value="{{ data.costingdate|date:'Y-m-d' }}" required>
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -86,7 +86,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label" for="input-conversionrates">Conversion Rates</label>
-                                <input type="text" id="input-conversionrates" class="form-control form-control-alternative" placeholder="£ = $" name="conversionrates" autocomplete="off" value="{{ data.conversionrates|default:'' }}" required>
+                                <input type="number" id="input-conversionrates" class="form-control form-control-alternative" placeholder="£ = $" name="conversionrates" autocomplete="off" value="{{ data.conversionrates|default:'' }}" required>
                             </div>
                         </div>
                     </div>
