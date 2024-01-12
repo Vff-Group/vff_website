@@ -156,7 +156,7 @@
         </div>
         <div class="modal-body">
           <!-- Form for editing category -->
-          <form id="editForm{{row.main_cat_id}}" method="post" action="{% url 'your_edit_category_url' %}" enctype="multipart/form-data">
+          <form id="editForm{{row.main_cat_id}}" method="post" action="{% url 'clothing_dashboard_app:update_main_category_details' %}" enctype="multipart/form-data">
             {% csrf_token %}
             <!-- Hidden input for category ID -->
             <input type="hidden" name="category_id" value="{{row.main_cat_id}}">
