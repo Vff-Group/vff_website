@@ -39,7 +39,7 @@
           <!-- Image upload input -->
           <div class="mb-3">
             <label for="newCategoryImage" class="form-label">New Image</label>
-            <input type="file" class="form-control" id="newCategoryImage" name="category_image" onchange="previewNewImage(this)">
+            <input type="file" class="form-control" id="newCategoryImage" name="category_image" onchange="previewNewImage(this)" required>
           </div>
 
            <!-- Image preview element -->
@@ -50,7 +50,7 @@
           <!-- Text input for category name -->
           <div class="mb-3">
             <label for="newCategoryName" class="form-label">Category Name</label>
-            <input type="text" class="form-control" id="newCategoryName" name="main_category_name">
+            <input type="text" class="form-control" id="newCategoryName" name="main_category_name" required>
           </div>
 
           <button type="submit" class="btn btn-primary">Create Category</button>
