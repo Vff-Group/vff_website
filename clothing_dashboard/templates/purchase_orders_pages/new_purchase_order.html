@@ -18,60 +18,131 @@
           <div class="card-body px-0 pt-0 pb-2">
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-            <div class="pl-lg-4 m-4">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <div class="form-group">
-                          <label class="form-control-label" for="input-kimbalno">Kimball No</label>
-                          <input type="text" id="input-kimbalno" class="form-control form-control-alternative" placeholder="Enter Kimball No" name="kimbalno" autocomplete="off" value="{{ data.kimbalno|default:'' }}"  required>
+                <div class="pl-lg-4 m-4">
+                    <!-- First Row -->
+                    <div class="row mb-4">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-kimbalno">Kimball No</label>
+                                <input type="text" id="input-kimbalno" class="form-control form-control-alternative" placeholder="TBC" name="kimbalno" autocomplete="off" value="{{ data.kimbalno|default:'' }}" required>
+                            </div>
                         </div>
-                      </div>
-                      <div class="col-lg-3">
-                        <div class="form-group">
-                          <label class="form-control-label" for="input-styleref">Style Reference</label>
-                          <input type="text" id="input-styleref" class="form-control form-control-alternative" placeholder="Style Reference ID" name="styleref" autocomplete="off" value="{{ data.styleref|default:'' }}"  required>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-styleref">Style Reference</label>
+                                <input type="text" id="input-styleref" class="form-control form-control-alternative" placeholder="Enter Style Reference" name="styleref" autocomplete="off" value="{{ data.styleref|default:'' }}" required>
+                            </div>
                         </div>
-                      </div>
-                      <div class="col-lg-6">
-                        <div class="form-group">
-                          <label class="form-control-label" for="input-productdsc">Product Description</label>
-                          <input type="text" id="input-productdsc" class="form-control form-control-alternative" placeholder="Enter Product Description" name="productdsc" autocomplete="off" value="{{ data.productdsc|default:'' }}"  required>
-                        </div>
-                      </div>
-                  
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                          <label class="form-control-label" for="input-department">Department</label>
-                          <input type="text" id="input-department" class="form-control form-control-alternative" placeholder="Enter Department" name="department" autocomplete="off" value="{{ data.department|default:'' }}"  required>
-                        </div>
-                      </div>
-                      <div class="col-lg-5">
-                        <div class="input-group">
-                           <div class="col-lg-8 ms-1">
-                            <label class="form-control-label" for="input-section">Section</label>
-                            <input type="text" id="input-section" class="form-control form-control-alternative" placeholder="Section" name="section" autocomplete="off" value="{{ data.section|default:'' }}" required>
-                           </div>
-                            <div class="col-lg-2 ms-1">
-                                <label class="form-control-label" for="input-size">EZ/UK</label>
-                            <input type="text" id="input-size" class="form-control form-control-alternative" placeholder="EZ/UK" name="size" autocomplete="off" style="width: 50px;" value="{{ data.size|default:'' }}" required>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-productdsc">Product Description</label>
+                                <input type="text" id="input-productdsc" class="form-control form-control-alternative" placeholder="MENS ZIP THRU HOODY - CVC" name="productdsc" autocomplete="off" value="{{ data.productdsc|default:'' }}" required>
                             </div>
                         </div>
                     </div>
-                    
-                      <div class="col-lg-3">
-                        <div class="form-group">
-                          <label class="form-control-label" for="input-productdsc">Product Description</label>
-                          <input type="text" id="input-productdsc" class="form-control form-control-alternative" placeholder="Enter Product Description" name="productdsc" autocomplete="off" value="{{ data.productdsc|default:'' }}"  required>
+            
+                    <!-- Second Row -->
+                    <div class="row mb-4">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-department">Department</label>
+                                <input type="text" id="input-department" class="form-control form-control-alternative" placeholder="Fashions" name="department" autocomplete="off" value="{{ data.department|default:'' }}" required>
+                            </div>
                         </div>
-                      </div>
-                  
+                        <div class="col-lg-5">
+                            <div class="input-group">
+                                <div class="col-lg-8 ms-1">
+                                    <label class="form-control-label" for="input-section">Section</label>
+                                    <input type="text" id="input-section" class="form-control form-control-alternative" placeholder="14 Sports Tops" name="section" autocomplete="off" value="{{ data.section|default:'' }}" required>
+                                </div>
+                                <div class="col-lg-2 ms-1">
+                                    <label class="form-control-label" for="input-size">EZ/UK</label>
+                                    <input type="text" id="input-size" class="form-control form-control-alternative" placeholder="Enter EZ/UK" name="size" autocomplete="off" style="width: 50px;" value="{{ data.size|default:'' }}" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-season">Season</label>
+                                <input type="text" id="input-season" class="form-control form-control-alternative" placeholder="Enter Season" name="season" autocomplete="off" value="{{ data.season|default:'' }}" required>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <!-- Third Row -->
+                    <div class="row mb-4">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-costingdate">Costing Date</label>
+                                <input type="text" id="input-costingdate" class="form-control form-control-alternative" placeholder="10/18/2019" name="costingdate" autocomplete="off" value="{{ data.costingdate|default:'' }}" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-version">Version</label>
+                                <input type="text" id="input-version" class="form-control form-control-alternative" placeholder="1" name="version" autocomplete="off" value="{{ data.version|default:'' }}" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-conversionrates">Conversion Rates</label>
+                                <input type="text" id="input-conversionrates" class="form-control form-control-alternative" placeholder="£ = $" name="conversionrates" autocomplete="off" value="{{ data.conversionrates|default:'' }}" required>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <!-- Fourth Row -->
+                    <div class="row mb-4">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-supplier">Supplier</label>
+                                <input type="text" id="input-supplier" class="form-control form-control-alternative" placeholder="NEW BEST GLOBAL ENT CORP" name="supplier" autocomplete="off" value="{{ data.supplier|default:'' }}" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-factory">Factory</label>
+                                <input type="text" id="input-factory" class="form-control form-control-alternative" placeholder="NEW BEST TEXTILE" name="factory" autocomplete="off" value="{{ data.factory|default:'' }}" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-country">Country</label>
+                                <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="CAMBODIA" name="country" autocomplete="off" value="{{ data.country|default:'' }}" required>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <!-- Fifth Row -->
+                    <div class="row mb-4">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-type">Type</label>
+                                <input type="text" id="input-type" class="form-control form-control-alternative" placeholder="FOB - Far East" name="type" autocomplete="off" value="{{ data.type|default:'' }}" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-gsp">GSP</label>
+                                <input type="text" id="input-gsp" class="form-control form-control-alternative" placeholder="Yes" name="gsp" autocomplete="off" value="{{ data.gsp|default:'' }}" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-currency">Currency</label>
+                                <input type="text" id="input-currency" class="form-control form-control-alternative" placeholder="$" name="currency" autocomplete="off" value="{{ data.currency|default:'' }}" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-other">Other</label>
+                                <input type="text" id="input-other" class="form-control form-control-alternative" placeholder="SOLID" name="other" autocomplete="off" value="{{ data.other|default:'' }}" required>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-            </div>
             </form>
+            
         </div>
         </div>
       </div>
