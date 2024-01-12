@@ -92,6 +92,41 @@
                   </button>
               </div>
               {% else %}
+
+              <!-- Add this to your HTML body -->
+<div class="modal fade" id="modal-default{{row.main_cat_id}}" tabindex="-1" role="dialog" aria-labelledby="modal-default-label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-default-label">Edit Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Form for editing category -->
+        <form id="editForm{{row.main_cat_id}}" method="post" action="{% url 'your_edit_category_url' %}" enctype="multipart/form-data">
+          {% csrf_token %}
+          <!-- Hidden input for category ID -->
+          <input type="hidden" name="category_id" value="{{row.main_cat_id}}">
+          
+          <!-- Image upload input -->
+          <div class="mb-3">
+            <label for="categoryImage" class="form-label">Category Image</label>
+            <input type="file" class="form-control" id="categoryImage" name="category_image">
+          </div>
+
+          <!-- Text input for category name -->
+          <div class="mb-3">
+            <label for="categoryName" class="form-label">Category Name</label>
+            <input type="text" class="form-control" id="categoryName" name="category_name" value="{{row.main_title_name}}">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
                  <tbody >
                   {% for row in query_result %}
                   <tr>
@@ -101,6 +136,8 @@
                     </td>
                    <td>
                     <h6 class="mb-0 text-sm">{{row.main_title_name}}</h6>
+                    <input type="hidden" name="category_id" id="categoryID" value="{{row.main_cat_id}}">
+                    <input type="hidden" name="category_id" id="categoryID" value="{{row.images}}">
                    </td>
                    
                    <td class="align-middle text-center text-sm">
@@ -141,7 +178,7 @@
                   </tr>
 
                  
-                  <div class="col-md-4">
+                  <!-- <div class="col-md-4">
                     
                     <div class="modal fade" id="modal-default{{row.main_cat_id}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
                       <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
@@ -153,6 +190,7 @@
                             </button>
                           </div>
                           <form
+                          id="editMainCategoryForm{{row.main_cat_id}}"
                   method="post"
                   action="{% url 'clothing_dashboard_app:update_main_category_details' %}"
                   enctype="multipart/form-data"
@@ -174,7 +212,7 @@
                                           </div>
                                         </div>
                                       </div>
-                                      <input type="file" id="image_upload" class="d-none" accept="image/jpeg, image/png" name="profile-image1" onchange="displayImage(event)" value="{{ row.images }}">
+                                      <input type="file" id="image_upload" class="d-none" accept="image/jpeg, image/png" name="default-image"  value="{{ row.images }}">
                                     {% else %}
                                       <div class="row">
                                         <div class="col mt-4">
@@ -196,14 +234,14 @@
                             </div>
                         </div>
                           <div class="modal-footer">
-                            <button type="submit" class="btn bg-gradient-success">Save</button>
+                            <button type="submit" class="btn bg-gradient-success" onclick="submitForm({{row.main_cat_id}})">Save</button>
                             <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
                           </div>
                         </form>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                   {% endfor %}
                 </tbody> 
 

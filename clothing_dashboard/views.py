@@ -197,13 +197,12 @@ def update_main_category_details(request):
         main_category_name = request.POST.get('main_category_name')
         main_cat_id = request.POST.get('category_id')#Hidden Input Field
         uploaded_image = request.FILES.get('profile-image1')
-        default_image = request.POST.get('profile-image1')
+        
 
         # image_url='NA'
         if uploaded_image:
             image_url = upload_images2(uploaded_image)
-        else:
-            image_url = default_image; 
+        
 
         try:
             with connection.cursor() as cursor:
