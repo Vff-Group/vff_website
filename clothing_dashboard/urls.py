@@ -37,7 +37,7 @@ urlpatterns = [
     path('update_main_category_details/',views.update_main_category_details,name='update_main_category_details'),
    
     # Add New  Category
-    path('add_new_category/',views.add_new_main_category,name='add_new_category'),
+    path('add_new_category/',views.add_new_category,name='add_new_category'),
    
     #Update  Category Details
     path('update_category_details/',views.update_category_details,name='update_category_details'),

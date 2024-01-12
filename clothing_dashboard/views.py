@@ -292,7 +292,7 @@ def update_category_details(request):
                 update_query="update vff.united_armor_categorytbl set cat_name='"+str(category_name)+"',time_while_creation= EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) where catid='"+str(category_id)+"'"
                 cursor.execute(update_query)
                 connection.commit()
-                print(f" New Category {category_name} Updated Successfully.")
+                print(f"  Category {category_name} Updated Successfully.")
                 return redirect(reverse('clothing_dashboard_app:all_categories', kwargs={'main_cat_id': main_category_id,'main_cat_name':main_category_name}))
         except Exception as e:
             print(f"Error loading data: {e}")
