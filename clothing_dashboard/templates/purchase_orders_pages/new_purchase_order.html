@@ -186,7 +186,7 @@
         var addRowButton = document.getElementById('add-row-btn');
 
         addRowButton.addEventListener('click', function () {
-            var newRow = tableBody.insertRow(-1);  // Insert at the end of the table
+            var newRow = tableBody.insertRow(tableBody.rows.length);
             var cellIndex = 0;
 
             // Add cells with input fields
@@ -205,12 +205,7 @@
             deleteButton.className = 'btn btn-danger btn-sm';
             deleteButton.textContent = 'Delete';
             deleteButton.addEventListener('click', function () {
-                // Find the parent row of the clicked button
-                var rowIndex = deleteButton.closest('tr').rowIndex;
-                // Ensure the row index is within the valid range
-                if (rowIndex !== -1 && rowIndex < tableBody.rows.length) {
-                    tableBody.deleteRow(cellIndex);
-                }
+                tableBody.deleteRow(newRow.rowIndex);
             });
             deleteCell.appendChild(deleteButton);
         });
