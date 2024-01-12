@@ -57,10 +57,11 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                        <input type="hidden" name="category_id" id="categoryID" value="">
+                        <input type="hidden" name="main_category_id"  value="{{main_cat_id}}">
+                        <input type="hidden" name="main_category_name"  value="{{main_cat_name}}">
                         <div class="form-group">
                             <label for="categoryName">Category Name</label>
-                            <input type="text" class="form-control" id="categoryName" name="category_name" placeholder="Enter New Category Name">
+                            <input type="text" class="form-control" id="categoryName" name="category_name" placeholder="Enter New Category Name" autocomplete="off" required>
                         </div>
                     </div>
                       <div class="modal-footer">
@@ -104,6 +105,7 @@
                     </td>
                    <td>
                     <h6 class="mb-0 text-sm">{{row.cat_name}}</h6>
+                    <input type="hidden" name="category_id" value="{{row.cat_id}}">
                    </td>
                   
                    
@@ -144,14 +146,16 @@
                           </div>
                           <form
                   method="post"
-                  action=""
+                  action="{% url 'clothing_dashboard_app:update_category_details' %}"
                 >
                   {% csrf_token %}
                           <div class="modal-body">
-                            <input type="hidden" name="category_id" id="categoryID" value="">
+                            <input type="hidden" name="main_category_id"  value="{{main_cat_id}}">
+                        <input type="hidden" name="main_category_name"  value="{{main_cat_name}}">
+                        <input type="hidden" name="category_id"  value="{{row.catid}}">
                             <div class="form-group">
                                 <label for="categoryName">Category Name</label>
-                                <input type="text" class="form-control" id="categoryName" name="category_name" value="{{row.cat_name}}">
+                                <input type="text" class="form-control" id="categoryName" name="category_name" value="{{row.cat_name}}"  autocomplete="off"  required>
                             </div>
                         </div>
                           <div class="modal-footer">

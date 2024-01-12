@@ -103,7 +103,7 @@ def all_main_categories(request):
 
 def all_categories(request,main_cat_id,main_cat_name):
     error_msg = 'No Category Found'
-    query = "select catid,cat_name,active_status from vff.united_armor_categorytbl where main_catid='"+str(main_cat_id)+"'"
+    query = "select catid,cat_name,active_status from vff.united_armor_categorytbl where main_catid='"+str(main_cat_id)+"' ORDER BY time_while_creation desc"
     
     query_result = execute_raw_query(query)
     
@@ -219,7 +219,6 @@ def add_new_main_category(request):
     context = {'current_url': current_url,'error_msg':error_msg}
     return render(request,"categories/all_main_categories.html",context)
     
-
 def update_main_category_details(request):
     
     error_msg = 'No Main Category Details Found'
@@ -253,45 +252,105 @@ def update_main_category_details(request):
     context = {'current_url': current_url,'error_msg':error_msg}
     return render(request,"categories/all_main_categories.html",context)
 
+def add_new_category(request):
+    
+    error_msg = 'No Category Details Found'
+    if request.method == "POST":
+        main_category_id = request.POST.get('main_category_id')
+        main_category_name = request.POST.get('main_category_name')
+        category_name = request.POST.get('category_name')
+        
+        
 
-def update_category_details(request,main_cat_id):
+        try:
+            with connection.cursor() as cursor:
+                insert_query="insert into vff.united_armor_categorytbl (cat_name,main_catid) values ('"+str(category_name)+"','"+str(main_category_id)+"')"
+                cursor.execute(insert_query)
+                connection.commit()
+                print(f" New Category {category_name} Inserted Successfully.")
+                return redirect(reverse('clothing_dashboard_app:all_categories', kwargs={'main_cat_id': main_category_id,'main_cat_name':main_category_name}))
+        except Exception as e:
+            print(f"Error loading data: {e}")
+            
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"categories/all_main_categories.html",context)
+
+def update_category_details(request):
     
     error_msg = 'No  Category Details Found'
     if request.method == "POST":
+        main_category_id = request.POST.get('main_category_id')
         main_category_name = request.POST.get('main_category_name')
+        category_id = request.POST.get('category_id')
+        category_name = request.POST.get('category_name')
         
         
-        # try:
-        #     with connection.cursor() as cursor:
-        #         insert_query="update vff.gym_fees_detailstbl set fees_type='"+str(fees_type)+"',duration_in_months='"+str(duration_in_months)+"',price='"+str(price)+"',description='"+str(description)+"',cardio='"+str(cardio)+"' where fdetail_id='"+str(fees_plan_id)+"'"
-        #         cursor.execute(insert_query)
-        #         connection.commit()
-        #         print(" Fees Plan Updated Successfully.")
-        #         return redirect('gym_dashboard_app:all_fees_plans')
-        # except Exception as e:
-        #     print(f"Error loading data: {e}")
+        try:
+            with connection.cursor() as cursor:
+                update_query="update vff.united_armor_categorytbl set cat_name='"+str(category_name)+"',time_while_creation= EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) where catid='"+str(category_id)+"'"
+                cursor.execute(update_query)
+                connection.commit()
+                print(f" New Category {category_name} Updated Successfully.")
+                return redirect(reverse('clothing_dashboard_app:all_categories', kwargs={'main_cat_id': main_category_id,'main_cat_name':main_category_name}))
+        except Exception as e:
+            print(f"Error loading data: {e}")
             
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
     context = {'current_url': current_url,'error_msg':error_msg}
     return render(request,"categories/all_categories.html",context)
 
-def update_sub_category_details(request,main_cat_id,cat_id):
+def add_new_sub_category(request):
+    
+    error_msg = 'No Category Details Found'
+    if request.method == "POST":
+        main_category_id = request.POST.get('main_category_id')
+        main_category_name = request.POST.get('main_category_name')
+        category_name = request.POST.get('category_name')
+        category_id = request.POST.get('category_id')
+        sub_category_name = request.POST.get('sub_category_name')
+        
+        
+
+        try:
+            with connection.cursor() as cursor:
+                insert_query="insert into vff.united_armor_sub_categorytbl (sub_cat_name,cat_id) values ('"+str(sub_category_name)+"','"+str(category_id)+"')"
+                cursor.execute(insert_query)
+                connection.commit()
+                print(f" New Sub Category {sub_category_name} Inserted Successfully.")
+                return redirect(reverse('clothing_dashboard_app:all_sub_categories', kwargs={'main_cat_id': main_category_id,'main_cat_name':main_category_name,'cat_id':category_id,'cat_name':category_name}))
+        except Exception as e:
+            print(f"Error loading data: {e}")
+            
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"categories/all_main_categories.html",context)
+
+
+def update_sub_category_details(request):
     
     error_msg = 'No Sub Category Details Found'
     if request.method == "POST":
+        main_category_id = request.POST.get('main_category_id')
         main_category_name = request.POST.get('main_category_name')
+        category_name = request.POST.get('category_name')
+        category_id = request.POST.get('category_id')
+        sub_category_name = request.POST.get('sub_category_name')
         
         
-        # try:
-        #     with connection.cursor() as cursor:
-        #         insert_query="update vff.gym_fees_detailstbl set fees_type='"+str(fees_type)+"',duration_in_months='"+str(duration_in_months)+"',price='"+str(price)+"',description='"+str(description)+"',cardio='"+str(cardio)+"' where fdetail_id='"+str(fees_plan_id)+"'"
-        #         cursor.execute(insert_query)
-        #         connection.commit()
-        #         print(" Fees Plan Updated Successfully.")
-        #         return redirect('gym_dashboard_app:all_fees_plans')
-        # except Exception as e:
-        #     print(f"Error loading data: {e}")
+
+        try:
+            with connection.cursor() as cursor:
+                update_query="update vff.united_armor_sub_categorytbl set sub_cat_name='"+str(sub_category_name)+"',time_creation= EXTRACT (EPOCH FROM CURRENT_TIMESTAMP) where sub_catid=''"
+                cursor.execute(update_query)
+                connection.commit()
+                print(f" Sub Category {sub_category_name} Updated Successfully.")
+                return redirect(reverse('clothing_dashboard_app:all_sub_categories', kwargs={'main_cat_id': main_category_id,'main_cat_name':main_category_name,'cat_id':category_id,'cat_name':category_name}))
+        except Exception as e:
+            print(f"Error loading data: {e}")
             
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.

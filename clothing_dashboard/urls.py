@@ -36,11 +36,19 @@ urlpatterns = [
     #Update Main Category Details
     path('update_main_category_details/',views.update_main_category_details,name='update_main_category_details'),
    
-    #Update Category Details
-    path('update_category_details/<int:main_cat_id>/',views.update_category_details,name='update_category_details'),
+    # Add New  Category
+    path('add_new_category/',views.add_new_main_category,name='add_new_category'),
+   
+    #Update  Category Details
+    path('update_category_details/',views.update_category_details,name='update_category_details'),
+   
+    # Add New Sub Category
+    path('add_new_sub_category/',views.add_new_sub_category,name='add_new_sub_category'),
    
     #Update Sub Category Details
-    path('update_sub_category_details/<int:main_cat_id>/<int:cat_id>/',views.update_sub_category_details,name='update_sub_category_details'),
+    path('update_sub_category_details/',views.update_sub_category_details,name='update_sub_category_details'),
+   
+    
    
     #---------------- PRE ORDER Sequence Paths ------------------
     
