@@ -1,162 +1,154 @@
-{% extends "base/full_page_base.html" %}
+{% extends "base/base.html" %}
 {% load static %}
-{% block title %}Add New Product{% endblock title%}
+{% block title %}Add New Purchase Order{% endblock title%}
 {% block content %}
 
   <div class="container-fluid py-4">
     
-    <div class="card">
-        <div class="card-body" id="step1">
-            <!-- First Step: Basic Information -->
-            <h2 class="card-title">Basic Information</h2>
-            <form id="basicInfoForm">
-                <div class="mb-3">
-                    <label for="productName" class="form-label">Product Name</label>
-                    <input type="text" class="form-control" id="productName" required>
-                </div>
-                <div class="mb-3">
-                    <label for="manufacturerName" class="form-label">Manufacturer Name</label>
-                    <input type="text" class="form-control" id="manufacturerName" required>
-                </div>
-                <div class="mb-3">
-                    <label for="manufacturerBrand" class="form-label">Manufacturer Brand</label>
-                    <input type="text" class="form-control" id="manufacturerBrand" required>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="mb-3">
-                            <label for="price" class="form-label">Price</label>
-                            <input type="number" class="form-control" id="price" required>
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header pb-0 d-flex justify-content-between">
+            <h6>Add New Purchase Order</h6>
+            
+          </div>
+
+          <div class="card-body px-0 pt-0 pb-2">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="pl-lg-4 m-4">
+                    <!-- Existing form fields... -->
+        
+                    <!-- New fields for multiple images, product name, description, fit and care, and return policy -->
+                    <div class="row mb-4">
+                        <!-- Multiple Images Upload -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-images">Product Images</label>
+                                <input type="file" id="input-images" class="form-control form-control-alternative" name="product_images[]" multiple accept="image/*">
+                                <!-- Preview container for images -->
+                                <div id="image-preview-container"></div>
+                            </div>
+                        </div>
+        
+                        <!-- Product Name -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-product-name">Product Name</label>
+                                <input type="text" id="input-product-name" class="form-control form-control-alternative" placeholder="Enter Product Name" name="product_name" autocomplete="off" required>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
 
+                    <!-- Checkboxes for Sizes -->
+                     <div class="row mb-4">
+                             <!-- Dropdown for Color -->
+                          <div class="col-lg-3">
+                              <div class="form-group">
+                                  <label class="form-control-label" for="input-color">Color</label>
+                                  <select id="input-color" class="form-control form-control-alternative" name="color" required>
+                                      <option value="">Select Color</option>
+                                      <!-- Add options dynamically based on your colors -->
+                                      <option value="red">Red</option>
+                                      <option value="blue">Blue</option>
+                                  </select>
+                              </div>
+                          </div>
+            
+                         <div class="col-lg-9">
+                             <label class="form-control-label">Sizes Available</label>
+                         </div>
+                         <!-- Add checkboxes dynamically based on your available sizes -->
+                         <div class="col-lg-1">
+                             <div class="form-check">
+                                 <input class="form-check-input" type="checkbox" id="sizeCheckbox1" name="sizes[]" value="S">
+                                 <label class="form-check-label" for="sizeCheckbox1">S</label>
+                             </div>
+                         </div>
+                         <div class="col-lg-1">
+                             <div class="form-check">
+                                 <input class="form-check-input" type="checkbox" id="sizeCheckbox2" name="sizes[]" value="M">
+                                 <label class="form-check-label" for="sizeCheckbox2">M</label>
+                             </div>
+                         </div>
+                         <!-- Add more checkboxes for other sizes as needed -->
+                     </div>
+
+                    <div class="row mb-4">
+                        <!-- Dropdown for Product Type -->
+                           <div class="col-lg-3">
+                               <div class="form-group">
+                                   <label class="form-control-label" for="input-product-type">Product Type</label>
+                                   <select id="input-product-type" class="form-control form-control-alternative" name="product_type" required>
+                                       <option value="">Select Product Type</option>
+                                       <!-- Add options dynamically based on your product types -->
+                                       <option value="type1">Type 1</option>
+                                       <option value="type2">Type 2</option>
+                                   </select>
+                               </div>
+                           </div>
+                        
                     </div>
-                </div>
-                
-               
-                <div class="mb-3">
-                    <label for="productDescription" class="form-label">Product Description</label>
-                    <textarea class="form-control" id="productDescription" rows="4" required></textarea>
+
+
+        
+                    <!-- Description, Fit and Care, and Return Policy Textareas -->
+                    <div class="row mb-4">
+                        <!-- Product Description -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-product-description">Product Description</label>
+                                <textarea id="input-product-description" class="form-control form-control-alternative" placeholder="Enter Product Description" name="product_description" rows="3" required></textarea>
+                            </div>
+                        </div>
+        
+                        <!-- Fit and Care Information -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-fit-care">Fit and Care Information</label>
+                                <textarea id="input-fit-care" class="form-control form-control-alternative" placeholder="Enter Fit and Care Information" name="fit_care" rows="3" required></textarea>
+                            </div>
+                        </div>
+        
+                        <!-- Return Policy -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-return-policy">Return Policy</label>
+                                <textarea id="input-return-policy" class="form-control form-control-alternative" placeholder="Enter Return Policy" name="return_policy" rows="3" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- Existing form fields... -->
+        
+                    <button type="submit" class="btn btn-primary">Add New Product</button>
                 </div>
             </form>
-            <button onclick="nextStep()" class="btn btn-primary">Next</button>
         </div>
-    </div>
-    
-<!-- Second Step card with image upload input -->
-<div class="card" id="step2" style="display: none;">
-    <div class="card-body">
-        <!-- Second Step: Product Images -->
-        <h2 class="card-title">Product Images</h2>
-        <form id="productImagesForm">
-            <div class="mb-3">
-                <label for="imageUpload" class="form-label">Upload Images</label>
-                <input type="file" class="form-control" id="imageUpload" multiple>
-            </div>
-            <!-- Container to show uploaded images -->
-            <!-- Selected Images Card -->
-            <h2 class="card-title">Selected Images</h2>
-            <div class="row" id="selectedImagesContainer">
-                <!-- Images will be added dynamically here -->
-            </div>
-        </form>
-        <div class="d-flex justify-content-between mt-5">
-        <button onclick="prevStep()" class="btn btn-secondary">Previous</button>
-        <button onclick="nextStep()" class="btn btn-primary">Next</button>
-        </div>
-    </div>
-</div>
-
-
-    
-    <!-- Third Step card with meta data input -->
-    <div class="card" style="display: none;">
-        <div class="card-body" id="step3">
-            <!-- Third Step: Meta Data -->
-            <h2 class="card-title">Meta Data</h2>
-            <form id="metaDataForm">
-                <div class="mb-3">
-                    <label for="metaTitle" class="form-label">Meta Title</label>
-                    <input type="text" class="form-control" id="metaTitle" required>
-                </div>
-                <div class="mb-3">
-                    <label for="metaKeywords" class="form-label">Meta Keywords</label>
-                    <input type="text" class="form-control" id="metaKeywords" required>
-                </div>
-                <!-- Add other input fields for Meta Description -->
-            </form>
-            <div class="d-flex justify-content-between mt-5">
-            <button onclick="prevStep()" class="btn btn-secondary">Previous</button>
-            <button  class="btn btn-success">Submit</button>
-        </div>
-        </div>
-    </div>
-    
-    
-    
-    
-</div>
-</main>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script>
-    function nextStep() {
-        const currentStep = document.querySelector('.card:not([style*="display: none"])');
-        const nextStep = currentStep.nextElementSibling;
-        currentStep.style.display = 'none';
-        if (nextStep) {
-            nextStep.style.display = 'block';
-        }
-    }
-    
-    function prevStep() {
-        const currentStep = document.querySelector('.card:not([style*="display: none"])');
-        const prevStep = currentStep.previousElementSibling;
-        currentStep.style.display = 'none';
-        if (prevStep) {
-            prevStep.style.display = 'block';
-        }
-    }
-    
-
-// Function to display selected images
-document.getElementById('imageUpload').addEventListener('change', function (event) {
-    const selectedImagesContainer = document.getElementById('selectedImagesContainer');
-    const files = event.target.files;
-
-    for (const file of files) {
-        const imageDiv = document.createElement('div');
-        imageDiv.className = 'col-2 mt-2'; // Bootstrap classes for margin and width
-
-        const image = document.createElement('img');
-        image.src = URL.createObjectURL(file);
-        image.className = 'img-fluid'; // Bootstrap class for responsive images
-
-        const closeIcon = document.createElement('span');
-        closeIcon.className = 'close-icon';
-        closeIcon.innerHTML = '&times;'; // Close symbol
-        closeIcon.onclick = function () {
-            selectedImagesContainer.removeChild(imageDiv);
-            // Remove the file from the input
-            const input = document.getElementById('imageUpload');
-            const fileList = Array.from(input.files);
-            const index = fileList.findIndex(f => f === file);
-            if (index !== -1) {
-                fileList.splice(index, 1);
-                input.files = new FileList(fileList);
+        
+        <script>
+            // Function to preview selected images
+            function previewImages(input) {
+                var previewContainer = document.getElementById('image-preview-container');
+                previewContainer.innerHTML = ''; // Clear previous previews
+        
+                if (input.files) {
+                    for (var i = 0; i < input.files.length; i++) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            var imgElement = document.createElement('img');
+                            imgElement.src = e.target.result;
+                            imgElement.className = 'img-thumbnail';
+                            previewContainer.appendChild(imgElement);
+                        };
+                        reader.readAsDataURL(input.files[i]);
+                    }
+                }
             }
-        };
-
-        imageDiv.appendChild(closeIcon);
-        imageDiv.appendChild(image);
-        selectedImagesContainer.appendChild(imageDiv);
-    }
-});
-
-
-
-
-</script>
-{% endblock  %}
+        
+            // Attach the previewImages function to the change event of the image input
+            document.getElementById('input-images').addEventListener('change', function () {
+                previewImages(this);
+            });
+        </script>
+    {% endblock  %}        
