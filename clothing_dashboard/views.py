@@ -201,6 +201,8 @@ def update_main_category_details(request):
         # image_url='NA'
         if uploaded_image:
             image_url = upload_images2(uploaded_image)
+        else:
+            image_url = uploaded_image;
         
         try:
             with connection.cursor() as cursor:
