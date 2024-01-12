@@ -159,8 +159,9 @@
                           <div class="modal-body">
                             <input type="hidden" name="main_category_id"  value="{{main_cat_id}}">
                         <input type="hidden" name="main_category_name"  value="{{main_cat_name}}">
-                        <input type="hidden" name="category_id"  value="{{row.cat_id}}">
-                        <input type="hidden" name="category_name"  value="{{row.cat_name}}">
+                        <input type="hidden" name="category_id"  value="{{cat_id}}">
+                        <input type="hidden" name="category_name"  value="{{cat_name}}">
+                        <input type="hidden" name="sub_category_id"  value="{{row.sub_catid}}">
                             <div class="form-group">
                                 <label for="categoryName">Sub Category Name</label>
                                 <input type="text" class="form-control" id="categoryName" name="sub_category_name" value="{{row.sub_cat_name}}" required>

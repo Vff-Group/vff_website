@@ -316,7 +316,7 @@ def add_new_sub_category(request):
 
         try:
             with connection.cursor() as cursor:
-                insert_query="insert into vff.united_armor_sub_categorytbl (sub_cat_name,cat_id) values ('"+str(sub_category_name)+"','"+str(category_id)+"')"
+                insert_query="insert into vff.united_armor_sub_categorytbl (sub_cat_name,catid) values ('"+str(sub_category_name)+"','"+str(category_id)+"')"
                 cursor.execute(insert_query)
                 connection.commit()
                 print(f" New Sub Category {sub_category_name} Inserted Successfully.")
@@ -339,12 +339,13 @@ def update_sub_category_details(request):
         category_name = request.POST.get('category_name')
         category_id = request.POST.get('category_id')
         sub_category_name = request.POST.get('sub_category_name')
+        sub_category_id = request.POST.get('sub_category_id')
         
         
 
         try:
             with connection.cursor() as cursor:
-                update_query="update vff.united_armor_sub_categorytbl set sub_cat_name='"+str(sub_category_name)+"',time_creation= EXTRACT (EPOCH FROM CURRENT_TIMESTAMP) where sub_catid=''"
+                update_query="update vff.united_armor_sub_categorytbl set sub_cat_name='"+str(sub_category_name)+"',time_creation= EXTRACT (EPOCH FROM CURRENT_TIMESTAMP) where sub_catid='"+str(sub_category_id)+"'"
                 cursor.execute(update_query)
                 connection.commit()
                 print(f" Sub Category {sub_category_name} Updated Successfully.")
