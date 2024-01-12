@@ -76,7 +76,7 @@ def all_customers(request):
 
 def all_main_categories(request):
     error_msg = 'No Main Categories Found'
-    query = "select main_cat_id,main_title_name,status,images from vff.united_armor_main_categorytbl"
+    query = "select main_cat_id,main_title_name,status,images from vff.united_armor_main_categorytbl order by time_at DESC"
     
     query_result = execute_raw_query(query)
     
@@ -210,7 +210,7 @@ def update_main_category_details(request):
 
         try:
             with connection.cursor() as cursor:
-                update_query="update vff.united_armor_main_categorytbl set main_title_name='"+str(main_category_name)+"',images='"+str(image_url)+"' where main_cat_id='"+str(main_cat_id)+"';"
+                update_query="update vff.united_armor_main_categorytbl set main_title_name='"+str(main_category_name)+"',images='"+str(image_url)+"',time_at = EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) where main_cat_id='"+str(main_cat_id)+"'"
                 cursor.execute(update_query)
                 connection.commit()
                 print(f" Main Category {main_category_name} Updated Successfully.")
