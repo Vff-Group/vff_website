@@ -196,8 +196,12 @@ def update_main_category_details(request):
     if request.method == "POST":
         main_category_name = request.POST.get('main_category_name')
         main_cat_id = request.POST.get('category_id')#Hidden Input Field
-        uploaded_image = request.FILES.get('profile-image1')
+        uploaded_image = request.FILES.get('category_image')
         
+        query = "select main_cat_id,main_title_name,status,images from vff.united_armor_main_categorytbl where main_cat_id='"+str(main_cat_id)+"'"
+        user_data = execute_raw_query_fetch_one(query)
+        if user_data:
+            image_url = user_data[3]
 
         # image_url='NA'
         if uploaded_image:
