@@ -39,7 +39,8 @@ urlpatterns = [
     #Update Sub Category Details
     path('update_sub_category_details/<int:main_cat_id>/<int:cat_id>/',views.update_sub_category_details,name='update_sub_category_details'),
    
-'''PRE ORDER CONTROLS'''
+    #---------------- PRE ORDER Sequence Paths ------------------
+    
     #PURCHASE ORDER DETAILS
     path('all_purchase_orders/',views.all_purchase_orders,name='all_purchase_orders'),
    
