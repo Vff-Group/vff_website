@@ -67,7 +67,7 @@
                                     <button type="button" class="btn btn-outline-danger btn-sm rounded-start" onclick="removeColorInput(this)">-</button>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-success" onclick="addColorInput()">Add Color</button>
+                            <button type="button" class="btn btn-success btn-sm" onclick="addColorInput()">Add Color</button>
                         </div>
             
                          <div class="col-lg-6">
@@ -148,6 +148,7 @@
                            imgElement.className = 'img-thumbnail';
                            imgElement.style.width = '100px'; // Set the fixed width
                            imgElement.style.height = '100px'; // Set the fixed height
+                           imgElement.style.marginRight = '5px'; // Set the fixed height
                            previewContainer.appendChild(imgElement);
                        };
                        reader.readAsDataURL(input.files[i]);
@@ -167,7 +168,7 @@
         
                 // Create a new color input field
                 var newColorInput = document.createElement('div');
-                newColorInput.className = 'input-group mb-3 me-3';
+                newColorInput.className = 'input-group mb-3 me-3 d-flex';
         
                 // Color input field using HTML color picker
                 var inputField = document.createElement('input');
