@@ -189,6 +189,36 @@ def all_products_details(request,main_cat_id,cat_id,sub_cat_id):
 def add_new_product(request):
     return render(request,"all_products/add_new_product.html")
 
+def add_new_main_category(request):
+    
+    error_msg = 'No Main Category Details Found'
+    if request.method == "POST":
+        main_category_name = request.POST.get('main_category_name')
+        
+        uploaded_image = request.FILES.get('category_image')
+        
+       
+
+        # image_url='NA'
+        if uploaded_image:
+            image_url = upload_images2(uploaded_image)
+        
+
+        try:
+            with connection.cursor() as cursor:
+                update_query="insert into vff.united_armor_main_categorytbl (main_title_name,images) values ('"+str(main_category_name)+"','"+str(image_url)+"')"
+                cursor.execute(update_query)
+                connection.commit()
+                print(f" Main Category {main_category_name} Inserted Successfully.")
+                return redirect('clothing_dashboard_app:all_main_categories')
+        except Exception as e:
+            print(f"Error loading data: {e}")
+            
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"categories/all_main_categories.html",context)
+    
 
 def update_main_category_details(request):
     
@@ -222,7 +252,8 @@ def update_main_category_details(request):
     # using the 'current_url' variable to determine the active card.
     context = {'current_url': current_url,'error_msg':error_msg}
     return render(request,"categories/all_main_categories.html",context)
-    
+
+
 def update_category_details(request,main_cat_id):
     
     error_msg = 'No  Category Details Found'

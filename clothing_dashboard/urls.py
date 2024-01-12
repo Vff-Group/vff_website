@@ -30,6 +30,9 @@ urlpatterns = [
     #Add New Products
     path('add_new_product/',views.add_new_product,name='add_new_product'),
    
+    # Add New Main Category
+    path('add_new_main_category/',views.add_new_main_category,name='add_new_main_category'),
+   
     #Update Main Category Details
     path('update_main_category_details/',views.update_main_category_details,name='update_main_category_details'),
    
