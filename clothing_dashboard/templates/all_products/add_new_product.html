@@ -59,15 +59,18 @@
                      <div class="row mb-4">
                         <label class="form-control-label">Colors Available</label>
                     
-                        <div class="col-lg-1">
-                            <div id="color-input-container" class="d-flex flex-wrap">
+                        <div class="col-lg-12">
+                            <div id="color-input-container" class="d-flex flex-wrap align-items-center">
                                 <!-- Initial color input field -->
                                 <div class="input-group mb-3 me-3">
                                     <input type="color" class="form-control form-control-sm rounded" name="colors[]" required>
-                                    <button type="button" class="btn btn-outline-danger btn-sm rounded-start" onclick="removeColorInput(this)">-</button>
+                                    <button type="button" class="btn btn-outline-danger rounded-start" onclick="removeColorInput(this)">
+                                        <!-- Use the Flaticon or other delete icon here -->
+                                        <i class='fas fa-trash-alt delete-icon'></i>
+                                    </button>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-success btn-sm" onclick="addColorInput()">Add Color</button>
+                            <button type="button" class="btn btn-success mt-2" onclick="addColorInput()">Add Color</button>
                         </div>
             
                          <div class="col-lg-6">
@@ -163,12 +166,52 @@
 
            
             // Function to add a new color input field
+          // function addColorInput() {
+          //     var colorInputContainer = document.getElementById('color-input-container');
+        
+          //     // Create a new color input field
+          //     var newColorInput = document.createElement('div');
+          //     newColorInput.className = 'input-group mb-3 me-3';
+        
+          //     // Color input field using HTML color picker
+          //     var inputField = document.createElement('input');
+          //     inputField.type = 'color';
+          //     inputField.className = 'form-control form-control-sm rounded';
+          //     inputField.name = 'colors[]';
+          //     inputField.required = true;
+        
+          //     // Delete button
+          //     var deleteButton = document.createElement('button');
+          //     deleteButton.type = 'button';
+          //     deleteButton.className = 'btn btn-outline-danger rounded-start';
+          //     deleteButton.textContent = '-';
+          //     deleteButton.addEventListener('click', function() {
+          //         removeColorInput(newColorInput);
+          //     });
+        
+          //     // Append elements to the new color input field
+          //     newColorInput.appendChild(inputField);
+          //     newColorInput.appendChild(deleteButton);
+        
+          //     // Append the new color input field to the container
+          //     colorInputContainer.appendChild(newColorInput);
+          // }
+        
+          // // Function to remove a color input field
+          // function removeColorInput(element) {
+          //     var colorInputContainer = document.getElementById('color-input-container');
+          //     colorInputContainer.removeChild(element);
+          // }
+        </script>
+
+        <script>
+            // Function to add a new color input field
             function addColorInput() {
                 var colorInputContainer = document.getElementById('color-input-container');
         
                 // Create a new color input field
                 var newColorInput = document.createElement('div');
-                newColorInput.className = 'input-group mb-3 me-3 d-flex';
+                newColorInput.className = 'input-group mb-3 me-3';
         
                 // Color input field using HTML color picker
                 var inputField = document.createElement('input');
@@ -177,11 +220,12 @@
                 inputField.name = 'colors[]';
                 inputField.required = true;
         
-                // Delete button
+                // Delete button with Flaticon or other delete icon
                 var deleteButton = document.createElement('button');
                 deleteButton.type = 'button';
                 deleteButton.className = 'btn btn-outline-danger rounded-start';
-                deleteButton.textContent = '-';
+                // Use the Flaticon or other delete icon here
+                deleteButton.innerHTML = '<i class="fas fa-trash-alt delete-icon"></i>';
                 deleteButton.addEventListener('click', function() {
                     removeColorInput(newColorInput);
                 });
@@ -200,4 +244,5 @@
                 colorInputContainer.removeChild(element);
             }
         </script>
+        
     {% endblock  %}        
