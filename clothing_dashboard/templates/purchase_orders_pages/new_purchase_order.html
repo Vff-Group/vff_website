@@ -209,7 +209,7 @@
                 var rowIndex = deleteButton.closest('tr').rowIndex;
                 // Ensure the row index is within the valid range
                 if (rowIndex !== -1 && rowIndex < tableBody.rows.length) {
-                    tableBody.deleteRow(rowIndex);
+                    tableBody.deleteRow(cellIndex);
                 }
             });
             deleteCell.appendChild(deleteButton);
