@@ -153,7 +153,7 @@
                     <table class="table table-bordered" id="fob-costs-table">
                         <thead>
                             <tr>
-                                <th>Fabric Supplier</th>
+                                <th class=" text-secondary text-sm">Fabric Supplier</th>
                                 <th>Reference</th>
                                 <th>Quality</th>
                                 <th>Origin</th>
@@ -212,39 +212,6 @@
     });
 </script>
 
-
-
-<!-- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var tableBody = document.getElementById('fob-costs-table').getElementsByTagName('tbody')[0];
-        var addRowButton = document.getElementById('add-row-btn');
-
-        addRowButton.addEventListener('click', function () {
-            var newRow = tableBody.insertRow(tableBody.rows.length);
-            var cellIndex = 0;
-
-            // Add cells with input fields
-            for (cellIndex; cellIndex < 8; cellIndex++) {
-                var cell = newRow.insertCell(cellIndex);
-                var input = document.createElement('input');
-                input.type = 'text';
-                input.className = 'form-control';
-                cell.appendChild(input);
-            }
-
-            // Add delete button
-            var deleteCell = newRow.insertCell(cellIndex);
-            var deleteButton = document.createElement('button');
-            deleteButton.type = 'button';
-            deleteButton.className = 'btn btn-danger btn-sm';
-            deleteButton.textContent = 'Delete';
-            deleteButton.addEventListener('click', function () {
-                tableBody.deleteRow(newRow.rowIndex);
-            });
-            deleteCell.appendChild(deleteButton);
-        });
-    });
-</script> -->
 
 
 <script>
