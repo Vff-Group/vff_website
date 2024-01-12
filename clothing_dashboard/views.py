@@ -270,7 +270,7 @@ def add_new_purchase_orders(request):
     error_msg = 'No Purchase Order Created'
     current_url = request.get_full_path()
     context = {'current_url': current_url,'error_msg':error_msg}
-    return render(request,"purchase_orders_pages/new_purchase_orders.html",context)
+    return render(request,"purchase_orders_pages/new_purchase_order.html",context)
 
 def inventory(request):
     current_url = request.get_full_path()
