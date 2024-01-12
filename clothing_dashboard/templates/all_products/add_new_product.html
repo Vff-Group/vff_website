@@ -22,7 +22,7 @@
                     <!-- New fields for multiple images, product name, description, fit and care, and return policy -->
                     <div class="row mb-4">
                         <!-- Multiple Images Upload -->
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label" for="input-images">Product Images</label>
                                 <input type="file" id="input-images" class="form-control form-control-alternative" name="product_images[]" multiple accept="image/*">
@@ -32,24 +32,39 @@
                         </div>
         
                         <!-- Product Name -->
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label" for="input-product-name">Product Name</label>
                                 <input type="text" id="input-product-name" class="form-control form-control-alternative" placeholder="Enter Product Name" name="product_name" autocomplete="off" required>
                             </div>
                         </div>
+
+                         <!-- Dropdown for Product Type -->
+                         <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-product-type">Product Type</label>
+                                <select id="input-product-type" class="form-control form-control-alternative" name="product_type" required>
+                                    <option value="">Select Product Type</option>
+                                    <!-- Add options dynamically based on your product types -->
+                                    <option value="type1">Clothing</option>
+                                    <option value="type2">Accessories</option>
+                                    <option value="type2">Shoes</option>
+                                </select>
+                            </div>
+                        </div>
+                     
                     </div>
 
                     <!-- Checkboxes for Sizes -->
                      <div class="row mb-4">
                         <label class="form-control-label">Colors Available</label>
                     
-                        <div class="col-lg-6">
+                        <div class="col-lg-1">
                             <div id="color-input-container" class="d-flex flex-wrap">
                                 <!-- Initial color input field -->
                                 <div class="input-group mb-3 me-3">
                                     <input type="color" class="form-control form-control-sm rounded" name="colors[]" required>
-                                    <button type="button" class="btn btn-outline-danger rounded-start" onclick="removeColorInput(this)">-</button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm rounded-start" onclick="removeColorInput(this)">-</button>
                                 </div>
                             </div>
                             <button type="button" class="btn btn-success" onclick="addColorInput()">Add Color</button>
@@ -77,21 +92,7 @@
                         
                      </div>
 
-                    <div class="row mb-4">
-                        <!-- Dropdown for Product Type -->
-                           <div class="col-lg-3">
-                               <div class="form-group">
-                                   <label class="form-control-label" for="input-product-type">Product Type</label>
-                                   <select id="input-product-type" class="form-control form-control-alternative" name="product_type" required>
-                                       <option value="">Select Product Type</option>
-                                       <!-- Add options dynamically based on your product types -->
-                                       <option value="type1">Type 1</option>
-                                       <option value="type2">Type 2</option>
-                                   </select>
-                               </div>
-                           </div>
-                        
-                    </div>
+                    
 
 
         
