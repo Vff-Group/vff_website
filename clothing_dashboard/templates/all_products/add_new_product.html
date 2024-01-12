@@ -45,10 +45,10 @@
                         <label class="form-control-label">Colors Available</label>
                     
                         <div class="col-lg-6">
-                            <div id="color-input-container">
+                            <div id="color-input-container" class="d-flex flex-wrap">
                                 <!-- Initial color input field -->
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control jscolor rounded-end" placeholder="Select Color" name="colors[]" required>
+                                <div class="input-group mb-3 me-3">
+                                    <input type="color" class="form-control form-control-sm rounded" name="colors[]" required>
                                     <button type="button" class="btn btn-outline-danger rounded-start" onclick="removeColorInput(this)">-</button>
                                 </div>
                             </div>
@@ -163,19 +163,18 @@
             // Function to add a new color input field
             function addColorInput() {
                 var colorInputContainer = document.getElementById('color-input-container');
-
+        
                 // Create a new color input field
                 var newColorInput = document.createElement('div');
-                newColorInput.className = 'input-group mb-3';
-
-                // Color input field using jscolor library
+                newColorInput.className = 'input-group mb-3 me-3';
+        
+                // Color input field using HTML color picker
                 var inputField = document.createElement('input');
-                inputField.type = 'text';
-                inputField.className = 'form-control jscolor rounded-end';
-                inputField.placeholder = 'Select Color';
+                inputField.type = 'color';
+                inputField.className = 'form-control form-control-sm rounded';
                 inputField.name = 'colors[]';
                 inputField.required = true;
-
+        
                 // Delete button
                 var deleteButton = document.createElement('button');
                 deleteButton.type = 'button';
@@ -184,18 +183,15 @@
                 deleteButton.addEventListener('click', function() {
                     removeColorInput(newColorInput);
                 });
-
+        
                 // Append elements to the new color input field
                 newColorInput.appendChild(inputField);
                 newColorInput.appendChild(deleteButton);
-
+        
                 // Append the new color input field to the container
                 colorInputContainer.appendChild(newColorInput);
-
-                // Initialize the jscolor for the new color input
-                jscolor.installByClassName("jscolor");
             }
-
+        
             // Function to remove a color input field
             function removeColorInput(element) {
                 var colorInputContainer = document.getElementById('color-input-container');
