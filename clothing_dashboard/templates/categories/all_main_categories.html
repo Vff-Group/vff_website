@@ -160,7 +160,7 @@
                   {% csrf_token %}
                           <div class="modal-body">
 
-                            <input type="hidden" name="category_id" id="categoryID" value="">
+                            <input type="hidden" name="category_id" id="categoryID" value="{{row.main_cat_id}}">
                             
                             <div class="col-lg-1">
                               <div class="form-group">

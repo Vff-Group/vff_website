@@ -195,21 +195,22 @@ def update_main_category_details(request):
     error_msg = 'No Main Category Details Found'
     if request.method == "POST":
         main_category_name = request.POST.get('main_category_name')
+        main_cat_id = request.POST.get('category_id')#Hidden Input Field
         uploaded_image = request.FILES.get('profile-image1')
 
         # image_url='NA'
         if uploaded_image:
             image_url = upload_images2(uploaded_image)
         
-        # try:
-        #     with connection.cursor() as cursor:
-        #         insert_query="update vff.gym_fees_detailstbl set fees_type='"+str(fees_type)+"',duration_in_months='"+str(duration_in_months)+"',price='"+str(price)+"',description='"+str(description)+"',cardio='"+str(cardio)+"' where fdetail_id='"+str(fees_plan_id)+"'"
-        #         cursor.execute(insert_query)
-        #         connection.commit()
-        #         print(" Fees Plan Updated Successfully.")
-        #         return redirect('gym_dashboard_app:all_fees_plans')
-        # except Exception as e:
-        #     print(f"Error loading data: {e}")
+        try:
+            with connection.cursor() as cursor:
+                update_query="update vff.united_armor_main_categorytbl set main_title_name='"+str(main_category_name)+"',images='"+str(image_url)+"' where main_cat_id='"+str(main_cat_id)+"';"
+                cursor.execute(update_query)
+                connection.commit()
+                print(f" Main Category {main_category_name} Updated Successfully.")
+                return redirect('gym_dashboard_app:all_main_categories')
+        except Exception as e:
+            print(f"Error loading data: {e}")
             
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
