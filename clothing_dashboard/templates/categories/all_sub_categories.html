@@ -56,6 +56,8 @@
                           <span aria-hidden="true">×</span>
                         </button>
                       </div>
+                      <form id="createForm" method="post" action="{% url 'clothing_dashboard_app:add_new_sub_category' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
                       <div class="modal-body">
                         <input type="hidden" name="main_category_id"  value="{{main_cat_id}}">
                         <input type="hidden" name="main_category_name"  value="{{main_cat_name}}">
@@ -70,6 +72,7 @@
                         <button type="submit" class="btn bg-gradient-success">Add</button>
                         <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
                       </div>
+                    </form>
                     </div>
                   </div>
                 </div>
