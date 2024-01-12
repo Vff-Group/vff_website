@@ -261,10 +261,16 @@ def update_sub_category_details(request,main_cat_id,cat_id):
     return render(request,"categories/all_categories.html",context)
     
 def all_purchase_orders(request):
-    error_msg = 'No Customers Found'
+    error_msg = 'No Purchase Order Created'
     current_url = request.get_full_path()
     context = {'current_url': current_url,'error_msg':error_msg}
     return render(request,"purchase_orders_pages/all_purchase_orders.html",context)
+
+def add_new_purchase_orders(request):
+    error_msg = 'No Purchase Order Created'
+    current_url = request.get_full_path()
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"purchase_orders_pages/new_purchase_orders.html",context)
 
 def inventory(request):
     current_url = request.get_full_path()

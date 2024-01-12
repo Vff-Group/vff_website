@@ -43,6 +43,9 @@ urlpatterns = [
     
     #PURCHASE ORDER DETAILS
     path('all_purchase_orders/',views.all_purchase_orders,name='all_purchase_orders'),
+    
+    # ADD NEW PURCHASE ORDER DETAILS
+    path('add_new_purchase_orders/',views.add_new_purchase_orders,name='add_new_purchase_orders'),
    
     #INVENTORY DASHBOARD
     path('inventory/',views.inventory,name='inventory'),
