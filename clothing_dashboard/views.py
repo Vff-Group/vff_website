@@ -260,7 +260,15 @@ def update_sub_category_details(request,main_cat_id,cat_id):
     context = {'current_url': current_url,'error_msg':error_msg}
     return render(request,"categories/all_categories.html",context)
     
+def all_purchase_orders(request):
+    current_url = request.get_full_path()
+    context = {'current_url': current_url}
+    return render(request,"purchase_orders_pages/all_purchase_orders.html",context)
 
+def inventory(request):
+    current_url = request.get_full_path()
+    context = {'current_url': current_url}
+    return render(request,"inventory_pages/dashboard_inventory.html",context)
 
 def epochToDateTime(epoch):
     datetime_obj = datetime.utcfromtimestamp(epoch)
