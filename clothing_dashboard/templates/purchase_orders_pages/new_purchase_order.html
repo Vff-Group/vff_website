@@ -205,8 +205,8 @@
             deleteButton.className = 'btn btn-danger btn-sm';
             deleteButton.textContent = 'Delete';
             deleteButton.addEventListener('click', function () {
-                // Find the index of the row to delete
-                var rowIndex = newRow.rowIndex;
+                // Find the parent row of the clicked button
+                var rowIndex = deleteButton.closest('tr').rowIndex;
                 // Ensure the row index is within the valid range
                 if (rowIndex !== -1 && rowIndex < tableBody.rows.length) {
                     tableBody.deleteRow(rowIndex);
@@ -216,6 +216,7 @@
         });
     });
 </script>
+
 
 
 <!-- <script>
