@@ -19,6 +19,8 @@ import re
 import os
 from django.conf import settings
 from django.http import JsonResponse
+from PIL import ImageDecompressionBombWarning
+
 
 
 from PIL import Image  # Pillow library for image processing
@@ -489,16 +491,59 @@ def upload_images2(uploaded_image):
     # Assuming you have a MEDIA_ROOT where the images will be stored
     file_path = os.path.join(settings.MEDIA_ROOT, custom_image_name)
 
-    # Open the uploaded image using Pillow
-    img = Image.open(uploaded_image)
-    img_resized = img.resize((765, 850))
-    # Save the resized image
-    img_resized.save(file_path)
+    try:
+        # Open the uploaded image using Pillow
+        img = Image.open(uploaded_image)
 
-    # Assuming you have a MEDIA_URL configured
-    image_url = os.path.join(settings.MEDIA_URL, custom_image_name)
-    print(f'Uploaded Image URL: {image_url}')
-    return image_url
+        # Check if the image size exceeds the limit
+        MAX_IMAGE_PIXELS = 894784851
+        if img.size[0] * img.size[1] > MAX_IMAGE_PIXELS:
+            raise ValueError("Image size exceeds the limit")
+
+        # Resize the image
+        img_resized = img.resize((765, 850))
+        
+        # Save the resized image
+        img_resized.save(file_path)
+        
+        # Assuming you have a MEDIA_URL configured
+        image_url = os.path.join(settings.MEDIA_URL, custom_image_name)
+        print(f'Uploaded Image URL: {image_url}')
+        return image_url
+
+    except ImageDecompressionBombWarning as e:
+        # Handle the decompression bomb warning
+        print(f"DecompressionBombWarning: {e}")
+        # You can choose to handle it as needed, e.g., log the warning, return an error message, etc.
+        return None
+    except Exception as e:
+        # Handle other exceptions
+        print(f"Error: {e}")
+        # You can choose to handle it as needed, e.g., log the error, return an error message, etc.
+        return None
+    
+# def upload_images2(uploaded_image):
+#     # Generate a unique identifier for the image
+#     unique_identifier = str(uuid.uuid4())
+
+#     # Extract the file extension from the uploaded image
+#     file_extension = mimetypes.guess_extension(uploaded_image.content_type)
+
+#     # Construct the custom image name with the unique identifier and original extension
+#     custom_image_name = f'uam_{unique_identifier}{file_extension}'
+#     # Assuming you have a MEDIA_ROOT where the images will be stored
+#     file_path = os.path.join(settings.MEDIA_ROOT, custom_image_name)
+
+#     # Open the uploaded image using Pillow
+#     img = Image.open(uploaded_image)
+#     img_resized = img.resize((765, 850))
+#     # Save the resized image
+#     img_resized.save(file_path)
+
+#     # Assuming you have a MEDIA_URL configured
+#     image_url = os.path.join(settings.MEDIA_URL, custom_image_name)
+#     print(f'Uploaded Image URL: {image_url}')
+#     return image_url
 
 
 def execute_raw_query_fetch_one(query, params=None,):
