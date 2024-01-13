@@ -496,7 +496,7 @@ def upload_images2(uploaded_image):
         img = Image.open(uploaded_image)
 
         # Check if the image size exceeds the limit
-        MAX_IMAGE_PIXELS = 120894784851
+        MAX_IMAGE_PIXELS = 2000000000000000 
         if img.size[0] * img.size[1] > MAX_IMAGE_PIXELS:
             raise ValueError("Image size exceeds the limit")
 
