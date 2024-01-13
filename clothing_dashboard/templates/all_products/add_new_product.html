@@ -120,7 +120,7 @@
                                 {% for size in sizes_data %}
                                 <div class="col-lg-3">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="sizeCheckbox{{ size.size_id }}" name="sizes[]" value="{{ size.size_value }} " onclick="updateSelectedSizes()">
+                                        <input class="form-check-input" type="checkbox" id="sizeCheckbox{{ size.size_id }}" name="sizes[]" value="{{ size.size_value }} " data-size-id="{{ size.size_id }}" onclick="updateSelectedSizes()">
                                         <label class="form-check-label" for="sizeCheckbox{{ size.size_id }}">{{ size.size_value }}</label>
                                     </div>
                                 </div>
@@ -332,7 +332,7 @@
         
                 // Iterate over all checkboxes
                 document.querySelectorAll('input[name="sizes[]"]:checked').forEach(function (checkbox) {
-                    selectedSizeIds.push(checkbox.id);
+                    selectedSizeIds.push(checkbox.getAttribute('data-size-id'));
                     selectedSizeValues.push(document.querySelector('label[for="' + checkbox.id + '"]').textContent);
                 });
         

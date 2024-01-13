@@ -324,7 +324,7 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
                 cursor.execute(insert_query)
                 color_id = cursor.fetchone()[0]
                 
-                insert_query2="update vff.united_armor_all_productstbl set default_color_id='"+str(color_id)+"' where product_id='"+str(product_id)+"'"
+                insert_query2="update vff.united_armor_all_productstbl set default_color_id='"+str(color_id)+"' where productid='"+str(product_id)+"'"
                 print(f'insert Color query::{insert_query2}')
                 cursor.execute(insert_query2)
                 
