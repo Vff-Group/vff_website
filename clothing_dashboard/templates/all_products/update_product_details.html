@@ -93,10 +93,10 @@
                             <!-- Access the first item in the list -->
                             {% with first_p_type=p_type_data.0 %}
                                     <!-- Hidden input for selected product type name -->
-                                <input type="hidden" id="selected-product-type-name" name="selected_product_type_name" value="{{first_p_type.p_type_name}}">
+                                <input type="hidden" id="selected-product-type-name" name="selected_product_type_name" value="{% if product_data %}{{ product_data.0.product_type_name }}{% endif %}">
 
                                 <!-- Hidden input for selected product type ID -->
-                                <input type="hidden" id="selected-product-type-id" name="selected_product_type_id"  value="{{first_p_type.p_type_id}}">
+                                <input type="hidden" id="selected-product-type-id" name="selected_product_type_id"  value="{% if product_data %}{{ product_data.0.product_type_id }}{% endif %}">
                                 
                             {% endwith %}
                         {% else %}
@@ -196,10 +196,10 @@
                             <!-- Access the first item in the list -->
                             {% with first_p_type=p_category_data.0 %}
                                     <!-- Hidden input for selected product category collection name -->
-                            <input type="hidden" id="selected-product-category-name" name="selected_product_category_name" value="{{first_p_type.p_cat_name}}">
+                            <input type="hidden" id="selected-product-category-name" name="selected_product_category_name" value="{% if product_data %}{{ product_data.0.product_category_name }}{% endif %}">
 
                                 <!-- Hidden input for selected product category collection ID -->
-                            <input type="hidden" id="selected-product-category-id" name="selected_product_category_id"  value="{{first_p_type.p_cat_id}}">
+                            <input type="hidden" id="selected-product-category-id" name="selected_product_category_id"  value="{% if product_data %}{{ product_data.0.product_category_id }}{% endif %}">
                                 
                             {% endwith %}
                         {% else %}
@@ -230,10 +230,10 @@
                             <!-- Access the first item in the list -->
                             {% with first_p_type=p_fitting_data.0 %}
                                     <!-- Hidden input for selected product fitting name -->
-                            <input type="hidden" id="selected-product-fitting-name" name="selected_product_fitting_name" value="{{first_p_type.p_fitting_name}}">
+                            <input type="hidden" id="selected-product-fitting-name" name="selected_product_fitting_name" value="{% if product_data %}{{ product_data.0.fitting_type }}{% endif %}">
 
                                 <!-- Hidden input for selected product fitting ID -->
-                            <input type="hidden" id="selected-product-fitting-id" name="selected_product_fitting_id" value="{{first_p_type.p_fitting_id}}">
+                            <input type="hidden" id="selected-product-fitting-id" name="selected_product_fitting_id" value="{% if product_data %}{{ product_data.0.fitting_id }}{% endif %}">
                                 
                             {% endwith %}
                         {% else %}
