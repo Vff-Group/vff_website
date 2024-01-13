@@ -16,7 +16,7 @@
           </div>
 
           <div class="card-body px-0 pt-0 pb-2">
-            <form method="post" enctype="multipart/form-data" id="new-product-form" action="{% url 'clothing_dashboard_app:add_new_product' %}">
+            <form method="post" enctype="multipart/form-data" id="new-product-form" action="{% url 'clothing_dashboard_app:add_new_product' main_cat_id cat_id sub_cat_id %}">
                 {% csrf_token %}
                 <div class="pl-lg-4 m-4">
                     <!-- To Select All Images and Default Image  -->
