@@ -75,11 +75,24 @@
                         </div>
 
                          <!-- Dropdown for Product Type -->
-                         <!-- Hidden input for selected product type name -->
-                        <input type="hidden" id="selected-product-type-name" name="selected_product_type_name">
+                         {% if p_type_data %}
+                            <!-- Access the first item in the list -->
+                            {% with first_p_type=p_type_data.0 %}
+                                    <!-- Hidden input for selected product type name -->
+                                <input type="hidden" id="selected-product-type-name" name="selected_product_type_name" value="{{first_p_type.p_type_id}}">
 
-                        <!-- Hidden input for selected product type ID -->
-                        <input type="hidden" id="selected-product-type-id" name="selected_product_type_id">
+                                <!-- Hidden input for selected product type ID -->
+                                <input type="hidden" id="selected-product-type-id" name="selected_product_type_id"  value="{{first_p_type.p_type_name}}">
+                                
+                            {% endwith %}
+                        {% else %}
+                            <!-- Hidden input for selected product type name -->
+                            <input type="hidden" id="selected-product-type-name" name="selected_product_type_name" >
+
+                            <!-- Hidden input for selected product type ID -->
+                            <input type="hidden" id="selected-product-type-id" name="selected_product_type_id"  >
+                        {% endif %}
+                        
                          <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label" for="input-product-type">Product Type</label>
@@ -98,10 +111,10 @@
                             <label class="form-control-label">Sizes Available</label>
                             <div class="row">
                                 <!-- Hidden input for selected size IDs -->
-                                <input type="hidden" id="selected-size-ids" name="selected_size_ids">
+                                <input type="hidden" id="selected-size-ids" name="selected_size_ids"  value="{{size_id[0]}}">
 
                                 <!-- Hidden input for selected size values -->
-                                <input type="hidden" id="selected-size-values" name="selected_size_values">
+                                <input type="hidden" id="selected-size-values" name="selected_size_values" value="{{sizes_data.size_value[0]}}">
 
                                 <!-- Add checkboxes dynamically based on your available sizes -->
                                 {% for size in sizes_data %}
@@ -151,13 +164,27 @@
                         </div>
 
                         <!-- Product Category Table -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <!-- Hidden input for selected product category collection name -->
-                                <input type="hidden" id="selected-product-category-name" name="selected_product_category_name">
+                        {% if p_category_data %}
+                            <!-- Access the first item in the list -->
+                            {% with first_p_type=p_category_data.0 %}
+                                    <!-- Hidden input for selected product category collection name -->
+                            <input type="hidden" id="selected-product-category-name" name="selected_product_category_name" value="{{first_p_type.p_cat_id}}">
 
                                 <!-- Hidden input for selected product category collection ID -->
-                                <input type="hidden" id="selected-product-category-id" name="selected_product_category_id">
+                            <input type="hidden" id="selected-product-category-id" name="selected_product_category_id"  value="{{first_p_type.p_cat_name}}">
+                                
+                            {% endwith %}
+                        {% else %}
+                            <!-- Hidden input for selected product category collection name -->
+                            <input type="hidden" id="selected-product-category-name" name="selected_product_category_name">
+
+                            <!-- Hidden input for selected product category collection ID -->
+                            <input type="hidden" id="selected-product-category-id" name="selected_product_category_id">
+                        {% endif %}
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                
                                 <label for="productCategory">Product Category</label>
                                 <select class="form-control" id="productCategory"  onchange="updateSelectedProductCategory()" required>
                                     <option value="" disabled>Select Product Category</option>
@@ -170,13 +197,29 @@
                         </div>
 
                          <!-- Fitting -->
-                         <div class="col-lg-4">
-                            <div class="form-group">
-                                <!-- Hidden input for selected product fitting name -->
-                                <input type="hidden" id="selected-product-fitting-name" name="selected_product_fitting_name">
+
+                         {% if p_fitting_data %}
+                            <!-- Access the first item in the list -->
+                            {% with first_p_type=p_fitting_data.0 %}
+                                    <!-- Hidden input for selected product fitting name -->
+                            <input type="hidden" id="selected-product-fitting-name" name="selected_product_fitting_name" value="{{first_p_type.p_fitting_id}}">
 
                                 <!-- Hidden input for selected product fitting ID -->
-                                <input type="hidden" id="selected-product-fitting-id" name="selected_product_fitting_id">
+                            <input type="hidden" id="selected-product-fitting-id" name="selected_product_fitting_id" value="{{first_p_type.p_fitting_name}}">
+                                
+                            {% endwith %}
+                        {% else %}
+                            <!-- Hidden input for selected product fitting name -->
+                            <input type="hidden" id="selected-product-fitting-name" name="selected_product_fitting_name">
+
+                            <!-- Hidden input for selected product fitting ID -->
+                            <input type="hidden" id="selected-product-fitting-id" name="selected_product_fitting_id">
+                        {% endif %}
+                        
+
+                         <div class="col-lg-4">
+                            <div class="form-group">
+                                
                                 <label for="fittingCategory">Fitting</label>
                                 <select class="form-control" id="fittingCategory"  onchange="updateSelectedProductFitting()" required>
                                     <option value="" disabled>Select Product Fitting</option>
