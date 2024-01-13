@@ -11,6 +11,12 @@ urlpatterns = [
    
     #Dashboard
     path('dashboard/',views.dashboard_view,name='dashboard'),
+    
+    #Home Page All Products
+    path('all_products_main/',views.all_products_main,name='all_products_main'),
+    
+    # Single Product Colors
+    path('single_product_colors/<int:main_cat_id>/<int:cat_id>/<int:sub_cat_id>/<int:product_id>/<str:product_name>/',views.single_product_colors,name='single_product_colors'),
    
     #All Customers
     path('all_customers/',views.all_customers,name='all_customers'),
@@ -32,6 +38,9 @@ urlpatterns = [
    
     # Update New Products
     path('update_new_product/<int:main_cat_id>/<int:cat_id>/<int:sub_cat_id>/<int:product_id>/',views.update_new_product,name='update_new_product'),
+   
+    # Add more Colors to the product with images
+    path('add_new_color_and_image_to_product/<int:main_cat_id>/<int:cat_id>/<int:sub_cat_id>/<int:product_id>/<str:product_name>/',views.add_new_color_and_image_to_product,name='add_new_color_and_image_to_product'),
    
     # Add New Main Category
     path('add_new_main_category/',views.add_new_main_category,name='add_new_main_category'),

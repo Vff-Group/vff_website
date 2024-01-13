@@ -1,0 +1,190 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %}Add Colors and Images{% endblock title%}
+{% block content %}
+
+
+
+  <div class="container-fluid py-4">
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header pb-0 d-flex justify-content-between">
+            <h6>Add New Colors And Images For Product [{{product_name}}]</h6>
+            
+          </div>
+
+          <div class="card-body px-0 pt-0 pb-2">
+            <form method="post" enctype="multipart/form-data" id="new-product-form" action="{% url 'clothing_dashboard_app:add_new_color_and_image_to_product' main_cat_id cat_id sub_cat_id product_id product_name %}">
+                {% csrf_token %}
+                <div class="pl-lg-4 m-4">
+                    <!-- To Select All Images and Default Image  -->
+                    
+                    
+                    
+                    <div class="row mb-4">
+                        
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-images">Product Images</label>
+                                <div id="image-dropzone" class="dropzone">
+                                    <input type="file" id="input-images" class="form-control form-control-alternative" name="product_images[]" multiple accept=".jpg, .jpeg, .png" style="display:none;" required>
+                                    <div class="dz-message needsclick" onclick="document.getElementById('input-images').click()">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <h6 class=" text-secondary">Click to upload product images</h6>
+                                        <h5 class=" text-secondary text-bolder">765 X 850</h5>
+                                        <small class=" text-secondary">Please choose image according to the aspect ratio</small>
+                                    </div>
+                                </div>
+                                <!-- Preview container for images -->
+                                <div id="image-preview-container" class="mt-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- New fields for multiple images, product name, description, fit and care, and return policy -->
+                    <div class="row mb-4">
+                        
+                        
+                        
+                        <!-- Checkboxes for Sizes -->
+                        <div class="col-lg-12">
+                            <label class="form-control-label">Sizes Available</label>
+                            <div class="row">
+                                <!-- Hidden input for selected size IDs -->
+                                <input type="hidden" id="selected-size-ids" name="selected_size_ids" >
+
+                                <!-- Hidden input for selected size values -->
+                                <input type="hidden" id="selected-size-values" name="selected_size_values" >
+
+                                <!-- Add checkboxes dynamically based on your available sizes -->
+                                {% for size in sizes_data %}
+                                <div class="col-lg-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="sizeCheckbox{{ size.size_id }}" name="sizes[]" value="{{ size.size_value }} " data-size-id="{{ size.size_id }}" onclick="updateSelectedSizes()">
+                                        <label class="form-check-label" for="sizeCheckbox{{ size.size_id }}">{{ size.size_value }}</label>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                     
+                    
+                    </div>
+
+                    
+
+                    <div class="row mb-4">
+                        <!-- Color Name -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-color-name">Color Name</label>
+                                <input type="text" id="input-color-name" class="form-control form-control-alternative" placeholder="Enter Color Name" name="color_name" autocomplete="off" required>
+                            </div>
+                        </div>
+
+                        <!-- Color Code  -->
+                        <div class="col-lg-6">
+                            <label class="form-control-label" for="input-product-color">Color</label>
+                        <input type="color" id="input-product-color" class="form-control form-control-sm rounded" name="colors[]" required>
+                        </div>
+
+                        
+
+                    </div>
+
+                   
+                
+                    <!-- Existing form fields... -->
+                    <div class="row justify-content-end">
+                        <div class="col-lg-12 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary">Add Product Colors</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Include jscolor library from CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"></script>
+        <!-- Include Dropzone.js library -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/dropzone.css">
+        <script src="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/dropzone.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
+        <script>
+           
+
+            function updateSelectedSizes() {
+                var selectedSizeIds = [];
+                var selectedSizeValues = [];
+        
+                // Iterate over all checkboxes
+                document.querySelectorAll('input[name="sizes[]"]:checked').forEach(function (checkbox) {
+                    selectedSizeIds.push(checkbox.getAttribute('data-size-id'));
+                    selectedSizeValues.push(document.querySelector('label[for="' + checkbox.id + '"]').textContent);
+                });
+        
+                // Update hidden input fields
+                document.getElementById('selected-size-ids').value = selectedSizeIds.join(',');
+                document.getElementById('selected-size-values').value = selectedSizeValues.join(', ');
+            }
+        </script>
+        <script>
+            
+
+            document.getElementById('input-images').addEventListener('change', function () {
+                previewImages(this);
+            });
+        
+            function previewImages(input) {
+                var previewContainer = document.getElementById('image-preview-container');
+                previewContainer.innerHTML = ''; // Clear previous previews
+        
+                var files = input.files;
+                for (var i = 0; i < files.length; i++) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var imageElement = document.createElement('img');
+                        imageElement.src = e.target.result;
+                        imageElement.className = 'preview-image';
+                        imageElement.style.width='100px';
+                        imageElement.style.height='100px';
+                        imageElement.style.marginRight='10px';
+                        imageElement.style.objectFit='contain';
+                        previewContainer.appendChild(imageElement);
+                    };
+                    reader.readAsDataURL(files[i]);
+                }
+            }
+
+            // Function to show a toast message
+function showToast(message, bodyContent) {
+    toastr.warning(bodyContent, message, {
+      positionClass: "toast-top-center",
+      timeOut: 5e3,
+      closeButton: !0,
+      debug: !1,
+      newestOnTop: !0,
+      progressBar: !0,
+      preventDuplicates: !0,
+      onclick: null,
+      showDuration: "300",
+      hideDuration: "1000",
+      extendedTimeOut: "1000",
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut",
+      tapToDismiss: !1
+  })
+}
+        </script>
+        
+       
+
+        
+          
+          
+    {% endblock  %}        

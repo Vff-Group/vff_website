@@ -158,6 +158,49 @@ def all_sub_categories(request,main_cat_id,main_cat_name,cat_id,cat_name):
     return render(request,"categories/all_sub_categories.html",context)
 
 
+def all_products_main(request): 
+    error_msg = 'No Products Found'
+    #query = "select productid,product_name,fitting_type,fitting_id,max_checkout_qty,product_collection_id,united_armor_product_typetbl.product_type_id,price,offer_price,default_images,product_type_name,product_category_name,color_name,color_code,default_color_id,main_title_name,cat_name,sub_cat_name,images as main_cat_img from vff.united_armor_main_categorytbl,vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl,vff.united_armor_product_colorstbl,vff.united_armor_product_typetbl,vff.united_armor_product_categorytbl,vff.united_armor_all_productstbl where united_armor_product_typetbl.product_type_id=united_armor_all_productstbl.product_type_id and united_armor_product_categorytbl.product_catid=united_armor_all_productstbl.product_collection_id and united_armor_all_productstbl.default_color_id=united_armor_product_colorstbl.colorsid and united_armor_all_productstbl.main_cat_id=united_armor_main_categorytbl.main_cat_id and  united_armor_all_productstbl.cat_id=united_armor_categorytbl.catid and united_armor_all_productstbl.sub_catid=united_armor_sub_categorytbl.sub_catid"
+    query = "select productid,product_name,fitting_type,price,offer_price,default_images,product_type_name,product_category_name,color_name,color_code,main_title_name,cat_name,sub_cat_name,images as main_cat_img,united_armor_all_productstbl.main_cat_id,united_armor_all_productstbl.cat_id,united_armor_all_productstbl.sub_catid from vff.united_armor_main_categorytbl,vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl,vff.united_armor_product_colorstbl,vff.united_armor_product_typetbl,vff.united_armor_product_categorytbl,vff.united_armor_all_productstbl where united_armor_product_typetbl.product_type_id=united_armor_all_productstbl.product_type_id and united_armor_product_categorytbl.product_catid=united_armor_all_productstbl.product_collection_id and united_armor_all_productstbl.default_color_id=united_armor_product_colorstbl.colorsid and united_armor_all_productstbl.main_cat_id=united_armor_main_categorytbl.main_cat_id and  united_armor_all_productstbl.cat_id=united_armor_categorytbl.catid and united_armor_all_productstbl.sub_catid=united_armor_sub_categorytbl.sub_catid"
+    
+    query_result = execute_raw_query(query)
+    
+    
+        
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            data.append({
+                'productid': row[0],
+                'product_name': row[1],
+                'fitting_type': row[2],
+                'price': row[3],
+                'offer_price': row[4],
+                'default_images': row[5],
+                'product_type_name': row[6],
+                'product_category_name': row[7],
+                'color_name': row[8],
+                'color_code': row[9],
+                'main_title_name': row[10],
+                'cat_name': row[11],
+                'sub_cat_name': row[12],
+                'main_category_image': row[13],
+                'main_cat_id': row[14],
+                'cat_id': row[15],
+                'sub_cat_id': row[16],
+                
+                
+                
+               
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg}
+    return render(request,"all_products/all_main_products.html",context)
+
 def all_products_details(request,main_cat_id,cat_id,sub_cat_id): 
     error_msg = 'No Products Found'
     query = "select productid,product_name,max_checkout_qty,price,offer_price,default_images from vff.united_armor_all_productstbl  where sub_catid='"+str(sub_cat_id)+"'"
@@ -370,7 +413,7 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
     context = {'sizes_data':sizes_data,'p_type_data':p_type_data,'p_category_data':p_category_data,'p_fitting_data':p_fitting_data,'error_msg':error_msg,'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id}
     return render(request,"all_products/add_new_product.html",context)
 
-def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id):
+def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id,ret=None):
     error_msg=''
     #All Details of Product
     query_product ="select product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,product_collection_id,united_armor_product_typetbl.product_type_id,price,offer_price,default_images,return_policy,product_type_name,product_category_name,color_name,color_code,default_color_id from vff.united_armor_product_colorstbl,vff.united_armor_product_typetbl,vff.united_armor_product_categorytbl,vff.united_armor_all_productstbl where united_armor_product_typetbl.product_type_id=united_armor_all_productstbl.product_type_id and united_armor_product_categorytbl.product_catid=united_armor_all_productstbl.product_collection_id and united_armor_all_productstbl.default_color_id=united_armor_product_colorstbl.colorsid  and productid='"+str(product_id)+"'"
@@ -602,13 +645,142 @@ def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id):
                 
         #     except Exception as e:
         #         print(f"Error Inserting Products Size Table: {e}")
-        
-        return redirect(reverse('clothing_dashboard_app:all_products', kwargs={'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id}))
+        if ret:
+            return redirect(reverse('clothing_dashboard_app:all_products_main'))
+        else:
+            return redirect(reverse('clothing_dashboard_app:all_products', kwargs={'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id}))
             
             
     
     context = {'sizes_data':sizes_data,'p_type_data':p_type_data,'p_category_data':p_category_data,'p_fitting_data':p_fitting_data,'error_msg':error_msg,'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id,'product_data':product_data,'all_images_data':all_images_data,'all_selected_sizes_data':all_selected_sizes_data,'product_id':product_id}#product_data,all_images_data,all_selected_sizes_data
     return render(request,"all_products/update_product_details.html",context)
+
+def single_product_colors(request,main_cat_id,cat_id,sub_cat_id,product_id,product_name): 
+    error_msg = 'No Product Colors Found'
+    query = "select colorsid,color_name,color_code from vff.united_armor_product_colorstbl where product_id='"+str(product_id)+"'"
+    
+    query_result = execute_raw_query(query)
+    
+    
+        
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            data.append({
+                'colorsid': row[0],
+                'color_name': row[1],
+                'color_code': row[2],
+               
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg,'main_cat_id':main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id,'product_id':product_id,'product_name':product_name}
+    return render(request,"all_products/all_colors_images.html",context)
+
+
+def add_new_color_and_image_to_product(request,main_cat_id,cat_id,sub_cat_id,product_id,product_name):
+    error_msg=''
+    #All Sizes
+    query_sizes ="select sizesid,size_value from vff.united_armor_product_sizestbl"
+    sizes_result = execute_raw_query(query_sizes)
+    sizes_data = []    
+    if not sizes_result == 500:
+        for row in sizes_result:
+            
+            sizes_data.append({
+                'size_id': row[0],
+                'size_value': row[1],
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    
+    
+    
+    if request.method == 'POST':
+        # Accessing other form fields
+        color_name = request.POST.get('color_name')
+        # Accessing uploaded images
+        product_images = request.FILES.getlist('product_images[]')
+        # Accessing color, category, and fitting
+        color = request.POST.get('colors[]')
+        
+        
+        selected_size_ids = request.POST.get('selected_size_ids')
+        selected_size_values = request.POST.get('selected_size_values')
+        
+        print(f'selected_size_ids:{selected_size_ids}')
+        selected_size_ids_str = selected_size_ids.split(",")
+        
+        
+        
+        if color:
+        # Split the color code where there is a '#'
+            parts = color.split('#')
+    
+            if len(parts) == 2:
+                # Extract the color code without the '#'
+                color = parts[1]
+                print(f'Color Code without #: {color}')
+            else:
+                print('Invalid color code format')
+        
+        
+            
+        
+        
+        #Adding value in color table
+        try:
+            with connection.cursor() as cursor:
+                insert_query="insert into vff.united_armor_product_colorstbl(color_name,color_code,product_id) values ('"+str(color_name)+"','"+str(color)+"','"+str(product_id)+"') RETURNING colorsid"
+                print(f'insert Color query::{insert_query}')
+                cursor.execute(insert_query)
+                color_id = cursor.fetchone()[0]
+                
+                
+                
+                connection.commit()
+                print(f" New Color Added To  {product_name} Inserted Successfully.")
+                
+        except Exception as e:
+            print(f"Error Inserting Products Table: {e}")
+            
+        for uploaded_image in product_images:
+            # Process and store each image in product_images table against productid returning from all_products table.
+            image_url = upload_images2(uploaded_image)
+            try:
+                with connection.cursor() as cursor:
+                    insert_query="insert into vff.united_armor_product_imagestbl(image_url,product_id,color_id) values ('"+str(image_url)+"','"+str(product_id)+"','"+str(color_id)+"')"
+                    cursor.execute(insert_query)
+                    connection.commit()
+                    print(f" New Product Image {product_name} Inserted Successfully.")
+                
+            except Exception as e:
+                print(f"Error Inserting Products Images Table: {e}")
+            
+        #Sizes Selected
+        for size_id in selected_size_ids_str:
+            
+            try:
+                with connection.cursor() as cursor:
+                    insert_query="insert into vff.united_armor_sizes_available(sizeid,product_id) values ('"+str(size_id)+"','"+str(product_id)+"')"
+                    cursor.execute(insert_query)
+                    
+                    connection.commit()
+                    print(f" New Product Sizes {product_name} Inserted Successfully.")
+                
+            except Exception as e:
+                print(f"Error Inserting Products Size Table: {e}")
+        
+        return redirect(reverse('clothing_dashboard_app:single_product_colors', kwargs={'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id,'product_id':product_id,'product_name':product_name}))
+            
+            
+    
+    context = {'sizes_data':sizes_data,'error_msg':error_msg,'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id,'product_id':product_id,'product_name':product_name}
+    return render(request,"all_products/add_more_colors_images.html",context)
 
 
 
