@@ -24,7 +24,7 @@
                         <div class="form-group">
                             <label class="form-control-label" for="input-images">Product Images</label>
                             <div id="image-dropzone" class="dropzone">
-                                <input type="file" id="input-images" class="form-control form-control-alternative" name="product_images[]" multiple accept="image/*" style="display:none;">
+                                <input type="file" id="input-images" class="form-control form-control-alternative" name="product_images[]" multiple accept=".jpg, .jpeg, .png, .gif" style="display:none;">
                                 <div class="dz-message needsclick" onclick="document.getElementById('input-images').click()">
                                     <i class="fas fa-cloud-upload-alt"></i>
                                     <h5>Click to upload product images</h5>
@@ -240,7 +240,28 @@
         <script src="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/dropzone.js"></script>
 
         <script>
+            
+
             document.getElementById('input-images').addEventListener('change', function () {
+                var validExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        
+                // Get selected files
+                var files = $(this)[0].files;
+    
+                // Filter out unsupported files
+                var validFiles = Array.from(files).filter(function (file) {
+                    var extension = file.name.split('.').pop().toLowerCase();
+                    return validExtensions.includes(extension);
+                });
+    
+                // Replace the selected files with valid ones
+                $(this)[0].files = new FileList(validFiles);
+    
+                // You can also display an alert or message for unsupported files
+                if (files.length !== validFiles.length) {
+                    showToast('Alert','Unsupported file types detected. Only jpg, jpeg, png, and gif are allowed.');
+                    return;
+                }
                 previewImages(this);
             });
         
@@ -263,6 +284,28 @@
                     reader.readAsDataURL(files[i]);
                 }
             }
+
+            // Function to show a toast message
+function showToast(message, bodyContent) {
+    toastr.warning(bodyContent, message, {
+      positionClass: "toast-top-center",
+      timeOut: 5e3,
+      closeButton: !0,
+      debug: !1,
+      newestOnTop: !0,
+      progressBar: !0,
+      preventDuplicates: !0,
+      onclick: null,
+      showDuration: "300",
+      hideDuration: "1000",
+      extendedTimeOut: "1000",
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut",
+      tapToDismiss: !1
+  })
+}
         </script>
         
        
