@@ -273,7 +273,12 @@ def add_new_product(request):
         print(f'selected_product_type_name::{selected_product_type_name}')
         print(f'selected_size_values::{selected_size_values}')
         print(f'selected_product_type_id::{selected_product_type_id}')
-        print(f'product_images::{product_images}')
+        # print(f'product_images::{product_images}')
+        
+        for uploaded_image in product_images:
+            # Process and store each image
+            image_url = upload_images2(uploaded_image)
+            print(f"image_url::{image_url}")
         
     
     context = {'sizes_data':sizes_data,'p_type_data':p_type_data,'p_category_data':p_category_data,'p_fitting_data':p_fitting_data,'error_msg':error_msg}
@@ -480,7 +485,7 @@ def upload_images2(uploaded_image):
     file_extension = mimetypes.guess_extension(uploaded_image.content_type)
 
     # Construct the custom image name with the unique identifier and original extension
-    custom_image_name = f'img_{unique_identifier}{file_extension}'
+    custom_image_name = f'united_armor_image_{unique_identifier}{file_extension}'
     # Assuming you have a MEDIA_ROOT where the images will be stored
     file_path = os.path.join(settings.MEDIA_ROOT, custom_image_name)
 
