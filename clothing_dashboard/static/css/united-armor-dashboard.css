@@ -25501,7 +25501,7 @@ pre[class*="language-"] {
 }
 
 .dropzone {
-  border: 2px dotted rgba(0, 0, 0, 0.3);
+  border: 2px dashed rgba(0, 0, 0, 0.3);
   padding: 20px;
   text-align: center;
   cursor: pointer;

@@ -1,6 +1,6 @@
 {% extends "base/base.html" %}
 {% load static %}
-{% block title %}Add New input-product-description{% endblock title%}
+{% block title %}Product{% endblock title%}
 {% block content %}
 
 
@@ -255,6 +255,9 @@
                         var imageElement = document.createElement('img');
                         imageElement.src = e.target.result;
                         imageElement.className = 'preview-image';
+                        imageElement.style.width='100px';
+                        imageElement.style.height='100px';
+                        imageElement.style.marginRight='10px';
                         previewContainer.appendChild(imageElement);
                     };
                     reader.readAsDataURL(files[i]);
