@@ -143,30 +143,29 @@
                     </div>
 
                     <div class="row mb-2">
-                         <!-- Price -->
-                         <div class="col-lg-4">
+                        <!-- Price -->
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="product-Price">Price</label>
-                                <input type="number" class="form-control" id="product-Price" name="productPrice" placeholder="Enter product price" required>
+                                <input type="number" class="form-control" id="product-Price" name="productPrice" placeholder="Enter product price" required value="{% if product_data %}{{ product_data.0.price }}{% endif %}">
                             </div>
-                         </div>
+                        </div>
 
-                          <!-- Offer Price -->
-                          <div class="col-lg-4">
+                        <!-- Offer Price -->
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="product-offer-price">Offer Price %</label>
-                                <input type="number" class="form-control" id="product-offer-price" name="productOfferPrice" placeholder="Enter product offer price" required>
+                                <input type="number" class="form-control" id="product-offer-price" name="productOfferPrice" placeholder="Enter product offer price" required value="{% if product_data %}{{ product_data.0.offer_price }}{% endif %}">
                             </div>
-                         </div>
-                          
+                        </div>
 
-                             <!-- Max Checkout Quantity -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label for="productCheckOut-Quantity">Max Checkout Quantity</label>
-                                    <input type="number" class="form-control" id="productCheckOut-Quantity" name="productCheckOutQuantity" placeholder="Enter Max Checkout Quantity"  required>
-                                </div>
+                        <!-- Max Checkout Quantity -->
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="productCheckOut-Quantity">Max Checkout Quantity</label>
+                                <input type="number" class="form-control" id="productCheckOut-Quantity" name="productCheckOutQuantity" placeholder="Enter Max Checkout Quantity" required value="{% if product_data %}{{ product_data.0.max_checkout_qty }}{% endif %}">
                             </div>
+                        </div>
                     </div>
 
                     <div class="row mb-4">
