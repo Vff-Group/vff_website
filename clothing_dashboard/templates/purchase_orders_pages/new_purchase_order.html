@@ -248,9 +248,10 @@
         // Function to delete the specified row
         function deleteRow(row) {
             var rowIndex = row.rowIndex;
-            tableBody.deleteRow(rowIndex);
+            tableBody.deleteRow(rowIndex - 1); // Adjust the index to delete the correct row
         }
     });
+    
     
 </script>
 
