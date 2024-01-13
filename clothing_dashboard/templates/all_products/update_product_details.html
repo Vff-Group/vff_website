@@ -113,7 +113,7 @@
                                     {% for p_type in p_type_data %}
                                     <option value="{{ p_type.p_type_id }}" {% if product_data and p_type.p_type_id == product_data.0.product_type_id %}selected{% endif %}>{{ p_type.p_type_name }}</option>
                                     {% endfor %}
-                                {% endfor %}
+                                
                                 </select>
                             </div>
                         </div>
