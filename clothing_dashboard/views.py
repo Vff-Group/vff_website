@@ -268,7 +268,10 @@ def add_new_product(request):
         fitting = request.POST.get('fittingCategory')
         selected_product_type_name = request.POST.get('selected_product_type_name')
         selected_product_type_id = request.POST.get('selected_product_type_id')
+        selected_size_ids = request.POST.get('selected_size_ids')
+        selected_size_values = request.POST.get('selected_size_values')
         print(f'selected_product_type_name::{selected_product_type_name}')
+        print(f'selected_size_values::{selected_size_values}')
         print(f'selected_product_type_id::{selected_product_type_id}')
         
     

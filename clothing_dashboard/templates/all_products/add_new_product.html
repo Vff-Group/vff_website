@@ -69,17 +69,24 @@
                         <div class="col-lg-4">
                             <label class="form-control-label">Sizes Available</label>
                             <div class="row">
+                                <!-- Hidden input for selected size IDs -->
+                                <input type="hidden" id="selected-size-ids" name="selected_size_ids">
+
+                                <!-- Hidden input for selected size values -->
+                                <input type="hidden" id="selected-size-values" name="selected_size_values">
+
                                 <!-- Add checkboxes dynamically based on your available sizes -->
                                 {% for size in sizes_data %}
                                 <div class="col-lg-3">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="sizeCheckbox{{ size.size_id }}" name="sizes[]" value="{{ size.size_value }} ">
+                                        <input class="form-check-input" type="checkbox" id="sizeCheckbox{{ size.size_id }}" name="sizes[]" value="{{ size.size_value }} " onclick="updateSelectedSizes()">
                                         <label class="form-check-label" for="sizeCheckbox{{ size.size_id }}">{{ size.size_value }}</label>
                                     </div>
                                 </div>
                             {% endfor %}
                         </div>
                      
+                    
                     </div>
 
                     <div class="row mb-2">
@@ -199,6 +206,20 @@
                 // Update hidden input fields
                 document.getElementById('selected-product-type-name').value = selectedOption.text;
                 document.getElementById('selected-product-type-id').value = selectedOption.value;
+            }
+            function updateSelectedSizes() {
+                var selectedSizeIds = [];
+                var selectedSizeValues = [];
+        
+                // Iterate over all checkboxes
+                document.querySelectorAll('input[name="sizes[]"]:checked').forEach(function (checkbox) {
+                    selectedSizeIds.push(checkbox.value);
+                    selectedSizeValues.push(document.querySelector('label[for="' + checkbox.id + '"]').textContent);
+                });
+        
+                // Update hidden input fields
+                document.getElementById('selected-size-ids').value = selectedSizeIds.join(',');
+                document.getElementById('selected-size-values').value = selectedSizeValues.join(', ');
             }
         </script>
         <script>
