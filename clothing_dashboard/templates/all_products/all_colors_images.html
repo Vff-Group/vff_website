@@ -48,7 +48,6 @@
                   <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sl No</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Color Details</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Image</th>
                     <th class="text-secondary opacity-7"></th>
                   </tr>
                 </thead>
@@ -69,35 +68,25 @@
                     </td>
                     <td>
                       <div class="d-flex px-2 py-1">
-                        <div>
+                        {% comment %} <div>
                           <img src="{{row.default_images}}" class="avatar avatar-sm me-3" alt="user1">
-                        </div>
+                        </div> {% endcomment %}
                         <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-sm">{{row.product_name}}</h6>
-                          <p class="text-xs text-secondary mb-0">{{row.productid}}</p>
+                          <h6 class="mb-0 text-sm">{{row.color_name}}</h6>
+                          <p class="text-xs text-secondary mb-0">{{row.colorsid}}</p>
                         </div>
                       </div>
                     </td>
-                    <td>
-                      <p class="text-xs font-weight-bold mb-0">₹.{{row.price}}/-</p>
-                      
-                    </td>
-                    <td>
-                        <p class="text-xs font-weight-bold mb-0 text-center">{{row.max_checkout_qty}}</p>
-                        
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0 text-center">₹.{{row.offer_price}}/-</p>
-                        
-                      </td>
+                   
                     
                     
                     <td class="align-middle">
                         <div class="row">
                             <div class="col">
-                                <a href="{% url 'clothing_dashboard_app:update_new_product' main_cat_id cat_id sub_cat_id row.productid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit "> 
+                                {% comment %} <a href="{% url 'clothing_dashboard_app:update_new_product' main_cat_id cat_id sub_cat_id row.productid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit ">  {% endcomment %}
+                                <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit "> 
                                 
-                                    Edit
+                                    View
                                   </a>
                             </div>
                             {% comment %}
