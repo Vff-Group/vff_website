@@ -680,10 +680,10 @@ def single_product_colors(request,main_cat_id,cat_id,sub_cat_id,product_id,produ
     context = {'query_result':data,'current_url': current_url,'error_msg':error_msg,'main_cat_id':main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id,'product_id':product_id,'product_name':product_name}
     return render(request,"all_products/all_colors_images.html",context)
 
-def view_product_images(request,product_name,color_name,product_id):
+def view_product_images(request,product_name,color_name,product_id,color_id):
     error_msg=''
     #All Images Data
-    query_all_images ="select imageid,image_url,color_id from vff.united_armor_product_imagestbl where product_id='"+str(product_id)+"'"
+    query_all_images ="select imageid,image_url,color_id from vff.united_armor_product_imagestbl where product_id='"+str(product_id)+"' and color_id='"+str(color_id)+"'"
     all_images_result = execute_raw_query(query_all_images)
     all_images_data = []    
     if not all_images_result == 500:
