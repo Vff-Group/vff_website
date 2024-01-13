@@ -16,7 +16,7 @@
           </div>
 
           <div class="card-body px-0 pt-0 pb-2">
-            <form method="post" enctype="multipart/form-data" id="new-product-form">
+            <form method="post" enctype="multipart/form-data" id="new-product-form" action="{% url 'clothing_dashboard_app:add_new_product' %}">
                 {% csrf_token %}
                 <div class="pl-lg-4 m-4">
                     <!-- Existing form fields... -->
@@ -47,10 +47,15 @@
                         </div>
 
                          <!-- Dropdown for Product Type -->
+                         <!-- Hidden input for selected product type name -->
+                        <input type="hidden" id="selected-product-type-name" name="selected_product_type_name">
+
+                        <!-- Hidden input for selected product type ID -->
+                        <input type="hidden" id="selected-product-type-id" name="selected_product_type_id">
                          <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label" for="input-product-type">Product Type</label>
-                                <select id="input-product-type" class="form-control form-control-alternative" name="product_type" required>
+                                <select id="input-product-type" class="form-control form-control-alternative" name="product_type" required onchange="updateSelectedProductType()">
                                     <option value="" disabled>Select Product Type</option>
                                     <!-- Add options dynamically based on your product types -->
                                     {% for p_type in p_type_data %}
@@ -186,6 +191,16 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 
+        <script>
+            function updateSelectedProductType() {
+                var selectElement = document.getElementById('input-product-type');
+                var selectedOption = selectElement.options[selectElement.selectedIndex];
+        
+                // Update hidden input fields
+                document.getElementById('selected-product-type-name').value = selectedOption.text;
+                document.getElementById('selected-product-type-id').value = selectedOption.value;
+            }
+        </script>
         <script>
             
 
@@ -389,61 +404,7 @@ function showToast(message, bodyContent) {
         </script>
         
 
-        <script>
-            $(document).ready(function () {
-              $('#new-product-form').validate({
-                // Define your validation rules and messages here...
-                // ...
-          
-                submitHandler: function (form) {
-                  event.preventDefault();
-          
-                  // Manually create a JSON object with form data
-                  var formData = {
-                    // Add other form fields to the JSON object
-                    product_name: $('#input-product-name').val(),
-                    product_type: $('#input-product-type').val(),
-                    sizes: $('input[name="sizes[]"]:checked').map(function () {
-                      return {
-                        id: this.id,
-                        name: this.name,
-                        value: this.value
-                      };
-                    }).get(),
-                    product_price: $('#productPrice').val(),
-                    product_offer_price: $('#productOfferPrice').val(),
-                    product_checkout_quantity: $('#productCheckOutQuantity').val(),
-                    product_color: $('#input-product-color').val(),
-                    product_category: $('#productCategory').val(),
-                    fitting_category: $('#fittingCategory').val(),
-                    product_description: $('#input-product-description').val(),
-                    fit_care: $('#input-fit-care').val(),
-                    return_policy: $('#input-return-policy').val(),
-                    // Add other fields as needed
-                  };
-          
-                  console.log('formData:', formData);
-                  return;
-                  // Perform an AJAX POST request
-                  $.ajax({
-                    type: 'POST',
-                    url: '/your_backend_endpoint/',  // Replace with your actual backend endpoint URL
-                    data: JSON.stringify(formData),
-                    contentType: 'application/json',
-                    success: function (data) {
-                      console.log('Success:', data);
-          
-                      // Handle success, for example, redirect to another page
-                      window.location.replace('/success-page');
-                    },
-                    error: function (error) {
-                      console.error('Error:', error);
-                    }
-                  });
-                }
-              });
-            });
-          </script>
+        
           
           
     {% endblock  %}        

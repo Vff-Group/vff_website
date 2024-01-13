@@ -245,6 +245,33 @@ def add_new_product(request):
     else:
         error_msg = 'Something Went Wrong'
     
+    if request.method == 'POST':
+        # Accessing other form fields
+        product_name = request.POST.get('product_name')
+        product_type = request.POST.get('product_type')
+        sizes = request.POST.getlist('sizes[]')
+        product_description = request.POST.get('product_description')
+        fit_care = request.POST.get('fit_care')
+        return_policy = request.POST.get('return_policy')
+
+        # Accessing uploaded images
+        product_images = request.FILES.getlist('product_images[]')
+        
+        # Accessing other numeric fields
+        price = request.POST.get('productPrice')
+        offer_price = request.POST.get('productOfferPrice')
+        checkout_quantity = request.POST.get('productCheckOutQuantity')
+
+        # Accessing color, category, and fitting
+        color = request.POST.get('colors[]')
+        product_category = request.POST.get('productCategory')
+        fitting = request.POST.get('fittingCategory')
+        selected_product_type_name = request.POST.get('selected_product_type_name')
+        selected_product_type_id = request.POST.get('selected_product_type_id')
+        print(f'selected_product_type_name::{selected_product_type_name}')
+        print(f'selected_product_type_id::{selected_product_type_id}')
+        
+    
     context = {'sizes_data':sizes_data,'p_type_data':p_type_data,'p_category_data':p_category_data,'p_fitting_data':p_fitting_data,'error_msg':error_msg}
     return render(request,"all_products/add_new_product.html",context)
 
