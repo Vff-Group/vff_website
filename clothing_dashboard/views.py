@@ -187,6 +187,7 @@ def all_products_details(request,main_cat_id,cat_id,sub_cat_id):
     return render(request,"all_products/all_products.html",context)
 
 def add_new_product(request):
+    error_msg=''
     #All Sizes
     query_sizes ="select sizesid,size_value from vff.united_armor_product_sizestbl"
     sizes_result = execute_raw_query(query_sizes)
