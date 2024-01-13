@@ -296,8 +296,8 @@ def add_new_product(request):
         try:
             with connection.cursor() as cursor:
                 insert_query="insert into vff.united_armor_all_productstbl(product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,main_cat_id,cat_id,sub_catid,product_collection_id,product_type_id,price,offer_price,default_images,default_size,default_color_id,return_policy) VALUES ('"+str(product_name)+"','"+str(selected_product_fitting_name)+"','"+str(selected_product_fitting_id)+"','"+str(checkout_quantity)+"','"+str(what_it_does)+"','"+str(product_description)+"','"+str(fit_care)+"','"+str(main_cat_id)+"','"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(selected_product_category_id)+"','"+str(selected_product_type_id)+"','"+str(price)+"','"+str(offer_price)+"','"+str(image_default_url)+"','"+str(selected_size_values[0])+"','"+str(color[0])+"','"+str(return_policy)+"') RETURNING productid"
-                cursor.execute(insert_query)
                 print(f'insert query::{insert_query}')
+                cursor.execute(insert_query)
                 product_id = cursor.fetchone()[0]
                 connection.commit()
                 print(f" New Product  {product_name} Inserted Successfully.")
@@ -320,11 +320,11 @@ def add_new_product(request):
                 print(f"Error Inserting Products Images Table: {e}")
             
         #Sizes Selected
-        for sizeid in selected_size_ids:
+        for size_id in selected_size_ids:
             
             try:
                 with connection.cursor() as cursor:
-                    insert_query="insert into vff.united_armor_sizes_available(sizeid,product_id) values ('"+str(sizeid)+"','"+str(product_id)+"')"
+                    insert_query="insert into vff.united_armor_sizes_available(sizeid,product_id) values ('"+str(size_id)+"','"+str(product_id)+"')"
                     cursor.execute(insert_query)
                     
                     connection.commit()
