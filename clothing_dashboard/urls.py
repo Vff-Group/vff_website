@@ -40,7 +40,7 @@ urlpatterns = [
     path('update_new_product/<int:main_cat_id>/<int:cat_id>/<int:sub_cat_id>/<int:product_id>/',views.update_new_product,name='update_new_product'),
    
     # Update New Products With Optional For Main Page Products
-    path('update_new_product/<int:main_cat_id>/<int:cat_id>/<int:sub_cat_id>/<int:product_id>/<int:optional_param>/',views.update_new_product,name='update_new_product'),
+    path('update_new_product/<int:main_cat_id>/<int:cat_id>/<int:sub_cat_id>/<int:product_id>/<int:ret>/',views.update_new_product,name='update_new_product'),
    
     # Add more Colors to the product with images
     path('add_new_color_and_image_to_product/<int:main_cat_id>/<int:cat_id>/<int:sub_cat_id>/<int:product_id>/<str:product_name>/',views.add_new_color_and_image_to_product,name='add_new_color_and_image_to_product'),

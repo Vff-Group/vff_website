@@ -670,7 +670,7 @@ def single_product_colors(request,main_cat_id,cat_id,sub_cat_id,product_id,produ
             data.append({
                 'colorsid': row[0],
                 'color_name': row[1],
-                'color_code': row[2],
+                'color_code': "#"+row[2],
                
             })
     else:
