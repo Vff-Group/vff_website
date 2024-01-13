@@ -187,7 +187,65 @@ def all_products_details(request,main_cat_id,cat_id,sub_cat_id):
     return render(request,"all_products/all_products.html",context)
 
 def add_new_product(request):
-    return render(request,"all_products/add_new_product.html")
+    #All Sizes
+    query_sizes ="select sizesid,size_value from vff.united_armor_product_sizestbl"
+    sizes_result = execute_raw_query(query_sizes)
+    sizes_data = []    
+    if not sizes_result == 500:
+        for row in sizes_result:
+            
+            sizes_data.append({
+                'size_id': row[0],
+                'size_value': row[1],
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    
+    #Product Type table [Short sleeves]
+    query_product_type ="select product_type_id,product_type_name from vff.united_armor_product_typetbl"
+    p_type_result = execute_raw_query(query_product_type)
+    p_type_data = []    
+    if not p_type_result == 500:
+        for row in p_type_result:
+            
+            p_type_data.append({
+                'p_type_id': row[0],
+                'p_type_name': row[1],
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    #Product Category table
+    query_product_category="select product_catid,product_category_name from vff.united_armor_product_categorytbl"
+    p_category_result = execute_raw_query(query_product_category)
+    p_category_data = []    
+    if not p_category_result == 500:
+        for row in p_category_result:
+            
+            p_category_data.append({
+                'p_cat_id': row[0],
+                'p_cat_name': row[1],
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    #Fitting Type
+    query_product_fitting = "select fittingid,fit_type from vff.united_armor_fittingtbl"
+    p_fitting_result = execute_raw_query(query_product_fitting)
+    p_fitting_data = []    
+    if not p_fitting_result == 500:
+        for row in p_fitting_result:
+            
+            p_fitting_data.append({
+                'p_fitting_id': row[0],
+                'p_fitting_name': row[1],
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    context = {'sizes_data':sizes_data,'p_type_data':p_type_data,'p_category_data':p_category_data,'p_fitting_data':p_fitting_data,'error_msg':error_msg}
+    return render(request,"all_products/add_new_product.html",context)
 
 def add_new_main_category(request):
     
