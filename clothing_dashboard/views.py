@@ -273,6 +273,7 @@ def add_new_product(request):
         print(f'selected_product_type_name::{selected_product_type_name}')
         print(f'selected_size_values::{selected_size_values}')
         print(f'selected_product_type_id::{selected_product_type_id}')
+        print(f'product_images::{product_images}')
         
     
     context = {'sizes_data':sizes_data,'p_type_data':p_type_data,'p_category_data':p_category_data,'p_fitting_data':p_fitting_data,'error_msg':error_msg}
