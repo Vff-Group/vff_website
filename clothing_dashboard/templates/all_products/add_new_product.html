@@ -243,25 +243,6 @@
             
 
             document.getElementById('input-images').addEventListener('change', function () {
-                var validExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-        
-                // Get selected files
-                var files = $(this)[0].files;
-    
-                // Filter out unsupported files
-                var validFiles = Array.from(files).filter(function (file) {
-                    var extension = file.name.split('.').pop().toLowerCase();
-                    return validExtensions.includes(extension);
-                });
-    
-                // Replace the selected files with valid ones
-                $(this)[0].files = new FileList(validFiles);
-    
-                // You can also display an alert or message for unsupported files
-                if (files.length !== validFiles.length) {
-                    showToast('Alert','Unsupported file types detected. Only jpg, jpeg, png, and gif are allowed.');
-                    return;
-                }
                 previewImages(this);
             });
         
