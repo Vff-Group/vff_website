@@ -19,7 +19,7 @@ import re
 import os
 from django.conf import settings
 from django.http import JsonResponse
-from PIL import ImageDecompressionBombWarning
+
 
 
 
@@ -511,11 +511,7 @@ def upload_images2(uploaded_image):
         print(f'Uploaded Image URL: {image_url}')
         return image_url
 
-    except ImageDecompressionBombWarning as e:
-        # Handle the decompression bomb warning
-        print(f"DecompressionBombWarning: {e}")
-        # You can choose to handle it as needed, e.g., log the warning, return an error message, etc.
-        return None
+  
     except Exception as e:
         # Handle other exceptions
         print(f"Error: {e}")
