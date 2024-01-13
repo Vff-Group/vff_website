@@ -188,7 +188,7 @@ def all_products_details(request,main_cat_id,cat_id,sub_cat_id):
     context = {'query_result':data,'current_url': current_url,'error_msg':error_msg,'main_cat_id':main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id}
     return render(request,"all_products/all_products.html",context)
 
-def add_new_product(request):
+def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
     error_msg=''
     #All Sizes
     query_sizes ="select sizesid,size_value from vff.united_armor_product_sizestbl"
@@ -249,9 +249,7 @@ def add_new_product(request):
     
     if request.method == 'POST':
         # Accessing other form fields
-        main_cat_id = request.POST.get('main_cat_id')
-        cat_id = request.POST.get('cat_id')
-        sub_cat_id = request.POST.get('sub_cat_id')
+        
         product_name = request.POST.get('product_name')
         product_type = request.POST.get('product_type')
         # sizes = request.POST.getlist('sizes[]')
