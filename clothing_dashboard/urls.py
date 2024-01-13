@@ -27,8 +27,11 @@ urlpatterns = [
     #All Products
     path('all_products/<int:main_cat_id>/<int:cat_id>/<int:sub_cat_id>/',views.all_products_details,name='all_products'),
    
-    #Add New Products
+    # Add New Products
     path('add_new_product/<int:main_cat_id>/<int:cat_id>/<int:sub_cat_id>/',views.add_new_product,name='add_new_product'),
+   
+    # Update New Products
+    path('update_new_product/<int:main_cat_id>/<int:cat_id>/<int:sub_cat_id>/<int:product_id/',views.update_new_product,name='update_new_product'),
    
     # Add New Main Category
     path('add_new_main_category/',views.add_new_main_category,name='add_new_main_category'),
