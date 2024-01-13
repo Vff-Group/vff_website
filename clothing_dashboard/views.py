@@ -397,12 +397,13 @@ def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id):
                 'product_category_name': row[14],
                 'color_name': row[15],
                 'color_code': '#'+row[16],
+                'default_color_id': row[17],
             })
     else:
         error_msg = 'Something Went Wrong'
     
     #All Images Data
-    query_all_images ="select imageid,image_url from vff.united_armor_product_imagestbl where product_id='"+str(product_id)+"'"
+    query_all_images ="select imageid,image_url,color_id from vff.united_armor_product_imagestbl where product_id='"+str(product_id)+"'"
     all_images_result = execute_raw_query(query_all_images)
     all_images_data = []    
     if not all_images_result == 500:
@@ -411,6 +412,7 @@ def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id):
             all_images_data.append({
                 'image_id': row[0],
                 'image_url': row[1],
+                'color_id': row[1],
             })
     else:
         error_msg = 'Something Went Wrong'
@@ -492,7 +494,7 @@ def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id):
         # Accessing other form fields
         
         product_name = request.POST.get('product_name')
-        product_type = request.POST.get('product_type')
+        
         # sizes = request.POST.getlist('sizes[]')
         product_description = request.POST.get('product_description')
         fit_care = request.POST.get('fit_care')
@@ -501,9 +503,9 @@ def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id):
         what_it_does = request.POST.get('what_it_does')
         
         # Accessing uploaded images
-        product_images = request.FILES.getlist('product_images[]')
+        # product_images = request.FILES.getlist('product_images[]')
         #Default Image upload
-        default_image = request.FILES.get('default_image', None)
+        # default_image = request.FILES.get('default_image', None)
         
         # Accessing other numeric fields
         price = request.POST.get('productPrice')
@@ -526,12 +528,14 @@ def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id):
         selected_size_ids = request.POST.get('selected_size_ids')
         selected_size_values = request.POST.get('selected_size_values')
         
+        color_id = request.POST.get('color_id')
+        
         print(f'selected_size_ids:{selected_size_ids}')
         selected_size_ids_str = selected_size_ids.split(",")
         
-        # print(f'product_images::{product_images}')
-        if default_image:
-            image_default_url = upload_images2(default_image)
+        # # print(f'product_images::{product_images}')
+        # if default_image:
+        #     image_default_url = upload_images2(default_image)
         
         if color:
         # Split the color code where there is a '#'
@@ -549,60 +553,55 @@ def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id):
         #Product Table
         try:
             with connection.cursor() as cursor:
-                insert_query="insert into vff.united_armor_all_productstbl(product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,main_cat_id,cat_id,sub_catid,product_collection_id,product_type_id,price,offer_price,default_images,default_size,return_policy) VALUES ('"+str(product_name)+"','"+str(selected_product_fitting_name)+"','"+str(selected_product_fitting_id)+"','"+str(checkout_quantity)+"','"+str(what_it_does)+"','"+str(product_description)+"','"+str(fit_care)+"','"+str(main_cat_id)+"','"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(selected_product_category_id)+"','"+str(selected_product_type_id)+"','"+str(price)+"','"+str(offer_price)+"','"+str(image_default_url)+"','"+str(selected_size_values[0])+"','"+str(return_policy)+"') RETURNING productid"
-                print(f'insert query::{insert_query}')
-                cursor.execute(insert_query)
-                product_id = cursor.fetchone()[0]
+                update_query="update vff.united_armor_all_productstbl SET product_name='"+str(product_name)+"', fitting_type='"+str(selected_product_fitting_name)+"', fitting_id='"+str(selected_product_fitting_id)+"', max_checkout_qty='"+str(checkout_quantity)+"', what_it_does='"+str(what_it_does)+"', specifications='"+str(product_description)+"', fit_and_care_desc='"+str(fit_care)+"', main_cat_id='"+str(main_cat_id)+"', cat_id='"+str(cat_id)+"', sub_catid='"+str(sub_cat_id)+"', product_collection_id='"+str(selected_product_category_id)+"', product_type_id='"+str(selected_product_type_id)+"', price='"+str(price)+"', offer_price='"+str(offer_price)+"', default_images='"+str(image_default_url)+"', default_size='"+str(selected_size_values[0])+"', return_policy='"+str(return_policy)+"' WHERE product_id='"+str(product_id)+"'"
+                print(f'update query::{update_query}')
+                cursor.execute(update_query)
                 connection.commit()
-                print(f" New Product  {product_name} Inserted Successfully.")
+                print(f" Updated Product  {product_name}  Successfully.")
                 
         except Exception as e:
-            print(f"Error Inserting Products Table: {e}")
+            print(f"Error Updating All Products Table: {e}")
         
         #Adding value in color table
         try:
             with connection.cursor() as cursor:
-                insert_query="insert into vff.united_armor_product_colorstbl(color_name,color_code,product_id) values ('"+str(color_name)+"','"+str(color)+"','"+str(product_id)+"') RETURNING colorsid"
-                print(f'insert Color query::{insert_query}')
-                cursor.execute(insert_query)
-                color_id = cursor.fetchone()[0]
+                update_query="update vff.united_armor_product_colorstbl SET color_name='"+str(color_name)+"', color_code='"+str(color)+"' WHERE product_id='"+str(product_id)+"' and colorsid='"+str(color_id)+"'"
+                print(f'update Color query::{update_query}')
+                cursor.execute(update_query)
                 
-                insert_query2="update vff.united_armor_all_productstbl set default_color_id='"+str(color_id)+"' where productid='"+str(product_id)+"'"
-                print(f'insert Color query::{insert_query2}')
-                cursor.execute(insert_query2)
                 
                 connection.commit()
-                print(f" New Color Added To  {product_name} Inserted Successfully.")
+                print(f"  Color Updates For {product_name} Successfully.")
                 
         except Exception as e:
-            print(f"Error Inserting Products Table: {e}")
+            print(f"Error Updating Products Colors Table: {e}")
             
-        for uploaded_image in product_images:
-            # Process and store each image in product_images table against productid returning from all_products table.
-            image_url = upload_images2(uploaded_image)
-            try:
-                with connection.cursor() as cursor:
-                    insert_query="insert into vff.united_armor_product_imagestbl(image_url,product_id,color_id) values ('"+str(image_url)+"','"+str(product_id)+"','"+str(color_id)+"')"
-                    cursor.execute(insert_query)
-                    connection.commit()
-                    print(f" New Product Image {product_name} Inserted Successfully.")
+        # for uploaded_image in product_images:
+        #     # Process and store each image in product_images table against productid returning from all_products table.
+        #     image_url = upload_images2(uploaded_image)
+        #     try:
+        #         with connection.cursor() as cursor:
+        #             insert_query="update vff.united_armor_product_imagestbl SET image_url='"+str(image_url)+"' WHERE product_id='"+str(product_id)+"' and colorsid='"+str(colorsid)+"'"
+        #             cursor.execute(insert_query)
+        #             connection.commit()
+        #             print(f"  Product Image {product_name} Updated Successfully.")
                 
-            except Exception as e:
-                print(f"Error Inserting Products Images Table: {e}")
+        #     except Exception as e:
+        #         print(f"Error Updating Products Images Table: {e}")
             
-        #Sizes Selected
-        for size_id in selected_size_ids_str:
+        # #Sizes Selected
+        # for size_id in selected_size_ids_str:
             
-            try:
-                with connection.cursor() as cursor:
-                    insert_query="insert into vff.united_armor_sizes_available(sizeid,product_id) values ('"+str(size_id)+"','"+str(product_id)+"')"
-                    cursor.execute(insert_query)
+        #     try:
+        #         with connection.cursor() as cursor:
+        #             update_query="update vff.united_armor_sizes_available SET sizeid = '"+str(size_id)+"' WHERE product_id = '"+str(product_id)+"' and size_avail_id='"+str(size_avail_id)+"'"
+        #             cursor.execute(update_query)
                     
-                    connection.commit()
-                    print(f" New Product Sizes {product_name} Inserted Successfully.")
+        #             connection.commit()
+        #             print(f" New Product Sizes {product_name} Inserted Successfully.")
                 
-            except Exception as e:
-                print(f"Error Inserting Products Size Table: {e}")
+        #     except Exception as e:
+        #         print(f"Error Inserting Products Size Table: {e}")
         
         return redirect(reverse('clothing_dashboard_app:all_products_details', kwargs={'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id}))
             
