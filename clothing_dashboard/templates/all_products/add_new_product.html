@@ -20,6 +20,11 @@
                 {% csrf_token %}
                 <div class="pl-lg-4 m-4">
                     <!-- To Select All Images and Default Image  -->
+                    
+                    <input type="hidden" name="main_cat_id" value="{{main_cat_id}}">
+                    <input type="hidden" name="cat_id" value="{{cat_id}}">
+                    <input type="hidden" name="sub_cat_id" value="{{sub_cat_id}}">
+                    
                     <div class="row mb-4">
                         <div class="col-lg-3">
                             <div class="form-group">
@@ -148,8 +153,13 @@
                         <!-- Product Category Table -->
                         <div class="col-lg-4">
                             <div class="form-group">
+                                <!-- Hidden input for selected product category collection name -->
+                                <input type="hidden" id="selected-product-category-name" name="selected_product_category_name">
+
+                                <!-- Hidden input for selected product category collection ID -->
+                                <input type="hidden" id="selected-product-category-id" name="selected_product_category_id">
                                 <label for="productCategory">Product Category</label>
-                                <select class="form-control" id="productCategory" required>
+                                <select class="form-control" id="productCategory"  onchange="updateSelectedProductCategory()" required>
                                     <option value="" disabled>Select Product Category</option>
                                     {% for p_category in p_category_data %}
                                     <option value="{{ p_category.p_cat_id }}">{{ p_category.p_cat_name }}</option>
@@ -162,8 +172,13 @@
                          <!-- Fitting -->
                          <div class="col-lg-4">
                             <div class="form-group">
+                                <!-- Hidden input for selected product fitting name -->
+                                <input type="hidden" id="selected-product-fitting-name" name="selected_product_fitting_name">
+
+                                <!-- Hidden input for selected product fitting ID -->
+                                <input type="hidden" id="selected-product-fitting-id" name="selected_product_fitting_id">
                                 <label for="fittingCategory">Fitting</label>
-                                <select class="form-control" id="fittingCategory" required>
+                                <select class="form-control" id="fittingCategory"  onchange="updateSelectedProductFitting()" required>
                                     <option value="" disabled>Select Product Fitting</option>
                                     {% for p_fitting in p_fitting_data %}
                                     <option value="{{ p_fitting.p_fitting_id }}">{{ p_fitting.p_fitting_name }}</option>
@@ -193,14 +208,24 @@
                                 <textarea id="input-fit-care" class="form-control form-control-alternative" placeholder="Enter Fit and Care Information" name="fit_care" rows="3" required></textarea>
                             </div>
                         </div>
+
+                        <!-- What is Does ? -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-what-it-does">Short Description</label>
+                                <textarea id="input-what-it-does" class="form-control form-control-alternative" placeholder="Enter Short Description" name="what_it_does" rows="3" required></textarea>
+                            </div>
+                        </div>
         
-                        <!-- Return Policy -->
+                        <!-- Return Policy-->
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label" for="input-return-policy">Return Policy</label>
                                 <textarea id="input-return-policy" class="form-control form-control-alternative" placeholder="Enter Return Policy" name="return_policy" rows="3" required></textarea>
                             </div>
                         </div>
+
+                        
                     </div>
         
                     <!-- Existing form fields... -->
@@ -230,6 +255,25 @@
                 document.getElementById('selected-product-type-name').value = selectedOption.text;
                 document.getElementById('selected-product-type-id').value = selectedOption.value;
             }
+            
+            function updateSelectedProductCategory() {
+                var selectElement = document.getElementById('productCategory');
+                var selectedOption = selectElement.options[selectElement.selectedIndex];
+        
+                // Update hidden input fields
+                document.getElementById('selected-product-category-name').value = selectedOption.text;
+                document.getElementById('selected-product-category-id').value = selectedOption.value;
+            }
+
+            function updateSelectedProductFitting() {
+                var selectElement = document.getElementById('productCategory');
+                var selectedOption = selectElement.options[selectElement.selectedIndex];
+        
+                // Update hidden input fields
+                document.getElementById('selected-product-fitting-name').value = selectedOption.text;
+                document.getElementById('selected-product-fitting-id').value = selectedOption.value;
+            }
+
             function updateSelectedSizes() {
                 var selectedSizeIds = [];
                 var selectedSizeValues = [];

@@ -249,15 +249,21 @@ def add_new_product(request):
     
     if request.method == 'POST':
         # Accessing other form fields
+        main_cat_id = request.POST.get('main_cat_id')
+        cat_id = request.POST.get('cat_id')
+        sub_cat_id = request.POST.get('sub_cat_id')
         product_name = request.POST.get('product_name')
         product_type = request.POST.get('product_type')
-        sizes = request.POST.getlist('sizes[]')
+        # sizes = request.POST.getlist('sizes[]')
         product_description = request.POST.get('product_description')
         fit_care = request.POST.get('fit_care')
         return_policy = request.POST.get('return_policy')
-
+        what_it_does = request.POST.get('what_it_does')
+        
         # Accessing uploaded images
         product_images = request.FILES.getlist('product_images[]')
+        #Default Image upload
+        default_image = request.FILES.get('default_image', None)
         
         # Accessing other numeric fields
         price = request.POST.get('productPrice')
@@ -266,22 +272,70 @@ def add_new_product(request):
 
         # Accessing color, category, and fitting
         color = request.POST.get('colors[]')
-        product_category = request.POST.get('productCategory')
-        fitting = request.POST.get('fittingCategory')
+        # product_category = request.POST.get('productCategory')
+        # fitting = request.POST.get('fittingCategory')
         selected_product_type_name = request.POST.get('selected_product_type_name')
         selected_product_type_id = request.POST.get('selected_product_type_id')
+        
+        selected_product_category_name = request.POST.get('selected_product_category_name')
+        selected_product_category_id = request.POST.get('selected_product_category_id')
+        
+        selected_product_fitting_name = request.POST.get('selected_product_fitting_name')
+        selected_product_fitting_id = request.POST.get('selected_product_fitting_id')
+        
         selected_size_ids = request.POST.get('selected_size_ids')
         selected_size_values = request.POST.get('selected_size_values')
-        print(f'selected_product_type_name::{selected_product_type_name}')
-        print(f'selected_size_values::{selected_size_values}')
-        print(f'selected_product_type_id::{selected_product_type_id}')
+        
+        
         # print(f'product_images::{product_images}')
+        if default_image:
+            image_default_url = upload_images2(default_image)
+        
+        
+        #Product Table
+        try:
+            with connection.cursor() as cursor:
+                insert_query="insert into vff.united_armor_all_productstbl(product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,main_cat_id,cat_id,sub_catid,product_collection_id,product_type_id,price,offer_price,default_images,default_size,default_color_id,return_policy) "
+                "values ('"+str(product_name)+"','"+str(selected_product_fitting_name)+"','"+str(selected_product_fitting_id)+"','"+str(checkout_quantity)+"','"+str(what_it_does)+"','"+str(product_description)+"','"+str(fit_care)+"','"+str(main_cat_id)+"','"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(selected_product_category_id)+"','"+str(selected_product_type_id)+"','"+str(price)+"','"+str(offer_price)+"','"+str(image_default_url)+"','"+str(selected_size_values[0])+"','"+str(color[0])+"','"+str(return_policy)+"') returning productid"
+                cursor.execute(insert_query)
+                product_id = cursor.fetchone()[0]
+                connection.commit()
+                print(f" New Product  {product_name} Inserted Successfully.")
+                
+        except Exception as e:
+            print(f"Error Inserting Products Table: {e}")
         
         for uploaded_image in product_images:
-            # Process and store each image
+            # Process and store each image in product_images table against productid returning from all_products table.
             image_url = upload_images2(uploaded_image)
-            print(f"image_url::{image_url}")
+            try:
+                with connection.cursor() as cursor:
+                    insert_query="insert into vff.united_armor_product_imagestbl(image_url,product_id,color_id) values ('"+str(image_url)+"','"+str(product_id)+"')"
+                    cursor.execute(insert_query)
+                    product_id = cursor.fetchone()[0]
+                    connection.commit()
+                    print(f" New Product Image {product_name} Inserted Successfully.")
+                
+            except Exception as e:
+                print(f"Error Inserting Products Images Table: {e}")
+            
+        #Sizes Selected
+        for sizeid in selected_size_ids:
+            
+            try:
+                with connection.cursor() as cursor:
+                    insert_query="insert into vff.united_armor_sizes_available(sizeid,product_id) values ('"+str(sizeid)+"','"+str(product_id)+"')"
+                    cursor.execute(insert_query)
+                    
+                    connection.commit()
+                    print(f" New Product Sizes {product_name} Inserted Successfully.")
+                
+            except Exception as e:
+                print(f"Error Inserting Products Size Table: {e}")
         
+        return redirect(reverse('clothing_dashboard_app:all_products', kwargs={'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id}))
+            
+            
     
     context = {'sizes_data':sizes_data,'p_type_data':p_type_data,'p_category_data':p_category_data,'p_fitting_data':p_fitting_data,'error_msg':error_msg}
     return render(request,"all_products/add_new_product.html",context)
