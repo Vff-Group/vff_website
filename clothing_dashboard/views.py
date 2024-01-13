@@ -331,7 +331,7 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
             except Exception as e:
                 print(f"Error Inserting Products Size Table: {e}")
         
-        return redirect(reverse('clothing_dashboard_app:all_products', kwargs={'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id}))
+        return redirect(reverse('clothing_dashboard_app:add_new_product', kwargs={'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id}))
             
             
     
