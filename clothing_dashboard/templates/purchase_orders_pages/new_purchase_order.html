@@ -180,7 +180,7 @@
 </main>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
+{% comment %} <script>
     document.addEventListener('DOMContentLoaded', function () {
         var tableBody = document.getElementById('fob-costs-table').getElementsByTagName('tbody')[0];
         var addRowButton = document.getElementById('add-row-btn');
@@ -210,9 +210,49 @@
             deleteCell.appendChild(deleteButton);
         });
     });
+</script> {% endcomment %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var tableBody = document.getElementById('fob-costs-table').getElementsByTagName('tbody')[0];
+        var addRowButton = document.getElementById('add-row-btn');
+    
+        addRowButton.addEventListener('click', function () {
+            var newRow = tableBody.insertRow(tableBody.rows.length);
+            var cellIndex = 0;
+    
+            // Add cells with input fields
+            for (cellIndex; cellIndex < 8; cellIndex++) {
+                var cell = newRow.insertCell(cellIndex);
+                var input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'form-control';
+                cell.appendChild(input);
+            }
+    
+            // Add delete button
+            var deleteCell = newRow.insertCell(cellIndex);
+            var deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.className = 'btn btn-danger btn-sm';
+            deleteButton.textContent = 'Delete';
+    
+            // Pass the newRow to the deleteRow function
+            deleteButton.addEventListener('click', function () {
+                deleteRow(newRow);
+            });
+    
+            deleteCell.appendChild(deleteButton);
+        });
+    
+        // Function to delete the specified row
+        function deleteRow(row) {
+            var rowIndex = row.rowIndex;
+            tableBody.deleteRow(rowIndex);
+        }
+    });
+    
 </script>
-
-
 
 <script>
     $(document).ready(function () {
