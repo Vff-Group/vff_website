@@ -16,7 +16,7 @@
           </div>
 
           <div class="card-body px-0 pt-0 pb-2">
-            <form method="post" enctype="multipart/form-data">
+            <form method="post" enctype="multipart/form-data" id="new-product-form">
                 {% csrf_token %}
                 <div class="pl-lg-4 m-4">
                     <!-- Existing form fields... -->
@@ -140,31 +140,7 @@
 
                     </div>
 
-                     <!-- <div class="row mb-4">
-                        <label class="form-control-label">Colors Available</label>
-                    
-                        <div class="col-lg-12">
-                            <div id="color-input-container" class="d-flex flex-wrap align-items-center">
-                                Initial color input field
-                                <div class="input-group mb-3 me-3">
-                                    <input type="color" class="form-control form-control-sm rounded" name="colors[]" required>
-                                    <button type="button" class="btn btn-outline-danger rounded-start" onclick="removeColorInput(this)">
-                                        Use the Flaticon or other delete icon here 
-                                        <i class='fas fa-trash-alt delete-icon'></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-success mt-2" onclick="addColorInput()">Add Color</button>
-                        </div>
-            
-                         
-                        
-                     </div> -->
-
-                    
-
-
-        
+                   
                     <!-- Description, Fit and Care, and Return Policy Textareas -->
                     <div class="row mb-4">
                         <!-- Product Description -->
@@ -410,4 +386,62 @@ function showToast(message, bodyContent) {
             }
         </script>
         
+
+        <script>
+            $(document).ready(function () {
+              $('#your-form-id').validate({
+                // Define your validation rules and messages here...
+                // ...
+          
+                submitHandler: function (form) {
+                  event.preventDefault();
+          
+                  // Manually create a JSON object with form data
+                  var formData = {
+                    // Add other form fields to the JSON object
+                    product_name: $('#input-product-name').val(),
+                    product_type: $('#input-product-type').val(),
+                    sizes: $('input[name="sizes[]"]:checked').map(function () {
+                      return {
+                        id: this.id,
+                        name: this.name,
+                        value: this.value
+                      };
+                    }).get(),
+                    product_price: $('#productPrice').val(),
+                    product_offer_price: $('#productOfferPrice').val(),
+                    product_checkout_quantity: $('#productCheckOutQuantity').val(),
+                    product_color: $('#input-product-color').val(),
+                    product_category: $('#productCategory').val(),
+                    fitting_category: $('#fittingCategory').val(),
+                    product_description: $('#input-product-description').val(),
+                    fit_care: $('#input-fit-care').val(),
+                    return_policy: $('#input-return-policy').val(),
+                    // Add other fields as needed
+                  };
+          
+                  console.log('formData:', formData);
+                  return;
+                  // Perform an AJAX POST request
+                  $.ajax({
+                    type: 'POST',
+                    url: '/your_backend_endpoint/',  // Replace with your actual backend endpoint URL
+                    data: JSON.stringify(formData),
+                    contentType: 'application/json',
+                    success: function (data) {
+                      console.log('Success:', data);
+          
+                      // Handle success, for example, redirect to another page
+                      window.location.replace('/success-page');
+                    },
+                    error: function (error) {
+                      console.error('Error:', error);
+                    }
+                  });
+                }
+              });
+            });
+          </script>
+          
+          
     {% endblock  %}        
