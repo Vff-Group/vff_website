@@ -293,7 +293,7 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
         #Product Table
         try:
             with connection.cursor() as cursor:
-                insert_query="insert into vff.united_armor_all_productstbl(product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,main_cat_id,cat_id,sub_catid,product_collection_id,product_type_id,price,offer_price,default_images,default_size,default_color_id,return_policy) VALUES ('"+str(product_name)+"','"+str(selected_product_fitting_name)+"','"+str(selected_product_fitting_id)+"','"+str(checkout_quantity)+"','"+str(what_it_does)+"','"+str(product_description)+"','"+str(fit_care)+"','"+str(main_cat_id)+"','"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(selected_product_category_id)+"','"+str(selected_product_type_id)+"','"+str(price)+"','"+str(offer_price)+"','"+str(image_default_url)+"','"+str(selected_size_values[0])+"','"+str(color[0])+"','"+str(return_policy)+"') RETURNING productid"
+                insert_query="insert into vff.united_armor_all_productstbl(product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,main_cat_id,cat_id,sub_catid,product_collection_id,product_type_id,price,offer_price,default_images,default_size,default_color_id,return_policy) VALUES ('"+str(product_name)+"','"+str(selected_product_fitting_name)+"','"+str(selected_product_fitting_id)+"','"+str(checkout_quantity)+"','"+str(what_it_does)+"','"+str(product_description)+"','"+str(fit_care)+"','"+str(main_cat_id)+"','"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(selected_product_category_id)+"','"+str(selected_product_type_id)+"','"+str(price)+"','"+str(offer_price)+"','"+str(image_default_url)+"','"+str(selected_size_values[0])+"','"+str(color[1])+"','"+str(return_policy)+"') RETURNING productid"
                 print(f'insert query::{insert_query}')
                 cursor.execute(insert_query)
                 product_id = cursor.fetchone()[0]
@@ -539,7 +539,7 @@ def upload_images2(uploaded_image):
     file_extension = mimetypes.guess_extension(uploaded_image.content_type)
 
     # Construct the custom image name with the unique identifier and original extension
-    custom_image_name = f'uam_{unique_identifier}{file_extension}'
+    custom_image_name = f'united_armor_{unique_identifier}{file_extension}'
     # Assuming you have a MEDIA_ROOT where the images will be stored
     file_path = os.path.join(settings.MEDIA_ROOT, custom_image_name)
 
@@ -549,14 +549,12 @@ def upload_images2(uploaded_image):
 
         # Check if the image size exceeds the limit
         MAX_IMAGE_PIXELS = 2000000000000000 
-        if img.size[0] * img.size[1] > MAX_IMAGE_PIXELS:
-            raise ValueError("Image size exceeds the limit")
+        # if img.size[0] * img.size[1] > MAX_IMAGE_PIXELS:
+        #     raise ValueError("Image size exceeds the limit")
 
-        # Resize the image
-        img_resized = img.resize((300, 300))
-        
-        # Save the resized image
-        img_resized.save(file_path)
+         # Save the original image without resizing
+        img.save(file_path)
+
         
         # Assuming you have a MEDIA_URL configured
         image_url = os.path.join(settings.MEDIA_URL, custom_image_name)
