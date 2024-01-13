@@ -372,6 +372,9 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
 
 def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id):
     error_msg=''
+    #All Details of Product need to join columns
+    #select product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,main_cat_id,cat_id,sub_catid,product_collection_id,product_type_id,price,offer_price,default_images,return_policy from vff.united_armor_product_typetbl,vff.united_armor_product_categorytbl,vff.united_armor_all_productstbl where productid='7'
+    
     #All Sizes
     query_sizes ="select sizesid,size_value from vff.united_armor_product_sizestbl"
     sizes_result = execute_raw_query(query_sizes)
@@ -550,7 +553,7 @@ def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id):
             
     
     context = {'sizes_data':sizes_data,'p_type_data':p_type_data,'p_category_data':p_category_data,'p_fitting_data':p_fitting_data,'error_msg':error_msg,'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id}
-    return render(request,"all_products/add_new_product.html",context)
+    return render(request,"all_products/update_product_details.html",context)
 
 
 

@@ -97,11 +97,17 @@
                     <td class="align-middle">
                         <div class="row">
                             <div class="col">
-                                {% comment %} <a href="{% url 'dashboard_app:update_customer' row.usrid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user"> {% endcomment %}
-                                <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                <a href="{% url 'clothing_dashboard_app:update_new_product' main_cat_id cat_id sub_cat_id row.productid%}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit "> 
+                                
                                     Edit
                                   </a>
                             </div>
+                            <div class="col">
+                              <a href="{% url 'clothing_dashboard_app:single_product_colors' row.productid%}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user"> 
+                              
+                                  Add Colors
+                                </a>
+                          </div>
                             <!-- <div class="col">
                                 <a href="" class="text-danger font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.usrid}}">
                                     Delete
