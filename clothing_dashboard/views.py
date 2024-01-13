@@ -341,7 +341,7 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
             image_url = upload_images2(uploaded_image)
             try:
                 with connection.cursor() as cursor:
-                    insert_query="insert into vff.united_armor_product_imagestbl(image_url,product_id,color_id) values ('"+str(image_url)+"','"+str(product_id)+"','"+str(color)+"')"
+                    insert_query="insert into vff.united_armor_product_imagestbl(image_url,product_id,color_id) values ('"+str(image_url)+"','"+str(product_id)+"','"+str(color_id)+"')"
                     cursor.execute(insert_query)
                     connection.commit()
                     print(f" New Product Image {product_name} Inserted Successfully.")
@@ -363,7 +363,7 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
             except Exception as e:
                 print(f"Error Inserting Products Size Table: {e}")
         
-        return redirect(reverse('clothing_dashboard_app:add_new_product', kwargs={'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id}))
+        return redirect(reverse('clothing_dashboard_app:all_products_details', kwargs={'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id}))
             
             
     
