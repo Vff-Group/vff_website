@@ -697,7 +697,7 @@ def view_product_images(request,product_name,color_name,product_id):
     else:
         error_msg = 'Something Went Wrong'
     context={'color_name':color_name,'product_id':product_id,'product_name':product_name,'all_images_data':all_images_data,'error_msg':error_msg}
-    return render('all_products/view_color_images.html',context)
+    return render(request,'all_products/view_color_images.html',context)
 
 def add_new_color_and_image_to_product(request,main_cat_id,cat_id,sub_cat_id,product_id,product_name):
     error_msg=''
