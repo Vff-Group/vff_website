@@ -183,6 +183,8 @@
         <!-- Include Dropzone.js library -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/dropzone.css">
         <script src="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/dropzone.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 
         <script>
             
@@ -389,7 +391,7 @@ function showToast(message, bodyContent) {
 
         <script>
             $(document).ready(function () {
-              $('#your-form-id').validate({
+              $('#new-product-form').validate({
                 // Define your validation rules and messages here...
                 // ...
           
