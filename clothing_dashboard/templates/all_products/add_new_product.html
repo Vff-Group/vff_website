@@ -20,142 +20,215 @@
                 {% csrf_token %}
                 <div class="pl-lg-4 m-4">
                     <!-- Existing form fields... -->
-                    <!-- Row 1 -->
-      <div class="form-row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-images">Product Images</label>
+                            <div id="image-dropzone" class="dropzone">
+                                <input type="file" id="input-images" class="form-control form-control-alternative" name="product_images[]" multiple accept="image/*" style="display:none;">
+                                <div class="dz-message needsclick" onclick="document.getElementById('input-images').click()">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <h5>Click to upload product images</h5>
+                                </div>
+                            </div>
+                            <!-- Preview container for images -->
+                            <div id="image-preview-container" class="mt-3"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- New fields for multiple images, product name, description, fit and care, and return policy -->
+                    <div class="row mb-4">
+                        <!-- Multiple Images Upload -->
+                        <!-- <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-images">Product Images</label>
+                                <input type="file" id="input-images" class="form-control form-control-alternative" name="product_images[]" multiple accept="image/*">
+                                Preview container for images
+                                <div id="image-preview-container" class="mt-3"></div>
+                            </div>
+                        </div> -->
+        
+                        <!-- Product Name -->
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-product-name">Product Name</label>
+                                <input type="text" id="input-product-name" class="form-control form-control-alternative" placeholder="Enter Product Name" name="product_name" autocomplete="off" required>
+                            </div>
+                        </div>
 
-        <!-- Item Name, Brand, Category -->
-        <div class="form-group col-md-6">
-          <label for="item_name">Item Name:</label>
-          <input type="text" class="form-control" id="item_name" name="item_name" required>
-        </div>
+                         <!-- Dropdown for Product Type -->
+                         <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-product-type">Product Type</label>
+                                <select id="input-product-type" class="form-control form-control-alternative" name="product_type" required>
+                                    <option value="">Select Product Type</option>
+                                    <!-- Add options dynamically based on your product types -->
+                                    <option value="type1">Short Sleeves</option>
+                                    <option value="type2">Regular</option>
+                                    <option value="type2">Shoes</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Checkboxes for Sizes -->
+                        <div class="col-lg-4">
+                            <label class="form-control-label">Sizes Available</label>
+                            <div class="row">
+                                <!-- Add checkboxes dynamically based on your available sizes -->
+                        <div class="col-lg-1">
+                           <div class="form-check">
+                               <input class="form-check-input" type="checkbox" id="sizeCheckbox1" name="sizes[]" value="S">
+                               <label class="form-check-label" for="sizeCheckbox1">S</label>
+                           </div>
+                       </div>
+                       <div class="col-lg-1">
+                           <div class="form-check">
+                               <input class="form-check-input" type="checkbox" id="sizeCheckbox2" name="sizes[]" value="M">
+                               <label class="form-check-label" for="sizeCheckbox2">M</label>
+                           </div>
+                       </div>
 
-        <div class="form-group col-md-6">
-          <label for="brand">Brand:</label>
-          <input type="text" class="form-control" id="brand" name="brand">
-        </div>
+                       <div class="col-lg-1">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="sizeCheckbox2" name="sizes[]" value="L">
+                            <label class="form-check-label" for="sizeCheckbox2">L</label>
+                        </div>
+                    </div>
 
-        <div class="form-group col-md-6">
-          <label for="category">Category:</label>
-          <select class="form-control" id="category" name="category" required>
-            <option value="shirt">Shirt</option>
-            <option value="pants">Pants</option>
-            <option value="shoes">Shoes</option>
-            <!-- Add more categories as needed -->
-          </select>
-        </div>
+                    <div class="col-lg-1">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="sizeCheckbox2" name="sizes[]" value="XL">
+                            <label class="form-check-label" for="sizeCheckbox2">XL</label>
+                        </div>
+                    </div>
 
-        <!-- Quantity, Size, Additional Sizes -->
-        <div class="form-group col-md-6">
-          <label for="quantity">Quantity:</label>
-          <input type="number" class="form-control" id="quantity" name="quantity" min="1" required>
-        </div>
+                    <div class="col-lg-1">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="sizeCheckbox2" name="sizes[]" value="XXL">
+                            <label class="form-check-label" for="sizeCheckbox2">XXL</label>
+                        </div>
+                    </div>
+                       <!-- Add more checkboxes for other sizes as needed -->
+                            </div>
+                        </div>
+                     
+                    </div>
 
-        <div class="form-group col-md-6">
-          <label for="size">Size:</label>
-          <input type="text" class="form-control" id="size" name="size">
-        </div>
+                    <div class="row mb-2">
+                         <!-- Price -->
+                         <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="productPrice">Price</label>
+                                <input type="number" class="form-control" id="productPrice" placeholder="Enter product price" required>
+                            </div>
+                         </div>
 
-        <div class="form-group col-md-6">
-          <label for="additional_sizes">Additional Sizes (comma-separated):</label>
-          <input type="text" class="form-control" id="additional_sizes" name="additional_sizes">
-        </div>
+                          <!-- Offer Price -->
+                          <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="productOfferPrice">Offer Price %</label>
+                                <input type="number" class="form-control" id="productOfferPrice" placeholder="Enter product offer price" required>
+                            </div>
+                         </div>
+                          
 
-        <!-- Color, Material, Price -->
-        <div class="form-group col-md-6">
-          <label for="color">Color:</label>
-          <input type="text" class="form-control" id="color" name="color">
-        </div>
+                             <!-- Max Checkout Quantity -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="productCheckOutQuantity">Max Checkout Quantity</label>
+                                    <input type="number" class="form-control" id="productCheckOutQuantity" placeholder="Enter Max Checkout Quantity" required>
+                                </div>
+                            </div>
+                    </div>
 
-        <div class="form-group col-md-6">
-          <label for="material">Material:</label>
-          <input type="text" class="form-control" id="material" name="material">
-        </div>
+                    <div class="row mb-4">
+                        <div class="col-lg-4">
+                            <label class="form-control-label" for="input-product-color">Color</label>
+                        <input type="color" id="input-product-color" class="form-control form-control-sm rounded" name="colors[]" required>
+                    </div>
 
-        <div class="form-group col-md-6">
-          <label for="price">Price:</label>
-          <input type="number" class="form-control" id="price" name="price" step="0.01" required>
-        </div>
+                        <!-- Product Category Table -->
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="mainCategory">Product Category</label>
+                                <select class="form-control" id="mainCategory" required>
+                                    <option value="newArrival">Clothing</option>
+                                    <option value="mens">Accessories</option>
+                                    <option value="womens">Shoes</option>
+                                    
+                                </select>
+                            </div>
+                        </div>
 
-        <!-- Discount, Purchase Date, Description -->
-        <div class="form-group col-md-6">
-          <label for="discount">Discount (%):</label>
-          <input type="number" class="form-control" id="discount" name="discount" min="0" max="100">
-        </div>
+                         <!-- Fitting -->
+                         <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="mainCategory">Fitting</label>
+                                <select class="form-control" id="mainCategory" required>
+                                    <option value="newArrival">Loose</option>
+                                    <option value="mens">Regular</option>
+                                    <option value="womens">Fitted</option>
+                                    
+                                </select>
+                            </div>
+                         </div>
 
-        <div class="form-group col-md-6">
-          <label for="purchase_date">Purchase Date:</label>
-          <input type="date" class="form-control" id="purchase_date" name="purchase_date" required>
-        </div>
+                    </div>
 
-        <div class="form-group col-md-12">
-          <label for="description">Description:</label>
-          <textarea class="form-control" id="description" name="description" rows="4"></textarea>
-        </div>
+                     <!-- <div class="row mb-4">
+                        <label class="form-control-label">Colors Available</label>
+                    
+                        <div class="col-lg-12">
+                            <div id="color-input-container" class="d-flex flex-wrap align-items-center">
+                                Initial color input field
+                                <div class="input-group mb-3 me-3">
+                                    <input type="color" class="form-control form-control-sm rounded" name="colors[]" required>
+                                    <button type="button" class="btn btn-outline-danger rounded-start" onclick="removeColorInput(this)">
+                                        Use the Flaticon or other delete icon here 
+                                        <i class='fas fa-trash-alt delete-icon'></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-success mt-2" onclick="addColorInput()">Add Color</button>
+                        </div>
+            
+                         
+                        
+                     </div> -->
 
-        <!-- Images, Supplier, Seasonal Availability -->
-        <div class="form-group col-md-6">
-          <label for="image">Images (upload multiple):</label>
-          <input type="file" class="form-control" id="image" name="image" accept="image/*" multiple>
-        </div>
+                    
 
-        <div class="form-group col-md-6">
-          <label for="supplier">Supplier:</label>
-          <input type="text" class="form-control" id="supplier" name="supplier">
-        </div>
 
-        <div class="form-group col-md-6">
-          <label for="seasonal_availability">Seasonal Availability:</label>
-          <select class="form-control" id="seasonal_availability" name="seasonal_availability">
-            <option value="spring">Spring</option>
-            <option value="summer">Summer</option>
-            <option value="autumn">Autumn</option>
-            <option value="winter">Winter</option>
-            <option value="all_seasons">All Seasons</option>
-          </select>
-        </div>
-
-        <!-- On Sale, Restock Date -->
-        <div class="form-group col-md-6">
-          <label for="on_sale">On Sale:</label>
-          <input type="checkbox" id="on_sale" name="on_sale">
-        </div>
-
-        <div class="form-group col-md-6">
-          <label for="restock_date">Restock Date:</label>
-          <input type="date" class="form-control" id="restock_date" name="restock_date">
-        </div>
-      </div>
-
-       <!-- Variants Section -->
-    <fieldset>
-        <legend>Variants</legend>
-        <div id="variants-container">
-          <!-- Variant 1 -->
-          <div class="variant">
-            <label for="variant_size_1">Size:</label>
-            <input type="text" id="variant_size_1" name="variant_size_1">
-  
-            <label for="variant_color_1">Color:</label>
-            <input type="text" id="variant_color_1" name="variant_color_1">
-  
-            <label for="variant_image_1">Image (upload multiple):</label>
-            <input type="file" id="variant_image_1" name="variant_image_1" accept="image/*" multiple>
-          </div>
-  
-          <!-- Add more variants as needed -->
-        </div>
-  
-        <button type="button" onclick="addVariant()">Add Variant</button>
-      </fieldset>
-  
-
-      <!-- Add other sections in a similar way -->
-
-      <!-- Submit Button -->
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary">Add to Inventory</button>
-      </div>
-
+        
+                    <!-- Description, Fit and Care, and Return Policy Textareas -->
+                    <div class="row mb-4">
+                        <!-- Product Description -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-product-description">Product Description</label>
+                                <textarea id="input-product-description" class="form-control form-control-alternative" placeholder="Enter Product Description" name="product_description" rows="3" required></textarea>
+                            </div>
+                        </div>
+        
+                        <!-- Fit and Care Information -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-fit-care">Fit and Care Information</label>
+                                <textarea id="input-fit-care" class="form-control form-control-alternative" placeholder="Enter Fit and Care Information" name="fit_care" rows="3" required></textarea>
+                            </div>
+                        </div>
+        
+                        <!-- Return Policy -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-return-policy">Return Policy</label>
+                                <textarea id="input-return-policy" class="form-control form-control-alternative" placeholder="Enter Return Policy" name="return_policy" rows="3" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- Existing form fields... -->
+        
+                    <button type="submit" class="btn btn-primary">Add New Product</button>
                 </div>
             </form>
         </div>
@@ -165,30 +238,6 @@
         <!-- Include Dropzone.js library -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/dropzone.css">
         <script src="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/dropzone.js"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-
-        <script>
-            function addVariant() {
-              const variantsContainer = document.getElementById('variants-container');
-              const variantCount = variantsContainer.getElementsByClassName('variant').length + 1;
-        
-              const newVariantDiv = document.createElement('div');
-              newVariantDiv.className = 'variant';
-        
-              newVariantDiv.innerHTML = `
-                <label for="variant_size_${variantCount}">Size:</label>
-                <input type="text" id="variant_size_${variantCount}" name="variant_size_${variantCount}">
-        
-                <label for="variant_color_${variantCount}">Color:</label>
-                <input type="text" id="variant_color_${variantCount}" name="variant_color_${variantCount}">
-        
-                <label for="variant_image_${variantCount}">Image (upload multiple):</label>
-                <input type="file" id="variant_image_${variantCount}" name="variant_image_${variantCount}" accept="image/*" multiple>
-              `;
-        
-              variantsContainer.appendChild(newVariantDiv);
-            }
-          </script>
 
         <script>
             document.getElementById('input-images').addEventListener('change', function () {
