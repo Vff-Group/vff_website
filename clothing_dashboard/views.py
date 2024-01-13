@@ -303,7 +303,7 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
         #Product Table
         try:
             with connection.cursor() as cursor:
-                insert_query="insert into vff.united_armor_all_productstbl(product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,main_cat_id,cat_id,sub_catid,product_collection_id,product_type_id,price,offer_price,default_images,default_size,default_color_id,return_policy) VALUES ('"+str(product_name)+"','"+str(selected_product_fitting_name)+"','"+str(selected_product_fitting_id)+"','"+str(checkout_quantity)+"','"+str(what_it_does)+"','"+str(product_description)+"','"+str(fit_care)+"','"+str(main_cat_id)+"','"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(selected_product_category_id)+"','"+str(selected_product_type_id)+"','"+str(price)+"','"+str(offer_price)+"','"+str(image_default_url)+"','"+str(selected_size_values[0])+"','"+str(color[1])+"','"+str(return_policy)+"') RETURNING productid"
+                insert_query="insert into vff.united_armor_all_productstbl(product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,main_cat_id,cat_id,sub_catid,product_collection_id,product_type_id,price,offer_price,default_images,default_size,default_color_id,return_policy) VALUES ('"+str(product_name)+"','"+str(selected_product_fitting_name)+"','"+str(selected_product_fitting_id)+"','"+str(checkout_quantity)+"','"+str(what_it_does)+"','"+str(product_description)+"','"+str(fit_care)+"','"+str(main_cat_id)+"','"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(selected_product_category_id)+"','"+str(selected_product_type_id)+"','"+str(price)+"','"+str(offer_price)+"','"+str(image_default_url)+"','"+str(selected_size_values[0])+"','"+str(color)+"','"+str(return_policy)+"') RETURNING productid"
                 print(f'insert query::{insert_query}')
                 cursor.execute(insert_query)
                 product_id = cursor.fetchone()[0]
@@ -318,7 +318,7 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
             image_url = upload_images2(uploaded_image)
             try:
                 with connection.cursor() as cursor:
-                    insert_query="insert into vff.united_armor_product_imagestbl(image_url,product_id,color_id) values ('"+str(image_url)+"','"+str(product_id)+"','"+str(color[1])+"')"
+                    insert_query="insert into vff.united_armor_product_imagestbl(image_url,product_id,color_id) values ('"+str(image_url)+"','"+str(product_id)+"','"+str(color)+"')"
                     cursor.execute(insert_query)
                     product_id = cursor.fetchone()[0]
                     connection.commit()

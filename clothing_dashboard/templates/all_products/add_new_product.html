@@ -280,7 +280,7 @@
         
                 // Iterate over all checkboxes
                 document.querySelectorAll('input[name="sizes[]"]:checked').forEach(function (checkbox) {
-                    selectedSizeIds.push(checkbox.value);
+                    selectedSizeIds.push(checkbox.id);
                     selectedSizeValues.push(document.querySelector('label[for="' + checkbox.id + '"]').textContent);
                 });
         
