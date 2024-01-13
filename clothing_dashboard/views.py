@@ -289,6 +289,16 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
         if default_image:
             image_default_url = upload_images2(default_image)
         
+        if color:
+        # Split the color code where there is a '#'
+            parts = color.split('#')
+    
+            if len(parts) == 2:
+                # Extract the color code without the '#'
+                color = parts[1]
+                print(f'Color Code without #: {color}')
+            else:
+                print('Invalid color code format')
         
         #Product Table
         try:
@@ -308,7 +318,7 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
             image_url = upload_images2(uploaded_image)
             try:
                 with connection.cursor() as cursor:
-                    insert_query="insert into vff.united_armor_product_imagestbl(image_url,product_id,color_id) values ('"+str(image_url)+"','"+str(product_id)+"')"
+                    insert_query="insert into vff.united_armor_product_imagestbl(image_url,product_id,color_id) values ('"+str(image_url)+"','"+str(product_id)+"','"+str(color[1])+"')"
                     cursor.execute(insert_query)
                     product_id = cursor.fetchone()[0]
                     connection.commit()
