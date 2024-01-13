@@ -423,8 +423,9 @@ def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id):
         for row in all_selected_sizes_result:
             
             all_selected_sizes_data.append({
-                'image_id': row[0],
-                'image_url': row[1],
+                'size_avail_id': row[0],
+                'sizeid': row[1],
+                'size_value': row[2],
             })
     else:
         error_msg = 'Something Went Wrong'
