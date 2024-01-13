@@ -255,6 +255,7 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
         # sizes = request.POST.getlist('sizes[]')
         product_description = request.POST.get('product_description')
         fit_care = request.POST.get('fit_care')
+        color_name = request.POST.get('color_name')
         return_policy = request.POST.get('return_policy')
         what_it_does = request.POST.get('what_it_does')
         
@@ -300,10 +301,12 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
             else:
                 print('Invalid color code format')
         
+        
+            
         #Product Table
         try:
             with connection.cursor() as cursor:
-                insert_query="insert into vff.united_armor_all_productstbl(product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,main_cat_id,cat_id,sub_catid,product_collection_id,product_type_id,price,offer_price,default_images,default_size,default_color_id,return_policy) VALUES ('"+str(product_name)+"','"+str(selected_product_fitting_name)+"','"+str(selected_product_fitting_id)+"','"+str(checkout_quantity)+"','"+str(what_it_does)+"','"+str(product_description)+"','"+str(fit_care)+"','"+str(main_cat_id)+"','"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(selected_product_category_id)+"','"+str(selected_product_type_id)+"','"+str(price)+"','"+str(offer_price)+"','"+str(image_default_url)+"','"+str(selected_size_values[0])+"','"+str(color)+"','"+str(return_policy)+"') RETURNING productid"
+                insert_query="insert into vff.united_armor_all_productstbl(product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,main_cat_id,cat_id,sub_catid,product_collection_id,product_type_id,price,offer_price,default_images,default_size,return_policy) VALUES ('"+str(product_name)+"','"+str(selected_product_fitting_name)+"','"+str(selected_product_fitting_id)+"','"+str(checkout_quantity)+"','"+str(what_it_does)+"','"+str(product_description)+"','"+str(fit_care)+"','"+str(main_cat_id)+"','"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(selected_product_category_id)+"','"+str(selected_product_type_id)+"','"+str(price)+"','"+str(offer_price)+"','"+str(image_default_url)+"','"+str(selected_size_values[0])+"','"+str(return_policy)+"') RETURNING productid"
                 print(f'insert query::{insert_query}')
                 cursor.execute(insert_query)
                 product_id = cursor.fetchone()[0]
@@ -313,6 +316,24 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
         except Exception as e:
             print(f"Error Inserting Products Table: {e}")
         
+        #Adding value in color table
+        try:
+            with connection.cursor() as cursor:
+                insert_query="insert into vff.united_armor_product_colorstbl(color_name,color_code,product_id) values ('"+str(color_name)+"','"+str(color)+"','"+str(product_id)+"') RETURNING colorsid"
+                print(f'insert Color query::{insert_query}')
+                cursor.execute(insert_query)
+                color_id = cursor.fetchone()[0]
+                
+                insert_query2="update vff.united_armor_all_productstbl set default_color_id='"+str(color_id)+"' where product_id='"+str(product_id)+"'"
+                print(f'insert Color query::{insert_query2}')
+                cursor.execute(insert_query2)
+                
+                connection.commit()
+                print(f" New Color Added To  {product_name} Inserted Successfully.")
+                
+        except Exception as e:
+            print(f"Error Inserting Products Table: {e}")
+            
         for uploaded_image in product_images:
             # Process and store each image in product_images table against productid returning from all_products table.
             image_url = upload_images2(uploaded_image)
