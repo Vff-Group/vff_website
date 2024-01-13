@@ -286,6 +286,7 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
         selected_size_values = request.POST.get('selected_size_values')
         
         print(f'selected_size_ids:{selected_size_ids}')
+        selected_size_ids_str = selected_size_ids.split(",")
         
         # print(f'product_images::{product_images}')
         if default_image:
@@ -349,7 +350,7 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
                 print(f"Error Inserting Products Images Table: {e}")
             
         #Sizes Selected
-        for size_id in selected_size_ids:
+        for size_id in selected_size_ids_str:
             
             try:
                 with connection.cursor() as cursor:
