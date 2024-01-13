@@ -607,7 +607,7 @@ def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id):
             
             
     
-    context = {'sizes_data':sizes_data,'p_type_data':p_type_data,'p_category_data':p_category_data,'p_fitting_data':p_fitting_data,'error_msg':error_msg,'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id,'product_data':product_data,'all_images_data':all_images_data,'all_selected_sizes_data':all_selected_sizes_data}#product_data,all_images_data,all_selected_sizes_data
+    context = {'sizes_data':sizes_data,'p_type_data':p_type_data,'p_category_data':p_category_data,'p_fitting_data':p_fitting_data,'error_msg':error_msg,'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id,'product_data':product_data,'all_images_data':all_images_data,'all_selected_sizes_data':all_selected_sizes_data,'product_id':product_id}#product_data,all_images_data,all_selected_sizes_data
     return render(request,"all_products/update_product_details.html",context)
 
 
