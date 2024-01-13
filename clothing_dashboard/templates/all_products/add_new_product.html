@@ -126,6 +126,29 @@
         </div>
       </div>
 
+       <!-- Variants Section -->
+    <fieldset>
+        <legend>Variants</legend>
+        <div id="variants-container">
+          <!-- Variant 1 -->
+          <div class="variant">
+            <label for="variant_size_1">Size:</label>
+            <input type="text" id="variant_size_1" name="variant_size_1">
+  
+            <label for="variant_color_1">Color:</label>
+            <input type="text" id="variant_color_1" name="variant_color_1">
+  
+            <label for="variant_image_1">Image (upload multiple):</label>
+            <input type="file" id="variant_image_1" name="variant_image_1" accept="image/*" multiple>
+          </div>
+  
+          <!-- Add more variants as needed -->
+        </div>
+  
+        <button type="button" onclick="addVariant()">Add Variant</button>
+      </fieldset>
+  
+
       <!-- Add other sections in a similar way -->
 
       <!-- Submit Button -->
@@ -166,7 +189,7 @@
               variantsContainer.appendChild(newVariantDiv);
             }
           </script>
-          
+
         <script>
             document.getElementById('input-images').addEventListener('change', function () {
                 previewImages(this);
