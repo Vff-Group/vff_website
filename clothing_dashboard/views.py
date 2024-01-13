@@ -285,6 +285,7 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
         selected_size_ids = request.POST.get('selected_size_ids')
         selected_size_values = request.POST.get('selected_size_values')
         
+        print(f'selected_size_ids:{selected_size_ids}')
         
         # print(f'product_images::{product_images}')
         if default_image:
@@ -341,7 +342,6 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
                 with connection.cursor() as cursor:
                     insert_query="insert into vff.united_armor_product_imagestbl(image_url,product_id,color_id) values ('"+str(image_url)+"','"+str(product_id)+"','"+str(color)+"')"
                     cursor.execute(insert_query)
-                    product_id = cursor.fetchone()[0]
                     connection.commit()
                     print(f" New Product Image {product_name} Inserted Successfully.")
                 
