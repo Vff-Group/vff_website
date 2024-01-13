@@ -485,13 +485,13 @@ def upload_images2(uploaded_image):
     file_extension = mimetypes.guess_extension(uploaded_image.content_type)
 
     # Construct the custom image name with the unique identifier and original extension
-    custom_image_name = f'united_armor_image_{unique_identifier}{file_extension}'
+    custom_image_name = f'uam_{unique_identifier}{file_extension}'
     # Assuming you have a MEDIA_ROOT where the images will be stored
     file_path = os.path.join(settings.MEDIA_ROOT, custom_image_name)
 
     # Open the uploaded image using Pillow
     img = Image.open(uploaded_image)
-    img_resized = img.resize((300, 300))
+    img_resized = img.resize((765, 850))
     # Save the resized image
     img_resized.save(file_path)
 
