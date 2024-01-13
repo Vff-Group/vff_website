@@ -111,10 +111,10 @@
                             <label class="form-control-label">Sizes Available</label>
                             <div class="row">
                                 <!-- Hidden input for selected size IDs -->
-                                <input type="hidden" id="selected-size-ids" name="selected_size_ids"  value="{{size_id[0]}}">
+                                <input type="hidden" id="selected-size-ids" name="selected_size_ids" >
 
                                 <!-- Hidden input for selected size values -->
-                                <input type="hidden" id="selected-size-values" name="selected_size_values" value="{{sizes_data.size_value[0]}}">
+                                <input type="hidden" id="selected-size-values" name="selected_size_values" >
 
                                 <!-- Add checkboxes dynamically based on your available sizes -->
                                 {% for size in sizes_data %}
