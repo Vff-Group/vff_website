@@ -372,8 +372,63 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
 
 def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id):
     error_msg=''
-    #All Details of Product need to join columns
-    #select product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,main_cat_id,cat_id,sub_catid,product_collection_id,product_type_id,price,offer_price,default_images,return_policy from vff.united_armor_product_typetbl,vff.united_armor_product_categorytbl,vff.united_armor_all_productstbl where productid='7'
+    #All Details of Product
+    query_product ="select product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,product_collection_id,united_armor_product_typetbl.product_type_id,price,offer_price,default_images,return_policy,product_type_name,product_category_name,color_name,color_code from vff.united_armor_product_colorstbl,vff.united_armor_product_typetbl,vff.united_armor_product_categorytbl,vff.united_armor_all_productstbl where united_armor_product_typetbl.product_type_id=united_armor_all_productstbl.product_type_id and united_armor_product_categorytbl.product_catid=united_armor_all_productstbl.product_collection_id and united_armor_all_productstbl.default_color_id=united_armor_product_colorstbl.colorsid  and productid='"+str(product_id)+"'"
+    product_result = execute_raw_query(query_product)
+    product_data = []    
+    if not product_result == 500:
+        for row in product_result:
+            
+            product_data.append({
+                'product_name': row[0],
+                'fitting_type': row[1],
+                'fitting_id': row[2],
+                'max_checkout_qty': row[3],
+                'short_description': row[4],
+                'description': row[5],
+                'fit_and_care': row[6],
+                'product_category_id': row[7],
+                'product_type_id': row[8],
+                'price': row[9],
+                'offer_price': row[10],
+                'default_images': row[11],
+                'return_policy': row[12],
+                'product_type_name': row[13],
+                'product_category_name': row[14],
+                'color_name': row[15],
+                'color_code': '#'+row[16],
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    #All Images Data
+    query_all_images ="select imageid,image_url from vff.united_armor_product_imagestbl where product_id='"+str(product_id)+"'"
+    all_images_result = execute_raw_query(query_all_images)
+    all_images_data = []    
+    if not all_images_result == 500:
+        for row in all_images_result:
+            
+            all_images_data.append({
+                'image_id': row[0],
+                'image_url': row[1],
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+        
+    #Selected Sizes
+    query_all_selected_sizes ="select size_avail_id,sizeid,size_value from vff.united_armor_product_sizestbl,vff.united_armor_sizes_available where united_armor_product_sizestbl.sizesid=united_armor_sizes_available.sizeid and product_id='"+str(product_id)+"'"
+    all_selected_sizes_result = execute_raw_query(query_all_selected_sizes)
+    all_selected_sizes_data = []    
+    if not all_selected_sizes_result == 500:
+        for row in all_selected_sizes_result:
+            
+            all_selected_sizes_data.append({
+                'image_id': row[0],
+                'image_url': row[1],
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
     
     #All Sizes
     query_sizes ="select sizesid,size_value from vff.united_armor_product_sizestbl"
@@ -552,7 +607,7 @@ def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id):
             
             
     
-    context = {'sizes_data':sizes_data,'p_type_data':p_type_data,'p_category_data':p_category_data,'p_fitting_data':p_fitting_data,'error_msg':error_msg,'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id}
+    context = {'sizes_data':sizes_data,'p_type_data':p_type_data,'p_category_data':p_category_data,'p_fitting_data':p_fitting_data,'error_msg':error_msg,'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id,'product_data':product_data,'all_images_data':all_images_data,'all_selected_sizes_data':all_selected_sizes_data}#product_data,all_images_data,all_selected_sizes_data
     return render(request,"all_products/update_product_details.html",context)
 
 

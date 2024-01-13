@@ -16,14 +16,12 @@
           </div>
 
           <div class="card-body px-0 pt-0 pb-2">
-            <form method="post" enctype="multipart/form-data" id="new-product-form" action="{% url 'clothing_dashboard_app:add_new_product' main_cat_id cat_id sub_cat_id %}">
+            <form method="post" enctype="multipart/form-data" id="new-product-form" action="{% url 'clothing_dashboard_app:update_new_product' main_cat_id cat_id sub_cat_id product_id %}">
                 {% csrf_token %}
                 <div class="pl-lg-4 m-4">
                     <!-- To Select All Images and Default Image  -->
                     
-                    <input type="hidden" name="main_cat_id" value="{{main_cat_id}}">
-                    <input type="hidden" name="cat_id" value="{{cat_id}}">
-                    <input type="hidden" name="sub_cat_id" value="{{sub_cat_id}}">
+                    
                     
                     <div class="row mb-4">
                         <div class="col-lg-3">
@@ -43,6 +41,14 @@
                                     <img id="default-image-preview" src="#" alt="Default Image Preview" style="width:150px; height: 150px;">
                                     <button type="button" class="btn  btn-outline-danger btn-sm mt-2" onclick="clearDefaultImage()">Clear Image</button>
                                 </div>
+
+                                 <!-- Display existing default image -->
+                                {% if product_data %}
+                                <div id="default-image-preview-container" class="mt-3">
+                                    <img id="default-image-preview" src="{{ product_data.0.default_images }}" alt="Default Image Preview" style="width:150px; height: 150px;">
+                                    <button type="button" class="btn btn-outline-danger btn-sm mt-2" onclick="clearDefaultImage()">Clear Image</button>
+                                </div>
+                            {% endif %}
                             </div>
                         </div>
                         <div class="col-lg-9">
@@ -59,6 +65,11 @@
                                 </div>
                                 <!-- Preview container for images -->
                                 <div id="image-preview-container" class="mt-3"></div>
+
+                                 <!-- Display existing product images -->
+                                {% for image in all_images_data %}
+                                <img src="{{ image.image_url }}" alt="Product Image" style="width: 150px; height: 150px; margin-right: 5px;">
+                            {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -70,7 +81,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label" for="input-product-name">Product Name</label>
-                                <input type="text" id="input-product-name" class="form-control form-control-alternative" placeholder="Enter Product Name" name="product_name" autocomplete="off" required>
+                                <input type="text" id="input-product-name" class="form-control form-control-alternative" placeholder="Enter Product Name" name="product_name" autocomplete="off" value="{% if product_data %}{{ product_data.0.product_name }}{% endif %}" required>
                             </div>
                         </div>
 
@@ -100,7 +111,8 @@
                                     <option value="" disabled>Select Product Type</option>
                                     <!-- Add options dynamically based on your product types -->
                                     {% for p_type in p_type_data %}
-                                    <option value="{{ p_type.p_type_id }}">{{ p_type.p_type_name }}</option>
+                                    <option value="{{ p_type.p_type_id }}" {% if product_data and p_type.p_type_id == product_data.0.product_type_id %}selected{% endif %}>{{ p_type.p_type_name }}</option>
+                                    {% endfor %}
                                 {% endfor %}
                                 </select>
                             </div>
@@ -117,15 +129,15 @@
                                 <input type="hidden" id="selected-size-values" name="selected_size_values" >
 
                                 <!-- Add checkboxes dynamically based on your available sizes -->
-                                {% for size in sizes_data %}
-                                <div class="col-lg-3">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="sizeCheckbox{{ size.size_id }}" name="sizes[]" value="{{ size.size_value }} " data-size-id="{{ size.size_id }}" onclick="updateSelectedSizes()">
-                                        <label class="form-check-label" for="sizeCheckbox{{ size.size_id }}">{{ size.size_value }}</label>
-                                    </div>
+                                        {% for size in sizes_data %}
+                                         <div class="col-lg-3">
+                                             <div class="form-check">
+                                                 <input class="form-check-input" type="checkbox" id="sizeCheckbox{{ size.size_id }}" name="sizes[]" value="{{ size.size_value }}" data-size-id="{{ size.size_id }}" {% if all_selected_sizes_data and size.size_id in all_selected_sizes_data %}checked{% endif %} onclick="updateSelectedSizes()">
+                                                 <label class="form-check-label" for="sizeCheckbox{{ size.size_id }}">{{ size.size_value }}</label>
+                                             </div>
+                                         </div>
+                                     {% endfor %}
                                 </div>
-                            {% endfor %}
-                        </div>
                      
                     
                     </div>
@@ -162,14 +174,15 @@
                         <div class="col-lg-2">
                             <div class="form-group">
                                 <label class="form-control-label" for="input-color-name">Color Name</label>
-                                <input type="text" id="input-color-name" class="form-control form-control-alternative" placeholder="Enter Color Name" name="color_name" autocomplete="off" required>
+                                <input type="text" id="input-color-name" class="form-control form-control-alternative" placeholder="Enter Color Name" name="color_name" autocomplete="off" required value="{% if product_data %}{{ product_data.0.color_name }}{% endif %}">
                             </div>
                         </div>
+                    
 
                         <!-- Color Code  -->
                         <div class="col-lg-2">
                             <label class="form-control-label" for="input-product-color">Color</label>
-                        <input type="color" id="input-product-color" class="form-control form-control-sm rounded" name="colors[]" required>
+                            <input type="color" id="input-product-color" class="form-control form-control-sm rounded" name="colors[]" value="{% if product_data %}{{ product_data.0.color_code }}{% endif %}" required>
                         </div>
 
                         <!-- Product Category Table -->
@@ -198,8 +211,8 @@
                                 <select class="form-control" id="productCategory"  onchange="updateSelectedProductCategory()" required>
                                     <option value="" disabled>Select Product Category</option>
                                     {% for p_category in p_category_data %}
-                                    <option value="{{ p_category.p_cat_id }}">{{ p_category.p_cat_name }}</option>
-                                {% endfor %}
+                                    <option value="{{ p_category.p_cat_id }}" {% if product_data and p_category.p_cat_id == product_data.0.product_category_id %}selected{% endif %}>{{ p_category.p_cat_name }}</option>
+                                    {% endfor %}
                                     
                                 </select>
                             </div>
@@ -233,7 +246,7 @@
                                 <select class="form-control" id="fittingCategory"  onchange="updateSelectedProductFitting()" required>
                                     <option value="" disabled>Select Product Fitting</option>
                                     {% for p_fitting in p_fitting_data %}
-                                    <option value="{{ p_fitting.p_fitting_id }}">{{ p_fitting.p_fitting_name }}</option>
+                                    <option value="{{ p_fitting.p_fitting_id }}" {% if product_data and p_fitting.p_fitting_id == product_data.0.fitting_id %}selected{% endif %}>{{ p_fitting.p_fitting_name }}</option>
                                 {% endfor %}
                                     
                                 </select>
@@ -249,31 +262,31 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label" for="input-product-description">Product Description</label>
-                                <textarea id="input-product-description" class="form-control form-control-alternative" placeholder="Enter Product Description" name="product_description" rows="3" required></textarea>
+                                <textarea id="input-product-description" class="form-control form-control-alternative" placeholder="Enter Product Description" name="product_description" rows="3" required>{% if product_data %}{{ product_data.0.description }}{% endif %}</textarea>
                             </div>
                         </div>
-        
+
                         <!-- Fit and Care Information -->
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label" for="input-fit-care">Fit and Care Information</label>
-                                <textarea id="input-fit-care" class="form-control form-control-alternative" placeholder="Enter Fit and Care Information" name="fit_care" rows="3" required></textarea>
+                                <textarea id="input-fit-care" class="form-control form-control-alternative" placeholder="Enter Fit and Care Information" name="fit_care" rows="3" required>{% if product_data %}{{ product_data.0.fit_and_care }}{% endif %}</textarea>
                             </div>
                         </div>
 
-                        <!-- What is Does ? -->
+                        <!-- Short Description -->
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label" for="input-what-it-does">Short Description</label>
-                                <textarea id="input-what-it-does" class="form-control form-control-alternative" placeholder="Enter Short Description" name="what_it_does" rows="3" required></textarea>
+                                <textarea id="input-what-it-does" class="form-control form-control-alternative" placeholder="Enter Short Description" name="what_it_does" rows="3" required>{% if product_data %}{{ product_data.0.short_description }}{% endif %}</textarea>
                             </div>
                         </div>
-        
+
                         <!-- Return Policy-->
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label" for="input-return-policy">Return Policy</label>
-                                <textarea id="input-return-policy" class="form-control form-control-alternative" placeholder="Enter Return Policy" name="return_policy" rows="3" required></textarea>
+                                <textarea id="input-return-policy" class="form-control form-control-alternative" placeholder="Enter Return Policy" name="return_policy" rows="3" required>{% if product_data %}{{ product_data.0.return_policy }}{% endif %}</textarea>
                             </div>
                         </div>
 
@@ -283,7 +296,7 @@
                     <!-- Existing form fields... -->
                     <div class="row justify-content-end">
                         <div class="col-lg-12 d-flex align-items-end">
-                            <button type="submit" class="btn btn-primary">Add New Product</button>
+                            <button type="submit" class="btn btn-bg-outline-warning">Update Product</button>
                         </div>
                     </div>
                 </div>
