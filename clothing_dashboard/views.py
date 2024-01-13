@@ -501,7 +501,7 @@ def upload_images2(uploaded_image):
             raise ValueError("Image size exceeds the limit")
 
         # Resize the image
-        img_resized = img.resize((765, 850))
+        img_resized = img.resize((300, 300))
         
         # Save the resized image
         img_resized.save(file_path)
