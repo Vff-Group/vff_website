@@ -397,7 +397,7 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
             
             try:
                 with connection.cursor() as cursor:
-                    insert_query="insert into vff.united_armor_sizes_available(sizeid,product_id) values ('"+str(size_id)+"','"+str(product_id)+"')"
+                    insert_query="insert into vff.united_armor_sizes_available(sizeid,product_id,color_id) values ('"+str(size_id)+"','"+str(product_id)+"','"+str(color_id)+"')"
                     cursor.execute(insert_query)
                     
                     connection.commit()
@@ -696,7 +696,23 @@ def view_product_images(request,product_name,color_name,product_id,color_id):
             })
     else:
         error_msg = 'Something Went Wrong'
-    context={'color_name':color_name,'product_id':product_id,'product_name':product_name,'all_images_data':all_images_data,'error_msg':error_msg}
+        
+    #Selected Sizes
+    query_all_selected_sizes ="select size_avail_id,sizeid,size_value from vff.united_armor_product_sizestbl,vff.united_armor_sizes_available where united_armor_product_sizestbl.sizesid=united_armor_sizes_available.sizeid and product_id='"+str(product_id)+"'"
+    all_selected_sizes_result = execute_raw_query(query_all_selected_sizes)
+    all_selected_sizes_data = []    
+    if not all_selected_sizes_result == 500:
+        for row in all_selected_sizes_result:
+            
+            all_selected_sizes_data.append({
+                'size_avail_id': row[0],
+                'sizeid': row[1],
+                'size_value': row[2],
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+        
+    context={'color_name':color_name,'product_id':product_id,'product_name':product_name,'all_images_data':all_images_data,'error_msg':error_msg,'all_selected_sizes_data':all_selected_sizes_data}
     return render(request,'all_products/view_color_images.html',context)
 
 def add_new_color_and_image_to_product(request,main_cat_id,cat_id,sub_cat_id,product_id,product_name):
@@ -784,7 +800,7 @@ def add_new_color_and_image_to_product(request,main_cat_id,cat_id,sub_cat_id,pro
             
             try:
                 with connection.cursor() as cursor:
-                    insert_query="insert into vff.united_armor_sizes_available(sizeid,product_id) values ('"+str(size_id)+"','"+str(product_id)+"')"
+                    insert_query="insert into vff.united_armor_sizes_available(sizeid,product_id,color_id) values ('"+str(size_id)+"','"+str(product_id)+"','"+str(color_id)+"')"
                     cursor.execute(insert_query)
                     
                     connection.commit()
