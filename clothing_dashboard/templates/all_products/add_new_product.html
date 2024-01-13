@@ -66,9 +66,9 @@
                             <div class="row">
                                 <!-- Add checkboxes dynamically based on your available sizes -->
                                 {% for size in sizes_data %}
-                                <div class="col-lg-1">
+                                <div class="col-lg-12">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="sizeCheckbox{{ size.size_id }}" name="sizes[]" value="{{ size.size_value }}">
+                                        <input class="form-check-input" type="checkbox" id="sizeCheckbox{{ size.size_id }}" name="sizes[]" value="{{ size.size_value }} ">
                                         <label class="form-check-label" for="sizeCheckbox{{ size.size_id }}">{{ size.size_value }}</label>
                                     </div>
                                 </div>
