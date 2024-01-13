@@ -680,6 +680,24 @@ def single_product_colors(request,main_cat_id,cat_id,sub_cat_id,product_id,produ
     context = {'query_result':data,'current_url': current_url,'error_msg':error_msg,'main_cat_id':main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id,'product_id':product_id,'product_name':product_name}
     return render(request,"all_products/all_colors_images.html",context)
 
+def view_product_images(request,product_name,color_name,product_id):
+    error_msg=''
+    #All Images Data
+    query_all_images ="select imageid,image_url,color_id from vff.united_armor_product_imagestbl where product_id='"+str(product_id)+"'"
+    all_images_result = execute_raw_query(query_all_images)
+    all_images_data = []    
+    if not all_images_result == 500:
+        for row in all_images_result:
+            
+            all_images_data.append({
+                'image_id': row[0],
+                'image_url': row[1],
+                'color_id': row[1],
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    context={'color_name':color_name,'product_id':product_id,'product_name':product_name,'all_images_data':all_images_data,'error_msg':error_msg}
+    return render('all_products/view_color_images.html',context)
 
 def add_new_color_and_image_to_product(request,main_cat_id,cat_id,sub_cat_id,product_id,product_name):
     error_msg=''

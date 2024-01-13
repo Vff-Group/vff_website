@@ -1,0 +1,353 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %}Product Color Images{% endblock title%}
+{% block content %}
+
+<style>
+    .image-container {
+        display: flex;
+        overflow-x: auto;
+    }
+
+    .image-wrapper {
+        margin-right: 5px;
+        width: 765px;
+        height: 850px;
+        border: 1px solid #f0f0f0; /* Lightest grey border */
+        background-color: #f8f8f8; /* Light grey background color */
+    }
+
+    .image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Maintain aspect ratio and cover the container */
+    }
+</style>
+
+  <div class="container-fluid py-4">
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header pb-0 d-flex justify-content-between">
+            <h6>Images For [{{product_name}}] </h6>
+            
+          </div>
+
+          <div class="card-body px-0 pt-0 pb-2">
+            
+                <div class="pl-lg-4 m-4">
+                    <!-- To Select All Images and Default Image  -->
+                    
+                    
+                    
+                    <div class="row mb-4">
+                        
+                        <div class="col-lg-9">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-images">Product Images for color [{{color_name}}]</label>
+                                <!-- Preview container for images -->
+                                <div id="image-preview-container" class="mt-3 image-container">
+                                    <!-- Display existing product images -->
+                                    {% for image in all_images_data %}
+                                        <div class="image-wrapper">
+                                            <img src="{{ image.image_url }}" alt="Product Image" class="image">
+                                            <input type="hidden" name="existing_image_ids[]" value="{{ image.image_id }}">
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    
+                </div>
+            
+        </div>
+
+        <!-- Include jscolor library from CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"></script>
+        <!-- Include Dropzone.js library -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/dropzone.css">
+        <script src="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/dropzone.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
+        <script>
+            function updateSelectedProductType() {
+                var selectElement = document.getElementById('input-product-type');
+                var selectedOption = selectElement.options[selectElement.selectedIndex];
+        
+                // Update hidden input fields
+                document.getElementById('selected-product-type-name').value = selectedOption.text;
+                document.getElementById('selected-product-type-id').value = selectedOption.value;
+            }
+            
+            function updateSelectedProductCategory() {
+                var selectElement = document.getElementById('productCategory');
+                var selectedOption = selectElement.options[selectElement.selectedIndex];
+        
+                // Update hidden input fields
+                document.getElementById('selected-product-category-name').value = selectedOption.text;
+                document.getElementById('selected-product-category-id').value = selectedOption.value;
+            }
+
+            function updateSelectedProductFitting() {
+                var selectElement = document.getElementById('fittingCategory');
+                var selectedOption = selectElement.options[selectElement.selectedIndex];
+        
+                // Update hidden input fields
+                document.getElementById('selected-product-fitting-name').value = selectedOption.text;
+                document.getElementById('selected-product-fitting-id').value = selectedOption.value;
+            }
+
+            function updateSelectedSizes() {
+                var selectedSizeIds = [];
+                var selectedSizeValues = [];
+        
+                // Iterate over all checkboxes
+                document.querySelectorAll('input[name="sizes[]"]:checked').forEach(function (checkbox) {
+                    selectedSizeIds.push(checkbox.getAttribute('data-size-id'));
+                    selectedSizeValues.push(document.querySelector('label[for="' + checkbox.id + '"]').textContent);
+                });
+        
+                // Update hidden input fields
+                document.getElementById('selected-size-ids').value = selectedSizeIds.join(',');
+                document.getElementById('selected-size-values').value = selectedSizeValues.join(', ');
+            }
+        </script>
+        <script>
+            //Default Image Select Code
+            document.getElementById('input-default-image').addEventListener('change', function () {
+                var input = this;
+                var previewContainer = document.getElementById('default-image-preview-container');
+                var previewImage = document.getElementById('default-image-preview');
+        
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+        
+                    reader.onload = function (e) {
+                        previewImage.src = e.target.result;
+                        previewContainer.style.display = 'block';
+                    };
+        
+                    reader.readAsDataURL(input.files[0]);
+                }
+            });
+        
+            function clearDefaultImage() {
+                var input = document.getElementById('input-default-image');
+                var previewContainer = document.getElementById('default-image-preview-container');
+                var previewImage = document.getElementById('default-image-preview');
+        
+                input.value = ''; // Clear the input value
+                previewImage.src = '#'; // Clear the preview
+                previewContainer.style.display = 'none'; // Hide the preview container
+            }
+            //Default Image Select Code End
+
+            document.getElementById('input-images').addEventListener('change', function () {
+                previewImages(this);
+            });
+        
+            function previewImages(input) {
+                var previewContainer = document.getElementById('image-preview-container');
+                previewContainer.innerHTML = ''; // Clear previous previews
+        
+                var files = input.files;
+                for (var i = 0; i < files.length; i++) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var imageElement = document.createElement('img');
+                        imageElement.src = e.target.result;
+                        imageElement.className = 'preview-image';
+                        imageElement.style.width='100px';
+                        imageElement.style.height='100px';
+                        imageElement.style.marginRight='10px';
+                        imageElement.style.objectFit='contain';
+                        previewContainer.appendChild(imageElement);
+                    };
+                    reader.readAsDataURL(files[i]);
+                }
+            }
+
+            // Function to show a toast message
+function showToast(message, bodyContent) {
+    toastr.warning(bodyContent, message, {
+      positionClass: "toast-top-center",
+      timeOut: 5e3,
+      closeButton: !0,
+      debug: !1,
+      newestOnTop: !0,
+      progressBar: !0,
+      preventDuplicates: !0,
+      onclick: null,
+      showDuration: "300",
+      hideDuration: "1000",
+      extendedTimeOut: "1000",
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut",
+      tapToDismiss: !1
+  })
+}
+        </script>
+        
+       
+
+        <!-- <script>
+            // Customize the appearance and behavior of Dropzone
+            Dropzone.autoDiscover = false;
+        
+            // Initialize Dropzone on the specified element
+            var myDropzone = new Dropzone("#image-dropzone", {
+                url: "/your-upload-endpoint",
+                paramName: "file", // The name that will be used to transfer the file
+                maxFilesize: 5, // MB
+                maxFiles: 10,
+                acceptedFiles: "image/*",
+                addRemoveLinks: true, // Add remove links for uploaded files
+                dictRemoveFile: "Remove", // Label for the remove link
+                init: function () {
+                    this.on("addedfile", function (file) {
+                        // Display the file preview in the preview container
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            var imageElement = document.createElement("img");
+                            imageElement.src = e.target.result;
+                            document.getElementById("image-preview-container").appendChild(imageElement);
+                        };
+                        reader.readAsDataURL(file);
+                    });
+        
+                    this.on("removedfile", function (file) {
+                        // Remove the file preview from the preview container
+                        var previewContainer = document.getElementById("image-preview-container");
+                        var previews = previewContainer.getElementsByTagName("img");
+                        for (var i = 0; i < previews.length; i++) {
+                            if (previews[i].src.includes(file.dataURL)) {
+                                previewContainer.removeChild(previews[i]);
+                                break;
+                            }
+                        }
+                    });
+                },
+            });
+        </script> -->
+        
+        <script>
+           // Function to preview selected images
+          //function previewImages(input) {
+          //    var previewContainer = document.getElementById('image-preview-container');
+          //    previewContainer.innerHTML = ''; // Clear previous previews
+
+          //    if (input.files) {
+          //        for (var i = 0; i < input.files.length; i++) {
+          //            var reader = new FileReader();
+          //            reader.onload = function (e) {
+          //                var imgElement = document.createElement('img');
+          //                imgElement.src = e.target.result;
+          //                imgElement.className = 'img-thumbnail';
+          //                imgElement.style.width = '100px'; // Set the fixed width
+          //                imgElement.style.height = '100px'; // Set the fixed height
+          //                imgElement.style.marginRight = '5px'; // Set the fixed height
+          //                previewContainer.appendChild(imgElement);
+          //            };
+          //            reader.readAsDataURL(input.files[i]);
+          //        }
+          //    }
+          //}
+
+          //// Attach the previewImages function to the change event of the image input
+          //document.getElementById('input-images').addEventListener('change', function () {
+          //    previewImages(this);
+          //});
+
+           
+            // Function to add a new color input field
+          // function addColorInput() {
+          //     var colorInputContainer = document.getElementById('color-input-container');
+        
+          //     // Create a new color input field
+          //     var newColorInput = document.createElement('div');
+          //     newColorInput.className = 'input-group mb-3 me-3';
+        
+          //     // Color input field using HTML color picker
+          //     var inputField = document.createElement('input');
+          //     inputField.type = 'color';
+          //     inputField.className = 'form-control form-control-sm rounded';
+          //     inputField.name = 'colors[]';
+          //     inputField.required = true;
+        
+          //     // Delete button
+          //     var deleteButton = document.createElement('button');
+          //     deleteButton.type = 'button';
+          //     deleteButton.className = 'btn btn-outline-danger rounded-start';
+          //     deleteButton.textContent = '-';
+          //     deleteButton.addEventListener('click', function() {
+          //         removeColorInput(newColorInput);
+          //     });
+        
+          //     // Append elements to the new color input field
+          //     newColorInput.appendChild(inputField);
+          //     newColorInput.appendChild(deleteButton);
+        
+          //     // Append the new color input field to the container
+          //     colorInputContainer.appendChild(newColorInput);
+          // }
+        
+          // // Function to remove a color input field
+          // function removeColorInput(element) {
+          //     var colorInputContainer = document.getElementById('color-input-container');
+          //     colorInputContainer.removeChild(element);
+          // }
+        </script>
+
+        <script>
+            // Function to add a new color input field
+            function addColorInput() {
+                var colorInputContainer = document.getElementById('color-input-container');
+        
+                // Create a new color input field
+                var newColorInput = document.createElement('div');
+                newColorInput.className = 'input-group mb-3 me-3';
+        
+                // Color input field using HTML color picker
+                var inputField = document.createElement('input');
+                inputField.type = 'color';
+                inputField.className = 'form-control form-control-sm rounded';
+                inputField.name = 'colors[]';
+                inputField.required = true;
+        
+                // Delete button with Flaticon or other delete icon
+                var deleteButton = document.createElement('button');
+                deleteButton.type = 'button';
+                deleteButton.className = 'btn btn-outline-danger rounded-start';
+                // Use the Flaticon or other delete icon here
+                deleteButton.innerHTML = '<i class="fas fa-trash-alt delete-icon"></i>';
+                deleteButton.addEventListener('click', function() {
+                    removeColorInput(newColorInput);
+                });
+        
+                // Append elements to the new color input field
+                newColorInput.appendChild(inputField);
+                newColorInput.appendChild(deleteButton);
+        
+                // Append the new color input field to the container
+                colorInputContainer.appendChild(newColorInput);
+            }
+        
+            // Function to remove a color input field
+            function removeColorInput(element) {
+                var colorInputContainer = document.getElementById('color-input-container');
+                colorInputContainer.removeChild(element);
+            }
+        </script>
+        
+
+        
+          
+          
+    {% endblock  %}        
