@@ -480,12 +480,7 @@
                 var checkboxes = document.querySelectorAll('input[name="sizes[]"]');
                 var checked = Array.from(checkboxes).some(checkbox => checkbox.checked);
 
-                // Display an alert if no checkbox is checked
-                if (!checked) {
-                    alert('Please select at least one size.');
-                    // You can add additional actions here, such as preventing form submission
-                    return;
-                }
+                
                 // Iterate over all checkboxes
                 document.querySelectorAll('input[name="sizes[]"]:checked').forEach(function (checkbox) {
                     selectedSizeIds.push(checkbox.getAttribute('data-size-id'));
@@ -495,6 +490,8 @@
                 // Update hidden input fields
                 document.getElementById('selected-size-ids').value = selectedSizeIds.join(',');
                 document.getElementById('selected-size-values').value = selectedSizeValues.join(', ');
+                console.log('selectedSizeIds::'+selectedSizeIds);
+                console.log('selectedSizeValues::'+selectedSizeValues);
             }
         </script>
         <script>
