@@ -295,9 +295,92 @@
         <!-- Include Dropzone.js library -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/dropzone.css">
         <script src="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/dropzone.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+        <!-- Include jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+        <!-- Include jQuery Validate -->
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/additional-methods.min.js"></script>
+
+
+        <script>
+            $(document).ready(function () {
+                // Validate the form
+                $('#new-product-form').validate({
+                    rules: {
+                        // Specify validation rules for each form field
+                        'input-default-image': {
+                            required: true,
+                            extension: 'jpg|jpeg|png'
+                        },
+                        'product_images[]': {
+                            required: true,
+                            extension: 'jpg|jpeg|png'
+                        },
+                        'product_name': 'required',
+                        'product_type': 'required',
+                        'sizes[]': 'required',
+                        'productPrice': {
+                            required: true,
+                            number: true
+                        },
+                        'productOfferPrice': {
+                            required: true,
+                            number: true
+                        },
+                        'productCheckOutQuantity': {
+                            required: true,
+                            number: true
+                        },
+                        'color_name': 'required',
+                        'colors[]': 'required',
+                        'productCategory': 'required',
+                        'fittingCategory': 'required',
+                        'product_description': 'required',
+                        'fit_care': 'required',
+                        'what_it_does': 'required',
+                        'return_policy': 'required'
+                    },
+                    messages: {
+                        // Specify custom error messages
+                        'input-default-image': {
+                            required: 'Please upload a default image',
+                            extension: 'File must be in JPG, JPEG, or PNG format'
+                        },
+                        'product_images[]': {
+                            required: 'Please upload product images',
+                            extension: 'Files must be in JPG, JPEG, or PNG format'
+                        },
+                        'product_name': 'Please enter a product name',
+                        'product_type': 'Please select a product type',
+                        'sizes[]': 'Please select at least one size',
+                        'productPrice': {
+                            required: 'Please enter a valid price',
+                            number: 'Please enter a valid number'
+                        },
+                        'productOfferPrice': {
+                            required: 'Please enter a valid offer price',
+                            number: 'Please enter a valid number'
+                        },
+                        'productCheckOutQuantity': {
+                            required: 'Please enter a valid max checkout quantity',
+                            number: 'Please enter a valid number'
+                        },
+                        'color_name': 'Please enter a color name',
+                        'colors[]': 'Please select at least one color',
+                        'productCategory': 'Please select a product category',
+                        'fittingCategory': 'Please select a fitting category',
+                        'product_description': 'Please enter a product description',
+                        'fit_care': 'Please enter fit and care information',
+                        'what_it_does': 'Please enter short description',
+                        'return_policy': 'Please enter a return policy'
+                    },
+                    // Add other settings as needed
+                });
+            });
+        </script>
+
+        
         <script>
             function updateSelectedProductType() {
                 var selectElement = document.getElementById('input-product-type');
