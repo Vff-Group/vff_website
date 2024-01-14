@@ -61,7 +61,7 @@
 
                     
                                 <!-- Add checkboxes dynamically based on your available sizes -->
-                                {% for size in sizes_data %}
+                                {% for size in all_selected_sizes_data %}
                                     <div class="col-lg-3">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="sizeCheckbox{{ size.size_id }}" name="sizes[]" value="{{ size.size_value }}" {% if all_selected_sizes_data %}{% for selected_size in all_selected_sizes_data %}{% if selected_size.sizeid == size.size_id %}checked{% endif %}{% endfor %}{% endif %} data-size-id="{{ size.size_id }}" data-size-avail-id="{{ selected_size.size_avail_id }}" onclick="updateSelectedSizes()" disabled>

@@ -754,7 +754,7 @@ def view_product_images(request,product_name,color_name,product_id,color_id):
             
             all_selected_sizes_data.append({
                 'size_avail_id': row[0],
-                'sizeid': row[1],
+                'size_id': row[1],
                 'size_value': row[2],
             })
     else:
