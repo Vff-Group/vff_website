@@ -385,9 +385,9 @@
 
                  // Update the sizes dropdown based on the selected product type
                   // Read the values from hidden input fields
-                var sizesData = JSON.parse(document.getElementById('sizes_data_id').value);
-                var shoesSizesData = JSON.parse(document.getElementById('shoes_sizes_data_id').value);
-                var pantsSizesData = JSON.parse(document.getElementById('pants_sizes_data_id').value);
+                var sizesData = document.getElementById('sizes_data_id').value;
+                var shoesSizesData = document.getElementById('shoes_sizes_data_id').value;
+                var pantsSizesData = document.getElementById('pants_sizes_data_id').value;
 
                 var sizesData;
                 if (selectElement === 'Pants & Leggings') {
