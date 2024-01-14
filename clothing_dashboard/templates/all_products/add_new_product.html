@@ -120,15 +120,19 @@
                                 <!-- Hidden input for selected size values -->
                                 <input type="hidden" id="selected-size-values" name="selected_size_values" >
 
-                                <!-- Add checkboxes dynamically based on your available sizes -->
-                                {% for size in sizes_data %}
+                                
+                                  <!-- Add checkboxes dynamically based on your available sizes -->
+                                <div id="sizes-checkboxes">
+                                    <!-- Checkbox options will be dynamically loaded here -->
+                                </div>
+                                <!-- {% for size in sizes_data %}
                                 <div class="col-lg-3">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="sizeCheckbox{{ size.size_id }}" name="sizes[]" value="{{ size.size_value }} " data-size-id="{{ size.size_id }}" onclick="updateSelectedSizes()">
                                         <label class="form-check-label" for="sizeCheckbox{{ size.size_id }}">{{ size.size_value }}</label>
                                     </div>
                                 </div>
-                            {% endfor %}
+                            {% endfor %} -->
                         </div>
                      
                     
@@ -376,6 +380,7 @@
             });
 
             function updateSelectedProductType() {
+                
                 var selectElement = document.getElementById('input-product-type');
                 var selectedOption = selectElement.options[selectElement.selectedIndex];
         
@@ -383,59 +388,44 @@
                 document.getElementById('selected-product-type-name').value = selectedOption.text;
                 document.getElementById('selected-product-type-id').value = selectedOption.value;
 
-                 // Update the sizes dropdown based on the selected product type
-                  // Read the values from hidden input fields
-                var allSizesData = document.getElementById('sizes_data_id').value;
-                var shoesSizesData = document.getElementById('shoes_sizes_data_id').value;
-                var pantsSizesData = document.getElementById('pants_sizes_data_id').value;
-
                 var sizesData;
-                if (selectElement === 'Pants & Leggings') {
+                var allSizesData = JSON.parse('{{ sizes_data|escapejs }}');
+                var pantsSizesData = JSON.parse('{{ pants_sizes_data|escapejs }}');
+                var shoesSizesData = JSON.parse('{{ shoes_sizes_data|escapejs }}');
+
+                console.log('pantsSizesData::'+pantsSizesData);
+                if (selectElement.value === "Pants") {
                     sizesData = pantsSizesData;
-                } else if (selectElement === 'Shoes') {
+                } else if (selectElement.value === "Shoes") {
                     sizesData = shoesSizesData;
                 } else {
                     sizesData = allSizesData;
                 }
-                // Call a function to update the sizes checkboxes
+                
+
                 updateSizesCheckboxes(sizesData);
+                 
             }
 
             function updateSizesCheckboxes(sizesData) {
-                // Clear existing checkboxes
-                var sizesContainer = document.querySelector('.row #selected-size-ids');
-                sizesContainer.innerHTML = '';
+                var sizesCheckboxes = document.getElementById("sizes-checkboxes");
+                sizesCheckboxes.innerHTML = "";
         
-                // Add checkboxes based on the sizesData
-                for (var i = 0; i < sizesData.length; i++) {
-                    var size = sizesData[i];
+                sizesData.forEach(function (size) {
+                    var checkboxDiv = document.createElement("div");
+                    checkboxDiv.className = "col-lg-3";
+                    checkboxDiv.innerHTML = `
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="sizeCheckbox${size.size_id}" name="sizes[]" value="${size.size_value}" data-size-id="${size.size_id}" onclick="updateSelectedSizes()">
+                            <label class="form-check-label" for="sizeCheckbox${size.size_id}">${size.size_value}</label>
+                        </div>
+                    `;
         
-                    // Create checkbox element
-                    var checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.name = 'sizes[]';
-                    checkbox.value = size.size_value;
-                    checkbox.id = 'sizeCheckbox' + size.size_id;
-                    checkbox.className = 'form-check-input';
-                    checkbox.setAttribute('data-size-id', size.size_id);
-                    checkbox.onclick = updateSelectedSizes;
-        
-                    // Create label element
-                    var label = document.createElement('label');
-                    label.className = 'form-check-label';
-                    label.htmlFor = 'sizeCheckbox' + size.size_id;
-                    label.appendChild(document.createTextNode(size.size_value));
-        
-                    // Create div for each checkbox
-                    var checkboxDiv = document.createElement('div');
-                    checkboxDiv.className = 'col-lg-3';
-                    checkboxDiv.appendChild(checkbox);
-                    checkboxDiv.appendChild(label);
-        
-                    // Append the div to the container
-                    sizesContainer.appendChild(checkboxDiv);
-                }
+                    sizesCheckboxes.appendChild(checkboxDiv);
+                });
             }
+        
+
             
             function updateSelectedProductCategory() {
                 var selectElement = document.getElementById('productCategory');
