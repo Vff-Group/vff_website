@@ -94,7 +94,7 @@
                     </td>
                     <td>
                         <p class="text-xs font-weight-bold mb-0 text-center">Color: {{row.color_name}}</p>
-                        <input type="color" name="" id="" value="{{row.color_code}}" style="width: 50px; height:50px;">
+                        <input type="color" name="" id="" value="{{row.color_code}}" style="width: 10px; height:10px;" disabled>
                       </td>
                       
                     
@@ -135,8 +135,8 @@
                             {% csrf_token %}
                           <div class="modal-body">
                             <div class="alert  m-4" role="alert">
-                              <strong>Alert! </strong>{{row.product_name}} 
-                              <p>With Color {{row.color_name}}</p> will be listed in Stock To Manage
+                              <strong>Alert! [ {{row.product_name}} ]</strong>
+                              With Color <strong>{{row.color_name}}</strong> will be listed in Stock To Manage
                           </div>
                             
                           </div>
