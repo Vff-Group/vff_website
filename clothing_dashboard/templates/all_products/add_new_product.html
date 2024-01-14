@@ -385,7 +385,7 @@
 
                  // Update the sizes dropdown based on the selected product type
                   // Read the values from hidden input fields
-                var sizesData = document.getElementById('sizes_data_id').value;
+                var allSizesData = document.getElementById('sizes_data_id').value;
                 var shoesSizesData = document.getElementById('shoes_sizes_data_id').value;
                 var pantsSizesData = document.getElementById('pants_sizes_data_id').value;
 
@@ -395,7 +395,7 @@
                 } else if (selectElement === 'Shoes') {
                     sizesData = shoesSizesData;
                 } else {
-                    sizesData = sizesData;
+                    sizesData = allSizesData;
                 }
                 // Call a function to update the sizes checkboxes
                 updateSizesCheckboxes(sizesData);
