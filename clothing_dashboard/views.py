@@ -234,7 +234,7 @@ def all_products_details(request,main_cat_id,cat_id,sub_cat_id):
 def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
     error_msg=''
     #All Sizes For Clothing
-    query_sizes ="select sizesid,size_value from vff.united_armor_product_sizestbl and type='Clothing'"
+    query_sizes ="select sizesid,size_value from vff.united_armor_product_sizestbl where type='Clothing'"
     sizes_result = execute_raw_query(query_sizes)
     sizes_data = []    
     if not sizes_result == 500:
@@ -248,7 +248,7 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
         error_msg = 'Something Went Wrong'
         
     #All Sizes For Shoes
-    query_shoes_sizes ="select sizesid,size_value from vff.united_armor_product_sizestbl and type='Shoes'"
+    query_shoes_sizes ="select sizesid,size_value from vff.united_armor_product_sizestbl where type='Shoes'"
     shoes_sizes_result = execute_raw_query(query_shoes_sizes)
     shoes_sizes_data = []    
     if not shoes_sizes_result == 500:
@@ -262,7 +262,7 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
         error_msg = 'Something Went Wrong'
     
     #Pants & Leggings
-    query_pants_sizes ="select sizesid,size_value from vff.united_armor_product_sizestbl and type='Shoes'"
+    query_pants_sizes ="select sizesid,size_value from vff.united_armor_product_sizestbl where type='Pants'"
     pants_sizes_result = execute_raw_query(query_pants_sizes)
     pants_sizes_data = []    
     if not pants_sizes_result == 500:
