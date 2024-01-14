@@ -493,8 +493,9 @@ def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id,ret=None
     else:
         error_msg = 'Something Went Wrong'
     
+    default_color_id = product_data[0]['default_color_id'] if product_data else ''
     #All Images Data
-    query_all_images ="select imageid,image_url,color_id from vff.united_armor_product_imagestbl where product_id='"+str(product_id)+"'"
+    query_all_images ="select imageid,image_url,color_id from vff.united_armor_product_imagestbl where product_id='"+str(product_id)+"' and color_id='"+str(default_color_id)+"'"
     all_images_result = execute_raw_query(query_all_images)
     all_images_data = []    
     if not all_images_result == 500:
