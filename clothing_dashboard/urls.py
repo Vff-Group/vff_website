@@ -78,6 +78,12 @@ urlpatterns = [
    
     #INVENTORY DASHBOARD
     path('inventory/',views.inventory,name='inventory'),
+    
+    #---------------- INVENTORY PART ------------------
+    
+    # Add Product based on color to inventory
+    path('add_product_to_inventory/<int:main_cat_id>/<int:cat_id>/<int:sub_cat_id>/<int:product_id>/<str:product_name>/<int:color_id>/',views.add_product_to_inventory,name='add_product_to_inventory'),
+    
    
 ]
 

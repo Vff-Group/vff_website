@@ -1054,6 +1054,31 @@ def inventory(request):
     context = {'current_url': current_url}
     return render(request,"inventory_pages/dashboard_inventory.html",context)
 
+def add_product_to_inventory(request,main_cat_id,cat_id,sub_cat_id,product_id,product_name,color_id):
+    error_msg = 'No Product Colors Found'
+    
+    
+    if request.method == "POST":
+        try:
+            with connection.cursor() as cursor:
+                insert_query="insert into vff.united_armor_inventory_productstbl(product_id,color_id) values ('"+str(product_id)+"','"+str(color_id)+"')"
+                cursor.execute(insert_query)
+                
+                #So that it does not shows add to inventory option
+                update_query="update vff.united_armor_product_colorstbl set added_to_inventory='1' where product_id='"+str(product_id)+"' and colorsid='"+str(color_id)+"'"
+                cursor.execute(update_query)
+                connection.commit()
+                print(f" Added Product {product_name} color {color_id} to Inventory Inserted Successfully.")
+                return redirect(reverse('clothing_dashboard_app:single_product_colors', kwargs={'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id,'product_id':product_id,'product_name':product_name}))
+        except Exception as e:
+            print(f"Error loading data: {e}")
+            
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg,'main_cat_id':main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id,'product_id':product_id,'product_name':product_name}
+    return render(request,"all_products/all_colors_images.html",context)
+    
+
 def epochToDateTime(epoch):
     datetime_obj = datetime.utcfromtimestamp(epoch)
     gmt_plus_0530 = pytz.timezone('Asia/Kolkata')

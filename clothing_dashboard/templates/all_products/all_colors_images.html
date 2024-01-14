@@ -119,7 +119,7 @@
                               <span aria-hidden="true">×</span>
                             </button>
                           </div>
-                          <form action="" method="post">
+                          <form action="{% url 'clothing_dashboard_app:add_product_to_inventory' main_cat_id cat_id sub_cat_id  product_id product_name row.colorsid %}" method="post">
                             {% csrf_token %}
                           <div class="modal-body">
                             <div class="alert  m-4" role="alert">
