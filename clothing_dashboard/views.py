@@ -352,11 +352,32 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
         selected_product_fitting_name = request.POST.get('selected_product_fitting_name')
         selected_product_fitting_id = request.POST.get('selected_product_fitting_id')
         
-        selected_size_ids = request.POST.get('selected_size_ids')
-        selected_size_values = request.POST.get('selected_size_values')
+        # selected_size_ids = request.POST.get('selected_size_ids')
+        # selected_size_values = request.POST.get('selected_size_values')
+        # Access the selected size IDs and values from the hidden fields
+        selected_other_size_ids = request.POST.get('selected-other-size-ids',None)
+        selected_other_size_values = request.POST.get('selected-other-size-values',None)
+
+        selected_shoes_size_ids = request.POST.get('selected-shoes-size-ids',None)
+        selected_shoes_size_values = request.POST.get('selected-shoes-size-values', None)
+
+        selected_pants_size_ids = request.POST.get('selected-pants-size-ids', None)
+        selected_pants_size_values = request.POST.get('selected-pants-size-values', None)
         
-        print(f'selected_size_ids:{selected_size_ids}')
-        selected_size_ids_str = selected_size_ids.split(",")
+        print(f'selected_shoes_size_ids:{selected_shoes_size_ids}')
+        print(f'selected_other_size_ids:{selected_other_size_ids}')
+        print(f'selected_pants_size_ids:{selected_pants_size_ids}')
+        if selected_other_size_ids:
+            selected_size_ids_str = selected_other_size_ids.split(",")
+            selected_size_values = selected_other_size_values
+        
+        if selected_shoes_size_ids:
+            selected_size_ids_str = selected_shoes_size_ids.split(",")
+            selected_size_values = selected_shoes_size_values
+            
+        if selected_pants_size_ids:
+            selected_size_ids_str = selected_pants_size_ids.split(",")
+            selected_size_values = selected_pants_size_values
         
         # print(f'product_images::{product_images}')
         if default_image:
