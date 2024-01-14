@@ -309,28 +309,28 @@
                 // Validation for sizes
                 var selectedSizes = document.querySelectorAll('input[name="sizes[]"]:checked');
                 if (selectedSizes.length === 0) {
-                    alert("Please select at least one size.");
+                    showToast("Alert","Please select at least one size.");
                     return false;
                 }
         
                 // Validation for default image
                 var defaultImageInput = document.getElementById('input-default-image');
                 if (defaultImageInput.files.length === 0) {
-                    alert("Please select the default image.");
+                    showToast("Alert","Please select the default image.");
                     return false;
                 }
         
                 // Validation for product images
                 var productImagesInput = document.getElementById('input-images');
                 if (productImagesInput.files.length === 0) {
-                    alert("Please select at least one product image.");
+                    showToast("Alert","Please select at least one product image.");
                     return false;
                 }
         
                 // Additional validations using Validator.js
                 var productName = document.getElementById('input-product-name').value;
                 if (!validator.isLength(productName, { min: 1, max: 255 })) {
-                    alert("Product name must be between 1 and 255 characters.");
+                    showToast("Alert","Product name must be between 1 and 255 characters.");
                     return false;
                 }
         
@@ -339,6 +339,28 @@
                 // If all validations pass, the form will be submitted
                 return true;
             }
+
+            // Function to show a toast message
+            function showToast(message, bodyContent) {
+                toastr.warning(bodyContent, message, {
+                positionClass: "toast-top-center",
+                timeOut: 5e3,
+                closeButton: !0,
+                debug: !1,
+                newestOnTop: !0,
+                progressBar: !0,
+                preventDuplicates: !0,
+                onclick: null,
+                showDuration: "300",
+                hideDuration: "1000",
+                extendedTimeOut: "1000",
+                showEasing: "swing",
+                hideEasing: "linear",
+                showMethod: "fadeIn",
+                hideMethod: "fadeOut",
+                tapToDismiss: !1
+            })
+        }
         </script>
 
         <!-- <script>
