@@ -475,24 +475,47 @@
             function updateSelectedSizes() {
                 var selectedSizeIds = [];
                 var selectedSizeValues = [];
-                
-                 // Check if at least one checkbox is checked
+        
+                // Loop through all checkboxes and check if they are selected
                 var checkboxes = document.querySelectorAll('input[name="sizes[]"]');
-                var checked = Array.from(checkboxes).some(checkbox => checkbox.checked);
-
-                
-                // Iterate over all checkboxes
-                document.querySelectorAll('input[name="sizes[]"]:checked').forEach(function (checkbox) {
-                    selectedSizeIds.push(checkbox.getAttribute('data-size-id'));
-                    selectedSizeValues.push(document.querySelector('label[for="' + checkbox.id + '"]').textContent);
+                checkboxes.forEach(function (checkbox) {
+                    if (checkbox.checked) {
+                        selectedSizeIds.push(checkbox.getAttribute('data-size-id'));
+                        selectedSizeValues.push(checkbox.value);
+                    }
                 });
         
-                // Update hidden input fields
+                // Set the selected size IDs in the hidden field
                 document.getElementById('selected-size-ids').value = selectedSizeIds.join(',');
-                document.getElementById('selected-size-values').value = selectedSizeValues.join(', ');
+        
+                // Set the selected size values in the hidden field
+                document.getElementById('selected-size-values').value = selectedSizeValues.join(',');
+
                 console.log('selectedSizeIds::'+selectedSizeIds);
                 console.log('selectedSizeValues::'+selectedSizeValues);
             }
+
+       //   function updateSelectedSizes() {
+       //       var selectedSizeIds = [];
+       //       var selectedSizeValues = [];
+       //       
+       //        // Check if at least one checkbox is checked
+       //       var checkboxes = document.querySelectorAll('input[name="sizes[]"]');
+       //       var checked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+
+       //       
+       //       // Iterate over all checkboxes
+       //       document.querySelectorAll('input[name="sizes[]"]:checked').forEach(function (checkbox) {
+       //           selectedSizeIds.push(checkbox.getAttribute('data-size-id'));
+       //           selectedSizeValues.push(document.querySelector('label[for="' + checkbox.id + '"]').textContent);
+       //       });
+       //
+       //       // Update hidden input fields
+       //       document.getElementById('selected-size-ids').value = selectedSizeIds.join(',');
+       //       document.getElementById('selected-size-values').value = selectedSizeValues.join(', ');
+       //       console.log('selectedSizeIds::'+selectedSizeIds);
+       //       console.log('selectedSizeValues::'+selectedSizeValues);
+       //   }
         </script>
         <script>
             //Default Image Select Code
