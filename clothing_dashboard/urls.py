@@ -84,6 +84,15 @@ urlpatterns = [
     # Add Product based on color to inventory
     path('add_product_to_inventory/<int:main_cat_id>/<int:cat_id>/<int:sub_cat_id>/<int:product_id>/<str:product_name>/<int:color_id>/',views.add_product_to_inventory,name='add_product_to_inventory'),
     
+    # Load all Products to add to inventory to add quantity
+    path('attach_to_inventory/',views.attach_to_inventory,name='attach_to_inventory'),
+    
+    # Load all Products to add to inventory to add quantity
+    path('attach_to_inventory_stock/<int:product_id>/<int:color_id>/',views.attach_to_inventory_stock,name='attach_to_inventory_stock'),
+    
+    # Load all Inventory Products
+    path('load_all_inventory_stock_products/',views.load_all_inventory_stock_products,name='load_all_inventory_stock_products'),
+    
    
 ]
 
