@@ -355,14 +355,14 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
         # selected_size_ids = request.POST.get('selected_size_ids')
         # selected_size_values = request.POST.get('selected_size_values')
         # Access the selected size IDs and values from the hidden fields
-        selected_other_size_ids = request.POST.get('selected-other-size-ids',None)
-        selected_other_size_values = request.POST.get('selected-other-size-values',None)
+        selected_other_size_ids = request.POST.get('selected_size_other_ids',None)
+        selected_other_size_values = request.POST.get('selected_size_other_values',None)
 
-        selected_shoes_size_ids = request.POST.get('selected-shoes-size-ids',None)
-        selected_shoes_size_values = request.POST.get('selected-shoes-size-values', None)
+        selected_shoes_size_ids = request.POST.get('selected_size_shoes_ids',None)
+        selected_shoes_size_values = request.POST.get('selected_size_shoes_values', None)
 
-        selected_pants_size_ids = request.POST.get('selected-pants-size-ids', None)
-        selected_pants_size_values = request.POST.get('selected-pants-size-values', None)
+        selected_pants_size_ids = request.POST.get('selected_size_pants_ids', None)
+        selected_pants_size_values = request.POST.get('selected_size_pants_values', None)
         
         print(f'selected_shoes_size_ids:{selected_shoes_size_ids}')
         print(f'selected_other_size_ids:{selected_other_size_ids}')

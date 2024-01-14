@@ -115,10 +115,10 @@
     <label class="form-control-label">Sizes Available</label>
     <div class="row">
         <!-- Hidden input for selected size IDs -->
-        <input type="hidden" id="selected-other-size-ids" name="selected_size_ids" >
+        <input type="hidden" id="selected-other-size-ids" name="selected_size_other_ids" >
 
         <!-- Hidden input for selected size values -->
-        <input type="hidden" id="selected-other-size-values" name="selected_size_values" >
+        <input type="hidden" id="selected-other-size-values" name="selected_size_other_values" >
 
         <!-- Add checkboxes dynamically based on your available sizes -->
         {% for size in sizes_data %}
@@ -137,10 +137,10 @@
             <label class="form-control-label">Sizes Available</label>
             <div class="row">
                 <!-- Hidden input for selected size IDs -->
-                <input type="hidden" id="selected-shoes-size-ids" name="selected_size_ids" >
+                <input type="hidden" id="selected-shoes-size-ids" name="selected_size_shoes_ids" >
 
                 <!-- Hidden input for selected size values -->
-                <input type="hidden" id="selected-shoes-size-values" name="selected_size_values" >
+                <input type="hidden" id="selected-shoes-size-values" name="selected_size_shoes_values" >
 
                 <!-- Add checkboxes dynamically based on your available sizes -->
                 {% for size in shoes_sizes_data %}
@@ -159,10 +159,10 @@
             <label class="form-control-label">Sizes Available</label>
             <div class="row">
                 <!-- Hidden input for selected size IDs -->
-                <input type="hidden" id="selected-pants-size-ids" name="selected_size_ids" >
+                <input type="hidden" id="selected-pants-size-ids" name="selected_size_pants_ids" >
 
                 <!-- Hidden input for selected size values -->
-                <input type="hidden" id="selected-pants-size-values" name="selected_size_values" >
+                <input type="hidden" id="selected-pants-size-values" name="selected_size_pants_values" >
 
                 <!-- Add checkboxes dynamically based on your available sizes -->
                 {% for size in pants_sizes_data %}
