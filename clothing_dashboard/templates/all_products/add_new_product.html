@@ -329,7 +329,17 @@
             function updateSelectedSizes() {
                 var selectedSizeIds = [];
                 var selectedSizeValues = [];
-        
+                
+                 // Check if at least one checkbox is checked
+                var checkboxes = document.querySelectorAll('input[name="sizes[]"]');
+                var checked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+
+                // Display an alert if no checkbox is checked
+                if (!checked) {
+                    alert('Please select at least one size.');
+                    // You can add additional actions here, such as preventing form submission
+                    return;
+                }
                 // Iterate over all checkboxes
                 document.querySelectorAll('input[name="sizes[]"]:checked').forEach(function (checkbox) {
                     selectedSizeIds.push(checkbox.getAttribute('data-size-id'));
