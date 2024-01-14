@@ -129,7 +129,9 @@
                                     </div>
                                 </div>
                             {% endfor %}
+                            </div>
                         </div>
+
 
                         <!-- Checkboxes for Shoes Sizes -->
                         <div class="col-lg-4" id="shoes_sizes" style="display: none;">
@@ -150,6 +152,7 @@
                                     </div>
                                 </div>
                             {% endfor %}
+                            </div>
                         </div>
 
 
@@ -172,6 +175,7 @@
                                     </div>
                                 </div>
                             {% endfor %}
+                            </div>
                         </div>
 
 
@@ -432,6 +436,7 @@
                 var pantsSizes = document.getElementById('pants_sizes');
                 //other_sizes,shoes_sizes,pants_sizes
                 var productType = selectedOption.value;
+                console.log("productType::"+productType);
                 if(productType === "Pants & Leggings"){
                     otherSizes.style.display='none';
                     shoesSizes.style.display='none';
