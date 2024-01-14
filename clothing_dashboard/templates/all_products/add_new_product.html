@@ -111,7 +111,7 @@
                         </div>
                         
                         <!-- Checkboxes for Sizes -->
-                        <div class="col-lg-4">
+                        <div class="col-lg-4" id="other_sizes" style="display: none;">
                             <label class="form-control-label">Sizes Available</label>
                             <div class="row">
                                 <!-- Hidden input for selected size IDs -->
@@ -120,20 +120,61 @@
                                 <!-- Hidden input for selected size values -->
                                 <input type="hidden" id="selected-size-values" name="selected_size_values" >
 
-                                
-                                  <!-- Add checkboxes dynamically based on your available sizes -->
-                                <div id="sizes-checkboxes">
-                                    <!-- Checkbox options will be dynamically loaded here -->
-                                </div>
-                                <!-- {% for size in sizes_data %}
+                                <!-- Add checkboxes dynamically based on your available sizes -->
+                                {% for size in sizes_data %}
                                 <div class="col-lg-3">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="sizeCheckbox{{ size.size_id }}" name="sizes[]" value="{{ size.size_value }} " data-size-id="{{ size.size_id }}" onclick="updateSelectedSizes()">
                                         <label class="form-check-label" for="sizeCheckbox{{ size.size_id }}">{{ size.size_value }}</label>
                                     </div>
                                 </div>
-                            {% endfor %} -->
+                            {% endfor %}
                         </div>
+
+                        <!-- Checkboxes for Shoes Sizes -->
+                        <div class="col-lg-4" id="shoes_sizes" style="display: none;">
+                            <label class="form-control-label">Sizes Available</label>
+                            <div class="row">
+                                <!-- Hidden input for selected size IDs -->
+                                <input type="hidden" id="selected-size-ids" name="selected_size_ids" >
+
+                                <!-- Hidden input for selected size values -->
+                                <input type="hidden" id="selected-size-values" name="selected_size_values" >
+
+                                <!-- Add checkboxes dynamically based on your available sizes -->
+                                {% for size in shoes_sizes_data %}
+                                <div class="col-lg-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="sizeCheckbox{{ size.size_id }}" name="sizes[]" value="{{ size.size_value }} " data-size-id="{{ size.size_id }}" onclick="updateSelectedSizes()">
+                                        <label class="form-check-label" for="sizeCheckbox{{ size.size_id }}">{{ size.size_value }}</label>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+
+                        <!-- Checkboxes for pants Sizes -->
+                        <div class="col-lg-4" id="pants_sizes" style="display: none;">
+                            <label class="form-control-label">Sizes Available</label>
+                            <div class="row">
+                                <!-- Hidden input for selected size IDs -->
+                                <input type="hidden" id="selected-size-ids" name="selected_size_ids" >
+
+                                <!-- Hidden input for selected size values -->
+                                <input type="hidden" id="selected-size-values" name="selected_size_values" >
+
+                                <!-- Add checkboxes dynamically based on your available sizes -->
+                                {% for size in pants_sizes_data %}
+                                <div class="col-lg-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="sizeCheckbox{{ size.size_id }}" name="sizes[]" value="{{ size.size_value }} " data-size-id="{{ size.size_id }}" onclick="updateSelectedSizes()">
+                                        <label class="form-check-label" for="sizeCheckbox{{ size.size_id }}">{{ size.size_value }}</label>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+
                      
                     
                     </div>
@@ -380,51 +421,32 @@
             });
 
             function updateSelectedProductType() {
-                
                 var selectElement = document.getElementById('input-product-type');
                 var selectedOption = selectElement.options[selectElement.selectedIndex];
         
                 // Update hidden input fields
                 document.getElementById('selected-product-type-name').value = selectedOption.text;
                 document.getElementById('selected-product-type-id').value = selectedOption.value;
-
-                var sizesData;
-                var allSizesData = JSON.parse('{{ sizes_data|escapejs }}');
-                var pantsSizesData = JSON.parse('{{ pants_sizes_data|escapejs }}');
-                var shoesSizesData = JSON.parse('{{ shoes_sizes_data|escapejs }}');
-
-                console.log('pantsSizesData::'+pantsSizesData);
-                if (selectElement.value === "Pants") {
-                    sizesData = pantsSizesData;
-                } else if (selectElement.value === "Shoes") {
-                    sizesData = shoesSizesData;
-                } else {
-                    sizesData = allSizesData;
+                var otherSizes = document.getElementById('other_sizes');
+                var shoesSizes = document.getElementById('shoes_sizes');
+                var pantsSizes = document.getElementById('pants_sizes');
+                //other_sizes,shoes_sizes,pants_sizes
+                var productType = selectedOption.value;
+                if(productType === "Pants & Leggings"){
+                    otherSizes.style.display='none';
+                    shoesSizes.style.display='none';
+                    pantsSizes.style.display='flex';
+                }else if(productType === "Shoes"){
+                    otherSizes.style.display='none';
+                    shoesSizes.style.display='flex';
+                    pantsSizes.style.display='none';
+                }else{
+                    otherSizes.style.display='flex';
+                    shoesSizes.style.display='none';
+                    pantsSizes.style.display='none';
                 }
-                
-
-                updateSizesCheckboxes(sizesData);
                  
             }
-
-            function updateSizesCheckboxes(sizesData) {
-                var sizesCheckboxes = document.getElementById("sizes-checkboxes");
-                sizesCheckboxes.innerHTML = "";
-        
-                sizesData.forEach(function (size) {
-                    var checkboxDiv = document.createElement("div");
-                    checkboxDiv.className = "col-lg-3";
-                    checkboxDiv.innerHTML = `
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="sizeCheckbox${size.size_id}" name="sizes[]" value="${size.size_value}" data-size-id="${size.size_id}" onclick="updateSelectedSizes()">
-                            <label class="form-check-label" for="sizeCheckbox${size.size_id}">${size.size_value}</label>
-                        </div>
-                    `;
-        
-                    sizesCheckboxes.appendChild(checkboxDiv);
-                });
-            }
-        
 
             
             function updateSelectedProductCategory() {
