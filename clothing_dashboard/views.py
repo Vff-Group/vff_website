@@ -746,7 +746,7 @@ def view_product_images(request,product_name,color_name,product_id,color_id):
         error_msg = 'Something Went Wrong'
         
     #Selected Sizes
-    query_all_selected_sizes ="select size_avail_id,sizeid,size_value from vff.united_armor_product_sizestbl,vff.united_armor_sizes_available where united_armor_product_sizestbl.sizesid=united_armor_sizes_available.sizeid and product_id='"+str(product_id)+"'"
+    query_all_selected_sizes ="select size_avail_id,sizeid,size_value from vff.united_armor_product_sizestbl,vff.united_armor_sizes_available where united_armor_product_sizestbl.sizesid=united_armor_sizes_available.sizeid and product_id='"+str(product_id)+"' and color_id='"+str(color_id)+"'"
     all_selected_sizes_result = execute_raw_query(query_all_selected_sizes)
     all_selected_sizes_data = []    
     if not all_selected_sizes_result == 500:
