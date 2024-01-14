@@ -706,7 +706,7 @@ def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id,ret=None
 
 def single_product_colors(request,main_cat_id,cat_id,sub_cat_id,product_id,product_name): 
     error_msg = 'No Product Colors Found'
-    query = "select colorsid,color_name,color_code from vff.united_armor_product_colorstbl where product_id='"+str(product_id)+"'"
+    query = "select colorsid,color_name,color_code,added_to_inventory from vff.united_armor_product_colorstbl where product_id='"+str(product_id)+"'"
     
     query_result = execute_raw_query(query)
     
@@ -720,6 +720,7 @@ def single_product_colors(request,main_cat_id,cat_id,sub_cat_id,product_id,produ
                 'colorsid': row[0],
                 'color_name': row[1],
                 'color_code': "#"+row[2],
+                'added_to_inventory': row[3],
                
             })
     else:

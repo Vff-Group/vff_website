@@ -88,6 +88,13 @@
                                     View
                                   </a>
                             </div>
+                            {% if row.added_to_inventory == 0 %}
+                            <div class="col">
+                                <a href="" class=" text-info font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.colorsid}}">
+                                    Add to Inventory
+                                  </a>
+                            </div>
+                            {% endif %}
                             {% comment %}
                             <!-- <div class="col">
                                 <a href="" class="text-danger font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.usrid}}">
@@ -103,29 +110,31 @@
 
                   <div class="col-md-4">
                     
-                    <div class="modal fade" id="modal-default{{row.usrid}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+                    <div class="modal fade" id="modal-default{{row.colorsid}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
                       <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h6 class="modal-title" id="modal-title-default">Are you sure you want to delete ?</h6>
+                            <h6 class="modal-title" id="modal-title-default">You will be adding [ {{product_name}} ] to Inventory</h6>
                             <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">×</span>
                             </button>
                           </div>
+                          <form action="" method="post">
+                            {% csrf_token %}
                           <div class="modal-body">
                             <div class="alert  m-4" role="alert">
-                              <strong>Alert! </strong>{{row.usrname}} will be deleted permanantely!
+                                You will be adding <strong>[ {{product_name}} ]</strong> to Inventory
                           </div>
                             
                           </div>
                           <div class="modal-footer">
-                            <form action="" method="post">
-                              {% csrf_token %}
-                              <button type="submit" class="btn bg-gradient-danger">Delete</button>
-                            </form>
+                            
+                              <button type="submit" class="btn bg-gradient-success">Add</button>
+                            
                             
                             <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
                           </div>
+                        </form>
                         </div>
                       </div>
                     </div>
