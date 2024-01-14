@@ -16,7 +16,8 @@
           </div>
 
           <div class="card-body px-0 pt-0 pb-2">
-            <form method="post" enctype="multipart/form-data" id="new-product-form" action="{% url 'clothing_dashboard_app:add_new_product' main_cat_id cat_id sub_cat_id %}">
+            <form method="post" enctype="multipart/form-data" id="new-product-form" action="{% url 'clothing_dashboard_app:add_new_product' main_cat_id cat_id sub_cat_id %}" onsubmit="return validateForm()">
+                
                 {% csrf_token %}
                 <div class="pl-lg-4 m-4">
                     <!-- To Select All Images and Default Image  -->
@@ -296,14 +297,51 @@
         <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/dropzone.css">
         <script src="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/dropzone.js"></script> -->
         <!-- Include jQuery -->
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-        <!-- Include jQuery Validate -->
-        <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/additional-methods.min.js"></script>
-
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+        <!-- Include Validator.js from CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/validator/13.6.0/validator.min.js"></script>
 
         <script>
+            function validateForm() {
+                // Validation using Validator.js
+        
+                // Validation for sizes
+                var selectedSizes = document.querySelectorAll('input[name="sizes[]"]:checked');
+                if (selectedSizes.length === 0) {
+                    alert("Please select at least one size.");
+                    return false;
+                }
+        
+                // Validation for default image
+                var defaultImageInput = document.getElementById('input-default-image');
+                if (defaultImageInput.files.length === 0) {
+                    alert("Please select the default image.");
+                    return false;
+                }
+        
+                // Validation for product images
+                var productImagesInput = document.getElementById('input-images');
+                if (productImagesInput.files.length === 0) {
+                    alert("Please select at least one product image.");
+                    return false;
+                }
+        
+                // Additional validations using Validator.js
+                var productName = document.getElementById('input-product-name').value;
+                if (!validator.isLength(productName, { min: 1, max: 255 })) {
+                    alert("Product name must be between 1 and 255 characters.");
+                    return false;
+                }
+        
+                // Add more validations as needed...
+        
+                // If all validations pass, the form will be submitted
+                return true;
+            }
+        </script>
+
+        <!-- <script>
             $(document).ready(function () {
                 // Validate the form
                 $('#new-product-form').validate({
@@ -378,10 +416,11 @@
                         'what_it_does': 'Please enter short description',
                         'return_policy': 'Please enter a return policy'
                     },
+                    
                     // Add other settings as needed
                 });
             });
-        </script>
+        </script> -->
 
         
         <script>
