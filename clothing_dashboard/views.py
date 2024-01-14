@@ -1166,7 +1166,7 @@ def attach_to_inventory_stock(request,product_id,color_id):
     if request.method == "POST":
         try:
             with connection.cursor() as cursor:
-                insert_query="insert into vff.united_armor_inventorytbl(product_id,color_id) values ('"+str(product_id)+"','"+str(color_id)+"')"
+                insert_query="insert into vff.united_armor_inventorytbl(product_id,color_id,size_id) values ('"+str(product_id)+"','"+str(color_id)+"','1')"
                 cursor.execute(insert_query)
                 
                 #So that it does not shows again to add stock to inventory
