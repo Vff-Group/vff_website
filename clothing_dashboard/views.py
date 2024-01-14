@@ -233,8 +233,8 @@ def all_products_details(request,main_cat_id,cat_id,sub_cat_id):
 
 def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
     error_msg=''
-    #All Sizes
-    query_sizes ="select sizesid,size_value from vff.united_armor_product_sizestbl"
+    #All Sizes For Clothing
+    query_sizes ="select sizesid,size_value from vff.united_armor_product_sizestbl and type='Clothing'"
     sizes_result = execute_raw_query(query_sizes)
     sizes_data = []    
     if not sizes_result == 500:
@@ -246,7 +246,34 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
             })
     else:
         error_msg = 'Something Went Wrong'
+        
+    #All Sizes For Shoes
+    query_shoes_sizes ="select sizesid,size_value from vff.united_armor_product_sizestbl and type='Shoes'"
+    shoes_sizes_result = execute_raw_query(query_shoes_sizes)
+    shoes_sizes_data = []    
+    if not shoes_sizes_result == 500:
+        for row in shoes_sizes_result:
+            
+            shoes_sizes_data.append({
+                'size_id': row[0],
+                'size_value': row[1],
+            })
+    else:
+        error_msg = 'Something Went Wrong'
     
+    #Pants & Leggings
+    query_pants_sizes ="select sizesid,size_value from vff.united_armor_product_sizestbl and type='Shoes'"
+    pants_sizes_result = execute_raw_query(query_pants_sizes)
+    pants_sizes_data = []    
+    if not pants_sizes_result == 500:
+        for row in pants_sizes_result:
+            
+            pants_sizes_data.append({
+                'size_id': row[0],
+                'size_value': row[1],
+            })
+    else:
+        error_msg = 'Something Went Wrong'
     
     #Product Type table [Short sleeves]
     query_product_type ="select product_type_id,product_type_name from vff.united_armor_product_typetbl"
@@ -410,7 +437,7 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
             
             
     
-    context = {'sizes_data':sizes_data,'p_type_data':p_type_data,'p_category_data':p_category_data,'p_fitting_data':p_fitting_data,'error_msg':error_msg,'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id}
+    context = {'sizes_data':sizes_data,'p_type_data':p_type_data,'p_category_data':p_category_data,'p_fitting_data':p_fitting_data,'error_msg':error_msg,'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id,'pants_sizes_data':pants_sizes_data,'shoes_sizes_data':shoes_sizes_data}
     return render(request,"all_products/add_new_product.html",context)
 
 def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id,ret=None):

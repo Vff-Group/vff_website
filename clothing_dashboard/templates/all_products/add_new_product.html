@@ -305,14 +305,7 @@
         <script>
             function validateForm() {
                 // Validation using Validator.js
-        
-                // Validation for sizes
-                var selectedSizes = document.querySelectorAll('input[name="sizes[]"]:checked');
-                if (selectedSizes.length === 0) {
-                    showToast("Alert","Please select at least one size.");
-                    return false;
-                }
-        
+                
                 // Validation for default image
                 var defaultImageInput = document.getElementById('input-default-image');
                 if (defaultImageInput.files.length === 0) {
@@ -327,6 +320,15 @@
                     return false;
                 }
         
+        
+                // Validation for sizes
+                var selectedSizes = document.querySelectorAll('input[name="sizes[]"]:checked');
+                if (selectedSizes.length === 0) {
+                    showToast("Alert","Please select at least one size.");
+                    return false;
+                }
+        
+                
                 // Additional validations using Validator.js
                 var productName = document.getElementById('input-product-name').value;
                 if (!validator.isLength(productName, { min: 1, max: 255 })) {
@@ -446,6 +448,10 @@
 
         
         <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                updateSelectedProductType();
+            });
+
             function updateSelectedProductType() {
                 var selectElement = document.getElementById('input-product-type');
                 var selectedOption = selectElement.options[selectElement.selectedIndex];
@@ -453,6 +459,54 @@
                 // Update hidden input fields
                 document.getElementById('selected-product-type-name').value = selectedOption.text;
                 document.getElementById('selected-product-type-id').value = selectedOption.value;
+
+                 // Update the sizes dropdown based on the selected product type
+                var sizesData;
+                if (selectedProductType === 'Pants & Leggings') {
+                    sizesData = pants_sizes_data;
+                } else if (selectedProductType === 'Shoes') {
+                    sizesData = shoes_sizes_data;
+                } else {
+                    sizesData = sizes_data;
+                }
+                // Call a function to update the sizes checkboxes
+                updateSizesCheckboxes(sizesData);
+            }
+
+            function updateSizesCheckboxes(sizesData) {
+                // Clear existing checkboxes
+                var sizesContainer = document.querySelector('.row #selected-size-ids');
+                sizesContainer.innerHTML = '';
+        
+                // Add checkboxes based on the sizesData
+                for (var i = 0; i < sizesData.length; i++) {
+                    var size = sizesData[i];
+        
+                    // Create checkbox element
+                    var checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.name = 'sizes[]';
+                    checkbox.value = size.size_value;
+                    checkbox.id = 'sizeCheckbox' + size.size_id;
+                    checkbox.className = 'form-check-input';
+                    checkbox.setAttribute('data-size-id', size.size_id);
+                    checkbox.onclick = updateSelectedSizes;
+        
+                    // Create label element
+                    var label = document.createElement('label');
+                    label.className = 'form-check-label';
+                    label.htmlFor = 'sizeCheckbox' + size.size_id;
+                    label.appendChild(document.createTextNode(size.size_value));
+        
+                    // Create div for each checkbox
+                    var checkboxDiv = document.createElement('div');
+                    checkboxDiv.className = 'col-lg-3';
+                    checkboxDiv.appendChild(checkbox);
+                    checkboxDiv.appendChild(label);
+        
+                    // Append the div to the container
+                    sizesContainer.appendChild(checkboxDiv);
+                }
             }
             
             function updateSelectedProductCategory() {
