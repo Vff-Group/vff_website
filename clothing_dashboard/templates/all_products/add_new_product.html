@@ -25,6 +25,9 @@
                     <input type="hidden" name="main_cat_id" value="{{main_cat_id}}">
                     <input type="hidden" name="cat_id" value="{{cat_id}}">
                     <input type="hidden" name="sub_cat_id" value="{{sub_cat_id}}">
+                    <input type="hidden" id="sizes_data_id" value="{{sizes_data}}">
+                    <input type="hidden" id="shoes_sizes_data_id" value="{{shoes_sizes_data}}">
+                    <input type="hidden" id="pants_sizes_data_id" value="{{pants_sizes_data}}">
                     
                     <div class="row mb-4">
                         <div class="col-lg-3">
@@ -365,87 +368,7 @@
         }
         </script>
 
-        <!-- <script>
-            $(document).ready(function () {
-                // Validate the form
-                $('#new-product-form').validate({
-                    rules: {
-                        // Specify validation rules for each form field
-                        'input-default-image': {
-                            required: true,
-                            extension: 'jpg|jpeg|png'
-                        },
-                        'product_images[]': {
-                            required: true,
-                            extension: 'jpg|jpeg|png'
-                        },
-                        'product_name': 'required',
-                        'product_type': 'required',
-                        'sizes[]': 'required',
-                        'productPrice': {
-                            required: true,
-                            number: true
-                        },
-                        'productOfferPrice': {
-                            required: true,
-                            number: true
-                        },
-                        'productCheckOutQuantity': {
-                            required: true,
-                            number: true
-                        },
-                        'color_name': 'required',
-                        'colors[]': 'required',
-                        'productCategory': 'required',
-                        'fittingCategory': 'required',
-                        'product_description': 'required',
-                        'fit_care': 'required',
-                        'what_it_does': 'required',
-                        'return_policy': 'required'
-                    },
-                    errorClass: 'is-invalid',
-                    validClass: 'is-valid',
-                    errorElement: 'div', // Use a custom error element, e.g., div
-                    messages: {
-                        // Specify custom error messages
-                        'input-default-image': {
-                            required: 'Please upload a default image',
-                            extension: 'File must be in JPG, JPEG, or PNG format'
-                        },
-                        'product_images[]': {
-                            required: 'Please upload product images',
-                            extension: 'Files must be in JPG, JPEG, or PNG format'
-                        },
-                        'product_name': 'Please enter a product name',
-                        'product_type': 'Please select a product type',
-                        'sizes[]': 'Please select at least one size',
-                        'productPrice': {
-                            required: 'Please enter a valid price',
-                            number: 'Please enter a valid number'
-                        },
-                        'productOfferPrice': {
-                            required: 'Please enter a valid offer price',
-                            number: 'Please enter a valid number'
-                        },
-                        'productCheckOutQuantity': {
-                            required: 'Please enter a valid max checkout quantity',
-                            number: 'Please enter a valid number'
-                        },
-                        'color_name': 'Please enter a color name',
-                        'colors[]': 'Please select at least one color',
-                        'productCategory': 'Please select a product category',
-                        'fittingCategory': 'Please select a fitting category',
-                        'product_description': 'Please enter a product description',
-                        'fit_care': 'Please enter fit and care information',
-                        'what_it_does': 'Please enter short description',
-                        'return_policy': 'Please enter a return policy'
-                    },
-                    
-                    // Add other settings as needed
-                });
-            });
-        </script> -->
-
+      
         
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -461,13 +384,18 @@
                 document.getElementById('selected-product-type-id').value = selectedOption.value;
 
                  // Update the sizes dropdown based on the selected product type
+                  // Read the values from hidden input fields
+                var sizesData = JSON.parse(document.getElementById('sizes_data_id').value);
+                var shoesSizesData = JSON.parse(document.getElementById('shoes_sizes_data_id').value);
+                var pantsSizesData = JSON.parse(document.getElementById('pants_sizes_data_id').value);
+
                 var sizesData;
                 if (selectElement === 'Pants & Leggings') {
-                    sizesData = pants_sizes_data;
+                    sizesData = pantsSizesData;
                 } else if (selectElement === 'Shoes') {
-                    sizesData = shoes_sizes_data;
+                    sizesData = shoesSizesData;
                 } else {
-                    sizesData = sizes_data;
+                    sizesData = sizesData;
                 }
                 // Call a function to update the sizes checkboxes
                 updateSizesCheckboxes(sizesData);
