@@ -168,34 +168,28 @@
 </main>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
-    $(document).ready(function () {
-        // Add an event listener to the search input field
-        $('#employee-name-search').on('input', function () {
-            applyFilters();
-        });
+  $(document).ready(function() {
+    // Search functionality
+    $('#employee-name-search').on('keyup', function() {
+      var searchText = $(this).val().toLowerCase(); // Get the search query and convert to lowercase
 
-       
-        function applyFilters() {
-          // Get the user's search input
-          var userSearch = $('#employee-name-search').val().toLowerCase();
-      
-          // Loop through the table rows and hide/show them based on the filters
-          $('.table tbody tr').each(function () {
-              var userName = $(this).find('td:first h6').text().toLowerCase();
-              var userMobile = $(this).find('td:first p.text-xs').text();
-      
-              if (
-                  userName.includes(userSearch) || userMobile.includes(userSearch) || userSearch === ''
-              ) {
-                  $(this).show();
-              } else {
-                  $(this).hide();
-              }
-          });
-      }
-      
+      // Loop through each table row
+      $('tbody tr').each(function() {
+        var name = $(this).find('td:eq(1) h6').text().toLowerCase(); // Get the name column content
+        var mobNo = $(this).find('td:eq(1) p').text().toLowerCase(); // Get the mobile number column content
+
+        // Check if the search query matches the name or mobile number
+        if (name.includes(searchText) || mobNo.includes(searchText)) {
+          $(this).show(); // If there's a match, show the row
+        } else {
+          $(this).hide(); // If no match, hide the row
+        }
       });
+    });
+  });
 </script>
 {% endblock  %}

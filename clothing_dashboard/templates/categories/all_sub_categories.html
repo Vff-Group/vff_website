@@ -16,7 +16,7 @@
                 <input
                     class="form-control form-control-alternative"
                     type="search"
-                    id="sub-category-name-search"
+                    id="employee-name-search"
                     name="sub-category-name-search-input"
                     placeholder="Search Sub Category Name"
                     value=""
@@ -189,37 +189,29 @@
 </main>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
-  // Get a reference to the dropdown element
-  var dropdown = document.getElementById("input-section_type");
-  
-  // Add an event listener to detect changes in the dropdown
-  dropdown.addEventListener("change", function() {
-      // Get a reference to the form
-      var form = document.getElementById("myForm");
+  $(document).ready(function() {
+    // Search functionality
+    $('#employee-name-search').on('keyup', function() {
+      var searchText = $(this).val().toLowerCase(); // Get the search query and convert to lowercase
 
-      // Set the form's method to "post"
-      form.method = "post";
+      // Loop through each table row
+      $('tbody tr').each(function() {
+        var name = $(this).find('td:eq(1) h6').text().toLowerCase(); // Get the name column content
+        var mobNo = $(this).find('td:eq(1) p').text().toLowerCase(); // Get the mobile number column content
 
-      // Submit the form
-      form.submit();
-  });
-
-  $(document).ready(function () {
-    $('#sub-category-name-search').on('input', function () {
-      var searchText = $(this).val().toLowerCase();
-      $('.table tbody tr').each(function () {
-        var subCategoryName = $(this).find('td:nth-child(2) h6').text().toLowerCase();
-        if (subCategoryName.includes(searchText)) {
-          $(this).show();
+        // Check if the search query matches the name or mobile number
+        if (name.includes(searchText) || mobNo.includes(searchText)) {
+          $(this).show(); // If there's a match, show the row
         } else {
-          $(this).hide();
+          $(this).hide(); // If no match, hide the row
         }
       });
     });
   });
-  
 </script>
 
 {% endblock  %}
