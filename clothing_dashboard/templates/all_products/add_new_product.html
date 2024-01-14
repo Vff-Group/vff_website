@@ -475,13 +475,19 @@
                 var selectedSizeValues = [];
 
                 // Loop through all checkboxes within the specified container and check if they are selected
-                var checkboxes = document.querySelectorAll('#' + containerId + ' input[name="sizes[]"]');
-                checkboxes.forEach(function (checkbox) {
-                    if (checkbox.checked) {
-                        selectedSizeIds.push(checkbox.getAttribute('data-size-id'));
-                        selectedSizeValues.push(checkbox.value);
-                    }
-                });
+             //  var checkboxes = document.querySelectorAll('#' + containerId + ' input[name="sizes[]"]');
+             //  checkboxes.forEach(function (checkbox) {
+             //      if (checkbox.checked) {
+             //          selectedSizeIds.push(checkbox.getAttribute('data-size-id'));
+             //          selectedSizeValues.push(checkbox.value);
+             //      }
+             //  });
+
+                // Iterate over all checkboxes
+                 document.querySelectorAll('input[name="sizes[]"]:checked').forEach(function (checkbox) {
+                     selectedSizeIds.push(checkbox.getAttribute('data-size-id'));
+                     selectedSizeValues.push(document.querySelector('label[for="' + checkbox.id + '"]').textContent);
+                 });
 
                 // Set the selected size IDs in the hidden field
                 document.getElementById('selected-' + containerId + '-ids').value = selectedSizeIds.join(',');
