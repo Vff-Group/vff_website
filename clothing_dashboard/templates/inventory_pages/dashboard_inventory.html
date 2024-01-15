@@ -317,8 +317,8 @@
                                   <div class="form-group">
                                     <label for="totalStock{{row.productid}}" class="form-control-label">Total Stock</label>
                                     <input type="number" class="form-control form-control-alternative" id="totalStock{{row.productid}}"
-                                        name="total_stock" value="{{row.product_name}}" required>
-                                      </div>
+                                        name="total_stock" value="{{row.available_quantity}}" required>
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                   <label for="stockStatus{{row.productid}}" class="form-label">Stock Status</label>
@@ -331,7 +331,7 @@
                             
                         </div>
                             
-                          </div>
+                          
                           <div class="modal-footer">
                               <button type="submit" class="btn bg-gradient-danger">Update</button>
                             <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
