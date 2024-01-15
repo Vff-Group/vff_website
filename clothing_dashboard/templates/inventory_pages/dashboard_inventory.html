@@ -347,26 +347,34 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
-$(document).ready(function() {
-// Search functionality
-$('#employee-name-search').on('keyup', function() {
-  var searchText = $(this).val().toLowerCase(); // Get the search query and convert to lowercase
+  $(document).ready(function () {
+    // Search functionality
+    $('#employee-name-search').on('keyup', function () {
+      var searchText = $(this).val().toLowerCase(); // Get the search query and convert to lowercase
 
-  // Loop through each table row
-  $('tbody tr').each(function() {
-    var name = $(this).find('td:eq(1) h6').text().toLowerCase(); // Get the name column content
-    var mobNo = $(this).find('td:eq(1) p').text().toLowerCase(); // Get the mobile number column content
+      // Loop through each table row
+      $('tbody tr').each(function () {
+        var name = $(this).find('td:eq(2) h6').text().toLowerCase(); // Get the name column content
+        var productId = $(this).find('td:eq(2) p:eq(0)').text().toLowerCase(); // Get the product ID column content
+        var fittingType = $(this).find('td:eq(2) p:eq(1)').text().toLowerCase(); // Get the fitting type column content
+        var sizeValue = $(this).find('td:eq(2) p:eq(2)').text().toLowerCase(); // Get the size value column content
 
-    // Check if the search query matches the name or mobile number
-    if (name.includes(searchText) || mobNo.includes(searchText)) {
-      $(this).show(); // If there's a match, show the row
-    } else {
-      $(this).hide(); // If no match, hide the row
-    }
+        // Check if the search query matches any of the criteria
+        if (
+          name.includes(searchText) ||
+          productId.includes(searchText) ||
+          fittingType.includes(searchText) ||
+          sizeValue.includes(searchText)
+        ) {
+          $(this).show(); // If there's a match, show the row
+        } else {
+          $(this).hide(); // If no match, hide the row
+        }
+      });
+    });
   });
-});
-});
 </script>
+
   <script src="{% static 'js/plugins/chartjs.min.js' %}"></script>
   <script>
     var ctx = document.getElementById("chart-bars").getContext("2d");
