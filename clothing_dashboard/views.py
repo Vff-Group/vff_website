@@ -1200,21 +1200,20 @@ def attach_to_inventory_stock(request,product_id,color_id):
         for key, value in request.POST.items():
             if key.startswith('available_quantity_'):
                 size_id = key.replace('available_quantity_', '')
-                print(f'Available quantity for Sizeid:{size_id} quantity:{value}')
-        # for row in temp_data:
-        #     size_id = row.size_id
-        #     available_quantity = request.POST.get(f'available_quantity_{size_id}')
-        #     if 'available_quantity_' + size_id  in request.POST:
-                # Save the updated available quantity in the database
-                
-                
-        context = {'current_url': current_url,'error_msg':error_msg}
-        return render(request,"inventory_pages/all_products_to_attach.html",context)  
+                available_quantity = value
+                # print(f'Available quantity for Sizeid:{size_id} quantity:{value}')
+                try:
+                    with connection.cursor() as cursor:
+                        insert_query="insert into vff.united_armor_inventorytbl(product_id,color_id,size_id,available_quantity,reserved_quantity,stock_status) values ('"+str(product_id)+"','"+str(color_id)+"','"+str(size_id)+"','"+str(available_quantity)+"','"+str(available_quantity)+"','Fresh Stock')"
+                        cursor.execute(insert_query)
+                        print(f'Inserting Stock Intial Records:{insert_query}')
+
+                        
+                except Exception as e:
+                    print(f"Error adding sizes data: {e}")
+        
         try:
             with connection.cursor() as cursor:
-                insert_query="insert into vff.united_armor_inventorytbl(product_id,color_id,size_id) values ('"+str(product_id)+"','"+str(color_id)+"','1')"
-                cursor.execute(insert_query)
-                
                 #So that it does not shows again to add stock to inventory
                 update_query="update vff.united_armor_inventory_productstbl set stock_added='1' where product_id='"+str(product_id)+"' and color_id='"+str(color_id)+"'"
                 cursor.execute(update_query)
