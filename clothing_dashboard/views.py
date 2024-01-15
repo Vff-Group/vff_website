@@ -1195,7 +1195,7 @@ def attach_to_inventory_stock(request,product_id,color_id):
     
     if request.method == "POST":
 
-        size_id = request.POST.get("size_id")
+        
         # Loop through the size_dict and process the data
         for size_id in request.POST:
             for row in temp_data:
