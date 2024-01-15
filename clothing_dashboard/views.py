@@ -1419,7 +1419,7 @@ def order_details(request,order_id):
     current_url = request.get_full_path()
     # context = {'query_result':data,'current_url': current_url,'total_products':total_products,'total_sales':total_sales,'total_stock_remaining':total_stock_remaining,'delivery_return':delivery_return}
     context = {'current_url': current_url}
-    return render(request,"orders_pages/all_orders_page.html",context)
+    return render(request,"orders_pages/order_detail_page.html",context)
 
 
 
