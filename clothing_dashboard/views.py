@@ -1083,7 +1083,7 @@ def inventory(request):
                 'main_cat_id': row[10],
                 'cat_id': row[11],
                 'sub_cat_id': row[12],
-                'color_code': row[13],
+                'color_code': "#"+row[13],
                 'price': row[14],
                 'offer_price': row[15],
                 'available_quantity': row[16],

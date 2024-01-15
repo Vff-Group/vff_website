@@ -259,9 +259,14 @@
                       <h6 class="mb-0 text-sm text-center">{{row.reserved_quantity}}</h6>
                     </td>
                     <td>
-                        <p class="text-xs font-weight-bold mb-0 text-center">Color: {{row.color_name}}</p>
+                      <div class="d-flex px-2 py-1">
+                        <div style="width: 20px; height: 20px; background-color: {{ color_code }}; display: inline-block;" class="avatar avatar-sm me-3"></div>
                         
-                      </td>
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">{{row.color_name}}</h6>
+                        </div>
+                      </div>
+                    </td>
                       <td class="align-middle text-center text-sm">
     
                         {% if row.stock_status == "Fresh Stock" %}
