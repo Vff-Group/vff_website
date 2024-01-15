@@ -49,9 +49,13 @@
                     </td>
                      <!-- Add a cell for available_quantity input -->
                     <td>
-                        <div class="form-group">
-                            <label class="form-control-label" for="input-available-quantity-{{ row.size_id }}">Available Stock Quantity</label>
-                            <input type="number" id="input-available-quantity-{{ row.size_id }}" class="form-control form-control-alternative" placeholder="Enter Quantity" name="available_quantity_{{ row.size_id }}" autocomplete="off" required>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-available-quantity-{{ row.size_id }}">Available Stock Quantity</label>
+                                    <input type="number" id="input-available-quantity-{{ row.size_id }}" class="form-control form-control-alternative" placeholder="Enter Quantity" name="available_quantity_{{ row.size_id }}" autocomplete="off" required>
+                                </div>
+                            </div>
                         </div>
                     </td>
                       
