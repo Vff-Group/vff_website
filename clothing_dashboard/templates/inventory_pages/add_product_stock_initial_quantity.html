@@ -42,10 +42,10 @@
                   {% for row in query_result %}
                   <tr>
                     <td>
-                        <p class="text-xs text-secondary mb-0">{{forloop.counter}}</p>
+                        <p class="text-sm text-secondary mb-0">{{forloop.counter}}</p>
                     </td>
                     <td>
-                      <h1 class="text-xs font-weight-bold mb-0"> <strong> #{{row.size_id}}</strong> [ {{row.size_name}} ]</h1>
+                      <h1 class="text-sm font-weight-bold mb-0">  <strong> {{row.size_name}} </strong> Size ID: [#{{row.size_id}}]</h1>
                     </td>
                      <!-- Add a cell for available_quantity input -->
                     <td>
@@ -119,7 +119,7 @@
                 </tbody>
               </table>
             </div>
-                <button type="submit" class="btn btn-primary m-5">Save</button>
+                <button type="submit" class="btn btn-primary ms-5">Add to Stock </button>
             </form>
           </div>
           {% endif %}
