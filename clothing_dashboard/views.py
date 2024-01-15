@@ -1284,6 +1284,8 @@ def update_stock_details(request,product_id,size_id,color_id):
     if request.method == "POST":
         total_quantity = request.POST.get('total_stock')
         stock_status = request.POST.get('stock_status')
+        print(f'total_quantity::{total_quantity}')
+        print(f'stock_status::{stock_status}')
         try:
             with connection.cursor() as cursor:
                 
