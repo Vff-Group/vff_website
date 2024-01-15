@@ -1277,6 +1277,38 @@ def load_all_inventory_stock_products(request):
     context = {'query_result':data,'current_url': current_url,'error_msg':error_msg}
     return render(request,"inventory_pages/dashboard_inventory.html",context)  
 
+def update_stock_details(request,product_id,size_id,color_id):
+    error_msg = 'Something Went Wrong'
+    
+    
+    if request.method == "POST":
+        total_quantity = request.POST.get('total_stock')
+        stock_status = request.POST.get('stock_status')
+        try:
+            with connection.cursor() as cursor:
+                
+                
+                #So that it does not shows add to inventory option
+                update_query="update vff.united_armor_inventorytbl set available_quantity='"+str(total_quantity)+"' and stock_status='"+str(stock_status)+"' where product_id='"+str(product_id)+"' and color_id='"+str(color_id)+"' and size_id='"+str(size_id)+"'"
+                cursor.execute(update_query)
+                connection.commit()
+                print(f" Update Product ID {product_id} color {color_id} details to Inventory  Successfully.")
+                return redirect(reverse('clothing_dashboard_app:inventory'))
+        except Exception as e:
+            print(f"Error loading data: {e}")
+            
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"inventory_pages/dashboard_inventory.html",context)
+
+
+
+
+
+
+
+
 
 def epochToDateTime(epoch):
     datetime_obj = datetime.utcfromtimestamp(epoch)

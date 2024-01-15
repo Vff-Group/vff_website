@@ -97,6 +97,9 @@ urlpatterns = [
     # Load all Inventory Products
     path('load_all_inventory_stock_products/',views.load_all_inventory_stock_products,name='load_all_inventory_stock_products'),
     
+    # Update Stock Status and Details
+    path('update_stock_details/<int:product_id>/<int:size_id>/<int:color_id>/',views.update_stock_details,name='update_stock_details'),
+    
    
 ]
 

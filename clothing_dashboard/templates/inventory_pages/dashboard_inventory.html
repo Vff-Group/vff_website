@@ -302,25 +302,41 @@
                       <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h6 class="modal-title" id="modal-title-default">Are you sure you want to delete ?</h6>
+                            <h6 class="modal-title" id="modal-title-default">Update Stock Details</h6>
                             <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">×</span>
                             </button>
                           </div>
+                          <form id="updateStockForm{{row.productid}}" method="post"
+                                action="{% url 'clothing_dashboard_app:update_stock_details' row.productid row.size_id row.color_id %}" data-id="{{row.productid}}">
+                                {% csrf_token %}
                           <div class="modal-body">
-                            <div class="alert  m-4" role="alert">
-                              <strong>Alert! </strong>{{row.product_name}} will be deleted permanantely!
-                          </div>
+                            
+                                <!-- Form content -->
+                                <div class="mb-3">
+                                  <div class="form-group">
+                                    <label for="totalStock{{row.productid}}" class="form-control-label">Total Stock</label>
+                                    <input type="number" class="form-control form-control-alternative" id="totalStock{{row.productid}}"
+                                        name="total_stock" value="{{row.product_name}}" required>
+                                      </div>
+                                </div>
+                                <div class="mb-3">
+                                  <label for="stockStatus{{row.productid}}" class="form-label">Stock Status</label>
+                                  <select class="form-select" id="stockStatus{{row.productid}}" name="stock_status" required>
+                                      <option value="Fresh Stock" {% if row.stock_status == 'Fresh Stock' %}selected{% endif %}>Fresh Stock</option>
+                                      <option value="In Stock" {% if row.stock_status == 'In Stock' %}selected{% endif %}>In Stock</option>
+                                      <option value="Out of Stock" {% if row.stock_status == 'Out of Stock' %}selected{% endif %}>Out of Stock</option>
+                                  </select>
+                              </div>
+                            
+                        </div>
                             
                           </div>
                           <div class="modal-footer">
-                            <form action="" method="post">
-                              {% csrf_token %}
                               <button type="submit" class="btn bg-gradient-danger">Update</button>
-                            </form>
-                            
                             <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
                           </div>
+                        </form>
                         </div>
                       </div>
                     </div>
