@@ -76,10 +76,11 @@ urlpatterns = [
     # ADD NEW PURCHASE ORDER DETAILS
     path('add_new_purchase_orders/',views.add_new_purchase_orders,name='add_new_purchase_orders'),
    
-    #INVENTORY DASHBOARD
-    path('inventory/',views.inventory,name='inventory'),
+    
     
     #---------------- INVENTORY PART ------------------
+    #INVENTORY DASHBOARD
+    path('inventory/',views.inventory,name='inventory'),
     
     # Add Product based on color to inventory
     path('add_product_to_inventory/<int:main_cat_id>/<int:cat_id>/<int:sub_cat_id>/<int:product_id>/<str:product_name>/<int:color_id>/',views.add_product_to_inventory,name='add_product_to_inventory'),
