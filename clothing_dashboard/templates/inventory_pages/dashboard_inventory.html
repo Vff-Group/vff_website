@@ -194,10 +194,11 @@
                       <th class="text-uppercase  text-xxs font-weight-bolder opacity-7">Sl No</th>
                       <th class="text-uppercase  text-xxs font-weight-bolder opacity-7 ps-2">Date</th>
                       <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">Product Details</th>
+                      <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">Category Details</th>
+                      <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">Price Details</th>
                       <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">Stock</th>                
                       <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">In Stock</th>                
                       <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">Color</th>                
-                      <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">Sold</th>
                       <th class="text-center text-uppercase  text-xxs font-weight-bolder opacity-7">Status</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
@@ -211,7 +212,115 @@
                     </button>
                 </div>
                 {% else %}
-               
+                <tbody >
+                  {% for row in query_result %}
+                  <tr>
+                    <td>
+                        <p class="text-xs text-secondary mb-0 text-center">{{forloop.counter}}</p>
+                    </td>
+                    <td>
+                      <p class="text-sm text-secondary mb-0 text-center">{{last_updated_time}}</p>
+                    </td>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div>
+                          <img src="{{row.default_images}}" class="avatar avatar-sm me-3" alt="user1">
+                        </div>
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">{{row.product_name}}</h6>
+                          <p class="text-xs text-secondary mb-0">{{row.productid}}</p>
+                          <p class="text-xs text-secondary mb-0">Fitting: {{row.fitting_type}}</p>
+                          <p class="text-sm text-secondary mb-0">Size: [ {{row.size_value}} ]</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="{{row.main_category_image}}" class="avatar avatar-sm me-3" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Main Category: {{row.main_title_name}}</h6>
+                            <p class="text-xs text-secondary mb-0">Category: {{row.cat_name}}</p>
+                            <p class="text-xs text-secondary mb-0">Sub Category: {{row.sub_cat_name}}</p>
+                          </div>
+                        </div>
+                      </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">Price: ₹.{{row.price}}/-</p>
+                      <p class="text-xs font-weight-bold mb-0">Offer Price: ₹.{{row.offer_price}}/-</p>
+                      
+                    </td>
+                    <td>
+                      <h6 class="mb-0 text-sm">{{row.available_quantity}}/{{row.reserved_quantity}}</h6>
+                    </td>
+                    <td>
+                      <h6 class="mb-0 text-sm">{{row.purchased_quantity}}</h6>
+                    </td>
+                    <td>
+                        <p class="text-xs font-weight-bold mb-0 text-center">Color: {{row.color_name}}</p>
+                        
+                      </td>
+                      <td class="align-middle text-center text-sm">
+    
+                        {% if row.stock_status == "Fresh" %}
+                          <span class="badge badge-sm bg-success">{{row.stock_status}}</span>
+                          {% elif row.stock_status == "In Stock" %}
+                          <span class="badge badge-sm bg-primary">{{row.stock_status}}</span>
+                          {% else %}
+                          <span class="badge badge-sm bg-danger">{{row.stock_status}}</span>
+                          {% endif %}
+                        </td>
+                      
+                    
+                    
+                    <td class="align-middle">
+                        <div class="row">
+                            
+                            <div class="col">
+                                
+                                <a href="" class="text-secondary font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.productid}}"> 
+                                    Update Stock
+                                  </a>
+                            </div>
+                           
+                        </div>
+                      
+                      
+                    </td>
+                  </tr>
+
+                  <div class="col-md-4">
+                    
+                    <div class="modal fade" id="modal-default{{row.productid}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+                      <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h6 class="modal-title" id="modal-title-default">Are you sure you want to delete ?</h6>
+                            <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="alert  m-4" role="alert">
+                              <strong>Alert! </strong>{{row.product_name}} will be deleted permanantely!
+                          </div>
+                            
+                          </div>
+                          <div class="modal-footer">
+                            <form action="" method="post">
+                              {% csrf_token %}
+                              <button type="submit" class="btn bg-gradient-danger">Update</button>
+                            </form>
+                            
+                            <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </tbody>
                 </table>
               </div>
             </div>
