@@ -1197,13 +1197,16 @@ def attach_to_inventory_stock(request,product_id,color_id):
 
         
         # Loop through the size_dict and process the data
-        
-        for row in temp_data:
-            size_id = row.size_id
-            available_quantity = request.POST.get(f'available_quantity_{size_id}')
-            if 'available_quantity_' + size_id  in request.POST:
+        for key, value in request.POST.items():
+            if key.startswith('available_quantity_'):
+                size_id = key.replace('available_quantity_', '')
+                print(f'Available quantity for Sizeid:{size_id} quantity:{value}')
+        # for row in temp_data:
+        #     size_id = row.size_id
+        #     available_quantity = request.POST.get(f'available_quantity_{size_id}')
+        #     if 'available_quantity_' + size_id  in request.POST:
                 # Save the updated available quantity in the database
-                print(f'Available quantity for Sizeid:{size_id} quantity:{available_quantity}')
+                
                 
         context = {'current_url': current_url,'error_msg':error_msg}
         return render(request,"inventory_pages/all_products_to_attach.html",context)  
