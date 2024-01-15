@@ -1065,7 +1065,7 @@ def inventory(request):
         for row in result:
             epoch = row[19]
             time_date = epochToDateTime(epoch)
-            print(f'time_date::{time_date}')
+            # print(f'time_date::{time_date}')
             sold = row[18]
             if sold == -1:
                 sold = 0
