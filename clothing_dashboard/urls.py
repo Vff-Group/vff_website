@@ -100,7 +100,13 @@ urlpatterns = [
     # Update Stock Status and Details
     path('update_stock_details/<int:product_id>/<int:size_id>/<int:color_id>/',views.update_stock_details,name='update_stock_details'),
     
-   
+   #---------------- ORDERS PART ------------------
+    #All ORDERS
+    path('all_orders/',views.all_orders,name='all_orders'),
+    
+    #order details
+    path('order_details/<int:order_id>/',views.order_details,name='order_details'),
+    
 ]
 
 if settings.DEBUG:
