@@ -285,7 +285,7 @@
                             
                             <div class="col">
                                 
-                                <a href="" class="text-secondary font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.productid}}"> 
+                                <a href="" class="text-secondary font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.inventory_id}}"> 
                                     Update Stock
                                   </a>
                             </div>
@@ -298,7 +298,7 @@
 
                   <div class="col-md-4">
                     
-                    <div class="modal fade" id="modal-default{{row.productid}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+                    <div class="modal fade" id="modal-default{{row.inventory_id}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
                       <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
@@ -307,25 +307,25 @@
                               <span aria-hidden="true">×</span>
                             </button>
                           </div>
-                          <form id="updateStockForm{{row.productid}}" method="post"
-                                action="{% url 'clothing_dashboard_app:update_stock_details' row.productid row.size_id row.color_id %}" data-id="{{row.productid}}">
+                          <form id="updateStockForm{{row.inventory_id}}" method="post"
+                                action="{% url 'clothing_dashboard_app:update_stock_details' row.productid row.size_id row.color_id %}" data-id="{{row.inventory_id}}">
                                 {% csrf_token %}
                           <div class="modal-body">
                             
                                 <!-- Form content -->
                                 <div class="mb-3">
                                   <div class="form-group">
-                                    <label for="totalStock{{row.productid}}" class="form-control-label">Total Stock</label>
-                                    <input type="number" class="form-control form-control-alternative" id="totalStock{{row.productid}}"
-                                        name="total_stock" value="{{row.available_quantity}}" required>
+                                    <label for="totalStock{{row.inventory_id}}" class="form-control-label">Total Stock</label>
+                                    <input type="number" class="form-control form-control-alternative" id="totalStock{{row.inventory_id}}"
+                                        name="total_stock"  required>
                                     </div>
                                 </div>
 
                                 <!-- Remaining  -->
                                 <div class="mb-3">
                                   <div class="form-group">
-                                    <label for="remainingStock{{row.productid}}" class="form-control-label">Remaining Stock</label>
-                                    <input type="number" class="form-control form-control-alternative" id="remainingStock{{row.productid}}"
+                                    <label for="remainingStock{{row.inventory_id}}" class="form-control-label">Remaining Stock</label>
+                                    <input type="number" class="form-control form-control-alternative" id="remainingStock{{row.inventory_id}}"
                                         name="remaining_stock" value="{{row.reserved_quantity}}" required>
                                     </div>
                                 </div>
@@ -333,16 +333,16 @@
                                 <!-- Sold  -->
                                 <div class="mb-3">
                                   <div class="form-group">
-                                    <label for="soldStock{{row.productid}}" class="form-control-label">Sold Stock</label>
-                                    <input type="number" class="form-control form-control-alternative" id="soldStock{{row.productid}}"
+                                    <label for="soldStock{{row.inventory_id}}" class="form-control-label">Sold Stock</label>
+                                    <input type="number" class="form-control form-control-alternative" id="soldStock{{row.inventory_id}}"
                                          value="{{row.purchased_quantity}}" disabled required>
                                         <input type="hidden" name="sold_stock" value="{{row.purchased_quantity}}">
                                     </div>
                                 </div>
 
                                 <div class="mb-3">
-                                  <label for="stockStatus{{row.productid}}" class="form-label">Stock Status</label>
-                                  <select class="form-select" id="stockStatus{{row.productid}}" name="stock_status" required>
+                                  <label for="stockStatus{{row.inventory_id}}" class="form-label">Stock Status</label>
+                                  <select class="form-select" id="stockStatus{{row.inventory_id}}" name="stock_status" required>
                                       <option value="Fresh Stock" {% if row.stock_status == 'Fresh Stock' %}selected{% endif %}>Fresh Stock</option>
                                       <option value="In Stock" {% if row.stock_status == 'In Stock' %}selected{% endif %}>In Stock</option>
                                       <option value="Out of Stock" {% if row.stock_status == 'Out of Stock' %}selected{% endif %}>Out of Stock</option>
