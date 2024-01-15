@@ -1114,7 +1114,7 @@ def add_product_to_inventory(request,main_cat_id,cat_id,sub_cat_id,product_id,pr
                 cursor.execute(insert_query)
                 
                 #So that it does not shows add to inventory option
-                update_query="update vff.united_armor_product_colorstbl set added_to_inventory='1' where product_id='"+str(product_id)+"' and colorsid='"+str(color_id)+"'"
+                update_query="update vff.united_armor_product_colorstbl set added_to_inventory='1', last_update_time=EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) where product_id='"+str(product_id)+"' and colorsid='"+str(color_id)+"'"
                 cursor.execute(update_query)
                 connection.commit()
                 print(f" Added Product {product_name} color {color_id} to Inventory Inserted Successfully.")
@@ -1130,7 +1130,7 @@ def add_product_to_inventory(request,main_cat_id,cat_id,sub_cat_id,product_id,pr
 def attach_to_inventory(request):
     error_msg='No Products Listed to stock'
     #All Images Data
-    query ="select productid,product_name,fitting_type,colorsid,color_name,default_images,main_title_name,cat_name,sub_cat_name,images as main_cat_img,united_armor_all_productstbl.main_cat_id,united_armor_all_productstbl.cat_id,united_armor_all_productstbl.sub_catid,stock_added,color_code,price,offer_price from vff.united_armor_main_categorytbl,vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl,vff.united_armor_product_colorstbl,vff.united_armor_all_productstbl,vff.united_armor_inventory_productstbl where united_armor_all_productstbl.productid=united_armor_product_colorstbl.product_id  and united_armor_inventory_productstbl.product_id=united_armor_all_productstbl.productid and united_armor_all_productstbl.default_color_id=united_armor_product_colorstbl.colorsid and united_armor_all_productstbl.main_cat_id=united_armor_main_categorytbl.main_cat_id and  united_armor_all_productstbl.cat_id=united_armor_categorytbl.catid and united_armor_all_productstbl.sub_catid=united_armor_sub_categorytbl.sub_catid  and added_to_inventory='1'"
+    query ="select productid,product_name,fitting_type,colorsid,color_name,default_images,main_title_name,cat_name,sub_cat_name,images as main_cat_img,united_armor_all_productstbl.main_cat_id,united_armor_all_productstbl.cat_id,united_armor_all_productstbl.sub_catid,stock_added,color_code,price,offer_price from vff.united_armor_main_categorytbl,vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl,vff.united_armor_product_colorstbl,vff.united_armor_all_productstbl,vff.united_armor_inventory_productstbl where united_armor_all_productstbl.productid=united_armor_product_colorstbl.product_id  and united_armor_inventory_productstbl.product_id=united_armor_all_productstbl.productid and united_armor_all_productstbl.default_color_id=united_armor_product_colorstbl.colorsid and united_armor_all_productstbl.main_cat_id=united_armor_main_categorytbl.main_cat_id and  united_armor_all_productstbl.cat_id=united_armor_categorytbl.catid and united_armor_all_productstbl.sub_catid=united_armor_sub_categorytbl.sub_catid  and added_to_inventory='1' order by last_update_time desc"
     result = execute_raw_query(query)
     data = []    
     if not result == 500:
