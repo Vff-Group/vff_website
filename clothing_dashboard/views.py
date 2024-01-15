@@ -1284,15 +1284,14 @@ def update_stock_details(request,product_id,size_id,color_id):
     if request.method == "POST":
         total_quantity = request.POST.get('total_stock')
         stock_status = request.POST.get('stock_status')
-        print(f'total_quantity::{total_quantity}')
-        print(f'stock_status::{stock_status}')
+        
         try:
             with connection.cursor() as cursor:
                 
                 
                 #So that it does not shows add to inventory option
-                update_query="update vff.united_armor_inventorytbl set available_quantity='"+str(total_quantity)+"' and stock_status='"+str(stock_status)+"' where product_id='"+str(product_id)+"' and color_id='"+str(color_id)+"' and size_id='"+str(size_id)+"'"
-                print(f'queryyy::{update_query}')
+                update_query="update vff.united_armor_inventorytbl set available_quantity='"+str(total_quantity)+"' , stock_status='"+str(stock_status)+"' where product_id='"+str(product_id)+"' and color_id='"+str(color_id)+"' and size_id='"+str(size_id)+"'"
+                
                 cursor.execute(update_query)
                 connection.commit()
                 print(f" Update Product ID {product_id} color {color_id} details to Inventory  Successfully.")
