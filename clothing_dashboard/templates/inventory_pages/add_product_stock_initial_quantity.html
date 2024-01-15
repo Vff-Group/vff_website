@@ -45,13 +45,14 @@
                         <p class="text-xs text-secondary mb-0 text-center">{{forloop.counter}}</p>
                     </td>
                     <td>
+                        <input type="hidden" name="size_id" value="{{row.size_id}}">
                       <p class="text-xs font-weight-bold mb-0 text-center"> <strong> #{{row.size_id}}</strong> [ {{row.size_name}} ]</p>
                     </td>
                      <!-- Add a cell for available_quantity input -->
                     <td>
                         <div class="form-group">
                             <label class="form-control-label" for="input-available-quantity-{{ row.size_id }}">Available Stock Quantity</label>
-                            <input type="text" id="input-available-quantity-{{ row.size_id }}" class="form-control form-control-alternative" placeholder="Enter Quantity" name="available_quantity_{{ row.size_id }}" autocomplete="off" required>
+                            <input type="number" id="input-available-quantity-{{ row.size_id }}" class="form-control form-control-alternative" placeholder="Enter Quantity" name="available_quantity_{{ row.size_id }}" autocomplete="off" required>
                         </div>
                     </td>
                       

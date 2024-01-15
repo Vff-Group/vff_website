@@ -26,7 +26,7 @@ from django.http import JsonResponse
 from PIL import Image  # Pillow library for image processing
 # Create your views here.
 serverToken="AAAApZY1ur0:APA91bHsk-e3OC5R2vqO7dD0WZp7ifULNzqrUPnQu07et7RLFMWWcwOqY9Bl-9YQWkuXUP5nM7bVMgMP-qKISf9Jcf2ix9j7oOkScq9-3BH0hfCH3nIWgkn4hbnmSLyw4pmq66rMZz8R"
-
+temp_data = []
 
 # Create your views here.
 #Login Page
@@ -1162,6 +1162,8 @@ def attach_to_inventory(request):
 def load_add_initial_stock(request,product_id,color_id,color_name,product_name):
     error_msg=f'No Sizes Added To Products For this color {color_name}'
     #All Images Data
+    global temp_data
+    temp_data = []
     query =" select sizesid,size_value from vff.united_armor_product_sizestbl,vff.united_armor_sizes_available where united_armor_product_sizestbl.sizesid=united_armor_sizes_available.sizeid and product_id='"+str(product_id)+"' and color_id='"+str(color_id)+"'"
     result = execute_raw_query(query)
     data = []    
@@ -1169,6 +1171,11 @@ def load_add_initial_stock(request,product_id,color_id,color_name,product_name):
         for row in result:
             
             data.append({
+                'size_id': row[0],
+                'size_name': row[1],
+                
+            })
+            temp_data.append({
                 'size_id': row[0],
                 'size_name': row[1],
                 
@@ -1181,19 +1188,22 @@ def load_add_initial_stock(request,product_id,color_id,color_name,product_name):
     return render(request,"inventory_pages/add_product_stock_initial_quantity.html",context)  
 
 
+    
 def attach_to_inventory_stock(request,product_id,color_id):
     error_msg = 'No Product Colors Found'
     
     
     if request.method == "POST":
 
-
+        size_id = request.POST.get("size_id")
         # Loop through the size_dict and process the data
         for size_id in request.POST:
-            if size_id.startswith('size_id_'):
-                size_id = size_id.replace('size_id_', '')
+            for row in temp_data:
+                size_id = row.size_id
                 available_quantity = request.POST.get(f'available_quantity_{size_id}')
-                print(f'Available quantity for Sizeid:{size_id} quantity:{available_quantity}')
+                if 'available_quantity_' + size_id  in request.POST:
+                    # Save the updated available quantity in the database
+                    print(f'Available quantity for Sizeid:{size_id} quantity:{available_quantity}')
         context = {'current_url': current_url,'error_msg':error_msg}
         return render(request,"inventory_pages/all_products_to_attach.html",context)  
         try:
