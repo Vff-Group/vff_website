@@ -335,7 +335,8 @@
                                   <div class="form-group">
                                     <label for="soldStock{{row.productid}}" class="form-control-label">Sold Stock</label>
                                     <input type="number" class="form-control form-control-alternative" id="soldStock{{row.productid}}"
-                                        name="sold_stock" value="{{row.purchased_quantity}}" disabled required>
+                                         value="{{row.purchased_quantity}}" disabled required>
+                                        <input type="hidden" name="sold_stock" value="{{row.purchased_quantity}}">
                                     </div>
                                 </div>
 
