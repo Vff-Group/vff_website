@@ -1201,7 +1201,7 @@ def attach_to_inventory_stock(request,product_id,color_id):
             if key.startswith('available_quantity_'):
                 size_id = key.replace('available_quantity_', '')
                 available_quantity = value
-                # print(f'Available quantity for Sizeid:{size_id} quantity:{value}')
+                print(f'Available quantity for Sizeid:{size_id} quantity:{value}')
                 try:
                     with connection.cursor() as cursor:
                         insert_query="insert into vff.united_armor_inventorytbl(product_id,color_id,size_id,available_quantity,reserved_quantity,stock_status) values ('"+str(product_id)+"','"+str(color_id)+"','"+str(size_id)+"','"+str(available_quantity)+"','"+str(available_quantity)+"','Fresh Stock')"

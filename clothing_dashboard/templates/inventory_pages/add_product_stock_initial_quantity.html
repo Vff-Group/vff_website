@@ -20,7 +20,7 @@
                 {% csrf_token %}
             <div class="table-responsive p-0">
               <table class="table align-items-center mb-0  table-hover">
-                <thead class=" bg-gradient-faded-info">
+                <thead class="bg-light">
                   <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sl No</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Size Value</th>
@@ -45,7 +45,6 @@
                         <p class="text-xs text-secondary mb-0 text-center">{{forloop.counter}}</p>
                     </td>
                     <td>
-                        {{row.size_id}}
                       <p class="text-xs font-weight-bold mb-0 text-center"> <strong> #{{row.size_id}}</strong> [ {{row.size_name}} ]</p>
                     </td>
                      <!-- Add a cell for available_quantity input -->
