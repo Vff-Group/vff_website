@@ -320,6 +320,25 @@
                                         name="total_stock" value="{{row.available_quantity}}" required>
                                     </div>
                                 </div>
+
+                                <!-- Remaining  -->
+                                <div class="mb-3">
+                                  <div class="form-group">
+                                    <label for="remainingStock{{row.productid}}" class="form-control-label">Remaining Stock</label>
+                                    <input type="number" class="form-control form-control-alternative" id="remainingStock{{row.productid}}"
+                                        name="remaining_stock" value="{{row.reserved_quantity}}" required>
+                                    </div>
+                                </div>
+
+                                <!-- Sold  -->
+                                <div class="mb-3">
+                                  <div class="form-group">
+                                    <label for="soldStock{{row.productid}}" class="form-control-label">Sold Stock</label>
+                                    <input type="number" class="form-control form-control-alternative" id="soldStock{{row.productid}}"
+                                        name="sold_stock" value="{{row.purchased_quantity}}" disabled required>
+                                    </div>
+                                </div>
+
                                 <div class="mb-3">
                                   <label for="stockStatus{{row.productid}}" class="form-label">Stock Status</label>
                                   <select class="form-select" id="stockStatus{{row.productid}}" name="stock_status" required>
