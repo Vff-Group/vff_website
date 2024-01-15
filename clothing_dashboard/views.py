@@ -1158,12 +1158,44 @@ def attach_to_inventory(request):
     # using the 'current_url' variable to determine the active card.
     context = {'query_result':data,'current_url': current_url,'error_msg':error_msg}
     return render(request,"inventory_pages/all_products_to_attach.html",context)  
+ 
+def load_add_initial_stock(request,product_id,color_id,color_name,product_name):
+    error_msg=f'No Sizes Added To Products For this color {color_name}'
+    #All Images Data
+    query =" select sizesid,size_value from vff.united_armor_product_sizestbl,vff.united_armor_sizes_available where united_armor_product_sizestbl.sizesid=united_armor_sizes_available.sizeid and product_id='"+str(product_id)+"' and color_id='"+str(color_id)+"'"
+    result = execute_raw_query(query)
+    data = []    
+    if not result == 500:
+        for row in result:
+            
+            data.append({
+                'size_id': row[0],
+                'size_name': row[1],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg,'product_id':product_id,'color_id':color_id,'color_name':color_name,'product_name':product_name}
+    return render(request,"inventory_pages/add_product_stock_initial_quantity.html",context)  
+
 
 def attach_to_inventory_stock(request,product_id,color_id):
     error_msg = 'No Product Colors Found'
     
     
     if request.method == "POST":
+
+
+        # Loop through the size_dict and process the data
+        for size_id in request.POST:
+            if size_id.startswith('size_id_'):
+                size_id = size_id.replace('size_id_', '')
+                available_quantity = request.POST.get(f'available_quantity_{size_id}')
+                print(f'Available quantity for Sizeid:{size_id} quantity:{available_quantity}')
+        context = {'current_url': current_url,'error_msg':error_msg}
+        return render(request,"inventory_pages/all_products_to_attach.html",context)  
         try:
             with connection.cursor() as cursor:
                 insert_query="insert into vff.united_armor_inventorytbl(product_id,color_id,size_id) values ('"+str(product_id)+"','"+str(color_id)+"','1')"

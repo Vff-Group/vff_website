@@ -87,6 +87,9 @@ urlpatterns = [
     # Load all Products to add to inventory to add quantity
     path('attach_to_inventory/',views.attach_to_inventory,name='attach_to_inventory'),
     
+    # Load Single Product Sizes Based on ColorID to add initial inventory Stock for Inventory Table
+    path('load_add_initial_stock/<int:product_id>/<int:color_id>/<str:color_name>/<str:product_name>/',views.load_add_initial_stock,name='load_add_initial_stock'),
+    
     # Load all Products to add to inventory to add quantity
     path('attach_to_inventory_stock/<int:product_id>/<int:color_id>/',views.attach_to_inventory_stock,name='attach_to_inventory_stock'),
     
