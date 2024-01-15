@@ -1063,7 +1063,12 @@ def inventory(request):
     data = []    
     if not result == 500:
         for row in result:
-            time_date = epochToDateTime(row[19])
+            epoch = row[19]
+            time_date = epochToDateTime(epoch)
+            print(f'time_date::{time_date}')
+            sold = row[18]
+            if sold == -1:
+                sold = 0
             data.append({
                 'productid': row[0],
                 'product_name': row[1],
@@ -1083,7 +1088,7 @@ def inventory(request):
                 'offer_price': row[15],
                 'available_quantity': row[16],
                 'reserved_quantity': row[17],
-                'purchased_quantity': row[18],
+                'purchased_quantity': sold,
                 'last_updated_time': time_date,
                 'stock_status': row[20],
                 'size_id': row[21],
