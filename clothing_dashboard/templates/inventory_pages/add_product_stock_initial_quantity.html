@@ -16,7 +16,7 @@
           
           <!-- Action Buttons End  -->
           <div class="card-body px-0 pt-0 pb-2">
-            <form method="post" action="{% url 'clothing_dashboard_app:attach_to_inventory_stock' product_id color_id %}">
+            <form method="post" >
                 {% csrf_token %}
             <div class="table-responsive p-0">
               <table class="table align-items-center mb-0  table-hover">
