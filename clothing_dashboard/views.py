@@ -1138,6 +1138,185 @@ def update_supplier_details(request,supplier_id):
     # using the 'current_url' variable to determine the active card.
     context = {'current_url': current_url,'error_msg':error_msg}
     return render(request,"inventory_pages/all_suppliers.html",context)
+
+#PURCHASE ORDERS
+def all_purchases(request):
+    error_msg='No Purchase Added Yet'
+    #All Suppliers Data
+    query_suppliers ="select supplierid,supplier_name from vff.united_armor_suppliertbl"
+    result_suppliers = execute_raw_query(query_suppliers)
+    supplier_data = []    
+    if not result_suppliers == 500:
+        for row in result_suppliers:
+            
+            supplier_data.append({
+                'supplier_id': row[0],
+                'supplier_name': row[1],
+                
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    #All Purchases Data
+    query ="select purchaseid,item_name,order_by_supplier_name,supplier_id,purchase_date,credit_amount,total_amount,paid_amount,balance_amount,supplier_type,status,purchase_status,transaction_type,tax_given from vff.united_armor_purchase_itemtbl"
+    result = execute_raw_query(query)
+    data = []    
+    if not result == 500:
+        for row in result:
+            
+            data.append({
+                'purchaseid': row[0],
+                'item_name': row[1],
+                'order_by_supplier_name': row[2],
+                'supplier_id': row[3],
+                'purchase_date': row[4],
+                'credit_taken': row[5],
+                'total_amount': row[6],
+                'paid_amount': row[7],
+                'balance_amount': row[8],
+                'supplier_type': row[9],
+                'payment_status': row[10],
+                'purchase_status': row[11],
+                'transaction_type': row[12],
+                'tax_given': row[13],
+                
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    current_url = request.get_full_path()
+    context = {'query_result':data,'supplier_data':supplier_data,'current_url': current_url,'error_msg':error_msg}
+    return render(request,"inventory_pages/all_purchases.html",context)
+
+def add_new_purchase(request):
+    error_msg = 'Something Went Wrong'
+    
+    
+    if request.method == "POST":
+        # Retrieve values from the form
+        
+        try:
+            with connection.cursor() as cursor:
+                insert_query="insert into vff.united_armor_purchase_itemtbl(purchaseid,item_name,order_by_supplier_name,supplier_id,purchase_date,credit_amount,total_amount,paid_amount,balance_amount,supplier_type,status,purchase_status,transaction_type,tax_given) values ()"
+                cursor.execute(insert_query)
+                
+               
+                connection.commit()
+                print(f" Added New Purchase  Successfully.")
+                return redirect(reverse('clothing_dashboard_app:all_purchases'))
+        except Exception as e:
+            print(f"Error loading data: {e}")
+            
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"inventory_pages/all_purchases.html",context)
+ 
+def update_purchase_details(request,purchase_id):
+    error_msg = 'Something Went Wrong'
+    
+    
+    if request.method == "POST":
+        # Retrieve values from the form
+        
+        try:
+            with connection.cursor() as cursor:
+                #,reg_date='"+str(date_of_reg)+"'
+                update_query="update vff.united_armor_purchase_itemtbl set item_name,order_by_supplier_name,supplier_id,credit_amount,total_amount,paid_amount,balance_amount,supplier_type,status,purchase_status,transaction_type,tax_given where purchaseid=''"
+                cursor.execute(update_query)
+                
+               
+                connection.commit()
+                print(f" Update  Purchase Details  Successfully.")
+                return redirect(reverse('clothing_dashboard_app:all_purchases'))
+        except Exception as e:
+            print(f"Error loading data: {e}")
+            
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"inventory_pages/all_purchases.html",context)
+
+#PURCHASE ORDERS END
+
+#DEPARTMENTS
+def all_departments(request):
+    error_msg='No Department Added Yet'
+   
+    
+    
+    #All Departments Data
+    query ="select departmentid,department_name,department_head_name,staff_under_work from vff.united_armor_departmenttbl"
+    result = execute_raw_query(query)
+    data = []    
+    if not result == 500:
+        for row in result:
+            
+            data.append({
+                'departmentid': row[0],
+                'department_name': row[1],
+                'department_head_name': row[2],
+                'staff_under_work': row[3],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    current_url = request.get_full_path()
+    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg}
+    return render(request,"inventory_pages/all_departments.html",context)
+
+def add_new_department(request):
+    error_msg = 'Something Went Wrong'
+    
+    
+    if request.method == "POST":
+        # Retrieve values from the form
+        
+        try:
+            with connection.cursor() as cursor:
+                insert_query="insert into vff.united_armor_departmenttbl(department_name,department_head_name,staff_under_work) values ()"
+                cursor.execute(insert_query)
+                
+               
+                connection.commit()
+                print(f" Added New Department  Successfully.")
+                return redirect(reverse('clothing_dashboard_app:all_departments'))
+        except Exception as e:
+            print(f"Error loading data: {e}")
+            
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"inventory_pages/all_departments.html",context)
+ 
+def update_purchase_details(request,purchase_id):
+    error_msg = 'Something Went Wrong'
+    
+    
+    if request.method == "POST":
+        # Retrieve values from the form
+        
+        try:
+            with connection.cursor() as cursor:
+                #,reg_date='"+str(date_of_reg)+"'
+                update_query="update vff.united_armor_purchase_itemtbl set item_name,order_by_supplier_name,supplier_id,credit_amount,total_amount,paid_amount,balance_amount,supplier_type,status,purchase_status,transaction_type,tax_given where purchaseid=''"
+                cursor.execute(update_query)
+                
+               
+                connection.commit()
+                print(f" Update  Department Details  Successfully.")
+                return redirect(reverse('clothing_dashboard_app:all_departments'))
+        except Exception as e:
+            print(f"Error loading data: {e}")
+            
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"inventory_pages/all_departments.html",context)
+
+#DEPARTMENTS END
  
 
 def inventory(request):

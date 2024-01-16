@@ -76,14 +76,6 @@ urlpatterns = [
     # ADD NEW PURCHASE ORDER DETAILS
     path('add_new_purchase_orders/',views.add_new_purchase_orders,name='add_new_purchase_orders'),
     
-    # All Supplier
-    path('all_suppliers/',views.all_suppliers,name='all_suppliers'),
-    
-    # Add New Supplier
-    path('add_new_supplier/',views.add_new_supplier,name='add_new_supplier'),
-    
-    # Update Supplier Details
-    path('update_supplier_details/<int:supplier_id>/',views.update_supplier_details,name='update_supplier_details'),
    
     
     
@@ -108,6 +100,37 @@ urlpatterns = [
     
     # Update Stock Status and Details
     path('update_stock_details/<int:product_id>/<int:size_id>/<int:color_id>/',views.update_stock_details,name='update_stock_details'),
+    
+    #-------------------- OTHER FINANCE ---------------
+    
+    # All Supplier
+    path('all_suppliers/',views.all_suppliers,name='all_suppliers'),
+    
+    # Add New Supplier
+    path('add_new_supplier/',views.add_new_supplier,name='add_new_supplier'),
+    
+    # Update Supplier Details
+    path('update_supplier_details/<int:supplier_id>/',views.update_supplier_details,name='update_supplier_details'),
+    
+    # All Purchases Done
+    path('all_purchases/',views.all_purchases,name='all_purchases'),
+    
+    # Add New Purchase
+    path('add_new_purchase/',views.add_new_purchase,name='add_new_purchase'),
+    
+    # Update Supplier Details
+    path('update_purchase_details/<int:purchase_id>/',views.update_purchase_details,name='update_purchase_details'),
+    
+    
+    # All Departments
+    path('all_departments/',views.all_departments,name='all_departments'),
+    
+    # Add New Purchase
+    path('add_new_department/',views.add_new_department,name='add_new_department'),
+    
+    # Update Department Details
+    path('update_department_details/<int:department_id>/',views.update_department_details,name='update_department_details'),
+    
     
    #---------------- ORDERS PART ------------------
     #All ORDERS
