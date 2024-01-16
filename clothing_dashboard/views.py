@@ -1124,7 +1124,7 @@ def update_supplier_details(request,supplier_id):
         try:
             with connection.cursor() as cursor:
                 #,reg_date='"+str(date_of_reg)+"'
-                update_query="update vff.united_armor_suppliertbl set supplier_name='"+str(supplier_name)+"',item_supplies='"+str(supplier_item_name)+"',email='"+str(mail_id)+"',phone_no='"+str(phone_no)+"',address='"+str(address)+"',tax_no'"+str(tax_no)+"' where supplierid='"+str(supplier_id)+"'"
+                update_query="update vff.united_armor_suppliertbl set supplier_name='"+str(supplier_name)+"',item_supplies='"+str(supplier_item_name)+"',email='"+str(mail_id)+"',phone_no='"+str(phone_no)+"',address='"+str(address)+"',tax_no='"+str(tax_no)+"' where supplierid='"+str(supplier_id)+"'"
                 cursor.execute(update_query)
                 
                
