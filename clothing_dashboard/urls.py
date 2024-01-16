@@ -139,6 +139,20 @@ urlpatterns = [
     #order details
     path('order_details/<int:order_id>/',views.order_details,name='order_details'),
     
+    #-------------- REPORTS ------------------------
+    #sales report
+    path('sales_report/',views.sales_report,name='sales_report'),
+    
+    #invoices report
+    path('invoice_report/',views.invoice_report,name='invoice_report'),
+    
+    #return and refund report
+    path('return_refund_report/',views.return_refund_report,name='return_refund_report'),
+    
+    
+    
+    
+    
 ]
 
 if settings.DEBUG:

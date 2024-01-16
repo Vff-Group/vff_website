@@ -1,0 +1,512 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %}Reports{% endblock title%}
+{% block content %}
+
+<div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="row">
+          <div class="col-12">
+            <div class="card mb-4">
+              <div class="card-header pb-0">
+                <h6>Return And Refund Report</h6>
+                <div class="row">
+                  <div class="col-4">
+                    <div class="col-lg-10">
+                      <div class="form-group">
+                        <label
+                          for="start-date"
+                          class="form-control-label text-secondary"
+                          >Start Date</label
+                        >
+                        <input
+                          class="form-control form-control-alternative"
+                          type="date"
+                          id="start-date"
+                          name="dateofexpense"
+                          value="{{ data.dateofexpense|date:'Y-m-d' }}"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="col-lg-10">
+                      <div class="form-group">
+                        <label
+                          for="end-date"
+                          class="form-control-label text-secondary"
+                          >End Date</label
+                        >
+                        <input
+                          class="form-control form-control-alternative"
+                          type="date"
+                          id="end-date"
+                          name="dateofexpense"
+                          value="{{ data.dateofexpense|date:'Y-m-d' }}"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                 
+                </div>
+              </div>
+              <!-- Action Buttons  -->
+
+              <!-- Action Buttons End  -->
+              <div class="card-body px-0 pt-0 pb-2 mt-2"  style="height: 400px; overflow-y: scroll;">
+                <div class="table-responsive p-0">
+                  <table class="table table-bordered align-items-center mb-0  table-hover" id="salesTable" >
+                    <thead class="bg-light">
+                      <tr>
+                        <th
+                          class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        >
+                          Return ID #
+                        </th>
+                        <th
+                          class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                        >
+                          Refund ID #
+                        </th>
+                        <th
+                          class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                        >
+                          Refund or Refund Date 
+                        </th>
+                        <th
+                          class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                        >
+                          Refund Amount 
+                        </th>
+                        <th
+                          class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                        >
+                          Refund Method
+                        </th>
+                        <th
+                          class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                        >
+                          Notes / Comments
+                        </th>
+                        <th
+                          class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        >
+                          Order ID #
+                        </th>
+                        <th
+                          class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        >
+                          Original Order Date 
+                        </th>
+                        <th
+                          class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                        >
+                          Customer Name
+                        </th>
+                        <!-- <th
+                          class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                        >
+                          Sub Total
+                        </th> -->
+                        
+                        <th
+                          class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        >
+                          Product Name
+                        </th>
+                        <th
+                          class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        >
+                          Unit Price
+                        </th>
+                        <th
+                          class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        >
+                          Quantity Returned
+                        </th>
+                        <th
+                          class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        >
+                          Tax Rate
+                        </th> 
+                        <th
+                          class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        >
+                          Tax Amount
+                        </th> 
+                        <th
+                          class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        >
+                          Discount 
+                        </th> 
+                        <th
+                          class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        >
+                          Sub Total
+                        </th>
+                        <th
+                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                      >
+                        Shipping Fee
+                      </th>
+                      
+                        <th
+                          class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        >
+                          Total Amount After Discount and Taxes
+                        </th> 
+                        <th
+                          class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        >
+                          Amount Paid
+                        </th> 
+                        <th
+                          class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        >
+                          Original Payment Method
+                        </th> 
+                        <th
+                          class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        >
+                          Original Payment Date
+                        </th> 
+                        <th
+                          class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        >
+                          Delivery Status
+                        </th> 
+                      </tr>
+                    </thead>
+                    <tbody id="salesTableBody">
+                      <tr></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card-footer px-4 pt-0 pb-2 mt-2">
+                <div class="row">
+                  <div class="col-3">
+                    <small class="mb-2 text-dark" id="total-orders">Total Invoice: 0</small>
+                  </div>
+                  <div class="col-3">
+                    <small class="text-dark" id="total-sales">Total Sales: Rs.0/-</small>
+                  </div>
+                  <div class="col-3">
+                    <small class="text-dark" id="total-tax-amount">Total Tax Amount: Rs.0/-</small>
+                  </div>
+                  <div class="col-3">
+                    <button class="btn btn-success btn-sm" id="download" style="display: none;">Download Report</button>
+                    <button class="btn btn-warning btn-sm" id="print" style="display: none;">Print Report</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+
+<script>
+    // Get the CSRF token from the cookie
+function getCSRFToken() {
+  const cookies = document.cookie.split(';');
+  for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith("csrftoken=")) {
+          return cookie.substring("csrftoken=".length, cookie.length);
+      }
+  }
+  return null;
+}
+
+  $(document).ready(function () {
+    // Add an event listener for the date inputs
+    $('#end-date').on('change', function () {
+       // updateSalesTable();
+    });
+
+    // Function to fetch data and update the table
+    function updateSalesTable() {
+        var startDate = $('#start-date').val();
+        var endDate = $('#end-date').val();
+        
+      function fetchSalesRecords(){
+        var startDate = $('#start-date').val();
+        var endDate = $('#end-date').val();
+        const dictMap = {
+          'start_date': startDate,
+          'end_date': endDate,
+          
+        }
+        const csrfToken = getCSRFToken();
+            $.ajax({
+                type: 'POST',
+                url: '/admin_dashboard/sales_report/',
+                data: JSON.stringify(dictMap),
+                headers: {
+                    'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+                },
+                contentType: 'application/json',
+                success: function (response) {
+                         // Check if the data is empty
+                        if (response.data.length === 0) {
+                          // If data is empty, hide the buttons
+                          $("#download").hide();
+                          $("#print").hide();
+                      } else {
+                          // If data is not empty, show the buttons
+                          $("#download").show();
+                          $("#print").show();
+                      }
+                    // Clear existing rows
+                    $('#salesTableBody').empty();
+
+                    // Populate the table dynamically
+                    response.data.forEach(function (row) {
+                        
+                        // Calculate discount percentage and format it
+                        discountPercentage = calculateDiscountPercentage(row.discount_price, row.price);
+                        // Example:
+                        
+                        var newRow = '<tr>' +
+                            '<td><p class="text-xs text-secondary mb-0">' + row.pickup_dt + '</p></td>' +
+                            '<td><p class="text-xs text-secondary mb-0">ORD#' + row.orderid + '</p></td>' +
+                            '<td><div class="d-flex px-2 py-1">'+
+                              '<div>'+
+                                '<img src="' + row.profile_img + '" class="avatar avatar-sm me-3" alt="user1">'+
+                              '</div>'+
+                              '<div class="d-flex flex-column justify-content-center">'+
+                                '<h6 class="mb-0 text-sm">' + row.customer_name + '</h6>'+
+                                '<p class="text-xs text-secondary mb-0">'+row.mobile_no+'</p>'+
+                              '</div>'+
+                            '</div></td>' +
+                            //'<td><p class="text-xs text-secondary mb-0 text-center">Rs.' + row.addons_price + '/-</p></td>' +
+                            '<td><p class="text-xs text-secondary mb-0 text-center">' + discountPercentage + '</p></td>' +
+                            '<td><p class="text-xs text-secondary mb-0 text-center">Rs.' + (row.gstamount+row.igstamount) + '/-</p></td>' +
+                            '<td><h6 class="mb-0 text-sm  text-center">Rs.' + parseFloat(row.price).toFixed(2) + '/-</h6></td>' +
+                            // Add other columns here
+                            '</tr>';
+                        $('#salesTableBody').append(newRow);
+                    });
+
+                    // Calculate and update total orders, total sales, total tax amount
+                    var totalOrders = response.data.length;
+                    var totalSales = calculateTotalSales(response.data);
+                    var totalTaxAmount = calculateTotalTaxAmount(response.data);
+
+                    // Update totals in the footer
+                    $('#total-orders').text('Total Order: ' + totalOrders);
+                    $('#total-sales').text('Total Sales: Rs.' + totalSales.toFixed(2));
+                    $('#total-tax-amount').text('Total Tax Amount: Rs.' + totalTaxAmount.toFixed(2));
+                },
+                error: function (error) {
+                    console.error('Error fetching data:', error);
+                }
+            });
+      }
+        // Check if both start date and end date are provided, and end date is not less than start date
+        if (startDate && endDate && startDate <= endDate) {
+          fetchSalesRecords()
+        } else {
+            // Handle the case where the start date, end date, or their relation is not valid
+            console.log('Invalid date range');
+        }
+    }
+
+    // Function to calculate discount percentage and format it
+    function calculateDiscountPercentage(discountPrice, totalPrice) {
+      console.log('discountPrice::::'+discountPrice)
+      if (totalPrice !== 0 && discountPrice !== 0) {
+        var discountPercentage = (discountPrice / totalPrice) * 100;
+          var formattedDiscount = 'Rs.' + discountPrice.toFixed(2) + '/- [' + discountPercentage.toFixed(1) + '%]';
+          return formattedDiscount;
+      }
+      return '0 - (0%)';
+  }
+  
+  
+    // Function to calculate total sales
+    function calculateTotalSales(data) {
+      var totalSales = 0;
+      data.forEach(function (row) {
+          totalSales += row.price;
+      });
+      return totalSales;
+    }
+
+    // Function to calculate total tax amount
+    function calculateTotalTaxAmount(data) {
+      var totalTaxAmount = 0;
+      data.forEach(function (row) {
+          totalTaxAmount += row.gstamount + row.igstamount;
+      });
+      return totalTaxAmount;
+    }
+
+
+    // Initial load
+    //updateSalesTable();
+
+       // Add an event listener to the "Print Receipts" button
+var printButton = document.querySelector('#print');
+printButton.addEventListener('click', function () {
+  printableContent = generateHTMLTemplate();
+
+    // Open a new window and write the printable content
+    var printWindow = window.open('', '', 'width=800,height=600');
+    printWindow.document.open();
+    printWindow.document.write(printableContent); // Use the printableContent generated by generateHTMLTemplate
+    printWindow.document.close();
+
+    // Trigger the print operation
+    printWindow.print();
+    printWindow.close();
+});
+
+
+function generateHTMLTemplate() {
+  var table = document.getElementById('salesTableBody');
+  var footerData = document.querySelector('.card-footer');
+
+  // Extract table headers from the <thead class="bg-light">
+  var headers = [];
+  var headerRow = table.closest('table').querySelector('thead').querySelector('tr');
+  headerRow.querySelectorAll('th').forEach(function (cell) {
+    headers.push(cell.textContent);
+  });
+
+  // Extract table data rows and store them in the 'rows' array
+  var rows = [];
+  table.querySelectorAll('tbody tr').forEach(function (row) {
+    var rowData = [];
+    row.querySelectorAll('td').forEach(function (cell) {
+      rowData.push(cell.textContent);
+    });
+    rows.push(rowData);
+  });
+
+  // Extract footer data
+  var totalOrders = footerData.querySelector('.col-3:nth-child(1)').textContent.trim();
+  var totalSales = footerData.querySelector('.col-3:nth-child(2)').textContent.trim();
+  var totalTaxAmount = footerData.querySelector('.col-3:nth-child(3)').textContent.trim();
+
+  // Create an HTML table with Bootstrap styling and borders
+  var htmlTable =
+    '<table style="width: 100%;" class="table table-bordered table-dark">' +
+    '<thead class="bg-light">' +
+    '<tr>';
+  headers.forEach(function (header) {
+    htmlTable += '<th style="border: 1px solid #dee2e6; padding: 8px; background-color: #343a40; color: white; font-weight: bold;" scope="col">' + header + '</th>';
+  });
+  htmlTable += '</tr>' +
+    '</thead>' +
+    '<tbody>';
+
+  rows.forEach(function (rowData) {
+    htmlTable += '<tr>';
+    rowData.forEach(function (cell) {
+      htmlTable += '<td  style="border: 1px solid #dee2e6; padding: 8px;">' + cell + '</td>';
+    });
+    htmlTable += '</tr>';
+  });
+
+  htmlTable += '</tbody>' +
+    '</table>';
+
+  // Create a div for the footer data with Bootstrap styling
+  var footerDiv =
+    '<div class="card-footer px-4 pt-0 pb-2 mt-2" style="background-color: #343a40; color: white; font-weight: bold; text-align: end; margin-top: 20px;">' +
+    '<div class="row">' +
+    '<div class="col-4">' +
+    '<small class="mb-2 text-dark" style="margin-top:2px; margin-bottom:2px; color: #343a40;">' + totalOrders + '</small>' +
+    '</div>' +
+    '<div class="col-4"> ' +
+    '<small class="text-dark" style="margin-top:2px; margin-bottom:2px; color: #343a40;">' + totalSales + '</small>' +
+    '</div>' +
+    '<div class="col-4"> ' +
+      '<small class="text-dark" style="margin-top:2px; margin-bottom:2px; color: #343a40;">' + totalTaxAmount + '</small>' +
+      '</div>' +
+    '</div>' +
+    '</div>';
+
+      // Get the selected start date and end date
+    var selectedStartDate = document.getElementById('start-date').value;
+    var selectedEndDate = document.getElementById('end-date').value;
+
+   // Create a heading with center alignment
+   var heading = '<h2 style="text-align: center; margin-bottom: 20px; color: #343a40;">Sales Report</h2>';
+   // Display selected start date and end date
+  var dateInfo = '<div style="text-align: center; margin-top: 3px; margin-bottom:10px;"> [Selected Start Date: ' + selectedStartDate + '] - [Selected End Date: ' + selectedEndDate + ']</div>';
+
+  // Combine the table and footer data
+  var htmlTemplate = heading+dateInfo+htmlTable + footerDiv;
+
+  // Add top margin and align to fit A4 size
+  var printableContent = '<div style="margin-top: 30px; max-width: 210mm;">' + htmlTemplate + '</div>';
+
+  // You can now use the 'printableContent' as needed, such as inserting it into a specific element or displaying it.
+  return printableContent;
+}
+
+  
+
+  // Download button click event
+$("#download").click(function () {
+  // Extract table headers from the <thead class="bg-light">
+  var headers = [];
+  var headerRow = document.getElementById('salesTable').querySelector('thead').querySelector('tr');
+  headerRow.querySelectorAll('th').forEach(function (cell) {
+    headers.push(cell.textContent);
+  });
+
+  // Extract table data rows
+  var rows = [];
+  document.getElementById('salesTable').querySelectorAll('tbody tr').forEach(function (row) {
+    var rowData = [];
+    row.querySelectorAll('td').forEach(function (cell) {
+      rowData.push(cell.textContent);
+    });
+    rows.push(rowData);
+  });
+
+  // Extract footer data
+  var totalOrders = $("#total-orders").text().trim();
+  var totalSales = $("#total-sales").text().trim();
+  var totalTaxAmount = $("#total-tax-amount").text().trim();
+
+  // Add the footer data to the last row of the table
+  var footerRow = [];
+  footerRow.length = headers.length;
+  footerRow[headers.length - 3] = totalOrders; // Add totalOrders to the Third last column
+  footerRow[headers.length - 2] = totalTaxAmount; // Add totalTaxAmount to the last column
+  footerRow[headers.length - 1] = totalSales; // Add totalSales to the second last column
+  rows.push(footerRow);
+
+  // Create a worksheet with headers and data
+  var worksheet = XLSX.utils.json_to_sheet([headers, ...rows]);
+
+  // Create a workbook and add the worksheet
+  var workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Sales Report');
+
+  // Generate the Excel file name
+  var fileName = 'sales_report.xlsx';
+
+  // Generate and download the Excel file
+  XLSX.writeFile(workbook, fileName);
+});
+
+
+});
+
+</script>
+{% endblock  %}

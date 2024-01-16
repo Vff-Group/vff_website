@@ -1840,8 +1840,21 @@ def order_details(request,order_id):
     # context = {'query_result':data,'current_url': current_url,'total_products':total_products,'total_sales':total_sales,'total_stock_remaining':total_stock_remaining,'delivery_return':delivery_return}
     context = {'current_url': current_url}
     return render(request,"orders_pages/order_detail_page.html",context)
+    
+def sales_report(request):
+    current_url = request.get_full_path()
+    context = {'current_url': current_url}
+    return render(request,"reports/sales_report.html",context)
 
+def invoice_report(request):
+    current_url = request.get_full_path()
+    context = {'current_url': current_url}
+    return render(request,"reports/invoice_report.html",context)
 
+def return_refund_report(request):
+    current_url = request.get_full_path()
+    context = {'current_url': current_url}
+    return render(request,"reports/return_refund_report.html",context)
 
 
 
