@@ -1074,7 +1074,7 @@ def all_suppliers(request):
         error_msg = 'Something Went Wrong'
     
     current_url = request.get_full_path()
-    context = {'query_result':data,'current_url': current_url}
+    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg}
     return render(request,"inventory_pages/all_suppliers.html",context)
 
 
