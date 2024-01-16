@@ -83,7 +83,7 @@ urlpatterns = [
     path('add_new_supplier/',views.add_new_supplier,name='add_new_supplier'),
     
     # Update Supplier Details
-    # path('update_supplier_details/',views.update_supplier_details,name='update_supplier_details'),
+    path('update_supplier_details/<int:supplier_id>/',views.update_supplier_details,name='update_supplier_details'),
    
     
     

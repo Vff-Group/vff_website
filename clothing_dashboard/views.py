@@ -1097,7 +1097,37 @@ def add_new_supplier(request):
                 
                
                 connection.commit()
-                print(f" Added New Supplier Successfully.")
+                print(f" Added New Supplier {supplier_name}  Successfully.")
+                return redirect(reverse('clothing_dashboard_app:all_suppliers'))
+        except Exception as e:
+            print(f"Error loading data: {e}")
+            
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"inventory_pages/all_suppliers.html",context)
+ 
+def update_supplier_details(request,supplier_id):
+    error_msg = 'Something Went Wrong'
+    
+    
+    if request.method == "POST":
+        # Retrieve values from the form
+        date_of_reg = request.POST.get('dateofreg')
+        tax_no = request.POST.get('tax_no')
+        supplier_name = request.POST.get('supplier_name')
+        supplier_item_name = request.POST.get('supplier_item_name')
+        mail_id = request.POST.get('mail_id')
+        phone_no = request.POST.get('phone_no')
+        address = request.POST.get('address')
+        try:
+            with connection.cursor() as cursor:
+                update_query="update vff.united_armor_suppliertbl set supplier_name='"+str(supplier_name)+"',reg_date='"+str(date_of_reg)+"',item_supplies='"+str(supplier_item_name)+"',email='"+str(mail_id)+"',phone_no='"+str(phone_no)+"',address='"+str(address)+"',tax_no'"+str(tax_no)+"' where supplierid='"+str(supplier_id)+"'"
+                cursor.execute(update_query)
+                
+               
+                connection.commit()
+                print(f" Update  Supplier {supplier_name} Successfully.")
                 return redirect(reverse('clothing_dashboard_app:all_suppliers'))
         except Exception as e:
             print(f"Error loading data: {e}")
