@@ -1291,7 +1291,7 @@ def all_departments(request):
         for row in result:
             
             data.append({
-                'departmentid': row[0],
+                'department_id': row[0],
                 'department_name': row[1],
                 'department_head_name': row[2],
                 'staff_under_work': row[3],
@@ -1310,10 +1310,13 @@ def add_new_department(request):
     
     if request.method == "POST":
         # Retrieve values from the form
+        department_name = request.POST.get('department_name')
+        department_head_name = request.POST.get('department_head_name')
+        staff_under_work = request.POST.get('staff_under_work')
         
         try:
             with connection.cursor() as cursor:
-                insert_query="insert into vff.united_armor_departmenttbl(department_name,department_head_name,staff_under_work) values ()"
+                insert_query="insert into vff.united_armor_departmenttbl(department_name,department_head_name,staff_under_work) values ('"+str(department_name)+"','"+str(department_head_name)+"','"+str(staff_under_work)+"')"
                 cursor.execute(insert_query)
                 
                
@@ -1334,11 +1337,13 @@ def update_department_details(request,department_id):
     
     if request.method == "POST":
         # Retrieve values from the form
-        
+        update_department_name = request.POST.get('update_department_name')
+        update_department_head_name = request.POST.get('update_department_head_name')
+        update_staff_under_work = request.POST.get('update_staff_under_work')
         try:
             with connection.cursor() as cursor:
                 #,reg_date='"+str(date_of_reg)+"'
-                update_query="update vff.united_armor_purchase_itemtbl set item_name,order_by_supplier_name,supplier_id,credit_amount,total_amount,paid_amount,balance_amount,supplier_type,status,purchase_status,transaction_type,tax_given where purchaseid=''"
+                update_query="update vff.united_armor_departmenttbl set department_name='"+str(update_department_name)+"',department_head_name='"+str(update_department_head_name)+"',staff_under_work='"+str(update_staff_under_work)+"' where departmentid='"+str(department_id)+"'"
                 cursor.execute(update_query)
                 
                
