@@ -478,8 +478,80 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="update-input-credit">Credit</label>
+                                            <input type="text" id="update-input-credit" class="form-control form-control-alternative" placeholder="1 Month, 3 Months, 6 Months" name="update_credit" value="{{ row.credit }}" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="update-input-total">Total</label>
+                                            <input type="number" id="update-input-total" class="form-control form-control-alternative" placeholder="Amount in Total" name="update_total_amount" value="{{ row.total_amount }}" required />
+                                        </div>
+                                    </div>
+                                </div>
 
-                                <!-- Continue with other fields and pre-fill values accordingly -->
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="update-input-paid-amount">Paid Amount</label>
+                                            <input type="number" id="update-input-paid-amount" class="form-control form-control-alternative" placeholder="Amount Paid" name="update_amount_paid" value="{{ row.paid_amount }}" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="update-input-balance-amount">Balance Amount</label>
+                                            <input type="number" id="update-input-balance-amount" class="form-control form-control-alternative" placeholder="Amount Balance" name="update_balance_amount" value="{{ row.balance_amount }}" required />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="update-input-status">Status</label>
+                                            <select class="form-control form-control-alternative" id="update-input-status" name="update_status">
+                                                <option value="Pending" {% if row.status == "Pending" %}selected{% endif %}>Pending</option>
+                                                <option value="Completed" {% if row.status == "Completed" %}selected{% endif %}>Completed</option>
+                                                <option value="Waiting" {% if row.status == "Waiting" %}selected{% endif %}>Waiting</option>
+                                                <option value="Declined" {% if row.status == "Declined" %}selected{% endif %}>Declined</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="update-input-purchase-status">Purchase Status</label>
+                                            <select class="form-control form-control-alternative" id="update-input-purchase-status" name="update_purchase_status">
+                                                <option value="Item Received" {% if row.purchase_status == "Item Received" %}selected{% endif %}>Item Received</option>
+                                                <option value="Item Not Received" {% if row.purchase_status == "Item Not Received" %}selected{% endif %}>Item Not Received</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="update-input-transaction-type">Transaction Type</label>
+                                            <select class="form-control form-control-alternative" id="update-input-transaction-type" name="update_transaction_type">
+                                                <option value="On Credit" {% if row.transaction_type == "On Credit" %}selected{% endif %}>On Credit</option>
+                                                <option value="Cash" {% if row.transaction_type == "Cash" %}selected{% endif %}>Cash</option>
+                                                <option value="UPI" {% if row.transaction_type == "UPI" %}selected{% endif %}>UPI</option>
+                                                <option value="Net Banking" {% if row.transaction_type == "Net Banking" %}selected{% endif %}>Net Banking</option>
+                                                <option value="Cheque" {% if row.transaction_type == "Cheque" %}selected{% endif %}>Cheque</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="update-input-tax-percentage">Tax Applicable in %</label>
+                                            <input type="text" id="update-input-tax-percentage" class="form-control form-control-alternative" placeholder=" 18% " name="update_tax_percentage" value="{{ row.tax_percentage }}" />
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
