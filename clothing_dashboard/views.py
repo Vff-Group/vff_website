@@ -1291,7 +1291,7 @@ def add_new_department(request):
     context = {'current_url': current_url,'error_msg':error_msg}
     return render(request,"inventory_pages/all_departments.html",context)
  
-def update_purchase_details(request,purchase_id):
+def update_department_details(request,department_id):
     error_msg = 'Something Went Wrong'
     
     
