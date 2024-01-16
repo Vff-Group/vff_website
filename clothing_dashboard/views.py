@@ -1195,10 +1195,32 @@ def add_new_purchase(request):
     
     if request.method == "POST":
         # Retrieve values from the form
+        # Filter out fields you want to process
+        fields_to_process = ['date_of_purchase', 'selected_supplier_name', 'selected_supplier_id', 'item_name', 'credit', 'total_amount', 'amount_paid', 'balance_amount', 'status', 'purchase_status', 'transaction_type', 'tax_percentage','supplier_item_name']
+
+        # Create a dictionary to store the values of the fields
+        field_values = {}
+        for field in fields_to_process:
+            field_values[field] = request.POST.get(field)
+
+        # Now you can access the values of specific fields
+        date_of_purchase = field_values.get('date_of_purchase')
+        selected_supplier_name = field_values.get('selected_supplier_name')
+        selected_supplier_id = field_values.get('selected_supplier_id')
+        item_name = field_values.get('item_name')
+        credit = field_values.get('credit')
+        total_amount = field_values.get('total_amount')
+        amount_paid = field_values.get('amount_paid')
+        balance_amount = field_values.get('balance_amount')
+        supplier_item_name = field_values.get('supplier_item_name')
+        status = field_values.get('status')
+        purchase_status = field_values.get('purchase_status')
+        transaction_type = field_values.get('transaction_type')
+        tax_percentage = field_values.get('tax_percentage')
         
         try:
             with connection.cursor() as cursor:
-                insert_query="insert into vff.united_armor_purchase_itemtbl(purchaseid,item_name,order_by_supplier_name,supplier_id,purchase_date,credit_amount,total_amount,paid_amount,balance_amount,supplier_type,status,purchase_status,transaction_type,tax_given) values ()"
+                insert_query="insert into vff.united_armor_purchase_itemtbl(item_name,order_by_supplier_name,supplier_id,purchase_date,credit_amount,total_amount,paid_amount,balance_amount,supplier_type,status,purchase_status,transaction_type,tax_given) values ('"+str(item_name)+"','"+str(selected_supplier_name)+"','"+str(selected_supplier_id)+"','"+str(date_of_purchase)+"','"+str(credit)+"','"+str(total_amount)+"','"+str(amount_paid)+"','"+str(balance_amount)+"','"+str(supplier_item_name)+"','"+str(status)+"','"+str(purchase_status)+"','"+str(transaction_type)+"','"+str(tax_percentage)+"')"
                 cursor.execute(insert_query)
                 
                
