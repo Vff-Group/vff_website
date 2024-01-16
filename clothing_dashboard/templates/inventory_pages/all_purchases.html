@@ -328,9 +328,9 @@
                 <thead class="bg-light">
                   <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sl No</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Order By</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Item Name</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Purchase Status</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Order By</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Supplier</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total</th>
@@ -372,7 +372,16 @@
                       
                     </td>
                     <td>
-                        <p class="text-xs font-weight-bold mb-0 text-center">{{row.purchase_status}}</p>
+                        <td class="align-middle text-center text-sm">
+    
+                            {% if row.order_status == "Item Received" %}
+                              <span class="badge badge-sm bg-success">{{row.purchase_status}}</span>
+                              
+                              {% else %}
+                              <span class="badge badge-sm bg-danger">{{row.purchase_status}}</span>
+                              {% endif %}
+                            </td>
+                        
                         
                       </td>
                     <td>
@@ -401,7 +410,20 @@
                       </td>
 
                       <td>
-                        <p class="text-xs font-weight-bold mb-0 text-center">{{row.payment_status}}</p>
+                        <td class="align-middle text-center text-sm">
+    
+                            {% if row.payment_status == "Completed" %}
+                              <span class="badge badge-sm bg-success">{{row.payment_status}}</span>
+                              {% elif row.payment_status == "Waiting" %}
+                              <span class="badge badge-sm bg-primary">{{row.payment_status}}</span>
+                              {% elif row.payment_status == "Pending" %}
+                              <span class="badge badge-sm bg-warning">{{row.payment_status}}</span>
+                              
+                              {% else %}
+                              <span class="badge badge-sm bg-danger">{{row.payment_status}}</span>
+                              {% endif %}
+                            </td>
+                        
                         
                       </td>
                       
