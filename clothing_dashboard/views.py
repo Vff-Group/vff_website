@@ -1053,7 +1053,7 @@ def all_suppliers(request):
     error_msg='No Suppliers Added Yet'
    
     #All Images Data
-    query ="select supplierid,supplier_name,reg_date,item_supplies,email,phone_no,address,tax_no from vff.united_armor_suppliertbl order by last_updated desc"
+    query ="select supplierid,supplier_name,reg_date,item_supplies,email,phone_no,address,tax_no from vff.united_armor_suppliertbl"
     result = execute_raw_query(query)
     data = []    
     if not result == 500:
@@ -1124,7 +1124,7 @@ def update_supplier_details(request,supplier_id):
         try:
             with connection.cursor() as cursor:
                 #,reg_date='"+str(date_of_reg)+"'
-                update_query="update vff.united_armor_suppliertbl set supplier_name='"+str(supplier_name)+"',item_supplies='"+str(supplier_item_name)+"',email='"+str(mail_id)+"',phone_no='"+str(phone_no)+"',address='"+str(address)+"',tax_no='"+str(tax_no)+"',last_updated=EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) where supplierid='"+str(supplier_id)+"'"
+                update_query="update vff.united_armor_suppliertbl set supplier_name='"+str(supplier_name)+"',item_supplies='"+str(supplier_item_name)+"',email='"+str(mail_id)+"',phone_no='"+str(phone_no)+"',address='"+str(address)+"',tax_no='"+str(tax_no)+"' where supplierid='"+str(supplier_id)+"'"
                 cursor.execute(update_query)
                 
                
@@ -1158,7 +1158,7 @@ def all_purchases(request):
     else:
         error_msg = 'Something Went Wrong'
     #All Purchases Data
-    query ="select purchaseid,item_name,order_by_supplier_name,supplier_id,purchase_date,credit_amount,total_amount,paid_amount,balance_amount,supplier_type,status,purchase_status,transaction_type,tax_given from vff.united_armor_purchase_itemtbl"
+    query ="select purchaseid,item_name,order_by_supplier_name,supplier_id,purchase_date,credit_amount,total_amount,paid_amount,balance_amount,supplier_type,status,purchase_status,transaction_type,tax_given from vff.united_armor_purchase_itemtbl order by last_updated desc"
     result = execute_raw_query(query)
     data = []    
     if not result == 500:
@@ -1260,7 +1260,7 @@ def update_purchase_details(request,purchase_id):
         try:
             with connection.cursor() as cursor:
                 #,reg_date='"+str(date_of_reg)+"'
-                update_query="update vff.united_armor_purchase_itemtbl set item_name='"+str(item_name)+"',order_by_supplier_name='"+str(selected_supplier_name)+"',supplier_id='"+str(selected_supplier_id)+"',credit_amount='"+str(credit)+"',total_amount='"+str(total_amount)+"',paid_amount='"+str(amount_paid)+"',balance_amount='"+str(balance_amount)+"',supplier_type='"+str(supplier_item_name)+"',status='"+str(status)+"',purchase_status='"+str(purchase_status)+"',transaction_type='"+str(transaction_type)+"',tax_given='"+str(tax_percentage)+"',purchase_date='"+str(date_of_purchase)+"' where purchaseid='"+str(purchase_id)+"'"
+                update_query="update vff.united_armor_purchase_itemtbl set item_name='"+str(item_name)+"',order_by_supplier_name='"+str(selected_supplier_name)+"',supplier_id='"+str(selected_supplier_id)+"',credit_amount='"+str(credit)+"',total_amount='"+str(total_amount)+"',paid_amount='"+str(amount_paid)+"',balance_amount='"+str(balance_amount)+"',supplier_type='"+str(supplier_item_name)+"',status='"+str(status)+"',purchase_status='"+str(purchase_status)+"',transaction_type='"+str(transaction_type)+"',tax_given='"+str(tax_percentage)+"',purchase_date='"+str(date_of_purchase)+"',last_updated=EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) where purchaseid='"+str(purchase_id)+"'"
                 cursor.execute(update_query)
                 
                
