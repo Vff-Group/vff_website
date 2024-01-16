@@ -1053,7 +1053,7 @@ def all_suppliers(request):
     error_msg='No Suppliers Added Yet'
    
     #All Images Data
-    query ="select supplierid,supplier_name,reg_date,item_supplies,email,phone_no,address,tax_no from vff.united_armor_suppliertbl"
+    query ="select supplierid,supplier_name,reg_date,item_supplies,email,phone_no,address,tax_no from vff.united_armor_suppliertbl order by last_updated desc"
     result = execute_raw_query(query)
     data = []    
     if not result == 500:
@@ -1124,7 +1124,7 @@ def update_supplier_details(request,supplier_id):
         try:
             with connection.cursor() as cursor:
                 #,reg_date='"+str(date_of_reg)+"'
-                update_query="update vff.united_armor_suppliertbl set supplier_name='"+str(supplier_name)+"',item_supplies='"+str(supplier_item_name)+"',email='"+str(mail_id)+"',phone_no='"+str(phone_no)+"',address='"+str(address)+"',tax_no='"+str(tax_no)+"' where supplierid='"+str(supplier_id)+"'"
+                update_query="update vff.united_armor_suppliertbl set supplier_name='"+str(supplier_name)+"',item_supplies='"+str(supplier_item_name)+"',email='"+str(mail_id)+"',phone_no='"+str(phone_no)+"',address='"+str(address)+"',tax_no='"+str(tax_no)+"',last_updated=EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) where supplierid='"+str(supplier_id)+"'"
                 cursor.execute(update_query)
                 
                
