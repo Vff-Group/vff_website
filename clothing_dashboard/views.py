@@ -1114,7 +1114,7 @@ def update_supplier_details(request,supplier_id):
     
     if request.method == "POST":
         # Retrieve values from the form
-        date_of_reg = request.POST.get('dateofreg')
+        # date_of_reg = request.POST.get('dateofreg')
         tax_no = request.POST.get('tax_no')
         supplier_name = request.POST.get('supplier_name')
         supplier_item_name = request.POST.get('supplier_item_name')
@@ -1123,7 +1123,8 @@ def update_supplier_details(request,supplier_id):
         address = request.POST.get('address')
         try:
             with connection.cursor() as cursor:
-                update_query="update vff.united_armor_suppliertbl set supplier_name='"+str(supplier_name)+"',reg_date='"+str(date_of_reg)+"',item_supplies='"+str(supplier_item_name)+"',email='"+str(mail_id)+"',phone_no='"+str(phone_no)+"',address='"+str(address)+"',tax_no'"+str(tax_no)+"' where supplierid='"+str(supplier_id)+"'"
+                #,reg_date='"+str(date_of_reg)+"'
+                update_query="update vff.united_armor_suppliertbl set supplier_name='"+str(supplier_name)+"',item_supplies='"+str(supplier_item_name)+"',email='"+str(mail_id)+"',phone_no='"+str(phone_no)+"',address='"+str(address)+"',tax_no'"+str(tax_no)+"' where supplierid='"+str(supplier_id)+"'"
                 cursor.execute(update_query)
                 
                
