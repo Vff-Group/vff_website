@@ -1077,6 +1077,28 @@ def all_suppliers(request):
     context = {'query_result':data,'current_url': current_url,'error_msg':error_msg}
     return render(request,"inventory_pages/all_suppliers.html",context)
 
+def add_new_supplier(request):
+    error_msg = 'Something Went Wrong'
+    
+    
+    if request.method == "POST":
+        try:
+            with connection.cursor() as cursor:
+                insert_query="insert into vff.united_armor_suppliertbl (supplier_name,reg_date,item_supplies,email,phone_no,address,tax_no) values ()"
+                cursor.execute(insert_query)
+                
+               
+                connection.commit()
+                print(f" Added New Supplier Successfully.")
+                return redirect(reverse('clothing_dashboard_app:all_suppliers'))
+        except Exception as e:
+            print(f"Error loading data: {e}")
+            
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"inventory_pages/all_suppliers.html",context)
+ 
 
 def inventory(request):
     #Total Products
