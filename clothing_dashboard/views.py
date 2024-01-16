@@ -1357,7 +1357,7 @@ def all_departments(request):
     
     
     #All Departments Data
-    query ="select departmentid,department_name,department_head_name,staff_under_work from vff.united_armor_departmenttbl"
+    query ="select departmentid,department_name,department_head_name,staff_under_work from vff.united_armor_departmenttbl order by last_update_time desc"
     result = execute_raw_query(query)
     data = []    
     if not result == 500:
@@ -1422,7 +1422,7 @@ def update_department_details(request,department_id):
         try:
             with connection.cursor() as cursor:
                 #,reg_date='"+str(date_of_reg)+"'
-                update_query="update vff.united_armor_departmenttbl set department_name='"+str(update_department_name)+"',department_head_name='"+str(update_department_head_name)+"',staff_under_work='"+str(update_staff_under_work)+"' where departmentid='"+str(department_id)+"'"
+                update_query="update vff.united_armor_departmenttbl set department_name='"+str(update_department_name)+"',department_head_name='"+str(update_department_head_name)+"',staff_under_work='"+str(update_staff_under_work)+"',last_update_time=EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) where departmentid='"+str(department_id)+"'"
                 cursor.execute(update_query)
                 
                
