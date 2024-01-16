@@ -467,7 +467,7 @@
                                                 
                                         <div class="form-group">
                                             <label class="form-control-label" for="update-input-supplier">Order By</label>
-                                            <select class="form-control form-control-alternative" id="update-input-supplier" name="update_supplier_details" required>
+                                            <select class="form-control form-control-alternative" id="update-input-supplier" name="update_supplier_details"  disabled>
                                                 <option disabled selected>Choose Supplier</option>
                                                 {% for supplier in supplier_data %}
                                                     <option value="{{ supplier.supplier_name }}" {% if supplier.supplier_name == row.order_by_supplier_name %}selected{% endif %} data-catid="{{ supplier.supplier_id }}">
