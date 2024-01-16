@@ -1844,17 +1844,17 @@ def order_details(request,order_id):
 def sales_report(request):
     current_url = request.get_full_path()
     context = {'current_url': current_url}
-    return render(request,"reports/sales_report.html",context)
+    return render(request,"reports_clothing/sales_report.html",context)
 
 def invoice_report(request):
     current_url = request.get_full_path()
     context = {'current_url': current_url}
-    return render(request,"reports/invoice_report.html",context)
+    return render(request,"reports_clothing/invoice_report.html",context)
 
 def return_refund_report(request):
     current_url = request.get_full_path()
     context = {'current_url': current_url}
-    return render(request,"reports/return_refund_report.html",context)
+    return render(request,"reports_clothing/return_refund_report.html",context)
 
 
 
