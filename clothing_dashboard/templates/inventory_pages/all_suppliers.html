@@ -329,14 +329,14 @@
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label
-                                                        for="date-of-reg"
+                                                        for="date-of-reg{{row.supplierid}}"
                                                         class="form-control-label"
                                                     >Registration Date *</label
                                                     >
                                                     <input
                                                         class="form-control form-control-alternative"
-                                                        type="text"
-                                                        id="date-of-reg"
+                                                        type="date"
+                                                        id="date-of-reg{{row.supplierid}}"
                                                         name="dateofreg"
                                                         value="{{row.reg_date|date:'Y-m-d' }}"
                                                         required
