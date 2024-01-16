@@ -1637,8 +1637,13 @@ def execute_raw_query(query, params=None,):
         # Ensure the cursor is closed to release resources
         cursor.close()  # Note: cursor might not be defined if an exception occurs earlier
 
+from datetime import datetime, date
 
 def convert_date_format(input_date):
+    # Convert the input to string if it's a date object
+    if isinstance(input_date, date):
+        input_date = input_date.strftime('%b. %d, %Y')
+
     # Convert the input date string to a datetime object
     date_obj = datetime.strptime(input_date, '%b. %d, %Y')
 
