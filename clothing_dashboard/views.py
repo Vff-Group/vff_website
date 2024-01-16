@@ -44,7 +44,7 @@ def login_view(request):
                 request.session['clothing_admin_name'] = user_data[1]
                 request.session['clothing_admin_password'] = user_data[2]
                 request.session['clothing_admin_type'] = user_data[3]
-                request.session['notification_token'] = user_data[8]
+                
                 request.session['is_clothing_logged_in'] = True
                 # Setting the session to expire after one day (86400 seconds)
                 request.session.set_expiry(43400)
