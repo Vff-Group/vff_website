@@ -49,7 +49,7 @@ def login_view(request):
                 # Setting the session to expire after one day (86400 seconds)
                 request.session.set_expiry(43400)
                 
-                return redirect('dashboard_app:dashboard')
+                return redirect('clothing_dashboard_app:dashboard')
         else:
             context = {
                 'username': username,
