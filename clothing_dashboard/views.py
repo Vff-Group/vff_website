@@ -1260,7 +1260,7 @@ def update_purchase_details(request,purchase_id):
         try:
             with connection.cursor() as cursor:
                 #,reg_date='"+str(date_of_reg)+"'
-                update_query="update vff.united_armor_purchase_itemtbl set item_name='"+str(item_name)+"',order_by_supplier_name='"+str(selected_supplier_name)+"',supplier_id='"+str(selected_supplier_id)+"',credit_amount='"+str(credit)+"',total_amount='"+str(total_amount)+"',paid_amount='"+str(amount_paid)+"',balance_amount='"+str(balance_amount)+"',supplier_type='"+str(supplier_item_name)+"',status='"+str(status)+"',purchase_status='"+str(purchase_status)+"',transaction_type='"+str(transaction_type)+"',tax_given='"+str(tax_percentage)+"' where purchaseid='"+str(purchase_id)+"'"
+                update_query="update vff.united_armor_purchase_itemtbl set item_name='"+str(item_name)+"',order_by_supplier_name='"+str(selected_supplier_name)+"',supplier_id='"+str(selected_supplier_id)+"',credit_amount='"+str(credit)+"',total_amount='"+str(total_amount)+"',paid_amount='"+str(amount_paid)+"',balance_amount='"+str(balance_amount)+"',supplier_type='"+str(supplier_item_name)+"',status='"+str(status)+"',purchase_status='"+str(purchase_status)+"',transaction_type='"+str(transaction_type)+"',tax_given='"+str(tax_percentage)+"',purchase_date='"+str(date_of_purchase)+"' where purchaseid='"+str(purchase_id)+"'"
                 cursor.execute(update_query)
                 
                
