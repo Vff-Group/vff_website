@@ -37,7 +37,7 @@ def login_view(request):
         password = request.POST.get('passwrd')
         query = "select adminid,admin_name,username,password,type from vff.united_armor_admintbl where username='"+str(username)+"' and password='"+str(password)+"'"
         user_data = execute_raw_query_fetch_one(query)
-        if user_data and user_data[2]:
+        if user_data:
                 # User is authorized
                 print('User is Authorized')
                 request.session['clothing_admin_id'] = user_data[0]
