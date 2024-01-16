@@ -514,10 +514,10 @@
                                         <div class="form-group">
                                             <label class="form-control-label" for="update-input-status">Status</label>
                                             <select class="form-control form-control-alternative" id="update-input-status" name="update_status">
-                                                <option value="Pending" {% if row.status == "Pending" %}selected{% endif %}>Pending</option>
-                                                <option value="Completed" {% if row.status == "Completed" %}selected{% endif %}>Completed</option>
-                                                <option value="Waiting" {% if row.status == "Waiting" %}selected{% endif %}>Waiting</option>
-                                                <option value="Declined" {% if row.status == "Declined" %}selected{% endif %}>Declined</option>
+                                                <option value="Pending" {% if row.payment_status == "Pending" %}selected{% endif %}>Pending</option>
+                                                <option value="Completed" {% if row.payment_status == "Completed" %}selected{% endif %}>Completed</option>
+                                                <option value="Waiting" {% if row.payment_status == "Waiting" %}selected{% endif %}>Waiting</option>
+                                                <option value="Declined" {% if row.payment_status == "Declined" %}selected{% endif %}>Declined</option>
                                             </select>
                                         </div>
                                     </div>
