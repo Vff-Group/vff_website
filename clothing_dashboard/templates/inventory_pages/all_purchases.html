@@ -31,12 +31,7 @@
                 role="document"
               >
                 <div class="modal-content">
-                  <!-- <div class="modal-header">
-              <h6 class="modal-title" id="modal-title-default">Add Expense</h6>
-              <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
-            </div> -->
+                  
                   <form
                     method="post"
                     action="{% url 'clothing_dashboard_app:add_new_purchase' %}"
@@ -300,7 +295,7 @@
               </div>
             </div>
           </div>
-          <!-- Add Supplier End  -->
+          <!-- Add Purchase End  -->
 
           <div class="card-body px-0 pt-0 pb-2">
             <div class="row ms-2">
@@ -354,7 +349,7 @@
                   {% for row in query_result %}
                   <tr>
                     <td>
-                        <p class="text-xs text-secondary mb-0">{{forloop.counter}}</p>
+                        <p class="text-xs text-secondary mb-0">#{{row.purchaseid}}</p>
                     </td>
                     <td>
                       <div class="d-flex px-2 py-1">
@@ -442,9 +437,65 @@
                             </div> -->
                             {% endcomment %}
                         </div>
-                      
-                      
                     </td>
+
+                    <!-- Update Modal -->
+<div class="modal fade" id="updateModal{{ row.purchaseid }}" tabindex="-1" role="dialog" aria-labelledby="updateModal" aria-hidden="true">
+    <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+        <div class="modal-content">
+            <form method="post" action="{% url 'clothing_dashboard_app:update_purchase_details' row.purchaseid %}">
+                {% csrf_token %}
+                <input type="hidden" name="purchase_id" value="{{ row.purchaseid }}">
+                <div class="modal-body">
+                    <h6 class="heading-small text-muted mb-4">Update Purchase</h6>
+                    <div class="pl-lg-4">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="update-date-of-purchase" class="form-control-label">Purchase Date *</label>
+                                            <input class="form-control form-control-alternative" type="date" id="update-date-of-purchase" name="update_date_of_purchase" value="{{ row.purchase_date|date:'Y-m-d' }}" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Hidden input for supplier name -->
+                                        <input type="hidden" id="update-selected-supplier-name" name="update_selected_supplier_name" value="{{ row.order_by_supplier_name }}">
+                                                
+                                        <!-- Hidden input for supplier id -->
+                                        <input type="hidden" id="update-selected-supplier-id" name="update_selected_supplier_id" value="{{ row.supplier_id }}">
+                                                
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="update-input-supplier">Order By</label>
+                                            <select class="form-control form-control-alternative" id="update-input-supplier" name="update_supplier_details" required>
+                                                <option disabled selected>Choose Supplier</option>
+                                                {% for supplier in supplier_data %}
+                                                    <option value="{{ supplier.supplier_name }}" {% if supplier.supplier_name == row.order_by_supplier_name %}selected{% endif %} data-catid="{{ supplier.supplier_id }}">
+                                                        {{ supplier.supplier_name }}
+                                                    </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Continue with other fields and pre-fill values accordingly -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn bg-gradient-success">Update</button>
+                    <button type="button" class="btn btn-link ml-auto" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End Update Modal -->
+
+                    
                   </tr>
 
                   
@@ -471,14 +522,15 @@
         // Attach event listener to the supplier select input
         $('#input-supplier').change(function() {
             // Get the selected supplier name and id
-            var selectedSupplierName = $('#input-supplier option:selected').text();
+            var selectedSupplierName = $('#input-supplier option:selected').text().trim();  // Trim whitespace
             var selectedSupplierId = $('#input-supplier option:selected').data('catid');
-            
+    
             // Update the hidden inputs
             $('#selected-supplier-name').val(selectedSupplierName);
             $('#selected-supplier-id').val(selectedSupplierId);
         });
     });
+    
   $(document).ready(function() {
     // Search functionality
     $('#employee-name-search').on('keyup', function() {
