@@ -1242,10 +1242,25 @@ def update_purchase_details(request,purchase_id):
     if request.method == "POST":
         # Retrieve values from the form
         
+        date_of_purchase = request.POST.get('update_date_of_purchase')
+        selected_supplier_name = request.POST.get('update_selected_supplier_name')
+        selected_supplier_id = request.POST.get('update_selected_supplier_id')
+        item_name = request.POST.get('update_item_name')
+        supplier_item_name = request.POST.get('update_supplier_item_name')
+        credit = request.POST.get('update_credit')
+        total_amount = request.POST.get('update_total_amount')
+        amount_paid = request.POST.get('update_amount_paid')
+        balance_amount = request.POST.get('update_balance_amount')
+        status = request.POST.get('update_status')
+        purchase_status = request.POST.get('update_purchase_status')
+        transaction_type = request.POST.get('update_transaction_type')
+        tax_percentage = request.POST.get('update_tax_percentage')
+
+        
         try:
             with connection.cursor() as cursor:
                 #,reg_date='"+str(date_of_reg)+"'
-                update_query="update vff.united_armor_purchase_itemtbl set item_name,order_by_supplier_name,supplier_id,credit_amount,total_amount,paid_amount,balance_amount,supplier_type,status,purchase_status,transaction_type,tax_given where purchaseid=''"
+                update_query="update vff.united_armor_purchase_itemtbl set item_name='"+str(item_name)+"',order_by_supplier_name='"+str(selected_supplier_name)+"',supplier_id='"+str(selected_supplier_id)+"',credit_amount='"+str(credit)+"',total_amount='"+str(total_amount)+"',paid_amount='"+str(amount_paid)+"',balance_amount='"+str(balance_amount)+"',supplier_type='"+str(supplier_item_name)+"',status='"+str(status)+"',purchase_status='"+str(purchase_status)+"',transaction_type='"+str(transaction_type)+"',tax_given='"+str(tax_percentage)+"' where purchaseid='"+str(purchase_id)+"'"
                 cursor.execute(update_query)
                 
                
