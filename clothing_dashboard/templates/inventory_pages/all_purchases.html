@@ -322,7 +322,7 @@
               <table class="table align-items-center mb-0  table-hover">
                 <thead class="bg-light">
                   <tr>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sl No</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Purchase ID</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Order By</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Item Name</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">Purchase Status</th>
@@ -349,7 +349,7 @@
                   {% for row in query_result %}
                   <tr>
                     <td>
-                        <h6 class="text-xs text-secondary mb-0 text-center text-bolder">#{{row.purchaseid}}</h6>
+                        <h6 class="text-xs text-dark mb-0 text-center text-bolder">#{{row.purchaseid}}</h6>
                     </td>
                     <td>
                       <div class="d-flex px-2 py-1">
