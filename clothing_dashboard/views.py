@@ -32,37 +32,38 @@ temp_data =[]
 #Login Page
 @never_cache
 def login_view(request):
-    print("Login View is being called")
-    alert_message = None
-    # if request.method == "POST":
-    #     username = request.POST.get('uname')
-    #     password = request.POST.get('passwrd')
-    #     query = "select usrname,username,password,usertbl.usrid,mobile_no,address,lat,lng,token,created_date from vff.admintbl,vff.usertbl where usertbl.usrid=admintbl.usrid and status='1' and username='"+str(username)+"' and password='"+str(password)+"'"
-    #     user_data = execute_raw_query_fetch_one(query)
-    #     if user_data and user_data[2]:
-    #             # User is authorized
-    #             print('User is Authorized')
-    #             request.session['usrname'] = user_data[0]
-    #             request.session['username'] = user_data[1]
-    #             request.session['password'] = user_data[2]
-    #             request.session['userid'] = user_data[3]
-    #             request.session['notification_token'] = user_data[8]
-    #             request.session['is_logged_in'] = True
-    #             # Setting the session to expire after one day (86400 seconds)
-    #             request.session.set_expiry(43400)
-    #             print('All Session Data Saved') 
-    #             return redirect('dashboard_app:all_branches')
-    #     else:
-    #         context = {
-    #             'username': username,
-    #             'password': password,
-    #             'error_message': 'Invalid credentials please try again',  # You can customize this error message
-    #             }
-    #         return render(request, 'admin_pages/login.html', context)
+    if request.method == "POST":
+        username = request.POST.get('uname')
+        password = request.POST.get('passwrd')
+        query = "select adminid,admin_name,username,password,type from vff.united_armor_admintbl where username='"+str(username)+"' and password='"+str(password)+"'"
+        user_data = execute_raw_query_fetch_one(query)
+        if user_data and user_data[2]:
+                # User is authorized
+                print('User is Authorized')
+                request.session['clothing_admin_id'] = user_data[0]
+                request.session['clothing_admin_name'] = user_data[1]
+                request.session['clothing_admin_password'] = user_data[2]
+                request.session['clothing_admin_type'] = user_data[3]
+                request.session['notification_token'] = user_data[8]
+                request.session['is_clothing_logged_in'] = True
+                # Setting the session to expire after one day (86400 seconds)
+                request.session.set_expiry(43400)
+                
+                return redirect('dashboard_app:dashboard')
+        else:
+            context = {
+                'username': username,
+                'password': password,
+                'error_message': 'Invalid credentials please try again',  # You can customize this error message
+                }
+            return render(request,"admin_pages_clothing/login.html",context)
         
     return render(request,"admin_pages_clothing/login.html")
 
 def dashboard_view(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'No Data Found'
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
@@ -70,6 +71,9 @@ def dashboard_view(request):
     return render(request,"admin_pages_clothing/dashboard.html",context)
 
 def all_customers(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'No Customers Found'
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
@@ -77,6 +81,9 @@ def all_customers(request):
     return render(request,"customers/all_customer.html",context)
 
 def all_main_categories(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'No Main Categories Found'
     query = "select main_cat_id,main_title_name,status,images from vff.united_armor_main_categorytbl order by time_at DESC"
     
@@ -104,6 +111,9 @@ def all_main_categories(request):
     return render(request,"categories/all_main_categories.html",context)
 
 def all_categories(request,main_cat_id,main_cat_name):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'No Category Found'
     query = "select catid,cat_name,active_status from vff.united_armor_categorytbl where main_catid='"+str(main_cat_id)+"' ORDER BY time_while_creation desc"
     
@@ -131,6 +141,9 @@ def all_categories(request,main_cat_id,main_cat_name):
     return render(request,"categories/all_categories.html",context)
 
 def all_sub_categories(request,main_cat_id,main_cat_name,cat_id,cat_name):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'No Sub Category Found'
     query = "select sub_catid,sub_cat_name,time_creation from vff.united_armor_sub_categorytbl where catid='"+str(cat_id)+"'"
     
@@ -159,6 +172,9 @@ def all_sub_categories(request,main_cat_id,main_cat_name,cat_id,cat_name):
 
 
 def all_products_main(request): 
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'No Products Found'
     #query = "select productid,product_name,fitting_type,fitting_id,max_checkout_qty,product_collection_id,united_armor_product_typetbl.product_type_id,price,offer_price,default_images,product_type_name,product_category_name,color_name,color_code,default_color_id,main_title_name,cat_name,sub_cat_name,images as main_cat_img from vff.united_armor_main_categorytbl,vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl,vff.united_armor_product_colorstbl,vff.united_armor_product_typetbl,vff.united_armor_product_categorytbl,vff.united_armor_all_productstbl where united_armor_product_typetbl.product_type_id=united_armor_all_productstbl.product_type_id and united_armor_product_categorytbl.product_catid=united_armor_all_productstbl.product_collection_id and united_armor_all_productstbl.default_color_id=united_armor_product_colorstbl.colorsid and united_armor_all_productstbl.main_cat_id=united_armor_main_categorytbl.main_cat_id and  united_armor_all_productstbl.cat_id=united_armor_categorytbl.catid and united_armor_all_productstbl.sub_catid=united_armor_sub_categorytbl.sub_catid"
     query = "select productid,product_name,fitting_type,price,offer_price,default_images,product_type_name,product_category_name,color_name,color_code,main_title_name,cat_name,sub_cat_name,images as main_cat_img,united_armor_all_productstbl.main_cat_id,united_armor_all_productstbl.cat_id,united_armor_all_productstbl.sub_catid from vff.united_armor_main_categorytbl,vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl,vff.united_armor_product_colorstbl,vff.united_armor_product_typetbl,vff.united_armor_product_categorytbl,vff.united_armor_all_productstbl where united_armor_product_typetbl.product_type_id=united_armor_all_productstbl.product_type_id and united_armor_product_categorytbl.product_catid=united_armor_all_productstbl.product_collection_id and united_armor_all_productstbl.default_color_id=united_armor_product_colorstbl.colorsid and united_armor_all_productstbl.main_cat_id=united_armor_main_categorytbl.main_cat_id and  united_armor_all_productstbl.cat_id=united_armor_categorytbl.catid and united_armor_all_productstbl.sub_catid=united_armor_sub_categorytbl.sub_catid"
@@ -202,6 +218,9 @@ def all_products_main(request):
     return render(request,"all_products/all_main_products.html",context)
 
 def all_products_details(request,main_cat_id,cat_id,sub_cat_id): 
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'No Products Found'
     query = "select productid,product_name,max_checkout_qty,price,offer_price,default_images from vff.united_armor_all_productstbl  where sub_catid='"+str(sub_cat_id)+"'"
     
@@ -232,7 +251,10 @@ def all_products_details(request,main_cat_id,cat_id,sub_cat_id):
     return render(request,"all_products/all_products.html",context)
 
 def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
-    error_msg=''
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
+    error_msg='Something went wrong'
     #All Sizes For Clothing
     query_sizes ="select sizesid,size_value from vff.united_armor_product_sizestbl where type='Clothing'"
     sizes_result = execute_raw_query(query_sizes)
@@ -462,6 +484,9 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
     return render(request,"all_products/add_new_product.html",context)
 
 def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id,ret=None):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg=''
     #All Details of Product
     query_product ="select product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,product_collection_id,united_armor_product_typetbl.product_type_id,price,offer_price,default_images,return_policy,product_type_name,product_category_name,color_name,color_code,default_color_id from vff.united_armor_product_colorstbl,vff.united_armor_product_typetbl,vff.united_armor_product_categorytbl,vff.united_armor_all_productstbl where united_armor_product_typetbl.product_type_id=united_armor_all_productstbl.product_type_id and united_armor_product_categorytbl.product_catid=united_armor_all_productstbl.product_collection_id and united_armor_all_productstbl.default_color_id=united_armor_product_colorstbl.colorsid  and productid='"+str(product_id)+"'"
@@ -705,6 +730,9 @@ def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id,ret=None
     return render(request,"all_products/update_product_details.html",context)
 
 def single_product_colors(request,main_cat_id,cat_id,sub_cat_id,product_id,product_name): 
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'No Product Colors Found'
     query = "select colorsid,color_name,color_code,added_to_inventory from vff.united_armor_product_colorstbl where product_id='"+str(product_id)+"'"
     
@@ -731,7 +759,10 @@ def single_product_colors(request,main_cat_id,cat_id,sub_cat_id,product_id,produ
     return render(request,"all_products/all_colors_images.html",context)
 
 def view_product_images(request,product_name,color_name,product_id,color_id):
-    error_msg=''
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
+    error_msg='Something went wrong'
     #All Images Data
     query_all_images ="select imageid,image_url,color_id from vff.united_armor_product_imagestbl where product_id='"+str(product_id)+"' and color_id='"+str(color_id)+"'"
     all_images_result = execute_raw_query(query_all_images)
@@ -766,7 +797,10 @@ def view_product_images(request,product_name,color_name,product_id,color_id):
     return render(request,'all_products/view_color_images.html',context)
 
 def add_new_color_and_image_to_product(request,main_cat_id,cat_id,sub_cat_id,product_id,product_name):
-    error_msg=''
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
+    error_msg='Something Went Wrong'
     #All Sizes
     query_sizes ="select sizesid,size_value from vff.united_armor_product_sizestbl"
     sizes_result = execute_raw_query(query_sizes)
@@ -869,7 +903,9 @@ def add_new_color_and_image_to_product(request,main_cat_id,cat_id,sub_cat_id,pro
 
 
 def add_new_main_category(request):
-    
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'No Main Category Details Found'
     if request.method == "POST":
         main_category_name = request.POST.get('main_category_name')
@@ -899,7 +935,9 @@ def add_new_main_category(request):
     return render(request,"categories/all_main_categories.html",context)
     
 def update_main_category_details(request):
-    
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'No Main Category Details Found'
     if request.method == "POST":
         main_category_name = request.POST.get('main_category_name')
@@ -932,7 +970,9 @@ def update_main_category_details(request):
     return render(request,"categories/all_main_categories.html",context)
 
 def add_new_category(request):
-    
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'No Category Details Found'
     if request.method == "POST":
         main_category_id = request.POST.get('main_category_id')
@@ -957,7 +997,9 @@ def add_new_category(request):
     return render(request,"categories/all_main_categories.html",context)
 
 def update_category_details(request):
-    
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'No  Category Details Found'
     if request.method == "POST":
         main_category_id = request.POST.get('main_category_id')
@@ -982,7 +1024,9 @@ def update_category_details(request):
     return render(request,"categories/all_categories.html",context)
 
 def add_new_sub_category(request):
-    
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'No Category Details Found'
     if request.method == "POST":
         main_category_id = request.POST.get('main_category_id')
@@ -1010,7 +1054,9 @@ def add_new_sub_category(request):
 
 
 def update_sub_category_details(request):
-    
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'No Sub Category Details Found'
     if request.method == "POST":
         main_category_id = request.POST.get('main_category_id')
@@ -1038,18 +1084,27 @@ def update_sub_category_details(request):
     return render(request,"categories/all_categories.html",context)
     
 def all_purchase_orders(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'No Purchase Order Created'
     current_url = request.get_full_path()
     context = {'current_url': current_url,'error_msg':error_msg}
     return render(request,"purchase_orders_pages/all_purchase_orders.html",context)
 
 def add_new_purchase_orders(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'No Purchase Order Created'
     current_url = request.get_full_path()
     context = {'current_url': current_url,'error_msg':error_msg}
     return render(request,"purchase_orders_pages/new_purchase_order.html",context)
 
 def all_suppliers(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg='No Suppliers Added Yet'
    
     #All Images Data
@@ -1079,6 +1134,9 @@ def all_suppliers(request):
     return render(request,"inventory_pages/all_suppliers.html",context)
 
 def add_new_supplier(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'Something Went Wrong'
     
     
@@ -1109,6 +1167,9 @@ def add_new_supplier(request):
     return render(request,"inventory_pages/all_suppliers.html",context)
  
 def update_supplier_details(request,supplier_id):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'Something Went Wrong'
     
     
@@ -1141,6 +1202,9 @@ def update_supplier_details(request,supplier_id):
 
 #PURCHASE ORDERS
 def all_purchases(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg='No Purchase Added Yet'
     #All Suppliers Data
     query_suppliers ="select supplierid,supplier_name from vff.united_armor_suppliertbl"
@@ -1190,6 +1254,9 @@ def all_purchases(request):
     return render(request,"inventory_pages/all_purchases.html",context)
 
 def add_new_purchase(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'Something Went Wrong'
     
     
@@ -1236,6 +1303,9 @@ def add_new_purchase(request):
     return render(request,"inventory_pages/all_purchases.html",context)
  
 def update_purchase_details(request,purchase_id):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'Something Went Wrong'
     
     
@@ -1279,6 +1349,9 @@ def update_purchase_details(request,purchase_id):
 
 #DEPARTMENTS
 def all_departments(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg='No Department Added Yet'
    
     
@@ -1305,6 +1378,9 @@ def all_departments(request):
     return render(request,"inventory_pages/all_departments.html",context)
 
 def add_new_department(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'Something Went Wrong'
     
     
@@ -1332,6 +1408,9 @@ def add_new_department(request):
     return render(request,"inventory_pages/all_departments.html",context)
  
 def update_department_details(request,department_id):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'Something Went Wrong'
     
     
@@ -1362,6 +1441,9 @@ def update_department_details(request,department_id):
  
 
 def inventory(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     #Total Products
     #select count(*) from vff.united_armor_inventory_productstbl
     
@@ -1422,6 +1504,9 @@ def inventory(request):
     return render(request,"inventory_pages/dashboard_inventory.html",context)
 
 def add_product_to_inventory(request,main_cat_id,cat_id,sub_cat_id,product_id,product_name,color_id):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'No Product Colors Found'
     
     
@@ -1446,6 +1531,9 @@ def add_product_to_inventory(request,main_cat_id,cat_id,sub_cat_id,product_id,pr
     return render(request,"all_products/all_colors_images.html",context)
  
 def attach_to_inventory(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg='No Products Listed to stock'
     #All Images Data
     query ="select productid,product_name,fitting_type,colorsid,color_name,default_images,main_title_name,cat_name,sub_cat_name,images as main_cat_img,united_armor_all_productstbl.main_cat_id,united_armor_all_productstbl.cat_id,united_armor_all_productstbl.sub_catid,stock_added,color_code,price,offer_price from vff.united_armor_main_categorytbl,vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl,vff.united_armor_product_colorstbl,vff.united_armor_all_productstbl,vff.united_armor_inventory_productstbl where united_armor_all_productstbl.productid=united_armor_product_colorstbl.product_id  and united_armor_inventory_productstbl.product_id=united_armor_all_productstbl.productid and united_armor_inventory_productstbl.color_id=united_armor_product_colorstbl.colorsid and united_armor_all_productstbl.main_cat_id=united_armor_main_categorytbl.main_cat_id and  united_armor_all_productstbl.cat_id=united_armor_categorytbl.catid and united_armor_all_productstbl.sub_catid=united_armor_sub_categorytbl.sub_catid  and added_to_inventory='1' order by last_update_time desc"
@@ -1483,6 +1571,9 @@ def attach_to_inventory(request):
     return render(request,"inventory_pages/all_products_to_attach.html",context)  
  
 def load_add_initial_stock(request,product_id,color_id,color_name,product_name):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg=f'No Sizes Added To Products For this color {color_name}'
     #All Images Data
     global temp_data
@@ -1513,6 +1604,9 @@ def load_add_initial_stock(request,product_id,color_id,color_name,product_name):
 
     
 def attach_to_inventory_stock(request,product_id,color_id):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'No Product Colors Found'
     
     
@@ -1553,6 +1647,9 @@ def attach_to_inventory_stock(request,product_id,color_id):
 
  
 def load_all_inventory_stock_products(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg='No Products Listed to stock'
     #All Images Data
     query ="select productid,product_name,fitting_type,colorsid,color_name,default_images,main_title_name,cat_name,sub_cat_name,images as main_cat_img,united_armor_all_productstbl.main_cat_id,united_armor_all_productstbl.cat_id,united_armor_all_productstbl.sub_catid,color_code,price,offer_price,available_quantity,reserved_quantity,purchased_quantity,last_updated_time,stock_status,size_id,size_value from vff.united_armor_product_sizestbl,vff.united_armor_main_categorytbl,vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl,vff.united_armor_product_colorstbl,vff.united_armor_all_productstbl,vff.united_armor_inventorytbl where united_armor_all_productstbl.productid=united_armor_product_colorstbl.product_id  and united_armor_inventorytbl.product_id=united_armor_all_productstbl.productid and united_armor_all_productstbl.default_color_id=united_armor_product_colorstbl.colorsid and united_armor_all_productstbl.main_cat_id=united_armor_main_categorytbl.main_cat_id and  united_armor_all_productstbl.cat_id=united_armor_categorytbl.catid and united_armor_all_productstbl.sub_catid=united_armor_sub_categorytbl.sub_catid  and united_armor_product_sizestbl.sizesid=vff.united_armor_inventorytbl.size_id"
@@ -1596,6 +1693,9 @@ def load_all_inventory_stock_products(request):
     return render(request,"inventory_pages/dashboard_inventory.html",context)  
 
 def update_stock_details(request,product_id,size_id,color_id):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     error_msg = 'Something Went Wrong'
     
     
@@ -1627,6 +1727,9 @@ def update_stock_details(request,product_id,size_id,color_id):
 
 
 def all_orders(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
     #Total Products
     #select count(*) from vff.united_armor_inventory_productstbl
     # total_products = 0
@@ -1873,3 +1976,8 @@ def convert_date_format(input_date):
     output_date = date_obj.strftime('%Y-%m-%d')
 
     return output_date
+
+def is_loggedin(request):
+    # Check if the session variable 'is_logged_in' exists and is set to True
+    print("checking if user has logged in or not")
+    return request.session.get('is_clothing_logged_in', False)
