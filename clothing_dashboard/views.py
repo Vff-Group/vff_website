@@ -1058,11 +1058,12 @@ def all_suppliers(request):
     data = []    
     if not result == 500:
         for row in result:
-            
+            input_date = row[2]
+            output_date = convert_date_format(input_date)
             data.append({
                 'supplierid': row[0],
                 'supplier_name': row[1],
-                'reg_date': row[2],
+                'reg_date': output_date,
                 'item_supplies': row[3],
                 'email': row[4],
                 'phone_no': row[5],
@@ -1635,3 +1636,13 @@ def execute_raw_query(query, params=None,):
     finally:
         # Ensure the cursor is closed to release resources
         cursor.close()  # Note: cursor might not be defined if an exception occurs earlier
+
+
+def convert_date_format(input_date):
+    # Convert the input date string to a datetime object
+    date_obj = datetime.strptime(input_date, '%b. %d, %Y')
+
+    # Format the datetime object in the desired output format
+    output_date = date_obj.strftime('%Y-%m-%d')
+
+    return output_date

@@ -338,7 +338,7 @@
                                                         type="date"
                                                         id="date-of-reg"
                                                         name="dateofreg"
-                                                        value="{{ row.reg_date }}"
+                                                        value="{{ row.reg_date|date:'Y-m-d' }}"
                                                         required
                                                     />
                                                 </div>
