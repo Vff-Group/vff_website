@@ -1052,11 +1052,16 @@ def add_new_purchase_orders(request):
 def inventory(request):
     #Total Products
     #select count(*) from vff.united_armor_inventory_productstbl
+    
     total_products = 0
     total_sales = 0
     total_stock_remaining = 0
     delivery_return =0
     error_msg='No Products Listed to stock'
+    query_product = "select count(*) from vff.united_armor_inventory_productstbl"
+    product_data = execute_raw_query_fetch_one(query_product)
+    if product_data:
+        total_products = product_data[0]
     #All Images Data
     query ="select productid,product_name,fitting_type,colorsid,color_name,default_images,main_title_name,cat_name,sub_cat_name,images as main_cat_img,united_armor_all_productstbl.main_cat_id,united_armor_all_productstbl.cat_id,united_armor_all_productstbl.sub_catid,color_code,price,offer_price,available_quantity,reserved_quantity,purchased_quantity,last_updated_time,stock_status,size_id,size_value,inventory_id from vff.united_armor_product_sizestbl,vff.united_armor_main_categorytbl,vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl,vff.united_armor_product_colorstbl,vff.united_armor_all_productstbl,vff.united_armor_inventorytbl where united_armor_all_productstbl.productid=united_armor_product_colorstbl.product_id  and united_armor_inventorytbl.product_id=united_armor_all_productstbl.productid and united_armor_inventorytbl.color_id=united_armor_product_colorstbl.colorsid and united_armor_all_productstbl.main_cat_id=united_armor_main_categorytbl.main_cat_id and  united_armor_all_productstbl.cat_id=united_armor_categorytbl.catid and united_armor_all_productstbl.sub_catid=united_armor_sub_categorytbl.sub_catid  and united_armor_product_sizestbl.sizesid=vff.united_armor_inventorytbl.size_id order by last_updated_time desc"
     result = execute_raw_query(query)
