@@ -295,7 +295,7 @@
                     <td class="align-middle">
                         <div class="row">
                             <div class="col">
-                                <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit "> 
+                                <a href="" class="text-secondary font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#editModal{{ row.supplierid }}"> 
                                     Edit
                                   </a>
                             </div>
@@ -312,35 +312,163 @@
                     </td>
                   </tr>
 
-                  <div class="col-md-4">
-                    
-                    <div class="modal fade" id="modal-default{{row.usrid}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
-                      <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h6 class="modal-title" id="modal-title-default">Are you sure you want to delete ?</h6>
-                            <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">×</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <div class="alert  m-4" role="alert">
-                              <strong>Alert! </strong>{{row.usrname}} will be deleted permanantely!
-                          </div>
-                            
-                          </div>
-                          <div class="modal-footer">
-                            <form action="" method="post">
-                              {% csrf_token %}
-                              <button type="submit" class="btn bg-gradient-danger">Delete</button>
-                            </form>
-                            
-                            <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal">Cancel</button>
-                          </div>
+                  <!-- Edit Supplier Modal -->
+                <div class="modal fade" id="editModal{{ row.supplierid }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Edit Supplier Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                      </div>
+                        <form method="post" action="{% url 'clothing_dashboard_app:update_supplier_details' row.supplier_id %}">
+                                {% csrf_token %}
+                                <div class="modal-body">
+                                    
+                                    <div class="pl-lg-4">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label
+                                                        for="date-of-reg"
+                                                        class="form-control-label"
+                                                    >Registration Date *</label
+                                                    >
+                                                    <input
+                                                        class="form-control form-control-alternative"
+                                                        type="date"
+                                                        id="date-of-reg"
+                                                        name="dateofreg"
+                                                        value="{{ row.reg_date }}"
+                                                        required
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label
+                                                        class="form-control-label"
+                                                        for="input-tax-no"
+                                                    >Tax No</label
+                                                    >
+                                                    <input
+                                                        type="text"
+                                                        id="input-tax-no"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Enter Tax No"
+                                                        name="tax_no"
+                                                        value="{{ row.tax_no }}"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label
+                                                        class="form-control-label"
+                                                        for="input-supplier-name"
+                                                    >Suppliers Name</label
+                                                    >
+                                                    <input
+                                                        type="text"
+                                                        id="input-supplier-name"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Enter Supplier Name"
+                                                        name="supplier_name"
+                                                        value="{{ row.supplier_name }}"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label
+                                                        class="form-control-label"
+                                                        for="input-supplier-item"
+                                                    >Item Suppliers</label
+                                                    >
+                                                    <input
+                                                        type="text"
+                                                        id="input-supplier-name"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Item supplies"
+                                                        name="supplier_item_name"
+                                                        value="{{ row.item_supplies }}"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label
+                                                        class="form-control-label"
+                                                        for="input-mail-id"
+                                                    >Mail</label
+                                                    >
+                                                    <input
+                                                        type="text"
+                                                        id="input-mail-id"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Enter Supplier Mail"
+                                                        name="mail_id"
+                                                        value="{{ row.email }}"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label
+                                                        class="form-control-label"
+                                                        for="input-phone"
+                                                    >Phone</label
+                                                    >
+                                                    <input
+                                                        type="text"
+                                                        id="input-phone"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="+91"
+                                                        name="phone_no"
+                                                        value="{{ row.phone_no }}"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="pl-lg-4">
+                                            <div class="form-group">
+                                                <label>Address</label>
+                                                <textarea
+                                                    rows="4"
+                                                    class="form-control form-control-alternative"
+                                                    placeholder="Enter Supplier Address"
+                                                    name="address"
+                                                >{{ row.address }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn bg-gradient-success">
+                                        Save
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="btn btn-link ml-auto"
+                                        data-bs-dismiss="modal"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+
                     </div>
-                  </div>
+                    </div>
+                </div>
+
+                  
                   {% endfor %}
                 </tbody>
               </table>
