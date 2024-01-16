@@ -1049,6 +1049,35 @@ def add_new_purchase_orders(request):
     context = {'current_url': current_url,'error_msg':error_msg}
     return render(request,"purchase_orders_pages/new_purchase_order.html",context)
 
+def all_suppliers(request):
+    error_msg='No Suppliers Added Yet'
+   
+    #All Images Data
+    query ="select supplierid,supplier_name,reg_date,item_supplies,email,phone_no,address,tax_no from vff.united_armor_suppliertbl"
+    result = execute_raw_query(query)
+    data = []    
+    if not result == 500:
+        for row in result:
+            
+            data.append({
+                'supplierid': row[0],
+                'supplier_name': row[1],
+                'reg_date': row[2],
+                'item_supplies': row[3],
+                'email': row[4],
+                'phone_no': row[5],
+                'address': row[6],
+                'tax_no': row[7],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    current_url = request.get_full_path()
+    context = {'query_result':data,'current_url': current_url}
+    return render(request,"inventory_pages/all_suppliers.html",context)
+
+
 def inventory(request):
     #Total Products
     #select count(*) from vff.united_armor_inventory_productstbl

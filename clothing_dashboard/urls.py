@@ -75,6 +75,15 @@ urlpatterns = [
     
     # ADD NEW PURCHASE ORDER DETAILS
     path('add_new_purchase_orders/',views.add_new_purchase_orders,name='add_new_purchase_orders'),
+    
+    # All Supplier
+    path('all_suppliers/',views.all_suppliers,name='all_suppliers'),
+    
+    # Add New Supplier
+    path('add_new_supplier/',views.add_new_supplier,name='add_new_supplier'),
+    
+    # Update Supplier Details
+    path('update_supplier_details/',views.update_supplier_details,name='update_supplier_details'),
    
     
     
