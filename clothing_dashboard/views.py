@@ -1092,8 +1092,7 @@ def add_new_supplier(request):
         address = request.POST.get('address')
         try:
             with connection.cursor() as cursor:
-                insert_query="insert into vff.united_armor_suppliertbl (supplier_name,reg_date,item_supplies,email,phone_no,address,tax_no)"
-                "values ('"+str(supplier_name)+"','"+str(date_of_reg)+"','"+str(supplier_item_name)+"','"+str(mail_id)+"','"+str(phone_no)+"','"+str(address)+"','"+str(tax_no)+"')"
+                insert_query="insert into vff.united_armor_suppliertbl (supplier_name,reg_date,item_supplies,email,phone_no,address,tax_no) values ('"+str(supplier_name)+"','"+str(date_of_reg)+"','"+str(supplier_item_name)+"','"+str(mail_id)+"','"+str(phone_no)+"','"+str(address)+"','"+str(tax_no)+"')"
                 cursor.execute(insert_query)
                 
                
