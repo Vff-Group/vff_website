@@ -11,242 +11,246 @@ Addmission Fees
    
     
     <!-- Page content -->
-    <div class="container-fluid mt-2 mb-4">
+    <div class="container mt-2 mb-4">
        
-        <div class="card card-profile shadow mb-4">
-        <div class="card-body">
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-      <h6 class="heading-small text-muted mb-4">New Admission Fees</h6>
-      <div class="pl-lg-4">
         <div class="row d-flex justify-content-center">
-            <div class="col-lg-4">
-                   
-          
-            <div class="form-group">
-              <label class="form-control-label" for="input-member-name">Member Name</label>
-              <input type="text" id="input-member-name" class="form-control form-control-alternative"  name="member_name" autocomplete="off" value="{{ member_name }}"  disabled>
-            </div>
-          
-
-          <input type="hidden" id="member_id_current" name="id" value="{{memberid}}">
-                              <input type="hidden" id="last_fees_due_date_current" name="last_fees_date"  value="{{due_date}}">
-                              
-                               <!-- Dropdown for fees plans -->
-                               <div class="form-group">
-                                  <label for="feesPlanDropdown">Choose a Plan</label>
-                                  <select class="form-control" id="feesPlanDropdown" name="fees_plan_id">
-                                    <!-- Options will be populated dynamically -->
-                                </select>
-                                <!-- Hidden input for selected plan ID -->
-                                <input type="hidden" id="selectedPlanId" name="selected_plan_id">
-                                <input type="hidden" id="selectedPlanDuration" name="selected_plan_duration">
-                                <input type="hidden" id="selectedPlanPrice" name="selected_plan_price">
-                            </div>
-                              
-                              <div class="form-group">
-                                  <label for="price">Amount to pay</label>
-                                  <input type="number" class="form-control" id="price" name="plan_price" placeholder="Enter Plan Price" value="{{row.price}}"  disabled>
-                                  
-                              </div>
-                              
-                              
-          
-                              <div class="form-group">
-                                  <label for="duration">Duration In Months</label>
-                                  <input type="text" class="form-control" id="duration" name="duration_in_months"  value="{{row.duration_in_months}}"  disabled>
-                              </div>
-  
-  
-                              <div class="form-group">
-                                  <label
-                                    for="fees-date"
-                                    class="form-control-label"
-                                    >Fees Date *</label
-                                  >
-                                  <input
-                                    class="form-control form-control-alternative"
-                                    type="date"
-                                    id="fees-date"
-                                    name="fees_date"
-                                    value=""
-                                    required
-                                  />
-                                </div>
-  
-                              <hr>
-  
-                              <div class="form-group">
-                                  <label for="single-payment-checkbox">
-                                      <input type="checkbox" id="single-payment-checkbox"> Single Payment
-                                  </label>
-                                  
-                              </div>
-  
-                              <div class="form-group">
-                              <label for="multi-payment-checkbox">
-                                  <input type="checkbox" id="multi-payment-checkbox"> Multi Payment 
-                              </label>
-                          </div>
-  
-                              
-  
-                              <div id="multi-payment-container"  style="display: none;">
-                                  <hr>
+            <div class="col-lg-6">
+                <div class="card card-profile shadow mb-4">
+                    <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                  <h6 class="heading-small text-muted mb-4">New Admission Fees</h6>
+                  <div class="pl-lg-4">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-lg-12">
+                               
+                      
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-member-name">Member Name</label>
+                          <input type="text" id="input-member-name" class="form-control form-control-alternative"  name="member_name" autocomplete="off" value="{{ member_name }}"  disabled>
+                        </div>
+                      
+            
+                      <input type="hidden" id="member_id_current" name="id" value="{{memberid}}">
+                                          <input type="hidden" id="last_fees_due_date_current" name="last_fees_date"  value="{{due_date}}">
                                           
-                                              <!-- Payment Mode Multi One  -->
+                                           <!-- Dropdown for fees plans -->
+                                           <div class="form-group">
+                                              <label for="feesPlanDropdown">Choose a Plan</label>
+                                              <select class="form-control" id="feesPlanDropdown" name="fees_plan_id">
+                                                <!-- Options will be populated dynamically -->
+                                            </select>
+                                            <!-- Hidden input for selected plan ID -->
+                                            <input type="hidden" id="selectedPlanId" name="selected_plan_id">
+                                            <input type="hidden" id="selectedPlanDuration" name="selected_plan_duration">
+                                            <input type="hidden" id="selectedPlanPrice" name="selected_plan_price">
+                                        </div>
+                                          
+                                          <div class="form-group">
+                                              <label for="price">Amount to pay</label>
+                                              <input type="number" class="form-control" id="price" name="plan_price" placeholder="Enter Plan Price" value="{{row.price}}"  disabled>
                                               
-                                                <div class="form-group">
-                                                  <label
-                                                    class="form-control-label"
-                                                    for="input-paymentmode-multi-one"
-                                                    >Payment Mode One</label
-                                                  >
-                                                  <select
-                                                    class="form-control form-control-alternative"
-                                                    id="input-paymentmode-multi-one"
-                                                    name="payment_mode_multi_one"
-                                                    required
-                                                  >
-                                                    <option disabled selected>
-                                                      Choose Payment Mode One
-                                                    </option>
-                                                    <option value="Cash">Cash</option>
-                                                    <option value="UPI">UPI</option>
-                                                    <option value="Card">Card</option>
-                                                    <option value="Cheque">Cheque</option>
-                                                    <option value="Bank Transfer">
-                                                      Bank Transfer
-                                                    </option>
-                                                   
-                                                  </select>
-                                                </div>
-                                                <div class="form-group">
-                                                  <label for="multi-mode-one-price">Amount to pay [Mode 1]</label>
-                                                  <input type="number" class="form-control" id="multi-mode-one-price" name="multi_mode_one_price" placeholder="Enter Amount for Payment Mode One" >
-                                                  </div>
-  
-                                                  <div class="form-group" id="payment-id-container-multi-one" style="display: none;">
-                                                      <label class="form-control-label" for="input-paymentid">Payment ID</label>
-                                                      <input class="form-control form-control-alternative" type="text" id="input-paymentid-multi-one" name="payment-id" disabled>
-                                                  </div>
+                                          </div>
+                                          
+                                          
+                      
+                                          <div class="form-group">
+                                              <label for="duration">Duration In Months</label>
+                                              <input type="text" class="form-control" id="duration" name="duration_in_months"  value="{{row.duration_in_months}}"  disabled>
+                                          </div>
+              
+              
+                                          <div class="form-group">
+                                              <label
+                                                for="fees-date"
+                                                class="form-control-label"
+                                                >Fees Date *</label
+                                              >
+                                              <input
+                                                class="form-control form-control-alternative"
+                                                type="date"
+                                                id="fees-date"
+                                                name="fees_date"
+                                                value=""
+                                                required
+                                              />
+                                            </div>
+              
+                                          <hr>
+              
+                                          <div class="form-group">
+                                              <label for="single-payment-checkbox">
+                                                  <input type="checkbox" id="single-payment-checkbox"> Single Payment
+                                              </label>
                                               
-                                                <div class="form-group">
-                                                  <button type="button" class="btn bg-gradient-success makePaymentBtn-multi-one" style="display: none;">Make Payment One</button>
-                                              </div>
-  
-                                              
-                                              
-  
-                                              <!-- Payment Mode Multi Two  -->
+                                          </div>
+              
+                                          <div class="form-group">
+                                          <label for="multi-payment-checkbox">
+                                              <input type="checkbox" id="multi-payment-checkbox"> Multi Payment 
+                                          </label>
+                                      </div>
+              
+                                          
+              
+                                          <div id="multi-payment-container"  style="display: none;">
                                               <hr>
-                                                  <div class="form-group">
-                                                    <label
-                                                      class="form-control-label"
-                                                      for="input-paymentmode-multi-two"
-                                                      >Payment Mode Two</label
-                                                    >
-                                                    <select
-                                                      class="form-control form-control-alternative"
-                                                      id="input-paymentmode-multi-two"
-                                                      name="payment_mode_multi_two"
-                                                      required
-                                                    >
-                                                      <option disabled selected>
-                                                        Choose Payment Mode Two
-                                                      </option>
-                                                      <option value="Cash">Cash</option>
-                                                      <option value="UPI">UPI</option>
-                                                      <option value="Card">Card</option>
-                                                      <option value="Cheque">Cheque</option>
-                                                      <option value="Bank Transfer">
-                                                        Bank Transfer
-                                                      </option>
-                                                     
-                                                    </select>
-                                                  </div>
-  
-                                                  <div class="form-group">
-                                                      <label for="multi-mode-two-price">Amount to pay [Mode 1]</label>
-                                                      <input type="number" class="form-control" id="multi-mode-two-price" name="multi_mode_two_price" placeholder="Enter Amount for Payment Mode Two" >
                                                       
-                                                  </div>
-  
-                                                  <div class="form-group" id="payment-id-container-multi-two" style="display: none;">
-                                                      <label class="form-control-label" for="input-paymentid">Payment ID</label>
-                                                      <input class="form-control form-control-alternative" type="text" id="input-paymentid-multi-two" name="payment-id" disabled>
-                                                  </div>
-  
-                                                  <div class="form-group">
-                                                    <button type="button" class="btn bg-gradient-success makePaymentBtn-multi-two" style="display: none;">Make Payment Two</button>
-                                                </div>
-                                               
-                                                
+                                                          <!-- Payment Mode Multi One  -->
+                                                          
+                                                            <div class="form-group">
+                                                              <label
+                                                                class="form-control-label"
+                                                                for="input-paymentmode-multi-one"
+                                                                >Payment Mode One</label
+                                                              >
+                                                              <select
+                                                                class="form-control form-control-alternative"
+                                                                id="input-paymentmode-multi-one"
+                                                                name="payment_mode_multi_one"
+                                                                required
+                                                              >
+                                                                <option disabled selected>
+                                                                  Choose Payment Mode One
+                                                                </option>
+                                                                <option value="Cash">Cash</option>
+                                                                <option value="UPI">UPI</option>
+                                                                <option value="Card">Card</option>
+                                                                <option value="Cheque">Cheque</option>
+                                                                <option value="Bank Transfer">
+                                                                  Bank Transfer
+                                                                </option>
+                                                               
+                                                              </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                              <label for="multi-mode-one-price">Amount to pay [Mode 1]</label>
+                                                              <input type="number" class="form-control" id="multi-mode-one-price" name="multi_mode_one_price" placeholder="Enter Amount for Payment Mode One" >
+                                                              </div>
+              
+                                                              <div class="form-group" id="payment-id-container-multi-one" style="display: none;">
+                                                                  <label class="form-control-label" for="input-paymentid">Payment ID</label>
+                                                                  <input class="form-control form-control-alternative" type="text" id="input-paymentid-multi-one" name="payment-id" disabled>
+                                                              </div>
+                                                          
+                                                            <div class="form-group">
+                                                              <button type="button" class="btn bg-gradient-success makePaymentBtn-multi-one" style="display: none;">Make Payment One</button>
+                                                          </div>
+              
+                                                          
+                                                          
+              
+                                                          <!-- Payment Mode Multi Two  -->
+                                                          <hr>
+                                                              <div class="form-group">
+                                                                <label
+                                                                  class="form-control-label"
+                                                                  for="input-paymentmode-multi-two"
+                                                                  >Payment Mode Two</label
+                                                                >
+                                                                <select
+                                                                  class="form-control form-control-alternative"
+                                                                  id="input-paymentmode-multi-two"
+                                                                  name="payment_mode_multi_two"
+                                                                  required
+                                                                >
+                                                                  <option disabled selected>
+                                                                    Choose Payment Mode Two
+                                                                  </option>
+                                                                  <option value="Cash">Cash</option>
+                                                                  <option value="UPI">UPI</option>
+                                                                  <option value="Card">Card</option>
+                                                                  <option value="Cheque">Cheque</option>
+                                                                  <option value="Bank Transfer">
+                                                                    Bank Transfer
+                                                                  </option>
+                                                                 
+                                                                </select>
+                                                              </div>
+              
+                                                              <div class="form-group">
+                                                                  <label for="multi-mode-two-price">Amount to pay [Mode 1]</label>
+                                                                  <input type="number" class="form-control" id="multi-mode-two-price" name="multi_mode_two_price" placeholder="Enter Amount for Payment Mode Two" >
+                                                                  
+                                                              </div>
+              
+                                                              <div class="form-group" id="payment-id-container-multi-two" style="display: none;">
+                                                                  <label class="form-control-label" for="input-paymentid">Payment ID</label>
+                                                                  <input class="form-control form-control-alternative" type="text" id="input-paymentid-multi-two" name="payment-id" disabled>
+                                                              </div>
+              
+                                                              <div class="form-group">
+                                                                <button type="button" class="btn bg-gradient-success makePaymentBtn-multi-two" style="display: none;">Make Payment Two</button>
+                                                            </div>
+                                                           
+                                                            
+                                                                
+                                                            
+                                                        
+                                                  
+                                              
+                                          </div>
+              
+                                          <div id="single-payment-container" style="display: none;">
+                                              <hr>
+                                                    <div class="form-group">
+                                                      <label
+                                                        class="form-control-label"
+                                                        for="input-paymentmode"
+                                                        >Payment Mode</label
+                                                      >
+                                                      <select
+                                                        class="form-control form-control-alternative"
+                                                        id="input-paymentmode"
+                                                        name="payment_mode"
+                                                        required
+                                                      >
+                                                        <option disabled selected>
+                                                          Choose Payment Mode
+                                                        </option>
+                                                        <option value="Cash">Cash</option>
+                                                        <option value="UPI">UPI</option>
+                                                        <option value="Card">Card</option>
+                                                        <option value="Cheque">Cheque</option>
+                                                        <option value="Bank Transfer">
+                                                          Bank Transfer
+                                                        </option>
+                                                       
+                                                      </select>
+                                                    </div>
+                                                  
+                                                  
+                                    
+                                                  
+                                                  
+                                                    
+                                                        <div class="form-group" id="payment-id-container" style="display: none;">
+                                                            <label class="form-control-label" for="input-paymentid">Payment ID</label>
+                                                            <input class="form-control form-control-alternative" type="text" id="input-paymentid" name="payment-id" disabled>
+                                                        </div>
                                                     
                                                 
-                                            
-                                      
-                                  
-                              </div>
-  
-                              <div id="single-payment-container" style="display: none;">
-                                  <hr>
-                                        <div class="form-group">
-                                          <label
-                                            class="form-control-label"
-                                            for="input-paymentmode"
-                                            >Payment Mode</label
-                                          >
-                                          <select
-                                            class="form-control form-control-alternative"
-                                            id="input-paymentmode"
-                                            name="payment_mode"
-                                            required
-                                          >
-                                            <option disabled selected>
-                                              Choose Payment Mode
-                                            </option>
-                                            <option value="Cash">Cash</option>
-                                            <option value="UPI">UPI</option>
-                                            <option value="Card">Card</option>
-                                            <option value="Cheque">Cheque</option>
-                                            <option value="Bank Transfer">
-                                              Bank Transfer
-                                            </option>
-                                           
-                                          </select>
-                                        </div>
-                                      
-                                      
-                        
-                                      
-                                      
-                                        
-                                            <div class="form-group" id="payment-id-container" style="display: none;">
-                                                <label class="form-control-label" for="input-paymentid">Payment ID</label>
-                                                <input class="form-control form-control-alternative" type="text" id="input-paymentid" name="payment-id" disabled>
-                                            </div>
-                                        
-                                    
-                              
-  
-                              
-                                <div class="form-group">
-                                  <button type="button" class="btn bg-gradient-success makePaymentBtn" style="display: none;">Make Payment</button>
-                              </div>
-
-                <div class="row justify-content-end p-4 mt--1">
-                    <div class="col-lg-2">
-                    
-                    <button type="submit" class="btn btn-primary my-4">Update Admission Details</button>
-                    
-                </div>
+                                          
+              
+                                          
+                                            <div class="form-group">
+                                              <button type="button" class="btn bg-gradient-success makePaymentBtn" style="display: none;">Make Payment</button>
+                                          </div>
+            
+                            <div class="row justify-content-end p-4 mt--1">
+                                <div class="col-lg-2">
+                                
+                                <button type="submit" class="btn btn-primary my-4">Update Admission Details</button>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                </form>
+              </div>
+                    </div>
             </div>
         </div>
-    </div> 
-    </form>
-  </div>
-</div>
 </div>
 </div>
 
