@@ -121,17 +121,18 @@
                               <input type="hidden" id="member_id_current" name="id" value="{{row.memberid}}">
                               <input type="hidden" id="last_fees_due_date_current" name="last_fees_date"  value="{{row.due_date}}">
                               
-                               <!-- Dropdown for fees plans -->
-                               <div class="form-group">
-                                  <label for="feesPlanDropdown">Choose a Plan</label>
-                                  <select class="form-control" id="feesPlanDropdown" name="fees_plan_id">
-                                    <!-- Options will be populated dynamically -->
-                                </select>
-                                <!-- Hidden input for selected plan ID -->
-                                <input type="hidden" id="selectedPlanId" name="selected_plan_id">
-                                <input type="hidden" id="selectedPlanDuration" name="selected_plan_duration">
-                                <input type="hidden" id="selectedPlanPrice" name="selected_plan_price">
-                            </div>
+                               
+                              <!-- Dropdown for fees plans -->
+                                <div class="form-group">
+                                  <label for="feesPlanDropdown{{row.memberid}}">Choose a Plan</label>
+                                  <select class="form-control fees-plan-dropdown" id="feesPlanDropdown{{row.memberid}}" name="fees_plan_id" data-memberid="{{row.memberid}}">
+                                      <!-- Options will be populated dynamically using AJAX -->
+                                  </select>
+                                  <!-- Hidden input for selected plan ID -->
+                                  <input type="hidden" id="selectedPlanId{{row.memberid}}" name="selected_plan_id">
+                                  <input type="hidden" id="selectedPlanDuration{{row.memberid}}" name="selected_plan_duration">
+                                  <input type="hidden" id="selectedPlanPrice{{row.memberid}}" name="selected_plan_price">
+                                </div>
                               
                               <div class="form-group">
                                   <label for="price">Amount to pay</label>
@@ -383,7 +384,87 @@
       });
 </script>
 
- <script>
+<script>
+  $(document).ready(function () {
+    // Get the CSRF token from the cookie
+    function getCSRFToken() {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.startsWith("csrftoken=")) {
+              return cookie.substring("csrftoken=".length, cookie.length);
+          }
+      }
+      return null;
+    }
+      // Event listener for showing the modal and fetching fees plans
+      $('.make-payment-link').on('click', function () {
+          var memberId = $(this).data('memberid');
+          var dropdown = $('#feesPlanDropdown' + memberId);
+          var selectedPlanIdInput = $('#selectedPlanId' + memberId);
+          var selectedPlanDurationInput = $('#selectedPlanDuration' + memberId);
+          var selectedPlanPriceInput = $('#selectedPlanPrice' + memberId);
+
+          // Fetch fees plans using AJAX and update the dropdown
+          const csrfToken = getCSRFToken();
+          $.ajax({
+            url: '/gym_dashboard_app/fetch_fees_plans/', // URL to fetch fees plans
+            type: 'POST',
+            headers: {
+                'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+            },
+            contentType: 'application/json',
+              success: function (data) {
+                  // Populate the dropdown with fetched data
+                  dropdown.empty();
+                  $.each(data.plans, function (key, value) {
+                      dropdown.append($('<option>').text(value.name).attr('value', value.id));
+                  });
+
+                  // Show the modal
+                  $('#modal-default' + memberId).modal('show');
+              },
+              error: function (xhr, status, error) {
+                  // Handle errors
+                  console.error(error);
+              }
+          });
+      });
+
+      // Event listener for fees plan dropdown change
+      $('.fees-plan-dropdown').on('change', function () {
+          var memberId = $(this).data('memberid');
+          var selectedPlanId = $(this).val();
+          var selectedPlanDuration = '';  // Set the plan duration based on your logic
+          var selectedPlanPrice = '';     // Set the plan price based on your logic
+
+          // Set the hidden inputs with selected values
+          $('#selectedPlanId' + memberId).val(selectedPlanId);
+          $('#selectedPlanDuration' + memberId).val(selectedPlanDuration);
+          $('#selectedPlanPrice' + memberId).val(selectedPlanPrice);
+      });
+
+      // Event listener for form submission (Update button click)
+      $('form[id^="update-fees-form"]').submit(function (e) {
+          e.preventDefault();
+
+          var memberId = $(this).data('memberid');
+          var selectedPlanId = $('#selectedPlanId' + memberId).val();
+          var selectedPlanDuration = $('#selectedPlanDuration' + memberId).val();
+          var selectedPlanPrice = $('#selectedPlanPrice' + memberId).val();
+          console.log('selectedPlanDuration::'+selectedPlanDuration)
+          console.log('selectedPlanId::'+selectedPlanId)
+          console.log('selectedPlanPrice::'+selectedPlanPrice)
+          // Perform other form submission logic (e.g., AJAX request)
+          // ...
+
+          // Close the modal
+          //$('#modal-default' + memberId).modal('hide');
+      });
+  });
+</script>
+
+ {% comment %} <script>
   var payment_id = "-1";
   var payment_one_id = "-1";
   var payment_two_id = "-1";
@@ -940,7 +1021,7 @@
     var toast = new bootstrap.Toast(toastElement);
     toast.show();*/
 }
-</script> 
+</script>  {% endcomment %}
 
 
 {% endblock  %}
