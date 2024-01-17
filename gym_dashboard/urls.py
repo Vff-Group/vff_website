@@ -48,8 +48,11 @@ urlpatterns = [
     #All New Admissions
     path('all_new_admissions_members_details/',views.all_new_admissions_members_details,name='all_new_admissions_members_details'),
    
+    #All New Admissions
+    path('make_admission_payment/<int:member_id>/<str:name>/',views.make_admission_payment,name='make_admission_payment'),
+   
     #New Admission Fees Details Add and Update
-    path('add_new_admission_fees_details/',views.add_new_admission_fees_details,name='add_new_admission_fees_details'),
+    # path('add_new_admission_fees_details/',views.add_new_admission_fees_details,name='add_new_admission_fees_details'),
    
    
     

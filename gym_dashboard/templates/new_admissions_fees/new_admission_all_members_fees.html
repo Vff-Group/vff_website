@@ -85,7 +85,7 @@
                         <div class="row">
                             <div class="col">
                               
-                                <a href="" class="text-secondary font-weight-bold text-xs make-payment-link" data-bs-toggle="modal" data-bs-target="#modal-default{{row.memberid}}" data-memberid="{{row.memberid}}"> 
+                                <a href="{% url 'gym_dashboard_app:make_admission_payment' row.memberid row.name %}" class="text-secondary font-weight-bold text-xs make-payment-link" > 
                                     Make Payment
                                   </a>
                             </div>
@@ -98,246 +98,7 @@
                       
                     </td>
                   
-                    <div class="col-md-4">
                     
-          
-                      <div class="modal fade" id="modal-default{{row.memberid}}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
-                          <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                              <h6 class="modal-title" id="modal-title-default">Making Payment For Member [{{row.name}}][{{row.memberid}}]  </h6>
-                              <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                              </button>
-                            </div>
-                            <form
-                            id="update-fees-form"
-                            method="post" 
-                          >
-                            {% csrf_token %}
-                            <div class="modal-body">
-                             
-                              
-                              <input type="hidden" id="member_id_current" name="id" value="{{row.memberid}}">
-                              <input type="hidden" id="last_fees_due_date_current" name="last_fees_date"  value="{{row.due_date}}">
-                              
-                               
-                              <!-- Dropdown for fees plans -->
-                                <div class="form-group">
-                                  <label for="feesPlanDropdown{{row.memberid}}">Choose a Plan</label>
-                                  <select class="form-control fees-plan-dropdown" id="feesPlanDropdown{{row.memberid}}" name="fees_plan_id" data-memberid="{{row.memberid}}">
-                                      <!-- Options will be populated dynamically using AJAX -->
-                                  </select>
-                                  <!-- Hidden input for selected plan ID -->
-                                  <input type="hidden" id="selectedPlanId{{row.memberid}}" name="selected_plan_id">
-                                  <input type="hidden" id="selectedPlanDuration{{row.memberid}}" name="selected_plan_duration">
-                                  <input type="hidden" id="selectedPlanPrice{{row.memberid}}" name="selected_plan_price">
-                                </div>
-                              
-                              <div class="form-group">
-                                  <label for="price">Amount to pay</label>
-                                  <input type="number" class="form-control" id="price" name="plan_price" placeholder="Enter Plan Price" value="{{row.price}}"  disabled>
-                                  
-                              </div>
-                              
-                              
-          
-                              <div class="form-group">
-                                  <label for="duration">Duration In Months</label>
-                                  <input type="text" class="form-control" id="duration" name="duration_in_months"  value="{{row.duration_in_months}}"  disabled>
-                              </div>
-  
-  
-                              <div class="form-group">
-                                  <label
-                                    for="fees-date"
-                                    class="form-control-label"
-                                    >Fees Date *</label
-                                  >
-                                  <input
-                                    class="form-control form-control-alternative"
-                                    type="date"
-                                    id="fees-date"
-                                    name="fees_date"
-                                    value=""
-                                    required
-                                  />
-                                </div>
-  
-                              <hr>
-  
-                              <div class="form-group">
-                                  <label for="single-payment-checkbox">
-                                      <input type="checkbox" id="single-payment-checkbox"> Single Payment
-                                  </label>
-                                  
-                              </div>
-  
-                              <div class="form-group">
-                              <label for="multi-payment-checkbox">
-                                  <input type="checkbox" id="multi-payment-checkbox"> Multi Payment 
-                              </label>
-                          </div>
-  
-                              
-  
-                              <div id="multi-payment-container"  style="display: none;">
-                                  <hr>
-                                          
-                                              <!-- Payment Mode Multi One  -->
-                                              
-                                                <div class="form-group">
-                                                  <label
-                                                    class="form-control-label"
-                                                    for="input-paymentmode-multi-one"
-                                                    >Payment Mode One</label
-                                                  >
-                                                  <select
-                                                    class="form-control form-control-alternative"
-                                                    id="input-paymentmode-multi-one"
-                                                    name="payment_mode_multi_one"
-                                                    required
-                                                  >
-                                                    <option disabled selected>
-                                                      Choose Payment Mode One
-                                                    </option>
-                                                    <option value="Cash">Cash</option>
-                                                    <option value="UPI">UPI</option>
-                                                    <option value="Card">Card</option>
-                                                    <option value="Cheque">Cheque</option>
-                                                    <option value="Bank Transfer">
-                                                      Bank Transfer
-                                                    </option>
-                                                   
-                                                  </select>
-                                                </div>
-                                                <div class="form-group">
-                                                  <label for="multi-mode-one-price">Amount to pay [Mode 1]</label>
-                                                  <input type="number" class="form-control" id="multi-mode-one-price" name="multi_mode_one_price" placeholder="Enter Amount for Payment Mode One" >
-                                                  </div>
-  
-                                                  <div class="form-group" id="payment-id-container-multi-one" style="display: none;">
-                                                      <label class="form-control-label" for="input-paymentid">Payment ID</label>
-                                                      <input class="form-control form-control-alternative" type="text" id="input-paymentid-multi-one" name="payment-id" disabled>
-                                                  </div>
-                                              
-                                                <div class="form-group">
-                                                  <button type="button" class="btn bg-gradient-success makePaymentBtn-multi-one" style="display: none;">Make Payment One</button>
-                                              </div>
-  
-                                              
-                                              
-  
-                                              <!-- Payment Mode Multi Two  -->
-                                              <hr>
-                                                  <div class="form-group">
-                                                    <label
-                                                      class="form-control-label"
-                                                      for="input-paymentmode-multi-two"
-                                                      >Payment Mode Two</label
-                                                    >
-                                                    <select
-                                                      class="form-control form-control-alternative"
-                                                      id="input-paymentmode-multi-two"
-                                                      name="payment_mode_multi_two"
-                                                      required
-                                                    >
-                                                      <option disabled selected>
-                                                        Choose Payment Mode Two
-                                                      </option>
-                                                      <option value="Cash">Cash</option>
-                                                      <option value="UPI">UPI</option>
-                                                      <option value="Card">Card</option>
-                                                      <option value="Cheque">Cheque</option>
-                                                      <option value="Bank Transfer">
-                                                        Bank Transfer
-                                                      </option>
-                                                     
-                                                    </select>
-                                                  </div>
-  
-                                                  <div class="form-group">
-                                                      <label for="multi-mode-two-price">Amount to pay [Mode 1]</label>
-                                                      <input type="number" class="form-control" id="multi-mode-two-price" name="multi_mode_two_price" placeholder="Enter Amount for Payment Mode Two" >
-                                                      
-                                                  </div>
-  
-                                                  <div class="form-group" id="payment-id-container-multi-two" style="display: none;">
-                                                      <label class="form-control-label" for="input-paymentid">Payment ID</label>
-                                                      <input class="form-control form-control-alternative" type="text" id="input-paymentid-multi-two" name="payment-id" disabled>
-                                                  </div>
-  
-                                                  <div class="form-group">
-                                                    <button type="button" class="btn bg-gradient-success makePaymentBtn-multi-two" style="display: none;">Make Payment Two</button>
-                                                </div>
-                                               
-                                                
-                                                    
-                                                
-                                            
-                                      
-                                  
-                              </div>
-  
-                              <div id="single-payment-container" style="display: none;">
-                                  <hr>
-                                        <div class="form-group">
-                                          <label
-                                            class="form-control-label"
-                                            for="input-paymentmode"
-                                            >Payment Mode</label
-                                          >
-                                          <select
-                                            class="form-control form-control-alternative"
-                                            id="input-paymentmode"
-                                            name="payment_mode"
-                                            required
-                                          >
-                                            <option disabled selected>
-                                              Choose Payment Mode
-                                            </option>
-                                            <option value="Cash">Cash</option>
-                                            <option value="UPI">UPI</option>
-                                            <option value="Card">Card</option>
-                                            <option value="Cheque">Cheque</option>
-                                            <option value="Bank Transfer">
-                                              Bank Transfer
-                                            </option>
-                                           
-                                          </select>
-                                        </div>
-                                      
-                                      
-                        
-                                      
-                                      
-                                        
-                                            <div class="form-group" id="payment-id-container" style="display: none;">
-                                                <label class="form-control-label" for="input-paymentid">Payment ID</label>
-                                                <input class="form-control form-control-alternative" type="text" id="input-paymentid" name="payment-id" disabled>
-                                            </div>
-                                        
-                                    
-                              
-  
-                              
-                                <div class="form-group">
-                                  <button type="button" class="btn bg-gradient-success makePaymentBtn" style="display: none;">Make Payment</button>
-                              </div>
-  
-                          </div>
-  
-                          </div>
-                            <div class="modal-footer">
-                              <button type="submit" class="btn bg-gradient-success">Update</button>
-                              <button type="button" class="btn btn-link  ml-auto" data-bs-dismiss="modal" id="cancel-btn">Cancel</button>
-                            </div>
-                          </form>
-  
-                          </div>
-                        </div>
-                      </div>
-                    </div> 
                   </tr>
 
                  
@@ -384,88 +145,7 @@
       });
 </script>
 
-<script>
-  $(document).ready(function () {
-    // Get the CSRF token from the cookie
-    function getCSRFToken() {
-      const cookies = document.cookie.split(';');
-      for (let i = 0; i < cookies.length; i++) {
-          const cookie = cookies[i].trim();
-          if (cookie.startsWith("csrftoken=")) {
-              return cookie.substring("csrftoken=".length, cookie.length);
-          }
-      }
-      return null;
-    }
-      // Event listener for showing the modal and fetching fees plans
-       {
-          var memberId = $(this).data('memberid');
-          console.log('memberId::'+memberId);
-          var dropdown = $('#feesPlanDropdown' + memberId);
-          var selectedPlanIdInput = $('#selectedPlanId' + memberId);
-          var selectedPlanDurationInput = $('#selectedPlanDuration' + memberId);
-          var selectedPlanPriceInput = $('#selectedPlanPrice' + memberId);
-
-          // Fetch fees plans using AJAX and update the dropdown
-          const csrfToken = getCSRFToken();
-          $.ajax({
-            url: '/gym_dashboard_app/fetch_fees_plans/', // URL to fetch fees plans
-            type: 'POST',
-            headers: {
-                'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
-            },
-            contentType: 'application/json',
-              success: function (data) {
-                  // Populate the dropdown with fetched data
-                  dropdown.empty();
-                  $.each(data.plans, function (key, value) {
-                      dropdown.append($('<option>').text(value.name).attr('value', value.id));
-                  });
-
-                  // Show the modal
-                  $('#modal-default' + memberId).modal('show');
-              },
-              error: function (xhr, status, error) {
-                  // Handle errors
-                  console.error(error);
-              }
-          });
-      }
-
-      // Event listener for fees plan dropdown change
-      $('.fees-plan-dropdown').on('change', function () {
-          var memberId = $(this).data('memberid');
-          var selectedPlanId = $(this).val();
-          var selectedPlanDuration = '';  // Set the plan duration based on your logic
-          var selectedPlanPrice = '';     // Set the plan price based on your logic
-
-          // Set the hidden inputs with selected values
-          $('#selectedPlanId' + memberId).val(selectedPlanId);
-          $('#selectedPlanDuration' + memberId).val(selectedPlanDuration);
-          $('#selectedPlanPrice' + memberId).val(selectedPlanPrice);
-      });
-
-      // Event listener for form submission (Update button click)
-      $('form[id^="update-fees-form"]').submit(function (e) {
-          e.preventDefault();
-
-          var memberId = $(this).data('memberid');
-          var selectedPlanId = $('#selectedPlanId' + memberId).val();
-          var selectedPlanDuration = $('#selectedPlanDuration' + memberId).val();
-          var selectedPlanPrice = $('#selectedPlanPrice' + memberId).val();
-          console.log('selectedPlanDuration::'+selectedPlanDuration)
-          console.log('selectedPlanId::'+selectedPlanId)
-          console.log('selectedPlanPrice::'+selectedPlanPrice)
-          // Perform other form submission logic (e.g., AJAX request)
-          // ...
-
-          // Close the modal
-          //$('#modal-default' + memberId).modal('hide');
-      });
-  });
-</script>
-
- {% comment %} <script>
+ <script>
   var payment_id = "-1";
   var payment_one_id = "-1";
   var payment_two_id = "-1";
@@ -486,60 +166,7 @@
           var payment_method = "";
 
         
-          function fetchFeesPlans() {
-            const csrfToken = getCSRFToken();
-        
-            $.ajax({
-                url: '/gym_dashboard_app/fetch_fees_plans/',
-                type: 'POST',
-                headers: {
-                    'X-CSRFToken': csrfToken
-                },
-                contentType: 'application/json',
-                success: function(data) {
-                    handleSuccessResponse(data);
-                },
-                error: function(xhr, status, error) {
-                    handleErrorResponse(error);
-                }
-            });
-        }
-        
-        function handleSuccessResponse(data) {
-            var feesPlanDropdown = $('#feesPlanDropdown');
-        
-            feesPlanDropdown.empty();
-        
-            $.each(data.fees_data, function(index, subSection) {
-                var cardio = subSection.cardio;
-                var isCardio = (cardio == 1) ? "With Cardio" : "Without Cardio";
-        
-                feesPlanDropdown.append($('<option>', {
-                    value: subSection.id,
-                    html: subSection.name + " [" + isCardio + "]",
-                    'data-duration': subSection.duration,
-                    'data-price': subSection.price
-                }));
-            });
-        
-            // Update hidden input with the default selected plan ID (optional)
-            $('#selectedPlanId').val(data.fees_data[0].id);
-            $('#price').val(data.fees_data[0].price);
-            $('#duration').val(data.fees_data[0].duration);
-        
-            new_plan_id = data.fees_data[0].id;
-            new_plan_price = data.fees_data[0].price;
-            new_plan_duration = data.fees_data[0].duration;
-        }
-        
-        function handleErrorResponse(error) {
-            console.log(error);
-            // Add additional error handling logic if needed
-        }
-        
-        // Call the function when needed
-        fetchFeesPlans();
-        
+    
       
 
   $(document).ready(function() {
@@ -551,7 +178,53 @@
         var member_id = $('#member_id_current').val();
         
 
+        const csrfToken = getCSRFToken();
+        $.ajax({
+            url: '/gym_dashboard_app/fetch_fees_plans/', // URL to fetch fees plans
+            type: 'POST',
+            headers: {
+                'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+            },
+            contentType: 'application/json',
+            success: function(data) {
+                // Handle successful response and load fees plans
+                 // Get the dropdown element
+                //var feesPlanDropdown = $('#feesPlanDropdown');
         
+                console.log('memberId::'+member_id);
+                var feesPlanDropdown = $('#feesPlanDropdown');
+                                    
+                // Clear existing options (if any)
+                feesPlanDropdown.empty();
+                console.log('data::'+data.fees_data.name);
+                // Populate dropdown with fetched plans
+                $.each(data.fees_data, function(index, subSection) {
+                    var cardio = subSection.cardio;
+                    var isCardio = "Without Cardio"
+                    if(cardio == 1){
+                        isCardio ="With Cardio"
+                    }
+                    feesPlanDropdown.append($('<option>', {
+                        value: subSection.id,
+                        html: subSection.name + " [" + isCardio + "]",
+                        'data-duration': subSection.duration, // Add data-duration attribute
+                        'data-price': subSection.price // Add data-price attribute
+                    }));
+                });
+            
+                // Update hidden input with the default selected plan ID (optional)
+                $('#selectedPlanId').val(data.fees_data[0].id); // Set the first plan ID as default
+                $('#price').val(data.fees_data[0].price);
+                $('#duration').val(data.fees_data[0].duration);
+                new_plan_id = data.fees_data[0].id;
+              new_plan_price = data.fees_data[0].price;
+              new_plan_duration = data.fees_data[0].duration;
+            },
+            error: function(xhr, status, error) {
+                // Handle error
+                console.log(error);
+            }
+        });
     
     });
 
@@ -1022,7 +695,7 @@
     var toast = new bootstrap.Toast(toastElement);
     toast.show();*/
 }
-</script>  {% endcomment %}
+</script> 
 
 
 {% endblock  %}
