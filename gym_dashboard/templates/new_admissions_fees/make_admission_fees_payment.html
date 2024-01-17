@@ -238,7 +238,7 @@
                                           </div>
             
                             <div class="row justify-content-end p-4 mt--1">
-                                <div class="col-lg-2">
+                                <div class="col-lg-6">
                                 
                                 <button type="submit" class="btn btn-primary my-4">Update Admission Details</button>
                                 
@@ -293,7 +293,7 @@
                  // Get the dropdown element
                 //var feesPlanDropdown = $('#feesPlanDropdown');
         
-                console.log('memberId::'+member_id);
+                
                 var feesPlanDropdown = $('#feesPlanDropdown');
                                     
                 // Clear existing options (if any)
@@ -355,8 +355,8 @@
                 "key": "rzp_test_qtHIWapeUEAAZO", // Enter the Key ID generated from the Dashboard rzp_test_qtHIWapeUEAAZO
                 "amount": (totalPayment * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
                 "currency": "INR",
-                "name": "VFF Group", //your business name
-                "description": "Gym Fees",
+                "name": "Velvet Royal Gym", //your business name
+                "description": "Gym Admission Fees",
                 "image": "https://vff-group.com/static/images/logo.png",
                 // Other options...
                 handler: function(response) {
@@ -372,7 +372,7 @@
                     "address": "Tilakwadi"
                 },
                 "theme": {
-                    "color": "#3399cc"
+                    "color": '#F37254'
                 }
             };
             var rzp = new Razorpay(options);
