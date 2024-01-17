@@ -22,6 +22,9 @@
     <!-- Nucleo Icons -->
     <link href="{% static 'css/nucleo-icons.css' %}" rel="stylesheet" />
     <link href="{% static 'css/nucleo-svg.css' %}" rel="stylesheet" />
+
+    <!-- Style Toast  -->
+    <link rel="stylesheet" href="{% static 'vendor/toastr/css/toastr.min.css' %}">
     <!-- Font Awesome Icons -->
     <script
       src="https://kit.fontawesome.com/eea5b138cd.js"
@@ -73,7 +76,13 @@
     <script src="{% static 'js/plugins/smooth-scrollbar.min.js' %}"></script>
     <script src="{% static 'js/plugins/chartjs.min.js' %}"></script>
     
-   
+   <!-- Toastr -->
+    <script src="{% static 'vendor/toastr/js/toastr.min.js' %}"></script>
+
+    <!-- All init script -->
+    <script src="{% static 'js/plugins-init/toastr-init.js' %}"></script>
+    <script src="{% static 'vendor/select2/js/select2.full.min.js' %}"></script>
+    <script src="{% static 'js/plugins-init/select2-init.js' %}"></script>
     
     <script src="{% static 'js/united-armor-dashboard.min.js' %}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
