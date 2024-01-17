@@ -400,6 +400,7 @@
       // Event listener for showing the modal and fetching fees plans
        {
           var memberId = $(this).data('memberid');
+          console.log('memberId::'+memberId);
           var dropdown = $('#feesPlanDropdown' + memberId);
           var selectedPlanIdInput = $('#selectedPlanId' + memberId);
           var selectedPlanDurationInput = $('#selectedPlanDuration' + memberId);
