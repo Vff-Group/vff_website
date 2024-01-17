@@ -622,7 +622,7 @@ def all_new_admissions_members_details(request):
 
 
 #New Admission Fees Details Update
-def make_admission_payment(request,member_id,name):
+def make_admission_payment(request,member_id,name,due_date):
     
     isLogin = is_loggedin(request)
     if isLogin == False:
@@ -716,8 +716,8 @@ def make_admission_payment(request,member_id,name):
         
             
 
-    
-    return render(request,"new_admissions_fees/make_admission_fees_payment.html")
+    context={'memberid':member_id,'member_name':name,'due_date':due_date}
+    return render(request,"new_admissions_fees/make_admission_fees_payment.html",context)
     #return redirect('dashboard_app:all_orders')
 # def add_new_admission_fees_details(request):
     

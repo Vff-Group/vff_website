@@ -85,7 +85,7 @@
                         <div class="row">
                             <div class="col">
                               
-                                <a href="{% url 'gym_dashboard_app:make_admission_payment' row.memberid row.name %}" class="text-secondary font-weight-bold text-xs" > 
+                                <a href="{% url 'gym_dashboard_app:make_admission_payment' row.memberid row.name row.due_date%}" class="text-secondary font-weight-bold text-xs" > 
                                     Make Payment
                                   </a>
                             </div>
