@@ -398,7 +398,7 @@
       return null;
     }
       // Event listener for showing the modal and fetching fees plans
-      $('.make-payment-link').on('click', function () {
+       {
           var memberId = $(this).data('memberid');
           var dropdown = $('#feesPlanDropdown' + memberId);
           var selectedPlanIdInput = $('#selectedPlanId' + memberId);
@@ -429,7 +429,7 @@
                   console.error(error);
               }
           });
-      });
+      }
 
       // Event listener for fees plan dropdown change
       $('.fees-plan-dropdown').on('change', function () {
