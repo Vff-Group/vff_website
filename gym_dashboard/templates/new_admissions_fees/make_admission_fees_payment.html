@@ -19,17 +19,15 @@ Addmission Fees
         {% csrf_token %}
       <h6 class="heading-small text-muted mb-4">New Admission Fees</h6>
       <div class="pl-lg-4">
-        <div class="row">
-
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-4">
+                   
           
-
-          
-          <div class="col-lg-4">
             <div class="form-group">
               <label class="form-control-label" for="input-member-name">Member Name</label>
               <input type="text" id="input-member-name" class="form-control form-control-alternative"  name="member_name" autocomplete="off" value="{{ member_name }}"  disabled>
             </div>
-          </div>
+          
 
           <input type="hidden" id="member_id_current" name="id" value="{{memberid}}">
                               <input type="hidden" id="last_fees_due_date_current" name="last_fees_date"  value="{{due_date}}">
@@ -237,13 +235,15 @@ Addmission Fees
                                   <button type="button" class="btn bg-gradient-success makePaymentBtn" style="display: none;">Make Payment</button>
                               </div>
 
-      <div class="row justify-content-end p-4 mt--1">
-        <div class="col-lg-2">
-        
-        <button type="submit" class="btn btn-primary my-4">Update Admission Details</button>
-        
-    </div>
-      </div>
+                <div class="row justify-content-end p-4 mt--1">
+                    <div class="col-lg-2">
+                    
+                    <button type="submit" class="btn btn-primary my-4">Update Admission Details</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div> 
     </form>
   </div>
 </div>
