@@ -714,8 +714,8 @@
   
        }
   
-       var convertedLastDueDate = convertDateFormat(last_due_date);
-          console.log("Last_due_date_converted"+convertedLastDueDate); 
+          //var convertedLastDueDate = convertDateFormat(last_due_date);
+          //console.log("Last_due_date_converted"+convertedLastDueDate); 
           
           var planPrice = $('#price').val();
           
@@ -726,7 +726,7 @@
             'member_id': member_id,
             'fees_date': fees_date,
             'next_fees_date': futureDate,
-            'last_due_date': convertedLastDueDate,
+            'last_due_date': last_due_date,
             'plan_id': new_plan_id,
             'plan_price': new_plan_price,
             'plan_duration': new_plan_duration,
@@ -744,7 +744,7 @@
             // Add other form fields to the JSON object
         };
         console.log('dictMap::'+JSON.stringify(dictMap));
-        //return;
+        return;
         // If payment is successful, proceed with AJAX
         const csrfToken = getCSRFToken();
         $.ajax({
