@@ -156,7 +156,7 @@ def all_gym_members(request):
             current_date = datetime.now().date()
             
             
-            if due_date <= current_date:
+            if due_date <= current_date and fees_status !='NA':
                 fees_status = 'UnPaid'
             data.append({
                 'memberid': row[0],
