@@ -25,7 +25,21 @@
                             <input type="hidden" id="member_id_current" name="member_id" value="{{member_id}}">
                             <input type="hidden" id="last_fees_due_date_current" name="last_fees_date"  value="{{last_due_date}}">
                             <input type="hidden" id="fees_table_id_current" name="fees_table_id"  value="{{fees_id}}">
-                            
+                            <div class="form-group">
+                                <label for="name_mem">Member Name</label>
+                                <input type="text" class="form-control" id="name_mem"  value="{{member_name}}"  disabled>
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="fees_date">Fees Date</label>
+                                <input type="number" class="form-control" id="fees_date"  value="{{fees_date}}"  disabled>
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="last_fees_date">Last Paid Date</label>
+                                <input type="number" class="form-control" id="last_fees_date"  value="{{last_due_date}}"  disabled>
+                                
+                            </div>
                             <div class="form-group">
                                 <label for="price">Amount to pay</label>
                                 <input type="number" class="form-control" id="price" name="plan_price" placeholder="Enter Plan Price" value="{{price}}"  disabled>
