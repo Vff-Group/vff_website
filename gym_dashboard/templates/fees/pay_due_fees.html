@@ -719,7 +719,10 @@
     
             // Perform your form validation here
             // For example, check if payment is successful
-            
+            if(payment_type === ''){
+                showToast('Alert','Please Select Type Either Single Or Multi Payment');
+                return;
+             }
             //Multiple Payments Only
          if(payment_type === 'Multiple'){
             payment_method = 'Multiple'
@@ -867,7 +870,7 @@
     // Function to show a toast message
     function showToast(message, bodyContent) {
         toastr.warning(bodyContent, message, {
-          positionClass: "toast-top-right",
+          positionClass: "toast-top-center",
           timeOut: 5e3,
           closeButton: !0,
           debug: !1,
