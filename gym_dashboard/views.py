@@ -477,6 +477,17 @@ def fees_due_details(request):
 
     return render(request,"fees/due_fees_details.html",context)
 
+def load_fees_due_details(request,fees_date,member_id,last_due_date,fees_id,price,duration_in_months,member_name):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('gym_dashboard_app:login')
+    
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'fees_date':fees_date,'member_id':member_id,'last_due_date':last_due_date,'fees_id':fees_id,'price':price,'duration_in_months':duration_in_months,'member_name':member_name}
+
+    return render(request,"fees/pay_due_fees.html",context)
+
 
 #Update Fees Details After Payment is Done
 def update_fees_payment_details_for_member(request):

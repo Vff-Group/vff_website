@@ -39,6 +39,10 @@ urlpatterns = [
     #All Due Fees Members Details
     path('fees_due_details/',views.fees_due_details,name='fees_due_details'),
    
+   
+    # Load Fees Due Details
+    path('load_fees_due_details/<str:fees_date>/<int:member_id>/<str:last_due_date>/<int:fees_id>/<str:price>/<str:duration_in_months>/<int:member_name>/',views.load_fees_due_details,name='load_fees_due_details'),
+   
     #All Fees Plans
     path('fetch_fees_plans/',views.fetch_fees_plans,name='fetch_fees_plans'),
    

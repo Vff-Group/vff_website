@@ -98,7 +98,7 @@
                         <div class="row">
                             <div class="col">
                                 
-                                <a href="" class="text-success font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.member_id}}" data-member-id="{{ row.member_id }}">
+                                <a href="{% url 'gym_dashboard_app:load_fees_due_details' row.fees_date row.member_id row.last_due_date row.fees_id row.price row.duration_in_months row.member_name%}" class="text-success font-weight-bold text-xs" >
                                     Make Payment
                                   </a>
                             </div>
@@ -113,7 +113,7 @@
                     </td>
                   </tr>
 
-                  <div class="col-md-4">
+                  {% comment %} <div class="col-md-4">
                     
           
                     <div class="modal fade" id="modal-default{{row.member_id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -125,10 +125,7 @@
                               <span aria-hidden="true">×</span>
                             </button>
                           </div>
-                          <form
-                          id="update-fees-form"
-                          method="post"
-                        >
+                          <form id="update-fees-form" method="post" >
                           {% csrf_token %}
                           <div class="modal-body">
                             <input type="hidden" id="fees_date_current" name="fees_date" value="{{row.fees_date}}">
@@ -340,7 +337,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> {% endcomment %}
                   {% endfor %}
                 </tbody>
               </table>
@@ -393,10 +390,10 @@
   var payment_two_id = "-1";
     var isOnlinePayment = false;
     var paymentSuccessful = false;
-var paymentType = "";
+  var paymentType = "";
 
-var payment_status = ""; // Payment Status
-var new_plan_id = "";
+  var payment_status = ""; // Payment Status
+  var new_plan_id = "";
            var new_plan_price = "";
             var new_plan_duration = "";
             var member_id= "";
