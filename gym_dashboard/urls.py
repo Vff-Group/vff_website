@@ -52,7 +52,7 @@ urlpatterns = [
     path('make_admission_payment/<int:member_id>/<str:name>/<str:due_date>/',views.make_admission_payment,name='make_admission_payment'),
    
     #New Admission Fees Details Add and Update
-    # path('add_new_admission_fees_details/',views.add_new_admission_fees_details,name='add_new_admission_fees_details'),
+    path('add_new_admission_fees_details/',views.add_new_admission_fees_details,name='add_new_admission_fees_details'),
    
    
     
