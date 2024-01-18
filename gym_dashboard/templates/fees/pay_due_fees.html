@@ -305,6 +305,7 @@
                         payment_id =  response.razorpay_payment_id;
                         order_status = "Payment Done";
                         payment_status = "Success";
+                        paymentSuccessful = true;
                         $('#input-paymentid').val(payment_id);
                         disableElements();
                         const csrfToken = getCSRFToken();
