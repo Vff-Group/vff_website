@@ -16,9 +16,11 @@
         <div class="row d-flex justify-content-center">
             <div class="col-lg-6">
                 <div class="card card-profile shadow mb-4">
+                    <form id="update-fees-form" method="post" >
+                        {% csrf_token %}
                     <div class="card-body">
-                <form id="update-fees-form" method="post" >
-                            {% csrf_token %}
+                
+                            <h6 class="heading-small text-dark mb-4">Pay Gym Due Fees</h6>
                             <input type="hidden" id="fees_date_current" name="fees_date" value="{{fees_date}}">
                             <input type="hidden" id="member_id_current" name="member_id" value="{{member_id}}">
                             <input type="hidden" id="last_fees_due_date_current" name="last_fees_date"  value="{{last_due_date}}">
@@ -217,16 +219,17 @@
                                 <input type="hidden" id="selectedPlanPrice" name="selected_plan_price">
                             </div>
 
-                            <div class="row justify-content-center p-4 mt-2">
-                                <div class="col-lg-4">
-                                
-                                <button type="submit" class="btn btn-primary my-4">Update</button>
-                                
+                            
+                            
+                    </div>
+                    <div class=" card-footer">
+                        <div class="row justify-content-center p-4 mt-2">
+                            <div class="col-lg-4">
+                            <button type="submit" class="btn btn-primary my-4">Update</button>
                             </div>
                         </div>
-                            
-                </form>
-              </div>
+                    </div>
+                    </form>
                     </div>
             </div>
         </div>
@@ -793,10 +796,10 @@
             var member_id = $('#member_id_current').val();
             var lastFeesDueDate = $('#last_fees_due_date_current').val();
             var feesTableId = $('#fees_table_id_current').val();
-            var convertedDate = convertDateFormat(feesDate);
-            console.log("fees_date_converted::"+convertedDate); 
-            feesDate = convertedDate;
-            last_due_date = feesDate;
+            //var convertedDate = convertDateFormat(feesDate);
+            //console.log("fees_date_converted::"+convertedDate); 
+            //feesDate = convertedDate;
+            last_due_date = lastFeesDueDate;
     
             var duration = new_plan_duration;  // Replace this with the selected plan's duration string
             console.log('duration ::'+duration);
@@ -806,9 +809,9 @@
             console.log("Future Date"+futureDate); 
     
             var memberId = $(this).data('member-id');
-            var modalId = $(this).data('bs-target');
+            
             console.log('memberId::'+memberId);
-            console.log('modalId::'+modalId);
+            
                 
             //Fees Paid date is added at backend
             const dictMap = {
@@ -835,7 +838,7 @@
             };
             console.log('dictMap::'+JSON.stringify(dictMap));
             // If payment is successful, proceed with AJAX
-            //return;
+            return;
             const csrfToken = getCSRFToken();
             $.ajax({
                 
