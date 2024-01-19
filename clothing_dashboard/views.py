@@ -1108,7 +1108,7 @@ def all_suppliers(request):
     error_msg='No Suppliers Added Yet'
    
     #All Images Data
-    query ="select supplierid,supplier_name,reg_date,item_supplies,email,phone_no,address,tax_no from vff.united_armor_suppliertbl"
+    query ="select supplierid,supplier_name,reg_date,item_supplies,email,phone_no,address,tax_no,account_no,bank_name,ifsc_code from vff.united_armor_suppliertbl"
     result = execute_raw_query(query)
     data = []    
     if not result == 500:
@@ -1124,6 +1124,9 @@ def all_suppliers(request):
                 'phone_no': row[5],
                 'address': row[6],
                 'tax_no': row[7],
+                'bank_account_no': row[8],
+                'bank_name': row[9],
+                'ifsc_code': row[10],
                 
             })
     else:
@@ -1149,9 +1152,12 @@ def add_new_supplier(request):
         mail_id = request.POST.get('mail_id')
         phone_no = request.POST.get('phone_no')
         address = request.POST.get('address')
+        bank_name = request.POST.get('bank_name')
+        bank_account_no = request.POST.get('bank_account_no')
+        ifsc_code = request.POST.get('ifsc_code')
         try:
             with connection.cursor() as cursor:
-                insert_query="insert into vff.united_armor_suppliertbl (supplier_name,reg_date,item_supplies,email,phone_no,address,tax_no) values ('"+str(supplier_name)+"','"+str(date_of_reg)+"','"+str(supplier_item_name)+"','"+str(mail_id)+"','"+str(phone_no)+"','"+str(address)+"','"+str(tax_no)+"')"
+                insert_query="insert into vff.united_armor_suppliertbl (supplier_name,reg_date,item_supplies,email,phone_no,address,tax_no,account_no,bank_name,ifsc_code) values ('"+str(supplier_name)+"','"+str(date_of_reg)+"','"+str(supplier_item_name)+"','"+str(mail_id)+"','"+str(phone_no)+"','"+str(address)+"','"+str(tax_no)+"','"+str(bank_account_no)+"','"+str(bank_name)+"','"+str(ifsc_code)+"')"
                 cursor.execute(insert_query)
                 
                
@@ -1182,10 +1188,14 @@ def update_supplier_details(request,supplier_id):
         mail_id = request.POST.get('mail_id')
         phone_no = request.POST.get('phone_no')
         address = request.POST.get('address')
+        bank_name = request.POST.get('bank_name')
+        bank_account_no = request.POST.get('bank_account_no')
+        ifsc_code = request.POST.get('ifsc_code')
+        
         try:
             with connection.cursor() as cursor:
                 #,reg_date='"+str(date_of_reg)+"'
-                update_query="update vff.united_armor_suppliertbl set supplier_name='"+str(supplier_name)+"',item_supplies='"+str(supplier_item_name)+"',email='"+str(mail_id)+"',phone_no='"+str(phone_no)+"',address='"+str(address)+"',tax_no='"+str(tax_no)+"' where supplierid='"+str(supplier_id)+"'"
+                update_query="update vff.united_armor_suppliertbl set supplier_name='"+str(supplier_name)+"',item_supplies='"+str(supplier_item_name)+"',email='"+str(mail_id)+"',phone_no='"+str(phone_no)+"',address='"+str(address)+"',tax_no='"+str(tax_no)+"',account_no='"+str(bank_account_no)+"',bank_name='"+str(bank_name)+"',ifsc_code='"+str(ifsc_code)+"' where supplierid='"+str(supplier_id)+"'"
                 cursor.execute(update_query)
                 
                

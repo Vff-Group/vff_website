@@ -162,6 +162,67 @@
                                       </div>
                                 </div>
                             </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label
+                                          class="form-control-label"
+                                          for="input-bank-name"
+                                          >Bank Name</label
+                                        >
+                                        <input
+                                          type="text"
+                                          id="input-bank-name"
+                                          class="form-control form-control-alternative"
+                                          placeholder="Enter Supplier Bank Name"
+                                          name="bank_name"
+                                          value=""
+                                          
+                                        />
+                                      </div>
+                                </div>
+                                
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label
+                                          class="form-control-label"
+                                          for="input-account-no"
+                                          >Bank Account No</label
+                                        >
+                                        <input
+                                          type="text"
+                                          id="input-account-no"
+                                          class="form-control form-control-alternative"
+                                          placeholder="Enter Supplier Bank Acc No"
+                                          name="bank_account_no"
+                                          value=""
+                                          
+                                        />
+                                      </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label
+                                          class="form-control-label"
+                                          for="input-ifsc-code"
+                                          >IFSC Code</label
+                                        >
+                                        <input
+                                          type="text"
+                                          id="input-ifsc-code"
+                                          class="form-control form-control-alternative"
+                                          placeholder="IFSC CODE"
+                                          name="ifsc_code"
+                                          
+                                          
+                                        />
+                                      </div>
+                                </div>
+                            </div>
   
                             
   
@@ -230,6 +291,7 @@
                   <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sl No</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Supplier Name</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Bank Details</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Items</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Registration Date</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Mail</th>
@@ -265,6 +327,18 @@
                         </div>
                       </div>
                     </td>
+                    <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="{% static 'img/avatar1.svg' %}" class="avatar avatar-sm me-3" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">{{row.bank_name}}</h6>
+                            <p class="text-xs font-weight-bold mb-0">{{row.bank_account_no}}</p>
+                            <p class="text-xs font-weight-bold mb-0">{{row.ifsc_code}}</p>
+                          </div>
+                        </div>
+                      </td>
                     <td>
                       <p class="text-xs font-weight-bold mb-0">{{row.item_supplies}}</p>
                       
@@ -435,6 +509,70 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label
+                                                      class="form-control-label"
+                                                      for="input-bank-name"
+                                                      >Bank Name</label
+                                                    >
+                                                    <input
+                                                      type="text"
+                                                      id="input-bank-name"
+                                                      class="form-control form-control-alternative"
+                                                      placeholder="Enter Supplier Bank Name"
+                                                      name="bank_name"
+                                                      value="{{ row.bank_name }}"
+                                                      
+                                                    />
+                                                  </div>
+                                            </div>
+                                            
+                                        </div>
+            
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label
+                                                      class="form-control-label"
+                                                      for="input-account-no"
+                                                      >Bank Account No</label
+                                                    >
+                                                    <input
+                                                      type="text"
+                                                      id="input-account-no"
+                                                      class="form-control form-control-alternative"
+                                                      placeholder="Enter Supplier Bank Acc No"
+                                                      name="bank_account_no"
+                                                      value="{{ row.bank_account_no }}"
+                                                      
+                                                    />
+                                                  </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label
+                                                      class="form-control-label"
+                                                      for="input-ifsc-code"
+                                                      >IFSC Code</label
+                                                    >
+                                                    <input
+                                                      type="text"
+                                                      id="input-ifsc-code"
+                                                      class="form-control form-control-alternative"
+                                                      placeholder="IFSC CODE"
+                                                      name="ifsc_code"
+                                                      value="{{ row.ifsc_code }}"
+                                                      
+                                                    />
+                                                  </div>
+                                            </div>
+                                        </div>
+              
+                                        
+              
 
                                         <div class="pl-lg-4">
                                             <div class="form-group">
