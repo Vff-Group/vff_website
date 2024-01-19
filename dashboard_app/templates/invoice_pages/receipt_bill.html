@@ -250,12 +250,12 @@
       
       {% if payment_type_order_tbl == 'Multiple' %}
 
-      <h1 style="border-top: 1px dashed #000; margin-bottom:2px;">Payment Type: {{payment_type_order_tbl}} Payment</h1>
+      <h1 >Payment Type: {{payment_type_order_tbl}} Payment</h1>
         {% if payment_one_type != 'Cash' and payment_one_type != 'Cheque' %}    
         <h1>Transaction ID 1: {{payment_one_id}}</h1>
-        <h1 style="border-top: 1px dashed #000; margin-bottom:2px;">Payment Method 1: {{payment_one_type}}</h1>
+        <h1 >Payment Method 1: {{payment_one_type}}</h1>
         {% else %}
-        <h1 style="border-top: 1px dashed #000; margin-bottom:2px;">Payment Method 1: {{payment_one_type}}</h1>
+        <h1 >Payment Method 1: {{payment_one_type}}</h1>
         {% endif %}
 
         {% if payment_two_type != 'Cash' and payment_two_type != 'Cheque' %}    
