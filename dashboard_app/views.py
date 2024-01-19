@@ -2335,7 +2335,99 @@ def print_label_tags(request,orderid):
         
 #Thermal Printer size
 def generate_bill(request, orderid):
-    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name,categoryid,subcategoryid,booking_type,dt,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,time,item_cost,item_quantity,type,section_type,laundry_ordertbl.booking_id,gstamount,igstamount,discount_price,wants_delivery,delivery_price,square_width,square_height from vff.laundry_active_orders_tbl,vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and laundry_active_orders_tbl.order_id=laundry_ordertbl.orderid and orderid='"+str(orderid)+"' order by orderid desc;"
+    # query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name,categoryid,subcategoryid,booking_type,dt,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,time,item_cost,item_quantity,type,section_type,laundry_ordertbl.booking_id,gstamount,igstamount,discount_price,wants_delivery,delivery_price,square_width,square_height,payment_type from vff.laundry_active_orders_tbl,vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and laundry_active_orders_tbl.order_id=laundry_ordertbl.orderid and orderid='"+str(orderid)+"' order by orderid desc;"
+    
+    # query_result = execute_raw_query(query)
+    # print(f'query_result:::{query_result}')
+    
+        
+    # data = []
+    # sub_items = []    
+    # if not query_result == 500:
+    #     for row in query_result:
+    #         total_square_feet = 0
+    #         depoch = row[25]#delivery epoch
+    #         oepoch = row[22]#order taken epoch
+    #         orderStatus = row[20]
+    #         item_cost_str = row[37]
+    #         item_cost = float(item_cost_str)
+    #         formatted_cost = '{:.2f}'.format(item_cost)
+    #         print("Delivery Epoch:"+str(depoch))
+    #         print("Order Taken Epoch:"+str(oepoch))
+    #         deliveryEpoch = epochToDateTime(depoch)
+    #         orderTakenEpoch = epochToDateTime(oepoch)
+    #         if orderStatus != "Completed":
+    #             deliveryEpoch = "Not Delivered Yet"
+    #         cat_name=row[32]
+    #         if cat_name != 'DRY CLEAN':
+    #             sub_items.append(row[33])
+    #         total_square_feet = float(row[47])*float(row[48])
+    #         data.append({
+    #             'consmrid': row[0],
+    #             'usrid': row[1],
+    #             'customer_name': row[2],
+    #             'mobile_no': row[3],
+    #             'houseno': row[4],
+    #             'address': row[5],
+    #             'city': row[6],
+    #             'pincode': row[7],
+    #             'landmark': row[8],
+    #             'profile_img': row[9],
+    #             'device_token': row[10],
+    #             'orderid': row[11],
+    #             'delivery_boyid': row[12],
+    #             'quantity':row[13],
+    #             'price': row[14],
+    #             'pickup_dt': row[15],
+    #             'delivery_dt': row[16],
+    #             'clat': row[17],
+    #             'clng': row[18],
+    #             'order_completed': row[19],
+    #             'order_status': orderStatus,
+    #             'additional_instruction': row[21],
+    #             'order_taken_epoch': orderTakenEpoch,
+    #             'cancel_reason': row[23],
+    #             'feedback': row[24],
+    #             'delivery_epoch': deliveryEpoch,
+    #             'delivery_boy_name': row[26],
+    #             'categoryid': row[27],
+    #             'subcategoryid': row[28],
+    #             'ordertype': row[29],
+    #             'dt': row[30],
+    #             'cat_img': row[31],
+    #             'cat_name': row[32],
+    #             'sub_cat_name': row[33],
+    #             'sub_cat_img': row[34],
+    #             'actual_cost': row[35],
+    #             'time': row[36],
+    #             'item_cost': formatted_cost,
+    #             'item_quantity': row[38],
+    #             'type_of': row[39],
+    #             'section_type': row[40],
+    #             'booking_id': row[41],
+    #             'gstamount': row[42],
+    #             'igstamount': row[43],
+    #             'discount_price': row[44],
+    #             'wants_delivery': row[45],
+    #             'delivery_price_taken': row[46],
+    #             'square_width': row[47],
+    #             'square_height': row[48],
+    #             'total_square_feet':total_square_feet,
+    #             'payment_type_order_tbl':row[49]
+                
+                
+               
+    #         })
+    #     delivery_price_taken = data[0]['delivery_price_taken'] if data else ''
+    #     #Payment Details
+    #     payment_id = 'Payment Not Done'
+    #     query_payment = "select razor_pay_payment_id,status,time,dt,payment_type from vff.laundry_payment_tbl where order_id='"+str(orderid)+"'"
+    #     pay_result = execute_raw_query_fetch_one(query_payment)
+    #     if pay_result:   
+    #         payment_id = pay_result[0]
+    #         payment_type = pay_result[4]
+        
+    query = "select consmrid,usertbl.usrid,customer_name,mobile_no,houseno,address,city,pincode,landmark,profile_img,device_token,orderid,delivery_boyid,quantity,price,pickup_dt,delivery,clat,clng,order_completed,order_status,additional_instruction,laundry_ordertbl.epoch,cancel_reason,feedback,delivery_epoch,name as deliveryboy_name,categoryid,subcategoryid,booking_type,dt,cat_img,cat_name,sub_cat_name,sub_cat_img,actual_cost,time,item_cost,item_quantity,type,section_type,laundry_ordertbl.booking_id,gstamount,igstamount,discount_price,order_taken_on,delivery_price,wants_delivery,square_width,square_height,payment_type from vff.laundry_active_orders_tbl,vff.laundry_ordertbl,vff.laundry_customertbl,vff.usertbl,vff.laundry_delivery_boytbl where laundry_customertbl.usrid=usertbl.usrid and laundry_ordertbl.customerid=laundry_customertbl.consmrid and laundry_ordertbl.delivery_boyid=laundry_delivery_boytbl.delivery_boy_id and laundry_active_orders_tbl.order_id=laundry_ordertbl.orderid and orderid='"+str(orderid)+"' order by orderid desc;"
     
     query_result = execute_raw_query(query)
     print(f'query_result:::{query_result}')
@@ -2361,7 +2453,7 @@ def generate_bill(request, orderid):
             cat_name=row[32]
             if cat_name != 'DRY CLEAN':
                 sub_items.append(row[33])
-            total_square_feet = float(row[47])*float(row[48])
+            total_square_feet = float(row[48])*float(row[49])
             data.append({
                 'consmrid': row[0],
                 'usrid': row[1],
@@ -2408,23 +2500,73 @@ def generate_bill(request, orderid):
                 'gstamount': row[42],
                 'igstamount': row[43],
                 'discount_price': row[44],
-                'wants_delivery': row[45],
+                'order_taken_on': row[45],
                 'delivery_price_taken': row[46],
-                'square_width': row[47],
-                'square_height': row[48],
-                'total_square_feet':total_square_feet
+                'wants_delivery': row[47],
+                'square_width': row[48],
+                'square_height': row[49],
+                'total_square_feet':total_square_feet,
+                'payment_type_order_tbl':row[50]
                 
                 
                
             })
         delivery_price_taken = data[0]['delivery_price_taken'] if data else ''
+        booking_id_for_order = data[0]['booking_id'] if data else ''
+        payment_type_order_tbl = data[0]['payment_type_order_tbl'] if data else ''
+        
+        #To Check Order Pick up  Delivery Agent Details
+        pickup_done_delivery_boy_name=""
+        query_check_whom_assigned="select name,laundry_order_assignmenttbl.delivery_boy_id,order_id,type_of_order,timing,dt,order_delivered from vff.laundry_order_assignmenttbl,vff.laundry_delivery_boytbl where laundry_order_assignmenttbl.delivery_boy_id=laundry_delivery_boytbl.delivery_boy_id and   booking_id='"+str(booking_id_for_order)+"' and pickup_done='1'"
+        query_result_pickup = execute_raw_query_fetch_one(query_check_whom_assigned)
+        print(f'Pickup Done Details:::{query_result_pickup}')
+        if query_result_pickup:   
+            pickup_done_delivery_boy_name = query_result_pickup[0]
+            pickup_done_delivery_boy_id = query_result_pickup[1]
+            
+        
+        #To Check Order Delivery Done  Delivery Agent Details
+        drop_done_delivery_boy_name=""
+        query_check_whom_assigned2="select name,laundry_order_assignmenttbl.delivery_boy_id,order_id,type_of_order,timing,dt from vff.laundry_order_assignmenttbl,vff.laundry_delivery_boytbl where laundry_order_assignmenttbl.delivery_boy_id=laundry_delivery_boytbl.delivery_boy_id and   booking_id='"+str(booking_id_for_order)+"' and order_delivered='1'"
+        query_result_drop = execute_raw_query_fetch_one(query_check_whom_assigned2)
+        print(f'Drop Done By DBoy Details:::{query_result_drop}')
+        if query_result_drop:   
+            drop_done_delivery_boy_name = query_result_drop[0]
+            drop_done_delivery_boy_id = query_result_drop[1]
+  
+        
+        
+        
+        #Check if Payment Done or Not
+        query_payment_status = "select payment_done,order_status from vff.laundry_ordertbl where orderid='"+str(orderid)+"'"
+        payment_result = execute_raw_query_fetch_one(query_payment_status)
+        if payment_result:   
+            payment_done = payment_result[0]
+            payment_order_status = payment_result[1]
+        
         #Payment Details
-        payment_id = 'Payment Not Done'
-        query_payment = "select razor_pay_payment_id,status,time,dt,payment_type from vff.laundry_payment_tbl where order_id='"+str(orderid)+"'"
+        payment_id = '-1'
+        payment_type = 'NA'
+        payment_one_type = 'NA'
+        payment_one_amount = 'NA'
+        payment_one_id = 'NA'
+        payment_two_id = 'NA'
+        payment_two_type = 'NA'
+        payment_two_amount = 'NA'
+        query_payment = "select razor_pay_payment_id,status,time,dt,payment_type,payment_one_type,payment_one_amount,payment_one_id,payment_two_id,payment_two_type,payment_two_amount from vff.laundry_payment_tbl where order_id='"+str(orderid)+"'"
+        # query_payment = "select razor_pay_payment_id,status,time,dt,payment_type from vff.laundry_payment_tbl where order_id='"+str(orderid)+"'"
         pay_result = execute_raw_query_fetch_one(query_payment)
         if pay_result:   
             payment_id = pay_result[0]
             payment_type = pay_result[4]
+            payment_one_type = pay_result[5]
+            payment_one_amount = pay_result[6]
+            payment_one_id = pay_result[7]
+            payment_two_id = pay_result[8]
+            payment_two_type = pay_result[9]
+            payment_two_amount = pay_result[10]
+            
+        
         
         
         #extra_cart_item like softner
@@ -2594,7 +2736,7 @@ def generate_bill(request, orderid):
     total_cost -= discount_amount
     total_cost = round(total_cost)
     context ={'query_result':data,'extra_data':extra_data,'payment_id':payment_id,'order_id':first_order_id,'customer_name':customer_name
-              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':round(total_cost,2),'extra_error':extra_error,'range_price':range_price,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':round(discount_amount,2),'sub_total':round(sub_total,2),'receipt_id':receiptID,'branch_id':branchID,'receiptName':receiptName,'receiptDate':receiptDate,'wants_delivery':wants_delivery,'delivery_dt':delivery_dt,'state_gst':round(state_gst, 2),'central_gst':round(central_gst,2),'igstamount':igstamount,'delivery_price_taken':delivery_price_taken}
+              ,'address':address,'houseno':houseno,'city':city,'pincode':pincode,'landmark':landmark,'order_status':order_status,'order_completed_status':order_completed_status,'order_date':order_date,'delivery_date':delivery_date,'extra_item_sum':extra_item_sum,'delivery_price':delivery_price,'total_cost':round(total_cost,2),'extra_error':extra_error,'range_price':range_price,'sub_items':sub_items,'booking_id':booking_id,'mobile_no':mobile_no,'branch_address':branch_address,'branch_name':branch_name,'branch_gstno':branch_gstno,'branch_igstno':branch_igstno,'branch_city':branch_city,'branch_state':branch_state,'branch_pincode':branch_pincode,'branch_contactno':branch_contactno,'payment_type':payment_type,'gst_amount':gst_amount,'discount_amount':round(discount_amount,2),'sub_total':round(sub_total,2),'receipt_id':receiptID,'branch_id':branchID,'receiptName':receiptName,'receiptDate':receiptDate,'wants_delivery':wants_delivery,'delivery_dt':delivery_dt,'state_gst':round(state_gst, 2),'central_gst':round(central_gst,2),'igstamount':igstamount,'delivery_price_taken':delivery_price_taken,'payment_done':payment_done,'payment_order_status':payment_order_status,'pickup_done_delivery_boy_name':pickup_done_delivery_boy_name,'drop_done_delivery_boy_name':drop_done_delivery_boy_name,"payment_one_type":payment_one_type,"payment_two_type":payment_two_type,"payment_one_id":payment_one_id,"payment_two_id":payment_two_id,"payment_one_amount":payment_one_amount,"payment_two_amount":payment_two_amount,'payment_type_order_tbl':payment_type_order_tbl}
     
     # return HttpResponse(formatted_bill_content)
     return render(request,'invoice_pages/receipt_bill.html',context)

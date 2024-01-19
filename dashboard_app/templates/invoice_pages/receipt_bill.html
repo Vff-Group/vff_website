@@ -239,13 +239,35 @@
     </div>
 
     <div class="payment-info">
-      <h1>Payment Method: {{payment_type}}</h1>
-      {% if payment_type != 'Cash' %}  
-      <h1>Transaction ID: {{payment_id}}</h1>
+      {% if payment_type_order_tbl == 'Single' %}
+      <h1>Payment Type: {{payment_type_order_tbl}} Payment</h1>
+        {% if payment_type != 'Cash' and payment_type != 'Cheque' %}    
+        <h1>Transaction ID: {{payment_id}}</h1>
+        {% else %}
+        <h1>Payment Method: {{payment_type}}</h1>
+        {% endif %}
+      {% endif %}
+      
+      {% if payment_type_order_tbl == 'Multiple' %}
+
+      <h1>Payment Type: {{payment_type_order_tbl}} Payment</h1>
+        {% if payment_one_type != 'Cash' and payment_one_type != 'Cheque' %}    
+        <h1>Transaction ID 1: {{payment_one_id}}</h1>
+        <p>Payment Method 1: {{payment_one_type}}</p>
+        {% else %}
+        <h1>Payment Method 1: {{payment_one_type}}</h1>
+        {% endif %}
+
+        {% if payment_two_type != 'Cash' and payment_two_type != 'Cheque' %}    
+        <h1>Transaction ID 2: {{payment_two_id}}</h1>
+        <p>Payment Method 2: {{payment_two_type}}</p>
+        {% else %}
+        <h1>Payment Method 2: {{payment_two_type}}</h1>
+        {% endif %}
+
+  
       {% endif %}
 
-      <!-- <h1>Card Type: Visa</h1>
-      <h1>Card Number: **** **** **** 1234</h1> -->
     </div>
 
     <div class="terms-and-conditions">
