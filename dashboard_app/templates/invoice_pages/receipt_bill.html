@@ -154,7 +154,7 @@
 
     <div class="receipt-info">
       <h1>GST No : {{branch_gstno}}</h1>
-      <h1>Receipt : #{{receipt_id}}</h1>
+      <h1>Invoice No : #{{receipt_id}}</h1>
       <h1>Date: {{receiptDate}}</h1>
       {% if wants_delivery == 1 %}
       <h1>Delivery Estimated Date: {{delivery_dt}}</h1>
@@ -241,7 +241,8 @@
     <div class="payment-info">
       {% if payment_type_order_tbl == 'Single' %}
       <h1>Payment Type: {{payment_type_order_tbl}} Payment</h1>
-        {% if payment_type != 'Cash' and payment_type != 'Cheque' %}    
+        {% if payment_type != 'Cash' and payment_type != 'Cheque' %}  
+        <h1>Payment Method: {{payment_type}}</h1>  
         <h1>Transaction ID: {{payment_id}}</h1>
         {% else %}
         <h1>Payment Method: {{payment_type}}</h1>
