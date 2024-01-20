@@ -58,3 +58,176 @@ def custom_404_view_united(request, exception=None):
 #5 0 0 Page
 def custom_500_view_united(request, exception=None):
     return render(request, 'error_pages/500.html', status=500)
+
+def get_main_categories(request):
+    errorRet={'ErrorCode#2':'ErrorCode#2'}
+    if request.method == "POST":
+        # Parsing and printing JSON body
+        
+        try:
+            
+            today_date = datetime.now().strftime("%Y-%m-%d")
+            
+            query = "select main_cat_id,main_title_name,images from vff.united_armor_main_categorytbl"
+            result = execute_raw_query(query)
+            data = []
+            sub_items = []    
+            if not result == 500:
+                for row in result:
+                    
+                    #bookingEpoch = epochToDateTime(depoch)
+                    data.append({
+                    'main_cat_id':row[0],
+                    'main_title_name':row[1],
+                    'images':row[2],
+                    
+                    })    
+            else:
+                error_msg = 'Something Went Wrong'
+            context ={'query_result':data} 
+            return JsonResponse(context)
+        
+        except KeyError as e:
+            print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except json.JSONDecodeError as e:
+            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except Exception as ex:
+            print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+
+
+def get_categories(request):
+    errorRet={'ErrorCode#2':'ErrorCode#2'}
+    if request.method == "POST":
+        # Parsing and printing JSON body
+        
+        try:
+            jdict = json.loads(request.body)
+            main_cat_id = jdict['main_cat_id']
+            
+            
+            
+            query = "select catid,cat_name from vff.united_armor_categorytbl where main_catid='"+str(main_cat_id)+"'"
+            result = execute_raw_query(query)
+            data = []
+              
+            if not result == 500:
+                for row in result:
+                    
+                    
+                    data.append({
+                    'catid':row[0],
+                    'cat_name':row[1],
+                    
+                    
+                    })    
+            else:
+                error_msg = 'Something Went Wrong'
+            context ={'query_result':data} 
+            return JsonResponse(context)
+        
+        except KeyError as e:
+            print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except json.JSONDecodeError as e:
+            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except Exception as ex:
+            print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+
+    return JsonResponse(errorRet)
+
+
+def get_sub_categories(request):
+    errorRet={'ErrorCode#2':'ErrorCode#2'}
+    if request.method == "POST":
+        # Parsing and printing JSON body
+        
+        try:
+            jdict = json.loads(request.body)
+            cat_id = jdict['cat_id']
+            today_date = datetime.now().strftime("%Y-%m-%d")
+            
+            query = "select sub_catid,sub_cat_name from vff.united_armor_sub_categorytbl where catid='"+str(cat_id)+"'"
+            result = execute_raw_query(query)
+            data = []
+            sub_items = []    
+            if not result == 500:
+                for row in result:
+                    
+                    
+                    data.append({
+                    'sub_catid':row[0],
+                    'sub_cat_name':row[1],
+                    
+                    
+                    })    
+            else:
+                error_msg = 'Something Went Wrong'
+            context ={'query_result':data} 
+            return JsonResponse(context)
+        
+        except KeyError as e:
+            print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except json.JSONDecodeError as e:
+            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+        except Exception as ex:
+            print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
+            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
+
+    return JsonResponse(errorRet)
+
+#Generic Def
+def execute_raw_query(query, params=None,):
+    
+    result = []
+    try:
+        print(f"{Fore.GREEN}Query Executed: {query}{Style.RESET_ALL}")
+        with connection.cursor() as cursor:
+            cursor.execute(query, params)
+            result = cursor.fetchall()
+            print(f"Result: {result}, Result length: {len(result)}")
+        return result
+    except DatabaseError as e:
+        print(f"{Fore.RED}DatabaseError Found: {e}{Style.RESET_ALL}")
+        # Need To Handle the error appropriately, such as logging or raising a custom exception
+        # roll back transactions if needed
+        
+        return 500
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        # Handle other unexpected errors
+        return 500
+    finally:
+        # Ensure the cursor is closed to release resources
+        cursor.close()  # Note: cursor might not be defined if an exception occurs earlier
+
+def execute_raw_query_fetch_one(query, params=None,):
+    
+    result = []
+    try:
+        print(f"{Fore.GREEN}Query Executed: {query}{Style.RESET_ALL}")
+        with connection.cursor() as cursor:
+            cursor.execute(query, params)
+            result = cursor.fetchone()
+            print(f"Result: {result}")
+        return result
+    except DatabaseError as e:
+        print(f"{Fore.RED}DatabaseError Found: {e}{Style.RESET_ALL}")
+        # Need To Handle the error appropriately, such as logging or raising a custom exception
+        # roll back transactions if needed
+        
+        return 500
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        # Handle other unexpected errors
+        return 500
+    finally:
+        # Ensure the cursor is closed to release resources
+        cursor.close()  # Note: cursor might not be defined if an exception occurs earlier
