@@ -21,7 +21,8 @@
                 <div class="col-md-6">
                     <div class="product-gallery">
                         <figure class="product-main-image">
-                            <img src="{% static 'assets/images/products/single/extended/3.webp' %}"  alt="product image">
+                            {% comment %} <img src="{% static 'assets/images/products/single/extended/3.webp' %}"  alt="product image"> {% endcomment %}
+                            <img src="{% static 'assets/images/no_image.jpg' %}"  width="100" height="100" alt="Product image" class="product-image">
 
                             <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                 <i class="icon-arrows"></i>
@@ -32,11 +33,13 @@
                             
 
                             <a class="product-gallery-item active" href="#" data-image="{% static 'assets/images/products/single/extended/3.webp' %}" >
-                                <img src="{% static 'assets/images/products/single/extended/3.webp' %}" alt="product with model">
+                                {% comment %} <img src="{% static 'assets/images/products/single/extended/3.webp' %}" alt="product with model"> {% endcomment %}
+                                <img src="{% static 'assets/images/no_image.jpg' %}"   alt="Product image">
                             </a>
 
                             <a class="product-gallery-item " href="#" data-image="{% static 'assets/images/products/single/extended/3-back.webp' %}" >
-                                <img src="{% static 'assets/images/products/single/extended/3-back.webp' %}" alt="product with model">
+                                {% comment %} <img src="{% static 'assets/images/products/single/extended/3-back.webp' %}" alt="product with model"> {% endcomment %}
+                                <img src="{% static 'assets/images/no_image.jpg' %}"   alt="Product image">
                             </a>
 
                             
