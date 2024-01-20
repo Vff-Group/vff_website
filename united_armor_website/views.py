@@ -21,6 +21,10 @@ import re
 from PIL import Image  # Pillow library for image processing
 
 # Create your views here.
+#Coming Soon Page
+def coming_soon(request):
+    current_url = request.get_full_path()
+    return render(request,"coming_soon.html",{'current_url': current_url})
 
 #Home Page
 def home(request):
