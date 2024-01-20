@@ -310,7 +310,25 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
             })
     else:
         error_msg = 'Something Went Wrong'
+    #Product Sizes Guide Line with Measurements Images
+    query = "select measurementid,image_url,measurement_name from vff.united_armor_measurementtbl order by measurementid desc"
     
+    query_result = execute_raw_query(query)
+    
+    
+        
+    p_size_info_data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            p_size_info_data.append({
+                'p_size_info_id': row[0],
+                'image_url': row[1],
+                'p_size_info_name': row[2],
+   
+            })
+    else:
+        error_msg = 'Something Went Wrong'
     #Product Category table
     query_product_category="select product_catid,product_category_name from vff.united_armor_product_categorytbl"
     p_category_result = execute_raw_query(query_product_category)
@@ -368,6 +386,9 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
         selected_product_type_name = request.POST.get('selected_product_type_name')
         selected_product_type_id = request.POST.get('selected_product_type_id')
         
+        selected_product_size_info_name = request.POST.get('selected_product_size_info_name')
+        selected_product_size_info_id = request.POST.get('selected_product_size_info_id')
+        
         selected_product_category_name = request.POST.get('selected_product_category_name')
         selected_product_category_id = request.POST.get('selected_product_category_id')
         
@@ -421,7 +442,7 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
         #Product Table
         try:
             with connection.cursor() as cursor:
-                insert_query="insert into vff.united_armor_all_productstbl(product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,main_cat_id,cat_id,sub_catid,product_collection_id,product_type_id,price,offer_price,default_images,default_size,return_policy) VALUES ('"+str(product_name)+"','"+str(selected_product_fitting_name)+"','"+str(selected_product_fitting_id)+"','"+str(checkout_quantity)+"','"+str(what_it_does)+"','"+str(product_description)+"','"+str(fit_care)+"','"+str(main_cat_id)+"','"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(selected_product_category_id)+"','"+str(selected_product_type_id)+"','"+str(price)+"','"+str(offer_price)+"','"+str(image_default_url)+"','"+str(selected_size_values[0])+"','"+str(return_policy)+"') RETURNING productid"
+                insert_query="insert into vff.united_armor_all_productstbl(product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,main_cat_id,cat_id,sub_catid,product_collection_id,product_type_id,price,offer_price,default_images,default_size,return_policy,measurement_id) VALUES ('"+str(product_name)+"','"+str(selected_product_fitting_name)+"','"+str(selected_product_fitting_id)+"','"+str(checkout_quantity)+"','"+str(what_it_does)+"','"+str(product_description)+"','"+str(fit_care)+"','"+str(main_cat_id)+"','"+str(cat_id)+"','"+str(sub_cat_id)+"','"+str(selected_product_category_id)+"','"+str(selected_product_type_id)+"','"+str(price)+"','"+str(offer_price)+"','"+str(image_default_url)+"','"+str(selected_size_values[0])+"','"+str(return_policy)+"','"+str(selected_product_size_info_id)+"') RETURNING productid"
                 print(f'insert query::{insert_query}')
                 cursor.execute(insert_query)
                 product_id = cursor.fetchone()[0]
