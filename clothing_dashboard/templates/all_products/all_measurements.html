@@ -72,7 +72,7 @@
                 <thead class="bg-light">
                   <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sl No</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Main Category Name</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Measurement Type Name</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
                     
                     <th class="text-secondary opacity-7"></th>
@@ -166,7 +166,7 @@
             <!-- Text input for category name -->
             <div class="mb-3">
               <label for="categoryName{{row.measurement_id}}" class="form-label">Measurement Type Name</label>
-              <input type="text" class="form-control" id="categoryName{{row.measurement_id}}" name="measurement_name" value="{{row.measurement_id}}">
+              <input type="text" class="form-control" id="categoryName{{row.measurement_id}}" name="measurement_name" value="{{row.measurement_name}}">
             </div>
 
             <button type="submit" class="btn btn-primary">Save Changes</button>
