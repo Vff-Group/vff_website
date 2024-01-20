@@ -9,10 +9,10 @@ app_name = 'united_armor' #nameSpaceses
 
 urlpatterns = [
     #Coming Soon Page
-    # path('',views.coming_soon,name='coming_soon'),
+    path('',views.coming_soon,name='coming_soon'),
     
     #Home
-    path('',views.home,name='home'),
+    path('home',views.home,name='home'),
     
     #All Products
     path('all_products/',views.all_products,name='all_products'),
