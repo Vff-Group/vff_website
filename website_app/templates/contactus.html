@@ -108,7 +108,8 @@
         var email = document.getElementById('sender_email').value;
         var subject = document.getElementById('subject_id').value;
         var message = document.getElementById('body_msg').value;
-    
+        console.log('email::'+email)
+        console.log('message::'+message)
         var mailtoLink = 'mailto:info@vff-group.com'
             + '?subject=' + encodeURIComponent(subject)
             + '&body=' + encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\nSubject: ' + subject + '\nMessage: ' + message);
