@@ -145,7 +145,7 @@
         </div>
         <div class="modal-body">
           <!-- Form for editing category -->
-          <form id="editForm{{row.measurement_id}}" method="post" action="{% url 'clothing_dashboard_app:update_main_category_details' row.measurement_id %}" enctype="multipart/form-data">
+          <form id="editForm{{row.measurement_id}}" method="post" action="{% url 'clothing_dashboard_app:update_new_measurement_type' row.measurement_id %}" enctype="multipart/form-data">
             {% csrf_token %}
             <!-- Hidden input for category ID -->
             <input type="hidden" name="measurement_id" value="{{row.measurement_id}}">
