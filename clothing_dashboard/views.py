@@ -1866,6 +1866,101 @@ def return_refund_report(request):
     context = {'current_url': current_url}
     return render(request,"reports_clothing/return_refund_report.html",context)
 
+def all_measurements(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
+    error_msg = 'No Measurement Type Found'
+    query = "select measurementid,image_url,measurement_name from vff.united_armor_measurementtbl order by measurementid desc"
+    
+    query_result = execute_raw_query(query)
+    
+    
+        
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            data.append({
+                'measurement_id': row[0],
+                'image_url': row[1],
+                'measurement_name': row[2],
+   
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg}
+    return render(request,"all_products/all_measurements.html",context)
+
+
+def add_new_measurement_type(request):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
+    error_msg = 'Something Went Wrong'
+    if request.method == "POST":
+        measurement_name = request.POST.get('measurement_name')
+        
+        uploaded_image = request.FILES.get('category_image')
+        
+       
+
+        # image_url='NA'
+        if uploaded_image:
+            image_url = upload_images2(uploaded_image)
+        
+
+        try:
+            with connection.cursor() as cursor:
+                insert_query="insert into vff.united_armor_measurementtbl(image_url,measurement_name) values ('"+str(image_url)+"','"+str(measurement_name)+"')"
+                cursor.execute(insert_query)
+                connection.commit()
+                print(f" New Measurement Type {measurement_name} Inserted Successfully.")
+                return redirect('clothing_dashboard_app:all_measurements')
+        except Exception as e:
+            print(f"Error loading data: {e}")
+            
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"all_products/all_measurements.html",context)
+    
+def update_new_measurement_type(request,measurement_id):
+    isLogin = is_loggedin(request)
+    if isLogin == False:
+        return redirect('clothing_dashboard_app:login')
+    error_msg = 'Something Went Wrong'
+    if request.method == "POST":
+        measurement_name = request.POST.get('measurement_name')
+        
+        uploaded_image = request.FILES.get('new_image')
+        
+        query = "select measurementid,image_url,measurement_name from vff.united_armor_measurementtbl where measurementid='"+str(measurement_id)+"'"
+        user_data = execute_raw_query_fetch_one(query)
+        if user_data:
+            image_url = user_data[1]
+
+        # image_url='NA'
+        if uploaded_image:
+            image_url = upload_images2(uploaded_image)
+        
+
+        try:
+            with connection.cursor() as cursor:
+                update_query="update vff.united_armor_measurementtbl set image_url='"+str(image_url)+"',measurement_name='"+str(measurement_name)+"' where measurementid='"+str(measurement_id)+"'"
+                cursor.execute(update_query)
+                connection.commit()
+                print(f" Measurement {main_category_name} Updated Successfully.")
+                return redirect('clothing_dashboard_app:all_measurements')
+        except Exception as e:
+            print(f"Error loading data: {e}")
+            
+    current_url = request.get_full_path()
+    # using the 'current_url' variable to determine the active card.
+    context = {'current_url': current_url,'error_msg':error_msg}
+    return render(request,"all_products/all_measurements.html",context)
 
 
 

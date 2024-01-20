@@ -66,6 +66,15 @@ urlpatterns = [
     #Update Sub Category Details
     path('update_sub_category_details/',views.update_sub_category_details,name='update_sub_category_details'),
    
+    #---------------- MEASUREMENTS ------------------------------
+    #All Measurement Types
+    path('all_measurements/',views.all_measurements,name='all_measurements'),
+    
+    # Add New Measurement Type
+    path('add_new_measurement_type/',views.add_new_measurement_type,name='add_new_measurement_type'),
+    
+    # Upadte Measurement Type
+    path('update_new_measurement_type/<int:measurement_id>/',views.update_new_measurement_type,name='update_new_measurement_type'),
     
    
     #---------------- PRE ORDER Sequence Paths ------------------

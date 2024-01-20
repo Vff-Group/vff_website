@@ -1,6 +1,6 @@
 {% extends "base/base.html" %}
 {% load static %}
-{% block title %}All Main Category{% endblock title%}
+{% block title %}All Measurements{% endblock title%}
 {% block content %}
 
   <div class="container-fluid py-4">
@@ -9,12 +9,12 @@
       <div class="col-12">
         <div class="card mb-4">
           <div class="card-header pb-0 d-flex justify-content-between">
-            <h6>All Main Category</h6>
+            <h6>All Measurements</h6>
             <div class="row justify-content-center align-items-center p-1">
                 <a href=""  data-bs-toggle="modal" data-bs-target="#modal-create">
                 <span class="badge badge-sm bg-gradient-info ">
                     <i class="fa-solid fa-user-plus"></i>
-                     Create New Main Category</span>
+                     Create New Measurement Type</span>
                     </a>
             </div>
           </div>
@@ -27,12 +27,12 @@
   <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modal-create-label">Create New Main Category</h5>
+        <h5 class="modal-title" id="modal-create-label">Create New Measurement Type</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <!-- Form for creating a new Main Category -->
-        <form id="createForm" method="post" action="{% url 'clothing_dashboard_app:add_new_main_category' %}" enctype="multipart/form-data">
+        <form id="createForm" method="post" action="{% url 'clothing_dashboard_app:add_new_measurement_type' %}" enctype="multipart/form-data">
           {% csrf_token %}
 
           
@@ -49,11 +49,11 @@
 
           <!-- Text input for category name -->
           <div class="mb-3">
-            <label for="newCategoryName" class="form-label">Category Name</label>
-            <input type="text" class="form-control" id="newCategoryName" name="main_category_name" required>
+            <label for="newCategoryName" class="form-label">Measurement Name</label>
+            <input type="text" class="form-control" id="newCategoryName" name="measurement_name" required>
           </div>
 
-          <button type="submit" class="btn btn-primary">Create Category</button>
+          <button type="submit" class="btn btn-primary">Create</button>
         </form>
       </div>
     </div>
@@ -98,46 +98,32 @@
                     <td class="text-center">
                         <p class="text-xs text-secondary mb-0">{{forloop.counter}}</p>
                     </td>
-                    <td>
-                      <div class="d-flex px-2 py-1">
-                        <div>
-                          <img src="{{row.images}}" class="avatar avatar-sm me-3" alt="user1">
-                        </div>
-                        <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-sm">{{row.main_title_name}}</h6>
-                          <input type="hidden" name="category_id" id="categoryID" value="{{row.main_cat_id}}">
-                    <input type="hidden" name="category_id" id="categoryID" value="{{row.images}}">
-                        </div>
+                   <td>
+                    <h6 class="mb-0 text-sm">{{row.measurement_name}}</h6>
+                    
+                   </td>
+                   
+                   <td>
+                    <div class="d-flex px-2 py-1">
+                      <div>
+                        <img src="{{row.image_url}}" class="avatar avatar-sm me-3" alt="user1">
                       </div>
-                    </td>
-                   
-                   
-                   <td class="align-middle text-center text-sm">
-                    {% if row.status == 1 %}
-                      <span class="badge badge-sm bg-success">
-                          Active
-                      </span>
-                    {% else %}
-                        <span class="badge badge-sm bg-warning">
-                        In-Active
-                        </span>
-                    {% endif %}
-                      
-                    </td>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-sm">{{row.measurement_name}}</h6>
+                        
+                      </div>
+                    </div>
+                  </td>
                     
                     <td class="align-middle">
                         <div class="row">
                             <div class="col">
                                 {% comment %} <a href="{% url 'clothing_dashboard_app:update_category' row.catid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user"> {% endcomment %}
-                                <a href="#" class="text-secondary font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.main_cat_id}}">
+                                <a href="#" class="text-secondary font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.measurement_id}}">
                                     Edit
                                   </a>
                             </div>
-                            <div class="col">
-                                <a href="{% url 'clothing_dashboard_app:all_categories' row.main_cat_id row.main_title_name %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                    View Category
-                                  </a>
-                            </div>
+                            
                             {% comment %} <div class="col">
                                 <a href="" class="text-danger font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.usrid}}">
                                     Delete
@@ -150,37 +136,37 @@
                   </tr>
 
                   <!-- Modal for each row -->
-  <div class="modal fade" id="modal-default{{row.main_cat_id}}" tabindex="-1" role="dialog" aria-labelledby="modal-default-label" aria-hidden="true">
+  <div class="modal fade" id="modal-default{{row.measurement_id}}" tabindex="-1" role="dialog" aria-labelledby="modal-default-label" aria-hidden="true">
     <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modal-default-label">Edit Main Category</h5>
+          <h5 class="modal-title" id="modal-default-label">Edit Measurement Category</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <!-- Form for editing category -->
-          <form id="editForm{{row.main_cat_id}}" method="post" action="{% url 'clothing_dashboard_app:update_main_category_details' %}" enctype="multipart/form-data">
+          <form id="editForm{{row.measurement_id}}" method="post" action="{% url 'clothing_dashboard_app:update_main_category_details' row.measurement_id %}" enctype="multipart/form-data">
             {% csrf_token %}
             <!-- Hidden input for category ID -->
-            <input type="hidden" name="category_id" value="{{row.main_cat_id}}">
+            <input type="hidden" name="measurement_id" value="{{row.measurement_id}}">
             
             <!-- Previous Image -->
             <div class="mb-3">
-              <label for="previousImage{{row.main_cat_id}}" class="form-label">Previous Image</label>
-              <img src="{{ row.images }}" alt="Previous Image" id="previousImage{{row.main_cat_id}}" class="img-thumbnail" style="max-width: 100px;">
+              <label for="previousImage{{row.measurement_id}}" class="form-label">Previous Image</label>
+              <img src="{{ row.image_url }}" alt="Previous Image" id="previousImage{{row.measurement_id}}" class="img-thumbnail" style="max-width: 200px;">
             </div>
 
             <!-- Image upload input -->
             <div class="mb-3">
-              <label for="categoryImage{{row.main_cat_id}}" class="form-label">New Image</label>
-              <input type="file" class="form-control" id="categoryImage{{row.main_cat_id}}" name="category_image"  accept="image/png, image/jpg, image/jpeg" onchange="previewImage(this, 'previousImage{{row.main_cat_id}}')">
+              <label for="categoryImage{{row.measurement_id}}" class="form-label">New Image</label>
+              <input type="file" class="form-control" id="categoryImage{{row.measurement_id}}" name="new_image"  accept="image/png, image/jpg, image/jpeg" onchange="previewImage(this, 'previousImage{{row.measurement_id}}')">
             </div>
 
 
             <!-- Text input for category name -->
             <div class="mb-3">
-              <label for="categoryName{{row.main_cat_id}}" class="form-label">Category Name</label>
-              <input type="text" class="form-control" id="categoryName{{row.main_cat_id}}" name="main_category_name" value="{{row.main_title_name}}">
+              <label for="categoryName{{row.measurement_id}}" class="form-label">Measurement Type Name</label>
+              <input type="text" class="form-control" id="categoryName{{row.measurement_id}}" name="measurement_name" value="{{row.measurement_id}}">
             </div>
 
             <button type="submit" class="btn btn-primary">Save Changes</button>
