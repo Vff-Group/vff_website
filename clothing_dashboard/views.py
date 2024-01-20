@@ -510,7 +510,7 @@ def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id,ret=None
         return redirect('clothing_dashboard_app:login')
     error_msg=''
     #All Details of Product
-    query_product ="select product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,product_collection_id,united_armor_product_typetbl.product_type_id,price,offer_price,default_images,return_policy,product_type_name,product_category_name,color_name,color_code,default_color_id from vff.united_armor_product_colorstbl,vff.united_armor_product_typetbl,vff.united_armor_product_categorytbl,vff.united_armor_all_productstbl where united_armor_product_typetbl.product_type_id=united_armor_all_productstbl.product_type_id and united_armor_product_categorytbl.product_catid=united_armor_all_productstbl.product_collection_id and united_armor_all_productstbl.default_color_id=united_armor_product_colorstbl.colorsid  and productid='"+str(product_id)+"'"
+    query_product ="select product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,product_collection_id,united_armor_product_typetbl.product_type_id,price,offer_price,default_images,return_policy,product_type_name,product_category_name,color_name,color_code,default_color_id,measurement_id from vff.united_armor_product_colorstbl,vff.united_armor_product_typetbl,vff.united_armor_product_categorytbl,vff.united_armor_all_productstbl where united_armor_product_typetbl.product_type_id=united_armor_all_productstbl.product_type_id and united_armor_product_categorytbl.product_catid=united_armor_all_productstbl.product_collection_id and united_armor_all_productstbl.default_color_id=united_armor_product_colorstbl.colorsid  and productid='"+str(product_id)+"'"
     product_result = execute_raw_query(query_product)
     product_data = []    
     if not product_result == 500:
@@ -535,6 +535,7 @@ def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id,ret=None
                 'color_name': row[15],
                 'color_code': '#'+row[16],
                 'default_color_id': row[17],
+                'measurement_id': row[18],
             })
     else:
         error_msg = 'Something Went Wrong'
@@ -600,6 +601,26 @@ def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id,ret=None
     else:
         error_msg = 'Something Went Wrong'
     
+    #Product Sizes Guide Line with Measurements Images
+    query = "select measurementid,image_url,measurement_name from vff.united_armor_measurementtbl order by measurementid desc"
+    
+    query_result = execute_raw_query(query)
+    
+    
+        
+    p_size_info_data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            p_size_info_data.append({
+                'p_size_info_id': row[0],
+                'image_url': row[1],
+                'p_size_info_name': row[2],
+   
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
     #Product Category table
     query_product_category="select product_catid,product_category_name from vff.united_armor_product_categorytbl"
     p_category_result = execute_raw_query(query_product_category)
@@ -657,6 +678,9 @@ def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id,ret=None
         selected_product_type_name = request.POST.get('selected_product_type_name')
         selected_product_type_id = request.POST.get('selected_product_type_id')
         
+        selected_product_size_info_name = request.POST.get('selected_product_size_info_name')
+        selected_product_size_info_id = request.POST.get('selected_product_size_info_id')
+        
         selected_product_category_name = request.POST.get('selected_product_category_name')
         selected_product_category_id = request.POST.get('selected_product_category_id')
         
@@ -691,7 +715,7 @@ def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id,ret=None
         #Product Table
         try:
             with connection.cursor() as cursor:
-                update_query="update vff.united_armor_all_productstbl SET product_name='"+str(product_name)+"', fitting_type='"+str(selected_product_fitting_name)+"', fitting_id='"+str(selected_product_fitting_id)+"', max_checkout_qty='"+str(checkout_quantity)+"', what_it_does='"+str(what_it_does)+"', specifications='"+str(product_description)+"', fit_and_care_desc='"+str(fit_care)+"', main_cat_id='"+str(main_cat_id)+"', cat_id='"+str(cat_id)+"', sub_catid='"+str(sub_cat_id)+"', product_collection_id='"+str(selected_product_category_id)+"', product_type_id='"+str(selected_product_type_id)+"', price='"+str(price)+"', offer_price='"+str(offer_price)+"',  return_policy='"+str(return_policy)+"' WHERE productid='"+str(product_id)+"'"
+                update_query="update vff.united_armor_all_productstbl SET product_name='"+str(product_name)+"', fitting_type='"+str(selected_product_fitting_name)+"', fitting_id='"+str(selected_product_fitting_id)+"', max_checkout_qty='"+str(checkout_quantity)+"', what_it_does='"+str(what_it_does)+"', specifications='"+str(product_description)+"', fit_and_care_desc='"+str(fit_care)+"', main_cat_id='"+str(main_cat_id)+"', cat_id='"+str(cat_id)+"', sub_catid='"+str(sub_cat_id)+"', product_collection_id='"+str(selected_product_category_id)+"', product_type_id='"+str(selected_product_type_id)+"', price='"+str(price)+"', offer_price='"+str(offer_price)+"',  return_policy='"+str(return_policy)+"',measurement_id='"+str(selected_product_size_info_id)+"' WHERE productid='"+str(product_id)+"'"
                 print(f'update query::{update_query}')
                 cursor.execute(update_query)
                 connection.commit()
@@ -747,7 +771,7 @@ def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id,ret=None
             
             
     
-    context = {'sizes_data':sizes_data,'p_type_data':p_type_data,'p_category_data':p_category_data,'p_fitting_data':p_fitting_data,'error_msg':error_msg,'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id,'product_data':product_data,'all_images_data':all_images_data,'all_selected_sizes_data':all_selected_sizes_data,'product_id':product_id}#product_data,all_images_data,all_selected_sizes_data
+    context = {'sizes_data':sizes_data,'p_type_data':p_type_data,'p_category_data':p_category_data,'p_fitting_data':p_fitting_data,'error_msg':error_msg,'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id,'product_data':product_data,'all_images_data':all_images_data,'all_selected_sizes_data':all_selected_sizes_data,'product_id':product_id,'p_size_info_data':p_size_info_data}#product_data,all_images_data,all_selected_sizes_data
     return render(request,"all_products/update_product_details.html",context)
 
 def single_product_colors(request,main_cat_id,cat_id,sub_cat_id,product_id,product_name): 

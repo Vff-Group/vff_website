@@ -142,7 +142,7 @@
 
                     <div class="row mb-2">
                         <!-- Price -->
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="product-Price">Price</label>
                                 <input type="number" class="form-control" id="product-Price" name="productPrice" placeholder="Enter product price" required value="{% if product_data %}{{ product_data.0.price }}{% endif %}">
@@ -150,15 +150,48 @@
                         </div>
 
                         <!-- Offer Price -->
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="product-offer-price">Offer Price %</label>
                                 <input type="number" class="form-control" id="product-offer-price" name="productOfferPrice" placeholder="Enter product offer price" required value="{% if product_data %}{{ product_data.0.offer_price }}{% endif %}">
                             </div>
                         </div>
 
+                         <!-- Dropdown for Product Size Guide-->
+                         {% if p_size_info_data %}
+                         <!-- Access the first item in the list -->
+                         {% with first_p_type=p_size_info_data.0 %}
+                                 <!-- Hidden input for selected product type name -->
+                             <input type="hidden" id="selected-product-type-name" name="selected_product_size_info_name" value="{{first_p_type.p_size_info_name}}">
+
+                             <!-- Hidden input for selected product type ID -->
+                             <input type="hidden" id="selected-product-type-id" name="selected_product_size_info_id"  value="{% if product_data %}{{ product_data.0.measurement_id }}{% endif %}">
+                             
+                         {% endwith %}
+                     {% else %}
+                         <!-- Hidden input for selected product type name -->
+                         <input type="hidden" id="selected-product-size-info-name" name="selected_product_size_info_name" >
+
+                         <!-- Hidden input for selected product type ID -->
+                         <input type="hidden" id="selected-product-size-info-id" name="selected_product_size_info_id"  >
+                     {% endif %}
+                     
+                      <div class="col-lg-3">
+                         <div class="form-group">
+                             <label class="form-control-label" for="input-product-size-guide">Size Guideline</label>
+                             <select id="input-product-size-guide" class="form-control form-control-alternative" name="product_type" required onchange="updateSelectedProductSizeGuideLine()">
+                                 <option value="" disabled>Select Product Size Guideline</option>
+                                 <!-- Add options dynamically based on your product types -->
+                                 {% for p_size_info in p_size_info_data %}
+                                 <option value="{{ p_size_info.p_size_info_id  }}" {% if product_data and p_size_info_data.p_size_info_id == product_data.0.measurement_id %}selected{% endif %}>{{ p_size_info.p_size_info_name }}</option>
+                                 
+                             {% endfor %}
+                             </select>
+                         </div>
+                     </div>
+
                         <!-- Max Checkout Quantity -->
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="productCheckOut-Quantity">Max Checkout Quantity</label>
                                 <input type="number" class="form-control" id="productCheckOut-Quantity" name="productCheckOutQuantity" placeholder="Enter Max Checkout Quantity" required value="{% if product_data %}{{ product_data.0.max_checkout_qty }}{% endif %}">
@@ -317,6 +350,18 @@
                 // Update hidden input fields
                 document.getElementById('selected-product-type-name').value = selectedOption.text;
                 document.getElementById('selected-product-type-id').value = selectedOption.value;
+            }
+
+            function updateSelectedProductSizeGuideLine() {
+                var selectElement = document.getElementById('input-product-size-guide');
+                var selectedOption = selectElement.options[selectElement.selectedIndex];
+        
+                // Update hidden input fields
+                document.getElementById('selected-product-size-info-name').value = selectedOption.text;
+                document.getElementById('selected-product-size-info-id').value = selectedOption.value;
+                
+                
+                 
             }
             
             function updateSelectedProductCategory() {
