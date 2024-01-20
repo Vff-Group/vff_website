@@ -1952,7 +1952,7 @@ def update_new_measurement_type(request,measurement_id):
                 update_query="update vff.united_armor_measurementtbl set image_url='"+str(image_url)+"',measurement_name='"+str(measurement_name)+"' where measurementid='"+str(measurement_id)+"'"
                 cursor.execute(update_query)
                 connection.commit()
-                print(f" Measurement {main_category_name} Updated Successfully.")
+                print(f" Measurement {measurement_name} Updated Successfully.")
                 return redirect('clothing_dashboard_app:all_measurements')
         except Exception as e:
             print(f"Error loading data: {e}")
