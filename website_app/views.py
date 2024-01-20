@@ -34,6 +34,7 @@ def contactus(request):
         message = f'Hi {name}, thank you for registering in vff group.'
         email_from = settings.EMAIL_HOST_USER
         recipient_list = [email, ]
+        print(f'subject:{subject}, \nemail:{email}')
         send_mail( subject, message, email_from, recipient_list )
         return redirect("/")
         
