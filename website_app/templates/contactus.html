@@ -122,7 +122,7 @@
     
     });
     
-    $(document).ready(function () {
+    {% comment %} $(document).ready(function () {
         const csrfToken = getCSRFToken();
         $('#contactForm').submit(function (e) {
             e.preventDefault();
@@ -150,7 +150,7 @@
                 }
             });
         });
-    });
+    }); {% endcomment %}
 
 </script>
 
