@@ -113,7 +113,7 @@
         var mailtoLink = 'mailto:info@vff-group.com'
             + '?subject=' + encodeURIComponent(subject)
             + '&body=' + encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\nSubject: ' + subject + '\nMessage: ' + message);
-    
+        console.log('mailtoLink::'+mailtoLink);
         window.location.href = mailtoLink;
         // Clear form fields
     document.getElementById('sender_name').value = '';
