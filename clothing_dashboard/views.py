@@ -501,7 +501,7 @@ def add_new_product(request,main_cat_id,cat_id,sub_cat_id):
             
             
     
-    context = {'sizes_data':sizes_data,'p_type_data':p_type_data,'p_category_data':p_category_data,'p_fitting_data':p_fitting_data,'error_msg':error_msg,'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id,'pants_sizes_data':pants_sizes_data,'shoes_sizes_data':shoes_sizes_data}
+    context = {'sizes_data':sizes_data,'p_type_data':p_type_data,'p_category_data':p_category_data,'p_fitting_data':p_fitting_data,'error_msg':error_msg,'main_cat_id': main_cat_id,'cat_id':cat_id,'sub_cat_id':sub_cat_id,'pants_sizes_data':pants_sizes_data,'shoes_sizes_data':shoes_sizes_data,'p_size_info_data':p_size_info_data}
     return render(request,"all_products/add_new_product.html",context)
 
 def update_new_product(request,main_cat_id,cat_id,sub_cat_id,product_id,ret=None):
