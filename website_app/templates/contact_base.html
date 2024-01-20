@@ -106,18 +106,19 @@
               </li>
               <li class="nav-item">
                 <a
-                  class="nav-link {% if current_url == '/gym_home/' %}active {% endif %}"
-                  href="{% url 'website_app:gym_home' %}"
-                  >Gym</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
                   class="nav-link {% if current_url == '/united_armor/' %}active {% endif %}"
                   href="{% url 'united_armor:coming_soon' %}"
                   >Clothing</a
                 >
               </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link {% if current_url == '/gym_home/' %}active {% endif %}"
+                  href="{% url 'website_app:gym_home' %}"
+                  >Gym</a
+                >
+              </li>
+              
               <li class="nav-item">
                 <a
                   class="nav-link {% if current_url == '/contactus/' %}active {% endif %}"
