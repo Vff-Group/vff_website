@@ -1,8 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.core.mail import send_mail
 from django.core.mail import EmailMessage
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
+from django.core.mail import send_mail
+
 # Create your views here.
 def index(request):
     current_url = request.get_full_path()
@@ -21,6 +24,19 @@ def franchise(request):
     return render(request,"franchise.html",{'current_url': current_url})
 
 def contactus(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        name = request.POST.get('name')
+        subject = request.POST.get('subject')
+        
+
+        subject = 'welcome to GFG world'
+        message = f'Hi {name}, thank you for registering in vff group.'
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = [email, ]
+        send_mail( subject, message, email_from, recipient_list )
+        return redirect("/")
+        
     current_url = request.get_full_path()
     return render(request,"contactus.html",{'current_url': current_url})
 
