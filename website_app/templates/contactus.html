@@ -25,7 +25,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-8 contacts12-main">
-                        <form   class="main-input"  method="POST" action="{% url 'website_app:contactus' %}">
+                        <form id="contactForm"  class="main-input"  method="POST">
                             {% csrf_token %}
                             <div class="row top-inputs">
                                 <div class="col-md-4">
@@ -101,7 +101,7 @@
         return null;
     }
 
-    {% comment %} document.getElementById('sendMailBtn').addEventListener('click', function(event) {
+    document.getElementById('sendMailBtn').addEventListener('click', function(event) {
         event.preventDefault();
         
         var name = document.getElementById('sender_name').value;
@@ -120,9 +120,9 @@
     document.getElementById('subject_id').value = '';
     document.getElementById('body_msg').value = '';
     
-    }); {% endcomment %}
+    });
     
-    {% comment %} $(document).ready(function () {
+    $(document).ready(function () {
         const csrfToken = getCSRFToken();
         $('#contactForm').submit(function (e) {
             e.preventDefault();
@@ -150,7 +150,7 @@
                 }
             });
         });
-    }); {% endcomment %}
+    });
 
 </script>
 
