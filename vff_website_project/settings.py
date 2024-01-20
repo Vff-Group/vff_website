@@ -156,11 +156,11 @@ MEDIA_ROOT = '/var/www/vffgroup/media/'
 
 # Configure your email backend (SMTP settings)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # Update with your email host
-EMAIL_PORT = 587  # Update with your email port (e.g., 587 for TLS)
-EMAIL_HOST_USER = 'shahidmaniyar888@gmail.com'  # Update with your email ID
-EMAIL_HOST_PASSWORD = "8105604377"  # Update with your email password
+EMAIL_HOST = 'smtp.hostinger.com'  # Update with your email host
+EMAIL_PORT = 465  # Update with your email port (e.g., 587 for TLS)
+EMAIL_HOST_USER = 'info@vff-group.com'  # Update with your email ID
+EMAIL_HOST_PASSWORD = "Vff!@#321"  # Update with your email password
 EMAIL_USE_TLS = True  # Set to True if your email provider requires TLS
 
 # Default sender email address
-# DEFAULT_FROM_EMAIL = 'info@vff-group.com'  # Update with your email ID
+DEFAULT_FROM_EMAIL = 'info@vff-group.com'  # Update with your email ID
