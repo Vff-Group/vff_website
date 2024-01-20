@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>United Armor - Popular Clothing Brand</title>
+    <meta name="keywords" content="United Armor">
+    <meta name="description" content="United Armor Clothing Brand at a very reasonable price">
+    <meta name="author" content="shaheed">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/images/icons/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/images/icons/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/images/icons/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'assets/images/icons/site.html' %}">
+    <link rel="mask-icon" href="{% static 'assets/images/icons/safari-pinned-tab.svg" color="#666666' %}">
+    <link rel="shortcut icon" href="{% static 'assets/images/icons/favicon.ico' %}">
+    <meta name="apple-mobile-web-app-title" content="United Armor">
+    <meta name="application-name" content="United Armor">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="{% static 'assets/images/icons/browserconfig.xml' %}">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="{% static 'assets/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css' %}">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/plugins/owl-carousel/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/plugins/magnific-popup/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/plugins/jquery.countdown.css' %}">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/skins/skin-demo-9.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/demos/demo-9.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/plugins/jquery.countdown.css' %}">
+
+</head>
+
+<body>
+    <div class="soon">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9 col-lg-8">
+                    <div class="soon-content text-center">
+                        <div class="soon-content-wrapper">
+                            <img src="assets/images/logo-icon.png" alt="Logo" class="soon-logo mx-auto">
+                            <h1 class="soon-title">Coming Soon</h1><!-- End .soon-title -->
+                            <div class="coming-countdown countdown-separator"></div><!-- End .coming-countdown -->
+                            <hr class="mt-2 mb-3 mt-md-3">
+                            <p>We are currently working on an awesome new site. Stay tuned for more information.
+                               </p>
+                            
+                            <div class="social-icons justify-content-center mb-0">
+                                <a href="https://www.facebook.com/profile.php?id=100066521419862&mibextid=ZbWKwL" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+                                <a href="https://x.com/VelvetFierce?s=20" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
+                                <a href="https://www.instagram.com/velvetwash_?igsh=YzVkODRmOTdmMw==" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+                                {% comment %} <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+                                <a href="#" class="social-icon" target="_blank" title="Pinterest"><i class="icon-pinterest"></i></a> {% endcomment %}
+                            </div><!-- End .soial-icons -->
+                        </div><!-- End .soon-content-wrapper -->
+                    </div><!-- End .soon-content -->
+                </div><!-- End .col-md-9 col-lg-8 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+        <div class="soon-bg bg-image" style="background-image: url(/static/assets/images/backgrounds/soon-bg.jpg)"></div>
+        <!-- End .soon-bg bg-image -->
+    </div><!-- End .soon -->
+    <!-- Plugins JS File -->
+    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.plugin.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.countdown.min.js' %}"></script>
+    <!-- Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    <script>
+    $(function() {
+        "use strict";
+        if ($.fn.countdown) {
+            $('.coming-countdown').countdown({
+                until: new Date(2023, 3, 18), //
+                format: 'DHMS',
+                padZeroes: true
+            });
+
+            // Pause
+            // $('.coming-countdown').countdown('pause');
+        }
+    });
+    </script>
+</body>
+
+
+<!-- molla/coming-soon.html  22 Nov 2019 10:04:05 GMT -->
+</html>
