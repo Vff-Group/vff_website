@@ -176,46 +176,44 @@
                                 <!-- Assuming the following code is inside your home.html template -->
 
                                 {% for row in main_cat_data %}
-    <li>
-        <a href="{% url 'united_armor:all_products' %}" class="sf-with-ul">{{ row.main_title_name }}</a>
-        <div class="megamenu megamenu-md">
-            <div class="row no-gutters">
-                <div class="col-md-8">
-                    <div class="menu-col">
-                        <div class="row">
-                            {% if row.cat_name %}
-                                {% for cat_name in all_cat_names %}
-                                    <div class="col-md-6">
-                                        <div class="menu-title">{{ cat_name }}</div><!-- End .menu-title -->
-                                        <ul>
-                                            {% for sub_cat_data in row.sub_category %}
-                                                <li>
-                                                    <a href="{% url 'united_armor:all_products' %}">{{ sub_cat_data.sub_cat_name }}</a>
-                                                </li>
-                                                <!-- Add more sub-categories if needed -->
-                                            {% endfor %}
-                                        </ul>
-                                    </div><!-- End .col-md-6 -->
+                                <li>
+                                    <a href="{% url 'united_armor:all_products' %}" class="sf-with-ul">{{ row.main_title_name }}</a>
+                                    <div class="megamenu megamenu-md">
+                                        <div class="row no-gutters">
+                                            <div class="col-md-8">
+                                                <div class="menu-col">
+                                                    <div class="row">
+                                                        {% if row.cat_name %}
+                                                            <div class="col-md-6">
+                                                                <div class="menu-title">{{ row.cat_name }}</div><!-- End .menu-title -->
+                                                                <ul>
+                                                                    {% if row.sub_category.sub_cat_name %}
+                                                                        <li>
+                                                                            <a href="{% url 'united_armor:all_products' %}">{{ row.sub_category.sub_cat_name }}</a>
+                                                                        </li>
+                                                                        <!-- Add more sub-categories if needed -->
+                                                                    {% endif %}
+                                                                </ul>
+                                                            </div><!-- End .col-md-6 -->
+                                                        {% endif %}
+                                                    </div><!-- End .row -->
+                                                </div><!-- End .menu-col -->
+                                            </div><!-- End .col-md-8 -->
+                                
+                                            <div class="col-md-4">
+                                                <div class="banner banner-overlay">
+                                                    <a href="{% url 'united_armor:all_products' %}" class="banner banner-menu">
+                                                        <img src="{{row.images}}" alt="Banner" >
+                                                        <div class="banner-content banner-content-top">
+                                                            <div class="banner-title text-white">Last <br>Chance<br><span><strong>Sale</strong></span></div><!-- End .banner-title -->
+                                                        </div><!-- End .banner-content -->
+                                                    </a>
+                                                </div><!-- End .banner banner-overlay -->
+                                            </div><!-- End .col-md-4 -->
+                                        </div><!-- End .row -->
+                                    </div><!-- End .megamenu megamenu-md -->
+                                </li>
                                 {% endfor %}
-                            {% endif %}
-                        </div><!-- End .row -->
-                    </div><!-- End .menu-col -->
-                </div><!-- End .col-md-8 -->
-
-                <div class="col-md-4">
-                    <div class="banner banner-overlay">
-                        <a href="{% url 'united_armor:all_products' %}" class="banner banner-menu">
-                            <img src="{{row.images}}" alt="Banner" >
-                            <div class="banner-content banner-content-top">
-                                <div class="banner-title text-white">Last <br>Chance<br><span><strong>Sale</strong></span></div><!-- End .banner-title -->
-                            </div><!-- End .banner-content -->
-                        </a>
-                    </div><!-- End .banner banner-overlay -->
-                </div><!-- End .col-md-4 -->
-            </div><!-- End .row -->
-        </div><!-- End .megamenu megamenu-md -->
-    </li>
-{% endfor %}
 
                             
 
