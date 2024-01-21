@@ -174,8 +174,7 @@
                                 <li class="megamenu-container">
                                     <a href="{% url 'united_armor:home' %}" class="sf-with-ul">Home</a>
                                 </li>
-                                
-
+                              
                                 {% for main_cat_data in all_categories %}
                                 <li>
                                     <a href="{% url 'united_armor:all_products' %}" class="sf-with-ul">{{ main_cat_data.main_cat_name }}</a>
@@ -350,80 +349,28 @@
                 <ul class="mobile-menu">
                     <li class="active">
                         <a href="{% url 'united_armor:home' %}">Home</a>
-
-                        <ul>
-                            <li><a href="">New Arrival</a></li>
-                            <li><a href="">Men</a></li>
-                            <li><a href="">Women</a></li>
-                            <li><a href="">Kids</a></li>
-                            <li><a href="">Trending</a></li>
-                          
-                        </ul>
                     </li>
+                    {% for main_cat_data in all_categories %}
                     <li>
-                        <a href="#">Men</a>
+                        <a href="{% url 'united_armor:all_products' %}">{{ main_cat_data.main_cat_name }}</a>
+                        {% for cat_data in main_cat_data.categories %}
                         <ul>
                             <li>
-                                <a href="about.html">Shop By Category</a>
+                                <a href="{% url 'united_armor:all_products' %}">{{ cat_data.cat_name }}</a>
 
                                 <ul>
-                                    <li><a href="about.html">Tops</a></li>
-                                    <li><a href="about-2.html">Leggings</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="contact.html">Shop by Sports</a>
-
-                                <ul>
-                                    <li><a href="contact.html">Running</a></li>
+                                    {% for sub_cat_data in cat_data.sub_category %}
+                                    <li><a href="{% url 'united_armor:all_products' %}">{{ sub_cat_data.sub_cat_name }}</a></li>
                                     
+                                    {% endfor %}
                                 </ul>
                             </li>
+                           
                         </ul>
-                        </li>
-                    <li>
-                        <a href="#">Women</a>
-                        <ul>
-                            <li>
-                                <a href="about.html">Shop By Category</a>
-
-                                <ul>
-                                    <li><a href="about.html">Tops</a></li>
-                                    <li><a href="about-2.html">Leggings</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="contact.html">Shop by Sports</a>
-
-                                <ul>
-                                    <li><a href="contact.html">Running</a></li>
-                                    
-                                </ul>
-                            </li>
-                        </ul>
+                        {% endfor %}
                     </li>
-                    <li>
-                        <a href="#">Kids</a>
-                        <ul>
-                            <li>
-                                <a href="about.html">Shop By Category</a>
-
-                                <ul>
-                                    <li><a href="about.html">Tops</a></li>
-                                    <li><a href="about-2.html">Leggings</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="contact.html">Shop by Sports</a>
-
-                                <ul>
-                                    <li><a href="contact.html">Running</a></li>
-                                    
-                                </ul>
-                            </li>
-                            
-                        </ul>
-                    </li>
+                    {% endfor %}
+                    
                     <li><a href="">Login</a></li>
                             
                     
