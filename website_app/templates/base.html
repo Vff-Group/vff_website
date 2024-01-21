@@ -58,7 +58,7 @@
               width="80"
               height="80"
             />
-            <span class="text-danger">VFF<span class="text-primary"> GROUP</span> {% comment %}
+            <span class="text-danger">VFF <span class="text-danger">G</span><span class="text-primary">ROUP</span> {% comment %}
             <i class="fas fa-hands-wash"></i> {% endcomment %}
           </a>
           <button
@@ -95,6 +95,13 @@
                   class="nav-link {% if current_url == '/services/' %}active {% endif %}"
                   href="{% url 'website_app:services' %}"
                   >Services</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link {% if current_url == '/' %}active {% endif %}"
+                  href="{% url 'website_app:index' %}"
+                  >Laundry</a
                 >
               </li>
               <li class="nav-item">
@@ -200,6 +207,8 @@
         </div>
       </div>
     </section>
+
+    
     <!-- //call section -->
     <!-- WhatsApp button -->
 <div class="whatsapp-button">
