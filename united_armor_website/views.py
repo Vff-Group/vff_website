@@ -458,9 +458,45 @@ def all_products_with_main_category(request,s_main_cat_id,s_main_cat_name):
             })
     else:
         error_msg = 'Something Went Wrong'
+        
+    
+    # All Products For Main Category
+    query_product = "SELECT productid,product_name,fitting_type,fitting_id,main_title_name,cat_name,sub_cat_name,product_catid,product_category_name,united_armor_all_productstbl.product_type_id,product_type_name,price,united_armor_all_productstbl.main_cat_id,united_armor_all_productstbl.cat_id,united_armor_all_productstbl.sub_catid,offer_price,default_images,default_size,ratings,default_color_id,color_name,color_code FROM vff.united_armor_product_colorstbl,vff.united_armor_all_productstbl,vff.united_armor_product_categorytbl,vff.united_armor_product_typetbl,vff.united_armor_main_categorytbl,vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl WHERE united_armor_product_colorstbl.colorsid=default_color_id  AND united_armor_product_categorytbl.product_catid=united_armor_all_productstbl.product_collection_id AND united_armor_product_typetbl.product_type_id=united_armor_all_productstbl.product_type_id AND united_armor_main_categorytbl.main_cat_id=united_armor_all_productstbl.main_cat_id AND united_armor_all_productstbl.cat_id=united_armor_categorytbl.catid AND united_armor_all_productstbl.sub_catid=united_armor_sub_categorytbl.sub_catid AND united_armor_all_productstbl.main_cat_id='"+str(s_main_cat_id)+"'"
+    query_result_product = execute_raw_query(query_product)
+    all_product_data = []    
+    if not query_result_product == 500:
+        for row in query_result_product:
+            
+            all_product_data.append({
+                    'productid':row[0],
+                    'product_name':row[1],
+                    'fitting_type':row[2],
+                    'fitting_id':row[3],
+                    'main_title_name':row[4],
+                    'cat_name':row[5],
+                    'sub_cat_name':row[6],
+                    'product_catid':row[7],
+                    'product_category_name':row[8],
+                    'product_type_id':row[9],
+                    'product_type_name':row[10],
+                    'price':row[11],
+                    'main_cat_id':row[12],
+                    'cat_id':row[13],
+                    'sub_catid':row[14],
+                    'offer_price':row[15],
+                    'image':row[16],
+                    'size':row[17],
+                    'ratings':row[18],
+                    'default_color_id':row[19],
+                    'color_name':row[20],
+                    'color_code':row[21],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
      
     current_url = request.get_full_path()
-    context = {'all_categories': all_categories,'product_category_data':product_category_data,'product_type_data':product_type_data,'sizes_filter_data':sizes_filter_data,'color_filter_data':color_filter_data, 'current_url': current_url,'s_main_cat_id':s_main_cat_id,'s_main_cat_name':s_main_cat_name}
+    context = {'all_categories': all_categories,'product_category_data':product_category_data,'product_type_data':product_type_data,'sizes_filter_data':sizes_filter_data,'color_filter_data':color_filter_data, 'current_url': current_url,'s_main_cat_id':s_main_cat_id,'s_main_cat_name':s_main_cat_name,'all_product_data':all_product_data}
     return render(request,"product_pages/all_products.html",context)
 
 #All Products with Category Wise
