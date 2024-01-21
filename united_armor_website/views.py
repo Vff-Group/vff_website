@@ -95,37 +95,21 @@ def home(request):
     main_cat_data = []
     all_cat_names = []  # List to store all cat_names
     all_sub_cat_names = []  # List to store all sub_cat_names
-    # Use a set to keep track of unique cat_ids
-    unique_cat_ids = []
-    
+
     if not query_result == 500:
         for row in query_result:
             main_cat_id = row[0]
-    
+
             # Nested query to select catid and cat_name where main_catid is unique
-            cat_query = f"SELECT catid, cat_name FROM vff.united_armor_categorytbl WHERE main_catid = {main_cat_id} ORDER BY catid"
+            cat_query = f"SELECT catid, cat_name FROM vff.united_armor_categorytbl WHERE main_catid = {main_cat_id} order by catid"
             cat_result = execute_raw_query(cat_query)
-    
-            if not cat_result == 500:
-                for row2 in cat_result:
-                    cat_id = row2[0]
-                    cat_name = row2[1]
-    
-                    # Check if cat_id is unique before appending to the list
-                    if not any(cat['cat_id'] == cat_id for cat in unique_cat_ids):
-                        unique_cat_ids.append({
-                            'cat_id': cat_id,
-                            'cat_name': cat_name,
-                        })
+
             # Nested query to select sub_catid and sub_cat_name where catid is unique
             if cat_result and len(cat_result) > 0:
                 catid = cat_result[0][0]
                 sub_cat_query = f"SELECT sub_catid, sub_cat_name FROM vff.united_armor_sub_categorytbl WHERE catid = {catid} order by sub_catid"
                 sub_cat_result = execute_raw_query(sub_cat_query)
-                if not cat_result == 500:
-                    for row2 in cat_result:
-                        # Append cat_name to the list
-                        all_cat_names.append(row2[1])
+
                 if sub_cat_result and len(sub_cat_result) > 0:
                     sub_cat_data = {
                         'sub_catid': sub_cat_result[0][0],
@@ -141,7 +125,8 @@ def home(request):
                         'sub_cat_name': None,
                     }
 
-                
+                # Append cat_name to the list
+                all_cat_names.append(cat_result[0][1])
 
                 cat_data = {
                     'main_cat_id': main_cat_id,
