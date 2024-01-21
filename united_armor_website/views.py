@@ -41,6 +41,7 @@ def home(request):
             cat_result = execute_raw_query(cat_query)
 
             sub_categories = []
+            sub_cat_data = []
             if cat_result and len(cat_result) > 0:
                 for cat_row in cat_result:
                     cat_id = cat_row[0]
