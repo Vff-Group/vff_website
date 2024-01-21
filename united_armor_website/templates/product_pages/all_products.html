@@ -68,9 +68,12 @@
                             </div><!-- End .product-action -->
 
                             <div class="product-action ">
-                                <form id="add-to-cart" method="post">
-                                <a href="" onclick="addToCart(row.productid)" class="btn-product btn-cart"><span>add to cart</span></a>
-                            </form>
+                                <form id="add-to-cart" method="post" data-product-id="{{ row.product_id }}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="product_id" value="{{ row.product_id }}">
+                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                </form>
+                                
                                
                             </div><!-- End .product-action -->
                         </figure><!-- End .product-media -->
@@ -241,7 +244,7 @@
     </div><!-- End .container -->
 </div><!-- End .page-content -->
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <!-- <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Get the filter button and mobile canvas elements
@@ -289,16 +292,21 @@
 </script> -->
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
 <script>
-    function addToCart(productId) {
-        console.log('productId::'+productId);
-        return;
+$(document).ready(function() {
+    $('#add-to-cart').submit(function(event) {
+        // Prevent the default form submission
+        event.preventDefault();
+
+        // Get form data
+        var formData = $(this).serialize();
+        console.log('formData::'+formData)
+        return
         // Perform AJAX request
         $.ajax({
             url: '/add-to-cart/',  // Update the URL to match your Django view URL
             type: 'POST',
-            data: {'product_id': productId},  // Include any necessary data
+            data: formData,
             success: function(response) {
                 // Show alert with the response message
                 alert(response.message);
@@ -308,7 +316,9 @@
                 console.error('Error:', error);
             }
         });
-    }
-    </script>
+    });
+});
+</script>
+
     
 {% endblock %}
