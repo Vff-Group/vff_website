@@ -63,8 +63,8 @@ def home(request):
     else:
         error_msg = 'Something Went Wrong'
     
-    #query2 ="select united_armor_categorytbl.catid,cat_name,sub_catid,sub_cat_name from vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl where united_armor_categorytbl.catid=united_armor_sub_categorytbl.catid order by united_armor_categorytbl.catid,sub_catid"
-    query2="select catid"
+    query2 ="select united_armor_categorytbl.catid,cat_name,sub_catid,sub_cat_name from vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl where united_armor_categorytbl.catid=united_armor_sub_categorytbl.catid order by united_armor_categorytbl.catid,sub_catid"
+    #query2="select catid"
     query_result2 = execute_raw_query(query2)
     
     
