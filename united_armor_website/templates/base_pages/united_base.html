@@ -184,11 +184,11 @@
                                                         {% for cat_data in main_cat_data %}
                                                         <div class="col-md-6">
                                                             <div class="menu-title">{{cat_data.cat_name}}</div><!-- End .menu-title -->
-                                                            <ul>
-                                                                <li><a href="{% url 'united_armor:all_products' %}">Tops</a></li>
-                                                                <li><a href="">Leggings</a></li>
-                                                               
+                                                             {% for sub_cat_data in main_cat_data %}
+                                                             <ul>
+                                                                <li><a href="{% url 'united_armor:all_products' %}">{{sub_cat_data.sub_category.sub_cat_name}}</a></li>   
                                                             </ul>
+                                                             {% endfor %}
             
                                                             
                                                         </div><!-- End .col-md-6 -->
