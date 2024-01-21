@@ -160,21 +160,25 @@
     <div class="container">
         <div class="banner-group">
             <div class="row">
+              {% for main_cat_data in all_categories %}
+              
+              
                 <div class="col-sm-6 col-lg-4">
                     <div class="banner banner-overlay banner-lg">
-                        <a href="#">
-                            <img src="{% static 'assets/images/no_image.jpg' %}" alt="Banner"  width="100" height="100">
+                        <a href="{% url 'united_armor:all_products_with_main_category' main_cat_data.main_cat_id main_cat_data.main_cat_name %}">
+                            {% comment %} <img src="{% static 'assets/images/no_image.jpg' %}" alt="Banner" > {% endcomment %}
+                            <img src="{{row.images}}" alt="Banner" >
                         </a>
 
                         <div class="banner-content banner-content-bottom">
-                            <h4 class="banner-subtitle text-white"><a href="#">Men Category</a></h4><!-- End .banner-subtitle -->
+                            <h4 class="banner-subtitle text-white"><a>{{main_cat_data.main_cat_name}}</a></h4><!-- End .banner-subtitle -->
                             
-                            <a href="#" class="btn btn-outline-white banner-link">Shop Men</a>
+                            <a href="{% url 'united_armor:all_products_with_main_category' main_cat_data.main_cat_id main_cat_data.main_cat_name %}" class="btn btn-outline-white banner-link">Shop {{main_cat_data.main_cat_name}}</a>
                         </div><!-- End .banner-content -->
                     </div><!-- End .banner -->
                 </div><!-- End .col-lg-4 -->
-
-                <div class="col-sm-6 col-lg-4 order-lg-last">
+                {% endfor %}
+                {% comment %} <div class="col-sm-6 col-lg-4 order-lg-last">
                     <div class="banner banner-overlay banner-lg">
                         <a href="#">
                             <img src="{% static 'assets/images/no_image.jpg' %}" alt="Banner"  width="100" height="100">
@@ -186,9 +190,9 @@
                             <a href="#" class="btn btn-outline-white banner-link">Shop Women</a>
                         </div><!-- End .banner-content -->
                     </div><!-- End .banner -->
-                </div><!-- End .col-lg-4 -->
+                </div><!-- End .col-lg-4 --> {% endcomment %}
 
-                <div class="col-12 col-lg-4">
+                {% comment %} <div class="col-12 col-lg-4">
                     <div class="row">
                         <div class="col-sm-6 col-lg-12">
                             <div class="banner banner-overlay">
@@ -219,10 +223,11 @@
                         </div><!-- End .col-sm-6 col-lg-12 -->
                     </div><!-- End .row -->
                 </div><!-- End .col-lg-4 -->
+                 {% endcomment %}
             </div><!-- End .row -->
         </div><!-- End .banner-group -->
 
-        <div class="owl-carousel mt-4 mb-3 owl-simple" data-toggle="owl" 
+        {% comment %} <div class="owl-carousel mt-4 mb-3 owl-simple" data-toggle="owl" 
             data-owl-options='{
                 "nav": false, 
                 "dots": false,
@@ -273,7 +278,7 @@
             <a href="#" class="brand">
                 <img src="{% static 'assets/images/brands/7.png' %}" alt="Brand Name">
             </a>
-        </div><!-- End .owl-carousel -->
+        </div><!-- End .owl-carousel --> {% endcomment %}
     </div><!-- End .container -->
 </div><!-- End .bg-lighter -->
 
