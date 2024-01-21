@@ -175,27 +175,31 @@
                                 </li>
                                 <!-- Assuming the following code is inside your home.html template -->
 
-{% for row in main_cat_data %}
+                                <!-- Assuming the following code is inside your home.html template -->
+
+{% for main_cat_entry in main_cat_data %}
 <li>
-    <a href="{% url 'united_armor:all_products' %}" class="sf-with-ul">{{ row.main_title_name }}</a>
+    <a href="{% url 'united_armor:all_products' %}" class="sf-with-ul">{{ main_cat_entry.main_title_name }}</a>
     <div class="megamenu megamenu-md">
         <div class="row no-gutters">
             <div class="col-md-8">
                 <div class="menu-col">
                     <div class="row">
-                        {% if row.cat_name %}
+                        {% for cat_entry in main_cat_entry.categories %}
                             <div class="col-md-6">
-                                <div class="menu-title">{{ row.cat_name }}</div><!-- End .menu-title -->
+                                <div class="menu-title">{{ cat_entry.cat_name }}</div><!-- End .menu-title -->
                                 <ul>
-                                    {% if row.sub_category.sub_cat_name %}
+                                    {% for sub_cat_entry in cat_entry.subcategories %}
                                         <li>
-                                            <a href="{% url 'united_armor:all_products' %}">{{ row.sub_category.sub_cat_name }}</a>
+                                            <a href="{% url 'united_armor:category_products' cat_entry.catid %}">
+                                                {{ sub_cat_entry.sub_cat_name }}
+                                            </a>
                                         </li>
                                         <!-- Add more sub-categories if needed -->
-                                    {% endif %}
+                                    {% endfor %}
                                 </ul>
                             </div><!-- End .col-md-6 -->
-                        {% endif %}
+                        {% endfor %}
                     </div><!-- End .row -->
                 </div><!-- End .menu-col -->
             </div><!-- End .col-md-8 -->
@@ -214,6 +218,7 @@
     </div><!-- End .megamenu megamenu-md -->
 </li>
 {% endfor %}
+
 
                                
                             </ul><!-- End .menu -->
