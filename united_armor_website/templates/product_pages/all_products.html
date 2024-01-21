@@ -50,18 +50,20 @@
                         
                     </div><!-- End .toolbox-right -->
                 </div><!-- End .toolbox -->
-
+                <div class="progress" id="loading-bar" style="display: none;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                </div>
                 <div class="products mb-3">
                     <div class="row justify-content-center">
                         {% if not products %}
-                        <!-- Show shimmer effect when products is empty -->
-                        <div class="col-6 col-md-4 col-lg-4 shimmer-effect">
-                            <div class="shimmer-placeholder"></div>
-                        </div>
-                        <div class="col-6 col-md-4 col-lg-4 shimmer-effect">
-                            <div class="shimmer-placeholder"></div>
-                        </div>
-                        <!-- Add more shimmer placeholders as needed -->
+                        <!-- Show linear progress bar when products are loading -->
+                    <script>
+                        // Add this script to show/hide the progress bar
+                        document.getElementById('loading-bar').style.display = 'block';
+                        setTimeout(function () {
+                            document.getElementById('loading-bar').style.display = 'none';
+                        }, 3000);  // Adjust the timeout duration as needed
+                    </script>
                     {% else %}
                         <div class="col-6 col-md-4 col-lg-4">
                             <div class="product product-7 text-center">
