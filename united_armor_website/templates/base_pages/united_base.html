@@ -173,49 +173,52 @@
                                 <li class="megamenu-container active">
                                     <a href="{% url 'united_armor:home' %}" class="sf-with-ul">Home</a>
                                 </li>
-                                <!-- Assuming the following code is inside your home.html template -->
+                                
 
-                                {% for main_cat_data in all_categories %}
-            <li>
-                <a href="{% url 'united_armor:all_products' %}" class="sf-with-ul">{{ main_cat_data.main_cat_name }}</a>
-
-                <div class="megamenu megamenu-md">
-                    <div class="row no-gutters">
-                        <div class="col-md-8">
-                            <div class="menu-col">
-                                <div class="row">
-                                    {% for cat_data in main_cat_data.categories %}
-                                        <div class="col-md-6">
-                                            <div class="menu-title">{{ cat_data.cat_name }}</div><!-- End .menu-title -->
-                                            <ul>
-                                                {% for sub_cat_data in cat_data.sub_category %}
-                                                    <li>
-                                                        <a href="{% url 'united_armor:all_products' %}">{{ sub_cat_data.sub_cat_name }}</a>
-                                                    </li>
-                                                {% endfor %}
-                                            </ul>
-                                        </div><!-- End .col-md-6 -->
+                               
+                                    {% for main_cat_data in all_categories %}
+                                        <li>
+                                            <a href="{% url 'united_armor:all_products' %}" class="sf-with-ul">{{ main_cat_data.main_cat_name }}</a>
+                                
+                                            <div class="megamenu megamenu-md">
+                                                <div class="row no-gutters">
+                                                    <div class="col-md-8">
+                                                        <div class="menu-col">
+                                                            <div class="row">
+                                                                {% cache 60*15 main_cat_data.main_cat_id %}
+                                                                    {% for cat_data in main_cat_data.categories %}
+                                                                        <div class="col-md-6">
+                                                                            <div class="menu-title">{{ cat_data.cat_name }}</div><!-- End .menu-title -->
+                                                                            <ul>
+                                                                                {% for sub_cat_data in cat_data.sub_category %}
+                                                                                    <li>
+                                                                                        <a href="{% url 'united_armor:all_products' %}">{{ sub_cat_data.sub_cat_name }}</a>
+                                                                                    </li>
+                                                                                {% endfor %}
+                                                                            </ul>
+                                                                        </div><!-- End .col-md-6 -->
+                                                                    {% endfor %}
+                                                                {% endcache %}
+                                                            </div><!-- End .row -->
+                                                        </div><!-- End .menu-col -->
+                                                    </div><!-- End .col-md-8 -->
+                                
+                                                    <div class="col-md-4">
+                                                        <div class="banner banner-overlay">
+                                                            <a href="{% url 'united_armor:all_products' %}" class="banner banner-menu">
+                                                                <img src="{{ main_cat_data.images }}" alt="Banner" >
+                                                                <div class="banner-content banner-content-top">
+                                                                    <div class="banner-title text-white">Last <br>Chance<br><span><strong>Sale</strong></span></div><!-- End .banner-title -->
+                                                                </div><!-- End .banner-content -->
+                                                            </a>
+                                                        </div><!-- End .banner banner-overlay -->
+                                                    </div><!-- End .col-md-4 -->
+                                                </div><!-- End .row -->
+                                            </div><!-- End .megamenu megamenu-md -->
+                                        </li>
                                     {% endfor %}
-                                </div><!-- End .row -->
-                            </div><!-- End .menu-col -->
-                        </div><!-- End .col-md-8 -->
-
-                        <div class="col-md-4">
-                            <div class="banner banner-overlay">
-                                <a href="{% url 'united_armor:all_products' %}" class="banner banner-menu">
-                                    <img src="{{ main_cat_data.images }}" alt="Banner" >
-                                    <!-- <img src="{% static 'assets/images/no_image.jpg' %}" alt="Banner" width="50" height="50"> -->
-
-                                    <div class="banner-content banner-content-top">
-                                        <div class="banner-title text-white">Last <br>Chance<br><span><strong>Sale</strong></span></div><!-- End .banner-title -->
-                                    </div><!-- End .banner-content -->
-                                </a>
-                            </div><!-- End .banner banner-overlay -->
-                        </div><!-- End .col-md-4 -->
-                    </div><!-- End .row -->
-                </div><!-- End .megamenu megamenu-md -->
-            </li>
-        {% endfor %}
+                                
+                                
 
                             
 

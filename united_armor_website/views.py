@@ -16,6 +16,8 @@ import requests
 import json
 import time
 import re
+from django.views.decorators.cache import cache_page
+from django.contrib.sessions.models import Session
 
 
 from PIL import Image  # Pillow library for image processing
@@ -27,6 +29,7 @@ def coming_soon(request):
     return render(request,"coming_soon.html",{'current_url': current_url})
 
 #Home Page
+@cache_page(60 * 15)  # Cache for 15 minutes
 def home(request):
     main_cat_query = "SELECT main_cat_id, main_title_name,images FROM vff.united_armor_main_categorytbl ORDER BY main_cat_id"
     main_cat_result = execute_raw_query(main_cat_query)
@@ -223,6 +226,7 @@ def home(request):
 #     return render(request, "home_pages/home.html", context)
 
 #All Products
+@cache_page(60 * 15, key_prefix='home_page_cache')
 def all_products(request):
     current_url = request.get_full_path()
     return render(request,"product_pages/all_products.html",{'current_url': current_url})
