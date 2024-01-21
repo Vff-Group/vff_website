@@ -48,8 +48,8 @@ def home(request):
 
                 if sub_cat_result and len(sub_cat_result) > 0:
                     sub_cat_data = {
-                        'sub_catid': sub_cat_result[0][0],
-                        'sub_cat_name': sub_cat_result[0][1],
+                        'sub_catid': sub_cat_result[0],
+                        'sub_cat_name': sub_cat_result[0],
                     }
                 else:
                     # Handle the case when no matching entry is found in united_armor_sub_categorytbl
@@ -63,7 +63,7 @@ def home(request):
                     'main_title_name': row[1],
                     'images': row[2],
                     'catid': catid,
-                    'cat_name': cat_result[0][1],
+                    'cat_name': cat_result[0],
                     'sub_category': sub_cat_data,
                 }
                 main_cat_data.append(cat_data)
