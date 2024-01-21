@@ -62,7 +62,7 @@
                             document.getElementById('loading-icon').style.display = 'block';
                             // Simulate loading time, replace this with actual product loading logic
                             setTimeout(function () {
-                                var productsExist = {% if products %}true{% else %}false{% endif %};
+                                var productsExist = {% if products %}false{% else %}true{% endif %};
                                 if (productsExist) {
                                     document.getElementById('loading-icon').style.display = 'none';
                                 }
