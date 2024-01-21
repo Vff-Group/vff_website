@@ -68,7 +68,7 @@
                             </div><!-- End .product-action -->
 
                             <div class="product-action ">
-                                <a href="" class="btn-product btn-cart"><span>add to cart</span></a>
+                                <a href="" onclick="addToCart(row.productid)" class="btn-product btn-cart"><span>add to cart</span></a>
                                
                             </div><!-- End .product-action -->
                         </figure><!-- End .product-media -->
@@ -285,4 +285,27 @@
         });
     });
 </script> -->
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    function addToCart(productId) {
+        console.log('productId::'+productId);
+        // Perform AJAX request
+        $.ajax({
+            url: '/add-to-cart/',  // Update the URL to match your Django view URL
+            type: 'POST',
+            data: {'product_id': productId},  // Include any necessary data
+            success: function(response) {
+                // Show alert with the response message
+                alert(response.message);
+            },
+            error: function(error) {
+                // Handle errors
+                console.error('Error:', error);
+            }
+        });
+    }
+    </script>
+    
 {% endblock %}
