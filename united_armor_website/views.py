@@ -28,8 +28,48 @@ def coming_soon(request):
 
 #Home Page
 def home(request):
+    query ="select main_cat_id,main_title_name,images from vff.united_armor_main_categorytbl"
+    query_result = execute_raw_query(query)
+    
+    
+        
+    main_cat_data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            main_cat_data.append({
+                'main_cat_id': row[0],
+                'main_title_name': row[1],
+                'images': row[2],
+                
+               
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    query2 ="select united_armor_categorytbl.catid,cat_name,sub_catid,sub_cat_name from vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl where united_armor_categorytbl.catid=united_armor_sub_categorytbl.catid"
+    query_result2 = execute_raw_query(query2)
+    
+    
+        
+    cat_data = []    
+    if not query_result2 == 500:
+        for row in query_result2:
+            
+            cat_data.append({
+                'catid': row[0],
+                'cat_name': row[1],
+                'sub_catid': row[2],
+                'sub_cat_name': row[3],
+                
+               
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    context={'main_cat_data':main_cat_data,'cat_data':cat_data,'current_url': current_url}
     current_url = request.get_full_path()
-    return render(request,"home_pages/home.html",{'current_url': current_url})
+    return render(request,"home_pages/home.html",context)
 
 #All Products
 def all_products(request):
