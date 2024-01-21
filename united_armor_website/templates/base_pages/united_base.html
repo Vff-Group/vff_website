@@ -181,11 +181,11 @@
 
                                     <div class="megamenu megamenu-md">
                                         <div class="row no-gutters">
-                                            <div class="col-md-8">
+                                            <div class="col-md-8 col-lg-10">
                                                 <div class="menu-col">
                                                     <div class="row">
                                                         {% for cat_data in main_cat_data.categories %}
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-6 col-lg-8">
                                                                 <div class="menu-title">{{ cat_data.cat_name }}</div><!-- End .menu-title -->
                                                                 <ul>
                                                                     {% for sub_cat_data in cat_data.sub_category %}
@@ -200,7 +200,7 @@
                                                 </div><!-- End .menu-col -->
                                             </div><!-- End .col-md-8 -->
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-4 col-lg-2">
                                                 <div class="banner banner-overlay">
                                                     <a href="{% url 'united_armor:all_products' %}" class="banner banner-menu">
                                                         <img src="{{ main_cat_data.images }}" alt="Banner" >
