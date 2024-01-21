@@ -226,8 +226,364 @@ def home(request):
 #     return render(request, "home_pages/home.html", context)
 
 #All Products
-@cache_page(60 * 15, key_prefix='home_page_cache')
 def all_products(request):
+    main_cat_query = "SELECT main_cat_id, main_title_name,images FROM vff.united_armor_main_categorytbl ORDER BY main_cat_id"
+    main_cat_result = execute_raw_query(main_cat_query)
+
+    all_categories = []
+    if not main_cat_result == 500:
+        for main_cat_row in main_cat_result:
+            main_cat_id = main_cat_row[0]
+            main_cat_name = main_cat_row[1]
+            main_image = main_cat_row[2]
+
+            cat_query = f"SELECT catid, cat_name FROM vff.united_armor_categorytbl WHERE main_catid = {main_cat_id} ORDER BY catid"
+            cat_result = execute_raw_query(cat_query)
+
+            sub_categories = []
+            if cat_result and len(cat_result) > 0:
+                for cat_row in cat_result:
+                    cat_id = cat_row[0]
+                    cat_name = cat_row[1]
+
+                    sub_cat_query = f"SELECT sub_catid, sub_cat_name FROM vff.united_armor_sub_categorytbl WHERE catid = {cat_id} ORDER BY sub_catid"
+                    sub_cat_result = execute_raw_query(sub_cat_query)
+
+                    sub_cat_data = []
+                    if sub_cat_result and len(sub_cat_result) > 0: 
+                        for sub_cat_row in sub_cat_result:
+                            sub_catid = sub_cat_row[0]
+                            sub_cat_name = sub_cat_row[1]
+                            
+                            sub_cat_data.append({
+                                'sub_cat_id': sub_catid,
+                                'sub_cat_name': sub_cat_name,
+                            })
+                            print(f'sub_cat_name::{sub_cat_name}')
+
+                    cat_data = {
+                        'cat_id': cat_id,
+                        'cat_name': cat_name,
+                        'sub_category': sub_cat_data,
+                    }
+                    sub_categories.append(cat_data)
+
+            main_cat_data = {
+                'main_cat_id': main_cat_id,
+                'main_cat_name': main_cat_name,
+                'images':main_image,
+                'categories': sub_categories,
+            }
+            all_categories.append(main_cat_data)
+    else:
+        error_msg = 'Something Went Wrong'
+
+    
+    # Product Categories Filter
+    query_cat = "select product_catid,product_category_name from vff.united_armor_product_categorytbl order by product_catid"
+    query_result_cat = execute_raw_query(query_cat)
+    product_category_data = []    
+    if not query_result_cat == 500:
+        for row in query_result_cat:
+            
+            product_category_data.append({
+                'product_catid': row[0],
+                'product_category_name': row[1],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    # Product Type Filter
+    query_type = "select product_type_id,product_type_name from vff.united_armor_product_typetbl order by product_type_id"
+    query_result_type = execute_raw_query(query_type)
+    product_type_data = []    
+    if not query_result_type == 500:
+        for row in query_result_type:
+            
+            product_type_data.append({
+                'product_type_id': row[0],
+                'product_type_name': row[1],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    # Sizes Filter
+    query_sizes = "select sizesid,size_value from vff.united_armor_product_sizestbl order by sizesid"
+    query_result_sizes = execute_raw_query(query_sizes)
+    sizes_filter_data = []    
+    if not query_result_sizes == 500:
+        for row in query_result_sizes:
+            
+            sizes_filter_data.append({
+                'sizes_id': row[0],
+                'size_value': row[1],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    # Color Filter
+    query_color = "select colorsid,color_name,color_code from vff.united_armor_product_colorstbl"
+    query_result_color = execute_raw_query(query_color)
+    color_filter_data = []    
+    if not query_result_color == 500:
+        for row in query_result_color:
+            
+            color_filter_data.append({
+                'colors_id': row[0],
+                'color_name': row[1],
+                'color_code': row[2],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+     
+    current_url = request.get_full_path()
+    context = {'all_categories': all_categories,'product_category_data':product_category_data,'product_type_data':product_type_data,'sizes_filter_data':sizes_filter_data,'color_filter_data':color_filter_data, 'current_url': current_url}
+    return render(request,"product_pages/all_products.html",context)
+
+#All Products With Main Category Wise
+def all_products_with_main_category(request,s_main_cat_id,s_main_cat_name):
+    main_cat_query = "SELECT main_cat_id, main_title_name,images FROM vff.united_armor_main_categorytbl ORDER BY main_cat_id"
+    main_cat_result = execute_raw_query(main_cat_query)
+
+    all_categories = []
+    if not main_cat_result == 500:
+        for main_cat_row in main_cat_result:
+            main_cat_id = main_cat_row[0]
+            main_cat_name = main_cat_row[1]
+            main_image = main_cat_row[2]
+
+            cat_query = f"SELECT catid, cat_name FROM vff.united_armor_categorytbl WHERE main_catid = {main_cat_id} ORDER BY catid"
+            cat_result = execute_raw_query(cat_query)
+
+            sub_categories = []
+            if cat_result and len(cat_result) > 0:
+                for cat_row in cat_result:
+                    cat_id = cat_row[0]
+                    cat_name = cat_row[1]
+
+                    sub_cat_query = f"SELECT sub_catid, sub_cat_name FROM vff.united_armor_sub_categorytbl WHERE catid = {cat_id} ORDER BY sub_catid"
+                    sub_cat_result = execute_raw_query(sub_cat_query)
+
+                    sub_cat_data = []
+                    if sub_cat_result and len(sub_cat_result) > 0: 
+                        for sub_cat_row in sub_cat_result:
+                            sub_catid = sub_cat_row[0]
+                            sub_cat_name = sub_cat_row[1]
+                            
+                            sub_cat_data.append({
+                                'sub_cat_id': sub_catid,
+                                'sub_cat_name': sub_cat_name,
+                            })
+                            print(f'sub_cat_name::{sub_cat_name}')
+
+                    cat_data = {
+                        'cat_id': cat_id,
+                        'cat_name': cat_name,
+                        'sub_category': sub_cat_data,
+                    }
+                    sub_categories.append(cat_data)
+
+            main_cat_data = {
+                'main_cat_id': main_cat_id,
+                'main_cat_name': main_cat_name,
+                'images':main_image,
+                'categories': sub_categories,
+            }
+            all_categories.append(main_cat_data)
+    else:
+        error_msg = 'Something Went Wrong'
+
+    
+    # Product Categories Filter
+    query_cat = "select product_catid,product_category_name from vff.united_armor_product_categorytbl order by product_catid"
+    query_result_cat = execute_raw_query(query_cat)
+    product_category_data = []    
+    if not query_result_cat == 500:
+        for row in query_result_cat:
+            
+            product_category_data.append({
+                'product_catid': row[0],
+                'product_category_name': row[1],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    # Product Type Filter
+    query_type = "select product_type_id,product_type_name from vff.united_armor_product_typetbl order by product_type_id"
+    query_result_type = execute_raw_query(query_type)
+    product_type_data = []    
+    if not query_result_type == 500:
+        for row in query_result_type:
+            
+            product_type_data.append({
+                'product_type_id': row[0],
+                'product_type_name': row[1],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    # Sizes Filter
+    query_sizes = "select sizesid,size_value from vff.united_armor_product_sizestbl order by sizesid"
+    query_result_sizes = execute_raw_query(query_sizes)
+    sizes_filter_data = []    
+    if not query_result_sizes == 500:
+        for row in query_result_sizes:
+            
+            sizes_filter_data.append({
+                'sizes_id': row[0],
+                'size_value': row[1],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    # Color Filter
+    query_color = "select colorsid,color_name,color_code from vff.united_armor_product_colorstbl"
+    query_result_color = execute_raw_query(query_color)
+    color_filter_data = []    
+    if not query_result_color == 500:
+        for row in query_result_color:
+            
+            color_filter_data.append({
+                'colors_id': row[0],
+                'color_name': row[1],
+                'color_code': row[2],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+     
+    current_url = request.get_full_path()
+    context = {'all_categories': all_categories,'product_category_data':product_category_data,'product_type_data':product_type_data,'sizes_filter_data':sizes_filter_data,'color_filter_data':color_filter_data, 'current_url': current_url}
+    return render(request,"product_pages/all_products.html",context)
+
+#All Products with Category Wise
+def all_products_with_category(request,s_main_cat_id,s_main_cat_name,s_cat_id,s_cat_name):
+    main_cat_query = "SELECT main_cat_id, main_title_name,images FROM vff.united_armor_main_categorytbl ORDER BY main_cat_id"
+    main_cat_result = execute_raw_query(main_cat_query)
+
+    all_categories = []
+    if not main_cat_result == 500:
+        for main_cat_row in main_cat_result:
+            main_cat_id = main_cat_row[0]
+            main_cat_name = main_cat_row[1]
+            main_image = main_cat_row[2]
+
+            cat_query = f"SELECT catid, cat_name FROM vff.united_armor_categorytbl WHERE main_catid = {main_cat_id} ORDER BY catid"
+            cat_result = execute_raw_query(cat_query)
+
+            sub_categories = []
+            if cat_result and len(cat_result) > 0:
+                for cat_row in cat_result:
+                    cat_id = cat_row[0]
+                    cat_name = cat_row[1]
+
+                    sub_cat_query = f"SELECT sub_catid, sub_cat_name FROM vff.united_armor_sub_categorytbl WHERE catid = {cat_id} ORDER BY sub_catid"
+                    sub_cat_result = execute_raw_query(sub_cat_query)
+
+                    sub_cat_data = []
+                    if sub_cat_result and len(sub_cat_result) > 0: 
+                        for sub_cat_row in sub_cat_result:
+                            sub_catid = sub_cat_row[0]
+                            sub_cat_name = sub_cat_row[1]
+                            
+                            sub_cat_data.append({
+                                'sub_cat_id': sub_catid,
+                                'sub_cat_name': sub_cat_name,
+                            })
+                            print(f'sub_cat_name::{sub_cat_name}')
+
+                    cat_data = {
+                        'cat_id': cat_id,
+                        'cat_name': cat_name,
+                        'sub_category': sub_cat_data,
+                    }
+                    sub_categories.append(cat_data)
+
+            main_cat_data = {
+                'main_cat_id': main_cat_id,
+                'main_cat_name': main_cat_name,
+                'images':main_image,
+                'categories': sub_categories,
+            }
+            all_categories.append(main_cat_data)
+    else:
+        error_msg = 'Something Went Wrong'
+
+    
+    # Product Categories Filter
+    query_cat = "select product_catid,product_category_name from vff.united_armor_product_categorytbl order by product_catid"
+    query_result_cat = execute_raw_query(query_cat)
+    product_category_data = []    
+    if not query_result_cat == 500:
+        for row in query_result_cat:
+            
+            product_category_data.append({
+                'product_catid': row[0],
+                'product_category_name': row[1],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    # Product Type Filter
+    query_type = "select product_type_id,product_type_name from vff.united_armor_product_typetbl order by product_type_id"
+    query_result_type = execute_raw_query(query_type)
+    product_type_data = []    
+    if not query_result_type == 500:
+        for row in query_result_type:
+            
+            product_type_data.append({
+                'product_type_id': row[0],
+                'product_type_name': row[1],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    # Sizes Filter
+    query_sizes = "select sizesid,size_value from vff.united_armor_product_sizestbl order by sizesid"
+    query_result_sizes = execute_raw_query(query_sizes)
+    sizes_filter_data = []    
+    if not query_result_sizes == 500:
+        for row in query_result_sizes:
+            
+            sizes_filter_data.append({
+                'sizes_id': row[0],
+                'size_value': row[1],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    # Color Filter
+    query_color = "select colorsid,color_name,color_code from vff.united_armor_product_colorstbl"
+    query_result_color = execute_raw_query(query_color)
+    color_filter_data = []    
+    if not query_result_color == 500:
+        for row in query_result_color:
+            
+            color_filter_data.append({
+                'colors_id': row[0],
+                'color_name': row[1],
+                'color_code': row[2],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+     
+    current_url = request.get_full_path()
+    context = {'all_categories': all_categories,'product_category_data':product_category_data,'product_type_data':product_type_data,'sizes_filter_data':sizes_filter_data,'color_filter_data':color_filter_data, 'current_url': current_url}
+    return render(request,"product_pages/all_products.html",context)
+
+#All Products with Sub Category Wise
+def all_products_with_sub_category(request,s_main_cat_id,s_main_cat_name,s_cat_id,s_cat_name,s_sub_cat_id,s_sub_cat_name):
     main_cat_query = "SELECT main_cat_id, main_title_name,images FROM vff.united_armor_main_categorytbl ORDER BY main_cat_id"
     main_cat_result = execute_raw_query(main_cat_query)
 

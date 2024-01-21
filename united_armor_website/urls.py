@@ -17,6 +17,15 @@ urlpatterns = [
     #All Products
     path('all_products/',views.all_products,name='all_products'),
     
+    #All Products With Main Cat ID
+    path('all_products_with_main_category/<int:s_main_cat_id>/<str:s_main_cat_name>/',views.all_products_with_main_category,name='all_products_with_main_category'),
+    
+    #All Products With Main Cat ID and Category ID
+    path('all_products/<int:s_main_cat_id>/<str:s_main_cat_name>/<int:s_cat_id>/<str:s_cat_name>/',views.all_products_with_category,name='all_products_with_category'),
+    
+    #All Products With Main Cat ID , Category ID , Sub Category ID
+    path('all_products/<int:s_main_cat_id>/<str:s_main_cat_name>/<int:s_cat_id>/<str:s_cat_name>/<int:s_sub_cat_id>/<str:s_sub_cat_name>/',views.all_products_with_sub_category,name='all_products_with_sub_category'),
+    
     #Single Product Details
     path('product/',views.product,name='product'),
    
