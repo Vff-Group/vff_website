@@ -59,27 +59,30 @@ def home(request):
                         'sub_cat_name': None,
                     }
 
-                cat_data = {
-                    'catid': catid,
-                    'cat_name': cat_result[0][1],
-                    'sub_category': sub_cat_data,
-                }
-
-                # Append cat_name, cat_id, sub_cat_name, and sub_cat_id to the dictionary
-                all_categories[cat_result[0][1]] = {
-                    'cat_id': catid,
-                    'sub_categories': {
-                        sub_cat_data['sub_cat_name']: {
-                            'sub_cat_id': sub_cat_data['sub_catid']
+                # Update the dictionary entries without overwriting
+                if cat_result[0][1] in all_categories:
+                    all_categories[cat_result[0][1]]['sub_categories'][sub_cat_data['sub_cat_name']] = {
+                        'sub_cat_id': sub_cat_data['sub_catid']
+                    }
+                else:
+                    all_categories[cat_result[0][1]] = {
+                        'cat_id': catid,
+                        'sub_categories': {
+                            sub_cat_data['sub_cat_name']: {
+                                'sub_cat_id': sub_cat_data['sub_catid']
+                            }
                         }
                     }
-                }
 
                 main_cat_data.append({
                     'main_cat_id': main_cat_id,
                     'main_title_name': row[1],
                     'images': row[2],
-                    'category': cat_data,
+                    'category': {
+                        'catid': catid,
+                        'cat_name': cat_result[0][1],
+                        'sub_category': sub_cat_data,
+                    },
                 })
             else:
                 main_cat_data.append({
