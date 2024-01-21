@@ -68,9 +68,9 @@
                             </div><!-- End .product-action -->
 
                             <div class="product-action ">
-                                <form id="add-to-cart" method="post" data-product-id="{{ row.product_id }}">
+                                <form id="add-to-cart" method="post" data-product-id="{{ row.productid }}">
                                     {% csrf_token %}
-                                    <input type="hidden" name="product_id" value="{{ row.product_id }}">
+                                    <input type="hidden" name="product_id" value="{{ row.productid }}">
                                     <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
                                 </form>
                                 
