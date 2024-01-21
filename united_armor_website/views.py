@@ -37,13 +37,13 @@ def home(request):
             main_cat_id = row[0]
 
             # Nested query to select catid and cat_name where main_catid is unique
-            cat_query = f"SELECT catid, cat_name FROM vff.united_armor_categorytbl WHERE main_catid = {main_cat_id} LIMIT 1"
+            cat_query = f"SELECT catid, cat_name FROM vff.united_armor_categorytbl WHERE main_catid = {main_cat_id} order by catid"
             cat_result = execute_raw_query(cat_query)
 
             # Nested query to select sub_catid and sub_cat_name where catid is unique
             if cat_result and len(cat_result) > 0:
                 catid = cat_result[0][0]
-                sub_cat_query = f"SELECT sub_catid, sub_cat_name FROM vff.united_armor_sub_categorytbl WHERE catid = {catid} LIMIT 1"
+                sub_cat_query = f"SELECT sub_catid, sub_cat_name FROM vff.united_armor_sub_categorytbl WHERE catid = {catid} order by sub_catid"
                 sub_cat_result = execute_raw_query(sub_cat_query)
 
                 if sub_cat_result and len(sub_cat_result) > 0:
