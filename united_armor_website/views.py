@@ -67,8 +67,8 @@ def home(request):
     else:
         error_msg = 'Something Went Wrong'
     
-    context={'main_cat_data':main_cat_data,'cat_data':cat_data,'current_url': current_url}
     current_url = request.get_full_path()
+    context={'main_cat_data':main_cat_data,'cat_data':cat_data,'current_url': current_url}
     return render(request,"home_pages/home.html",context)
 
 #All Products
