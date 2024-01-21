@@ -243,47 +243,16 @@
                         <div class="collapse show" id="widget-2">
                             <div class="widget-body">
                                 <div class="filter-items">
+                                    {% for row in sizes_filter_data %}
                                     <div class="filter-item">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="size-1">
-                                            <label class="custom-control-label" for="size-1">XS</label>
+                                            <input type="hidden" value="{{row.sizes_id}}">
+                                            <input type="checkbox" class="custom-control-input" id="size-1{{row.sizes_id}}">
+                                            <label class="custom-control-label" for="size-1{{row.sizes_id}}">{{row.size_value}}</label>
                                         </div><!-- End .custom-checkbox -->
                                     </div><!-- End .filter-item -->
-
-                                    <div class="filter-item">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="size-2">
-                                            <label class="custom-control-label" for="size-2">S</label>
-                                        </div><!-- End .custom-checkbox -->
-                                    </div><!-- End .filter-item -->
-
-                                    <div class="filter-item">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" checked id="size-3">
-                                            <label class="custom-control-label" for="size-3">M</label>
-                                        </div><!-- End .custom-checkbox -->
-                                    </div><!-- End .filter-item -->
-
-                                    <div class="filter-item">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" checked id="size-4">
-                                            <label class="custom-control-label" for="size-4">L</label>
-                                        </div><!-- End .custom-checkbox -->
-                                    </div><!-- End .filter-item -->
-
-                                    <div class="filter-item">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="size-5">
-                                            <label class="custom-control-label" for="size-5">XL</label>
-                                        </div><!-- End .custom-checkbox -->
-                                    </div><!-- End .filter-item -->
-
-                                    <div class="filter-item">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="size-6">
-                                            <label class="custom-control-label" for="size-6">XXL</label>
-                                        </div><!-- End .custom-checkbox -->
-                                    </div><!-- End .filter-item -->
+                                    {% endfor %}
+                                    
                                 </div><!-- End .filter-items -->
                             </div><!-- End .widget-body -->
                         </div><!-- End .collapse -->

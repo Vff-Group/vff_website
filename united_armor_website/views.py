@@ -309,9 +309,24 @@ def all_products(request):
             })
     else:
         error_msg = 'Something Went Wrong'
+    
+    # Sizes Filter
+    query_sizes = "select sizesid,size_value from vff.united_armor_product_sizestbl order by sizesid"
+    query_result_sizes = execute_raw_query(query_sizes)
+    sizes_filter_data = []    
+    if not query_result_sizes == 500:
+        for row in query_result_sizes:
+            
+            sizes_filter_data.append({
+                'sizes_id': row[0],
+                'size_value': row[1],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
      
     current_url = request.get_full_path()
-    context = {'all_categories': all_categories,'product_category_data':product_category_data,'product_type_data':product_type_data, 'current_url': current_url}
+    context = {'all_categories': all_categories,'product_category_data':product_category_data,'product_type_data':product_type_data,'sizes_filter_data':sizes_filter_data, 'current_url': current_url}
     return render(request,"product_pages/all_products.html",context)
 
 #Single Product Detail with Product ID
