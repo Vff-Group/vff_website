@@ -187,7 +187,7 @@
                                                             <div class="col-md-6">
                                                                 <div class="menu-title">{{ row.cat_name }}</div><!-- End .menu-title -->
                                                                 <ul>
-                                                                    {% for sub_cat_data in row.sub_category %}
+                                                                    {% for sub_cat_data in all_sub_cat_names %}
                                                                         <li>
                                                                             <a href="{% url 'united_armor:all_products' %}">{{ sub_cat_data.sub_cat_name }}</a>
                                                                         </li>
