@@ -68,7 +68,9 @@
                             </div><!-- End .product-action -->
 
                             <div class="product-action ">
+                                <form id="add-to-cart" method="post">
                                 <a href="" onclick="addToCart(row.productid)" class="btn-product btn-cart"><span>add to cart</span></a>
+                            </form>
                                
                             </div><!-- End .product-action -->
                         </figure><!-- End .product-media -->
@@ -291,6 +293,7 @@
 <script>
     function addToCart(productId) {
         console.log('productId::'+productId);
+        return;
         // Perform AJAX request
         $.ajax({
             url: '/add-to-cart/',  // Update the URL to match your Django view URL
