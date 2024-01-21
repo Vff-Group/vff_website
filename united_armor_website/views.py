@@ -107,8 +107,8 @@ def home(request):
                 for row2 in cat_result:
                     # Append cat_name to the list
                     all_cat_names.append({
-                'cat_id': row[0],
-                'cat_name': row[1],
+                'cat_id': row2[0],
+                'cat_name': row2[1],
                 })
             # Nested query to select sub_catid and sub_cat_name where catid is unique
             if cat_result and len(cat_result) > 0:
