@@ -28,7 +28,7 @@ def coming_soon(request):
 
 #Home Page
 def home(request):
-    main_cat_query = "SELECT main_cat_id, main_title_name FROM vff.united_armor_main_categorytbl ORDER BY main_cat_id"
+    main_cat_query = "SELECT main_cat_id, main_title_name,images FROM vff.united_armor_main_categorytbl ORDER BY main_cat_id"
     main_cat_result = execute_raw_query(main_cat_query)
 
     all_categories = []
@@ -36,6 +36,7 @@ def home(request):
         for main_cat_row in main_cat_result:
             main_cat_id = main_cat_row[0]
             main_cat_name = main_cat_row[1]
+            main_image = main_cat_row[2]
 
             cat_query = f"SELECT catid, cat_name FROM vff.united_armor_categorytbl WHERE main_catid = {main_cat_id} ORDER BY catid"
             cat_result = execute_raw_query(cat_query)
@@ -71,6 +72,7 @@ def home(request):
             main_cat_data = {
                 'main_cat_id': main_cat_id,
                 'main_cat_name': main_cat_name,
+                'images':main_image,
                 'categories': sub_categories,
             }
             all_categories.append(main_cat_data)
