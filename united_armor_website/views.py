@@ -460,7 +460,7 @@ def all_products_with_main_category(request,s_main_cat_id,s_main_cat_name):
         error_msg = 'Something Went Wrong'
      
     current_url = request.get_full_path()
-    context = {'all_categories': all_categories,'product_category_data':product_category_data,'product_type_data':product_type_data,'sizes_filter_data':sizes_filter_data,'color_filter_data':color_filter_data, 'current_url': current_url}
+    context = {'all_categories': all_categories,'product_category_data':product_category_data,'product_type_data':product_type_data,'sizes_filter_data':sizes_filter_data,'color_filter_data':color_filter_data, 'current_url': current_url,'s_main_cat_id':s_main_cat_id,'s_main_cat_name':s_main_cat_name}
     return render(request,"product_pages/all_products.html",context)
 
 #All Products with Category Wise
@@ -698,7 +698,7 @@ def all_products_with_sub_category(request,s_main_cat_id,s_main_cat_name,s_cat_i
         error_msg = 'Something Went Wrong'
      
     current_url = request.get_full_path()
-    context = {'all_categories': all_categories,'product_category_data':product_category_data,'product_type_data':product_type_data,'sizes_filter_data':sizes_filter_data,'color_filter_data':color_filter_data, 'current_url': current_url}
+    context = {'all_categories': all_categories,'product_category_data':product_category_data,'product_type_data':product_type_data,'sizes_filter_data':sizes_filter_data,'color_filter_data':color_filter_data, 'current_url': current_url,'s_main_cat_id':s_main_cat_id,'s_main_cat_name':s_main_cat_name,'s_cat_id':s_cat_id,'s_cat_name':s_cat_name,'s_sub_cat_id':s_sub_cat_id,'s_sub_cat_name':s_sub_cat_name}
     return render(request,"product_pages/all_products.html",context)
 
 #Single Product Detail with Product ID

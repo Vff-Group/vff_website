@@ -12,9 +12,11 @@
 <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
     <div class="container">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'united_armor:home' %}">Men</a></li>
-            <li class="breadcrumb-item"><a href="#">Shop By Category</a></li>
-            <li class="breadcrumb-item active" aria-current="page">All Men</li>
+            <li class="breadcrumb-item"><a href="{% url 'united_armor:home' %}">{{s_main_cat_name}}</a></li>
+            {% if s_sub_cat_name %}
+            <li class="breadcrumb-item"><a href="">{{s_cat_name}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{s_sub_cat_name}}</li>
+            {% endif %}
         </ol>
     </div><!-- End .container -->
 </nav><!-- End .breadcrumb-nav -->
