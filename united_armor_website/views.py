@@ -28,7 +28,7 @@ def coming_soon(request):
 
 #Home Page
 def home(request):
-    query ="select main_cat_id,main_title_name,images from vff.united_armor_main_categorytbl"
+    query ="select main_cat_id,main_title_name,images from vff.united_armor_main_categorytbl order by main_cat_id"
     query_result = execute_raw_query(query)
     
     
@@ -47,7 +47,7 @@ def home(request):
     else:
         error_msg = 'Something Went Wrong'
     
-    query2 ="select united_armor_categorytbl.catid,cat_name,sub_catid,sub_cat_name from vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl where united_armor_categorytbl.catid=united_armor_sub_categorytbl.catid"
+    query2 ="select united_armor_categorytbl.catid,cat_name,sub_catid,sub_cat_name from vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl where united_armor_categorytbl.catid=united_armor_sub_categorytbl.catid order by united_armor_categorytbl.catid,sub_catid"
     query_result2 = execute_raw_query(query2)
     
     
