@@ -118,10 +118,7 @@ def home(request):
                 if not cat_result == 500:
                     for row2 in cat_result:
                         # Append cat_name to the list
-                        all_cat_names.append({
-                        'cat_id': row2[0],
-                        'cat_name': row2[1],
-                    })
+                        all_cat_names.append(row2[1])
                 if sub_cat_result and len(sub_cat_result) > 0:
                     sub_cat_data = {
                         'sub_catid': sub_cat_result[0][0],
