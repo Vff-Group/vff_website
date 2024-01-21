@@ -352,15 +352,15 @@
                     </li>
                     {% for main_cat_data in all_categories %}
                     <li>
-                        <a href="{% url 'united_armor:all_products' %}">{{ main_cat_data.main_cat_name }}</a>
+                        <a href="{% url 'united_armor:all_products_with_main_category'  main_cat_data.main_cat_id main_cat_data.main_cat_name %}">{{ main_cat_data.main_cat_name }}</a>
                         <ul>
                             {% for cat_data in main_cat_data.categories %}
                             <li>
-                                <a href="{% url 'united_armor:all_products' %}">{{ cat_data.cat_name }}</a>
+                                {{ cat_data.cat_name }}
 
                                 <ul>
                                     {% for sub_cat_data in cat_data.sub_category %}
-                                    <li><a href="{% url 'united_armor:all_products' %}">{{ sub_cat_data.sub_cat_name }}</a></li>
+                                    <li><a href="{% url 'united_armor:all_products_with_sub_category'  main_cat_data.main_cat_id main_cat_data.main_cat_name cat_data.cat_id cat_data.cat_name sub_cat_data.sub_cat_id  sub_cat_data.sub_cat_name %}">{{ sub_cat_data.sub_cat_name }}</a></li>
                                     
                                     {% endfor %}
                                 </ul>
