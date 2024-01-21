@@ -28,27 +28,43 @@ def coming_soon(request):
 
 #Home Page
 def home(request):
-    query ="select main_cat_id,main_title_name,images from vff.united_armor_main_categorytbl order by main_cat_id"
+    query = "SELECT main_cat_id, main_title_name, images FROM vff.united_armor_main_categorytbl ORDER BY main_cat_id"
     query_result = execute_raw_query(query)
-    
-    
-        
+
     main_cat_data = []    
     if not query_result == 500:
         for row in query_result:
             main_cat_id = row[0]
 
             # Nested query to select catid and cat_name where main_catid is unique
-            cat_query = f"SELECT catid, cat_name FROM vff.united_armor_categorytbl WHERE main_catid = {main_cat_id}"
+            cat_query = f"SELECT catid, cat_name FROM vff.united_armor_categorytbl WHERE main_catid = {main_cat_id} LIMIT 1"
             cat_result = execute_raw_query(cat_query)
 
+            # Nested query to select sub_catid and sub_cat_name where catid is unique
             if cat_result and len(cat_result) > 0:
+                catid = cat_result[0][0]
+                sub_cat_query = f"SELECT sub_catid, sub_cat_name FROM vff.united_armor_sub_categorytbl WHERE catid = {catid} LIMIT 1"
+                sub_cat_result = execute_raw_query(sub_cat_query)
+
+                if sub_cat_result and len(sub_cat_result) > 0:
+                    sub_cat_data = {
+                        'sub_catid': sub_cat_result[0][0],
+                        'sub_cat_name': sub_cat_result[0][1],
+                    }
+                else:
+                    # Handle the case when no matching entry is found in united_armor_sub_categorytbl
+                    sub_cat_data = {
+                        'sub_catid': None,
+                        'sub_cat_name': None,
+                    }
+
                 cat_data = {
                     'main_cat_id': main_cat_id,
                     'main_title_name': row[1],
                     'images': row[2],
-                    'catid': cat_result[0][0],
+                    'catid': catid,
                     'cat_name': cat_result[0][1],
+                    'sub_category': sub_cat_data,
                 }
                 main_cat_data.append(cat_data)
             else:
@@ -59,33 +75,17 @@ def home(request):
                     'images': row[2],
                     'catid': None,
                     'cat_name': None,
+                    'sub_category': {
+                        'sub_catid': None,
+                        'sub_cat_name': None,
+                    },
                 })
     else:
         error_msg = 'Something Went Wrong'
-    
-    query2 ="select united_armor_categorytbl.catid,cat_name,sub_catid,sub_cat_name from vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl where united_armor_categorytbl.catid=united_armor_sub_categorytbl.catid order by united_armor_categorytbl.catid,sub_catid"
-    #query2="select catid"
-    query_result2 = execute_raw_query(query2)
-    
-    
-        
-    cat_data = []    
-    if not query_result2 == 500:
-        for row in query_result2:
-            
-            cat_data.append({
-                'catid': row[0],
-                'cat_name': row[1],
-                'sub_catid': row[2],
-                'sub_cat_name': row[3],
-                
-               
-            })
-    else:
-        error_msg = 'Something Went Wrong'
+
     
     current_url = request.get_full_path()
-    context={'main_cat_data':main_cat_data,'cat_data':cat_data,'current_url': current_url}
+    context={'main_cat_data':main_cat_data,'current_url': current_url}
     return render(request,"home_pages/home.html",context)
 
 #All Products
