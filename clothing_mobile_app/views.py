@@ -370,6 +370,7 @@ def get_product_category_filter(request):
         try:
             
             
+            
             query = "select product_catid,product_category_name from vff.united_armor_product_categorytbl"
             result = execute_raw_query(query)
             data = []

@@ -279,8 +279,39 @@ def all_products(request):
     else:
         error_msg = 'Something Went Wrong'
 
+    
+    # Product Categories Filter
+    query_cat = "select product_catid,product_category_name from vff.united_armor_product_categorytbl order by product_catid"
+    query_result_cat = execute_raw_query(query_cat)
+    product_category_data = []    
+    if not query_result_cat == 500:
+        for row in query_result_cat:
+            
+            product_category_data.append({
+                'product_catid': row[0],
+                'product_category_name': row[1],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
+    # Product Type Filter
+    query_type = "select product_type_id,product_type_name from vff.united_armor_product_typetbl order by product_type_id"
+    query_result_type = execute_raw_query(query_type)
+    product_type_data = []    
+    if not query_result_type == 500:
+        for row in query_result_type:
+            
+            product_type_data.append({
+                'product_type_id': row[0],
+                'product_type_name': row[1],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+     
     current_url = request.get_full_path()
-    context = {'all_categories': all_categories, 'current_url': current_url}
+    context = {'all_categories': all_categories,'product_category_data':product_category_data,'product_type_data':product_type_data, 'current_url': current_url}
     return render(request,"product_pages/all_products.html",context)
 
 #Single Product Detail with Product ID
