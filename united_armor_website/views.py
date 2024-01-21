@@ -63,7 +63,7 @@ def home(request):
                                 'sub_cat_id': sub_catid,
                                 'sub_cat_name': sub_cat_name,
                             })
-                            print(f'sub_cat_name::{sub_cat_name}')
+                            # print(f'sub_cat_name::{sub_cat_name}')
 
                     cat_data = {
                         'cat_id': cat_id,
@@ -378,7 +378,7 @@ def all_products_with_main_category(request,s_main_cat_id,s_main_cat_name):
                                 'sub_cat_id': sub_catid,
                                 'sub_cat_name': sub_cat_name,
                             })
-                            print(f'sub_cat_name::{sub_cat_name}')
+                            # print(f'sub_cat_name::{sub_cat_name}')
 
                     cat_data = {
                         'cat_id': cat_id,
@@ -652,7 +652,7 @@ def all_products_with_sub_category(request,s_main_cat_id,s_main_cat_name,s_cat_i
                                 'sub_cat_id': sub_catid,
                                 'sub_cat_name': sub_cat_name,
                             })
-                            print(f'sub_cat_name::{sub_cat_name}')
+                            # print(f'sub_cat_name::{sub_cat_name}')
 
                     cat_data = {
                         'cat_id': cat_id,
