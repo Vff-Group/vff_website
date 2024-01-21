@@ -68,7 +68,7 @@
                             </div><!-- End .product-action -->
 
                             <div class="product-action ">
-                                <form id="add-to-cart" method="post" data-product-id="{{ row.productid }}">
+                                <form  class="add-to-cart-form" method="post" id="add-to-cart-form-{{ row.productid }}" data-product-id="{{ row.productid }}">
                                     {% csrf_token %}
                                     <input type="hidden" name="product_id" value="{{ row.productid }}">
                                     <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
@@ -293,32 +293,31 @@
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-$(document).ready(function() {
-    $('#add-to-cart').submit(function(event) {
-        // Prevent the default form submission
-        event.preventDefault();
-
-        // Get form data
-        var formData = $(this).serialize();
-        console.log('formData::'+formData)
-        return
-        // Perform AJAX request
-        $.ajax({
-            url: '/add-to-cart/',  // Update the URL to match your Django view URL
-            type: 'POST',
-            data: formData,
-            success: function(response) {
-                // Show alert with the response message
-                alert(response.message);
-            },
-            error: function(error) {
-                // Handle errors
-                console.error('Error:', error);
-            }
+    $(document).ready(function() {
+        $('.add-to-cart-form').submit(function(event) {
+            // Prevent the default form submission
+            event.preventDefault();
+    
+            // Get form data
+            var formData = $(this).serialize();
+    
+            // Perform AJAX request
+            $.ajax({
+                url: '/united_armor/add-to-cart/',  // Update the URL to match your Django view URL
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    // Show alert with the response message
+                    alert(response.message);
+                },
+                error: function(error) {
+                    // Handle errors
+                    console.error('Error:', error);
+                }
+            });
         });
     });
-});
-</script>
+    </script>
 
     
 {% endblock %}
