@@ -53,10 +53,10 @@ def home(request):
                             sub_catid = sub_cat_row[0]
                             sub_cat_name = sub_cat_row[1]
                             print(f'sub_cat_name::{sub_cat_name}')
-                            sub_cat_data = {
+                            sub_cat_data.append({
                                 'sub_cat_id':sub_catid,
                                 'sub_cat_name':sub_cat_name,
-                            }
+                            })
                     # sub_cat_data = {
                     #     'sub_catid': sub_cat_result[0][0] if sub_cat_result else None,
                     #     'sub_cat_name': sub_cat_result[0][1] if sub_cat_result else None,
