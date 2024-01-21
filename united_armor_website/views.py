@@ -324,9 +324,25 @@ def all_products(request):
             })
     else:
         error_msg = 'Something Went Wrong'
+    
+    # Color Filter
+    query_color = "select colorsid,color_name,color_code from vff.united_armor_product_colorstbl"
+    query_result_color = execute_raw_query(query_color)
+    color_filter_data = []    
+    if not query_result_color == 500:
+        for row in query_result_color:
+            
+            color_filter_data.append({
+                'colors_id': row[0],
+                'color_name': row[1],
+                'color_code': row[2],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
      
     current_url = request.get_full_path()
-    context = {'all_categories': all_categories,'product_category_data':product_category_data,'product_type_data':product_type_data,'sizes_filter_data':sizes_filter_data, 'current_url': current_url}
+    context = {'all_categories': all_categories,'product_category_data':product_category_data,'product_type_data':product_type_data,'sizes_filter_data':sizes_filter_data,'color_filter_data':color_filter_data, 'current_url': current_url}
     return render(request,"product_pages/all_products.html",context)
 
 #Single Product Detail with Product ID
