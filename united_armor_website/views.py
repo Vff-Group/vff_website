@@ -41,7 +41,6 @@ def home(request):
             cat_result = execute_raw_query(cat_query)
 
             sub_categories = []
-            sub_cat_data = []
             if cat_result and len(cat_result) > 0:
                 for cat_row in cat_result:
                     cat_id = cat_row[0]
@@ -49,19 +48,18 @@ def home(request):
 
                     sub_cat_query = f"SELECT sub_catid, sub_cat_name FROM vff.united_armor_sub_categorytbl WHERE catid = {cat_id} ORDER BY sub_catid"
                     sub_cat_result = execute_raw_query(sub_cat_query)
+
+                    sub_cat_data = []
                     if sub_cat_result and len(sub_cat_result) > 0: 
                         for sub_cat_row in sub_cat_result:
                             sub_catid = sub_cat_row[0]
                             sub_cat_name = sub_cat_row[1]
-                            print(f'sub_cat_name::{sub_cat_name}')
+                            
                             sub_cat_data.append({
-                                'sub_cat_id':sub_catid,
-                                'sub_cat_name':sub_cat_name,
+                                'sub_cat_id': sub_catid,
+                                'sub_cat_name': sub_cat_name,
                             })
-                    # sub_cat_data = {
-                    #     'sub_catid': sub_cat_result[0][0] if sub_cat_result else None,
-                    #     'sub_cat_name': sub_cat_result[0][1] if sub_cat_result else None,
-                    # }
+                            print(f'sub_cat_name::{sub_cat_name}')
 
                     cat_data = {
                         'cat_id': cat_id,
@@ -69,17 +67,6 @@ def home(request):
                         'sub_category': sub_cat_data,
                     }
                     sub_categories.append(cat_data)
-            else:
-                # Handle the case when no matching entry is found in united_armor_categorytbl
-                sub_cat_data = {
-                    'cat_id': None,
-                    'cat_name': None,
-                    'sub_category': {
-                        'sub_catid': None,
-                        'sub_cat_name': None,
-                    },
-                }
-                sub_categories.append(sub_cat_data)
 
             main_cat_data = {
                 'main_cat_id': main_cat_id,
