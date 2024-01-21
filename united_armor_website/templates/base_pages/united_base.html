@@ -178,11 +178,12 @@
                                     <a href="{% url 'united_armor:all_products' %}" class="sf-with-ul">{{row.main_title_name}}</a>
                                     <div class="megamenu megamenu-md">
                                         <div class="row no-gutters">
-                                            <div class="col-md-12">
+                                            <div class="col-md-8">
                                                 <div class="menu-col">
                                                     <div class="row">
+                                                        {% for cat_data in main_cat_data %}
                                                         <div class="col-md-6">
-                                                            <div class="menu-title">Shop By Category</div><!-- End .menu-title -->
+                                                            <div class="menu-title">{{cat_data.cat_name}}</div><!-- End .menu-title -->
                                                             <ul>
                                                                 <li><a href="{% url 'united_armor:all_products' %}">Tops</a></li>
                                                                 <li><a href="">Leggings</a></li>
@@ -191,16 +192,8 @@
             
                                                             
                                                         </div><!-- End .col-md-6 -->
-            
-                                                        <div class="col-md-6">
-                                                            <div class="menu-title">Shop By Sports</div><!-- End .menu-title -->
-                                                            <ul>
-                                                                <li><a href="">Running</a></li>
-                                                                <li><a href="">OutDoor</a></li>
-                                                               
-                                                            </ul>
-                                                            
-                                                        </div><!-- End .col-md-6 -->
+                                                        {% endfor %}
+                                                        
                                                     </div><!-- End .row -->
                                                 </div><!-- End .menu-col -->
                                             </div><!-- End .col-md-8 -->
