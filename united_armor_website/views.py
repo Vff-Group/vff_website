@@ -154,6 +154,9 @@ def home(request):
         error_msg = 'Something Went Wrong'
 
     current_url = request.get_full_path()
+    print(f'cat_names::{all_cat_names}')
+    print('-------')
+    print(f'all_sub_cat_names::{all_sub_cat_names}')
     context = {
         'main_cat_data': main_cat_data,
         'all_cat_names': all_cat_names,
