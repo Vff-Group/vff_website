@@ -6,7 +6,11 @@
 
 <div class="page-header text-center" style="background-image: url('/static/assets/images/page-header-bg.jpg')">
     <div class="container">
-        <h1 class="page-title">Men<span>Shop By Category</span></h1>
+        {% if s_sub_cat_name %}
+        <h1 class="page-title">{{s_main_cat_name}}<span>{{s_cat_name}}</span></h1>
+        {%else%}
+        <h1 class="page-title">All<span>{{s_main_cat_name}}</span></h1>
+        {% endif %}
     </div><!-- End .container -->
 </div><!-- End .page-header -->
 <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
@@ -14,7 +18,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'united_armor:home' %}">{{s_main_cat_name}}</a></li>
             {% if s_sub_cat_name %}
-            <li class="breadcrumb-item"><a href="">{{s_cat_name}}</a></li>
+            <li class="breadcrumb-item"><a >{{s_cat_name}}</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{s_sub_cat_name}}</li>
             {% endif %}
         </ol>
