@@ -166,8 +166,8 @@
                 <div class="col-sm-6 col-lg-4">
                     <div class="banner banner-overlay banner-lg">
                         <a href="{% url 'united_armor:all_products_with_main_category' main_cat_data.main_cat_id main_cat_data.main_cat_name %}">
-                            {% comment %} <img src="{% static 'assets/images/no_image.jpg' %}" alt="Banner" > {% endcomment %}
-                            <img src="{{main_cat_data.images}}" alt="Banner" >
+                            <img src="{% static 'assets/images/no_image.jpg' %}" alt="Banner" width="100" height="100">
+                            {% comment %} <img src="{{main_cat_data.images}}" alt="Banner" > {% endcomment %}
                         </a>
 
                         <div class="banner-content banner-content-bottom">
