@@ -27,6 +27,86 @@ def coming_soon(request):
     return render(request,"coming_soon.html",{'current_url': current_url})
 
 #Home Page
+def home(request):
+    query = "SELECT main_cat_id, main_title_name, images FROM vff.united_armor_main_categorytbl ORDER BY main_cat_id"
+    query_result = execute_raw_query(query)
+
+    main_cat_data = []
+    all_categories = {}  # Dictionary to store all categories
+
+    if not query_result == 500:
+        for row in query_result:
+            main_cat_id = row[0]
+
+            # Nested query to select catid and cat_name where main_catid is unique
+            cat_query = f"SELECT catid, cat_name FROM vff.united_armor_categorytbl WHERE main_catid = {main_cat_id} order by catid"
+            cat_result = execute_raw_query(cat_query)
+
+            # Nested query to select sub_catid and sub_cat_name where catid is unique
+            if cat_result and len(cat_result) > 0:
+                catid = cat_result[0][0]
+                sub_cat_query = f"SELECT sub_catid, sub_cat_name FROM vff.united_armor_sub_categorytbl WHERE catid = {catid} order by sub_catid"
+                sub_cat_result = execute_raw_query(sub_cat_query)
+
+                if sub_cat_result and len(sub_cat_result) > 0:
+                    sub_cat_data = {
+                        'sub_catid': sub_cat_result[0][0],
+                        'sub_cat_name': sub_cat_result[0][1],
+                    }
+                else:
+                    sub_cat_data = {
+                        'sub_catid': None,
+                        'sub_cat_name': None,
+                    }
+
+                cat_data = {
+                    'catid': catid,
+                    'cat_name': cat_result[0][1],
+                    'sub_category': sub_cat_data,
+                }
+
+                # Append cat_name, cat_id, sub_cat_name, and sub_cat_id to the dictionary
+                all_categories[cat_result[0][1]] = {
+                    'cat_id': catid,
+                    'sub_categories': {
+                        sub_cat_data['sub_cat_name']: {
+                            'sub_cat_id': sub_cat_data['sub_catid']
+                        }
+                    }
+                }
+
+                main_cat_data.append({
+                    'main_cat_id': main_cat_id,
+                    'main_title_name': row[1],
+                    'images': row[2],
+                    'category': cat_data,
+                })
+            else:
+                main_cat_data.append({
+                    'main_cat_id': main_cat_id,
+                    'main_title_name': row[1],
+                    'images': row[2],
+                    'category': {
+                        'catid': None,
+                        'cat_name': None,
+                        'sub_category': {
+                            'sub_catid': None,
+                            'sub_cat_name': None,
+                        },
+                    },
+                })
+    else:
+        error_msg = 'Something Went Wrong'
+
+    current_url = request.get_full_path()
+    print(f'all_categories::{all_categories}')
+    context = {
+        'main_cat_data': main_cat_data,
+        'all_categories': all_categories,
+        'current_url': current_url
+    }
+    return render(request, "home_pages/home.html", context)
+
 # def home(request):
 #     query = "SELECT main_cat_id, main_title_name, images FROM vff.united_armor_main_categorytbl ORDER BY main_cat_id"
 #     query_result = execute_raw_query(query)
@@ -88,82 +168,82 @@ def coming_soon(request):
 #     context={'main_cat_data':main_cat_data,'current_url': current_url}
 #     return render(request,"home_pages/home.html",context)
 
-def home(request):
-    query = "SELECT main_cat_id, main_title_name, images FROM vff.united_armor_main_categorytbl ORDER BY main_cat_id"
-    query_result = execute_raw_query(query)
+# def home(request):
+#     query = "SELECT main_cat_id, main_title_name, images FROM vff.united_armor_main_categorytbl ORDER BY main_cat_id"
+#     query_result = execute_raw_query(query)
 
-    main_cat_data = []
-    all_cat_names = []  # List to store all cat_names
-    all_sub_cat_names = []  # List to store all sub_cat_names
+#     main_cat_data = []
+#     all_cat_names = []  # List to store all cat_names
+#     all_sub_cat_names = []  # List to store all sub_cat_names
 
-    if not query_result == 500:
-        for row in query_result:
-            main_cat_id = row[0]
+#     if not query_result == 500:
+#         for row in query_result:
+#             main_cat_id = row[0]
 
-            # Nested query to select catid and cat_name where main_catid is unique
-            cat_query = f"SELECT catid, cat_name FROM vff.united_armor_categorytbl WHERE main_catid = {main_cat_id} order by catid"
-            cat_result = execute_raw_query(cat_query)
+#             # Nested query to select catid and cat_name where main_catid is unique
+#             cat_query = f"SELECT catid, cat_name FROM vff.united_armor_categorytbl WHERE main_catid = {main_cat_id} order by catid"
+#             cat_result = execute_raw_query(cat_query)
 
-            # Nested query to select sub_catid and sub_cat_name where catid is unique
-            if cat_result and len(cat_result) > 0:
-                catid = cat_result[0][0]
-                sub_cat_query = f"SELECT sub_catid, sub_cat_name FROM vff.united_armor_sub_categorytbl WHERE catid = {catid} order by sub_catid"
-                sub_cat_result = execute_raw_query(sub_cat_query)
+#             # Nested query to select sub_catid and sub_cat_name where catid is unique
+#             if cat_result and len(cat_result) > 0:
+#                 catid = cat_result[0][0]
+#                 sub_cat_query = f"SELECT sub_catid, sub_cat_name FROM vff.united_armor_sub_categorytbl WHERE catid = {catid} order by sub_catid"
+#                 sub_cat_result = execute_raw_query(sub_cat_query)
 
-                if sub_cat_result and len(sub_cat_result) > 0:
-                    sub_cat_data = {
-                        'sub_catid': sub_cat_result[0][0],
-                        'sub_cat_name': sub_cat_result[0][1],
-                    }
+#                 if sub_cat_result and len(sub_cat_result) > 0:
+#                     sub_cat_data = {
+#                         'sub_catid': sub_cat_result[0][0],
+#                         'sub_cat_name': sub_cat_result[0][1],
+#                     }
 
-                    # Append sub_cat_name to the list
-                    all_sub_cat_names.append(sub_cat_result[0][1])
-                else:
-                    # Handle the case when no matching entry is found in united_armor_sub_categorytbl
-                    sub_cat_data = {
-                        'sub_catid': None,
-                        'sub_cat_name': None,
-                    }
+#                     # Append sub_cat_name to the list
+#                     all_sub_cat_names.append(sub_cat_result[0][1])
+#                 else:
+#                     # Handle the case when no matching entry is found in united_armor_sub_categorytbl
+#                     sub_cat_data = {
+#                         'sub_catid': None,
+#                         'sub_cat_name': None,
+#                     }
 
-                # Append cat_name to the list
-                all_cat_names.append(cat_result[0][1])
+#                 # Append cat_name to the list
+#                 all_cat_names.append(cat_result[0][1])
 
-                cat_data = {
-                    'main_cat_id': main_cat_id,
-                    'main_title_name': row[1],
-                    'images': row[2],
-                    'catid': catid,
-                    'cat_name': cat_result[0][1],
-                    'sub_category': sub_cat_data,
-                }
-                main_cat_data.append(cat_data)
-            else:
-                # Handle the case when no matching entry is found in united_armor_categorytbl
-                main_cat_data.append({
-                    'main_cat_id': main_cat_id,
-                    'main_title_name': row[1],
-                    'images': row[2],
-                    'catid': None,
-                    'cat_name': None,
-                    'sub_category': {
-                        'sub_catid': None,
-                        'sub_cat_name': None,
-                    },
-                })
-    else:
-        error_msg = 'Something Went Wrong'
+#                 cat_data = {
+#                     'main_cat_id': main_cat_id,
+#                     'main_title_name': row[1],
+#                     'images': row[2],
+#                     'catid': catid,
+#                     'cat_name': cat_result[0][1],
+#                     'sub_category': sub_cat_data,
+#                 }
+#                 main_cat_data.append(cat_data)
+#             else:
+#                 # Handle the case when no matching entry is found in united_armor_categorytbl
+#                 main_cat_data.append({
+#                     'main_cat_id': main_cat_id,
+#                     'main_title_name': row[1],
+#                     'images': row[2],
+#                     'catid': None,
+#                     'cat_name': None,
+#                     'sub_category': {
+#                         'sub_catid': None,
+#                         'sub_cat_name': None,
+#                     },
+#                 })
+#     else:
+#         error_msg = 'Something Went Wrong'
 
-    current_url = request.get_full_path()
-    print(f'cat_names::{all_cat_names}')
-    print('-------')
-    print(f'all_sub_cat_names::{all_sub_cat_names}')
-    context = {
-        'main_cat_data': main_cat_data,
-        'all_cat_names': all_cat_names,
-        'all_sub_cat_names': all_sub_cat_names,
-        'current_url': current_url
-    }
-    return render(request, "home_pages/home.html", context)
+#     current_url = request.get_full_path()
+#     print(f'cat_names::{all_cat_names}')
+#     print('-------')
+#     print(f'all_sub_cat_names::{all_sub_cat_names}')
+#     context = {
+#         'main_cat_data': main_cat_data,
+#         'all_cat_names': all_cat_names,
+#         'all_sub_cat_names': all_sub_cat_names,
+#         'current_url': current_url
+#     }
+#     return render(request, "home_pages/home.html", context)
 
 #All Products
 def all_products(request):
