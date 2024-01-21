@@ -184,19 +184,17 @@
                 <div class="menu-col">
                     <div class="row">
                         {% if row.cat_name %}
-                            {% for row2 in row.cat_name %}
                             <div class="col-md-6">
-                                <div class="menu-title">{{ row2.cat_name }}</div><!-- End .menu-title -->
+                                <div class="menu-title">{{ row.cat_name }}</div><!-- End .menu-title -->
                                 <ul>
-                                    {% if row2.sub_category.sub_cat_name %}
+                                    {% if row.sub_category.sub_cat_name %}
                                         <li>
-                                            <a href="{% url 'united_armor:all_products' %}">{{ row2.sub_category.sub_cat_name }}</a>
+                                            <a href="{% url 'united_armor:all_products' %}">{{ row.sub_category.sub_cat_name }}</a>
                                         </li>
                                         <!-- Add more sub-categories if needed -->
                                     {% endif %}
                                 </ul>
                             </div><!-- End .col-md-6 -->
-                            {% endfor %}
                         {% endif %}
                     </div><!-- End .row -->
                 </div><!-- End .menu-col -->
