@@ -95,7 +95,8 @@ def home(request):
     main_cat_data = []
     all_cat_names = []  # List to store all cat_names
     all_sub_cat_names = []  # List to store all sub_cat_names
-
+    # Use a set to keep track of unique cat_ids
+    unique_cat_ids = set()
     if not query_result == 500:
         for row in query_result:
             main_cat_id = row[0]
@@ -104,8 +105,7 @@ def home(request):
             cat_query = f"SELECT catid, cat_name FROM vff.united_armor_categorytbl WHERE main_catid = {main_cat_id} order by catid"
             cat_result = execute_raw_query(cat_query)
             if not cat_result == 500:
-                # Use a set to keep track of unique cat_ids
-                unique_cat_ids = set()
+                
                 
                 for row2 in cat_result:
                     cat_id = row2[0]
@@ -116,7 +116,7 @@ def home(request):
                             'cat_id': cat_id,
                             'cat_name': cat_name,
                         })
-                                        # Add cat_id to the set to mark it as seen
+                        # Add cat_id to the set to mark it as seen
                         unique_cat_ids.add(cat_id)
             # Nested query to select sub_catid and sub_cat_name where catid is unique
             if cat_result and len(cat_result) > 0:
