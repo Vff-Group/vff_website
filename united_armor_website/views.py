@@ -48,11 +48,18 @@ def home(request):
 
                     sub_cat_query = f"SELECT sub_catid, sub_cat_name FROM vff.united_armor_sub_categorytbl WHERE catid = {cat_id} ORDER BY sub_catid"
                     sub_cat_result = execute_raw_query(sub_cat_query)
-
-                    sub_cat_data = {
-                        'sub_catid': sub_cat_result[0][0] if sub_cat_result else None,
-                        'sub_cat_name': sub_cat_result[0][1] if sub_cat_result else None,
-                    }
+                    if sub_cat_result and len(sub_cat_result) > 0: 
+                        for sub_cat_row in sub_cat_result:
+                            sub_catid = sub_cat_row[0]
+                            sub_cat_name = sub_cat_row[1]
+                            sub_cat_data = {
+                                'sub_cat_id':sub_catid,
+                                'sub_cat_name':sub_cat_name,
+                            }
+                    # sub_cat_data = {
+                    #     'sub_catid': sub_cat_result[0][0] if sub_cat_result else None,
+                    #     'sub_cat_name': sub_cat_result[0][1] if sub_cat_result else None,
+                    # }
 
                     cat_data = {
                         'cat_id': cat_id,
