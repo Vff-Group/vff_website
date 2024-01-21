@@ -36,18 +36,35 @@ def home(request):
     main_cat_data = []    
     if not query_result == 500:
         for row in query_result:
-            
-            main_cat_data.append({
-                'main_cat_id': row[0],
-                'main_title_name': row[1],
-                'images': row[2],
-                
-               
-            })
+            main_cat_id = row[0]
+
+            # Nested query to select catid and cat_name where main_catid is unique
+            cat_query = f"SELECT catid, cat_name FROM vff.united_armor_categorytbl WHERE main_catid = {main_cat_id}"
+            cat_result = execute_raw_query(cat_query)
+
+            if cat_result and len(cat_result) > 0:
+                cat_data = {
+                    'main_cat_id': main_cat_id,
+                    'main_title_name': row[1],
+                    'images': row[2],
+                    'catid': cat_result[0][0],
+                    'cat_name': cat_result[0][1],
+                }
+                main_cat_data.append(cat_data)
+            else:
+                # Handle the case when no matching entry is found in united_armor_categorytbl
+                main_cat_data.append({
+                    'main_cat_id': main_cat_id,
+                    'main_title_name': row[1],
+                    'images': row[2],
+                    'catid': None,
+                    'cat_name': None,
+                })
     else:
         error_msg = 'Something Went Wrong'
     
-    query2 ="select united_armor_categorytbl.catid,cat_name,sub_catid,sub_cat_name from vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl where united_armor_categorytbl.catid=united_armor_sub_categorytbl.catid order by united_armor_categorytbl.catid,sub_catid"
+    #query2 ="select united_armor_categorytbl.catid,cat_name,sub_catid,sub_cat_name from vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl where united_armor_categorytbl.catid=united_armor_sub_categorytbl.catid order by united_armor_categorytbl.catid,sub_catid"
+    query2="select catid"
     query_result2 = execute_raw_query(query2)
     
     
