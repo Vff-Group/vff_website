@@ -353,8 +353,8 @@
                     {% for main_cat_data in all_categories %}
                     <li>
                         <a href="{% url 'united_armor:all_products' %}">{{ main_cat_data.main_cat_name }}</a>
-                        {% for cat_data in main_cat_data.categories %}
                         <ul>
+                            {% for cat_data in main_cat_data.categories %}
                             <li>
                                 <a href="{% url 'united_armor:all_products' %}">{{ cat_data.cat_name }}</a>
 
@@ -366,8 +366,8 @@
                                 </ul>
                             </li>
                            
+                            {% endfor %}
                         </ul>
-                        {% endfor %}
                     </li>
                     {% endfor %}
                     
