@@ -113,19 +113,23 @@ def home(request):
             # Nested query to select sub_catid and sub_cat_name where catid is unique
             if cat_result and len(cat_result) > 0:
                 catid = cat_result[0][0]
-                sub_cat_data = {
-                        'sub_catid': None,
-                        'sub_cat_name': None,
-                    }
                 sub_cat_query = f"SELECT sub_catid, sub_cat_name FROM vff.united_armor_sub_categorytbl WHERE catid = {catid} order by sub_catid"
                 sub_cat_result = execute_raw_query(sub_cat_query)
-                if not sub_cat_result == 500:
-                    for row3 in sub_cat_result:
+                if not cat_result == 500:
+                    for row2 in cat_result:
                         # Append cat_name to the list
-                        all_sub_cat_names = {
-                        'sub_catid': row3[0],
-                        'sub_cat_name': row3[1],
-                        }
+                        all_cat_names ={
+                        'cat_id': row2[0],
+                        'cat_name': row2[1],
+                    }
+                if sub_cat_result and len(sub_cat_result) > 0:
+                    sub_cat_data = {
+                        'sub_catid': sub_cat_result[0][0],
+                        'sub_cat_name': sub_cat_result[0][1],
+                    }
+
+                    # Append sub_cat_name to the list
+                    all_sub_cat_names.append(sub_cat_result[0][1])
                 else:
                     # Handle the case when no matching entry is found in united_armor_sub_categorytbl
                     sub_cat_data = {
