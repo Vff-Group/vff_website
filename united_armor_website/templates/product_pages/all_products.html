@@ -66,7 +66,7 @@
                             <div class="product-action-vertical">
                                 <form class="add-to-wishlist-form" method="post" id="add-to-wishlist-form-{{ row.productid }}" data-product-id="{{ row.productid }}">
                                     {% csrf_token %}
-                                    <a href="" class="btn-product-icon btn-wishlist btn-expandable" onclick="addToWishList('{{ row.productid }}','{{row.default_color_id}}')"><span>add to wishlist</span></a>
+                                    <a  class="btn-product-icon btn-wishlist btn-expandable" onclick="addToWishList('{{ row.productid }}','{{row.default_color_id}}')"><span>add to wishlist</span></a>
                                 </form>
                                 
                             </div><!-- End .product-action -->
@@ -350,15 +350,17 @@
                  // Show the Bootstrap toast with dynamic message
                  $('#toastMessage').html(response.message);
                  $('#liveToast').removeClass('hide').toast('show');
+                 return false;
             },
             error: function(error) {
                 console.error('Error adding product to cart:', error);
                 $('#toastMessage').html('Oops Something Went Wrong');
                  $('#liveToast').removeClass('hide').toast('show');
+                 return false;
             }
         });
         // Prevent the default form submission behavior
-    return false;
+        return false;
     }
 
     // Hide the toast when the close button is clicked

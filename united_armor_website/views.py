@@ -808,7 +808,7 @@ def add_to_wishlist(request,product_id,color_id):
             # Add Item To Wish list
             insert_query = "insert into vff.united_armor_wishlisttbl(product_id,customer_id,color_id) values ('"+str(product_id)+"','"+str(customer_id)+"','"+str(color_id)+"')"
             
-            print(f"adding to cart Id::{insert_query}")
+            print(f"adding to wish list::{insert_query}")
             cursor.execute(insert_query)
             connection.commit()
             print("Item Added To Wish List Successfully.")
