@@ -796,6 +796,9 @@ def custom_500_view_united(request, exception=None):
     return render(request, 'error_pages/500.html', status=500)
 
 def add_to_cart(request,product_id,color_id,size_id,price,quantity,offer_price):
+    # Convert path parameters to float
+    price = float(price)
+    offer_price = float(offer_price)
     actual_price = price
     #If he is a guest user then the customer id will be 1000000
     customer_id = request.session.get('u_customer_id')
@@ -803,7 +806,7 @@ def add_to_cart(request,product_id,color_id,size_id,price,quantity,offer_price):
         customer_id == 1000000
     try:
         with connection.cursor() as cursor:
-            if offer_price != 0:
+            if offer_price != 0.0:
                 price = offer_price
             # Update an existing employee
             insert_query = "insert into vff.united_armor_cart_tbl(product_id,customer_id,price,color_id,size_id,quantity,offer_price,actual_price) values ('"+str(product_id)+"','"+str(customer_id)+"','"+str(price)+"','"+str(color_id)+"','"+str(size_id)+"','"+str(quantity)+"','"+str(offer_price)+"','"+str(actual_price)+"')"
