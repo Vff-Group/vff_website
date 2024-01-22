@@ -71,7 +71,7 @@
                                 <form class="add-to-cart-form" method="post" id="add-to-cart-form-{{ row.productid }}" data-product-id="{{ row.productid }}">
                                     {% csrf_token %}
                                     <input type="hidden" name="product_id" value="{{ row.productid }}">
-                                    <a href="#" class="btn-product btn-cart" onclick="addToCart('{{ row.productid }}')"><span>add to cart</span></a>
+                                    <a href="#" class="btn-product btn-cart" onclick="addToCart('{{ row.productid }}','{{row.default_color_id}}','{{row.size}}','{{row.price}}',1,'{{row.offer_price}}')"><span>add to cart</span></a>
                                 </form>
                                 
                                
@@ -291,6 +291,19 @@
     });
 </script> -->
 
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <img src="..." class="rounded me-2" alt="...">
+        <strong class="me-auto">Alert</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body" id="toastMessage">
+        <!-- Toast body content will be dynamically updated here -->
+      </div>
+    </div>
+  </div>
+
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     function addToCart(productId,color_id,size_id,price,quantity,offer_price) {
@@ -304,12 +317,22 @@
             success: function(response) {
                 console.log('Product added to cart successfully');
                 // You can handle the response here if needed
+                 // Show the Bootstrap toast with dynamic message
+                 $('#toastMessage').html(response.message);
+                 $('#liveToast').removeClass('hide').toast('show');
             },
             error: function(error) {
                 console.error('Error adding product to cart:', error);
+                $('#toastMessage').html(response.message);
+                 $('#liveToast').removeClass('hide').toast('show');
             }
         });
     }
+
+    // Hide the toast when the close button is clicked
+    $('#liveToast').on('hidden.bs.toast', function() {
+        // Perform any actions after the toast is hidden
+    });
 
     function showToast(message, bodyContent) {
         toastr.warning(bodyContent, message, {

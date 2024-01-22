@@ -795,26 +795,27 @@ def custom_404_view_united(request, exception=None):
 def custom_500_view_united(request, exception=None):
     return render(request, 'error_pages/500.html', status=500)
 
-def add_to_cart(request,product_id,color_id,size_id,price,quantity):
-    
+def add_to_cart(request,product_id,color_id,size_id,price,quantity,offer_price):
+    actual_price = price
     #If he is a guest user then the customer id will be 1000000
     customer_id = request.session.get('u_customer_id')
     if customer_id == '':
         customer_id == 1000000
     try:
         with connection.cursor() as cursor:
-            
+            if offer_price != 0:
+                price = offer_price
             # Update an existing employee
-            insert_query = "insert into vff.united_armor_cart_tbl(product_id,customer_id,price,color_id,size_id,quantity) values ('"+str(product_id)+"','"+str(customer_id)+"','"+str(price)+"','"+str(color_id)+"','"+str(size_id)+"','"+str(quantity)+"')"
+            insert_query = "insert into vff.united_armor_cart_tbl(product_id,customer_id,price,color_id,size_id,quantity,offer_price,actual_price) values ('"+str(product_id)+"','"+str(customer_id)+"','"+str(price)+"','"+str(color_id)+"','"+str(size_id)+"','"+str(quantity)+"','"+str(offer_price)+"','"+str(actual_price)+"')"
             
             print(f"adding to cart Id::{insert_query}")
             cursor.execute(insert_query)
             connection.commit()
             print("Item Added To Cart Successfully.")
-            return JsonResponse({'success':True})
+            return JsonResponse({'message':'Item Added to cart successfully'})
     except Exception as e:
         print(f"Error loading data: {e}")
-    return JsonResponse({'success':False})
+    return JsonResponse({'message':'Oops Something Went Wrong'})
 #Generic Def
 def execute_raw_query(query, params=None,):
     

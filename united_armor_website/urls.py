@@ -36,7 +36,7 @@ urlpatterns = [
     path('checkout/',views.checkout,name='checkout'),
     
     #Get Sub Categories
-    path('add_to_cart/<int:product_id>/<int:color_id>/<int:size_id>/<double:price>/<int:quantity>/',views.add_to_cart,name='add_to_cart'),
+    path('add_to_cart/<int:product_id>/<int:color_id>/<int:size_id>/<float:price>/<int:quantity>/<float:offer_price>/',views.add_to_cart,name='add_to_cart'),
    
     
     
