@@ -863,9 +863,26 @@ def product(request,product_id):
             })
     else:
         error_msg = 'Something Went Wrong'
+    
+    #All Sizes for a particular product id and color id 
+    query_size = "select sizesid,size_value,quantity_available from vff.united_armor_product_sizestbl,vff.united_armor_sizes_available where united_armor_product_sizestbl.sizesid=united_armor_sizes_available.sizeid and product_id='"+str(product_id)+"' and color_id='"+str(color_id)+"'"
+    query_result_size = execute_raw_query(query_size)
+    data_sizes = []    
+    if not query_result_size == 500:
+        for row in query_result_size:
+            
+            data_sizes.append({
+                    'sizesid':row[0],
+                    'size_value':row[1],
+                    'quantity_available':row[2],
+                   
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
      
     current_url = request.get_full_path()
-    context = {'all_categories': all_categories,'query_result':data, 'current_url': current_url,'error_msg':error_msg}
+    context = {'all_categories': all_categories,'query_result':data,'data_sizes':data_sizes, 'current_url': current_url,'error_msg':error_msg}
     return render(request,"product_pages/single_product.html",context)
 
 #Wish List Details Against Customer ID
