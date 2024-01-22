@@ -47,7 +47,11 @@
 
                             <h3 class="product-title">
                                 <a>{{row.product_name}}</a>
-                                <p>Color [ {{row.color_name}} ]</p>
+                                <div class="m-1">
+                                    <span class="old-price">₹{{row.price}} </span>
+                                    <div class="product-price">₹{{row.offer_price}}</div>
+                                </div><!-- End .product-price -->
+                                <p class=" text-muted mt-1">Color [ {{row.color_name}} ]</p>
                             </h3><!-- End .product-title -->
                         </div><!-- End .product -->
                     </td>
