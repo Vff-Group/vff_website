@@ -42,22 +42,29 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        <h1 class="product-title">Beige V neck button cardigan</h1><!-- End .product-title -->
+                        {% if query_result %}
+                        {% with product=query_result.0 %}
+                            <h1 class="product-title">{{ product.product_name }}</h1>
 
-                        <div class="ratings-container">
-                            <div class="ratings">
-                                <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                            </div><!-- End .ratings -->
-                            <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>
-                        </div><!-- End .rating-container -->
+                            <div class="ratings-container">
+                                <div class="ratings">
+                                    <div class="ratings-val" style="width: 80%;"></div>
+                                </div>
+                                <a class="ratings-text" href="#product-review-link" id="review-link">( {{ product.ratings }} Reviews )</a>
+                            </div>
 
-                        <div class="product-price">
-                            {{query_result.product_name}}
-                        </div><!-- End .product-price -->
+                            <div class="product-price">
+                                {{ product.price }}
+                            </div>
 
-                        <div class="product-content">
-                            <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero.</p>
-                        </div><!-- End .product-content -->
+                            <div class="product-content">
+                                <p>{{ product.specifications }}</p>
+                            </div>
+                        {% endwith %}
+                    {% else %}
+                        <p>No product found.</p>
+                    {% endif %}
+
 
                         <div class="details-filter-row details-row-size">
                             <label>Color:</label>
