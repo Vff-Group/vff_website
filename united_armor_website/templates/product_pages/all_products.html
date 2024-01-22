@@ -332,6 +332,8 @@
                  $('#liveToast').removeClass('hide').toast('show');
             }
         });
+        // Prevent the default form submission behavior
+    return false;
     }
 
     function addToWishList(productId,color_id) {
@@ -355,6 +357,8 @@
                  $('#liveToast').removeClass('hide').toast('show');
             }
         });
+        // Prevent the default form submission behavior
+    return false;
     }
 
     // Hide the toast when the close button is clicked
