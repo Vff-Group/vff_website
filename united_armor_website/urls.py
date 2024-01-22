@@ -27,7 +27,7 @@ urlpatterns = [
     path('all_products/<int:s_main_cat_id>/<str:s_main_cat_name>/<int:s_cat_id>/<str:s_cat_name>/<int:s_sub_cat_id>/<str:s_sub_cat_name>/',views.all_products_with_sub_category,name='all_products_with_sub_category'),
     
     #Single Product Details
-    path('product/',views.product,name='product'),
+    path('product/<int:product_id>/',views.product,name='product'),
    
     #Wish list
     path('wishlist/',views.wishlist_details,name='wishlist'),
