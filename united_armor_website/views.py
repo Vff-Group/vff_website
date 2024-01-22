@@ -786,7 +786,7 @@ def wishlist_details(request):
     customer_id = request.session.get('u_customer_id')
     if customer_id == '' or customer_id == None:
         customer_id = 1000000
-    query = "select wishlistid,united_armor_wishlisttbl.product_id,product_name,price,offer_price,default_images,default_size,colorsid,color_name,color_code from vff.united_armor_product_colorstbl,vff.united_armor_wishlisttbl,vff.united_armor_all_productstbl where united_armor_wishlisttbl.product_id=united_armor_all_productstbl.productid and united_armor_product_colorstbl.product_id=united_armor_all_productstbl.productid and united_armor_wishlisttbl.product_id=united_armor_product_colorstbl.product_id and united_armor_wishlisttbl.color_id=united_armor_product_colorstbl.colorsid and customer_id='"+str(customer_id)+"'"
+    query = "select wishlistid,united_armor_wishlisttbl.product_id,product_name,price,offer_price,default_images,default_size,colorsid,color_name,color_code from vff.united_armor_product_colorstbl,vff.united_armor_wishlisttbl,vff.united_armor_all_productstbl where united_armor_wishlisttbl.product_id=united_armor_all_productstbl.productid and united_armor_product_colorstbl.product_id=united_armor_all_productstbl.productid and united_armor_wishlisttbl.product_id=united_armor_product_colorstbl.product_id and united_armor_wishlisttbl.color_id=united_armor_product_colorstbl.colorsid and customer_id='"+str(customer_id)+"' order by wishlistid desc"
     query_result = execute_raw_query(query)
     data = []    
     if not query_result == 500:
