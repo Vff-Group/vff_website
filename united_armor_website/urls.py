@@ -35,8 +35,11 @@ urlpatterns = [
     #Checkout Page
     path('checkout/',views.checkout,name='checkout'),
     
-    #Get Sub Categories
+    # Add Item to Cart
     path('add_to_cart/<int:product_id>/<int:color_id>/<int:size_id>/<path:price>/<int:quantity>/<path:offer_price>/',views.add_to_cart,name='add_to_cart'),
+    
+    # Add Item to Wishlist
+    path('add_to_wishlist/<int:product_id>/<int:color_id>/',views.add_to_wishlist,name='add_to_wishlist'),
    
     
     

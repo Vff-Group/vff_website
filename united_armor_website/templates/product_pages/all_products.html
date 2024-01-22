@@ -64,10 +64,14 @@
                             </a>
 
                             <div class="product-action-vertical">
-                                <a href="" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                                <form class="add-to-wishlist-form" method="post" id="add-to-wishlist-form-{{ row.productid }}" data-product-id="{{ row.productid }}">
+                                    {% csrf_token %}
+                                    <a href="" class="btn-product-icon btn-wishlist btn-expandable" onclick="addToWishList('{{ row.productid }}','{{row.default_color_id}}')"><span>add to wishlist</span></a>
+                                </form>
+                                
                             </div><!-- End .product-action -->
 
-                            <div class="product-action ">
+                            <!-- <div class="product-action ">
                                 <form class="add-to-cart-form" method="post" id="add-to-cart-form-{{ row.productid }}" data-product-id="{{ row.productid }}">
                                     {% csrf_token %}
                                     <input type="hidden" name="product_id" value="{{ row.productid }}">
@@ -75,7 +79,8 @@
                                 </form>
                                 
                                
-                            </div><!-- End .product-action -->
+                            </div> -->
+                            <!-- End .product-action -->
                         </figure><!-- End .product-media -->
 
                         <div class="product-body">
@@ -329,31 +334,35 @@
         });
     }
 
+    function addToWishList(productId,color_id) {
+        console.log("productId::"+productId)
+        $.ajax({
+            type: 'POST',
+            url: `/united_armor/add_to_wishlist/${productId}/${color_id}/`,
+            data: {
+                'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function(response) {
+                console.log('Product added to wishlist successfully');
+                // You can handle the response here if needed
+                 // Show the Bootstrap toast with dynamic message
+                 $('#toastMessage').html(response.message);
+                 $('#liveToast').removeClass('hide').toast('show');
+            },
+            error: function(error) {
+                console.error('Error adding product to cart:', error);
+                $('#toastMessage').html('Oops Something Went Wrong');
+                 $('#liveToast').removeClass('hide').toast('show');
+            }
+        });
+    }
+
     // Hide the toast when the close button is clicked
     $('#liveToast').on('hidden.bs.toast', function() {
         // Perform any actions after the toast is hidden
     });
 
-    function showToast(message, bodyContent) {
-        toastr.warning(bodyContent, message, {
-          positionClass: "toast-top-center",
-          timeOut: 5e3,
-          closeButton: !0,
-          debug: !1,
-          newestOnTop: !0,
-          progressBar: !0,
-          preventDuplicates: !0,
-          onclick: null,
-          showDuration: "300",
-          hideDuration: "1000",
-          extendedTimeOut: "1000",
-          showEasing: "swing",
-          hideEasing: "linear",
-          showMethod: "fadeIn",
-          hideMethod: "fadeOut",
-          tapToDismiss: !1
-      })
-    }
+
 </script>
 
     
