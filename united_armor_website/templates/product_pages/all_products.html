@@ -343,7 +343,7 @@
             },
             error: function(error) {
                 console.error('Error adding product to cart:', error);
-                showToast('Alert',error);
+                showToast('Alert',error.statusText);
                  return false;
             }
         });
