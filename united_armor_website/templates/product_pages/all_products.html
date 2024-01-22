@@ -296,18 +296,7 @@
     });
 </script> -->
 
-<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-    <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-header">
-        <img src="..." class="rounded me-2" alt="...">
-        <strong class="me-auto">Alert</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-      </div>
-      <div class="toast-body" id="toastMessage">
-        <!-- Toast body content will be dynamically updated here -->
-      </div>
-    </div>
-  </div>
+
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
@@ -348,14 +337,12 @@
                 console.log('Product added to wishlist successfully');
                 // You can handle the response here if needed
                  // Show the Bootstrap toast with dynamic message
-                 $('#toastMessage').html('Product Added To Wishlist Successfully');
-                 $('#liveToast').removeClass('hide').toast('show');
+                 showToastSuccess('Product Added To Wishlist Successfully');
                  return false;
             },
             error: function(error) {
                 console.error('Error adding product to cart:', error);
-                $('#toastMessage').html('Oops Something Went Wrong');
-                 $('#liveToast').removeClass('hide').toast('show');
+                showToast('Oops Something Went Wrong');
                  return false;
             }
         });
@@ -368,6 +355,48 @@
         // Perform any actions after the toast is hidden
     });
 
+// Function to show a toast message
+function showToast(message, bodyContent) {
+    toastr.warning(bodyContent, message, {
+      positionClass: "toast-top-center",
+      timeOut: 5e3,
+      closeButton: !0,
+      debug: !1,
+      newestOnTop: !0,
+      progressBar: !0,
+      preventDuplicates: !0,
+      onclick: null,
+      showDuration: "300",
+      hideDuration: "1000",
+      extendedTimeOut: "1000",
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut",
+      tapToDismiss: !1
+  })
+}
+
+function showToastSuccess(message, bodyContent) {
+    toastr.success(bodyContent, message, {
+      positionClass: "toast-top-center",
+      timeOut: 5e3,
+      closeButton: !0,
+      debug: !1,
+      newestOnTop: !0,
+      progressBar: !0,
+      preventDuplicates: !0,
+      onclick: null,
+      showDuration: "300",
+      hideDuration: "1000",
+      extendedTimeOut: "1000",
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut",
+      tapToDismiss: !1
+  })
+}
 
 </script>
 
