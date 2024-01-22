@@ -773,7 +773,7 @@ def all_products_with_sub_category(request,s_main_cat_id,s_main_cat_name,s_cat_i
     return render(request,"product_pages/all_products.html",context)
 
 #Single Product Detail with Product ID
-def product(request):
+def product(request,product_id):
     current_url = request.get_full_path()
     return render(request,"product_pages/single_product.html",{'current_url': current_url})
 
