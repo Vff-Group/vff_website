@@ -343,7 +343,7 @@
             },
             error: function(error) {
                 console.error('Error adding product to cart:', error);
-                showToast('Alert','Oops Something Went Wrong / No Internet Connection Found');
+                showToast('Alert',error);
                  return false;
             }
         });
