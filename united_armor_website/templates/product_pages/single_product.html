@@ -6,6 +6,8 @@
 <div class="page-content">
     <div class="product-details-top">
         <div class="bg-light pb-5 mb-4">
+            {% if query_result %}
+                        {% with product=query_result.0 %}
             <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
                 <div class="container d-flex align-items-center">
                     <ol class="breadcrumb">
@@ -20,7 +22,7 @@
             <div class="container">
                 <div class="product-gallery-carousel owl-carousel owl-full owl-nav-dark">
                     <figure class="product-gallery-image">
-                        <img src="assets/images/products/single/gallery/1.jpg" data-zoom-image="assets/images/products/single/gallery/1-big.jpg" alt="product image">
+                        <img src="{{product.image}}" data-zoom-image="{{product.image}}" alt="product image">
                     </figure><!-- End .product-gallery-image -->
 
                     <figure class="product-gallery-image">
@@ -42,8 +44,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        {% if query_result %}
-                        {% with product=query_result.0 %}
+                        
                             <h1 class="product-title">{{ product.product_name }}</h1>
 
                             <div class="ratings-container">
@@ -99,9 +100,7 @@
 
                             <a href="#" class="size-guide"><i class="icon-th-list"></i>size guide</a>
                         </div><!-- End .details-filter-row -->
-                        {% endwith %}
-                    
-                    {% endif %}
+                       
                     </div><!-- End .col-md-6 -->
 
                     <div class="col-md-6">
@@ -139,6 +138,9 @@
                 </div><!-- End .row -->
             </div><!-- End .container -->
         </div><!-- End .product-details -->
+        {% endwith %}
+                    
+        {% endif %}
     </div><!-- End .product-details-top -->
 
     <div class="container">
