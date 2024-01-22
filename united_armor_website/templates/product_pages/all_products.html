@@ -310,7 +310,7 @@
         console.log("productId::"+productId)
         $.ajax({
             type: 'POST',
-            url: `/united_armor/add_to_cart/${productId}/${color_id}/${size_id}/${price}/${quantity}/${offer_price}`,  // Replace with the actual URL endpoint where you handle the request on the server
+            url: `/united_armor/add_to_cart/${productId}/${color_id}/${size_id}/${price}/${quantity}/${offer_price}/`,  // Replace with the actual URL endpoint where you handle the request on the server
             data: {
                 'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
             },
