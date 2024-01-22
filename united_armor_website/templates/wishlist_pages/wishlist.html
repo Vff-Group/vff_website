@@ -21,12 +21,20 @@
         <table class="table table-wishlist table-mobile">
             <thead>
                 <tr>
-                    <th>Product</th>
+                    <th>Product Details</th>
                     <th></th>
                     <th></th>
                 </tr>
             </thead>
-
+            {% if not query_result%}
+            <div class="alert alert-info alert-dismissible m-4 fade show" role="alert">
+                <span class="alert-icon text-white"><i class="ni ni-like-2"></i></span>
+                <span class="alert-text text-white"><strong>Info!</strong> {{error_msg}}!</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% else %}
             <tbody>
                 
                 <tr>
@@ -51,6 +59,7 @@
                     <td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
                 </tr>
             </tbody>
+            {% endif %}
         </table><!-- End .table table-wishlist -->
         
     </div><!-- End .container -->

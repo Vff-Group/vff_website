@@ -779,8 +779,32 @@ def product(request):
 
 #Wish List Details Against Customer ID
 def wishlist_details(request):
+    #select wishlistid,united_armor_wishlisttbl.product_id,product_name,price,offer_price,default_images,default_size,colorsid,color_name,color_code from vff.united_armor_product_colorstbl,vff.united_armor_wishlisttbl,vff.united_armor_all_productstbl where united_armor_wishlisttbl.product_id=united_armor_all_productstbl.productid and united_armor_product_colorstbl.product_id=united_armor_all_productstbl.productid and united_armor_wishlisttbl.product_id=united_armor_product_colorstbl.product_id and united_armor_wishlisttbl.color_id=united_armor_product_colorstbl.colorsid and customer_id='1000000'
+    error_msg = 'No Item Added To Wishlist'
+    query = "select wishlistid,united_armor_wishlisttbl.product_id,product_name,price,offer_price,default_images,default_size,colorsid,color_name,color_code from vff.united_armor_product_colorstbl,vff.united_armor_wishlisttbl,vff.united_armor_all_productstbl where united_armor_wishlisttbl.product_id=united_armor_all_productstbl.productid and united_armor_product_colorstbl.product_id=united_armor_all_productstbl.productid and united_armor_wishlisttbl.product_id=united_armor_product_colorstbl.product_id and united_armor_wishlisttbl.color_id=united_armor_product_colorstbl.colorsid and customer_id='"+str(customer_id)+"'"
+    query_result = execute_raw_query(query)
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            data.append({
+                    'wishlist_id':row[0],
+                    'product_id':row[1],
+                    'product_name':row[2],
+                    'price':row[3],
+                    'offer_price':row[4],
+                    'default_images':row[5],
+                    'default_size':row[6],
+                    'colorsid':row[7],
+                    'color_name':row[8],
+                    'color_code':row[9],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
     current_url = request.get_full_path()
-    return render(request,"wishlist_pages/wishlist.html",{'current_url': current_url})
+    context= {'current_url': current_url,'query_result':data,'error_msg':error_msg}
+    return render(request,"wishlist_pages/wishlist.html",context)
 
 #Cart Details against Usrid
 def cart_details(request):
