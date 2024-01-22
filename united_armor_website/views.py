@@ -795,130 +795,26 @@ def custom_404_view_united(request, exception=None):
 def custom_500_view_united(request, exception=None):
     return render(request, 'error_pages/500.html', status=500)
 
-def get_main_categories(request):
-    errorRet={'ErrorCode#2':'ErrorCode#2'}
-    if request.method == "POST":
-        # Parsing and printing JSON body
-        
-        try:
+def add_to_cart(request,product_id,color_id,size_id,price,quantity):
+    
+    #If he is a guest user then the customer id will be 1000000
+    customer_id = request.session.get('u_customer_id')
+    if customer_id == '':
+        customer_id == 1000000
+    try:
+        with connection.cursor() as cursor:
             
-            today_date = datetime.now().strftime("%Y-%m-%d")
+            # Update an existing employee
+            insert_query = "insert into vff.united_armor_cart_tbl(product_id,customer_id,price,color_id,size_id,quantity) values ('"+str(product_id)+"','"+str(customer_id)+"','"+str(price)+"','"+str(color_id)+"','"+str(size_id)+"','"+str(quantity)+"')"
             
-            query = "select main_cat_id,main_title_name,images from vff.united_armor_main_categorytbl"
-            result = execute_raw_query(query)
-            data = []
-            sub_items = []    
-            if not result == 500:
-                for row in result:
-                    
-                    #bookingEpoch = epochToDateTime(depoch)
-                    data.append({
-                    'main_cat_id':row[0],
-                    'main_title_name':row[1],
-                    'images':row[2],
-                    
-                    })    
-            else:
-                error_msg = 'Something Went Wrong'
-            context ={'query_result':data} 
-            return JsonResponse(context)
-        
-        except KeyError as e:
-            print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
-        except json.JSONDecodeError as e:
-            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
-        except Exception as ex:
-            print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
-    return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
-
-
-def get_categories(request):
-    errorRet={'ErrorCode#2':'ErrorCode#2'}
-    if request.method == "POST":
-        # Parsing and printing JSON body
-        
-        try:
-            jdict = json.loads(request.body)
-            main_cat_id = jdict['main_cat_id']
-            
-            
-            
-            query = "select catid,cat_name from vff.united_armor_categorytbl where main_catid='"+str(main_cat_id)+"'"
-            result = execute_raw_query(query)
-            data = []
-              
-            if not result == 500:
-                for row in result:
-                    
-                    
-                    data.append({
-                    'catid':row[0],
-                    'cat_name':row[1],
-                    
-                    
-                    })    
-            else:
-                error_msg = 'Something Went Wrong'
-            context ={'query_result':data} 
-            return JsonResponse(context)
-        
-        except KeyError as e:
-            print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
-        except json.JSONDecodeError as e:
-            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
-        except Exception as ex:
-            print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
-
-    return JsonResponse(errorRet)
-
-
-def get_sub_categories(request):
-    errorRet={'ErrorCode#2':'ErrorCode#2'}
-    if request.method == "POST":
-        # Parsing and printing JSON body
-        
-        try:
-            jdict = json.loads(request.body)
-            cat_id = jdict['cat_id']
-            today_date = datetime.now().strftime("%Y-%m-%d")
-            
-            query = "select sub_catid,sub_cat_name from vff.united_armor_sub_categorytbl where catid='"+str(cat_id)+"'"
-            result = execute_raw_query(query)
-            data = []
-            sub_items = []    
-            if not result == 500:
-                for row in result:
-                    
-                    
-                    data.append({
-                    'sub_catid':row[0],
-                    'sub_cat_name':row[1],
-                    
-                    
-                    })    
-            else:
-                error_msg = 'Something Went Wrong'
-            context ={'query_result':data} 
-            return JsonResponse(context)
-        
-        except KeyError as e:
-            print(f"{Fore.RED}KeyError: {e}{Style.RESET_ALL} - Key does not exist in the JSON")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
-        except json.JSONDecodeError as e:
-            print(f"{Fore.RED}Failed to parse JSON: {e}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
-        except Exception as ex:
-            print(f"{Style.RESET_ALL}Error fetching data: {ex}{Style.RESET_ALL}")
-            return JsonResponse({'ErrorCode#8': 'ErrorCode#8'})
-
-    return JsonResponse(errorRet)
-
+            print(f"adding to cart Id::{insert_query}")
+            cursor.execute(insert_query)
+            connection.commit()
+            print("Item Added To Cart Successfully.")
+            return JsonResponse({'success':True})
+    except Exception as e:
+        print(f"Error loading data: {e}")
+    return JsonResponse({'success':False})
 #Generic Def
 def execute_raw_query(query, params=None,):
     

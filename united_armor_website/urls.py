@@ -35,14 +35,8 @@ urlpatterns = [
     #Checkout Page
     path('checkout/',views.checkout,name='checkout'),
     
-    #Main Navbar Categories
-    path('get_main_categories/',views.get_main_categories,name='get_main_categories'),
-    
-    #Categories
-    path('get_categories/',views.get_categories,name='get_categories'),
-    
     #Get Sub Categories
-    path('get_sub_categories/',views.get_sub_categories,name='get_sub_categories'),
+    path('add_to_cart/<int:product_id>/<int:color_id>/<int:size_id>/<double:price>/<int:quantity>/',views.add_to_cart,name='add_to_cart'),
    
     
     
