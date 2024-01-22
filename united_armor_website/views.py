@@ -774,8 +774,63 @@ def all_products_with_sub_category(request,s_main_cat_id,s_main_cat_name,s_cat_i
 
 #Single Product Detail with Product ID
 def product(request,product_id):
+    main_cat_query = "SELECT main_cat_id, main_title_name,images FROM vff.united_armor_main_categorytbl ORDER BY main_cat_id"
+    main_cat_result = execute_raw_query(main_cat_query)
+
+    all_categories = []
+    if not main_cat_result == 500:
+        for main_cat_row in main_cat_result:
+            main_cat_id = main_cat_row[0]
+            main_cat_name = main_cat_row[1]
+            main_image = main_cat_row[2]
+
+            cat_query = f"SELECT catid, cat_name FROM vff.united_armor_categorytbl WHERE main_catid = {main_cat_id} ORDER BY catid"
+            cat_result = execute_raw_query(cat_query)
+
+            sub_categories = []
+            if cat_result and len(cat_result) > 0:
+                for cat_row in cat_result:
+                    cat_id = cat_row[0]
+                    cat_name = cat_row[1]
+
+                    sub_cat_query = f"SELECT sub_catid, sub_cat_name FROM vff.united_armor_sub_categorytbl WHERE catid = {cat_id} ORDER BY sub_catid"
+                    sub_cat_result = execute_raw_query(sub_cat_query)
+
+                    sub_cat_data = []
+                    if sub_cat_result and len(sub_cat_result) > 0: 
+                        for sub_cat_row in sub_cat_result:
+                            sub_catid = sub_cat_row[0]
+                            sub_cat_name = sub_cat_row[1]
+                            
+                            sub_cat_data.append({
+                                'sub_cat_id': sub_catid,
+                                'sub_cat_name': sub_cat_name,
+                            })
+                            print(f'sub_cat_name::{sub_cat_name}')
+
+                    cat_data = {
+                        'cat_id': cat_id,
+                        'cat_name': cat_name,
+                        'sub_category': sub_cat_data,
+                    }
+                    sub_categories.append(cat_data)
+
+            main_cat_data = {
+                'main_cat_id': main_cat_id,
+                'main_cat_name': main_cat_name,
+                'images':main_image,
+                'categories': sub_categories,
+            }
+            all_categories.append(main_cat_data)
+    else:
+        error_msg = 'Something Went Wrong'
+
+    
+    
+     
     current_url = request.get_full_path()
-    return render(request,"product_pages/single_product.html",{'current_url': current_url})
+    context = {'all_categories': all_categories, 'current_url': current_url,'error_msg':error_msg}
+    return render(request,"product_pages/single_product.html",context)
 
 #Wish List Details Against Customer ID
 def wishlist_details(request):
