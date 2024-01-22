@@ -3,6 +3,17 @@
 {% block content %}
 
 
+<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+    <div class="container d-flex align-items-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Products</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Extended Description</li>
+        </ol>
+
+        
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
 
 
 <div class="page-content">
@@ -12,8 +23,7 @@
                 <div class="col-md-6">
                     <div class="product-gallery">
                         <figure class="product-main-image">
-                            {% comment %} <img src="{% static 'assets/images/products/single/extended/3.webp' %}"  alt="product image"> {% endcomment %}
-                            <img src="{% static 'assets/images/no_image.jpg' %}"  width="100" height="100" alt="Product image" class="product-image">
+                            <img id="product-zoom" src="assets/images/products/single/extended/3.jpg" data-zoom-image="assets/images/products/single/extended/3-big.jpg" alt="product image">
 
                             <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                 <i class="icon-arrows"></i>
@@ -21,43 +31,29 @@
                         </figure><!-- End .product-main-image -->
 
                         <div id="product-zoom-gallery" class="product-image-gallery">
-                            
-
-                            <a class="product-gallery-item active" href="#" data-image="{% static 'assets/images/products/single/extended/3.webp' %}" >
-                                {% comment %} <img src="{% static 'assets/images/products/single/extended/3.webp' %}" alt="product with model"> {% endcomment %}
-                                <img src="{% static 'assets/images/no_image.jpg' %}"   alt="Product image">
+                            <a class="product-gallery-item" href="#" data-image="assets/images/products/single/extended/1.jpg" data-zoom-image="assets/images/products/single/extended/1-big.jpg">
+                                <img src="assets/images/products/single/extended/1-small.jpg" alt="product side">
                             </a>
 
-                            <a class="product-gallery-item " href="#" data-image="{% static 'assets/images/products/single/extended/3-back.webp' %}" >
-                                {% comment %} <img src="{% static 'assets/images/products/single/extended/3-back.webp' %}" alt="product with model"> {% endcomment %}
-                                <img src="{% static 'assets/images/no_image.jpg' %}"   alt="Product image">
+                            <a class="product-gallery-item" href="#" data-image="assets/images/products/single/extended/2.jpg" data-zoom-image="assets/images/products/single/extended/2-big.jpg">
+                                <img src="assets/images/products/single/extended/2-small.jpg" alt="product cross">
                             </a>
 
-                            
+                            <a class="product-gallery-item active" href="#" data-image="assets/images/products/single/extended/3.jpg" data-zoom-image="assets/images/products/single/extended/3-big.jpg">
+                                <img src="assets/images/products/single/extended/3-small.jpg" alt="product with model">
+                            </a>
+
+                            <a class="product-gallery-item" href="#" data-image="assets/images/products/single/extended/4.jpg" data-zoom-image="assets/images/products/single/extended/4-big.jpg">
+                                <img src="assets/images/products/single/extended/4-small.jpg" alt="product back">
+                            </a>
 
                         </div><!-- End .product-image-gallery -->
                     </div><!-- End .product-gallery -->
                 </div><!-- End .col-md-6 -->
 
                 <div class="col-md-6">
-                    <div class="product-details-footer">
-                        <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
-                            <div class="container d-flex align-items-center">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="{% url 'united_armor:home' %}">Men</a></li>
-                                    <li class="breadcrumb-item"><a href="#">Shop By Category</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Tops</li>
-                                </ol>
-                                
-                                
-                            </div><!-- End .container -->
-                        </nav><!-- End .breadcrumb-nav -->
-                        
-
-                       
-                    </div><!-- End .product-details-footer -->
                     <div class="product-details">
-                        <h1 class="product-title">Boys' UA Rival Fleece Hoodie</h1><!-- End .product-title -->
+                        <h1 class="product-title">Yellow tie strap block heel sandals</h1><!-- End .product-title -->
 
                         <div class="ratings-container">
                             <div class="ratings">
@@ -67,11 +63,11 @@
                         </div><!-- End .rating-container -->
 
                         <div class="product-price">
-                            ₹700.00
+                            $70.00
                         </div><!-- End .product-price -->
 
                         <div class="product-content">
-                            <p>This gear keeps you warmed up and ready for pretty much everything you do—it's light, comfy, and super-soft on the inside. </p>
+                            <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing. Sed lectus. </p>
                         </div><!-- End .product-content -->
 
                         <div class="details-filter-row details-row-size">
@@ -112,11 +108,27 @@
 
                             <div class="details-action-wrapper">
                                 <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
-                                
+                                <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a>
                             </div><!-- End .details-action-wrapper -->
                         </div><!-- End .product-details-action -->
 
-                        
+                        <div class="product-details-footer">
+                            <div class="product-cat">
+                                <span>Category:</span>
+                                <a href="#">Women</a>,
+                                <a href="#">Shoes</a>,
+                                <a href="#">Sandals</a>,
+                                <a href="#">Yellow</a>
+                            </div><!-- End .product-cat -->
+
+                            <div class="social-icons social-icons-sm">
+                                <span class="social-label">Share:</span>
+                                <a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
+                                <a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
+                                <a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
+                                <a href="#" class="social-icon" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
+                            </div>
+                        </div><!-- End .product-details-footer -->
                     </div><!-- End .product-details -->
                 </div><!-- End .col-md-6 -->
             </div><!-- End .row -->
