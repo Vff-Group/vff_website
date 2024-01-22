@@ -30,6 +30,10 @@ urlpatterns = [
     path('product/',views.product,name='product'),
    
     #Cart
+    path('wishlist/',views.wishlist_details,name='wishlist'),
+    
+    
+    #Cart
     path('cart/',views.cart_details,name='cart'),
    
     #Checkout Page

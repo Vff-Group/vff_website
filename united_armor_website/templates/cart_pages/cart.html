@@ -84,7 +84,7 @@
                         </tbody>
                     </table><!-- End .table table-wishlist -->
 
-                    <div class="cart-bottom">
+                    {% comment %} <div class="cart-bottom">
                         <div class="cart-discount">
                             <form action="#">
                                 <div class="input-group">
@@ -96,8 +96,9 @@
                             </form>
                         </div><!-- End .cart-discount -->
 
-                        <a href="#" class="btn btn-outline-dark-2"><span>UPDATE CART</span><i class="icon-refresh"></i></a>
-                    </div><!-- End .cart-bottom -->
+                        {% comment %} <a href="#" class="btn btn-outline-dark-2"><span>UPDATE CART</span><i class="icon-refresh"></i></a> {% endcomment %}
+                    </div><!-- End .cart-bottom --> {% endcomment %}
+
                 </div><!-- End .col-lg-9 -->
                 <aside class="col-lg-3">
                     <div class="summary summary-cart">
@@ -109,7 +110,7 @@
                                     <td>Subtotal:</td>
                                     <td>₹160.00</td>
                                 </tr><!-- End .summary-subtotal -->
-                                <tr class="summary-shipping">
+                                {% comment %} <tr class="summary-shipping">
                                     <td>Coupon Code:</td>
                                     <td>&nbsp;</td>
                                 </tr>
@@ -122,7 +123,7 @@
                                         </div><!-- End .custom-control -->
                                     </td>
                                     <td>₹60.00</td>
-                                </tr><!-- End .summary-shipping-row -->
+                                </tr><!-- End .summary-shipping-row --> {% endcomment %}
 
                             
 
@@ -138,7 +139,7 @@
                         <a href="{% url 'united_armor:checkout' %}" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
                     </div><!-- End .summary -->
 
-                    <a href="{% url 'united_armor:all_products' %}" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
+                    <a href="{% url 'united_armor:home' %}" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
                 </aside><!-- End .col-lg-3 -->
             </div><!-- End .row -->
         </div><!-- End .container -->

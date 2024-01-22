@@ -777,6 +777,11 @@ def product(request):
     current_url = request.get_full_path()
     return render(request,"product_pages/single_product.html",{'current_url': current_url})
 
+#Wish List Details Against Customer ID
+def wishlist_details(request):
+    current_url = request.get_full_path()
+    return render(request,"wishlist_pages/wishlist.html",{'current_url': current_url})
+
 #Cart Details against Usrid
 def cart_details(request):
     current_url = request.get_full_path()
