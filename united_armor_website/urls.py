@@ -29,8 +29,11 @@ urlpatterns = [
     #Single Product Details
     path('product/',views.product,name='product'),
    
-    #Cart
+    #Wish list
     path('wishlist/',views.wishlist_details,name='wishlist'),
+   
+    # Delete From Wish list
+    path('delete_from_wishlist/<int:wishlist_id>/',views.delete_from_wishlist,name='delete_from_wishlist'),
     
     
     #Cart

@@ -58,7 +58,11 @@
                     
                     
                     <td class="remove-col">
-                        <a class="btn-remove"><i class="icon-close"></i></a>
+                        <form class="delete-wishlist-form" method="post" id="delete-wishlist-form-{{ row.wishlist_id }}" data-wishlist-id="{{ row.wishlist_id }}">
+                            {% csrf_token %}
+                            <a class="btn-remove" onclick="deleteFromWishList('{{ row.wishlist_id }}')"><i class="icon-close"></i></a>
+                        </form>
+                        
                     </td>
                 </tr>
                 {% endfor %}        
@@ -69,4 +73,79 @@
     </div><!-- End .container -->
 </div><!-- End .page-content -->
 
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    function deleteFromWishList(wishlist_id) {
+        console.log("wishlist_id::"+wishlist_id)
+        $.ajax({
+            type: 'POST',
+            url: `/united_armor/delete_from_wishlist/${wishlist_id}/`,
+            data: {
+                'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function(response) {
+                
+                // You can handle the response here if needed
+                 // Show the Bootstrap toast with dynamic message
+                 showToastSuccess('Success','Product Removed From Wishlist Successfully');
+                 console.log('Product Removed from wishlist successfully');
+                 return false;
+            },
+            error: function(error) {
+                console.error('Error removing product from wishlist:', error);
+                showToast('Alert',error.statusText);
+                 return false;
+            }
+        });
+        // Prevent the default form submission behavior
+        return false;
+    }
+
+    
+
+// Function to show a toast message
+function showToast(message, bodyContent) {
+    toastr.warning(bodyContent, message, {
+      positionClass: "toast-top-center",
+      timeOut: 5e3,
+      closeButton: !0,
+      debug: !1,
+      newestOnTop: !0,
+      progressBar: !0,
+      preventDuplicates: !0,
+      onclick: null,
+      showDuration: "300",
+      hideDuration: "1000",
+      extendedTimeOut: "1000",
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut",
+      tapToDismiss: !1
+  })
+}
+
+function showToastSuccess(message, bodyContent) {
+    toastr.success(bodyContent, message, {
+        positionClass: "toast-top-full-width",
+        timeOut: 5e3,
+        closeButton: !0,
+        debug: !1,
+        newestOnTop: !0,
+        progressBar: !0,
+        preventDuplicates: !0,
+        onclick: null,
+        showDuration: "300",
+        hideDuration: "1000",
+        extendedTimeOut: "1000",
+        showEasing: "swing",
+        hideEasing: "linear",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut",
+        tapToDismiss: !1
+  })
+}
+
+</script>
 {% endblock %}

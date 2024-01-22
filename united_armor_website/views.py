@@ -811,6 +811,23 @@ def wishlist_details(request):
     context= {'current_url': current_url,'query_result':data,'error_msg':error_msg}
     return render(request,"wishlist_pages/wishlist.html",context)
 
+#Delete From Wish List 
+def delete_from_wishlist(request,wishlist_id):
+    try:
+        with connection.cursor() as cursor:
+            
+            # Add Item To Wish list
+            insert_query = "delete from vff.united_armor_wishlisttbl where wishlistid='"+str(wishlist_id)+"'"
+            
+            print(f"deleting from wish list::{insert_query}")
+            cursor.execute(insert_query)
+            connection.commit()
+            print("Item Delete from Wish List Successfully.")
+            return JsonResponse({'message':'Item Delete from  Wish List successfully'})
+    except Exception as e:
+        print(f"Error loading data: {e}")
+    return JsonResponse({'message':'Oops Something Went Wrong'})
+
 #Cart Details against Usrid
 def cart_details(request):
     current_url = request.get_full_path()
