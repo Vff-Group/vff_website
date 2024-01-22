@@ -863,7 +863,7 @@ def product(request,product_id):
             })
     else:
         error_msg = 'Something Went Wrong'
-    
+    color_id = data[0]['default_color_id'] if data else ''
     #All Sizes for a particular product id and color id 
     query_size = "select sizesid,size_value,quantity_available from vff.united_armor_product_sizestbl,vff.united_armor_sizes_available where united_armor_product_sizestbl.sizesid=united_armor_sizes_available.sizeid and product_id='"+str(product_id)+"' and color_id='"+str(color_id)+"'"
     query_result_size = execute_raw_query(query_size)
