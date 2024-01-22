@@ -84,9 +84,13 @@
                             <label>Size:</label>
 
                             <div class="product-size">
+                               
                                 {% for size in data_sizes %}
-                                <a href="#" title="size" class=" {%if size.quantity_available==0 or size.quantity_available == -1 %} disabled{% elif size.sizesid == product.default_color_id %}active {% else %}{% endif %}">{{size.size_value}}</a>
+                                <a href="#" title="size" class="{% if size.quantity_available|default_if_none:0 == 0 or size.quantity_available|default_if_none:-1 == 0 %}disabled{% elif size.sizesid == product.default_color_id %}active{% endif %}">
+                                    {{ size.size_value }}
+                                </a>                                
                                 {% endfor %}
+
                                 {% comment %} <a href="#" title="Small">S</a>
                                 <a href="#" title="Medium" class="active">M</a>
                                 <a href="#" title="Large" class="disabled">L</a>
