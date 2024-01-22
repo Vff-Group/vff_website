@@ -827,10 +827,45 @@ def product(request,product_id):
         error_msg = 'Something Went Wrong'
 
     
-    
+    query = "SELECT product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,main_title_name,cat_name,sub_cat_name,product_catid,product_category_name,united_armor_all_productstbl.product_type_id,product_type_name,price,united_armor_all_productstbl.main_cat_id,united_armor_all_productstbl.cat_id,united_armor_all_productstbl.sub_catid,offer_price,default_images,default_size,ratings,default_color_id,color_name,color_code FROM  vff.united_armor_product_colorstbl,vff.united_armor_all_productstbl,vff.united_armor_product_categorytbl,vff.united_armor_product_typetbl,vff.united_armor_main_categorytbl,vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl WHERE  united_armor_product_colorstbl.colorsid=default_color_id  AND united_armor_product_categorytbl.product_catid=united_armor_all_productstbl.product_collection_id AND united_armor_product_typetbl.product_type_id=united_armor_all_productstbl.product_type_id AND united_armor_main_categorytbl.main_cat_id=united_armor_all_productstbl.main_cat_id AND united_armor_all_productstbl.cat_id=united_armor_categorytbl.catid AND united_armor_all_productstbl.sub_catid=united_armor_sub_categorytbl.sub_catid AND productid='"+str(product_id)+"'"
+    query_result = execute_raw_query(query)
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            
+            data.append({
+                    'product_name':row[0],
+                    'fitting_type':row[1],
+                    'fitting_id':row[2],
+                    'max_checkout_qty':row[3],
+                    'what_it_does':row[4],
+                    'specifications':row[5],
+                    'fit_and_care_desc':row[6],
+                    'main_title_name':row[7],
+                    'cat_name':row[8],
+                    'sub_cat_name':row[9],
+                    'product_catid':row[10],
+                    'product_category_name':row[11],
+                    'product_type_id':row[12],
+                    'product_type_name':row[13],
+                    'price':row[14],
+                    'main_cat_id':row[15],
+                    'cat_id':row[16],
+                    'sub_catid':row[17],
+                    'offer_price':row[18],
+                    'image':row[19],
+                    'size':row[20],
+                    'ratings':row[21],
+                    'default_color_id':row[22],
+                    'color_name':row[23],
+                    'color_code':row[24],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
      
     current_url = request.get_full_path()
-    context = {'all_categories': all_categories, 'current_url': current_url,'error_msg':error_msg}
+    context = {'all_categories': all_categories,'query_result':data, 'current_url': current_url,'error_msg':error_msg}
     return render(request,"product_pages/single_product.html",context)
 
 #Wish List Details Against Customer ID
