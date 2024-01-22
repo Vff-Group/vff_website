@@ -880,9 +880,27 @@ def product(request,product_id):
             })
     else:
         error_msg = 'Something Went Wrong'
+    
+    #colors available for a particular color
+    query_color = "select colorsid,color_name,color_code from vff.united_armor_product_colorstbl where product_id='"+str(product_id)+"'"
+    query_result_color = execute_raw_query(query_color)
+    data_colors = []    
+    if not query_result_color == 500:
+        for row in query_result_color:
+            
+            data_colors.append({
+                    'colorsid':row[0],
+                    'color_name':row[1],
+                    'color_code':row[2],
+                   
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+    
      
     current_url = request.get_full_path()
-    context = {'all_categories': all_categories,'query_result':data,'data_sizes':data_sizes, 'current_url': current_url,'error_msg':error_msg}
+    context = {'all_categories': all_categories,'query_result':data,'data_sizes':data_sizes,'data_colors':data_colors, 'current_url': current_url,'error_msg':error_msg}
     return render(request,"product_pages/single_product.html",context)
 
 #Wish List Details Against Customer ID
