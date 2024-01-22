@@ -68,10 +68,10 @@
                             </div><!-- End .product-action -->
 
                             <div class="product-action ">
-                                <form  class="add-to-cart-form" method="post" id="add-to-cart-form-{{ row.productid }}" data-product-id="{{ row.productid }}">
+                                <form class="add-to-cart-form" method="post" id="add-to-cart-form-{{ row.productid }}" data-product-id="{{ row.productid }}">
                                     {% csrf_token %}
                                     <input type="hidden" name="product_id" value="{{ row.productid }}">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                    <a href="#" class="btn-product btn-cart" onclick="addToCart('{{ row.productid }}')"><span>add to cart</span></a>
                                 </form>
                                 
                                
@@ -293,33 +293,25 @@
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('.add-to-cart-form').submit(function(event) {
-            // Prevent the default form submission
-            event.preventDefault();
-            // Get the selected product ID from the form's data-product-id attribute
-        var productId = $(this).data('product-id');
-        console.log('productID:'+productId);
-            // Get form data
-            var formData = $(this).serialize();
-    
-            // Perform AJAX request
-            $.ajax({
-                url: '/united_armor/add-to-cart/',  // Update the URL to match your Django view URL
-                type: 'POST',
-                data: formData,
-                success: function(response) {
-                    // Show alert with the response message
-                    alert(response.message);
-                },
-                error: function(error) {
-                    // Handle errors
-                    console.error('Error:', error);
-                }
-            });
+    function addToCart(productId) {
+        console.log("productId::"+productId)
+        $.ajax({
+            type: 'POST',
+            url: '/your-backend-endpoint/',  // Replace with the actual URL endpoint where you handle the request on the server
+            data: {
+                'product_id': productId,
+                'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function(response) {
+                console.log('Product added to cart successfully');
+                // You can handle the response here if needed
+            },
+            error: function(error) {
+                console.error('Error adding product to cart:', error);
+            }
         });
-    });
-    </script>
+    }
+</script>
 
     
 {% endblock %}
