@@ -633,53 +633,30 @@
         });
     });
 
-     // Add a click event listener to the "Add to Wish list" button
-     document.querySelector('wishlist-btn').addEventListener('click', function (event) {
-        event.preventDefault();
+    // Wait for the document to be ready
+    $(document).ready(function () {
+        // Attach a click event handler to the wishlist button
+        $('#wishlist-btn').on('click', function (event) {
+            // Prevent the default behavior of the anchor tag
+            event.preventDefault();
+            var customerId = $('#customer-id').val();
 
-        // Get the selected color ID and size ID
-        var selectedColorId = document.getElementById('selected-color-id').value;
-        var selectedSizeId = document.getElementById('selected-size-id').value;
-        var customerId = $('#customer-id').val();
+            if (!customerId) {
+                // Show the login modal if customer ID is empty
+                $('#loginModal').modal('show');
+                return;
+            }
+            // Add your custom logic here, e.g., trigger an AJAX request to add to the wishlist
+            addToWishlist();
+        });
 
-    if (!customerId) {
-        // Show the login modal if customer ID is empty
-        $('#loginModal').modal('show');
-        return;
-    }
-        if(selectedColorId === ''){
-            showToast('Alert','Please Select the Color you want');
-            return;
+        // Function to handle adding to the wishlist (you can customize this)
+        function addToWishlist() {
+            // Add your logic here to perform actions when the "Add to Wishlist" button is clicked
+            console.log('Adding to Wishlist...');
         }
-        if(selectedSizeId === ''){
-            showToast('Alert','Please Select the Size you want');
-            return;
-        }
-        
-        // Get the selected product details
-        var productName = $('#product-name').text();
-        var selectedColorImage = document.querySelector('.product-gallery-image[data-color-id="' + selectedColorId + '"] img').getAttribute('data-zoom-image');
-        var price = $('#price').text().trim();
-        var offerPrice = $('#offer-price').text().trim();
-
-        // Get the selected quantity
-        var quantity = parseInt(document.getElementById('qty').value);
-        
-        // Create an object with the selected product details
-        var selectedProduct = {
-            productName: productName,
-            selectedColorImage: selectedColorImage,
-            price: price,
-            offerPrice: offerPrice,
-            selectedColorId: selectedColorId,
-            selectedSizeId: selectedSizeId,
-            quantity: quantity
-        };
-
-        
-        console.log(selectedProduct);
     });
-});
+
 
     // Function to show a toast message
         function showToast(message, bodyContent) {
