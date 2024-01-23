@@ -48,10 +48,10 @@
                             </div>
 
                             <div class="product-price">
-                                <small class="old-price text-sm">₹{{product.price}} </small>
+                                <small class="old-price text-sm" id="price">₹{{product.price}} </small>
                             </div>
                             <div class="product-price">
-                            <div class="product-price">₹{{product.offer_price}}</div>
+                            <div class="product-price" id="offer-price">₹{{product.offer_price}}</div>
                             </div>
 
                             <div class="product-content">
@@ -581,8 +581,8 @@
             // Get the selected product details
             var productName = $('#product-name').text();
             var selectedColorImage = document.querySelector('.product-gallery-image[data-color-id="' + selectedColorId + '"] img').getAttribute('data-zoom-image');
-            var price = document.querySelector('.product-price .product-price').textContent.trim();
-            var offerPrice = document.querySelector('.product-price .product-price').textContent.trim();
+            var price = $('#price').text().trim();
+            var offerPrice = $('#offer-price').text().trim();
 
             // Get the selected quantity
             var quantity = parseInt(document.getElementById('qty').value);
@@ -598,7 +598,7 @@
                 quantity: quantity
             };
 
-            // You can now send this 'selectedProduct' object to your server or perform any other desired action
+            
             console.log(selectedProduct);
         });
     });
