@@ -577,7 +577,14 @@
             // Get the selected color ID and size ID
             var selectedColorId = document.getElementById('selected-color-id').value;
             var selectedSizeId = document.getElementById('selected-size-id').value;
-
+            if(selectedColorId === ''){
+                alert('Please select color ')
+                return;
+            }
+            if(selectedSizeId === ''){
+                alert('Please select Size  ')
+                return;
+            }
             // Get the selected product details
             var productName = $('#product-name').text();
             var selectedColorImage = document.querySelector('.product-gallery-image[data-color-id="' + selectedColorId + '"] img').getAttribute('data-zoom-image');
