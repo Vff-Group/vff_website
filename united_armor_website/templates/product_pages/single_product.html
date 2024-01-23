@@ -92,7 +92,8 @@
 
                              
                             </div><!-- End .product-size -->
-
+                            <input type="hidden" id="selected-color-id" name="selected-color-id">
+                            <input type="hidden" id="selected-size-id" name="selected-size-id">
                             <a href="" class="size-guide" data-bs-toggle="modal" data-bs-target="#sizeGuideModal"><i class="icon-th-list"></i>size guide</a>
 
                         </div><!-- End .details-filter-row -->
@@ -246,6 +247,8 @@
 
 <script>
     $(document).ready(function () {
+        var selectedColorId = null;
+        var selectedSizeId = null;
         // Store all original images in a variable
         var allImages = $('.product-gallery-image').clone();
         var carousel = $('#color-carousel');
@@ -272,11 +275,14 @@
         $('.color-link').on('mouseenter click', function (event) {
             event.preventDefault();
             var colorId = $(this).data('color-id');
+            selectedColorId = $(this).data('color-id');
             updateCarouselAndSizes(colorId, null);
 
             // Add a class to the clicked color link
             $('.color-link').removeClass('selected-color');
             $(this).addClass('selected-color');
+            // Update hidden input for color id
+            updateColorIdInput();
         });
 
         // Handle click events for sizes
@@ -284,6 +290,7 @@
             event.preventDefault();
             var sizeColorId = $(this).data('color-id');
             var sizeId = $(this).data('size-id');
+            selectedSizeId = $(this).data('size-id');
             console.log('Size clicked for colorId:', sizeColorId, ' and sizeId:', sizeId);
 
             // Remove the 'active' class from all sizes and add it to the clicked size
@@ -292,6 +299,8 @@
 
             // Update carousel based on the selected color and size
             var colorId = $('.color-link.selected-color').data('color-id');
+             // Update hidden input for size id
+             updateSizeIdInput();
            // updateCarouselAndSizes(colorId, sizeId);
         });
 
@@ -376,69 +385,57 @@
             $('#sizeGuideModal').modal('show');
         });
 
+        // Function to update hidden input for color id
+        function updateColorIdInput() {
+            $('#selected-color-id').val(selectedColorId);
+        }
+
+        // Function to update hidden input for size id
+        function updateSizeIdInput() {
+            $('#selected-size-id').val(selectedSizeId);
+        }
 
     });
 </script>
 
 
-<!-- Add this script to your HTML -->
+<!-- To Handle the Add To Cart Button  -->
 <script>
-    $(document).ready(function () {
-        // Variables to store selected values
-        var selectedColorName = '';
-        var selectedColorId = '';
-        var selectedSizeId = '';
-        var selectedSizeValue = '';
-        var selectedProductName = $('.product-title').text().trim();
-        var selectedQuantity = 1; // Default quantity
-        var selectedPrice = $('.product-price .product-price').text().trim().replace('₹', ''); // Assuming the price is formatted as ₹XXX
-        var selectedOfferPrice = $('.product-price .product-price').text().trim().replace('₹', ''); // Assuming the offer price is formatted as ₹XXX
-
-        // Handle click events for color links
-        $('.color-link').on('click', function () {
-            selectedColorName = $(this).find('.sr-only').text();
-            selectedColorId = $(this).data('color-id');
-        });
-
-        // Handle click events for size links
-        $('.product-size a').on('click', function () {
-            selectedSizeId = $(this).data('size-id');
-            selectedSizeValue = $(this).data('size-value');
-        });
-
-        // Handle click event for Add to Cart button
-        $('.btn-cart').on('click', function (event) {
+    document.addEventListener('DOMContentLoaded', function () {
+        // Add a click event listener to the "Add to Cart" button
+        document.querySelector('.btn-cart').addEventListener('click', function (event) {
             event.preventDefault();
 
-            // Check if color and size are selected
-            if (!selectedColorId) {
-                alert('Please select a color.');
-                return;
-            }
+            // Get the selected color ID and size ID
+            var selectedColorId = document.getElementById('selected-color-id').value;
+            var selectedSizeId = document.getElementById('selected-size-id').value;
 
-            if (!selectedSizeId) {
-                alert('Please select a size.');
-                return;
-            }
+            // Get the selected product details
+            var productName = document.querySelector('.product-title').textContent.trim();
+            var selectedColorImage = document.querySelector('.product-gallery-image[data-color-id="' + selectedColorId + '"] img').getAttribute('data-zoom-image');
+            var price = document.querySelector('.product-price .product-price').textContent.trim();
+            var offerPrice = document.querySelector('.product-price .product-price').textContent.trim();
 
-            // Get selected quantity from input
-            selectedQuantity = parseInt($('#qty').val());
+            // Get the selected quantity
+            var quantity = parseInt(document.getElementById('qty').value);
 
-            // Log the selected values (replace with your actual logic)
-            console.log('Selected Color Name:', selectedColorName);
-            console.log('Selected Color ID:', selectedColorId);
-            console.log('Selected Size ID:', selectedSizeId);
-            console.log('Selected Size Value:', selectedSizeValue);
-            console.log('Selected Product Name:', selectedProductName);
-            console.log('Selected Quantity:', selectedQuantity);
-            console.log('Selected Price:', selectedPrice);
-            console.log('Selected Offer Price:', selectedOfferPrice);
+            // Create an object with the selected product details
+            var selectedProduct = {
+                productName: productName,
+                selectedColorImage: selectedColorImage,
+                price: price,
+                offerPrice: offerPrice,
+                selectedColorId: selectedColorId,
+                selectedSizeId: selectedSizeId,
+                quantity: quantity
+            };
 
-            // Add your logic to perform the "Add to Cart" action here
-            // For example, you can send an AJAX request to your server to add the item to the cart.
+            // You can now send this 'selectedProduct' object to your server or perform any other desired action
+            console.log(selectedProduct);
         });
     });
 </script>
+
 
 
 
