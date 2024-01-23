@@ -411,6 +411,7 @@
         }
 
     });
+    
 </script>
 
 <!-- <script>
@@ -578,11 +579,11 @@
             var selectedColorId = document.getElementById('selected-color-id').value;
             var selectedSizeId = document.getElementById('selected-size-id').value;
             if(selectedColorId === ''){
-                alert('Please select color ')
+                showToast('Alert','Please Select the Color you want');
                 return;
             }
             if(selectedSizeId === ''){
-                alert('Please select Size  ')
+                showToast('Alert','Please Select the Size you want');
                 return;
             }
             // Get the selected product details
@@ -609,6 +610,50 @@
             console.log(selectedProduct);
         });
     });
+
+    // Function to show a toast message
+        function showToast(message, bodyContent) {
+            toastr.warning(bodyContent, message, {
+            positionClass: "toast-top-center",
+            timeOut: 5e3,
+            closeButton: !0,
+            debug: !1,
+            newestOnTop: !0,
+            progressBar: !0,
+            preventDuplicates: !0,
+            onclick: null,
+            showDuration: "300",
+            hideDuration: "1000",
+            extendedTimeOut: "1000",
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut",
+            tapToDismiss: !1
+        })
+        }
+
+        function showToastSuccess(message, bodyContent) {
+            toastr.success(bodyContent, message, {
+                positionClass: "toast-top-full-width",
+                timeOut: 5e3,
+                closeButton: !0,
+                debug: !1,
+                newestOnTop: !0,
+                progressBar: !0,
+                preventDuplicates: !0,
+                onclick: null,
+                showDuration: "300",
+                hideDuration: "1000",
+                extendedTimeOut: "1000",
+                showEasing: "swing",
+                hideEasing: "linear",
+                showMethod: "fadeIn",
+                hideMethod: "fadeOut",
+                tapToDismiss: !1
+        })
+        }
+
 </script>
 
 
