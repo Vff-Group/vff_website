@@ -256,6 +256,13 @@
     
 </div><!-- End .page-content -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<style>
+    .product-gallery-image {
+        margin: 0; /* Remove any margin to eliminate spacing */
+        padding: 0; /* Remove any padding */
+    }
+</style>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var colorLinks = document.querySelectorAll('.color-link');
@@ -279,12 +286,60 @@
 
                     if (imageColorId === selectedColorId || !selectedColorId) {
                         image.classList.remove('d-none');
-                        image.classList.add('d-block');
                     }
+                });
+            });
+
+            colorLink.addEventListener('mouseenter', function (event) {
+                var selectedColorId = colorLink.getAttribute('data-color-id');
+
+                // Hide all images initially
+                productImages.forEach(function (image) {
+                    var imageColorId = image.getAttribute('data-color-id');
+                    if (imageColorId !== selectedColorId) {
+                        image.classList.add('d-none');
+                    }
+                });
+            });
+
+            colorLink.addEventListener('mouseleave', function (event) {
+                // Show all images on mouse leave
+                productImages.forEach(function (image) {
+                    image.classList.remove('d-none');
                 });
             });
         });
     });
 </script>
+
+<!-- <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var colorLinks = document.querySelectorAll('.color-link');
+        var productImages = document.querySelectorAll('.product-gallery-image');
+
+        colorLinks.forEach(function (colorLink) {
+            colorLink.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                // Get the selected color ID
+                var selectedColorId = colorLink.getAttribute('data-color-id');
+
+                // Hide all images initially
+                productImages.forEach(function (image) {
+                    image.style.display = 'none';
+                });
+
+                // Show images with matching color ID
+                productImages.forEach(function (image) {
+                    var imageColorId = image.getAttribute('data-color-id');
+
+                    if (imageColorId === selectedColorId || !selectedColorId) {
+                        image.style.display = 'block';
+                    }
+                });
+            });
+        });
+    });
+</script> -->
 
 {% endblock %}
