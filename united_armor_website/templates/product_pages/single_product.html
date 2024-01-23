@@ -259,8 +259,134 @@
 </div><!-- End .page-content -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-
 <script>
+    $(document).ready(function () {
+        // Store all original images in a variable
+        var allImages = $('.product-gallery-image').clone();
+        var carousel = $('#color-carousel');
+
+        // Initialize the carousel
+        initCarousel();
+
+        // Initialize sizes and colors with the data from Django template
+        var initialColorId = $('.color-link:first').data('color-id');
+        var initialSizeId = $('.product-size a.active').data('size-id');
+
+        // Set the first color and size as active if none is initially selected
+        if (!initialColorId) {
+            initialColorId = $('.color-link:first').addClass('selected-color').data('color-id');
+        }
+
+        if (!initialSizeId) {
+            initialSizeId = $('.product-size a:first').addClass('active').data('size-id');
+        }
+
+        updateCarouselAndSizes(initialColorId, initialSizeId);
+
+        // Handle mouse enter and click events for colors
+        $('.color-link').on('mouseenter click', function (event) {
+            event.preventDefault();
+            var colorId = $(this).data('color-id');
+            updateCarouselAndSizes(colorId, null);
+
+            // Add a class to the clicked color link
+            $('.color-link').removeClass('selected-color');
+            $(this).addClass('selected-color');
+        });
+
+        // Handle click events for sizes
+        $('.product-size').on('click', 'a', function (event) {
+            event.preventDefault();
+            var sizeColorId = $(this).data('color-id');
+            var sizeId = $(this).data('size-id');
+            console.log('Size clicked for colorId:', sizeColorId, ' and sizeId:', sizeId);
+
+            // Remove the 'active' class from all sizes and add it to the clicked size
+            $('.product-size a').removeClass('active');
+            $(this).addClass('active');
+
+            // Update carousel based on the selected color and size
+            var colorId = $('.color-link.selected-color').data('color-id');
+            updateCarouselAndSizes(colorId, sizeId);
+        });
+
+        // Function to update carousel and sizes based on color id and size id
+        function updateCarouselAndSizes(colorId, sizeId) {
+            // Destroy the existing carousel
+            carousel.trigger('destroy.owl.carousel');
+            carousel.empty();
+
+            // Create a copy of the original images
+            var originalImages = allImages.clone();
+
+            // Filter images based on the selected color
+            var matchingImages = originalImages.filter('[data-color-id="' + colorId + '"]');
+
+            // Append matching images to the carousel
+            carousel.append(matchingImages);
+
+            // Reinitialize the carousel
+            initCarousel();
+
+            // Update sizes based on the selected color
+            updateSizesByColor(colorId);
+
+            // Set the selected size as active
+            if (sizeId) {
+                $('.product-size a[data-size-id="' + sizeId + '"]').addClass('active');
+            }
+        }
+
+        // Function to initialize the carousel
+        function initCarousel() {
+            carousel.owlCarousel({
+                // Add your carousel options here
+                // For example:
+                items: 3,
+                loop: true,
+                margin: 10,
+                nav: true,
+                dots: false,
+                responsiveClass: true,
+                responsive: {
+                    0: {
+                        items: 1,
+                        nav: true
+                    },
+                    600: {
+                        items: 3,
+                        nav: false
+                    },
+                    1000: {
+                        items: 3,
+                        nav: true,
+                        loop: false
+                    }
+                }
+            });
+
+            // Add additional classes after the carousel is initialized
+            carousel.addClass('owl-full owl-nav-dark');
+        }
+
+        // Function to update sizes based on color id
+        function updateSizesByColor(colorId) {
+            // Hide all sizes
+            $('.product-size a').hide();
+
+            // If there's only one color, show all sizes
+            if ($('.color-link').length === 1) {
+                $('.product-size a').show();
+            } else {
+                // Select and show sizes with the specified data-color-id
+                $('.product-size a[data-color-id="' + colorId + '"]').show();
+            }
+        }
+    });
+</script>
+
+
+<!-- <script>
     $(document).ready(function () {
         // Store all original images in a variable
         var allImages = $('.product-gallery-image').clone();
@@ -361,85 +487,9 @@
             }
         }
     });
-</script>
-
-
-
-
-
-
-<!-- <script>
-    $(document).ready(function () {
-        // Store all original images in a variable
-        var allImages = $('.product-gallery-image').clone();
-        var carousel = $('#color-carousel');
-
-        // Initialize the carousel
-        initCarousel();
-
-        // Handle mouse enter and click events
-        $('.color-link').on('mouseenter click', function (event) {
-            event.preventDefault();
-            var colorId = $(this).data('color-id');
-            updateCarouselByColor(colorId);
-
-            // Add a class to the clicked color link
-            $('.color-link').removeClass('selected-color');
-            $(this).addClass('selected-color');
-        });
-
-        // Function to update carousel based on color id
-        function updateCarouselByColor(colorId) {
-            // Destroy the existing carousel
-            carousel.trigger('destroy.owl.carousel');
-            carousel.empty();
-
-            // Create a copy of the original images
-            var originalImages = allImages.clone();
-
-            // Filter images based on the selected color
-            var matchingImages = originalImages.filter('[data-color-id="' + colorId + '"]');
-
-            // Append matching images to the carousel
-            carousel.append(matchingImages);
-
-            // Reinitialize the carousel
-            initCarousel();
-        }
-
-        // Function to initialize the carousel
-        function initCarousel() {
-            carousel.owlCarousel({
-                // Add your carousel options here
-                // For example:
-                items: 3,
-                loop: true,
-                margin: 10,
-                nav: true,
-                dots: false,
-                responsiveClass: true,
-                responsive: {
-                    0: {
-                        items: 1,
-                        nav: true
-                    },
-                    600: {
-                        items: 3,
-                        nav: false
-                    },
-                    1000: {
-                        items: 3,
-                        nav: true,
-                        loop: false
-                    }
-                }
-            });
-        
-            // Add additional classes after the carousel is initialized
-            carousel.addClass('owl-full owl-nav-dark');
-        }
-    });
 </script> -->
+
+
 
 
 
