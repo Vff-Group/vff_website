@@ -260,6 +260,7 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 
+<!-- Add this before the closing </body> tag -->
 <script>
     $(document).ready(function () {
         // Store all original images in a variable
@@ -340,26 +341,15 @@
 
         // Function to update sizes based on color id
         function updateSizesByColor(colorId) {
-            // Select all sizes with the specified data-color-id
-            var matchingSizes = $('.product-size a[data-color-id="' + colorId + '"]');
+            // Hide all sizes
+            $('.product-size a').hide();
 
-            // Update the product-size container with matching sizes
-            var sizeContainer = $('.product-size');
-            sizeContainer.empty();
-
-            // If there's only one color, show only one size
-            if (matchingSizes.length === 1) {
-                var sizeLink = matchingSizes.clone();
-                sizeContainer.append(sizeLink);
-            } else {
-                matchingSizes.each(function () {
-                    var sizeLink = $(this).clone();
-                    sizeContainer.append(sizeLink);
-                });
-            }
+            // Select and show sizes with the specified data-color-id
+            $('.product-size a[data-color-id="' + colorId + '"]').show();
         }
     });
 </script>
+
 
 
 
