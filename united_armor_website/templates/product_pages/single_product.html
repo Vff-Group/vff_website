@@ -83,7 +83,8 @@
                                     class="{% if size.quantity_available|default_if_none:0 == 0 or size.quantity_available|default_if_none:-1 == 0 %}disabled{% elif size.sizesid == product.default_color_id %}active{% endif %}"
                                     data-size-value="{{ size.size_value }}"
                                     data-size-id="{{ size.sizesid }}"
-                                    data-quantity-available="{{ size.quantity_available }}">
+                                    data-quantity-available="{{ size.quantity_available }}"
+                                    data-color-id="{{ size.size_color_id }}">
                                         {{ size.size_value }}
                                     </a>
                                 {% endfor %}
@@ -258,8 +259,7 @@
 </div><!-- End .page-content -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-<!-- Add this before the closing </body> tag -->
-<!-- Add this before the closing </body> tag -->
+
 <script>
     $(document).ready(function () {
         // Store all original images in a variable
@@ -341,7 +341,7 @@
         // Function to update sizes based on color id
         function updateSizesByColor(colorId) {
             // Select all sizes with the specified data-color-id
-            var matchingSizes = $('[data-color-id="' + colorId + '"]');
+            var matchingSizes = $('.product-size a[data-color-id="' + colorId + '"]');
 
             // Update the product-size container with matching sizes
             var sizeContainer = $('.product-size');
