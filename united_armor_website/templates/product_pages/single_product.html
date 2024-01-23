@@ -92,7 +92,7 @@
                              
                             </div><!-- End .product-size -->
 
-                            <a href="#" class="size-guide" data-bs-toggle="modal" data-bs-target="#sizeGuideModal"><i class="icon-th-list"></i>size guide</a>
+                            <a href="" class="size-guide" data-bs-toggle="modal" data-bs-target="#sizeGuideModal"><i class="icon-th-list"></i>size guide</a>
 
                         </div><!-- End .details-filter-row -->
                        
@@ -402,7 +402,13 @@
             }
         }
 
-        
+         // Handle click events for the size guide
+         $('.size-guide').on('click', function (event) {
+            event.preventDefault();
+
+            
+            $('#sizeGuideModal').modal('show');
+        });
 
 
     });
