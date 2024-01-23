@@ -389,10 +389,10 @@
         var selectedColorId = '';
         var selectedSizeId = '';
         var selectedSizeValue = '';
-        var selectedProductName = '{{ product.product_name }}';
+        var selectedProductName = $('.product-title').text().trim();
         var selectedQuantity = 1; // Default quantity
-        var selectedPrice = '{{ product.price }}';
-        var selectedOfferPrice = '{{ product.offer_price }}';
+        var selectedPrice = $('.product-price .product-price').text().trim().replace('₹', ''); // Assuming the price is formatted as ₹XXX
+        var selectedOfferPrice = $('.product-price .product-price').text().trim().replace('₹', ''); // Assuming the offer price is formatted as ₹XXX
 
         // Handle click events for color links
         $('.color-link').on('click', function () {
@@ -409,6 +409,17 @@
         // Handle click event for Add to Cart button
         $('.btn-cart').on('click', function (event) {
             event.preventDefault();
+
+            // Check if color and size are selected
+            if (!selectedColorId) {
+                alert('Please select a color.');
+                return;
+            }
+
+            if (!selectedSizeId) {
+                alert('Please select a size.');
+                return;
+            }
 
             // Get selected quantity from input
             selectedQuantity = parseInt($('#qty').val());
@@ -428,6 +439,7 @@
         });
     });
 </script>
+
 
 
 <!-- <script>
