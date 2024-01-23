@@ -24,7 +24,7 @@
                 <div class="product-gallery-carousel owl-carousel owl-full owl-nav-dark">
                     {% for image in data_images%}
                     <figure class="product-gallery-image">
-                        <img src="{{product.image}}" data-zoom-image="{{product.image}}" alt="product image">
+                        <img src="{{image.image_url}}" data-zoom-image="{{image.image_url}}" alt="product image">
                     </figure><!-- End .product-gallery-image -->
                     {% endfor %}
                 </div><!-- End .owl-carousel -->
