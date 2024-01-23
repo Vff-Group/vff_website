@@ -258,6 +258,7 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <style>
     .product-gallery-image {
+        display: none;
         margin: 0; /* Remove any margin to eliminate spacing */
         padding: 0; /* Remove any padding */
     }
@@ -277,7 +278,7 @@
 
                 // Hide all images initially
                 productImages.forEach(function (image) {
-                    image.classList.add('d-none');
+                    image.style.display = 'none';
                 });
 
                 // Show images with matching color ID
@@ -285,7 +286,7 @@
                     var imageColorId = image.getAttribute('data-color-id');
 
                     if (imageColorId === selectedColorId || !selectedColorId) {
-                        image.classList.remove('d-none');
+                        image.style.display = 'block';
                     }
                 });
             });
@@ -297,7 +298,7 @@
                 productImages.forEach(function (image) {
                     var imageColorId = image.getAttribute('data-color-id');
                     if (imageColorId !== selectedColorId) {
-                        image.classList.add('d-none');
+                        image.style.display = 'none';
                     }
                 });
             });
