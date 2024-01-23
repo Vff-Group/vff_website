@@ -259,6 +259,7 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <!-- Add this before the closing </body> tag -->
+<!-- Add this before the closing </body> tag -->
 <script>
     $(document).ready(function () {
         // Store all original images in a variable
@@ -270,7 +271,7 @@
 
         // Initialize sizes with the first color_id
         var initialColorId = $('.color-link:first').data('color-id');
-        updateSizesByColor(initialColorId);
+        updateCarouselAndSizes(initialColorId);
 
         // Handle mouse enter and click events for colors
         $('.color-link').on('mouseenter click', function (event) {
@@ -339,21 +340,27 @@
 
         // Function to update sizes based on color id
         function updateSizesByColor(colorId) {
+            // Select all sizes with the specified data-color-id
+            var matchingSizes = $('[data-color-id="' + colorId + '"]');
+
             // Update the product-size container with matching sizes
             var sizeContainer = $('.product-size');
             sizeContainer.empty();
 
-            // Select all sizes with the specified data-color-id
-            var matchingSizes = $('[data-color-id="' + colorId + '"]');
-
-            // Append matching sizes to the container
-            matchingSizes.each(function () {
-                var sizeLink = $(this).clone();
+            // If there's only one color, show only one size
+            if (matchingSizes.length === 1) {
+                var sizeLink = matchingSizes.clone();
                 sizeContainer.append(sizeLink);
-            });
+            } else {
+                matchingSizes.each(function () {
+                    var sizeLink = $(this).clone();
+                    sizeContainer.append(sizeLink);
+                });
+            }
         }
     });
 </script>
+
 
 
 
