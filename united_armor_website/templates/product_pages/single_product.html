@@ -258,9 +258,16 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <style>
     .product-gallery-image {
-        display: none;
         margin: 0; /* Remove any margin to eliminate spacing */
         padding: 0; /* Remove any padding */
+        visibility: hidden; /* Initially hide images */
+        position: absolute; /* Absolute positioning to stack images */
+    }
+
+    .product-gallery-image.active {
+        visibility: visible; /* Display the active image */
+        position: relative; /* Reset position for active image */
+        z-index: 1; /* Ensure the active image is on top */
     }
 </style>
 
@@ -276,17 +283,23 @@
                 // Get the selected color ID
                 var selectedColorId = colorLink.getAttribute('data-color-id');
 
-                // Hide all images initially
+                // Toggle active class for color links
+                colorLinks.forEach(function(link) {
+                    link.classList.remove('active');
+                });
+                colorLink.classList.add('active');
+
+                // Reset visibility for all images
                 productImages.forEach(function (image) {
-                    image.style.display = 'none';
+                    image.classList.remove('active');
                 });
 
-                // Show images with matching color ID
+                // Show the active image
                 productImages.forEach(function (image) {
                     var imageColorId = image.getAttribute('data-color-id');
 
                     if (imageColorId === selectedColorId || !selectedColorId) {
-                        image.style.display = 'block';
+                        image.classList.add('active');
                     }
                 });
             });
@@ -294,24 +307,26 @@
             colorLink.addEventListener('mouseenter', function (event) {
                 var selectedColorId = colorLink.getAttribute('data-color-id');
 
-                // Hide all images initially
+                // Hide images that don't match the selected color
                 productImages.forEach(function (image) {
                     var imageColorId = image.getAttribute('data-color-id');
                     if (imageColorId !== selectedColorId) {
-                        image.style.display = 'none';
+                        image.classList.remove('active');
                     }
                 });
             });
 
             colorLink.addEventListener('mouseleave', function (event) {
-                // Show all images on mouse leave
+                // Reset visibility for all images on mouse leave
                 productImages.forEach(function (image) {
-                    image.classList.remove('d-none');
+                    image.classList.add('active');
                 });
             });
         });
     });
 </script>
+
+
 
 <!-- <script>
     document.addEventListener('DOMContentLoaded', function () {
