@@ -260,12 +260,15 @@
     .product-gallery-image {
         margin: 0; /* Remove any margin to eliminate spacing */
         padding: 0; /* Remove any padding */
-        opacity: 1; /* Set initial opacity to 1 */
+        display: none; /* Initially hide images */
+        opacity: 0; /* Set opacity to 0 */
         transition: opacity 0.3s ease; /* Add transition for a smooth effect */
     }
 
-    .product-gallery-image.hidden {
-        opacity: 0; /* Set opacity to 0 for hidden images */
+    .product-gallery-image.active {
+        display: block; /* Display the active image */
+        opacity: 1; /* Set opacity to 1 */
+        transition: opacity 0.3s ease; /* Add transition for a smooth effect */
     }
 </style>
 
@@ -287,17 +290,17 @@
                 });
                 colorLink.classList.add('active');
 
-                // Reset opacity for all images
+                // Reset display and opacity for all images
                 productImages.forEach(function (image) {
-                    image.classList.remove('hidden');
+                    image.classList.remove('active');
                 });
 
-                // Hide images that don't match the selected color
+                // Show the active image
                 productImages.forEach(function (image) {
                     var imageColorId = image.getAttribute('data-color-id');
 
-                    if (imageColorId !== selectedColorId && selectedColorId) {
-                        image.classList.add('hidden');
+                    if (imageColorId === selectedColorId || !selectedColorId) {
+                        image.classList.add('active');
                     }
                 });
             });
@@ -309,20 +312,21 @@
                 productImages.forEach(function (image) {
                     var imageColorId = image.getAttribute('data-color-id');
                     if (imageColorId !== selectedColorId) {
-                        image.classList.add('hidden');
+                        image.classList.remove('active');
                     }
                 });
             });
 
             colorLink.addEventListener('mouseleave', function (event) {
-                // Reset opacity for all images on mouse leave
+                // Reset display and opacity for all images on mouse leave
                 productImages.forEach(function (image) {
-                    image.classList.remove('hidden');
+                    image.classList.add('active');
                 });
             });
         });
     });
 </script>
+
 
 
 
