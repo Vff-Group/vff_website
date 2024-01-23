@@ -92,7 +92,7 @@
                              
                             </div><!-- End .product-size -->
 
-                            <a href="#" class="size-guide"><i class="icon-th-list"></i>size guide</a>
+                            <a  class="size-guide" data-bg-target="#sizeGuideModal"><i class="icon-th-list"></i>size guide</a>
                         </div><!-- End .details-filter-row -->
                        
                     </div><!-- End .col-md-6 -->
@@ -406,11 +406,11 @@
             event.preventDefault();
 
             // Get the size guide image URL from the product data
-            var sizeGuideImageUrl = '{{ product.size_guide_image_url }}';
+            //var sizeGuideImageUrl = '{{ product.size_guide_image_url }}';
 
             // Display the modal with the size guide image
-            $('#sizeGuideModal img').attr('src', sizeGuideImageUrl);
-            $('#sizeGuideModal').modal('show');
+            //$('#sizeGuideModal img').attr('src', sizeGuideImageUrl);
+            //$('#sizeGuideModal').modal('show');
         });
 
 
