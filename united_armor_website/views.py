@@ -1113,6 +1113,18 @@ def execute_raw_query_fetch_one(query, params=None,):
 
 from datetime import datetime, timedelta
 
+def format_time_difference(time_difference):
+    if time_difference < 1:
+        return 'just now'
+    elif time_difference == 1:
+        return '1 day ago'
+    elif time_difference < 60:
+        return f'{time_difference} minutes ago'
+    elif time_difference < 1440:
+        return f'{time_difference // 60} hours ago'
+    else:
+        return f'{time_difference // 1440} days ago'
+
 def days_since_review(timestamp):
     # Convert double precision epoch to seconds
     timestamp_seconds = timestamp * 1e-6
@@ -1123,7 +1135,10 @@ def days_since_review(timestamp):
     # Get current date and time
     current_date = datetime.utcnow()
 
-    # Calculate the difference in days
-    days_difference = (current_date - review_date).days
+    # Calculate the difference in minutes
+    minutes_difference = int((current_date - review_date).total_seconds() / 60)
 
-    return days_difference
+    # Format the time difference
+    formatted_time_difference = format_time_difference(minutes_difference)
+
+    return formatted_time_difference
