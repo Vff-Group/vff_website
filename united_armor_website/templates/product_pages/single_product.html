@@ -22,21 +22,11 @@
             
             <div class="container">
                 <div class="product-gallery-carousel owl-carousel owl-full owl-nav-dark">
+                    {% for image in data_images%}
                     <figure class="product-gallery-image">
                         <img src="{{product.image}}" data-zoom-image="{{product.image}}" alt="product image">
                     </figure><!-- End .product-gallery-image -->
-
-                    <figure class="product-gallery-image">
-                        <img src="{{product.image}}" data-zoom-image="{{product.image}}" alt="product image">
-                    </figure><!-- End .product-gallery-image -->
-
-                    <figure class="product-gallery-image">
-                        <img src="{{product.image}}" data-zoom-image="{{product.image}}" alt="product image">
-                    </figure><!-- End .product-gallery-image -->
-
-                    <figure class="product-gallery-image">
-                        <img src="{{product.image}}" data-zoom-image="{{product.image}}" alt="product image">
-                    </figure><!-- End .product-gallery-image -->
+                    {% endfor %}
                 </div><!-- End .owl-carousel -->
             </div><!-- End .container -->
         </div><!-- End .bg-light pb-5 -->
