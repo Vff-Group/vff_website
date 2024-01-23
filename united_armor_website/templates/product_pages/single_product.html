@@ -119,7 +119,7 @@
                                 <div class="product-details-quantity">
                                     <input type="number" id="qty" class="form-control" value="1" min="1" max="{{product.max_checkout_qty}}" step="1" data-decimals="0" required>
                                 </div><!-- End .product-details-quantity -->
-                                <input type="hidden" value="{{customer_id}}">
+                                <input type="hidden" id="customer-id" value="{{customer_id}}">
                                 <a href="" class="btn-product btn-cart"><span>add to cart</span></a>
                             </div><!-- End .details-action-col -->
 
@@ -578,12 +578,17 @@
             // Get the selected color ID and size ID
             var selectedColorId = document.getElementById('selected-color-id').value;
             var selectedSizeId = document.getElementById('selected-size-id').value;
+            var customerID = document.getElementById('customer-id').value;
             if(selectedColorId === ''){
                 showToast('Alert','Please Select the Color you want');
                 return;
             }
             if(selectedSizeId === ''){
                 showToast('Alert','Please Select the Size you want');
+                return;
+            }
+            if(customerID === ''){
+                showToast('Alert','Please Login Before Adding Items To Cart');
                 return;
             }
             // Get the selected product details
