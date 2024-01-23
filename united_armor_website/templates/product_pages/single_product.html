@@ -81,7 +81,7 @@
                                
                                 {% for size in data_sizes %}
                                     <a href="" title="size" 
-                                    class="{% if size.quantity_available|default_if_none:0 == 0 or size.quantity_available|default_if_none:-1 == 0 %}disabled{% elif size.sizesid == product.default_color_id %}active{% endif %}"
+                                    class=" ms-1 me-1 {% if size.quantity_available|default_if_none:0 == 0 or size.quantity_available|default_if_none:-1 == 0 %}disabled{% elif size.sizesid == product.default_color_id %}active{% endif %}"
                                     data-size-value="{{ size.size_value }}"
                                     data-size-id="{{ size.sizesid }}"
                                     data-quantity-available="{{ size.quantity_available }}"
@@ -116,10 +116,10 @@
                         <div class="product-details-action">
                             <div class="details-action-col">
                                 <div class="product-details-quantity">
-                                    <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
+                                    <input type="number" id="qty" class="form-control" value="1" min="1" max="{{product.max_checkout_qty}}" step="1" data-decimals="0" required>
                                 </div><!-- End .product-details-quantity -->
 
-                                <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                <a href="" class="btn-product btn-cart"><span>add to cart</span></a>
                             </div><!-- End .details-action-col -->
 
                             <div class="details-action-wrapper">
