@@ -118,7 +118,7 @@
                                 <div class="product-details-quantity">
                                     <input type="number" id="qty" class="form-control" value="1" min="1" max="{{product.max_checkout_qty}}" step="1" data-decimals="0" required>
                                 </div><!-- End .product-details-quantity -->
-
+                                <input type="hidden" value="{{customer_id}}">
                                 <a href="" class="btn-product btn-cart"><span>add to cart</span></a>
                             </div><!-- End .details-action-col -->
 
@@ -377,6 +377,55 @@
         });
 
 
+    });
+</script>
+
+
+<!-- Add this script to your HTML -->
+<script>
+    $(document).ready(function () {
+        // Variables to store selected values
+        var selectedColorName = '';
+        var selectedColorId = '';
+        var selectedSizeId = '';
+        var selectedSizeValue = '';
+        var selectedProductName = '{{ product.product_name }}';
+        var selectedQuantity = 1; // Default quantity
+        var selectedPrice = '{{ product.price }}';
+        var selectedOfferPrice = '{{ product.offer_price }}';
+
+        // Handle click events for color links
+        $('.color-link').on('click', function () {
+            selectedColorName = $(this).find('.sr-only').text();
+            selectedColorId = $(this).data('color-id');
+        });
+
+        // Handle click events for size links
+        $('.product-size a').on('click', function () {
+            selectedSizeId = $(this).data('size-id');
+            selectedSizeValue = $(this).data('size-value');
+        });
+
+        // Handle click event for Add to Cart button
+        $('.btn-cart').on('click', function (event) {
+            event.preventDefault();
+
+            // Get selected quantity from input
+            selectedQuantity = parseInt($('#qty').val());
+
+            // Log the selected values (replace with your actual logic)
+            console.log('Selected Color Name:', selectedColorName);
+            console.log('Selected Color ID:', selectedColorId);
+            console.log('Selected Size ID:', selectedSizeId);
+            console.log('Selected Size Value:', selectedSizeValue);
+            console.log('Selected Product Name:', selectedProductName);
+            console.log('Selected Quantity:', selectedQuantity);
+            console.log('Selected Price:', selectedPrice);
+            console.log('Selected Offer Price:', selectedOfferPrice);
+
+            // Add your logic to perform the "Add to Cart" action here
+            // For example, you can send an AJAX request to your server to add the item to the cart.
+        });
     });
 </script>
 
