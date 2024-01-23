@@ -258,44 +258,70 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <!-- Add this before the closing </body> tag -->
+<!-- Add this before the closing </body> tag -->
 <script>
     $(document).ready(function () {
         // Store all images in a variable
         var allImages = $('.product-gallery-image');
+        var carousel = $('#color-carousel');
 
         // Handle mouse enter event
         $('.color-link').mouseenter(function () {
             var colorId = $(this).data('color-id');
-            showImagesByColor(colorId);
+            updateCarouselByColor(colorId);
         });
 
         // Handle mouse leave event
         $('.color-link').mouseleave(function () {
-            showAllImages();
+            resetCarousel();
         });
 
         // Handle click event
         $('.color-link').click(function (event) {
             event.preventDefault();
             var colorId = $(this).data('color-id');
-            showImagesByColor(colorId);
+            updateCarouselByColor(colorId);
         });
 
-        // Function to show images based on color id
-        function showImagesByColor(colorId) {
-            // Hide all images
-            allImages.hide();
+        // Function to update carousel based on color id
+        function updateCarouselByColor(colorId) {
+            // Clone all images
+            var clonedImages = allImages.clone();
 
-            // Show only images with the selected color id
-            $('.product-gallery-image[data-color-id="' + colorId + '"]').show();
+            // Remove non-matching color images
+            clonedImages.filter(':not([data-color-id="' + colorId + '"])').remove();
+
+            // Empty and append the updated carousel content
+            carousel.trigger('destroy.owl.carousel');
+            carousel.empty().append(clonedImages);
+            initCarousel();
         }
 
-        // Function to show all images
-        function showAllImages() {
-            allImages.show();
+        // Function to reset carousel to show all images
+        function resetCarousel() {
+            carousel.trigger('destroy.owl.carousel');
+            carousel.empty().append(allImages);
+            initCarousel();
         }
+
+        // Initialize the carousel
+        function initCarousel() {
+            carousel.owlCarousel({
+                // Add your carousel options here
+                // For example:
+                items: 4,
+                loop: true,
+                margin: 10,
+                nav: true,
+                dots: false
+            });
+        }
+
+        // Initialize the carousel on page load
+        initCarousel();
     });
 </script>
+
 
 
 
