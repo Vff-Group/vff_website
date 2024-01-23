@@ -24,7 +24,7 @@
                 <div class="product-gallery-carousel owl-carousel owl-full owl-nav-dark">
                 {% for image in data_images %}
                     {% if data_colors|length <= 1 or image.color_id_image == selected_color_id %}
-                        <figure class="product-gallery-image">
+                        <figure class="product-gallery-image  {% if data_colors|length > 1 and image.color_id_image != selected_color_id %}d-none{% endif %}">
                             <img src="{{ image.image_url }}" data-zoom-image="{{ image.image_url }}" alt="product image">
                         </figure><!-- End .product-gallery-image -->
                     {% endif %}
@@ -267,7 +267,14 @@
 
         selected_color_id = colorId;
 
-        // Add logic to update the displayed images based on the selected color if needed
+        // Adding logic to update the displayed images based on the selected color 
+        document.querySelectorAll('.product-gallery-image').forEach(image => {
+            image.classList.add('d-none');
+        });
+
+        document.querySelectorAll(`.product-gallery-image[data-color-id="${colorId}"]`).forEach(image => {
+            image.classList.remove('d-none');
+        });
     }
 </script>
 {% endblock %}
