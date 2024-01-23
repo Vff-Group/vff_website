@@ -38,7 +38,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         
-                            <h1 class="product-title">{{ product.product_name }}</h1>
+                            <h1 class="product-title" id="product-name">{{ product.product_name }}</h1>
 
                             <div class="ratings-container">
                                 <div class="ratings">
@@ -579,7 +579,7 @@
             var selectedSizeId = document.getElementById('selected-size-id').value;
 
             // Get the selected product details
-            var productName = document.querySelector('.product-title').textContent.trim();
+            var productName = $('#product-name').text();
             var selectedColorImage = document.querySelector('.product-gallery-image[data-color-id="' + selectedColorId + '"] img').getAttribute('data-zoom-image');
             var price = document.querySelector('.product-price .product-price').textContent.trim();
             var offerPrice = document.querySelector('.product-price .product-price').textContent.trim();
