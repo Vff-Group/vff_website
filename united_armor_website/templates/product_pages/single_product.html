@@ -295,8 +295,10 @@
             selectedSizeId = $(this).data('size-id');
             console.log('Size clicked for colorId:', sizeColorId, ' and sizeId:', sizeId);
 
-            // Remove the 'active' class from all sizes and add it to the clicked size
+            // Remove the 'active' class from all sizes
             $('.product-size a').removeClass('active');
+
+            // Add 'active' class only to the clicked size
             $(this).addClass('active');
 
             // Update carousel based on the selected color and size
@@ -306,6 +308,7 @@
             // Update hidden input for size id
             updateSizeIdInput();
         });
+
 
 
         // Function to update carousel and sizes based on color id and size id
