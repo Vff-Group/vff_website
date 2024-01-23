@@ -74,14 +74,14 @@
 
                         </div><!-- End .details-filter-row -->
 
-                        <div class="details-filter-row details-row-size mb-md-1">
+                        <div class="details-filter-row details-row-size mb-md-2">
                             <label>Size:</label>
 
                             <div class="product-size">
                                
                                 {% for size in data_sizes %}
                                     <a href="" title="size" 
-                                    class=" ms-1 me-1 {% if size.quantity_available|default_if_none:0 == 0 or size.quantity_available|default_if_none:-1 == 0 %}disabled{% elif size.sizesid == product.default_color_id %}active{% endif %}"
+                                    class="{% if size.quantity_available|default_if_none:0 == 0 or size.quantity_available|default_if_none:-1 == 0 %}disabled{% elif size.sizesid == product.default_color_id %}active{% endif %} m-4"
                                     data-size-value="{{ size.size_value }}"
                                     data-size-id="{{ size.sizesid }}"
                                     data-quantity-available="{{ size.quantity_available }}"
