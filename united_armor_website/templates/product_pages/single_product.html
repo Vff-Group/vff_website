@@ -124,7 +124,7 @@
                             </div><!-- End .details-action-col -->
 
                             <div class="details-action-wrapper">
-                                <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
+                                <a href="" id="wishlist-btn" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
                             </div><!-- End .details-action-wrapper -->
                         </div><!-- End .product-details-action -->
 
@@ -632,6 +632,54 @@
             console.log(selectedProduct);
         });
     });
+
+     // Add a click event listener to the "Add to Wish list" button
+     document.querySelector('wishlist-btn').addEventListener('click', function (event) {
+        event.preventDefault();
+
+        // Get the selected color ID and size ID
+        var selectedColorId = document.getElementById('selected-color-id').value;
+        var selectedSizeId = document.getElementById('selected-size-id').value;
+        var customerId = $('#customer-id').val();
+
+    if (!customerId) {
+        // Show the login modal if customer ID is empty
+        $('#loginModal').modal('show');
+        return;
+    }
+        if(selectedColorId === ''){
+            showToast('Alert','Please Select the Color you want');
+            return;
+        }
+        if(selectedSizeId === ''){
+            showToast('Alert','Please Select the Size you want');
+            return;
+        }
+        
+        // Get the selected product details
+        var productName = $('#product-name').text();
+        var selectedColorImage = document.querySelector('.product-gallery-image[data-color-id="' + selectedColorId + '"] img').getAttribute('data-zoom-image');
+        var price = $('#price').text().trim();
+        var offerPrice = $('#offer-price').text().trim();
+
+        // Get the selected quantity
+        var quantity = parseInt(document.getElementById('qty').value);
+        
+        // Create an object with the selected product details
+        var selectedProduct = {
+            productName: productName,
+            selectedColorImage: selectedColorImage,
+            price: price,
+            offerPrice: offerPrice,
+            selectedColorId: selectedColorId,
+            selectedSizeId: selectedSizeId,
+            quantity: quantity
+        };
+
+        
+        console.log(selectedProduct);
+    });
+});
 
     // Function to show a toast message
         function showToast(message, bodyContent) {
