@@ -832,15 +832,16 @@ def product(request,product_id):
     data = []    
     if not query_result == 500:
         for row in query_result:
-            
+            specifications_list = row[5].split('.') if '.' in row[5] else [row[5]]
+            fit_and_care_list = row[6].split('.') if '.' in row[6] else [row[6]]
             data.append({
                     'product_name':row[0],
                     'fitting_type':row[1],
                     'fitting_id':row[2],
                     'max_checkout_qty':row[3],
                     'what_it_does':row[4],
-                    'specifications':row[5],
-                    'fit_and_care_desc':row[6],
+                    'specifications':specifications_list,
+                    'fit_and_care_desc':fit_and_care_list,
                     'main_title_name':row[7],
                     'cat_name':row[8],
                     'sub_cat_name':row[9],
@@ -919,9 +920,29 @@ def product(request,product_id):
     else:
         error_msg = 'Something Went Wrong'
     
+    # Review for this product
+    query_review = "select review_id,customer_id,customer_name,comment,ratings,time_review_given from vff.united_armor_product_reviewtbl,vff.united_armor_customertbl where united_armor_customertbl.customerid=united_armor_product_reviewtbl.customer_id and product_id='"+str(product_id)+"'"
+    query_result_review = execute_raw_query(query_review)
+    review_data = []    
+    if not query_result_review == 500:
+        for row in query_result_review:
+            timestamp = row[5]
+            days_back = days_since_review(timestamp)
+            review_data.append({
+                    'review_id':row[0],
+                    'customer_id':row[1],
+                    'customer_name':row[2],
+                    'comment':row[3],
+                    'ratings':row[4],
+                    'time_review_given':days_back,
+                   
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
      
     current_url = request.get_full_path()
-    context = {'all_categories': all_categories,'query_result':data,'data_images':data_images,'data_sizes':data_sizes,'data_colors':data_colors, 'current_url': current_url,'error_msg':error_msg}
+    context = {'all_categories': all_categories,'query_result':data,'review_data':review_data,'data_images':data_images,'data_sizes':data_sizes,'data_colors':data_colors, 'current_url': current_url,'error_msg':error_msg}
     return render(request,"product_pages/single_product.html",context)
 
 #Wish List Details Against Customer ID
@@ -1089,3 +1110,20 @@ def execute_raw_query_fetch_one(query, params=None,):
     finally:
         # Ensure the cursor is closed to release resources
         cursor.close()  # Note: cursor might not be defined if an exception occurs earlier
+
+from datetime import datetime, timedelta
+
+def days_since_review(timestamp):
+    # Convert double precision epoch to seconds
+    timestamp_seconds = timestamp * 1e-6
+
+    # Convert to datetime object
+    review_date = datetime.utcfromtimestamp(timestamp_seconds)
+
+    # Get current date and time
+    current_date = datetime.utcnow()
+
+    # Calculate the difference in days
+    days_difference = (current_date - review_date).days
+
+    return days_difference
