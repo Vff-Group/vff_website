@@ -927,7 +927,7 @@ def product(request,product_id):
     if not query_result_review == 500:
         for row in query_result_review:
             timestamp = row[5]
-            days_back = days_since_review(timestamp)
+            days_back = calculate_time_difference(timestamp)
             review_data.append({
                     'review_id':row[0],
                     'customer_id':row[1],
@@ -1111,7 +1111,7 @@ def execute_raw_query_fetch_one(query, params=None,):
         # Ensure the cursor is closed to release resources
         cursor.close()  # Note: cursor might not be defined if an exception occurs earlier
 
-from datetime import datetime, timedelta
+from datetime import datetime
 
 def format_time_difference(time_difference):
     if time_difference < 1:
@@ -1125,12 +1125,9 @@ def format_time_difference(time_difference):
     else:
         return f'{time_difference // 1440} days ago'
 
-def days_since_review(timestamp):
-    # Convert double precision epoch to seconds
-    timestamp_seconds = timestamp * 1e-6
-
-    # Convert to datetime object
-    review_date = datetime.utcfromtimestamp(timestamp_seconds)
+def calculate_time_difference(timestamp):
+    # Assuming timestamp is in seconds
+    review_date = datetime.utcfromtimestamp(timestamp)
 
     # Get current date and time
     current_date = datetime.utcnow()
@@ -1142,3 +1139,5 @@ def days_since_review(timestamp):
     formatted_time_difference = format_time_difference(minutes_difference)
 
     return formatted_time_difference
+
+
