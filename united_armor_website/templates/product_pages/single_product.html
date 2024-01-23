@@ -339,30 +339,22 @@
 
         // Function to update sizes based on color id
         function updateSizesByColor(colorId) {
-            // You can make an AJAX call or use existing data_sizes to update sizes
-            var matchingSizes = data_sizes.filter(function(size) {
-                return size.size_color_id === colorId;
-            });
-
             // Update the product-size container with matching sizes
             var sizeContainer = $('.product-size');
             sizeContainer.empty();
 
+            // Select all sizes with the specified data-color-id
+            var matchingSizes = $('[data-color-id="' + colorId + '"]');
+
             // Append matching sizes to the container
-            matchingSizes.forEach(function(size) {
-                var sizeLink = $('<a href="#" title="size"></a>')
-                    .addClass(size.quantity_available == 0 ? 'disabled' : '')
-                    .text(size.size_value);
-
-                if (size.sizesid == product.default_color_id) {
-                    sizeLink.addClass('active');
-                }
-
+            matchingSizes.each(function () {
+                var sizeLink = $(this).clone();
                 sizeContainer.append(sizeLink);
             });
         }
     });
 </script>
+
 
 
 <!-- <script>
