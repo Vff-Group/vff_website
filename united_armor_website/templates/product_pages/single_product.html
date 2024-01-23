@@ -288,17 +288,15 @@
                 });
                 colorLink.classList.add('active');
 
-                // Reset opacity and margin for all images
-                productImages.forEach(function (image) {
-                    image.classList.remove('hidden');
-                    image.style.margin = '5px';
-                });
-
-                // Hide images that don't match the selected color
+                // Reload images for the selected color
                 productImages.forEach(function (image) {
                     var imageColorId = image.getAttribute('data-color-id');
 
-                    if (imageColorId !== selectedColorId && selectedColorId) {
+                    if (imageColorId === selectedColorId || !selectedColorId) {
+                        image.classList.remove('hidden');
+                        image.style.margin = '5px';
+                        image.src = image.src; // Reload the image by setting its source again
+                    } else {
                         image.classList.add('hidden');
                     }
                 });
@@ -306,6 +304,15 @@
 
             colorLink.addEventListener('mouseenter', function (event) {
                 var selectedColorId = colorLink.getAttribute('data-color-id');
+
+                // Reload images for the selected color on mouse enter
+                productImages.forEach(function (image) {
+                    var imageColorId = image.getAttribute('data-color-id');
+
+                    if (imageColorId === selectedColorId || !selectedColorId) {
+                        image.src = image.src; // Reload the image by setting its source again
+                    }
+                });
 
                 // Hide images that don't match the selected color
                 productImages.forEach(function (image) {
@@ -326,6 +333,7 @@
         });
     });
 </script>
+
 
 
 
