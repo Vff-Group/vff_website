@@ -270,7 +270,7 @@
 
                 // Hide all images initially
                 productImages.forEach(function (image) {
-                    image.style.display = 'none';
+                    image.classList.add('d-none');
                 });
 
                 // Show images with matching color ID
@@ -278,7 +278,8 @@
                     var imageColorId = image.getAttribute('data-color-id');
 
                     if (imageColorId === selectedColorId || !selectedColorId) {
-                        image.style.display = 'block';
+                        image.classList.remove('d-none');
+                        image.classList.add('d-block');
                     }
                 });
             });
