@@ -274,14 +274,22 @@
        // Handle mouse enter and click events for colors
         $('.color-link').on('mouseenter click', function (event) {
             event.preventDefault();
+
+            // Remove 'active' class from all color links
+            $('.color-link').removeClass('active');
+
+            // Add 'active' class to the clicked color link
+            $(this).addClass('active');
+
             var colorId = $(this).data('color-id');
             selectedColorId = $(this).data('color-id');
             updateCarouselAndSizes(colorId, null);
-
+            // Add 'active' class to the clicked color link
+            $(this).addClass('active');
             // Add a class to the clicked color link and remove 'active' from all sizes
             $('.color-link').removeClass('selected-color');
             $(this).addClass('selected-color');
-            $('.product-size a').removeClass('active');
+           
 
             // Update hidden input for color id
             updateColorIdInput();
