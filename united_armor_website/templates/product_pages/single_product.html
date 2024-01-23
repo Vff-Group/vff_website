@@ -579,7 +579,7 @@
             var selectedColorId = document.getElementById('selected-color-id').value;
             var selectedSizeId = document.getElementById('selected-size-id').value;
             var customerID = document.getElementById('customer-id').value;
-            if(customerID === ''){
+            if(customerID === '' || customerID === undefined){
                 showToast('Alert','Please Login Before Adding Items To Cart');
                 return;
             }
