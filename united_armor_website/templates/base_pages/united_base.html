@@ -42,6 +42,7 @@
     <!-- For Toast Messages  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async></script>
 </head>
 
 <body>
@@ -420,20 +421,18 @@
                                         </div><!-- End .form-footer -->
                                     </form>
                                     <div class="form-choice">
+                                        <div id="g_id_onload" data-client_id="15200598023-da59a8krvlcfctgv1u9b5kmjikrisn79.apps.googleusercontent.com"
+                                        data-context="signin"
+                                        data-ux_mode="popup"
+                                        data-callback="handleCredentialsResponse"
+                                        data-auto_prompt="false"
+                                        ></div>
                                         <p class="text-center">or sign in with</p>
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <a href="#" class="btn btn-login btn-g">
-                                                    <i class="icon-google"></i>
-                                                    Login With Google
-                                                </a>
+                                                <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline" data-text="signin_with" data-size="large" data-logo_alignment="left"></div>
                                             </div><!-- End .col-6 -->
-                                            <div class="col-sm-6">
-                                                <a href="#" class="btn btn-login btn-f">
-                                                    <i class="icon-facebook-f"></i>
-                                                    Login With Facebook
-                                                </a>
-                                            </div><!-- End .col-6 -->
+                                            
                                         </div><!-- End .row -->
                                     </div><!-- End .form-choice -->
                                 </div><!-- .End .tab-pane -->
