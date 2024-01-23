@@ -537,6 +537,13 @@
     <!-- Toastr -->
     <script src="{% static 'vendor/toastr/js/toastr.min.js' %}"></script>
     <script src="{% static 'js/plugins-init/toastr-init.js' %}"></script>
+
+    <!-- signin with google  -->
+    <script>
+        function handleCredentialsResponse(response){
+            JSON.stringify({request_type:'user_auth',credential: response.credential})
+        }
+    </script>
 </body>
 
 
