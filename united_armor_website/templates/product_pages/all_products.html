@@ -356,7 +356,7 @@
 // Function to show a toast message
 function showToast(message, bodyContent) {
     toastr.warning(bodyContent, message, {
-      positionClass: "toast-top-center",
+        positionClass: "toast-bottom-right",
       timeOut: 5e3,
       closeButton: !0,
       debug: !1,
@@ -377,7 +377,7 @@ function showToast(message, bodyContent) {
 
 function showToastSuccess(message, bodyContent) {
     toastr.success(bodyContent, message, {
-        positionClass: "toast-top-full-width",
+        positionClass: "toast-bottom-right",
         timeOut: 5e3,
         closeButton: !0,
         debug: !1,
