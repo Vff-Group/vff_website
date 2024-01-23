@@ -269,20 +269,20 @@
             initialSizeId = $('.product-size a:first').addClass('active').data('size-id');
         }
 
-        // Trigger click events on the first color and size
-        $('.color-link[data-color-id="' + initialColorId + '"]').trigger('click');
-        $('.product-size a[data-size-id="' + initialSizeId + '"]').trigger('click');
+        updateCarouselAndSizes(initialColorId, initialSizeId);
 
-        // Handle mouse enter and click events for colors
+       // Handle mouse enter and click events for colors
         $('.color-link').on('mouseenter click', function (event) {
             event.preventDefault();
             var colorId = $(this).data('color-id');
             selectedColorId = $(this).data('color-id');
             updateCarouselAndSizes(colorId, null);
 
-            // Add a class to the clicked color link
+            // Add a class to the clicked color link and remove 'active' from all sizes
             $('.color-link').removeClass('selected-color');
             $(this).addClass('selected-color');
+            $('.product-size a').removeClass('active');
+
             // Update hidden input for color id
             updateColorIdInput();
         });
@@ -301,10 +301,12 @@
 
             // Update carousel based on the selected color and size
             var colorId = $('.color-link.selected-color').data('color-id');
-             // Update hidden input for size id
-             updateSizeIdInput();
-           // updateCarouselAndSizes(colorId, sizeId);
+            updateCarouselAndSizes(colorId, sizeId);
+
+            // Update hidden input for size id
+            updateSizeIdInput();
         });
+
 
         // Function to update carousel and sizes based on color id and size id
         function updateCarouselAndSizes(colorId, sizeId) {
@@ -399,7 +401,6 @@
 
     });
 </script>
-
 
 <!-- <script>
     $(document).ready(function () {
