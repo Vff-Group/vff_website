@@ -284,6 +284,15 @@
             $(this).addClass('selected-color');
         });
 
+         // Handle click events for sizes
+         $('.product-size').on('click', 'a', function (event) {
+            event.preventDefault();
+
+            // Add your logic for handling size click here
+            var sizeColorId = $(this).data('color-id');
+            console.log('Size clicked for colorId:', sizeColorId);
+        });
+
         // Function to update carousel and sizes based on color id
         function updateCarouselAndSizes(colorId) {
             // Destroy the existing carousel
