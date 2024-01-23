@@ -258,14 +258,15 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <style>
     .product-gallery-image {
-        margin: 0; /* Remove any margin to eliminate spacing */
+        margin: 5px; /* Add a little margin */
         padding: 0; /* Remove any padding */
         opacity: 1; /* Set initial opacity to 1 */
-        transition: opacity 0.3s ease; /* Add transition for a smooth effect */
+        transition: opacity 0.3s ease, margin 0.3s ease; /* Add transition for a smooth effect */
     }
 
     .product-gallery-image.hidden {
         opacity: 0; /* Set opacity to 0 for hidden images */
+        margin: 0; /* Set margin to 0 for hidden images */
     }
 </style>
 
@@ -287,9 +288,10 @@
                 });
                 colorLink.classList.add('active');
 
-                // Reset opacity for all images
+                // Reset opacity and margin for all images
                 productImages.forEach(function (image) {
                     image.classList.remove('hidden');
+                    image.style.margin = '5px';
                 });
 
                 // Hide images that don't match the selected color
@@ -315,14 +317,16 @@
             });
 
             colorLink.addEventListener('mouseleave', function (event) {
-                // Reset opacity for all images on mouse leave
+                // Reset opacity and margin for all images on mouse leave
                 productImages.forEach(function (image) {
                     image.classList.remove('hidden');
+                    image.style.margin = '5px';
                 });
             });
         });
     });
 </script>
+
 
 
 
