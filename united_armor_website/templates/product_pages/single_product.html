@@ -258,7 +258,59 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <!-- Add this before the closing </body> tag -->
+<!-- Add this before the closing </body> tag -->
 <script>
+    $(document).ready(function () {
+        // Store all images in a variable
+        var allImages = $('.product-gallery-image');
+        var carousel = $('#color-carousel');
+
+        // Initialize the carousel
+        initCarousel();
+
+        // Handle mouse enter and click events
+        $('.color-link').on('mouseenter click', function (event) {
+            event.preventDefault();
+            var colorId = $(this).data('color-id');
+            updateCarouselByColor(colorId);
+
+            // Add a class to the clicked color link
+            $('.color-link').removeClass('selected-color');
+            $(this).addClass('selected-color');
+        });
+
+        // Function to update carousel based on color id
+        function updateCarouselByColor(colorId) {
+            // Destroy the existing carousel
+            carousel.trigger('destroy.owl.carousel');
+            carousel.empty();
+
+            // Filter images based on the selected color
+            var matchingImages = allImages.filter('[data-color-id="' + colorId + '"]');
+
+            // Append matching images to the carousel
+            carousel.append(matchingImages);
+
+            // Reinitialize the carousel
+            initCarousel();
+        }
+
+        // Function to initialize the carousel
+        function initCarousel() {
+            carousel.owlCarousel({
+                // Add your carousel options here
+                // For example:
+                items: 3,
+                loop: true,
+                margin: 10,
+                nav: true,
+                dots: false
+            });
+        }
+    });
+</script>
+
+<!-- <script>
     $(document).ready(function () {
         // Store all images in a variable
         var allImages = $('.product-gallery-image');
@@ -307,79 +359,9 @@
             });
         }
     });
-</script>
-
-
-<!-- <script>
-    $(document).ready(function () {
-        // Store all images in a variable
-        var allImages = $('.product-gallery-image');
-        var carousel = $('#color-carousel');
-
-        // Initialize the carousel
-        initCarousel();
-
-        // Handle mouse enter event
-        $('.color-link').mouseenter(function () {
-            var colorId = $(this).data('color-id');
-            updateCarouselByColor(colorId);
-        });
-
-        // Handle mouse leave event
-        $('.color-link').mouseleave(function () {
-            resetCarousel();
-        });
-
-        // Handle click event
-        $('.color-link').click(function (event) {
-            event.preventDefault();
-            var colorId = $(this).data('color-id');
-            updateCarouselByColor(colorId);
-        });
-
-        // Function to update carousel based on color id
-        function updateCarouselByColor(colorId) {
-            // Remove all slides from the carousel
-            carousel.trigger('destroy.owl.carousel');
-            carousel.empty();
-
-            // Filter images based on the selected color
-            var matchingImages = allImages.filter('[data-color-id="' + colorId + '"]');
-
-            // Append matching images to the carousel
-            carousel.append(matchingImages);
-
-            // Reinitialize the carousel
-            initCarousel();
-        }
-
-        // Function to reset carousel to show all images
-        function resetCarousel() {
-            // Remove all slides from the carousel
-            carousel.trigger('destroy.owl.carousel');
-            carousel.empty();
-
-            // Append all images to the carousel
-            carousel.append(allImages);
-
-            // Reinitialize the carousel
-            initCarousel();
-        }
-
-        // Function to initialize the carousel
-        function initCarousel() {
-            carousel.owlCarousel({
-                // Add your carousel options here
-                // For example:
-                items: 4,
-                loop: true,
-                margin: 10,
-                nav: true,
-                dots: false
-            });
-        }
-    });
 </script> -->
+
+
 
 
 <!-- <script>
