@@ -943,7 +943,7 @@ def product(request,product_id):
         
     #customer ID
     customer_id = request.session.get('u_customer_id')
-     
+    
     current_url = request.get_full_path()
     context = {'all_categories': all_categories,'query_result':data,'review_data':review_data,'data_images':data_images,'data_sizes':data_sizes,'data_colors':data_colors, 'current_url': current_url,'error_msg':error_msg,'customer_id':customer_id}
     return render(request,"product_pages/single_product.html",context)
