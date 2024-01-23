@@ -882,7 +882,7 @@ def product(request,product_id):
         error_msg = 'Something Went Wrong'
     
     #all Images
-    query_images="select imageid,image_url,color_id from vff.united_armor_product_imagestbl where product_id='"+str(product_id)+"'"
+    query_images="select imageid,image_url,color_id from vff.united_armor_product_imagestbl where product_id='"+str(product_id)+"' order by imageid"
     query_result_images = execute_raw_query(query_images)
     data_images = []    
     if not query_result_images == 500:
