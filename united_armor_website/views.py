@@ -864,8 +864,8 @@ def product(request,product_id):
     else:
         error_msg = 'Something Went Wrong'
     color_id = data[0]['default_color_id'] if data else ''
-    #All Sizes for a particular product id and color id 
-    query_size = "select sizesid,size_value,quantity_available from vff.united_armor_product_sizestbl,vff.united_armor_sizes_available where united_armor_product_sizestbl.sizesid=united_armor_sizes_available.sizeid and product_id='"+str(product_id)+"' and color_id='"+str(color_id)+"'"
+    #All Sizes for a particular product id and color id
+    query_size="select sizesid,size_value,reserved_quantity,stock_status,united_armor_inventorytbl.color_id from vff.united_armor_inventorytbl,vff.united_armor_product_sizestbl,vff.united_armor_sizes_available where united_armor_product_sizestbl.sizesid=united_armor_sizes_available.sizeid and united_armor_inventorytbl.product_id=united_armor_sizes_available.product_id and united_armor_sizes_available.color_id=united_armor_inventorytbl.color_id and united_armor_sizes_available.sizeid=united_armor_inventorytbl.size_id and united_armor_inventorytbl.product_id='"+str(product_id)+"'"
     query_result_size = execute_raw_query(query_size)
     data_sizes = []    
     if not query_result_size == 500:
@@ -875,6 +875,8 @@ def product(request,product_id):
                     'sizesid':row[0],
                     'size_value':row[1],
                     'quantity_available':row[2],
+                    'stock_status':row[3],
+                    'size_color_id':row[4],
                    
                 
             })

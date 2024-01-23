@@ -84,10 +84,7 @@
                                 </a>                                
                                 {% endfor %}
 
-                                {% comment %} <a href="#" title="Small">S</a>
-                                <a href="#" title="Medium" class="active">M</a>
-                                <a href="#" title="Large" class="disabled">L</a>
-                                <a href="#" title="Extra Large">XL</a> {% endcomment %}
+                             
                             </div><!-- End .product-size -->
 
                             <a href="#" class="size-guide"><i class="icon-th-list"></i>size guide</a>
@@ -257,8 +254,114 @@
 </div><!-- End .page-content -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-
+<!-- Add this before the closing </body> tag -->
 <script>
+    $(document).ready(function () {
+        // Store all original images in a variable
+        var allImages = $('.product-gallery-image').clone();
+        var carousel = $('#color-carousel');
+
+        // Initialize the carousel
+        initCarousel();
+
+        // Initialize sizes with the first color_id
+        var initialColorId = $('.color-link:first').data('color-id');
+        updateSizesByColor(initialColorId);
+
+        // Handle mouse enter and click events for colors
+        $('.color-link').on('mouseenter click', function (event) {
+            event.preventDefault();
+            var colorId = $(this).data('color-id');
+            updateCarouselAndSizes(colorId);
+
+            // Add a class to the clicked color link
+            $('.color-link').removeClass('selected-color');
+            $(this).addClass('selected-color');
+        });
+
+        // Function to update carousel and sizes based on color id
+        function updateCarouselAndSizes(colorId) {
+            // Destroy the existing carousel
+            carousel.trigger('destroy.owl.carousel');
+            carousel.empty();
+
+            // Create a copy of the original images
+            var originalImages = allImages.clone();
+
+            // Filter images based on the selected color
+            var matchingImages = originalImages.filter('[data-color-id="' + colorId + '"]');
+
+            // Append matching images to the carousel
+            carousel.append(matchingImages);
+
+            // Reinitialize the carousel
+            initCarousel();
+
+            // Update sizes based on the selected color
+            updateSizesByColor(colorId);
+        }
+
+        // Function to initialize the carousel
+        function initCarousel() {
+            carousel.owlCarousel({
+                // Add your carousel options here
+                // For example:
+                items: 3,
+                loop: true,
+                margin: 10,
+                nav: true,
+                dots: false,
+                responsiveClass: true,
+                responsive: {
+                    0: {
+                        items: 1,
+                        nav: true
+                    },
+                    600: {
+                        items: 3,
+                        nav: false
+                    },
+                    1000: {
+                        items: 3,
+                        nav: true,
+                        loop: false
+                    }
+                }
+            });
+
+            // Add additional classes after the carousel is initialized
+            carousel.addClass('owl-full owl-nav-dark');
+        }
+
+        // Function to update sizes based on color id
+        function updateSizesByColor(colorId) {
+            // You can make an AJAX call or use existing data_sizes to update sizes
+            var matchingSizes = data_sizes.filter(function(size) {
+                return size.size_color_id === colorId;
+            });
+
+            // Update the product-size container with matching sizes
+            var sizeContainer = $('.product-size');
+            sizeContainer.empty();
+
+            // Append matching sizes to the container
+            matchingSizes.forEach(function(size) {
+                var sizeLink = $('<a href="#" title="size"></a>')
+                    .addClass(size.quantity_available == 0 ? 'disabled' : '')
+                    .text(size.size_value);
+
+                if (size.sizesid == product.default_color_id) {
+                    sizeLink.addClass('active');
+                }
+
+                sizeContainer.append(sizeLink);
+            });
+        }
+    });
+</script>
+
+
+<!-- <script>
     $(document).ready(function () {
         // Store all original images in a variable
         var allImages = $('.product-gallery-image').clone();
@@ -329,58 +432,8 @@
             carousel.addClass('owl-full owl-nav-dark');
         }
     });
-</script>
-
-
-<!-- <script>
-    $(document).ready(function () {
-        // Store all images in a variable
-        var allImages = $('.product-gallery-image');
-        var carousel = $('#color-carousel');
-
-        // Initialize the carousel
-        initCarousel();
-
-        // Handle mouse enter and click events
-        $('.color-link').on('mouseenter click', function (event) {
-            event.preventDefault();
-            var colorId = $(this).data('color-id');
-            updateCarouselByColor(colorId);
-
-            // Add a class to the clicked color link
-            $('.color-link').removeClass('selected-color');
-            $(this).addClass('selected-color');
-        });
-
-        // Function to update carousel based on color id
-        function updateCarouselByColor(colorId) {
-            // Destroy the existing carousel
-            carousel.trigger('destroy.owl.carousel');
-            carousel.empty();
-
-            // Filter images based on the selected color
-            var matchingImages = allImages.filter('[data-color-id="' + colorId + '"]');
-
-            // Append matching images to the carousel
-            carousel.append(matchingImages);
-
-            // Reinitialize the carousel
-            initCarousel();
-        }
-
-        // Function to initialize the carousel
-        function initCarousel() {
-            carousel.owlCarousel({
-                // Add your carousel options here
-                // For example:
-                items: 3,
-                loop: true,
-                margin: 10,
-                nav: true,
-                dots: false
-            });
-        }
-    });
 </script> -->
+
+
 
 {% endblock %}
