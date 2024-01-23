@@ -257,81 +257,47 @@
 </div><!-- End .page-content -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-
-
-
+<!-- Add this before the closing </body> tag -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var colorLinks = document.querySelectorAll('.color-link');
-        var productImages = document.querySelectorAll('.product-gallery-image');
+    $(document).ready(function () {
+        // Store all images in a variable
+        var allImages = $('.product-gallery-image');
 
-        function showSelectedColorImages(selectedColorId) {
-            var carouselContainer = document.getElementById('color-carousel');
-            
-            // Clear existing carousel content
-            carouselContainer.innerHTML = '';
+        // Handle mouse enter event
+        $('.color-link').mouseenter(function () {
+            var colorId = $(this).data('color-id');
+            showImagesByColor(colorId);
+        });
 
-            // Show images for the selected color
-            productImages.forEach(function (image) {
-                var imageColorId = image.getAttribute('data-color-id');
+        // Handle mouse leave event
+        $('.color-link').mouseleave(function () {
+            showAllImages();
+        });
 
-                if (imageColorId === selectedColorId || !selectedColorId) {
-                    var figure = document.createElement('figure');
-                    figure.classList.add('product-gallery-image');
-                    figure.setAttribute('data-color-id', imageColorId);
+        // Handle click event
+        $('.color-link').click(function (event) {
+            event.preventDefault();
+            var colorId = $(this).data('color-id');
+            showImagesByColor(colorId);
+        });
 
-                    var img = document.createElement('img');
-                    img.src = image.src;
-                    img.setAttribute('data-zoom-image', image.src);
-                    img.alt = 'product image';
+        // Function to show images based on color id
+        function showImagesByColor(colorId) {
+            // Hide all images
+            allImages.hide();
 
-                    figure.appendChild(img);
-                    carouselContainer.appendChild(figure);
-                }
-            });
-
-            // Initialize the Owl Carousel
-            $('.product-gallery-carousel').owlCarousel({
-                // Your Owl Carousel options here
-                // For example:
-                items: 1,
-                loop: true,
-                nav: true,
-                dots: false
-            });
+            // Show only images with the selected color id
+            $('.product-gallery-image[data-color-id="' + colorId + '"]').show();
         }
 
-        colorLinks.forEach(function (colorLink) {
-            colorLink.addEventListener('click', function (event) {
-                event.preventDefault();
-
-                // Get the selected color ID
-                var selectedColorId = colorLink.getAttribute('data-color-id');
-
-                // Toggle active class for color links
-                colorLinks.forEach(function(link) {
-                    link.classList.remove('active');
-                });
-                colorLink.classList.add('active');
-
-                // Show images for the selected color
-                showSelectedColorImages(selectedColorId);
-            });
-
-            colorLink.addEventListener('mouseenter', function (event) {
-                var selectedColorId = colorLink.getAttribute('data-color-id');
-
-                // Show images for the selected color on mouse enter
-                showSelectedColorImages(selectedColorId);
-            });
-
-            colorLink.addEventListener('mouseleave', function (event) {
-                // Reset carousel content on mouse leave
-                showSelectedColorImages(null);
-            });
-        });
+        // Function to show all images
+        function showAllImages() {
+            allImages.show();
+        }
     });
 </script>
+
+
 
 
 
