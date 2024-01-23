@@ -65,7 +65,7 @@
                             <!-- Add a class to the color links to make it easier to select them with JavaScript -->
                             <div class="product-nav product-nav-dots">
                                 {% for color in data_colors %}
-                                    <a href="#" class="color-link" data-color-id="{{ color.colorsid }}" style="background: #{{ color.color_code }};">
+                                    <a href="" class="color-link" data-color-id="{{ color.colorsid }}" style="background: #{{ color.color_code }};">
                                         <span class="sr-only">{{ color.color_name }}</span>
                                     </a>
                                 {% endfor %}
@@ -342,7 +342,7 @@
         // Function to update sizes based on color id
         function updateSizesByColor(colorId) {
             // Hide all sizes
-            $('.product-size a').hide();
+           // $('.product-size a').hide();
 
             // Select and show sizes with the specified data-color-id
             $('.product-size a[data-color-id="' + colorId + '"]').show();
