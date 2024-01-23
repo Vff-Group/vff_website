@@ -22,11 +22,13 @@
             
             <div class="container">
                 <div class="product-gallery-carousel owl-carousel owl-full owl-nav-dark">
-                    {% for image in data_images%}
-                    <figure class="product-gallery-image">
-                        <img src="{{image.image_url}}" data-zoom-image="{{image.image_url}}" alt="product image">
-                    </figure><!-- End .product-gallery-image -->
-                    {% endfor %}
+                {% for image in data_images %}
+                    {% if data_colors|length <= 1 or image.color_id_image == selected_color_id %}
+                        <figure class="product-gallery-image">
+                            <img src="{{ image.image_url }}" data-zoom-image="{{ image.image_url }}" alt="product image">
+                        </figure><!-- End .product-gallery-image -->
+                    {% endif %}
+                {% endfor %}
                 </div><!-- End .owl-carousel -->
             </div><!-- End .container -->
         </div><!-- End .bg-light pb-5 -->
@@ -63,11 +65,9 @@
 
                             <div class="product-nav product-nav-dots">
                                 {% for color in data_colors %}
-                                <a href="" class="active" style="background: #{{color.color_code}};"><span class="sr-only">{{color.color_name}}</span></a>
+                                <a href="" class="active" style="background: #{{color.color_code}};" onclick="changeColor('{{ color.color_id }}'); return false;"><span class="sr-only">{{color.color_name}}</span></a>
                                 {% endfor %}
-                                {% comment %} <a href="#" class="active" style="background: #cc9966;"><span class="sr-only">Color name</span></a>
-                                <a href="#" style="background: #7fc5ed;"><span class="sr-only">Color name</span></a>
-                                <a href="#" style="background: #e8c97a;"><span class="sr-only">Color name</span></a> {% endcomment %}
+                               
                                 
                             </div><!-- End .product-nav -->
                         </div><!-- End .details-filter-row -->
@@ -254,5 +254,20 @@
 
     
 </div><!-- End .page-content -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    var selected_color_id = '{% if data_colors|length == 1 %}{{ data_colors.0.color_id }}{% endif %}';
 
+    function changeColor(colorId) {
+        document.querySelectorAll('.product-gallery-carousel a').forEach(link => {
+            link.classList.remove('active');
+        });
+
+        document.querySelector(`.product-gallery-carousel a[href="#"][onclick="changeColor('${colorId}'); return false;"]`).classList.add('active');
+
+        selected_color_id = colorId;
+
+        // Add logic to update the displayed images based on the selected color if needed
+    }
+</script>
 {% endblock %}
