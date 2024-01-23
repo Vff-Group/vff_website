@@ -263,7 +263,7 @@
             link.classList.remove('active');
         });
 
-        document.querySelector(`.product-gallery-carousel a[href="#"][onclick="changeColor('${colorId}'); return false;"]`).classList.add('active');
+        document.querySelector(`.product-gallery-carousel a[][onclick="changeColor('${colorId}'); return false;"]`).classList.add('active');
 
         selected_color_id = colorId;
 
