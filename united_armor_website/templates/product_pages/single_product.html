@@ -577,13 +577,8 @@
             // Get the selected color ID and size ID
             var selectedColorId = document.getElementById('selected-color-id').value;
             var selectedSizeId = document.getElementById('selected-size-id').value;
-            if (!selectedColorId) {
-                alert('Please select a color before adding to cart.');
-            } else if (!selectedSizeId) {
-                alert('Please select a size before adding to cart.');
-            } else {
-                // Both color and size are selected
-                // Get the selected product details
+
+            // Get the selected product details
             var productName = $('#product-name').text();
             var selectedColorImage = document.querySelector('.product-gallery-image[data-color-id="' + selectedColorId + '"] img').getAttribute('data-zoom-image');
             var price = $('#price').text().trim();
@@ -592,22 +587,19 @@
             // Get the selected quantity
             var quantity = parseInt(document.getElementById('qty').value);
             
-                // Create an object with the selected product details
-                var selectedProduct = {
-                    productName: productName,
-                    selectedColorImage: selectedColorImage,
-                    price: price,
-                    offerPrice: offerPrice,
-                    selectedColorId: selectedColorId,
-                    selectedSizeId: selectedSizeId,
-                    quantity: quantity
-                };
+            // Create an object with the selected product details
+            var selectedProduct = {
+                productName: productName,
+                selectedColorImage: selectedColorImage,
+                price: price,
+                offerPrice: offerPrice,
+                selectedColorId: selectedColorId,
+                selectedSizeId: selectedSizeId,
+                quantity: quantity
+            };
 
-                console.log(selectedProduct);
-            }
             
-            
-           
+            console.log(selectedProduct);
         });
     });
 </script>
