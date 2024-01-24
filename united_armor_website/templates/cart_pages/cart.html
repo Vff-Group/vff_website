@@ -124,6 +124,18 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     $(document).ready(function () {
+        // Get the CSRF token from the cookie
+        function getCSRFToken() {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith("csrftoken=")) {
+                    return cookie.substring("csrftoken=".length, cookie.length);
+                }
+            }
+            return null;
+        }
+
         // Function to format currency with commas
         function formatCurrency(amount) {
             return '₹' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
@@ -131,14 +143,18 @@
 
         // Function to update subtotal and total via AJAX
         function updateCartItem(cartID, quantity, price) {
+            const csrfToken = getCSRFToken();
             $.ajax({
                 type: 'POST',
                 url: '/united_armor/update_cart/',  // Update this with the correct URL
                 data: {
-                    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),  // Include the CSRF token
+                    
                     'cart_id': cartID,
                     'quantity': quantity,
                     'price': price,
+                },
+                headers: {
+                    'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
                 },
                 success: function (response) {
                     // Reload the screen after successful update
@@ -199,12 +215,15 @@
 
         // Function to remove item from the cart via AJAX
         function removeCartItem(cartID) {
+            const csrfToken = getCSRFToken();
             $.ajax({
                 type: 'POST',
                 url: '/united_armor/remove_cart_item/',  // Update this with the correct URL
                 data: {
-                    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
                     'cart_id': cartID,
+                },
+                headers: {
+                    'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
                 },
                 success: function (response) {
                     // Reload the screen after successful removal
