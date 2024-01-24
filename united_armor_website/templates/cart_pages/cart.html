@@ -142,6 +142,13 @@
                 },
                 success: function (response) {
                     // Reload the screen after successful update
+                    if (response.message === 'success') {
+                        // Show success modal
+                        showToastSuccess('Success','Item Updated Successfully');
+                    } else {
+                        // Show error modal
+                        showToast('Alert','Item Update Error');
+                    }
                     location.reload();
                 },
                 error: function (error) {
@@ -189,11 +196,7 @@
             // Update subtotal and total on the client side
             updateCartTotal();
         });
-    });
-</script>
 
-<script>
-    $(document).ready(function () {
         // Function to remove item from the cart via AJAX
         function removeCartItem(cartID) {
             $.ajax({
@@ -205,6 +208,13 @@
                 },
                 success: function (response) {
                     // Reload the screen after successful removal
+                    if (response.message === 'success') {
+                        // Show success modal
+                        showToastSuccess('Success','Item Removed Successfully');
+                    } else {
+                        // Show error modal
+                        showToast('Alert','Item Remove Error');
+                    }
                     location.reload();
                 },
                 error: function (error) {
@@ -221,8 +231,55 @@
             // Remove cart item via AJAX
             removeCartItem(cartID);
         });
+
+
+        function showToast(message, bodyContent) {
+            toastr.info(bodyContent, message, {
+                positionClass: "toast-bottom-right",
+                timeOut: 5e3,
+                closeButton: !0,
+                debug: !1,
+                newestOnTop: !0,
+                progressBar: !0,
+                preventDuplicates: !0,
+                onclick: null,
+                showDuration: "300",
+                hideDuration: "1000",
+                extendedTimeOut: "1000",
+                showEasing: "swing",
+                hideEasing: "linear",
+                showMethod: "fadeIn",
+                hideMethod: "fadeOut",
+                tapToDismiss: !1
+        })
+        }
+
+        function showToastSuccess(message, bodyContent) {
+            toastr.success(bodyContent, message, {
+                positionClass: "toast-bottom-right",
+                timeOut: 5e3,
+                closeButton: !0,
+                debug: !1,
+                newestOnTop: !0,
+                progressBar: !0,
+                preventDuplicates: !0,
+                onclick: null,
+                showDuration: "300",
+                hideDuration: "1000",
+                extendedTimeOut: "1000",
+                showEasing: "swing",
+                hideEasing: "linear",
+                showMethod: "fadeIn",
+                hideMethod: "fadeOut",
+                tapToDismiss: !1
+        })
+        }
+
     });
 </script>
+
+
+
 
 
 {% endblock %}
