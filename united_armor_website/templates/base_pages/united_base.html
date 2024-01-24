@@ -446,6 +446,7 @@
                                         <div class="form-group">
                                             <label for="register-password">Password *</label>
                                             <input type="password" class="form-control" id="register-password" name="register-password" required>
+                                            <small id="password-error-msg" class="text-danger m-1"></small>
                                         </div><!-- End .form-group -->
                                         <div class="form-group">
                                             <small id="register-error-msg" class="text-danger m-1 text-center"></small>
@@ -524,8 +525,18 @@
                     return;
                 }
     
-                // Clear previous error message
+                // Validate password length
+                var passwordInput = $('#register-password');
+                var passwordErrorMsg = $('#password-error-msg');
+
+                if (passwordInput.val().length < 8) {
+                    passwordErrorMsg.text('Password must be at least 8 characters long.');
+                    return;
+                }
+
+                // Clear previous error messages
                 emailErrorMsg.text('');
+                passwordErrorMsg.text('');
     
                 // Perform AJAX request
                 $.ajax({
