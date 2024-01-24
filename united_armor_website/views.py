@@ -941,8 +941,10 @@ def add_to_cart(request):
             selected_color_id = json_data['selectedColorId']
             selected_size_id = json_data['selectedSizeId']
             quantity = json_data['quantity']
-            price = float(price)
-            offer_price = float(offer_price)
+            
+            # Remove the ₹ symbol and any other non-numeric characters
+            price = float(price.replace('₹', '').replace(',', ''))
+            offer_price = float(offer_price.replace('₹', '').replace(',', ''))
             final_price = price
             if offer_price != 0.0:
                 final_price = offer_price
