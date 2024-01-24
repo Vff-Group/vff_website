@@ -972,41 +972,43 @@ def add_to_cart(request):
 
 #Update Cart Items 
 def update_cart(request):
-    try:
-        with connection.cursor() as cursor:
-            cart_id = request.POST.get('cart_id')
-            quantity = request.POST.get('quantity')
-            price = request.POST.get('price')
-            price = float(price.replace('₹', '').replace(',', ''))
-            # Update Cart item Price and Quantity where cartid 
-            update_query = "update  vff.united_armor_cart_tbl set quantity='"+str(quantity)+"' and price='"+str(price)+"' where cartid='"+str(cart_id)+"'"
-            
-            print(f"Update Cart Item Details::{update_query}")
-            cursor.execute(update_query)
-            connection.commit()
-            print("Cart Item Updated Successfully.")
-            return JsonResponse({'message':'success'})
-    except Exception as e:
-        print(f"Error loading data: {e}")
+    if request.method == "POST":
+        try:
+            with connection.cursor() as cursor:
+                cart_id = request.POST.get('cart_id')
+                quantity = request.POST.get('quantity')
+                price = request.POST.get('price')
+                price = float(price.replace('₹', '').replace(',', ''))
+                # Update Cart item Price and Quantity where cartid 
+                update_query = "update  vff.united_armor_cart_tbl set quantity='"+str(quantity)+"' and price='"+str(price)+"' where cartid='"+str(cart_id)+"'"
+                
+                print(f"Update Cart Item Details::{update_query}")
+                cursor.execute(update_query)
+                connection.commit()
+                print("Cart Item Updated Successfully.")
+                return JsonResponse({'message':'success'})
+        except Exception as e:
+            print(f"Error loading data: {e}")
     return JsonResponse({'message':'error'})
 
 
 #Remove From Cart Items 
 def remove_cart_item(request):
-    try:
-        with connection.cursor() as cursor:
-            cart_id = request.POST.get('cart_id')
-            # Remove item from cart where cartid
-            delete_query = "delete from vff.united_armor_cart_tbl where cartid='"+str(cart_id)+"';"
-            
-            print(f"deleting from cart::{delete_query}")
-            cursor.execute(delete_query)
-            connection.commit()
-            print("Item Delete from cart Successfully.")
-            return JsonResponse({'message':'success'})
-    except Exception as e:
-        print(f"Error loading data: {e}")
-    return JsonResponse({'message':'error'})
+    if request.method == "POST":
+        try:
+            with connection.cursor() as cursor:
+                cart_id = request.POST.get('cart_id')
+                # Remove item from cart where cartid
+                delete_query = "delete from vff.united_armor_cart_tbl where cartid='"+str(cart_id)+"';"
+                
+                print(f"deleting from cart::{delete_query}")
+                cursor.execute(delete_query)
+                connection.commit()
+                print("Item Delete from cart Successfully.")
+                return JsonResponse({'message':'success'})
+        except Exception as e:
+            print(f"Error loading data: {e}")
+        return JsonResponse({'message':'error'})
 
 
 #Cart Details against Usrid
