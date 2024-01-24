@@ -395,10 +395,12 @@
                             </ul>
                             <div class="tab-content" id="tab-content-5">
                                 <div class="tab-pane fade show active" id="signin" role="tabpanel" aria-labelledby="signin-tab">
-                                    <form action="#">
+                                    <form method="post" id="login-form">
+                                        {% csrf_token %}
                                         <div class="form-group">
-                                            <label for="singin-email">Username or email address *</label>
+                                            <label for="singin-email">Email address *</label>
                                             <input type="text" class="form-control" id="singin-email" name="singin-email" required>
+                                            <small id="email-error-msg" class="text-danger m-1"></small>
                                         </div><!-- End .form-group -->
 
                                         <div class="form-group">
@@ -509,7 +511,40 @@
     <script src="{% static 'js/plugins-init/toastr-init.js' %}"></script>
 
     <!-- signin with google  -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#login-button').on('click', function(event) {
+                // Prevent the default form submission
+                event.preventDefault();
+                // Validate email format
+                var emailInput = $('#singin-email');
+                var emailErrorMsg = $('#email-error-msg');
     
+                if (!emailInput[0].checkValidity()) {
+                    emailErrorMsg.text('Please provide a valid Gmail address.');
+                    return;
+                }
+    
+                // Clear previous error message
+                emailErrorMsg.text('');
+    
+                // Perform AJAX request
+                $.ajax({
+                    type: 'POST',
+                    url: '/united_armor/login/',
+                    data: $('#login-form').serialize(),
+                    success: function(response) {
+                        console.log('Login successful:'+response);
+
+                    },
+                    error: function(error) {
+                        console.error('Error during login:', error);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 

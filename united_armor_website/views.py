@@ -28,6 +28,29 @@ def coming_soon(request):
     current_url = request.get_full_path()
     return render(request,"coming_soon.html",{'current_url': current_url})
 
+def handle_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('singin-email')
+        password = request.POST.get('singin-password')
+
+        # Perform your login logic here
+        query = "select customerid,customer_name from vff.united_armor_customertbl where email='"+str(username)+"' and password='"+str(password)+"'"
+        user_data = execute_raw_query_fetch_one(query)
+        if user_data :
+                # User is authorized
+                print('User is Authorized')
+                request.session['u_customer_id'] = user_data[0]
+                request.session['customer_name'] = user_data[1]
+                return JsonResponse({'message': 'Login successful'})        
+        else:
+            error_msg = 'Something Went Wrong'
+            return JsonResponse({'message': 'InValid Login Credentials'})
+        
+        
+    else:
+        # Handle other HTTP methods if needed
+        return JsonResponse({'message': 'Invalid request method'})
+    
 #Home Page
 @cache_page(60 * 15)  # Cache for 15 minutes
 def home(request):

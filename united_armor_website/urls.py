@@ -11,6 +11,9 @@ urlpatterns = [
     #Coming Soon Page
     # path('home',views.coming_soon,name='coming_soon'),
     
+    #Login
+    path('login/',views.handle_login,name='login'),
+    
     #Home
     path('home',views.home,name='home'),
     
