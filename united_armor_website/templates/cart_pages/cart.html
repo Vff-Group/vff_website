@@ -82,7 +82,7 @@
                             <tbody>
                                 <tr class="summary-subtotal">
                                     <td>Subtotal:</td>
-                                    <td>₹160.00</td>
+                                    <td>₹0.0</td>
                                 </tr><!-- End .summary-subtotal -->
                                 {% comment %} <tr class="summary-shipping">
                                     <td>Coupon Code:</td>
@@ -105,7 +105,7 @@
 
                                 <tr class="summary-total">
                                     <td>Total:</td>
-                                    <td>₹100.00</td>
+                                    <td>₹0.0</td>
                                 </tr><!-- End .summary-total -->
                             </tbody>
                         </table><!-- End .table table-summary -->
@@ -119,5 +119,40 @@
         </div><!-- End .container -->
     </div><!-- End .cart -->
 </div><!-- End .page-content -->
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Function to update subtotal and total
+        function updateCartTotal() {
+            var subTotal = 0;
+
+            // Iterate through each row in the cart
+            $('.table-cart tbody tr').each(function () {
+                var quantity = parseInt($(this).find('.cart-product-quantity input').val());
+                var price = parseFloat($(this).find('.price-col').text().replace('₹', '').trim());
+
+                // Calculate row total
+                var rowTotal = quantity * price;
+                subTotal += rowTotal;
+
+                // Update total column in the table
+                $(this).find('.total-col').text('₹' + rowTotal.toFixed(2));
+            });
+
+            // Update subtotal and total labels
+            $('.summary-subtotal td:last-child').text('₹' + subTotal.toFixed(2));
+            $('.summary-total td:last-child').text('₹' + subTotal.toFixed(2));
+        }
+
+        // Trigger updateCartTotal on page load
+        updateCartTotal();
+
+        // Event listener for quantity change
+        $('.cart-product-quantity input').on('input', function () {
+            updateCartTotal();
+        });
+    });
+</script>
 
 {% endblock %}
