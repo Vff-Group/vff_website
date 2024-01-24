@@ -47,6 +47,12 @@ urlpatterns = [
     
     # Add To Cart
     path('add_to_cart/',views.add_to_cart,name='add_to_cart'),
+    
+    # Update Cart
+    path('update_cart/',views.update_cart,name='update_cart'),
+    
+    # Remove From Cart
+    path('remove_cart_item/',views.remove_cart_item,name='remove_cart_item'),
    
     #Checkout Page
     path('checkout/',views.checkout,name='checkout'),

@@ -970,6 +970,41 @@ def add_to_cart(request):
             return JsonResponse({'error': str(e)}, status=400)
     return JsonResponse({'message':'Oops Something Went Wrong'})
 
+#Update Cart Items 
+def update_cart(request):
+    try:
+        with connection.cursor() as cursor:
+            
+            # Update Cart item Price and Quantity where cartid 
+            update_query = "update table vff.united_armor_cart_tbl set quantity='"+str(quantity)+"' and price='"+str(price)+"' where cartid='"+str(cart_id)+"'"
+            
+            print(f"Update Cart Item Details::{update_query}")
+            cursor.execute(update_query)
+            connection.commit()
+            print("Cart Item Updated Successfully.")
+            return JsonResponse({'message':'success'})
+    except Exception as e:
+        print(f"Error loading data: {e}")
+    return JsonResponse({'message':'error'})
+
+
+#Remove From Cart Items 
+def remove_cart_item(request):
+    try:
+        with connection.cursor() as cursor:
+            
+            # Remove item from cart where cartid
+            delete_query = "delete from vff.united_armor_cart_tbl where cartid='"+str(cart_id)+"';"
+            
+            print(f"deleting from cart::{delete_query}")
+            cursor.execute(delete_query)
+            connection.commit()
+            print("Item Delete from cart Successfully.")
+            return JsonResponse({'message':'success'})
+    except Exception as e:
+        print(f"Error loading data: {e}")
+    return JsonResponse({'message':'error'})
+
 
 #Cart Details against Usrid
 def cart_details(request):

@@ -45,6 +45,7 @@
                             <tr>
                                 <td class="product-col">
                                     <div class="product">
+                                        <input type="hidden" value={{row.cart_id}}>
                                         <figure class="product-media">
                                             <a href="{% url 'united_armor:product' row.product_id %}">
                                                 <img src="{{row.product_img_url}}" alt="Product image">
@@ -129,14 +130,15 @@
         }
 
         // Function to update subtotal and total via AJAX
-        function updateCart(productID, quantity) {
+        function updateCart(cartID, quantity, price) {
             $.ajax({
                 type: 'POST',
                 url: '/united_armor/update_cart/',  // Update this with the correct URL
                 data: {
                     'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
-                    'productID': productID,
+                    'cart_id': cartID,
                     'quantity': quantity,
+                    'price': price,
                 },
                 success: function (response) {
                     // Reload the screen after successful update
@@ -177,11 +179,12 @@
 
         // Event listener for quantity change
         $('.cart-product-quantity input').on('input', function () {
-            var productID = $(this).closest('tr').data('product-id');
-            var quantity = parseInt($(this).val());
+            var cartID = $(this).closest('tr').find('input[type="hidden"]').val();
+            var quantity = $(this).val();
+            var price = $(this).closest('tr').find('.price-col').text();
 
-            // Update cart via AJAX
-            updateCart(productID, quantity);
+            // Update cart item via AJAX
+            updateCartItem(cartID, quantity, price);
 
             // Update subtotal and total on the client side
             updateCartTotal();
@@ -192,13 +195,13 @@
 <script>
     $(document).ready(function () {
         // Function to remove item from the cart via AJAX
-        function removeCartItem(productID) {
+        function removeCartItem(cartID) {
             $.ajax({
                 type: 'POST',
                 url: '/united_armor/remove_cart_item/',  // Update this with the correct URL
                 data: {
                     'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
-                    'productID': productID,
+                    'cart_id': cartID,
                 },
                 success: function (response) {
                     // Reload the screen after successful removal
@@ -213,10 +216,10 @@
 
         // Event listener for remove button click
         $('.btn-remove').on('click', function () {
-            var productID = $(this).closest('tr').data('product-id');
+            var cartID = $(this).closest('tr').find('input[type="hidden"]').val();
 
             // Remove cart item via AJAX
-            removeCartItem(productID);
+            removeCartItem(cartID);
         });
     });
 </script>
