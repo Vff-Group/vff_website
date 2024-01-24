@@ -44,7 +44,7 @@ def handle_login(request):
                 return JsonResponse({'message': 'Login successful'})        
         else:
             error_msg = 'Something Went Wrong'
-            return JsonResponse({'message': 'InValid Login Credentials'})
+            return JsonResponse({'message': 'Invalid credentials'})
         
         
     else:
