@@ -940,20 +940,21 @@ def add_to_cart(request):
             offer_price = json_data['offerPrice']
             selected_color_id = json_data['selectedColorId']
             selected_size_id = json_data['selectedSizeId']
-            quantity = json_data['quantity']
+            quantity = int(json_data['quantity'])
             
             # Remove the ₹ symbol and any other non-numeric characters
             price = float(price.replace('₹', '').replace(',', ''))
             offer_price = float(offer_price.replace('₹', '').replace(',', ''))
-            final_price = price
+            total_price = quantity * price
+            
             if offer_price != 0.0:
-                final_price = offer_price
+                total_price = quantity * offer_price
             customer_id = request.session.get('u_customer_id')
             try:
                 with connection.cursor() as cursor:
                     
                     # Add Item To Wish list
-                    insert_query = "insert into vff.united_armor_cart_tbl(product_id,quantity,customer_id,price,color_id,size_id,offer_price,actual_price,product_img_url) values ('"+str(product_id)+"','"+str(quantity)+"','"+str(customer_id)+"','"+str(final_price)+"','"+str(selected_color_id)+"','"+str(selected_size_id)+"','"+str(offer_price)+"','"+str(price)+"','"+str(selected_color_image)+"')"
+                    insert_query = "insert into vff.united_armor_cart_tbl(product_id,quantity,customer_id,price,color_id,size_id,offer_price,actual_price,product_img_url) values ('"+str(product_id)+"','"+str(quantity)+"','"+str(customer_id)+"','"+str(total_price)+"','"+str(selected_color_id)+"','"+str(selected_size_id)+"','"+str(offer_price)+"','"+str(price)+"','"+str(selected_color_image)+"')"
                     
                     print(f"Add To Cart ::{insert_query}")
                     cursor.execute(insert_query)
