@@ -183,8 +183,8 @@
             // Iterate through each row in the cart
             $('.table-cart tbody tr').each(function () {
                 var productID = $(this).data('product-id');
-                var quantity = parseInt($(this).find('.cart-product-quantity input').val());
-                var price = parseFloat($(this).find('.price-col').text().replace('₹', '').replace(/,/g, '').trim());
+                var quantity = $(this).find('.cart-product-quantity input').val();
+                var price = $(this).find('.price-col').text();
 
                 // Calculate row total
                 var rowTotal = quantity * price;
@@ -207,6 +207,7 @@
             var cartID = $(this).closest('tr').find('input[type="hidden"]').val();
             var quantity = $(this).val();
             var price = $(this).closest('tr').find('.price-col').text();
+            price = parseFloat(price.replace('₹', '').replace(',', '')) 
             price = price * quantity
             // Update cart item via AJAX
             updateCartItem(cartID, quantity, price);
