@@ -51,13 +51,16 @@
                                                 <img src="{{row.product_img_url}}" alt="Product image">
                                             </a>
                                         </figure>
-
-                                        <h3 class="product-title">
-                                            <a href="{% url 'united_armor:product' row.product_id %}">{{row.product_name}}</a>
-                                            
-                                        </h3><!-- End .product-title -->
-                                        <small class=" text-secondary m-1"> Color : {{row.color_name}}</small>
-                                            <small class=" text-secondary m-1 "> Size  : {{row.size_value}}</small>
+                                        <div class="">
+                                            <h3 class="product-title">
+                                                <a href="{% url 'united_armor:product' row.product_id %}">{{row.product_name}}</a>
+                                                
+                                            </h3>
+                                            <small class=" text-secondary m-1"> Color : {{row.color_name}}</small>
+                                                <small class=" text-secondary m-1 "> Size  : {{row.size_value}}</small>    
+                                        </div>
+                                        <!-- End .product-title -->
+                                        
                                     </div><!-- End .product -->
                                 </td>
                                 <td class="price-col">₹{{row.actual_price}}</td>
