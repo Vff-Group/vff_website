@@ -431,19 +431,22 @@
                                     
                                 </div><!-- .End .tab-pane -->
                                 <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
-                                    <form action="#">
+                                    <form method="post" id="register-form">
                                         <div class="form-group">
                                             <label for="register-email">Your email address *</label>
                                             <input type="email" class="form-control" id="register-email" name="register-email" required>
+                                            <small id="email-error-msg" class="text-danger m-1"></small>
                                         </div><!-- End .form-group -->
 
                                         <div class="form-group">
                                             <label for="register-password">Password *</label>
                                             <input type="password" class="form-control" id="register-password" name="register-password" required>
                                         </div><!-- End .form-group -->
-
+                                        <div class="form-group">
+                                            <small id="register-error-msg" class="text-danger m-1 text-center"></small>
+                                        </div>
                                         <div class="form-footer">
-                                            <button type="submit" class="btn btn-outline-primary-2">
+                                            <button type="submit" class="btn btn-outline-primary-2" id="register-button">
                                                 <span>SIGN UP</span>
                                                 <i class="icon-long-arrow-right"></i>
                                             </button>
@@ -498,8 +501,7 @@
 -->
     <!-- Plugins JS File -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <!-- signin with google  -->
-    
+    <!-- Login form  -->
     <script>
         $(document).ready(function() {
             $('#login-button').on('click', function(event) {
@@ -548,6 +550,52 @@
         });
     </script>
     
+    <script>
+        $(document).ready(function() {
+            $('#register-form').on('submit', function(event) {
+                // Prevent the default form submission
+                event.preventDefault();
+    
+                // Validate email format
+                var emailInput = $('#register-email');
+                var emailErrorMsg = $('#email-error-msg');
+    
+                var emailPattern = /\S+@\S+\.\S+/; // Regular expression for a simple email validation
+    
+                if (!emailPattern.test(emailInput.val())) {
+                    emailErrorMsg.text('Please provide a valid email address.');
+                    return;
+                }
+    
+                // Clear previous error message
+                emailErrorMsg.text('');
+    
+                // Perform AJAX request
+                $.ajax({
+                    type: 'POST',
+                    url: '/united_armor/register/',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        console.log('Registration response:', response);
+    
+                        // Check the response message
+                        if (response.message === 'Already Exist') {
+                            // Show an error message
+                            $('#register-error-msg').text('This Email Already Exist Please Try to Login');
+                        } else if (response.message === 'Registration successful') {
+                            // Redirect to a success page or perform any other action
+                            window.location.reload();
+                        } else {
+                            // Handle other response cases as needed
+                        }
+                    },
+                    error: function(error) {
+                        console.error('Error during registration:', error);
+                    }
+                });
+            });
+        });
+    </script>
 
     <script src="{% static 'assets/js/jquery.min.js' %}"></script>
     <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
