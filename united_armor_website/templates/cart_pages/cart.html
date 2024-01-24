@@ -207,7 +207,7 @@
             var cartID = $(this).closest('tr').find('input[type="hidden"]').val();
             var quantity = $(this).val();
             var price = $(this).closest('tr').find('.price-col').text();
-
+            price = price * quantity
             // Update cart item via AJAX
             updateCartItem(cartID, quantity, price);
 
