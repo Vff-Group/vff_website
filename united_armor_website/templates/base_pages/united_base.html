@@ -412,7 +412,7 @@
                                             <input type="password" class="form-control" id="singin-password" name="singin-password" required>
                                         </div><!-- End .form-group -->
                                         <div class="form-group">
-                                            <small id="login-error-msg" class="text-danger m-1"></small>
+                                            <small id="login-error-msg" class="text-danger m-1 text-center"></small>
                                         </div>
                                         <div class="form-footer">
                                             <button type="submit" class="btn btn-outline-primary-2"  id="login-button">
@@ -530,7 +530,7 @@
                          // Check the response message
                     if (response.message === 'Invalid credentials') {
                         // Show an error message
-                        $('#login-error-msg').text('Invalid credentials. Please check your username or password. If not Registered Please Register Now.');
+                        $('#login-error-msg').text('Invalid credentials.\n Please check your username or password. If not Registered \nplease Register Now.');
                     } else {
                         // Reload the screen
                         window.location.reload();
