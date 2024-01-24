@@ -135,7 +135,7 @@
                 type: 'POST',
                 url: '/united_armor/update_cart/',  // Update this with the correct URL
                 data: {
-                    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+                    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),  // Include the CSRF token
                     'cart_id': cartID,
                     'quantity': quantity,
                     'price': price,
