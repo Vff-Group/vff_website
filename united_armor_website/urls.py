@@ -44,6 +44,9 @@ urlpatterns = [
     
     #Cart
     path('cart/',views.cart_details,name='cart'),
+    
+    # Add To Cart
+    path('add_to_cart/',views.add_to_cart,name='add_to_cart'),
    
     #Checkout Page
     path('checkout/',views.checkout,name='checkout'),
