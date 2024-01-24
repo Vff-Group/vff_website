@@ -123,6 +123,11 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     $(document).ready(function () {
+        // Function to format currency with commas
+        function formatCurrency(amount) {
+            return '₹' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+
         // Function to update subtotal and total
         function updateCartTotal() {
             var subTotal = 0;
@@ -130,19 +135,19 @@
             // Iterate through each row in the cart
             $('.table-cart tbody tr').each(function () {
                 var quantity = parseInt($(this).find('.cart-product-quantity input').val());
-                var price = parseFloat($(this).find('.price-col').text().replace('₹', '').trim());
+                var price = parseFloat($(this).find('.price-col').text().replace('₹', '').replace(/,/g, '').trim());
 
                 // Calculate row total
                 var rowTotal = quantity * price;
                 subTotal += rowTotal;
 
-                // Update total column in the table
-                $(this).find('.total-col').text('₹' + rowTotal.toFixed(2));
+                // Update total column in the table with formatted currency
+                $(this).find('.total-col').text(formatCurrency(rowTotal));
             });
 
-            // Update subtotal and total labels
-            $('.summary-subtotal td:last-child').text('₹' + subTotal.toFixed(2));
-            $('.summary-total td:last-child').text('₹' + subTotal.toFixed(2));
+            // Update subtotal and total labels with formatted currency
+            $('.summary-subtotal td:last-child').text(formatCurrency(subTotal));
+            $('.summary-total td:last-child').text(formatCurrency(subTotal));
         }
 
         // Trigger updateCartTotal on page load
@@ -154,5 +159,6 @@
         });
     });
 </script>
+
 
 {% endblock %}
