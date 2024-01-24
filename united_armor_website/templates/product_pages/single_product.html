@@ -39,7 +39,7 @@
                     <div class="col-md-6">
                         
                             <h1 class="product-title" id="product-name">{{ product.product_name }}</h1>
-                            <pre>{{product_id}}</pre>
+                            
                             <input type="hidden" id="product-id" name="product-id" value="{{product_id}}">
 
                             <div class="ratings-container">
@@ -612,7 +612,7 @@
             
             // Get the selected product details
             var productName = $('#product-name').text();
-            var productID = $('#product-id').text();
+            var productID = $('#product-id').val();
             var selectedColorImage = document.querySelector('.product-gallery-image[data-color-id="' + selectedColorId + '"] img').getAttribute('data-zoom-image');
             var price = $('#price').text().trim();
             var offerPrice = $('#offer-price').text().trim();
