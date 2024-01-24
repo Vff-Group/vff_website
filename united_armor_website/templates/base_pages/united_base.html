@@ -525,18 +525,10 @@
                     return;
                 }
     
-                // Validate password length
-                var passwordInput = $('#register-password');
-                var passwordErrorMsg = $('#password-error-msg');
-
-                if (passwordInput.val().length < 8) {
-                    passwordErrorMsg.text('Password must be at least 8 characters long.');
-                    return;
-                }
 
                 // Clear previous error messages
                 emailErrorMsg.text('');
-                passwordErrorMsg.text('');
+                
     
                 // Perform AJAX request
                 $.ajax({
@@ -588,8 +580,18 @@
                     return;
                 }
     
-                // Clear previous error message
+                // Validate password length
+                var passwordInput = $('#register-password');
+                var passwordErrorMsg = $('#password-error-msg');
+
+                if (passwordInput.val().length < 8) {
+                    passwordErrorMsg.text('Password must be at least 8 characters long.');
+                    return;
+                }
+
+                // Clear previous error messages
                 emailErrorMsg.text('');
+                passwordErrorMsg.text('');
     
                 // Perform AJAX request
                 $.ajax({
