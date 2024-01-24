@@ -147,144 +147,6 @@ def home(request):
     return render(request, "home_pages/home.html", context)
 
 
-# def home(request):
-#     query = "SELECT main_cat_id, main_title_name, images FROM vff.united_armor_main_categorytbl ORDER BY main_cat_id"
-#     query_result = execute_raw_query(query)
-
-#     main_cat_data = []    
-#     if not query_result == 500:
-#         for row in query_result:
-#             main_cat_id = row[0]
-
-#             # Nested query to select catid and cat_name where main_catid is unique
-#             cat_query = f"SELECT catid, cat_name FROM vff.united_armor_categorytbl WHERE main_catid = {main_cat_id} order by catid"
-#             cat_result = execute_raw_query(cat_query)
-
-#             # Nested query to select sub_catid and sub_cat_name where catid is unique
-#             if cat_result and len(cat_result) > 0:
-#                 catid = cat_result[0][0]
-#                 sub_cat_query = f"SELECT sub_catid, sub_cat_name FROM vff.united_armor_sub_categorytbl WHERE catid = {catid} order by sub_catid"
-#                 sub_cat_result = execute_raw_query(sub_cat_query)
-
-#                 if sub_cat_result and len(sub_cat_result) > 0:
-#                     sub_cat_data = {
-#                         'sub_catid': sub_cat_result[0][0],
-#                         'sub_cat_name': sub_cat_result[0][1],
-#                     }
-#                 else:
-#                     # Handle the case when no matching entry is found in united_armor_sub_categorytbl
-#                     sub_cat_data = {
-#                         'sub_catid': None,
-#                         'sub_cat_name': None,
-#                     }
-
-#                 cat_data = {
-#                     'main_cat_id': main_cat_id,
-#                     'main_title_name': row[1],
-#                     'images': row[2],
-#                     'catid': catid,
-#                     'cat_name': cat_result[0][1],
-#                     'sub_category': sub_cat_data,
-#                 }
-#                 main_cat_data.append(cat_data)
-#             else:
-#                 # Handle the case when no matching entry is found in united_armor_categorytbl
-#                 main_cat_data.append({
-#                     'main_cat_id': main_cat_id,
-#                     'main_title_name': row[1],
-#                     'images': row[2],
-#                     'catid': None,
-#                     'cat_name': None,
-#                     'sub_category': {
-#                         'sub_catid': None,
-#                         'sub_cat_name': None,
-#                     },
-#                 })
-#     else:
-#         error_msg = 'Something Went Wrong'
-
-    
-#     current_url = request.get_full_path()
-#     context={'main_cat_data':main_cat_data,'current_url': current_url}
-#     return render(request,"home_pages/home.html",context)
-
-# def home(request):
-#     query = "SELECT main_cat_id, main_title_name, images FROM vff.united_armor_main_categorytbl ORDER BY main_cat_id"
-#     query_result = execute_raw_query(query)
-
-#     main_cat_data = []
-#     all_cat_names = []  # List to store all cat_names
-#     all_sub_cat_names = []  # List to store all sub_cat_names
-
-#     if not query_result == 500:
-#         for row in query_result:
-#             main_cat_id = row[0]
-
-#             # Nested query to select catid and cat_name where main_catid is unique
-#             cat_query = f"SELECT catid, cat_name FROM vff.united_armor_categorytbl WHERE main_catid = {main_cat_id} order by catid"
-#             cat_result = execute_raw_query(cat_query)
-
-#             # Nested query to select sub_catid and sub_cat_name where catid is unique
-#             if cat_result and len(cat_result) > 0:
-#                 catid = cat_result[0][0]
-#                 sub_cat_query = f"SELECT sub_catid, sub_cat_name FROM vff.united_armor_sub_categorytbl WHERE catid = {catid} order by sub_catid"
-#                 sub_cat_result = execute_raw_query(sub_cat_query)
-
-#                 if sub_cat_result and len(sub_cat_result) > 0:
-#                     sub_cat_data = {
-#                         'sub_catid': sub_cat_result[0][0],
-#                         'sub_cat_name': sub_cat_result[0][1],
-#                     }
-
-#                     # Append sub_cat_name to the list
-#                     all_sub_cat_names.append(sub_cat_result[0][1])
-#                 else:
-#                     # Handle the case when no matching entry is found in united_armor_sub_categorytbl
-#                     sub_cat_data = {
-#                         'sub_catid': None,
-#                         'sub_cat_name': None,
-#                     }
-
-#                 # Append cat_name to the list
-#                 all_cat_names.append(cat_result[0][1])
-
-#                 cat_data = {
-#                     'main_cat_id': main_cat_id,
-#                     'main_title_name': row[1],
-#                     'images': row[2],
-#                     'catid': catid,
-#                     'cat_name': cat_result[0][1],
-#                     'sub_category': sub_cat_data,
-#                 }
-#                 main_cat_data.append(cat_data)
-#             else:
-#                 # Handle the case when no matching entry is found in united_armor_categorytbl
-#                 main_cat_data.append({
-#                     'main_cat_id': main_cat_id,
-#                     'main_title_name': row[1],
-#                     'images': row[2],
-#                     'catid': None,
-#                     'cat_name': None,
-#                     'sub_category': {
-#                         'sub_catid': None,
-#                         'sub_cat_name': None,
-#                     },
-#                 })
-#     else:
-#         error_msg = 'Something Went Wrong'
-
-#     current_url = request.get_full_path()
-#     print(f'cat_names::{all_cat_names}')
-#     print('-------')
-#     print(f'all_sub_cat_names::{all_sub_cat_names}')
-#     context = {
-#         'main_cat_data': main_cat_data,
-#         'all_cat_names': all_cat_names,
-#         'all_sub_cat_names': all_sub_cat_names,
-#         'current_url': current_url
-#     }
-#     return render(request, "home_pages/home.html", context)
-
 #All Products
 def all_products(request):
     main_cat_query = "SELECT main_cat_id, main_title_name,images FROM vff.united_armor_main_categorytbl ORDER BY main_cat_id"
@@ -1065,19 +927,44 @@ def delete_from_wishlist(request,wishlist_id):
 
 # Add to cart
 def add_to_cart(request):
-    try:
-        with connection.cursor() as cursor:
-            
-            # Add Item To Wish list
-            insert_query = "insert into vff.united_armor_cart_tbl(product_id,quantity,customer_id,price,color_id,size_id,offer_price,actual_price,product_img_url) values ()"
-            
-            print(f"Add To Cart ::{insert_query}")
-            cursor.execute(insert_query)
-            connection.commit()
-            print("Add To Cart Successfully.")
-            return JsonResponse({'message':'Added To Cart successfully'})
-    except Exception as e:
-        print(f"Error loading data: {e}")
+    if request.method == 'POST':
+        try:
+            # Get the JSON data sent in the request
+            json_data = json.loads(request.POST.get('selectedProduct'))
+
+            # Access individual values from the JSON data
+            product_id = json_data['productID']
+            product_name = json_data['productName']
+            selected_color_image = json_data['selectedColorImage']
+            price = json_data['price']
+            offer_price = json_data['offerPrice']
+            selected_color_id = json_data['selectedColorId']
+            selected_size_id = json_data['selectedSizeId']
+            quantity = json_data['quantity']
+            price = float(price)
+            offer_price = float(offer_price)
+            final_price = price
+            if offer_price != 0.0:
+                final_price = offer_price
+            customer_id = request.session.get('u_customer_id')
+            try:
+                with connection.cursor() as cursor:
+                    
+                    # Add Item To Wish list
+                    insert_query = "insert into vff.united_armor_cart_tbl(product_id,quantity,customer_id,price,color_id,size_id,offer_price,actual_price,product_img_url) values ('"+str(product_id)+"','"+str(quantity)+"','"+str(customer_id)+"','"+str(final_price)+"','"+str(selected_color_id)+"','"+str(selected_size_id)+"','"+str(offer_price)+"','"+str(price)+"','"+str(selected_color_image)+"')"
+                    
+                    print(f"Add To Cart ::{insert_query}")
+                    cursor.execute(insert_query)
+                    connection.commit()
+                    print("Add To Cart Successfully.")
+                    return JsonResponse({'message':'Added To Cart successfully'})
+            except Exception as e:
+                print(f"Error loading data: {e}")
+                return JsonResponse({'message':'Oops Something Went Wrong'})
+        except Exception as e:
+            # Handle exceptions (e.g., invalid JSON, missing keys, etc.)
+            print(f"Add to cart error{e}")
+            return JsonResponse({'error': str(e)}, status=400)
     return JsonResponse({'message':'Oops Something Went Wrong'})
 
 

@@ -255,7 +255,30 @@
     {% endwith %}
                     
         {% endif %}
-    
+    <!-- Add this modal to your HTML -->
+    <div class="modal fade" id="addToCartModal" tabindex="-1" role="dialog" aria-labelledby="addToCartModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="addToCartModalLabel">Product Added to Cart</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex flex-column align-items-center justify-content-center">
+                <img src="{% static 'assets/gifs/add_to_cart.gif' %}" alt="" width="100" height="100">
+                <p>Your product has been added to the cart successfully!</p>
+        </div>
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-sm btn-dark" id="goToWishlistBtn">Go to Cart</button>
+            </div>
+            </div>
+            
+        </div>
+        </div>
+    </div>
+  
 
     
 </div><!-- End .page-content -->
@@ -634,6 +657,31 @@
 
             
             console.log(selectedProduct);
+            // Perform AJAX request to send data to Django backend
+            $.ajax({
+                type: 'POST',
+                url: '/united_armor/add_to_cart/',  // Replace with the actual URL endpoint
+                data: {
+                    'selectedProduct': JSON.stringify(selectedProduct),
+                    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+                },
+                success: function (response) {
+                    console.log('Product added to cart successfully:', response);
+                    if(response.message === "Added To Cart successfully"){
+
+                    }else{
+                        showToast('Alert',response.message);
+                    }
+                    // You can handle the response here if needed
+                    // For example, show a success message or update the cart UI
+                },
+                error: function (error) {
+                    console.error('Error adding product to cart:', error);
+
+                    // You can handle the error response here if needed
+                    // For example, show an error message to the user
+                }
+            });
         });
     });
 
