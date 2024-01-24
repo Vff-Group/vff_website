@@ -433,6 +433,10 @@
                                 <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
                                     <form method="post" id="register-form">
                                         <div class="form-group">
+                                            <label for="register-name">User Name *</label>
+                                            <input type="text" class="form-control" id="register-name" name="register-name" required>
+                                        </div><!-- End .form-group -->
+                                        <div class="form-group">
                                             <label for="register-email">Your email address *</label>
                                             <input type="text" class="form-control" id="register-email" name="register-email" required>
                                             <small id="remail-error-msg" class="text-danger m-1"></small>
@@ -532,8 +536,13 @@
                          // Check the response message
                     if (response.message === 'Invalid credentials') {
                         // Show an error message
-                        $('#login-error-msg').text('Invalid credentials.\n Please check your username or password. If not Registered \nplease Register Now.');
-                    } else {
+                        $('#login-error-msg').text('You are not a registered customer. Please Register');
+                    } 
+                    else if (response.message === 'Something Went Wrong') {
+                        // Show an error message
+                        $('#login-error-msg').text('Something Went Wrong . Please Try again Later');
+                    } 
+                    else {
                         // Reload the screen
                         window.location.reload();
                     }
@@ -582,11 +591,11 @@
                         if (response.message === 'Already Exist') {
                             // Show an error message
                             $('#register-error-msg').text('This Email Already Exist Please Try to Login');
-                        } else if (response.message === 'Registration successful') {
+                        } else if (response.message === 'Registered successful') {
                             // Redirect to a success page or perform any other action
                             window.location.reload();
                         } else {
-                            // Handle other response cases as needed
+                            $('#register-error-msg').text('Something Went Wrong. Please Try again later');
                         }
                     },
                     error: function(error) {

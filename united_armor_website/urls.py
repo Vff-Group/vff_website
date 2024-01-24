@@ -14,6 +14,9 @@ urlpatterns = [
     #Login
     path('login/',views.handle_login,name='login'),
     
+    #Register
+    path('register/',views.handle_register,name='register'),
+    
     #Home
     path('home',views.home,name='home'),
     

@@ -34,7 +34,7 @@ def handle_login(request):
         password = request.POST.get('singin-password')
 
         # Perform your login logic here
-        query = "select customerid,customer_name from vff.united_armor_customertbl where email='"+str(username)+"' and password='"+str(password)+"'"
+        query = "select customerid,customer_name from vff.united_armor_customertbl where email='"+str(username)+"' "
         user_data = execute_raw_query_fetch_one(query)
         if user_data :
                 # User is authorized
@@ -49,7 +49,44 @@ def handle_login(request):
         
     else:
         # Handle other HTTP methods if needed
-        return JsonResponse({'message': 'Invalid request method'})
+        return JsonResponse({'message': 'Something Went Wrong'})
+    
+def handle_register(request):
+    if request.method == 'POST':
+        name = request.POST.get('register-name')
+        email = request.POST.get('register-email')
+        password = request.POST.get('register-password')
+
+        # Perform your login logic here
+        query = "select customerid,customer_name from vff.united_armor_customertbl where email='"+str(email)+"' "
+        user_data = execute_raw_query_fetch_one(query)
+        if user_data :
+                return JsonResponse({'message': 'Already Exist'})        
+        else:
+            try:
+                with connection.cursor() as cursor:
+                    
+                    # Add Item To Wish list
+                    insert_query = "insert into vff.united_armor_customertbl(customer_name,email,password) values ('"+str(name)+"','"+str(email)+"','"+str(password)+"') returning customerid"
+                    
+                    print(f"New User Register::{insert_query}")
+                    cursor.execute(insert_query)
+                    customer_id = cursor.fetchone()[0] 
+                    connection.commit()
+                    request.session['u_customer_id'] = customer_id
+                    request.session['customer_name'] = name
+                    print("Customer Registered  Successfully.")
+                    return JsonResponse({'message':'Registered Successfully'})
+            except Exception as e:
+                print(f"Error loading data: {e}")
+                return JsonResponse({'message': 'Something Went Wrong'})
+                
+            
+        
+        
+    else:
+        # Handle other HTTP methods if needed
+        return JsonResponse({'message': 'Something Went Wrong'})
     
 #Home Page
 @cache_page(60 * 15)  # Cache for 15 minutes
