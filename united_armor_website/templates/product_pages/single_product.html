@@ -39,6 +39,7 @@
                     <div class="col-md-6">
                         
                             <h1 class="product-title" id="product-name">{{ product.product_name }}</h1>
+                            <input type="hidden" id="product-id" value="{{product_id}}">
 
                             <div class="ratings-container">
                                 <div class="ratings">
@@ -610,6 +611,7 @@
             
             // Get the selected product details
             var productName = $('#product-name').text();
+            var productID = $('#product-id').text();
             var selectedColorImage = document.querySelector('.product-gallery-image[data-color-id="' + selectedColorId + '"] img').getAttribute('data-zoom-image');
             var price = $('#price').text().trim();
             var offerPrice = $('#offer-price').text().trim();
@@ -619,6 +621,7 @@
             
             // Create an object with the selected product details
             var selectedProduct = {
+                productID:productID,
                 productName: productName,
                 selectedColorImage: selectedColorImage,
                 price: price,
@@ -633,7 +636,7 @@
         });
     });
 
-    // Wait for the document to be ready
+    //To Show Wish List 
     $(document).ready(function () {
         // Attach a click event handler to the wishlist button
         $('#wishlist-btn').on('click', function (event) {

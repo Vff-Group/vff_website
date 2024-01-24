@@ -1009,7 +1009,7 @@ def product(request,product_id):
         customer_id = ''
     
     current_url = request.get_full_path()
-    context = {'all_categories': all_categories,'query_result':data,'review_data':review_data,'data_images':data_images,'data_sizes':data_sizes,'data_colors':data_colors, 'current_url': current_url,'error_msg':error_msg,'customer_id':customer_id}
+    context = {'all_categories': all_categories,'product_id':product_id,'query_result':data,'review_data':review_data,'data_images':data_images,'data_sizes':data_sizes,'data_colors':data_colors, 'current_url': current_url,'error_msg':error_msg,'customer_id':customer_id}
     return render(request,"product_pages/single_product.html",context)
 
 #Wish List Details Against Customer ID
@@ -1062,6 +1062,24 @@ def delete_from_wishlist(request,wishlist_id):
     except Exception as e:
         print(f"Error loading data: {e}")
     return JsonResponse({'message':'Oops Something Went Wrong'})
+
+# Add to cart
+def add_to_cart(request):
+    try:
+        with connection.cursor() as cursor:
+            
+            # Add Item To Wish list
+            insert_query = "insert into vff.united_armor_cart_tbl(product_id,quantity,customer_id,price,color_id,size_id,offer_price,actual_price,product_img_url) values ()"
+            
+            print(f"Add To Cart ::{insert_query}")
+            cursor.execute(insert_query)
+            connection.commit()
+            print("Add To Cart Successfully.")
+            return JsonResponse({'message':'Added To Cart successfully'})
+    except Exception as e:
+        print(f"Error loading data: {e}")
+    return JsonResponse({'message':'Oops Something Went Wrong'})
+
 
 #Cart Details against Usrid
 def cart_details(request):
