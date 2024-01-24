@@ -161,11 +161,13 @@
                     if (response.message === 'success') {
                         // Show success modal
                         showToastSuccess('Success','Item Updated Successfully');
+                        location.reload();
                     } else {
                         // Show error modal
                         showToast('Alert','Item Update Error');
+                        location.reload();
                     }
-                    location.reload();
+                    
                 },
                 error: function (error) {
                     console.error('Error updating cart:', error);
@@ -230,11 +232,13 @@
                     if (response.message === 'success') {
                         // Show success modal
                         showToastSuccess('Success','Item Removed Successfully');
+                        location.reload();
                     } else {
                         // Show error modal
                         showToast('Alert','Item Remove Error');
+                        location.reload();
                     }
-                    location.reload();
+                    
                 },
                 error: function (error) {
                     console.error('Error removing cart item:', error);
