@@ -128,12 +128,34 @@
             return '₹' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
 
+        // Function to update subtotal and total via AJAX
+        function updateCart(productID, quantity) {
+            $.ajax({
+                type: 'POST',
+                url: '/united_armor/update_cart/',  // Update this with the correct URL
+                data: {
+                    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+                    'productID': productID,
+                    'quantity': quantity,
+                },
+                success: function (response) {
+                    // Reload the screen after successful update
+                    location.reload();
+                },
+                error: function (error) {
+                    console.error('Error updating cart:', error);
+                    // Handle the error as needed
+                }
+            });
+        }
+
         // Function to update subtotal and total
         function updateCartTotal() {
             var subTotal = 0;
 
             // Iterate through each row in the cart
             $('.table-cart tbody tr').each(function () {
+                var productID = $(this).data('product-id');
                 var quantity = parseInt($(this).find('.cart-product-quantity input').val());
                 var price = parseFloat($(this).find('.price-col').text().replace('₹', '').replace(/,/g, '').trim());
 
@@ -155,7 +177,46 @@
 
         // Event listener for quantity change
         $('.cart-product-quantity input').on('input', function () {
+            var productID = $(this).closest('tr').data('product-id');
+            var quantity = parseInt($(this).val());
+
+            // Update cart via AJAX
+            updateCart(productID, quantity);
+
+            // Update subtotal and total on the client side
             updateCartTotal();
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Function to remove item from the cart via AJAX
+        function removeCartItem(productID) {
+            $.ajax({
+                type: 'POST',
+                url: '/united_armor/remove_cart_item/',  // Update this with the correct URL
+                data: {
+                    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+                    'productID': productID,
+                },
+                success: function (response) {
+                    // Reload the screen after successful removal
+                    location.reload();
+                },
+                error: function (error) {
+                    console.error('Error removing cart item:', error);
+                    // Handle the error as needed
+                }
+            });
+        }
+
+        // Event listener for remove button click
+        $('.btn-remove').on('click', function () {
+            var productID = $(this).closest('tr').data('product-id');
+
+            // Remove cart item via AJAX
+            removeCartItem(productID);
         });
     });
 </script>
