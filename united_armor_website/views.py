@@ -980,7 +980,7 @@ def update_cart(request):
                 price = request.POST.get('price')
                 price = float(price.replace('₹', '').replace(',', ''))
                 # Update Cart item Price and Quantity where cartid 
-                update_query = "update  vff.united_armor_cart_tbl set quantity='"+str(quantity)+"' and price='"+str(price)+"' where cartid='"+str(cart_id)+"'"
+                update_query = "update  vff.united_armor_cart_tbl set quantity='"+str(quantity)+"', price='"+str(price)+"' where cartid='"+str(cart_id)+"'"
                 
                 print(f"Update Cart Item Details::{update_query}")
                 cursor.execute(update_query)
