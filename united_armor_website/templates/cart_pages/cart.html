@@ -130,7 +130,7 @@
         }
 
         // Function to update subtotal and total via AJAX
-        function updateCart(cartID, quantity, price) {
+        function updateCartItem(cartID, quantity, price) {
             $.ajax({
                 type: 'POST',
                 url: '/united_armor/update_cart/',  // Update this with the correct URL
