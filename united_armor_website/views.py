@@ -977,11 +977,13 @@ def update_cart(request):
             with connection.cursor() as cursor:
                 cart_id = request.POST.get('cart_id')
                 quantity = request.POST.get('quantity')
+                # Convert quantity to an integer
+                quantity = int(quantity)
                 price = request.POST.get('price')
                 price = float(price.replace('₹', '').replace(',', ''))
-                price = quantity * price
+                total_price = quantity * price
                 # Update Cart item Price and Quantity where cartid 
-                update_query = "update  vff.united_armor_cart_tbl set quantity='"+str(quantity)+"', price='"+str(price)+"' where cartid='"+str(cart_id)+"'"
+                update_query = "update  vff.united_armor_cart_tbl set quantity='"+str(quantity)+"', price='"+str(total_price)+"' where cartid='"+str(cart_id)+"'"
                 
                 print(f"Update Cart Item Details::{update_query}")
                 cursor.execute(update_query)
