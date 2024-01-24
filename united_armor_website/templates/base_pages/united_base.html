@@ -499,6 +499,7 @@
             $('#login-button').on('click', function(event) {
                 // Prevent the default form submission
                 event.preventDefault();
+                
                 // Validate email format
                 var emailInput = $('#singin-email');
                 var emailErrorMsg = $('#email-error-msg');
@@ -517,16 +518,20 @@
                     url: '/united_armor/login/',
                     data: $('#login-form').serialize(),
                     success: function(response) {
-                        console.log('Login successful:'+response);
-
+                        console.log('Login successful:' + response);
+    
                     },
                     error: function(error) {
                         console.error('Error during login:', error);
                     }
                 });
+    
+                // Return false to prevent form submission and page reload
+                return false;
             });
         });
     </script>
+    
 
     <script src="{% static 'assets/js/jquery.min.js' %}"></script>
     <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
