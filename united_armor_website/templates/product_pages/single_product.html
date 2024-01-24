@@ -668,7 +668,7 @@
                 success: function (response) {
                     console.log('Product added to cart successfully:', response);
                     if(response.message === "Added To Cart successfully"){
-
+                        $('#addToCartModal').modal('show');
                     }else{
                         showToast('Alert',response.message);
                     }
