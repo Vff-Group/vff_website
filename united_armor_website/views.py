@@ -947,7 +947,7 @@ def add_to_cart(request):
             offer_price = float(offer_price.replace('₹', '').replace(',', ''))
             total_price = quantity * price
             
-            if offer_price != 0.0:
+            if offer_price != 0.0 or offer_price !=0:
                 total_price = quantity * offer_price
             customer_id = request.session.get('u_customer_id')
             try:
@@ -973,8 +973,44 @@ def add_to_cart(request):
 
 #Cart Details against Usrid
 def cart_details(request):
+    error_msg = 'No Items Found in Cart'
+    customer_id = request.session.get("u_customer_id")
+    if customer_id == None:
+        error_msg = 'Please Login To Add Items to Cart'
+        context = {'query_result':[],'error_msg':error_msg}
+        return render(request,"cart_pages/cart.html",context)
+    query = "select cartid,united_armor_cart_tbl.product_id,product_name,quantity,max_checkout_qty,united_armor_cart_tbl.price,color_name,product_img_url,reserved_quantity,stock_status,size_value,actual_price,united_armor_cart_tbl.offer_price from vff.united_armor_inventorytbl,vff.united_armor_cart_tbl,vff.united_armor_all_productstbl,vff.united_armor_product_sizestbl,vff.united_armor_product_colorstbl where united_armor_product_sizestbl.sizesid=united_armor_cart_tbl.size_id and united_armor_product_colorstbl.colorsid=united_armor_cart_tbl.color_id and united_armor_product_colorstbl.product_id=united_armor_all_productstbl.productid and united_armor_product_colorstbl.product_id=united_armor_cart_tbl.product_id and united_armor_cart_tbl.product_id=united_armor_all_productstbl.productid and united_armor_inventorytbl.product_id=united_armor_all_productstbl.productid and united_armor_inventorytbl.product_id=united_armor_cart_tbl.product_id and united_armor_inventorytbl.color_id=united_armor_cart_tbl.color_id and united_armor_inventorytbl.size_id=united_armor_cart_tbl.size_id and  customer_id='"+str(customer_id)+"'"
+    query_result = execute_raw_query(query)
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            actual_price = row[11]
+            offer_price = row[12]
+            per_item_price= actual_price
+            if offer_price !=0.0 or offer_price !=0:
+                per_item_price = offer_price
+            data.append({
+                    'cart_id':row[0],
+                    'product_id':row[1],
+                    'product_name':row[2],
+                    'quantity':row[3],
+                    'max_checkout_qty':row[4],
+                    'price':row[5],
+                    'color_name':row[6],
+                    'product_img_url':row[7],
+                    'reserved_quantity':row[8],
+                    'stock_status':row[9],
+                    'size_value':row[10],
+                    'actual_price':per_item_price,
+                    
+                    
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
     current_url = request.get_full_path()
-    return render(request,"cart_pages/cart.html",{'current_url': current_url})
+    context = {'current_url': current_url,'query_result':data,'error_msg':error_msg}
+    return render(request,"cart_pages/cart.html",context)
 
 #Checkout Page
 def checkout(request):

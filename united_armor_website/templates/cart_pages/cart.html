@@ -22,6 +22,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-9">
+                    {% if not query_result %}
+                    <div class="alert alert-info alert-dismissible m-4 fade show" role="alert">
+                        <span class="alert-icon text-white"><i class="ni ni-like-2"></i></span>
+                        <span class="alert-text text-white"><strong>Info!</strong> {{error_msg}}!</span>
+                        
+                    </div>
+                    {% else %}
                     <table class="table table-cart table-mobile">
                         <thead>
                             <tr>
@@ -34,54 +41,35 @@
                         </thead>
 
                         <tbody>
+                            {% for row in query_result %}
                             <tr>
                                 <td class="product-col">
                                     <div class="product">
                                         <figure class="product-media">
-                                            <a href="#">
-                                                <img src="{% static 'assets/images/products/single/extended/3.webp' %}" alt="Product image">
+                                            <a href="{% url 'united_armor:product' row.product_id %}">
+                                                <img src="{{row.product_img_url}}" alt="Product image">
                                             </a>
                                         </figure>
 
                                         <h3 class="product-title">
-                                            <a href="#">Beige knitted elastic runner shoes</a>
+                                            <a href="{% url 'united_armor:product' row.product_id %}">{{row.product_name}}</a>
                                         </h3><!-- End .product-title -->
                                     </div><!-- End .product -->
                                 </td>
-                                <td class="price-col">₹84.00</td>
+                                <td class="price-col">₹{{row.actual_price}}</td>
                                 <td class="quantity-col">
                                     <div class="cart-product-quantity">
-                                        <input type="number" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
+                                        <input type="number" class="form-control" value="{{row.quantity}}" min="1" max="{{row.max_checkout_qty}}" step="1" data-decimals="0" required>
                                     </div><!-- End .cart-product-quantity -->
                                 </td>
-                                <td class="total-col">₹84.00</td>
+                                <td class="total-col">₹{{row.price}}</td>
                                 <td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
                             </tr>
-                            <tr>
-                                <td class="product-col">
-                                    <div class="product">
-                                        <figure class="product-media">
-                                            <a href="#">
-                                                <img src="{% static 'assets/images/products/single/extended/3.webp' %}" alt="Product image">
-                                            </a>
-                                        </figure>
-
-                                        <h3 class="product-title">
-                                            <a href="#">Boys' UA Rival Fleece Hoodie</a>
-                                        </h3><!-- End .product-title -->
-                                    </div><!-- End .product -->
-                                </td>
-                                <td class="price-col">₹76.00</td>
-                                <td class="quantity-col">
-                                    <div class="cart-product-quantity">
-                                        <input type="number" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
-                                    </div><!-- End .cart-product-quantity -->                                 
-                                </td>
-                                <td class="total-col">₹76.00</td>
-                                <td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
-                            </tr>
+                            
+                            {% endfor %}
                         </tbody>
                     </table><!-- End .table table-wishlist -->
+                    {% endif %}
 
                     
 
