@@ -255,7 +255,7 @@
     {% endwith %}
                     
         {% endif %}
-    <!-- Add this modal to your HTML -->
+    <!-- Add To Cart Success -->
     <div class="modal fade" id="addToCartModal" tabindex="-1" role="dialog" aria-labelledby="addToCartModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -279,6 +279,32 @@
         </div>
     </div>
   
+    <!-- Add To Wishlist Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Success</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex flex-column align-items-center justify-content-center">
+                    <img src="{% static 'assets/gifs/wishlist.gif' %}" alt="" width="100" height="100">
+                    <p class=" mb-4 mt-4">Product added to wishlist successfully!</p>
+                </div>
+                <div class=" d-flex justify-content-center m-5">
+                    <button type="button" class="btn btn-sm btn-dark" id="goToWishlistBtn"><i class="icon-heart-o"></i> Go to Wishlist</button>
+                </div>
+            </div>
+            
+            
+                
+            
+        </div>
+    </div>
+</div>
 
     
 </div><!-- End .page-content -->
@@ -711,8 +737,65 @@
         // Function to handle adding to the wishlist (you can customize this)
         function addToWishlist() {
             // Add your logic here to perform actions when the "Add to Wishlist" button is clicked
-            console.log('Adding to Wishlist...');
+            // Get the selected color ID and size ID
+            var selectedColorId = document.getElementById('selected-color-id').value;
+            var selectedSizeId = document.getElementById('selected-size-id').value;
+            var customerId = $('#customer-id').val();
+
+        if (!customerId) {
+            // Show the login modal if customer ID is empty
+            $('#loginModal').modal('show');
+            return;
         }
+            if(selectedColorId === ''){
+                showToast('Alert','Please Select the Color you want');
+                return;
+            }
+            if(selectedSizeId === ''){
+                showToast('Alert','Please Select the Size you want');
+                return;
+            }
+            
+            // Get the selected product details
+            var productName = $('#product-name').text();
+            var productID = $('#product-id').val();
+            $.ajax({
+                type: 'POST',
+                url: `/united_armor/add_to_wishlist/${productID}/${selectedColorId}/`,
+                data: {
+                    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function(response) {
+                    
+                    // You can handle the response here if needed
+                     // Show the Bootstrap toast with dynamic message
+                     //showToastSuccess('Success','Product Added To Wishlist Successfully');
+                     // Display modal with success message and buttons
+                    showSuccessModal();
+                     console.log('Product added to wishlist successfully');
+                     return false;
+                },
+                error: function(error) {
+                    console.error('Error adding product to cart:', error);
+                    showToast('Alert',error.statusText);
+                     return false;
+                }
+            });
+            // Prevent the default form submission behavior
+            return false;
+        }
+    
+        function showSuccessModal() {
+            // Show the Bootstrap modal
+            $('#successModal').modal('show');
+        }
+        
+        // Handle modal buttons
+        $('#goToWishlistBtn').on('click', function () {
+            // Redirect to the wishlist page
+            window.location.href = '/united_armor/wishlist/';
+        });
+
     });
 
 
