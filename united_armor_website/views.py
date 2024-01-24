@@ -797,6 +797,8 @@ def all_products_with_sub_category(request,s_main_cat_id,s_main_cat_name,s_cat_i
 
 #Single Product Detail with Product ID
 def product(request,product_id):
+    request.session['u_customer_id'] = None
+    request.session['customer_name'] = None
     error_msg = 'No Product Details Found'
     main_cat_query = "SELECT main_cat_id, main_title_name,images FROM vff.united_armor_main_categorytbl ORDER BY main_cat_id"
     main_cat_result = execute_raw_query(main_cat_query)
