@@ -504,8 +504,10 @@
                 var emailInput = $('#singin-email');
                 var emailErrorMsg = $('#email-error-msg');
     
-                if (!emailInput[0].checkValidity()) {
-                    emailErrorMsg.text('Please provide a valid Gmail address.');
+                var emailPattern = /\S+@\S+\.\S+/; // Regular expression for a simple email validation
+
+                if (!emailPattern.test(emailInput.val())) {
+                    emailErrorMsg.text('Please provide a valid email address.');
                     return;
                 }
     
