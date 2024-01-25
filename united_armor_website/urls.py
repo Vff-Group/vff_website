@@ -18,7 +18,7 @@ urlpatterns = [
     path('register/',views.handle_register,name='register'),
     
     #Home
-    path('home',views.home,name='home'),
+    path('home/',views.home,name='home'),
     
     #All Products
     path('all_products/',views.all_products,name='all_products'),
