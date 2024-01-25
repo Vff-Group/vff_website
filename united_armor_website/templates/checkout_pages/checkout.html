@@ -27,7 +27,7 @@
                 
             </div>
             {% else %}
-            <form action="#">
+            <form id="billing-form">
                 <div class="row">
                     <div class="col-lg-9">
                         <h2 class="checkout-title">Billing Details</h2><!-- End .checkout-title -->
@@ -149,6 +149,10 @@
                                 
                             </div><!-- End .accordion -->
 
+                            <!-- Add payment method radio buttons -->
+<label><input type="radio" name="payment_method" value="cod"> Cash on Delivery</label>
+<label><input type="radio" name="payment_method" value="razorpay"> Razorpay</label>
+
                             <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
                                 <span class="btn-text">Place Order</span>
                                 <span class="btn-hover-text">Proceed & Place Order</span>
@@ -196,6 +200,73 @@
 
         // Initial calculation on page load
         calculateTotal();
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        // Validate the form and submit using AJAX
+        $('#billing-form').submit(function(e) {
+            e.preventDefault(); // Prevent the form from submitting traditionally
+
+            // Validate the form
+            if (!validateForm()) {
+                return false;
+            }
+
+            // Check if a payment method is selected
+            var paymentMethod = $('input[name="payment_method"]:checked').val();
+            if (!paymentMethod) {
+                alert('Please select a payment method.');
+                return false;
+            }
+
+            // Check the selected payment method
+            if (paymentMethod === 'cod') {
+                // AJAX request for Cash on Delivery
+                submitOrderAjax();
+            } else if (paymentMethod === 'razorpay') {
+                // Show Razorpay options (You need to implement this part)
+                alert('Razorpay options. Implement this part.');
+            }
+        });
+
+        // Function to validate the form
+        function validateForm() {
+            // Your validation logic goes here
+
+            var isValid = true;
+
+            // Iterate through each input field
+            $('#billing-form input, #billing-form textarea').each(function() {
+                var value = $(this).val().trim();
+                if (value === '' || value.toUpperCase() === 'NA' || value === '-1') {
+                    alert($(this).prev('label').text() + ' cannot be empty or equal to "NA" or "-1".');
+                    isValid = false;
+                    return false; // Break the loop if validation fails for any field
+                }
+            });
+
+            return isValid;
+        }
+
+        // Function to handle AJAX request for Cash on Delivery
+        function submitOrderAjax() {
+            // AJAX request to send form data
+            $.ajax({
+                type: 'POST',
+                url: '/your-server-endpoint', // Replace with your server endpoint
+                data: $('#billing-form').serialize(), // Serialize the form data
+                success: function(response) {
+                    // Handle success response
+                    console.log(response);
+                },
+                error: function(error) {
+                    // Handle error
+                    console.error(error);
+                }
+            });
+        }
     });
 </script>
 
