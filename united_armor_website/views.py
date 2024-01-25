@@ -1220,7 +1220,64 @@ def about_us(request):
   
 #My Account
 def my_account(request):
-    return render(request,'account_pages/my_account.html')
+    error_msg = 'No Order has been made yet'
+    customer_id = request.session.get('u_customer_id')
+    query = "select activeid,united_armor_active_orders_tbl.product_id,product_name,quantity,max_checkout_qty,united_armor_active_orders_tbl.price,color_name,product_img_url,reserved_quantity,stock_status,size_value,actual_price,united_armor_active_orders_tbl.offer_price,united_armor_active_orders_tbl.color_id,united_armor_active_orders_tbl.size_id,order_id from vff.united_armor_inventorytbl,vff.united_armor_active_orders_tbl,vff.united_armor_all_productstbl,vff.united_armor_product_sizestbl,vff.united_armor_product_colorstbl where united_armor_product_sizestbl.sizesid=united_armor_active_orders_tbl.size_id and united_armor_product_colorstbl.colorsid=united_armor_active_orders_tbl.color_id and united_armor_product_colorstbl.product_id=united_armor_all_productstbl.productid and united_armor_product_colorstbl.product_id=united_armor_active_orders_tbl.product_id and united_armor_active_orders_tbl.product_id=united_armor_all_productstbl.productid and united_armor_inventorytbl.product_id=united_armor_all_productstbl.productid and united_armor_inventorytbl.product_id=united_armor_active_orders_tbl.product_id and united_armor_inventorytbl.color_id=united_armor_active_orders_tbl.color_id and united_armor_inventorytbl.size_id=united_armor_active_orders_tbl.size_id and  customer_id='"+str(customer_id)+"'  order by activeid desc"
+    query_result = execute_raw_query(query)
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            actual_price = row[11]
+            offer_price = row[12]
+            per_item_price= actual_price
+            if offer_price !=0.0 or offer_price !=0:
+                per_item_price = offer_price
+            data.append({
+                    'active_id':row[0],
+                    'product_id':row[1],
+                    'product_name':row[2],
+                    'quantity':row[3],
+                    'max_checkout_qty':row[4],
+                    'price':row[5],
+                    'color_name':row[6],
+                    'product_img_url':row[7],
+                    'reserved_quantity':row[8],
+                    'stock_status':row[9],
+                    'size_value':row[10],
+                    'actual_price':per_item_price,
+                    'color_id':row[13],
+                    'size_id':row[14],
+                    'order_id':row[15],
+                    
+                    
+                
+            })
+        
+    else:
+        error_msg = 'Something Went Wrong'
+        
+    customer_name = ''
+    address1 = ''
+    address2 = ''
+    city_name = ''
+    state = ''
+    pincode = ''
+    mobno = ''
+    query = "select customer_name,address,address2,city_name,state,pincode,mobno from vff.united_armor_customertbl where customerid='"+str(customer_id)+"'"
+    user_data = execute_raw_query_fetch_one(query)
+    if user_data :
+        customer_name = user_data[0]
+        address1 = user_data[1]
+        address2 = user_data[2]
+        city_name = user_data[3]
+        state = user_data[4]
+        pincode = user_data[5]
+        mobno = user_data[6]
+    else:
+        error_msg = 'Something Went Wrong'
+    current_url = request.get_full_path()
+    context = {'current_url': current_url,'query_result':data,'error_msg':error_msg,'customer_name':customer_name,'address1':address1,'address2':address2,'city_name':city_name,'state':state,'pincode':pincode,'mobno':mobno}
+    return render(request,'account_pages/my_account.html',context)
   
 #Privacy Policy
 def privacy_policy(request):
