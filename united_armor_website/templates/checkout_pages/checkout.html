@@ -322,15 +322,17 @@
             var totalAmount = parseFloat(totalAmountWithSymbol.replace('₹', '').trim());
             const csrfToken = getCSRFToken();
             // Add the payment_id to the form data
-            var formData = $('#billing-form').serializeArray();
-            formData.push({ name: 'payment_id', value: payment_id });
-            formData.push({ name: 'total_amount', value: totalAmount });
-            // Add cart ids to formData
-            formData.push({ name: 'cart_ids', value: cartIds });
-            formData.push({ name: 'product_ids', value: productIds });
-            formData.push({ name: 'color_ids', value: colorIds });
-            formData.push({ name: 'size_ids', value: sizeIds });
-            formData.push({ name: 'quantity_list', value: quantities });
+            var formData = $('#billing-form').serialize();
+
+            // Add additional data
+            formData += '&payment_id=' + encodeURIComponent(payment_id);
+            formData += '&total_amount=' + encodeURIComponent(totalAmount);
+            formData += '&cart_ids=' + encodeURIComponent(cartIds.join(',')); // Assuming cartIds is an array
+            formData += '&product_ids=' + encodeURIComponent(productIds.join(',')); // Assuming productIds is an array
+            formData += '&color_ids=' + encodeURIComponent(colorIds.join(',')); // Assuming colorIds is an array
+            formData += '&size_ids=' + encodeURIComponent(sizeIds.join(',')); // Assuming sizeIds is an array
+            formData += '&quantity_list=' + encodeURIComponent(quantities.join(',')); // Assuming quantities is an array
+
             // AJAX request to send form data
             $.ajax({
                 type: 'POST',

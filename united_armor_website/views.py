@@ -1120,7 +1120,7 @@ def checkout(request):
 #To Place Order 
 def place_order(request):
     if request.method == "POST":
-        payment_id = request.POST.get('payment_id', 'NA')
+        payment_id = request.POST.get('payment_id', '-1')
         total_price = request.POST.get('total_amount', '0')
 
         # Get other form data with default values 'NA'
@@ -1130,14 +1130,14 @@ def place_order(request):
         street_address_2 = request.POST.get('street_address_2', 'NA')
         town_city = request.POST.get('town_city', 'NA')
         state_county = request.POST.get('state_county', 'NA')
-        postcode_zip = request.POST.get('postcode_zip', 'NA')
+        postcode_zip = request.POST.get('postcode_zip', '-1')
         phone = request.POST.get('phone', '-1')
         order_notes = request.POST.get('order_notes', 'NA')
-        cart_ids = request.POST.getlist('cart_ids[]')
-        product_ids = request.POST.getlist('product_ids[]')
-        size_ids = request.POST.getlist('size_ids[]')
-        color_ids = request.POST.getlist('color_ids[]')
-        quantities = request.POST.getlist('quantity_list[]')
+        cart_ids = request.POST.get('cart_ids', '').split(',')  # Assuming it's a comma-separated list
+        product_ids = request.POST.get('product_ids', '').split(',')
+        color_ids = request.POST.get('color_ids', '').split(',')
+        size_ids = request.POST.get('size_ids', '').split(',')
+        quantities = request.POST.get('quantity_list', '').split(',')
 
         # Handle payment method with default value 'NA'
         payment_method = request.POST.get('payment_method', 'NA')
