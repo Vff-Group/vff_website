@@ -276,59 +276,56 @@
 
 <script>
     $(document).ready(function () {
-        // Function to apply filters and show/hide products
-        function applyFilters() {
-            // Get selected values from filters
-            var selectedCategory = $('input[name="category_filter"]:checked').map(function() {
-                return $(this).val();
-            }).get();
-            var selectedType = $('input[name="type_filter"]:checked').map(function() {
-                return $(this).val();
-            }).get();
-            var selectedSize = $('input[name="size_filter"]:checked').map(function() {
-                return $(this).val();
-            }).get();
-            var selectedColor = $('input[name="color_filter"]:checked').map(function() {
-                return $(this).val();
-            }).get();
-
-            // Hide all products
-            $('.filter-item').hide();
-
-            // Show products that match the selected filters
-            $('.filter-item').each(function () {
-                var productCategory = $(this).data('catid').toString();
-                var productType = $(this).data('typeid').toString();
-                var productSize = $(this).data('size').toString();
-                var productColor = $(this).data('colorid').toString();
-
-                if ((selectedCategory.length === 0 || selectedCategory.includes(productCategory)) &&
-                    (selectedType.length === 0 || selectedType.includes(productType)) &&
-                    (selectedSize.length === 0 || selectedSize.includes(productSize)) &&
-                    (selectedColor.length === 0 || selectedColor.includes(productColor))) {
-                    $(this).show();
+        // Store all product items
+        var productItems = $('.product-item');
+    
+        // Function to show or hide products based on filter values
+        function filterProducts() {
+            var categoryFilter = $('input[name="category_filter"]:checked');
+            var typeFilter = $('input[name="type_filter"]:checked');
+            var sizeFilter = $('input[name="size_filter"]:checked');
+            var colorFilter = $('a[name="color_filter"]:not(.inactive)');
+    
+            productItems.each(function () {
+                var item = $(this);
+                var matchCategory = categoryFilter.length === 0 || categoryFilter.is('[value="' + item.data('catid') + '"]');
+                var matchType = typeFilter.length === 0 || typeFilter.is('[value="' + item.data('typeid') + '"]');
+                var matchSize = sizeFilter.length === 0 || sizeFilter.is('[value="' + item.data('size') + '"]');
+                var matchColor = colorFilter.length === 0 || colorFilter.is('[data-color-id="' + item.data('colorid') + '"]');
+    
+                if (matchCategory && matchType && matchSize && matchColor) {
+                    item.show();
+                } else {
+                    item.hide();
                 }
             });
-
-            // Display a message if no products match the selected filters
-            if ($('.filter-item:visible').length === 0) {
-                $('#no-matching-products').show();
-            } else {
-                $('#no-matching-products').hide();
-            }
         }
-
-        // Add event listeners for filter changes
-        $('input[name="category_filter"], input[name="type_filter"], input[name="size_filter"], input[name="color_filter"]').on('change', function () {
-            applyFilters();
+    
+        // Function to clear all filters
+        function clearAllFilters() {
+            $('input[type="checkbox"]').prop('checked', false);
+    
+            $('a[name="color_filter"]').removeClass('inactive');
+    
+            productItems.show();
+        }
+    
+        // Attach event listeners to filter and clear buttons
+        $('input[name="category_filter"]').change(filterProducts);
+        $('input[name="type_filter"]').change(filterProducts);
+        $('input[name="size_filter"]').change(filterProducts);
+    
+        $('a[name="color_filter"]').click(function () {
+            $(this).toggleClass('inactive');
+            filterProducts();
         });
-
-        // Your existing code...
-
-        // Optionally, you can call applyFilters() once on page load to filter products based on the default state of filters.
-        // applyFilters();
+    
+        $('.sidebar-filter-clear').click(function () {
+            clearAllFilters();
+        });
     });
-</script>
+    </script>
+    
 
 
 <script>
