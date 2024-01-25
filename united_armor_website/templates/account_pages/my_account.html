@@ -158,12 +158,12 @@
                                     <h3 class="product-title">
                                         <a href="{% url 'united_armor:product' row.product_id %}">{{row.product_name}}</a>
                                         <div class="mt-1">
-                                            <div ><small class=" text-muted">Order ID : [ {{row.order_id}} ]</small></div>
-                                            <div ><small class=" text-muted">[ {{row.size_value}} ]</small></div>
-                                            <div ><small class=" text-muted">[ {{row.color_name}} ]</small></div>
-                                            <div ><small class=" text-muted">Qty : [ {{row.quantity}} ]</small></div>
+                                            <div ><small class=" text-muted">Order ID : #{{row.order_id}}</small></div>
+                                            <div ><small class=" text-muted">{{row.size_value}}</small></div>
+                                            <div ><small class=" text-muted">{{row.color_name}}</small></div>
+                                            <div ><small class=" text-muted">Qty : {{row.quantity}}</small></div>
                                         </div><!-- End .product-price -->
-                                        <p class=" text-muted mt-1">Date :  {{row.purchased_date}} </p>
+                                        <p class=" text-muted mt-1">Date :- {{row.purchased_date}} </p>
                                     </h3><!-- End .product-title -->
                                 </div><!-- End .product -->
                             </td>
