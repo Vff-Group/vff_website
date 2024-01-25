@@ -1154,7 +1154,7 @@ def place_order(request):
                 cursor.execute(update_query)
                 
                 # Insert into Order Table
-                insert_order_query = "insert into vff.united_armor_order_tbl(quantity,purchased_price,customer_id) values ('"+str(quantities.length)+"','"+str(total_price)+"','"+str(customer_id)+"') returning orderid "
+                insert_order_query = "insert into vff.united_armor_order_tbl(quantity,purchased_price,customer_id) values ('"+str(len(quantities))+"','"+str(total_price)+"','"+str(customer_id)+"') returning orderid "
                 print(f"Order Table Query Insert::{insert_order_query}")
                 cursor.execute(insert_order_query)
                 order_id = cursor.fetchone()[0] 
