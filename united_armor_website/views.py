@@ -1118,6 +1118,97 @@ def checkout(request):
     current_url = request.get_full_path()
     context = {'current_url': current_url,'query_result':data,'error_msg':error_msg,'customer_name':customer_name,'address1':address1,'address2':address2,'city_name':city_name,'state':state,'pincode':pincode,'mobno':mobno}
     return render(request,"checkout_pages/checkout.html",context)
+
+#To Place Order 
+def place_order(request):
+    if request.method == "POST":
+        payment_id = request.POST.get('payment_id', '-1')
+        total_price = request.POST.get('total_amount', '0')
+
+        # Get other form data with default values 'NA'
+        full_name = request.POST.get('full_name', 'NA')
+        country = request.POST.get('country', 'NA')
+        street_address_1 = request.POST.get('street_address_1', 'NA')
+        street_address_2 = request.POST.get('street_address_2', 'NA')
+        town_city = request.POST.get('town_city', 'NA')
+        state_county = request.POST.get('state_county', 'NA')
+        postcode_zip = request.POST.get('postcode_zip', '-1')
+        phone = request.POST.get('phone', '-1')
+        order_notes = request.POST.get('order_notes', 'NA')
+        cart_ids = request.POST.get('cart_ids', '').split(',')  # Assuming it's a comma-separated list
+        product_ids = request.POST.get('product_ids', '').split(',')
+        color_ids = request.POST.get('color_ids', '').split(',')
+        size_ids = request.POST.get('size_ids', '').split(',')
+        quantities = request.POST.get('quantity_list', '').split(',')
+
+        # Handle payment method with default value 'NA'
+        payment_method = request.POST.get('payment_method', 'NA')
+        payment_status = "Paid"
+        if payment_method == "cod":
+            payment_status = "Un Paid"
+        try:
+            with connection.cursor() as cursor:
+                customer_id = request.session.get('u_customer_id')
+                
+                #Updating Customer Information
+                update_query="update vff.united_armor_customertbl set customer_name='"+str(full_name)+"',address='"+str(street_address_1)+"',address2='"+str(street_address_2)+"',city_name='"+str(town_city)+"',state='"+str(state_county)+"',country='"+str(country)+"',mobno='"+str(phone)+"',pincode='"+str(postcode_zip)+"' where customerid='"+str(customer_id)+"'"
+                print(f'Updating Customer Details ::{update_query}')
+                cursor.execute(update_query)
+                
+                # Insert into Order Table
+                insert_order_query = "insert into vff.united_armor_order_tbl(quantity,purchased_price,customer_id) values ('"+str(len(quantities))+"','"+str(total_price)+"','"+str(customer_id)+"') returning orderid "
+                print(f"Order Table Query Insert::{insert_order_query}")
+                cursor.execute(insert_order_query)
+                order_id = cursor.fetchone()[0] 
+                
+                # Insert Order History Table
+                insert_order_history_query = "insert into vff.united_armor_order_historytbl (order_id,status) values ('"+str(order_id)+"','Order Placed')"
+                print(f"History Order Table Query Insert::{insert_order_history_query}")
+                cursor.execute(insert_order_history_query)
+                
+                #Payment Table
+                update_query="insert into vff.united_armor_paymenttbl(order_id,status,payment_method,razor_pay_id,amount_paid) values ('"+str(order_id)+"','"+str(payment_status)+"','"+str(payment_method)+"','"+str(payment_id)+"','"+str(total_price)+"')"
+                print(f'Updating Customer Details ::{update_query}')
+                cursor.execute(update_query)
+                
+                # Insert Into Active Orders Table
+                insert_active_orders_query = f"""
+                INSERT INTO vff.united_armor_active_orders_tbl (product_id, quantity, customer_id, price, color_id, size_id, offer_price, actual_price, product_img_url, order_id)
+                SELECT product_id, quantity, customer_id, price, color_id, size_id, offer_price, actual_price, product_img_url, {order_id}
+                FROM vff.united_armor_cart_tbl
+                WHERE customer_id = '{customer_id}';
+                """
+                print(f"Active Order Table Query Insert::{insert_active_orders_query}")
+                cursor.execute(insert_active_orders_query)
+                
+                #To Delete the Entries from Cart Table 
+                for cart_id in cart_ids:
+                    delete_cart_rows_query = f"""
+                        DELETE FROM vff.united_armor_cart_tbl
+                        WHERE customer_id = '{customer_id}' AND cartid = '{cart_id}';
+                    """
+                    print(f'delete_cart_rows_query:{delete_cart_rows_query}')
+                    # Execute the delete query for each cart id
+                    cursor.execute(delete_cart_rows_query)
+                    
+                #To Update the Inventory Table 
+                for product_id, size_id, color_id, quantity in zip(product_ids, size_ids, color_ids,quantities):
+                    update_query = f"""
+                        UPDATE vff.united_armor_inventorytbl
+                        SET reserved_quantity = reserved_quantity - '{quantity}',purchased_quantity= purchased_quantity + '{quantity}'
+                        WHERE product_id = '{product_id}'
+                          AND color_id = '{color_id}'
+                          AND size_id = '{size_id}'
+                          AND reserved_quantity >= '{quantity}';
+                    """
+                    cursor.execute(update_query)
+                
+                connection.commit()
+                print("Order Placed Successfully")
+                return JsonResponse({'message':'success'})
+        except Exception as e:
+            print(f"Error loading data: {e}")
+        return JsonResponse({'message':'error'})
   
 #My Acount
 def my_account(request):
