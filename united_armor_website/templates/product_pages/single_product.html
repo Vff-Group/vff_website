@@ -475,6 +475,37 @@
             $('#selected-size-id').val(selectedSizeId);
         }
 
+
+        //Added New Code From Here
+           // Function to update max attribute based on available stock
+    function updateMaxQuantity() {
+        var maxCheckoutQty = parseInt('{{ product.max_checkout_qty }}', 10);
+        var availableStock = parseInt($('#qty').data('available-stock'), 10);
+
+        // Set the max attribute to the minimum of maxCheckoutQty and availableStock
+        $('#qty').attr('max', Math.min(maxCheckoutQty, availableStock));
+    }
+
+    // Trigger updateMaxQuantity on page load
+    updateMaxQuantity();
+
+    // ... (existing code)
+
+    // Handle quantity input change event
+    $('#qty').on('input', function () {
+        var maxQuantity = parseInt($(this).attr('max'), 10);
+        var quantity = parseInt($(this).val(), 10);
+
+        if (quantity > maxQuantity) {
+            // If the entered quantity exceeds the max quantity, set it to the max quantity
+            $(this).val(maxQuantity);
+            showToast('Alert', 'Quantity cannot exceed the available stock.');
+        }
+
+        // Update hidden input for quantity
+        updateQuantityInput();
+    });
+        //Added New Code From Here End
     });
     
 </script>
