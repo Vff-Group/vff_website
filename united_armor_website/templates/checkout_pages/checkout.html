@@ -190,6 +190,18 @@
 
 <script>
     $(document).ready(function() {
+        let payment_id = '-1'
+        // Get the CSRF token from the cookie
+        function getCSRFToken() {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith("csrftoken=")) {
+                    return cookie.substring("csrftoken=".length, cookie.length);
+                }
+            }
+            return null;
+        }
         // Validate the form and submit using AJAX
         $('#billing-form').submit(function(e) {
             e.preventDefault(); // Prevent the form from submitting traditionally
@@ -209,10 +221,15 @@
             // Check the selected payment method
             if (paymentMethod === 'cod') {
                 // AJAX request for Cash on Delivery
-                submitOrderAjax();
+                submitOrderAjax(payment_id);
             } else if (paymentMethod === 'razorpay') {
                 // Show Razorpay options (You need to implement this part)
-                alert('Razorpay options. Implement this part.');
+                var totalAmountWithSymbol = $('#cart-table tbody tr.summary-total td:eq(1)').text();
+
+                // Replace the Rupees symbol and extract the numeric value
+                var totalAmountToPay = parseFloat(totalAmountWithSymbol.replace('₹', '').trim());
+        
+                payment_show(totalAmountToPay);
             }
         });
 
@@ -235,8 +252,45 @@
             return isValid;
         }
 
+        function payment_show(totalPayment){
+            console.log('PaytotalPayment::'+totalPayment);
+            var options = {
+        
+                "key": "rzp_test_qtHIWapeUEAAZO",//Live rzp_live_SeGnLgb5JnY8Id // Enter the Key ID generated from the Dashboard rzp_test_qtHIWapeUEAAZO
+                "amount": (totalPayment * 100), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                "currency": "INR",
+                "name": "United Armor", //your business name
+                "description": "The Clothing Brand",
+                "image": "https://vffgroup.in/static/assets/images/demos/demo-9/logo-footer.png",
+                "handler": function (response){
+                    payment_id =  response.razorpay_payment_id;
+                    submitOrderAjax(payment_id);
+                },
+                "notes": {
+                    "address": "Tilakwadi"
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.on('payment.failed', function (response){
+                  //  alert(response.error.code);
+                    alert(response.error.description);
+                    //alert(response.error.source);
+                    //alert(response.error.step);
+                    //alert(response.error.reason);
+                   // alert(response.error.metadata.order_id);
+                    //alert(response.error.metadata.payment_id);
+            });
+            rzp1.open();
+            /*document.getElementById('pay-button').onclick = function(e){
+                rzp1.open();
+                e.preventDefault();
+            }*/
+        }
         // Function to handle AJAX request for Cash on Delivery
-        function submitOrderAjax() {
+        function submitOrderAjax(payment_id) {
             // AJAX request to send form data
             $.ajax({
                 type: 'POST',
