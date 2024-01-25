@@ -58,7 +58,7 @@
                     No products found with the selected filters.
                 </div>
                 {% for row in all_product_data%}
-                <div class="col-6 col-md-4 col-lg-4 col-xl-3 filter-item" data-catid="{{ row.product_catid }}" data-typeid="{{ row.product_type_id }}" data-size="{{ row.size }}" data-colorid="{{ row.default_color_id }}">
+                <div class="col-6 col-md-4 col-lg-4 col-xl-3 product-item" data-catid="{{ row.product_catid }}" data-typeid="{{ row.product_type_id }}" data-size="{{ row.size }}" data-colorid="{{ row.default_color_id }}">
                     <div class="product">
                         <input type="hidden" name="fitting_id" value="{{row.fitting_id}}">
                         <input type="hidden" name="fitting_type" value="{{row.fitting_type}}">
