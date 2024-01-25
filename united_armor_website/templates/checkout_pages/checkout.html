@@ -92,7 +92,10 @@
                                 <tbody>
                                     {% for row in query_result %}
                                     <tr>
-                                        <td><a href="{% url 'united_armor:product' row.product_id %}">{{row.product_name}}</a></td>
+                                        <td>
+                                            <a href="{% url 'united_armor:product' row.product_id %}">{{row.product_name}}</a>
+                                            
+                                        </td>
                                         <td>₹{{row.actual_price}}</td>
                                     </tr>
                                     {% endfor %}
