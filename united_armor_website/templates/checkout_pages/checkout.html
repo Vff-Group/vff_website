@@ -115,40 +115,26 @@
                                 </tbody>
                             </table><!-- End .table table-summary -->
 
-                            <div class="accordion-summary" id="accordion-payment">
+                           
+
+                            <!-- Add payment method radio buttons -->
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Cash on Delivery</label>
+                                <input type="radio" name="payment_method" value="cod"> Cash on Delivery
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Razor Pay</label>
+                                        <label><input type="radio" name="payment_method" value="razorpay"> Razorpay</label>
+                                    </div>
+                                </div>
                                 
-                                <div class="card">
-                                    <div class="card-header" id="heading-3">
-                                        <h2 class="card-title">
-                                            <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-3" aria-expanded="false" aria-controls="collapse-3">
-                                                Cash on delivery
-                                            </a>
-                                        </h2>
-                                    </div><!-- End .card-header -->
-                                    <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-payment">
-                                        <div class="card-body">Cash on delivery is when a buyer pays for goods or services once they are received. Cash in advance, on the other hand, is when payment is made before the goods.
-                                        </div><!-- End .card-body -->
-                                    </div><!-- End .collapse -->
-                                </div><!-- End .card -->
-
-                                <div class="card">
-                                    <div class="card-header" id="heading-4">
-                                        <h2 class="card-title">
-                                            <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-4" aria-expanded="false" aria-controls="collapse-4">
-                                                Razorpay <small class="float-right paypal-link">What is Razorpay?</small>
-                                            </a>
-                                        </h2>
-                                    </div><!-- End .card-header -->
-                                    <div id="collapse-4" class="collapse" aria-labelledby="heading-4" data-parent="#accordion-payment">
-                                        <div class="card-body">
-                                            Free payment gateway for you* Fastest Checkout Experience With 100+ Payment Modes - All Cards, UPI, EMI, Wallets & More. 24x7 Customer Support. Simple Pricing. Go Live Instantly. GST Ready Payment Gateway.
-                                        </div><!-- End .card-body -->
-                                    </div><!-- End .collapse -->
-                                </div><!-- End .card -->
-
                                 
-                            </div><!-- End .accordion -->
-
+                            </div>
+                            
                             
 
                             <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
@@ -213,21 +199,20 @@
             }
 
             // Check if a payment method is selected
-            var selectedAccordion = $('.accordion-summary .card.show');
-            
-            if (selectedAccordion.length === 0) {
+            var paymentMethod = $('input[name="payment_method"]:checked').val();
+            if (!paymentMethod) {
                 alert('Please select a payment method.');
                 return false;
             }
 
-            // Determine the selected payment method
-            var paymentMethod = selectedAccordion.find('a').text().trim();
-            alert('Selected Payment Method: ' + paymentMethod);
-
-            
-
             // Check the selected payment method
-           
+            if (paymentMethod === 'cod') {
+                // AJAX request for Cash on Delivery
+                submitOrderAjax();
+            } else if (paymentMethod === 'razorpay') {
+                // Show Razorpay options (You need to implement this part)
+                alert('Razorpay options. Implement this part.');
+            }
         });
 
         // Function to validate the form
