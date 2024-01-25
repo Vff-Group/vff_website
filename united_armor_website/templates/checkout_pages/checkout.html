@@ -172,8 +172,8 @@
 
             // Iterate through each row in the tbody
             $('tbody tr:not(.summary-subtotal, .summary-total)').each(function() {
-                var price = parseFloat($(this).find('td:eq(1)').text().replace('₹', '').trim());
-                subtotal += price;
+                var actualPrice = parseFloat($(this).find('td:eq(2)').text().replace('₹', '').trim());
+                subtotal += actualPrice;
             });
 
             // Update Subtotal
@@ -188,5 +188,6 @@
         updateSummary();
     });
 </script>
+
 
 {% endblock %}
