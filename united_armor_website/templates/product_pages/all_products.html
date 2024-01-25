@@ -55,7 +55,7 @@
         <div class="products">
             <div class="row">
                 {% for row in all_product_data%}
-                <div class="col-6 col-md-4 col-lg-4 col-xl-3">
+                <div class="col-6 col-md-4 col-lg-4 col-xl-3 filter-item" data-catid="{{ row.product_catid }}" data-typeid="{{ row.product_type_id }}" data-sizeid="{{ row.size }}" data-colorid="{{ row.default_color_id }}">
                     <div class="product">
                         <figure class="product-media">
                             {% comment %} <span class="product-label label-new">New</span> {% endcomment %}
@@ -325,6 +325,53 @@
 
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var isFiltering = false;  // Flag to track whether filters are active
+
+        // Handle category, type, size, and color filtering
+        $('#widget-1 input[type="checkbox"]').change(updateFilters);
+        $('#widget-type input[type="checkbox"]').change(updateFilters);
+        $('#widget-2 input[type="checkbox"]').change(updateFilters);
+        $('#widget-3 input[type="checkbox"]').change(updateFilters);
+
+        function updateFilters() {
+            if (!isFiltering) {
+                $('.filter-item').hide();  // Hide all products
+
+                var selectedCatIds = getSelectedCheckboxValues('#widget-1');
+                var selectedTypeIds = getSelectedCheckboxValues('#widget-type');
+                var selectedSizeIds = getSelectedCheckboxValues('#widget-2');
+                var selectedColorIds = getSelectedCheckboxValues('#widget-3');
+
+                // Show products that match selected filters
+                $('.filter-item').filter(function () {
+                    var catMatch = selectedCatIds.length === 0 || selectedCatIds.includes($(this).data('catid'));
+                    var typeMatch = selectedTypeIds.length === 0 || selectedTypeIds.includes($(this).data('typeid'));
+                    var sizeMatch = selectedSizeIds.length === 0 || selectedSizeIds.includes($(this).data('sizeid'));
+                    var colorMatch = selectedColorIds.length === 0 || selectedColorIds.includes($(this).data('colorid'));
+
+                    return catMatch && typeMatch && sizeMatch && colorMatch;
+                }).show();
+            }
+        }
+
+        function getSelectedCheckboxValues(widgetId) {
+            return $(widgetId + ' input:checked').map(function () {
+                return $(this).val();
+            }).get();
+        }
+
+        // Handle clearing filters
+        $('.sidebar-filter-clear').on('click', function () {
+            isFiltering = true;  // Set the flag to true before clearing checkboxes
+            $('input[type="checkbox"]').prop('checked', false);  // Clear all checkboxes
+            isFiltering = false;  // Set the flag back to false
+            $('.filter-item').show();  // Show all products
+        });
+    });
+</script>
+
 <script>
     function addToCart(productId,color_id,size_id,price,quantity,offer_price) {
         console.log("productId::"+productId)
