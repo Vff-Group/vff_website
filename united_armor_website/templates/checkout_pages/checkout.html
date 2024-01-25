@@ -97,12 +97,17 @@
                                             
                                         </td>
                                         <td>₹{{row.actual_price}}</td>
+                                        {% with item_total=row.actual_price|floatformat:2|intmul:row.quantity %}
+                                        {% with subtotal=subtotal|add:item_total %}
+                                            <!-- Additional logic for each row if needed -->
+                                        {% endwith %}
+                                    {% endwith %}
                                     </tr>
                                     {% endfor %}
                                     
                                     <tr class="summary-subtotal">
                                         <td>Subtotal:</td>
-                                        <td>₹0.0</td>
+                                        <td>₹{{subtotal|floatformat:2}}</td>
                                     </tr><!-- End .summary-subtotal -->
                                     <tr>
                                         <td>Shipping:</td>
@@ -110,7 +115,7 @@
                                     </tr>
                                     <tr class="summary-total">
                                         <td>Total:</td>
-                                        <td>₹0.0</td>
+                                        <td>₹{{subtotal|floatformat:2}}</td>
                                     </tr><!-- End .summary-total -->
                                 </tbody>
                             </table><!-- End .table table-summary -->
