@@ -162,4 +162,31 @@
     </div><!-- End .checkout -->
 </div><!-- End .page-content -->
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Function to update the subtotal and total
+        function updateSummary() {
+            var subtotal = 0;
+
+            // Iterate through each row in the tbody
+            $('tbody tr:not(.summary-subtotal, .summary-total)').each(function() {
+                var price = parseFloat($(this).find('td:eq(1)').text().replace('₹', '').trim());
+                subtotal += price;
+            });
+
+            // Update Subtotal
+            $('.summary-subtotal td:eq(1)').text('₹' + subtotal.toFixed(2));
+
+            // Update Total (assuming shipping is free in this case)
+            var total = subtotal;
+            $('.summary-total td:eq(1)').text('₹' + total.toFixed(2));
+        }
+
+        // Call updateSummary on document ready
+        updateSummary();
+    });
+</script>
+
 {% endblock %}
