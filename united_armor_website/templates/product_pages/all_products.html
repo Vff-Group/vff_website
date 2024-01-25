@@ -58,8 +58,16 @@
                     No products found with the selected filters.
                 </div>
                 {% for row in all_product_data%}
-                <div class="col-6 col-md-4 col-lg-4 col-xl-3 filter-item" data-catid="{{ row.product_catid }}" data-typeid="{{ row.product_type_id }}" data-sizeid="{{ row.size }}" data-colorid="{{ row.default_color_id }}">
+                <div class="col-6 col-md-4 col-lg-4 col-xl-3 filter-item" data-catid="{{ row.product_catid }}" data-typeid="{{ row.product_type_id }}" data-size="{{ row.size }}" data-colorid="{{ row.default_color_id }}">
                     <div class="product">
+                        <input type="hidden" name="fitting_id" value="{{row.fitting_id}}">
+                        <input type="hidden" name="fitting_type" value="{{row.fitting_type}}">
+                        <input type="hidden" name="product_category_id" value="{{row.product_catid}}">
+                        <input type="hidden" name="product_category_name" value="{{row.product_category_name}}">
+                        <input type="hidden" name="product_type_id" value="{{row.product_type_id}}">
+                        <input type="hidden" name="product_type_name" value="{{row.product_type_name}}">
+                        <input type="hidden" name="product_size" value="{{row.size}}">
+                        <input type="hidden" name="product_color_id" value="{{row.default_color_id}}">
                         <figure class="product-media">
                             {% comment %} <span class="product-label label-new">New</span> {% endcomment %}
                             <a href="{% url 'united_armor:product' row.productid %}">
@@ -281,59 +289,60 @@
 
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <script>
     $(document).ready(function () {
-        var isFiltering = false;  // Flag to track whether filters are active
+        // Function to apply filters and show/hide products
+        function applyFilters() {
+            // Get selected values from filters
+            var selectedCategory = $('input[name="category_filter"]:checked').map(function() {
+                return $(this).val();
+            }).get();
+            var selectedType = $('input[name="type_filter"]:checked').map(function() {
+                return $(this).val();
+            }).get();
+            var selectedSize = $('input[name="size_filter"]:checked').map(function() {
+                return $(this).val();
+            }).get();
+            var selectedColor = $('input[name="color_filter"]:checked').map(function() {
+                return $(this).val();
+            }).get();
 
-        // Handle fitting, category, type, size, and color filtering
-        $('#widget-1 input[type="checkbox"]').change(updateFilters);
-        $('#widget-type input[type="checkbox"]').change(updateFilters);
-        $('#widget-2 input[type="checkbox"]').change(updateFilters);
-        $('#widget-3 input[type="checkbox"]').change(updateFilters);
+            // Hide all products
+            $('.filter-item').hide();
 
-        function updateFilters() {
-            if (!isFiltering) {
-                $('.filter-item').hide();  // Hide all products
+            // Show products that match the selected filters
+            $('.filter-item').each(function () {
+                var productCategory = $(this).data('catid').toString();
+                var productType = $(this).data('typeid').toString();
+                var productSize = $(this).data('size').toString();
+                var productColor = $(this).data('colorid').toString();
 
-                var selectedCatIds = getSelectedCheckboxValues('#widget-1');
-                var selectedTypeIds = getSelectedCheckboxValues('#widget-type');
-                var selectedSizeIds = getSelectedCheckboxValues('#widget-2');
-                var selectedColorIds = getSelectedCheckboxValues('#widget-3');
-
-                // Filter products that match selected filters
-                var matchingProducts = $('.filter-item').filter(function () {
-                    var catMatch = selectedCatIds.length === 0 || selectedCatIds.includes($(this).data('catid'));
-                    var typeMatch = selectedTypeIds.length === 0 || selectedTypeIds.includes($(this).data('typeid'));
-                    var sizeMatch = selectedSizeIds.length === 0 || selectedSizeIds.includes($(this).data('sizeid'));
-                    var colorMatch = selectedColorIds.length === 0 || selectedColorIds.includes($(this).data('colorid'));
-                    var fittingMatch = selectedFittingIds.length === 0 || selectedFittingIds.includes($(this).data('fittingid'));
-
-                    return catMatch && typeMatch && sizeMatch && colorMatch && fittingMatch;
-                });
-
-                if (matchingProducts.length > 0) {
-                    matchingProducts.show();
-                    $('#no-matching-products').hide();
-                } else {
-                    $('#no-matching-products').show();
+                if ((selectedCategory.length === 0 || selectedCategory.includes(productCategory)) &&
+                    (selectedType.length === 0 || selectedType.includes(productType)) &&
+                    (selectedSize.length === 0 || selectedSize.includes(productSize)) &&
+                    (selectedColor.length === 0 || selectedColor.includes(productColor))) {
+                    $(this).show();
                 }
+            });
+
+            // Display a message if no products match the selected filters
+            if ($('.filter-item:visible').length === 0) {
+                $('#no-matching-products').show();
+            } else {
+                $('#no-matching-products').hide();
             }
         }
 
-        function getSelectedCheckboxValues(widgetId) {
-            return $(widgetId + ' input:checked').map(function () {
-                return $(this).val();
-            }).get();
-        }
-
-        // Handle clearing filters
-        $('.sidebar-filter-clear').on('click', function () {
-            isFiltering = true;  // Set the flag to true before clearing checkboxes
-            $('input[type="checkbox"]').prop('checked', false);  // Clear all checkboxes
-            isFiltering = false;  // Set the flag back to false
-            $('.filter-item').show();  // Show all products
-            $('#no-matching-products').hide();
+        // Add event listeners for filter changes
+        $('input[name="category_filter"], input[name="type_filter"], input[name="size_filter"], input[name="color_filter"]').on('change', function () {
+            applyFilters();
         });
+
+        // Your existing code...
+
+        // Optionally, you can call applyFilters() once on page load to filter products based on the default state of filters.
+        // applyFilters();
     });
 </script>
 
