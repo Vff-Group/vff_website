@@ -20,15 +20,16 @@
 <div class="page-content">
     <div class="cart">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-9">
-                    {% if not query_result %}
+            {% if not query_result %}
                     <div class="alert alert-info alert-dismissible m-4 fade show" role="alert">
                         <span class="alert-icon text-white"><i class="ni ni-like-2"></i></span>
                         <span class="alert-text text-white"><strong>Info!</strong> {{error_msg}}!</span>
                         
                     </div>
                     {% else %}
+            <div class="row">
+                <div class="col-lg-9">
+                    
                     <table class="table table-cart table-mobile">
                         <thead>
                             <tr>
@@ -76,7 +77,7 @@
                             {% endfor %}
                         </tbody>
                     </table><!-- End .table table-wishlist -->
-                    {% endif %}
+                    
 
                     
 
@@ -123,6 +124,7 @@
                     <a href="{% url 'united_armor:home' %}" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
                 </aside><!-- End .col-lg-3 -->
             </div><!-- End .row -->
+            {% endif %}
         </div><!-- End .container -->
     </div><!-- End .cart -->
 </div><!-- End .page-content -->
