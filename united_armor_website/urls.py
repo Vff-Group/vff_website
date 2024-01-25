@@ -69,6 +69,12 @@ urlpatterns = [
     #Terms of Use
     path('terms_of_use/',views.terms_of_use,name='terms_of_use'),
    
+    #Contact Us
+    path('contact_us/',views.contact_us,name='contact_us'),
+   
+    #Contact Us
+    path('about_us/',views.about_us,name='about_us'),
+   
     #Log Out
     path('logout/',views.logout,name='logout'),
     

@@ -1,0 +1,119 @@
+{% extends 'base_pages/without_nav_base.html' %}
+{% load static %}
+{% block content %}
+
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'united_armor:home' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">About us</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+<div class="container">
+    <div class="page-header page-header-big text-center" style="background-image: url('/static/assets/images/about-header-bg.jpg')">
+        <h1 class="page-title text-white">About us<span class="text-white">Who we are</span></h1>
+    </div><!-- End .page-header -->
+</div><!-- End .container -->
+
+
+<div class="page-content pb-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mb-3 mb-lg-0">
+                <h2 class="title">Our Vision</h2><!-- End .title -->
+                <p>At United Armor, our vision is to transcend the ordinary and redefine the landscape of fashion. We envision a world where clothing is more than just garments; it's a statement of strength, resilience, and unwavering style. United Armor aspires to be the epitome of empowerment, inspiring individuals to embrace their uniqueness and face life's challenges with confidence and flair.</p>
+            </div><!-- End .col-lg-6 -->
+            
+            <div class="col-lg-6">
+                <h2 class="title">Our Mission</h2><!-- End .title -->
+                <p>Our mission at United Armor is to curate a collection that seamlessly blends fashion and fortitude. We are committed to delivering meticulously crafted garments that not only elevate your style but also stand the test of time. Through innovation, quality, and a passion for excellence, we aim to empower our community to express their individuality boldly.</p>
+            </div><!-- End .col-lg-6 -->
+        </div><!-- End .row -->
+
+        <div class="mb-5"></div><!-- End .mb-4 -->
+    </div><!-- End .container -->
+
+    <div class="bg-light-2 pt-6 pb-5 mb-6 mb-lg-8">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 mb-3 mb-lg-0">
+                    <h2 class="title">Who We Are</h2><!-- End .title -->
+                    <p class="lead text-primary mb-3">United Armor Defining Style, Empowering Lives – Where Strength Meets Style in Every Thread</p><!-- End .lead text-primary -->
+                    <p class="mb-2">United Armor is more than a clothing brand, it's a lifestyle. We are a collective of visionaries, artisans, and fashion enthusiasts united by a shared passion for style and substance. Our identity is woven into the very fabric of our garments, reflecting a commitment to quality, innovation, and the belief that clothing should be an extension of one's identity.                    </p>
+
+                    <a href="{% url 'united_armor:home' %}" class="btn btn-sm btn-minwidth btn-outline-primary-2">
+                        <span>Get Started</span>
+                        <i class="icon-long-arrow-right"></i>
+                    </a>
+                </div><!-- End .col-lg-5 -->
+
+                <div class="col-lg-6 offset-lg-1">
+                    <div class="about-images">
+                        <img src="{% static 'assets/images/about/img-1.jpg' %}" alt="" class="about-img-front">
+                        <img src="{% static 'assets/images/about/img-2.jpg' %}" alt="" class="about-img-back">
+                    </div><!-- End .about-images -->
+                </div><!-- End .col-lg-6 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .bg-light-2 pt-6 pb-6 -->
+
+    
+
+    
+</div><!-- End .page-content -->
+
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  <script>
+    
+
+    
+
+// Function to show a toast message
+function showToast(message, bodyContent) {
+    toastr.warning(bodyContent, message, {
+      positionClass: "toast-top-center",
+      timeOut: 5e3,
+      closeButton: !0,
+      debug: !1,
+      newestOnTop: !0,
+      progressBar: !0,
+      preventDuplicates: !0,
+      onclick: null,
+      showDuration: "300",
+      hideDuration: "1000",
+      extendedTimeOut: "1000",
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut",
+      tapToDismiss: !1
+  })
+}
+
+function showToastSuccess(message, bodyContent) {
+    toastr.success(bodyContent, message, {
+        positionClass: "toast-top-full-width",
+        timeOut: 5e3,
+        closeButton: !0,
+        debug: !1,
+        newestOnTop: !0,
+        progressBar: !0,
+        preventDuplicates: !0,
+        onclick: null,
+        showDuration: "300",
+        hideDuration: "1000",
+        extendedTimeOut: "1000",
+        showEasing: "swing",
+        hideEasing: "linear",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut",
+        tapToDismiss: !1
+  })
+}
+
+</script>
+{% endblock %}

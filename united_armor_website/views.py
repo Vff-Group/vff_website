@@ -1210,7 +1210,15 @@ def place_order(request):
             print(f"Error loading data: {e}")
         return JsonResponse({'message':'error'})
   
-#My Acount
+#Contact US
+def contact_us(request):
+    return render(request,'account_pages/contact_us.html')
+  
+#About US
+def about_us(request):
+    return render(request,'account_pages/about_us.html')
+  
+#My Account
 def my_account(request):
     return render(request,'account_pages/my_account.html')
   
