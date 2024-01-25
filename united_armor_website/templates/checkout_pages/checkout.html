@@ -151,6 +151,30 @@
                     </aside><!-- End .col-lg-3 -->
                 </div><!-- End .row -->
             </form>
+
+            <!-- Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="successModalLabel">Success</h5>
+          <!-- Close button (if needed) -->
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Modal content goes here -->
+          <p>Your order has been successfully placed!</p>
+        </div>
+        <div class="modal-footer">
+          <!-- Continue shopping button -->
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Continue Shopping</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
             {% endif %}
         </div><!-- End .container -->
     </div><!-- End .checkout -->
@@ -382,6 +406,11 @@
                 tapToDismiss: !1
         })
         }
+
+        $('#successModal').on('click', '.btn-secondary', function() {
+            // Redirect to the home URL
+            window.location.href = '/united_armor/home/';  
+        });
 
     });
 </script>
