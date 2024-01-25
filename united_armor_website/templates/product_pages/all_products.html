@@ -54,6 +54,9 @@
 
         <div class="products">
             <div class="row">
+                <div id="no-matching-products" style="display: none;">
+                    No products found with the selected filters.
+                </div>
                 {% for row in all_product_data%}
                 <div class="col-6 col-md-4 col-lg-4 col-xl-3 filter-item" data-catid="{{ row.product_catid }}" data-typeid="{{ row.product_type_id }}" data-sizeid="{{ row.size }}" data-colorid="{{ row.default_color_id }}">
                     <div class="product">
@@ -329,7 +332,7 @@
     $(document).ready(function () {
         var isFiltering = false;  // Flag to track whether filters are active
 
-        // Handle category, type, size, and color filtering
+        // Handle fitting, category, type, size, and color filtering
         $('#widget-1 input[type="checkbox"]').change(updateFilters);
         $('#widget-type input[type="checkbox"]').change(updateFilters);
         $('#widget-2 input[type="checkbox"]').change(updateFilters);
@@ -344,15 +347,23 @@
                 var selectedSizeIds = getSelectedCheckboxValues('#widget-2');
                 var selectedColorIds = getSelectedCheckboxValues('#widget-3');
 
-                // Show products that match selected filters
-                $('.filter-item').filter(function () {
+                // Filter products that match selected filters
+                var matchingProducts = $('.filter-item').filter(function () {
                     var catMatch = selectedCatIds.length === 0 || selectedCatIds.includes($(this).data('catid'));
                     var typeMatch = selectedTypeIds.length === 0 || selectedTypeIds.includes($(this).data('typeid'));
                     var sizeMatch = selectedSizeIds.length === 0 || selectedSizeIds.includes($(this).data('sizeid'));
                     var colorMatch = selectedColorIds.length === 0 || selectedColorIds.includes($(this).data('colorid'));
+                    var fittingMatch = selectedFittingIds.length === 0 || selectedFittingIds.includes($(this).data('fittingid'));
 
-                    return catMatch && typeMatch && sizeMatch && colorMatch;
-                }).show();
+                    return catMatch && typeMatch && sizeMatch && colorMatch && fittingMatch;
+                });
+
+                if (matchingProducts.length > 0) {
+                    matchingProducts.show();
+                    $('#no-matching-products').hide();
+                } else {
+                    $('#no-matching-products').show();
+                }
             }
         }
 
@@ -368,6 +379,7 @@
             $('input[type="checkbox"]').prop('checked', false);  // Clear all checkboxes
             isFiltering = false;  // Set the flag back to false
             $('.filter-item').show();  // Show all products
+            $('#no-matching-products').hide();
         });
     });
 </script>
