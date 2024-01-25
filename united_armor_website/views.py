@@ -1063,7 +1063,7 @@ def checkout(request):
         error_msg = 'Please Login To Place Order'
         context = {'query_result':[],'error_msg':error_msg}
         return render(request,"checkout_pages/checkout.html",context)
-    query = "select cartid,united_armor_cart_tbl.product_id,product_name,quantity,max_checkout_qty,united_armor_cart_tbl.price,color_name,product_img_url,reserved_quantity,stock_status,size_value,actual_price,united_armor_cart_tbl.offer_price from vff.united_armor_inventorytbl,vff.united_armor_cart_tbl,vff.united_armor_all_productstbl,vff.united_armor_product_sizestbl,vff.united_armor_product_colorstbl where united_armor_product_sizestbl.sizesid=united_armor_cart_tbl.size_id and united_armor_product_colorstbl.colorsid=united_armor_cart_tbl.color_id and united_armor_product_colorstbl.product_id=united_armor_all_productstbl.productid and united_armor_product_colorstbl.product_id=united_armor_cart_tbl.product_id and united_armor_cart_tbl.product_id=united_armor_all_productstbl.productid and united_armor_inventorytbl.product_id=united_armor_all_productstbl.productid and united_armor_inventorytbl.product_id=united_armor_cart_tbl.product_id and united_armor_inventorytbl.color_id=united_armor_cart_tbl.color_id and united_armor_inventorytbl.size_id=united_armor_cart_tbl.size_id and  customer_id='"+str(customer_id)+"'  order by cartid desc"
+    query = "select cartid,united_armor_cart_tbl.product_id,product_name,quantity,max_checkout_qty,united_armor_cart_tbl.price,color_name,product_img_url,reserved_quantity,stock_status,size_value,actual_price,united_armor_cart_tbl.offer_price,united_armor_cart_tbl.color_id,united_armor_cart_tbl.size_id from vff.united_armor_inventorytbl,vff.united_armor_cart_tbl,vff.united_armor_all_productstbl,vff.united_armor_product_sizestbl,vff.united_armor_product_colorstbl where united_armor_product_sizestbl.sizesid=united_armor_cart_tbl.size_id and united_armor_product_colorstbl.colorsid=united_armor_cart_tbl.color_id and united_armor_product_colorstbl.product_id=united_armor_all_productstbl.productid and united_armor_product_colorstbl.product_id=united_armor_cart_tbl.product_id and united_armor_cart_tbl.product_id=united_armor_all_productstbl.productid and united_armor_inventorytbl.product_id=united_armor_all_productstbl.productid and united_armor_inventorytbl.product_id=united_armor_cart_tbl.product_id and united_armor_inventorytbl.color_id=united_armor_cart_tbl.color_id and united_armor_inventorytbl.size_id=united_armor_cart_tbl.size_id and  customer_id='"+str(customer_id)+"'  order by cartid desc"
     query_result = execute_raw_query(query)
     data = []    
     if not query_result == 500:
@@ -1086,6 +1086,8 @@ def checkout(request):
                     'stock_status':row[9],
                     'size_value':row[10],
                     'actual_price':per_item_price,
+                    'color_id':row[13],
+                    'size_id':row[14],
                     
                     
                 
