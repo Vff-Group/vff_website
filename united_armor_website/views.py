@@ -1149,7 +1149,7 @@ def place_order(request):
                 customer_id = request.session.get('u_customer_id')
                 
                 #Updating Customer Information
-                update_query="update vff.united_armor_customertbl set customer_name='"+str(full_name)+"',address='"+str(street_address_1)+"',address2='"+str(street_address_2)+"',city_name='"+str(town_city)+"',state='"+str(state_county)+"',country='India',mobno='"+str(phone)+"',pincode='"+str(postcode_zip)+"' where customerid='"+str(customer_id)+"'"
+                update_query="update vff.united_armor_customertbl set customer_name='"+str(full_name)+"',address='"+str(street_address_1)+"',address2='"+str(street_address_2)+"',city_name='"+str(town_city)+"',state='"+str(state_county)+"',country='"+str(country)+"',mobno='"+str(phone)+"',pincode='"+str(postcode_zip)+"' where customerid='"+str(customer_id)+"'"
                 print(f'Updating Customer Details ::{update_query}')
                 cursor.execute(update_query)
                 

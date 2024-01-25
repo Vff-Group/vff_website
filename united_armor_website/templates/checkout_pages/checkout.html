@@ -28,13 +28,14 @@
             </div>
             {% else %}
             <form id="billing-form">
+                {% csrf_token %}
                 <div class="row">
                     <div class="col-lg-9">
                         <h2 class="checkout-title">Billing Details</h2><!-- End .checkout-title -->
                             <div class="row">
                                 <div class="col-sm-8">
                                     <label>Full Name *</label>
-                                    <input type="text" class="form-control" value="{{ customer_name|default:'' }}" required>
+                                    <input type="text" class="form-control" value="{{ customer_name|default:'' }}" name="full_name" required>
                                 </div><!-- End .col-sm-6 -->
 
                                 
@@ -43,39 +44,39 @@
                             
 
                             <label>Country *</label>
-                            <input type="text" class="form-control" value="India" required>
+                            <input type="text" class="form-control" value="India" name="country" required>
 
                             <label>Street address *</label>
-                            <input type="text" class="form-control" placeholder="House number and Street name"  value="{{ address1|default:'' }}" required>
-                            <input type="text" class="form-control" placeholder="Appartments, suite, unit etc ..." value="{{ address2|default:'' }}" required>
+                            <input type="text" class="form-control" placeholder="House number and Street name"  value="{{ address1|default:'' }}" name="street_address_1" required>
+                            <input type="text" class="form-control" placeholder="Appartments, suite, unit etc ..." value="{{ address2|default:'' }}" name="street_address_2" required>
 
                             <div class="row">
                                 <div class="col-sm-6">
                                     <label>Town / City *</label>
-                                    <input type="text" class="form-control" value="{{ city_name|default:'' }}" required>
+                                    <input type="text" class="form-control" value="{{ city_name|default:'' }}" name="town_city" required>
                                 </div><!-- End .col-sm-6 -->
 
                                 <div class="col-sm-6">
-                                    <label>State / County *</label>
-                                    <input type="text" class="form-control" value="{{ state|default:'' }}" required>
+                                    <label>State *</label>
+                                    <input type="text" class="form-control" value="{{ state|default:'' }}" name="state_county" required>
                                 </div><!-- End .col-sm-6 -->
                             </div><!-- End .row -->
 
                             <div class="row">
                                 <div class="col-sm-6">
                                     <label>Postcode / ZIP *</label>
-                                    <input type="text" class="form-control"  value="{{ pincode|default:'' }}"required>
+                                    <input type="text" class="form-control"  value="{{ pincode|default:'' }}" name="postcode_zip" required>
                                 </div><!-- End .col-sm-6 -->
 
                                 <div class="col-sm-6">
                                     <label>Phone *</label>
-                                    <input type="tel" class="form-control" value="{{ mobno|default:'' }}" required>
+                                    <input type="tel" class="form-control" value="{{ mobno|default:'' }}" name="phone" required>
                                 </div><!-- End .col-sm-6 -->
                             </div><!-- End .row -->
 
 
                             <label>Order notes (optional)</label>
-                            <textarea class="form-control" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
+                            <textarea class="form-control" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery" name="order_notes"></textarea>
                     </div><!-- End .col-lg-9 -->
                     <aside class="col-lg-3">
                         <div class="summary">
@@ -338,9 +339,7 @@
                 type: 'POST',
                 url: '/united_armor/place_order/', // Replace with your server endpoint
                 data: formData, // Serialize the form data
-                headers: {
-                    'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
-                },
+                
                 success: function(response) {
                     // Handle success response
                     console.log(response);
