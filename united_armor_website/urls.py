@@ -56,6 +56,9 @@ urlpatterns = [
    
     #Checkout Page
     path('checkout/',views.checkout,name='checkout'),
+   
+    #Checkout Page
+    path('place_order/',views.place_order,name='place_order'),
     
     # Add Item to Cart
     path('add_to_cart/<int:product_id>/<int:color_id>/<int:size_id>/<path:price>/<int:quantity>/<path:offer_price>/',views.add_to_cart,name='add_to_cart'),

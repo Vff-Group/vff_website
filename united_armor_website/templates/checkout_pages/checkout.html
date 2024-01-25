@@ -94,7 +94,11 @@
                                     <tr>
                                         <td>
                                             <a href="{% url 'united_armor:product' row.product_id %}">{{row.product_name}}</a>
-                                            
+                                            <input type="hidden" id="cart-id"  class="cart-id" value="{{row.cart_id}}">
+                                            <input type="hidden" id="product-id"  class="product-id" value="{{row.product_id}}">
+                                            <input type="hidden" id="color-id"  class="color-id" value="{{row.color_id}}">
+                                            <input type="hidden" id="size-id"  class="size-id" value="{{row.size_id}}">
+                                            <input type="hidden" id="quantities"  class="quantities" value="{{row.quantity}}">
                                         </td>
                                         <td>₹{{row.price}}</td>
                                     </tr>
@@ -292,11 +296,50 @@
         }
         // Function to handle AJAX request for Cash on Delivery
         function submitOrderAjax(payment_id) {
+            // Get all cart ids
+            var cartIds = [];
+            $('.cart-id').each(function() {
+                cartIds.push($(this).val());
+            });
+            var productIds = [];
+            $('.product-id').each(function() {
+                productIds.push($(this).val());
+            });
+            var colorIds = [];
+            $('.color-id').each(function() {
+                colorIds.push($(this).val());
+            });
+            var sizeIds = [];
+            $('.size-id').each(function() {
+                sizeIds.push($(this).val());
+            });
+            var quantities = [];
+            $('.quantities').each(function() {
+                quantities.push($(this).val());
+            });
+            var totalAmountWithSymbol = $('#cart-table tbody tr.summary-total td:eq(1)').text();
+
+            // Replace the Rupees symbol and extract the numeric value
+            var totalAmount = parseFloat(totalAmountWithSymbol.replace('₹', '').trim());
+            const csrfToken = getCSRFToken();
+            // Add the payment_id to the form data
+            var formData = $('#billing-form').serializeArray();
+            formData.push({ name: 'payment_id', value: payment_id });
+            formData.push({ name: 'total_amount', value: totalAmount });
+            // Add cart ids to formData
+            formData.push({ name: 'cart_ids', value: cartIds });
+            formData.push({ name: 'product_ids', value: productIds });
+            formData.push({ name: 'color_ids', value: colorIds });
+            formData.push({ name: 'size_ids', value: sizeIds });
+            formData.push({ name: 'quantity_list', value: quantities });
             // AJAX request to send form data
             $.ajax({
                 type: 'POST',
-                url: '/your-server-endpoint', // Replace with your server endpoint
-                data: $('#billing-form').serialize(), // Serialize the form data
+                url: '/united_armor/place_order/', // Replace with your server endpoint
+                data: formData, // Serialize the form data
+                headers: {
+                    'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
+                },
                 success: function(response) {
                     // Handle success response
                     console.log(response);
