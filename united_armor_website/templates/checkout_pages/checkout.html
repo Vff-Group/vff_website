@@ -343,6 +343,17 @@
                 success: function(response) {
                     // Handle success response
                     console.log(response);
+                    if (response.message === "success") {
+                        // Show the success modal
+                        $('#successModal').modal({
+                            backdrop: 'static',  // To make the modal non-cancellable on click outside
+                            keyboard: false  // To make the modal non-cancellable by pressing Esc key
+                        });
+                        return;
+                    }else{
+                        showToast('Alert','Oops Something went Wrong');
+                        return;
+                    }
                 },
                 error: function(error) {
                     // Handle error
@@ -350,6 +361,28 @@
                 }
             });
         }
+
+        function showToast(message, bodyContent) {
+            toastr.info(bodyContent, message, {
+                positionClass: "toast-bottom-right",
+                timeOut: 5e3,
+                closeButton: !0,
+                debug: !1,
+                newestOnTop: !0,
+                progressBar: !0,
+                preventDuplicates: !0,
+                onclick: null,
+                showDuration: "300",
+                hideDuration: "1000",
+                extendedTimeOut: "1000",
+                showEasing: "swing",
+                hideEasing: "linear",
+                showMethod: "fadeIn",
+                hideMethod: "fadeOut",
+                tapToDismiss: !1
+        })
+        }
+
     });
 </script>
 
