@@ -1222,8 +1222,9 @@ def about_us(request):
 def my_account(request):
     error_msg = 'No Order has been made yet'
     customer_id = request.session.get('u_customer_id')
-    # select activeid,united_armor_active_orders_tbl.product_id,product_name,united_armor_active_orders_tbl.quantity,max_checkout_qty,united_armor_active_orders_tbl.price,color_name,product_img_url,reserved_quantity,stock_status,size_value,actual_price,united_armor_active_orders_tbl.offer_price,united_armor_active_orders_tbl.color_id,united_armor_active_orders_tbl.size_id,order_id,order_status,order_delivered,purchased_date,purchased_time from vff.united_armor_order_tbl,vff.united_armor_inventorytbl,vff.united_armor_active_orders_tbl,vff.united_armor_all_productstbl,vff.united_armor_product_sizestbl,vff.united_armor_product_colorstbl where united_armor_product_sizestbl.sizesid=united_armor_active_orders_tbl.size_id and united_armor_product_colorstbl.colorsid=united_armor_active_orders_tbl.color_id and united_armor_product_colorstbl.product_id=united_armor_all_productstbl.productid and united_armor_product_colorstbl.product_id=united_armor_active_orders_tbl.product_id and united_armor_active_orders_tbl.product_id=united_armor_all_productstbl.productid and united_armor_inventorytbl.product_id=united_armor_all_productstbl.productid and united_armor_inventorytbl.product_id=united_armor_active_orders_tbl.product_id and united_armor_inventorytbl.color_id=united_armor_active_orders_tbl.color_id and united_armor_inventorytbl.size_id=united_armor_active_orders_tbl.size_id and united_armor_order_tbl.orderid=united_armor_active_orders_tbl.order_id and united_armor_order_tbl.customer_id=united_armor_active_orders_tbl.customer_id  and  united_armor_active_orders_tbl.customer_id='3'  order by activeid desc
-    query = "select activeid,united_armor_active_orders_tbl.product_id,product_name,quantity,max_checkout_qty,united_armor_active_orders_tbl.price,color_name,product_img_url,reserved_quantity,stock_status,size_value,actual_price,united_armor_active_orders_tbl.offer_price,united_armor_active_orders_tbl.color_id,united_armor_active_orders_tbl.size_id,order_id from vff.united_armor_inventorytbl,vff.united_armor_active_orders_tbl,vff.united_armor_all_productstbl,vff.united_armor_product_sizestbl,vff.united_armor_product_colorstbl where united_armor_product_sizestbl.sizesid=united_armor_active_orders_tbl.size_id and united_armor_product_colorstbl.colorsid=united_armor_active_orders_tbl.color_id and united_armor_product_colorstbl.product_id=united_armor_all_productstbl.productid and united_armor_product_colorstbl.product_id=united_armor_active_orders_tbl.product_id and united_armor_active_orders_tbl.product_id=united_armor_all_productstbl.productid and united_armor_inventorytbl.product_id=united_armor_all_productstbl.productid and united_armor_inventorytbl.product_id=united_armor_active_orders_tbl.product_id and united_armor_inventorytbl.color_id=united_armor_active_orders_tbl.color_id and united_armor_inventorytbl.size_id=united_armor_active_orders_tbl.size_id and  customer_id='"+str(customer_id)+"'  order by activeid desc"
+ 
+    # query = "select activeid,united_armor_active_orders_tbl.product_id,product_name,quantity,max_checkout_qty,united_armor_active_orders_tbl.price,color_name,product_img_url,reserved_quantity,stock_status,size_value,actual_price,united_armor_active_orders_tbl.offer_price,united_armor_active_orders_tbl.color_id,united_armor_active_orders_tbl.size_id,order_id from vff.united_armor_inventorytbl,vff.united_armor_active_orders_tbl,vff.united_armor_all_productstbl,vff.united_armor_product_sizestbl,vff.united_armor_product_colorstbl where united_armor_product_sizestbl.sizesid=united_armor_active_orders_tbl.size_id and united_armor_product_colorstbl.colorsid=united_armor_active_orders_tbl.color_id and united_armor_product_colorstbl.product_id=united_armor_all_productstbl.productid and united_armor_product_colorstbl.product_id=united_armor_active_orders_tbl.product_id and united_armor_active_orders_tbl.product_id=united_armor_all_productstbl.productid and united_armor_inventorytbl.product_id=united_armor_all_productstbl.productid and united_armor_inventorytbl.product_id=united_armor_active_orders_tbl.product_id and united_armor_inventorytbl.color_id=united_armor_active_orders_tbl.color_id and united_armor_inventorytbl.size_id=united_armor_active_orders_tbl.size_id and  customer_id='"+str(customer_id)+"'  order by activeid desc"
+    query = "select activeid,united_armor_active_orders_tbl.product_id,product_name,united_armor_active_orders_tbl.quantity,max_checkout_qty,united_armor_active_orders_tbl.price,color_name,product_img_url,reserved_quantity,stock_status,size_value,actual_price,united_armor_active_orders_tbl.offer_price,united_armor_active_orders_tbl.color_id,united_armor_active_orders_tbl.size_id,order_id,order_status,order_delivered,purchased_date,purchased_time from vff.united_armor_order_tbl,vff.united_armor_inventorytbl,vff.united_armor_active_orders_tbl,vff.united_armor_all_productstbl,vff.united_armor_product_sizestbl,vff.united_armor_product_colorstbl where united_armor_product_sizestbl.sizesid=united_armor_active_orders_tbl.size_id and united_armor_product_colorstbl.colorsid=united_armor_active_orders_tbl.color_id and united_armor_product_colorstbl.product_id=united_armor_all_productstbl.productid and united_armor_product_colorstbl.product_id=united_armor_active_orders_tbl.product_id and united_armor_active_orders_tbl.product_id=united_armor_all_productstbl.productid and united_armor_inventorytbl.product_id=united_armor_all_productstbl.productid and united_armor_inventorytbl.product_id=united_armor_active_orders_tbl.product_id and united_armor_inventorytbl.color_id=united_armor_active_orders_tbl.color_id and united_armor_inventorytbl.size_id=united_armor_active_orders_tbl.size_id and united_armor_order_tbl.orderid=united_armor_active_orders_tbl.order_id and united_armor_order_tbl.customer_id=united_armor_active_orders_tbl.customer_id  and  united_armor_active_orders_tbl.customer_id='"+str(customer_id)+"'  order by activeid desc"
     query_result = execute_raw_query(query)
     data = []    
     if not query_result == 500:
@@ -1249,6 +1250,10 @@ def my_account(request):
                     'color_id':row[13],
                     'size_id':row[14],
                     'order_id':row[15],
+                    'order_status':row[16],
+                    'order_order_deliveredid':row[17],
+                    'purchased_date':row[18],
+                    'purchased_time':row[19],
                     
                     
                 
@@ -1264,7 +1269,9 @@ def my_account(request):
     state = ''
     pincode = ''
     mobno = ''
-    query = "select customer_name,address,address2,city_name,state,pincode,mobno from vff.united_armor_customertbl where customerid='"+str(customer_id)+"'"
+    email = ''
+    password = ''
+    query = "select customer_name,address,address2,city_name,state,pincode,mobno,email,password from vff.united_armor_customertbl where customerid='"+str(customer_id)+"'"
     user_data = execute_raw_query_fetch_one(query)
     if user_data :
         customer_name = user_data[0]
@@ -1274,10 +1281,12 @@ def my_account(request):
         state = user_data[4]
         pincode = user_data[5]
         mobno = user_data[6]
+        email = user_data[7]
+        password = user_data[8]
     else:
         error_msg = 'Something Went Wrong'
     current_url = request.get_full_path()
-    context = {'current_url': current_url,'query_result':data,'error_msg':error_msg,'customer_name':customer_name,'address1':address1,'address2':address2,'city_name':city_name,'state':state,'pincode':pincode,'mobno':mobno}
+    context = {'current_url': current_url,'query_result':data,'error_msg':error_msg,'email':email,'password':password,'customer_name':customer_name,'address1':address1,'address2':address2,'city_name':city_name,'state':state,'pincode':pincode,'mobno':mobno}
     return render(request,'account_pages/my_account.html',context)
   
 #Privacy Policy

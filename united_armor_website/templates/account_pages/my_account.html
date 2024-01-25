@@ -166,9 +166,13 @@
                                 </div><!-- End .product -->
                             </td>
                             <td class="price-col">₹{{row.price}}</td>
-                            <td class="stock-col"><span class="in-stock">In stock</span></td>
+                            <td class="stock-col"><span class="in-stock">{{row.order_status}}</span></td>
                             <td class="action-col">
+                                {% if row.order_order_deliveredid == 0 %}
                                 <button class="btn btn-block btn-outline-primary-2"><i class="icon-close"></i>Cancel Order</button>
+                                {% else %}
+                                <button class="btn btn-block btn-outline-dark-2"><i class="icon-close"></i>Return</button>
+                                {% endif %}
                             </td>
                             
                         </tr>
