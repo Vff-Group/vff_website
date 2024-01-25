@@ -11,7 +11,7 @@
     <div class="container">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'united_armor:home' %}">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Shop</a></li>
+            
             <li class="breadcrumb-item active" aria-current="page">Checkout</li>
         </ol>
     </div><!-- End .container -->
@@ -20,74 +20,59 @@
 <div class="page-content">
     <div class="checkout">
         <div class="container">
-            <div class="checkout-discount">
-                <form action="#">
-                    <input type="text" class="form-control" required id="checkout-discount-input">
-                    <label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to enter your code</span></label>
-                </form>
-            </div><!-- End .checkout-discount -->
+            {% if not query_result %}
+            <div class="alert alert-info alert-dismissible m-4 fade show" role="alert">
+                <span class="alert-icon text-white"><i class="ni ni-like-2"></i></span>
+                <span class="alert-text text-white"><strong>Info!</strong> {{error_msg}}!</span>
+                
+            </div>
+            {% else %}
             <form action="#">
                 <div class="row">
                     <div class="col-lg-9">
                         <h2 class="checkout-title">Billing Details</h2><!-- End .checkout-title -->
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <label>First Name *</label>
-                                    <input type="text" class="form-control" required>
+                                <div class="col-sm-8">
+                                    <label>Full Name *</label>
+                                    <input type="text" class="form-control" value="{{ customer_name|default:'' }}" required>
                                 </div><!-- End .col-sm-6 -->
 
-                                <div class="col-sm-6">
-                                    <label>Last Name *</label>
-                                    <input type="text" class="form-control" required>
-                                </div><!-- End .col-sm-6 -->
+                                
                             </div><!-- End .row -->
 
-                            <label>Company Name (Optional)</label>
-                            <input type="text" class="form-control">
+                            
 
                             <label>Country *</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control" value="India" required>
 
                             <label>Street address *</label>
-                            <input type="text" class="form-control" placeholder="House number and Street name" required>
-                            <input type="text" class="form-control" placeholder="Appartments, suite, unit etc ..." required>
+                            <input type="text" class="form-control" placeholder="House number and Street name"  value="{{ address1|default:'' }}" required>
+                            <input type="text" class="form-control" placeholder="Appartments, suite, unit etc ..." value="{{ address2|default:'' }}" required>
 
                             <div class="row">
                                 <div class="col-sm-6">
                                     <label>Town / City *</label>
-                                    <input type="text" class="form-control" required>
+                                    <input type="text" class="form-control" value="{{ city_name|default:'' }}" required>
                                 </div><!-- End .col-sm-6 -->
 
                                 <div class="col-sm-6">
                                     <label>State / County *</label>
-                                    <input type="text" class="form-control" required>
+                                    <input type="text" class="form-control" value="{{ state|default:'' }}" required>
                                 </div><!-- End .col-sm-6 -->
                             </div><!-- End .row -->
 
                             <div class="row">
                                 <div class="col-sm-6">
                                     <label>Postcode / ZIP *</label>
-                                    <input type="text" class="form-control" required>
+                                    <input type="text" class="form-control"  value="{{ pincode|default:'' }}"required>
                                 </div><!-- End .col-sm-6 -->
 
                                 <div class="col-sm-6">
                                     <label>Phone *</label>
-                                    <input type="tel" class="form-control" required>
+                                    <input type="tel" class="form-control" value="{{ mobno|default:'' }}" required>
                                 </div><!-- End .col-sm-6 -->
                             </div><!-- End .row -->
 
-                            <label>Email address *</label>
-                            <input type="email" class="form-control" required>
-
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="checkout-create-acc">
-                                <label class="custom-control-label" for="checkout-create-acc">Create an account?</label>
-                            </div><!-- End .custom-checkbox -->
-
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="checkout-diff-address">
-                                <label class="custom-control-label" for="checkout-diff-address">Ship to a different address?</label>
-                            </div><!-- End .custom-checkbox -->
 
                             <label>Order notes (optional)</label>
                             <textarea class="form-control" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
@@ -105,18 +90,16 @@
                                 </thead>
 
                                 <tbody>
+                                    {% for row in query_result %}
                                     <tr>
-                                        <td><a href="#">Beige knitted elastic runner shoes</a></td>
-                                        <td>₹84.00</td>
+                                        <td><a href="{% url 'united_armor:product' row.product_id %}">{{row.product_name}}</a></td>
+                                        <td>₹{{row.actual_price}}</td>
                                     </tr>
-
-                                    <tr>
-                                        <td><a href="#">Boys' UA Rival Fleece Hoodie</a></td>
-                                        <td>₹76,00</td>
-                                    </tr>
+                                    {% endfor %}
+                                    
                                     <tr class="summary-subtotal">
                                         <td>Subtotal:</td>
-                                        <td>₹160.00</td>
+                                        <td>₹0.0</td>
                                     </tr><!-- End .summary-subtotal -->
                                     <tr>
                                         <td>Shipping:</td>
@@ -124,7 +107,7 @@
                                     </tr>
                                     <tr class="summary-total">
                                         <td>Total:</td>
-                                        <td>₹160.00</td>
+                                        <td>₹0.0</td>
                                     </tr><!-- End .summary-total -->
                                 </tbody>
                             </table><!-- End .table table-summary -->
@@ -171,6 +154,7 @@
                     </aside><!-- End .col-lg-3 -->
                 </div><!-- End .row -->
             </form>
+            {% endif %}
         </div><!-- End .container -->
     </div><!-- End .checkout -->
 </div><!-- End .page-content -->
