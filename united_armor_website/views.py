@@ -1193,7 +1193,7 @@ def place_order(request):
                 for product_id, size_id, color_id, quantity in zip(product_ids, size_ids, color_ids,quantities):
                     update_query = f"""
                         UPDATE vff.united_armor_inventorytbl
-                        SET reserved_quantity = reserved_quantity - '{quantity}'
+                        SET reserved_quantity = reserved_quantity - '{quantity}',purchased_quantity= purchased_quantity + '{quantity}'
                         WHERE product_id = '{product_id}'
                           AND color_id = '{color_id}'
                           AND size_id = '{size_id}'
