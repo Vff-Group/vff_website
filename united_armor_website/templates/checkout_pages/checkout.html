@@ -238,7 +238,7 @@
             var isValid = true;
 
             // Iterate through each input field
-            $('#billing-form input, #billing-form textarea').each(function() {
+            $('#billing-form input').each(function() {
                 var value = $(this).val().trim();
                 if (value === '' || value.toUpperCase() === 'NA' || value === '-1') {
                     alert($(this).prev('label').text() + ' cannot be empty or equal to "NA" or "-1".');
