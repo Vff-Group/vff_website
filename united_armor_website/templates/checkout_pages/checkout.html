@@ -149,9 +149,7 @@
                                 
                             </div><!-- End .accordion -->
 
-                            <!-- Add payment method radio buttons -->
-<label><input type="radio" name="payment_method" value="cod"> Cash on Delivery</label>
-<label><input type="radio" name="payment_method" value="razorpay"> Razorpay</label>
+                            
 
                             <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
                                 <span class="btn-text">Place Order</span>
@@ -215,20 +213,21 @@
             }
 
             // Check if a payment method is selected
-            var paymentMethod = $('input[name="payment_method"]:checked').val();
-            if (!paymentMethod) {
+            var selectedAccordion = $('.accordion-summary .card.show');
+            
+            if (selectedAccordion.length === 0) {
                 alert('Please select a payment method.');
                 return false;
             }
 
+            // Determine the selected payment method
+            var paymentMethod = selectedAccordion.find('a').text().trim();
+            alert('Selected Payment Method: ' + paymentMethod);
+
+            
+
             // Check the selected payment method
-            if (paymentMethod === 'cod') {
-                // AJAX request for Cash on Delivery
-                submitOrderAjax();
-            } else if (paymentMethod === 'razorpay') {
-                // Show Razorpay options (You need to implement this part)
-                alert('Razorpay options. Implement this part.');
-            }
+           
         });
 
         // Function to validate the form
