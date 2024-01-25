@@ -81,7 +81,7 @@
                         <div class="summary">
                             <h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
 
-                            <table class="table table-summary">
+                            <table class="table table-summary" id="cart-table">
                                 <thead>
                                     <tr>
                                         <th>Product</th>
@@ -97,17 +97,12 @@
                                             
                                         </td>
                                         <td>₹{{row.actual_price}}</td>
-                                        {% with item_total=row.actual_price|floatformat:2|intmul:row.quantity %}
-                                        {% with subtotal=subtotal|add:item_total %}
-                                            <!-- Additional logic for each row if needed -->
-                                        {% endwith %}
-                                    {% endwith %}
                                     </tr>
                                     {% endfor %}
                                     
                                     <tr class="summary-subtotal">
                                         <td>Subtotal:</td>
-                                        <td>₹{{subtotal|floatformat:2}}</td>
+                                        <td>₹0.0</td>
                                     </tr><!-- End .summary-subtotal -->
                                     <tr>
                                         <td>Shipping:</td>
@@ -115,7 +110,7 @@
                                     </tr>
                                     <tr class="summary-total">
                                         <td>Total:</td>
-                                        <td>₹{{subtotal|floatformat:2}}</td>
+                                        <td>₹0.0</td>
                                     </tr><!-- End .summary-total -->
                                 </tbody>
                             </table><!-- End .table table-summary -->
@@ -170,28 +165,36 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Function to update the subtotal and total
         function updateSummary() {
             var subtotal = 0;
 
-            // Iterate through each row in the tbody
-            $('tbody tr:not(.summary-subtotal, .summary-total)').each(function() {
-                // Ensure actual price is in numeric format
-                var actualPrice = parseFloat($(this).find('td:eq(1)').text().replace('₹', '').trim());
-                subtotal += actualPrice;
+            // Calculate subtotal
+            $('#cart-table tbody tr').each(function () {
+                var price = parseFloat($(this).find('.price').text().replace('₹', ''));
+                subtotal += price;
             });
 
-            // Update Subtotal
-            $('.summary-subtotal td:eq(1)').text('₹' + subtotal.toFixed(2));
+            // Update subtotal in the table
+            $('#subtotal').text('₹' + subtotal.toFixed(2));
 
-            // Update Total (assuming shipping is free in this case)
-            var total = subtotal;
-            $('.summary-total td:eq(1)').text('₹' + total.toFixed(2));
+            // Assuming shipping is free
+            var shipping = 0;
+
+            // Calculate total
+            var total = subtotal + shipping;
+
+            // Update total in the table
+            $('#total').text('₹' + total.toFixed(2));
         }
 
-        // Call updateSummary on document ready
+        // Initial update when the page loads
         updateSummary();
+
+        // Example: Update data when there's a change
+        // For example, if you update the 'quantity' or 'actual_price' in your data array
+        // updateSummary();
     });
 </script>
 
