@@ -240,12 +240,11 @@
 
         // Function to validate the form
         function validateForm() {
-            // Your validation logic goes here
-
+            
             var isValid = true;
-
-            // Iterate through each input field
-            $('#billing-form input').each(function() {
+        
+            // Iterate through each visible input field
+            $('#billing-form input:visible').each(function() {
                 var value = $(this).val().trim();
                 if (value === '' || value.toUpperCase() === 'NA' || value === '-1') {
                     alert($(this).prev('label').text() + ' cannot be empty or equal to "NA" or "-1".');
@@ -253,7 +252,7 @@
                     return false; // Break the loop if validation fails for any field
                 }
             });
-
+        
             return isValid;
         }
 
