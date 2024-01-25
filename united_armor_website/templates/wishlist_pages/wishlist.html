@@ -61,7 +61,7 @@
                     <td class="remove-col">
                         <form class="delete-wishlist-form" method="post" id="delete-wishlist-form-{{ row.wishlist_id }}" data-wishlist-id="{{ row.wishlist_id }}">
                             {% csrf_token %}
-                            <a href="" class="btn-remove" onclick="deleteFromWishList('{{ row.wishlist_id }}')"><i class="icon-close"></i></a>
+                            <a href="" class="btn-remove" onclick="deleteFromWishList('{{ row.wishlist_id }}') return false"><i class="icon-close"></i></a>
                         </form>
                         
                     </td>
