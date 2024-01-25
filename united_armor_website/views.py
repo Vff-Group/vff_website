@@ -1222,6 +1222,18 @@ def privacy_policy(request):
 def terms_of_use(request):
     return render(request,'privacy_pages/terms_of_use.html')  
 
+#Delete From Wish List 
+def logout(request):
+    if request.method == "POST":
+        request.session['u_customer_id'] = None
+        request.session['customer_name'] = None
+        print("User Logged Out Successfully.")
+        return JsonResponse({'message':'Success'})
+    
+    return JsonResponse({'message':'Oops Something Went Wrong'})
+
+
+
 #4 0 4 Page
 def custom_404_view_united(request, exception=None):
     return render(request, 'error_pages/404.html', status=404)

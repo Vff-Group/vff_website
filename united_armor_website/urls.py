@@ -68,6 +68,9 @@ urlpatterns = [
    
     #Terms of Use
     path('terms_of_use/',views.terms_of_use,name='terms_of_use'),
+   
+    #Log Out
+    path('logout/',views.logout,name='logout'),
     
     # Add Item to Cart
     path('add_to_cart/<int:product_id>/<int:color_id>/<int:size_id>/<path:price>/<int:quantity>/<path:offer_price>/',views.add_to_cart,name='add_to_cart'),
