@@ -96,7 +96,7 @@
                                             <a href="{% url 'united_armor:product' row.product_id %}">{{row.product_name}}</a>
                                             
                                         </td>
-                                        <td>₹{{row.actual_price}}</td>
+                                        <td>₹{{row.price}}</td>
                                     </tr>
                                     {% endfor %}
                                     
@@ -165,36 +165,37 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
-    $(document).ready(function () {
-        // Function to update the subtotal and total
-        function updateSummary() {
+    $(document).ready(function() {
+        // Function to calculate subtotal and total
+        function calculateTotal() {
             var subtotal = 0;
 
-            // Calculate subtotal
-            $('#cart-table tbody tr').each(function () {
-                var price = parseFloat($(this).find('.price').text().replace('₹', ''));
-                subtotal += price;
+            // Iterate through each row in the table
+            $('#cart-table tbody tr').each(function() {
+                // Extract the price value from the second column of each row
+                var price = parseFloat($(this).find('td:nth-child(2)').text().replace('₹', ''));
+
+                // Check if the extracted value is a valid number
+                if (!isNaN(price)) {
+                    subtotal += price;
+                }
             });
 
-            // Update subtotal in the table
-            $('#subtotal').text('₹' + subtotal.toFixed(2));
+            // Update the Subtotal in the summary
+            $('.summary-subtotal td:nth-child(2)').text('₹' + subtotal.toFixed(2));
 
-            // Assuming shipping is free
+            // Assume shipping is free, so it does not contribute to the total
             var shipping = 0;
 
-            // Calculate total
+            // Calculate the total by adding subtotal and shipping
             var total = subtotal + shipping;
 
-            // Update total in the table
-            $('#total').text('₹' + total.toFixed(2));
+            // Update the Total in the summary
+            $('.summary-total td:nth-child(2)').text('₹' + total.toFixed(2));
         }
 
-        // Initial update when the page loads
-        updateSummary();
-
-        // Example: Update data when there's a change
-        // For example, if you update the 'quantity' or 'actual_price' in your data array
-        // updateSummary();
+        // Initial calculation on page load
+        calculateTotal();
     });
 </script>
 
