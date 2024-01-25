@@ -61,7 +61,7 @@
                                     <div class="row">
                                         <div class="col-sm-6 col-md-4">
                                             <span class="widget-about-title">Got Question? Call us 24/7</span>
-                                            <a href="tel:123456789">+91-6364912877</a>
+                                            <a href="tel:+916364912877">+91-6364912877</a>
                                         </div><!-- End .col-sm-6 -->
                                         <div class="col-sm-6 col-md-8">
                                             <span class="widget-about-title">Payment Method</span>
@@ -78,10 +78,11 @@
 
                         <div class="col-sm-4 col-lg-3">
                             <div class="widget">
-                                <h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+                                <h4 class="widget-title">Other</h4><!-- End .widget-title -->
 
                                 <ul class="widget-list">
-                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="{% url 'united_armor:terms_of_use' %}">Terms of Use</a></li>
+                                    <li><a href="{% url 'united_armor:privacy_policy' %}">Privacy Policy</a></li>
                                 </ul><!-- End .widget-list -->
                             </div><!-- End .widget -->
                         </div><!-- End .col-sm-4 col-lg-3 -->
@@ -91,7 +92,8 @@
                                 <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
 
                                 <ul class="widget-list">
-                                    <li><a href="#">Track My Order</a></li>
+                                    <li><a href="{% url 'united_armor:account' %}">Account</a></li>
+                                    <li><a href="{% url 'united_armor:account' %}">Track My Order</a></li>
                                 </ul><!-- End .widget-list -->
                             </div><!-- End .widget -->
                         </div><!-- End .col-sm-64 col-lg-3 -->
@@ -103,8 +105,8 @@
                 <div class="container">
                     <p class="footer-copyright">Copyright &copy;<script>document.write(new Date().getFullYear());</script></p><!-- End .footer-copyright -->
                     <ul class="footer-menu">
-                        <li><a href="#">Terms Of Use</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="{% url 'united_armor:terms_of_use' %}">Terms Of Use</a></li>
+                        <li><a href="{% url 'united_armor:privacy_policy' %}">Privacy Policy</a></li>
                     </ul><!-- End .footer-menu -->
 
                     <div class="social-icons social-icons-color">

@@ -59,6 +59,15 @@ urlpatterns = [
    
     #Checkout Page
     path('place_order/',views.place_order,name='place_order'),
+   
+    #My Account
+    path('account/',views.my_account,name='account'),
+   
+    #Privacy Policy
+    path('privacy_policy/',views.privacy_policy,name='privacy_policy'),
+   
+    #Terms of Use
+    path('terms_of_use/',views.terms_of_use,name='terms_of_use'),
     
     # Add Item to Cart
     path('add_to_cart/<int:product_id>/<int:color_id>/<int:size_id>/<path:price>/<int:quantity>/<path:offer_price>/',views.add_to_cart,name='add_to_cart'),

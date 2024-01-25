@@ -1,0 +1,89 @@
+{% extends 'base_pages/without_nav_base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="page-header text-center" style="background-image: url('/static/assets/images/page-header-bg.jpg')">
+    <div class="container">
+        <h1 class="page-title">Privacy Policy<span>United Armor</span></h1>
+    </div><!-- End .container -->
+</div><!-- End .page-header -->
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'united_armor:home' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Privacy Policy</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+
+<div class="page-content">
+    <div class="dashboard">
+      <div class="container">
+        <div class="row">
+          
+
+          <div class="col-md-8 col-lg-9">
+            
+          </div>
+          <!-- End .col-lg-9 -->
+        </div>
+        <!-- End .row -->
+      </div>
+      <!-- End .container -->
+    </div>
+    <!-- End .dashboard -->
+  </div>
+  <!-- End .page-content -->
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    
+
+    
+
+// Function to show a toast message
+function showToast(message, bodyContent) {
+    toastr.warning(bodyContent, message, {
+      positionClass: "toast-top-center",
+      timeOut: 5e3,
+      closeButton: !0,
+      debug: !1,
+      newestOnTop: !0,
+      progressBar: !0,
+      preventDuplicates: !0,
+      onclick: null,
+      showDuration: "300",
+      hideDuration: "1000",
+      extendedTimeOut: "1000",
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut",
+      tapToDismiss: !1
+  })
+}
+
+function showToastSuccess(message, bodyContent) {
+    toastr.success(bodyContent, message, {
+        positionClass: "toast-top-full-width",
+        timeOut: 5e3,
+        closeButton: !0,
+        debug: !1,
+        newestOnTop: !0,
+        progressBar: !0,
+        preventDuplicates: !0,
+        onclick: null,
+        showDuration: "300",
+        hideDuration: "1000",
+        extendedTimeOut: "1000",
+        showEasing: "swing",
+        hideEasing: "linear",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut",
+        tapToDismiss: !1
+  })
+}
+
+</script>
+{% endblock %}
