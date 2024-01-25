@@ -58,7 +58,7 @@
                     No products found with the selected filters.
                 </div>
                 {% for row in all_product_data%}
-                <div class="col-6 col-md-4 col-lg-4 col-xl-3 product-item" data-catid="{{ row.product_catid }}" data-typeid="{{ row.product_type_id }}" data-size="{{ row.size }}" data-colorid="{{ row.default_color_id }}">
+                <div class="col-6 col-md-4 col-lg-4 col-xl-3 product-item" data-catid="{{ row.product_catid }}" data-product-category="{{row.product_category_name}}" data-typeid="{{ row.product_type_id }}" data-product-type="{{row.product_type_name}}"  data-size="{{ row.size }}" data-colorid="{{ row.default_color_id }}">
                     <div class="product">
                         <input type="hidden" name="fitting_id" value="{{row.fitting_id}}">
                         <input type="hidden" name="fitting_type" value="{{row.fitting_type}}">
@@ -276,53 +276,29 @@
 
 <script>
     $(document).ready(function () {
-        // Store all product items
         var productItems = $('.product-item');
     
-        // Function to show or hide products based on filter values
         function filterProducts() {
-            var categoryFilter = $('input[name="category_filter"]:checked');
-            var typeFilter = $('input[name="type_filter"]:checked');
-            var sizeFilter = $('input[name="size_filter"]:checked');
-            var colorFilter = $('a[name="color_filter"]:not(.inactive)');
+            var selectedCategories = $('input[name="category_filter"]:checked').map(function() {
+                return $(this).val();
+            }).get();
     
-            productItems.each(function () {
-                var item = $(this);
-                var matchCategory = categoryFilter.length === 0 || categoryFilter.is('[value="' + item.data('catid') + '"]');
-                var matchType = typeFilter.length === 0 || typeFilter.is('[value="' + item.data('typeid') + '"]');
-                var matchSize = sizeFilter.length === 0 || sizeFilter.is('[value="' + item.data('size') + '"]');
-                var matchColor = colorFilter.length === 0 || colorFilter.is('[data-color-id="' + item.data('colorid') + '"]');
-    
-                if (matchCategory && matchType && matchSize && matchColor) {
-                    item.show();
-                } else {
-                    item.hide();
-                }
-            });
+            if (selectedCategories.length === 0) {
+                productItems.show();
+            } else {
+                productItems.hide().filter(function() {
+                    return selectedCategories.includes($(this).data('product-category'));
+                }).show();
+            }
         }
     
-        // Function to clear all filters
         function clearAllFilters() {
             $('input[type="checkbox"]').prop('checked', false);
-    
-            $('a[name="color_filter"]').removeClass('inactive');
-    
             productItems.show();
         }
     
-        // Attach event listeners to filter and clear buttons
         $('input[name="category_filter"]').change(filterProducts);
-        $('input[name="type_filter"]').change(filterProducts);
-        $('input[name="size_filter"]').change(filterProducts);
-    
-        $('a[name="color_filter"]').click(function () {
-            $(this).toggleClass('inactive');
-            filterProducts();
-        });
-    
-        $('.sidebar-filter-clear').click(function () {
-            clearAllFilters();
-        });
+        $('.sidebar-filter-clear').click(clearAllFilters);
     });
     </script>
     
