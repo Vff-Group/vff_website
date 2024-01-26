@@ -1791,12 +1791,7 @@ def all_orders(request):
     data = []    
     if not result == 500:
         for row in result:
-            epoch = row[19]
-            time_date = epochToDateTime(epoch)
-            # print(f'time_date::{time_date}')
-            sold = row[18]
-            if sold == -1:
-                sold = 0
+            
             data.append({
                 'order_id': row[0],
                 'customer_id': row[1],
