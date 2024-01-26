@@ -312,18 +312,18 @@
                       >Current password (leave blank to leave
                       unchanged)</label
                     >
-                    <input type="password" class="form-control" value={{password}} name="current_password"/>
-  
+                    <input type="password" class="form-control" value={{password}} name="current_password" id="current_password"/>
+                    
+                    <label for="showPasswordCheckbox">Show Passwords</label>
+                    <input type="checkbox"  id="showPasswordCheckbox" />
                     <label
                       >New password (leave blank to leave unchanged)</label
                     >
-                    <input type="password" class="form-control" name="new_password"/>
+                    <input type="password" class="form-control" name="new_password" id="new_password"/>
   
                     <label>Confirm new password</label>
-                    <input type="password" class="form-control mb-2" name="confirm_new_password" />
+                    <input type="password" class="form-control mb-2" name="confirm_new_password" id="confirm_new_password"/>
                     
-                    <label for="showPasswordCheckbox">Show Passwords</label>
-                    <input type="checkbox" class="form-control mb-2" id="showPasswordCheckbox" />
                     
                     <button type="submit" class="btn btn-outline-primary-2" id="submitChanges">
                       <span>SAVE CHANGES</span>
@@ -529,6 +529,7 @@ function showToast(message, bodyContent) {
 </script>
 
 <script>
+    $(document).ready(function () {
     // Function to toggle password visibility
 function togglePasswordVisibility(inputId) {
     var inputField = document.getElementById(inputId);
@@ -601,6 +602,6 @@ function validateForm() {
 
     return true;
 }
-
+});
 </script>
 {% endblock %}
