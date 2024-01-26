@@ -1220,6 +1220,8 @@ def about_us(request):
   
 #My Account
 def my_account(request):
+    request.session['u_customer_id'] = None
+    request.session['customer_name'] = None
     error_msg = 'No Order has been made yet'
     customer_id = request.session.get('u_customer_id')
     customer_name = ''
@@ -1433,6 +1435,10 @@ def logout(request):
     if request.method == "POST":
         request.session['u_customer_id'] = None
         request.session['customer_name'] = None
+        customer_id = request.session.get('u_customer_id')
+        customer_name = request.session.get('customer_name')
+        print(f'customer_name::{customer_name}')
+        print(f'customer_id::{customer_id}')
         print("User Logged Out Successfully.")
         return JsonResponse({'message':'Success'})
     
