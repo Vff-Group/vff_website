@@ -643,7 +643,8 @@ function validateForm() {
     $(document).on('click', '.action-col button', function () {
         var actionType = $(this).data('action');
         var activeId = $(this).data('active-id');
-
+        // Clear previous modal body content
+        $('.modal-body').empty();
         // Set modal title based on action type
         var modalTitle = actionType === 'cancel' ? 'Cancel Order' : (actionType === 'return' ? 'Return Order' : 'Provide Feedback');
         $('#actionModalLabel').text(modalTitle);
@@ -722,6 +723,11 @@ function validateForm() {
                 }
             });
         });
+    });
+
+    $('#actionModal').on('hidden.bs.modal', function () {
+        // Clear modal body content
+        $('.modal-body').empty();
     });
 </script>
 {% endblock %}
