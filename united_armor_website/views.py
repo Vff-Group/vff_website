@@ -41,6 +41,7 @@ def handle_login(request):
                 print('User is Authorized')
                 request.session['u_customer_id'] = user_data[0]
                 request.session['customer_name'] = user_data[1]
+                request.session.save()
                 return JsonResponse({'message': 'Login successful'})        
         else:
             error_msg = 'Something Went Wrong'
@@ -75,6 +76,7 @@ def handle_register(request):
                     connection.commit()
                     request.session['u_customer_id'] = customer_id
                     request.session['customer_name'] = name
+                    request.session.save()
                     print("Customer Registered  Successfully.")
                     return JsonResponse({'message':'Registered Successfully'})
             except Exception as e:
@@ -1433,10 +1435,7 @@ def logout(request):
     if request.method == "POST":
         request.session['u_customer_id'] = None
         request.session['customer_name'] = None
-        customer_id = request.session.get('u_customer_id')
-        customer_name = request.session.get('customer_name')
-        print(f'customer_name::{customer_name}')
-        print(f'customer_id::{customer_id}')
+        request.session.save()
         print("User Logged Out Successfully.")
         return JsonResponse({'message':'Success'})
     
