@@ -73,7 +73,7 @@
                                 <a >Links</a>
                                 <ul>
                                     {% if request.session.customer_name %}
-                                    <li><a href="" ><i class="icon-user"></i>{{request.session.customer_name}}</a></li>
+                                    <li><a href="{% url 'united_armor.account' %}" ><i class="icon-user"></i>{{request.session.customer_name}}</a></li>
                                     {% else %}
                                     <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a></li>
                                     {% endif %}
