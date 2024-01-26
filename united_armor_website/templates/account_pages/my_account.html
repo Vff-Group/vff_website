@@ -170,15 +170,41 @@
                             <td class="price-col">₹{{row.price}}</td>
                             <td class="stock-col"><span class="in-stock">{{row.order_status}}</span></td>
                             <td class="action-col">
-                                {% if row.order_order_deliveredid == 0 %}
-                                <button class="btn btn-block btn-outline-primary-2"><i class="icon-close"></i>Cancel Order</button>
+                                {% if row.order_order_deliveredid == 0 and row.cancelled == 0 %}
+                                    <button class="btn btn-block btn-outline-primary-2" data-action="cancel" data-active-id="{{row.active_id}}"><i class="icon-close"></i>Cancel Order</button>
+                                {% elif order_order_deliveredid == 1 and row.feedback == 'NA' %}
+                                    <button class="btn btn-block btn-outline-dark-2" data-action="return" data-active-id="{{row.active_id}}"><i class="icon-close"></i>Return</button>
+                                {% elif row.feedback == 'NA' %}
+                                    <button class="btn btn-block btn-outline-dark-2" data-action="feedback" data-active-id="{{row.active_id}}"><i class="icon-commenting-o"></i>Feedback</button>
                                 {% else %}
-                                <button class="btn btn-block btn-outline-dark-2"><i class="icon-close"></i>Return</button>
+                                    <span class="in-stock">Order Delivered</span>
                                 {% endif %}
                             </td>
                             
                         </tr>
                         {% endfor %}
+
+                        <!-- Modal Structure -->
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog" aria-labelledby="actionModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="actionModalLabel">Modal Title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Content will be dynamically added here based on button click -->
+            </div>
+            <div class="modal-footer">
+                <!-- Buttons for submission will be dynamically added here -->
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
                     </tbody>
                 </table><!-- End .table table-wishlist -->
                   {% endif %}
@@ -364,6 +390,7 @@
         </div>
     </div>
 </div><!-- Eng Logout Confirmation Modal -->
+
   </div>
   <!-- End .page-content -->
 
@@ -605,5 +632,74 @@ function validateForm() {
     return true;
 }
 });
+</script>
+
+<script>
+    // Handle button click event
+    $(document).on('click', '.action-col button', function () {
+        var actionType = $(this).data('action');
+        var activeId = $(this).data('active-id');
+
+        // Set modal title
+        $('#actionModalLabel').text(actionType === 'cancel' ? 'Cancel Order' : (actionType === 'return' ? 'Return Order' : 'Provide Feedback'));
+
+        // Dynamically set modal body content based on action type
+        var modalBodyContent = '';
+        if (actionType === 'cancel') {
+            modalBodyContent = '<label for="cancelReason">Cancel Reason</label><textarea class="form-control" id="cancelReason" rows="3"></textarea>';
+        } else if (actionType === 'return') {
+            modalBodyContent = '<label for="returnReason">Return Reason</label><textarea class="form-control" id="returnReason" rows="3"></textarea>';
+        } else {
+            modalBodyContent = '<label for="feedbackTextarea">Feedback</label><textarea class="form-control" id="feedbackTextarea" rows="3"></textarea>';
+        }
+
+        // Set modal body content
+        $('.modal-body').html(modalBodyContent);
+
+        // Dynamically set modal footer buttons
+        var modalFooterButtons = '<button type="button" class="btn btn-primary" id="submitAction">Submit</button>';
+        $('.modal-footer').html(modalFooterButtons);
+
+        // Show the modal
+        $('#actionModal').modal('show');
+
+        // Handle submission of the form data
+        $('#submitAction').on('click', function () {
+            var formData = {};
+            if (actionType === 'cancel') {
+                formData.reason = $('#cancelReason').val();
+            } else if (actionType === 'return') {
+                formData.reason = $('#returnReason').val();
+            } else {
+                formData.feedback = $('#feedbackTextarea').val();
+            }
+
+            // Use AJAX to submit the form data
+            $.ajax({
+                type: 'POST',
+                url: '/your-server-endpoint', // Replace with your actual server endpoint
+                data: {
+                    action: actionType,
+                    activeId: activeId,
+                    formData: formData
+                },
+                success: function (response) {
+                    // Handle success response
+                    console.log(response);
+                    if (response.message === 'success') {
+                        window.location.reload();
+                        return;
+                    } else {
+                        showToast('Alert', 'Oops something went wrong');
+                        return;
+                    }
+                },
+                error: function (error) {
+                    // Handle error
+                    console.error(error);
+                }
+            });
+        });
+    });
 </script>
 {% endblock %}
