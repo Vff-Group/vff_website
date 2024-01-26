@@ -206,13 +206,13 @@
                           <!-- End .card-title -->
   
                           <p>
-                            User Name<br />
-                            User Company<br />
-                            John str<br />
-                            New York, NY 10001<br />
-                            1-234-987-6543<br />
-                            yourmail@mail.com<br />
-                            <a href="#">Edit <i class="icon-edit"></i></a>
+                            {{customer_name}}<br />
+                            {{address1,address2}}<br />
+                            {{city_name}}, {{pincode}}<br />
+                            {{state}} - India<br />
+                            {{mobno}}<br />
+                            {{email}}<br />
+                            <a href="#" data-toggle="modal" data-target="#editBillingModal">Edit <i class="icon-edit"></i></a>
                           </p>
                         </div>
                         <!-- End .card-body -->
@@ -227,6 +227,69 @@
                 </div>
                 <!-- .End .tab-pane -->
   
+                <!-- Modal to edit address -->
+                <div class="modal fade" id="editBillingModal" tabindex="-1" role="dialog" aria-labelledby="editBillingModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="editBillingModalLabel">Edit Billing Address</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                        <form id="editBillingForm">
+                            {% csrf_token %}
+                            <!-- Form fields -->
+                            <div class="form-group">
+                            <label for="customerName">Customer Name</label>
+                            <input type="text" class="form-control" id="customerName"  name="customer_name"  value="{{customer_name}}">
+                            </div>
+                
+                            
+                            <label>Country *</label>
+                            <input type="text" class="form-control" value="India" name="country" required>
+
+                            <label>Street address *</label>
+                            <input type="text" class="form-control" placeholder="House number and Street name"  value="{{ address1|default:'' }}" name="street_address_1" required>
+                            <input type="text" class="form-control" placeholder="Appartments, suite, unit etc ..." value="{{ address2|default:'' }}" name="street_address_2" required>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Town / City *</label>
+                                    <input type="text" class="form-control" value="{{ city_name|default:'' }}" name="town_city" required>
+                                </div><!-- End .col-sm-6 -->
+
+                                <div class="col-sm-6">
+                                    <label>State *</label>
+                                    <input type="text" class="form-control" value="{{ state|default:'' }}" name="state_county" required>
+                                </div><!-- End .col-sm-6 -->
+                            </div><!-- End .row -->
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Postcode / ZIP *</label>
+                                    <input type="text" class="form-control"  value="{{ pincode|default:'' }}" name="postcode_zip" required>
+                                </div><!-- End .col-sm-6 -->
+
+                                <div class="col-sm-6">
+                                    <label>Phone *</label>
+                                    <input type="tel" class="form-control" value="{{ mobno|default:'' }}" name="phone" required>
+                                </div><!-- End .col-sm-6 -->
+                            </div><!-- End .row -->
+                
+                            <!-- Add other form fields as needed -->
+                
+                            <div class="form-group">
+                            <button type="button" class="btn btn-primary" id="submitBilling">Submit</button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <!-- Modal to edit address end-->
+
                 <div
                   class="tab-pane fade"
                   id="tab-account"
@@ -237,20 +300,20 @@
                     
   
                     <label>Display Name *</label>
-                    <input type="text" class="form-control" required />
+                    <input type="text" class="form-control" value="{{customer_name}}" required />
                     <small class="form-text"
                       >This will be how your name will be displayed in the
                       account section and in reviews</small
                     >
   
                     <label>Email address *</label>
-                    <input type="email" class="form-control" required />
+                    <input type="email" class="form-control" value="{{email}}" required />
   
                     <label
                       >Current password (leave blank to leave
                       unchanged)</label
                     >
-                    <input type="password" class="form-control" />
+                    <input type="password" class="form-control" value={{password}}/>
   
                     <label
                       >New password (leave blank to leave unchanged)</label
@@ -388,5 +451,49 @@ function showToastSuccess(message, bodyContent) {
   })
 }
 
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Handle submit button click
+        $("#submitBilling").on("click", function () {
+            // Validate form fields
+            if (validateForm()) {
+                // Collect form data
+                var formData = $("#editBillingForm").serialize();
+
+                // Use AJAX to submit the form data
+                $.ajax({
+                    type: "POST",
+                    url: "/your-submit-url", // Replace with your actual server endpoint
+                    data: formData,
+                    success: function (response) {
+                        // Handle success response
+                        console.log(response);
+                    },
+                    error: function (error) {
+                        // Handle error
+                        console.error(error);
+                    }
+                });
+            }
+        });
+
+        // Validation function
+        function validateForm() {
+            // Check for fields with values "NA", "-1", or empty
+            var isValid = true;
+            $("form :input[required]").each(function () {
+                var fieldValue = $(this).val();
+                if (fieldValue === "NA" || fieldValue === "-1" || fieldValue.trim() === "") {
+                    alert("Please fill in all required fields and avoid using 'NA' or '-1'.");
+                    isValid = false;
+                    return false; // Break out of the loop if an invalid field is found
+                }
+            });
+
+            return isValid;
+        }
+    });
 </script>
 {% endblock %}
