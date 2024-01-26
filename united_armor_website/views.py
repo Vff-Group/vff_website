@@ -143,9 +143,13 @@ def home(request):
             all_categories.append(main_cat_data)
     else:
         error_msg = 'Something Went Wrong'
-
+    customer_name = request.session.get('customer_name')
+    customer_id = request.session.get('u_customer_id')
+    if customer_id == None or customer_id == '':
+        customer_id = None
+        customer_name = None
     current_url = request.get_full_path()
-    context = {'all_categories': all_categories, 'current_url': current_url}
+    context = {'all_categories': all_categories, 'current_url': current_url,'customer_name':customer_name}
     return render(request, "home_pages/home.html", context)
 
 
