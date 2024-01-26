@@ -372,14 +372,17 @@
             $('tbody tr').each(function () {
                 var price = parseFloat($(this).find('[data-price]').data('price'));
                 var quantity = parseInt($(this).find('[name="quantity"]').val());
-                subTotal += price * quantity;
+                //subTotal += price * quantity;
+                subTotal += price ;
 
                 // Adjust sub-total and refund amount based on order_current_status
                 var orderStatus = $(this).find('td:last-child h6').text().trim();
                 if (orderStatus === 'Cancelled' || orderStatus === 'Returned') {
-                    subTotal -= price * quantity;
+                    //subTotal -= price * quantity;
+                    subTotal -= price ;
                     if (orderStatus === 'Returned') {
-                        refundAmount += price * quantity;
+                        //refundAmount += price * quantity;
+                        refundAmount += price;
                     }
                 }
             });
