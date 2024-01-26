@@ -731,14 +731,7 @@ a:focus {
 .product.product-list .btn-product.btn-cart:focus {
   background-color: #DC0119;
 }
-.product.product-list .btn-product.btn-out-of-stock {
-  color: #DC0119;
-  border-bolor: #DC0119;
-}
-.product.product-list .btn-product.btn-out-of-stock:hover,
-.product.product-list .btn-product.btn-out-of-stock:focus {
-  background-color: #DC0119;
-}
+
 .footer a:hover,
 .footer a:focus {
   color: #DC0119;
