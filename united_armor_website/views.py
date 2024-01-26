@@ -1337,7 +1337,7 @@ def update_account_details(request):
                 cursor.execute(update_query)
                 
                 connection.commit()
-                print("Billing Address Details Updated Successfully.")
+                print("Account Details Updated Successfully.")
                 return JsonResponse({'message':'success'})
         except Exception as e:
             print(f"Error loading data: {e}")
