@@ -187,6 +187,7 @@
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Product Name</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Quantity</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Price</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">User Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -199,6 +200,7 @@
                                             <td><h6 class="mb-0 text-sm text-center">{{row.product_name}}</h6></td>
                                             <td><h6 class="mb-0 text-sm text-center">{{row.quantity}}</h6></td>
                                             <td><h6 class="mb-0 text-sm text-center" data-price="{{row.purchased_price}}">₹ {{row.purchased_price}}/-</h6></td>
+                                            <td><h6 class="mb-0 text-sm text-center">{{row.order_current_status}}</h6></td>
                                             
                                         </tr>
                                         {% endfor %}
