@@ -20,7 +20,7 @@
 <div class="page-content">
     <div class="dashboard">
       <div class="container">
-        {% if not request.session.customer_name %}
+        {% if not request.session.customer_name or not request.session.u_customer_id%}
         <div class="alert alert-info alert-dismissible m-4 fade show" role="alert">
             <span class="alert-icon text-white"><i class="ni ni-like-2"></i></span>
             <span class="alert-text text-white"><strong>Info!</strong> Please Login To Manage Your Account!</span>
