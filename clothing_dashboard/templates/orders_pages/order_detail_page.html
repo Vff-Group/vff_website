@@ -233,6 +233,10 @@
                                             <p class="text-xs text-secondary mb-0">₹ 0/-</p>
                                             </div>
                                             <!-- shipping end  -->
+                                            <div class="container-fluid d-none justify-content-between mb-2" id="refund-container">
+                                                <p class="text-xs text-secondary mb-0">Refund Amount </p>
+                                                <p class="text-xs text-secondary mb-0" id="refund-amount">₹ 0/-</p>
+                                                </div> 
                                             <!-- <div class="container-fluid d-flex justify-content-between mb-2">
                                             <p class="text-xs text-secondary mb-0">Discount (%) </p>
                                             <p class="text-xs text-secondary mb-0">₹ 100/-</p>
@@ -348,7 +352,62 @@
     });
   });
 </script>
+
 <script>
+    $(document).ready(function () {
+        // Calculate totals when the page loads
+        calculateTotals();
+
+        // Update totals when quantity changes
+        $('tbody').on('change', 'input[name="quantity"]', function () {
+            calculateTotals();
+        });
+
+        // Function to calculate totals
+        function calculateTotals() {
+            var subTotal = 0;
+            var refundAmount = 0;
+
+            // Calculate subtotal based on purchased price and quantity
+            $('tbody tr').each(function () {
+                var price = parseFloat($(this).find('[data-price]').data('price'));
+                var quantity = parseInt($(this).find('[name="quantity"]').val());
+                subTotal += price * quantity;
+
+                // Adjust sub-total and refund amount based on order_current_status
+                var orderStatus = $(this).find('td:last-child h6').text().trim();
+                if (orderStatus === 'Cancelled' || orderStatus === 'Returned') {
+                    subTotal -= price * quantity;
+                    if (orderStatus === 'Returned') {
+                        refundAmount += price * quantity;
+                    }
+                }
+            });
+
+            // Calculate GST (18%)
+            var gst = subTotal * 0.18;
+
+            // Calculate total payable
+            var totalPayable = subTotal + gst;
+
+            // Update the displayed values
+            $('[name="sub_total"]').text('₹ ' + subTotal.toFixed(2) + '/-');
+            $('[name="tax_amount"]').text('₹ ' + gst.toFixed(2) + '/-');
+            $('#totalPayable').text('₹ ' + totalPayable.toFixed(2) + '/-');
+
+            // Show/hide refund container based on refund amount
+            if (refundAmount > 0) {
+                $('#refund-container').removeClass('d-none');
+                $('#refund-amount').text('₹ ' + refundAmount.toFixed(2) + '/-');
+            } else {
+                $('#refund-container').addClass('d-none');
+                $('#refund-amount').text('₹ 0/-');
+            }
+        }
+    });
+</script>
+
+<!-- <script>
     $(document).ready(function () {
         // Calculate totals when the page loads
         calculateTotals();
@@ -383,5 +442,5 @@
             $('#totalPayable').text('₹ ' + totalPayable.toFixed(2) + '/-');
         }
     });
-</script>
+</script> -->
 {% endblock  %}
