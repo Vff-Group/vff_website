@@ -1785,59 +1785,40 @@ def all_orders(request):
     isLogin = is_loggedin(request)
     if isLogin == False:
         return redirect('clothing_dashboard_app:login')
-    #Total Products
-    #select count(*) from vff.united_armor_inventory_productstbl
-    # total_products = 0
-    # total_sales = 0
-    # total_stock_remaining = 0
-    # delivery_return =0
-    # error_msg='No Products Listed to stock'
-    # #All Images Data
-    # query ="select productid,product_name,fitting_type,colorsid,color_name,default_images,main_title_name,cat_name,sub_cat_name,images as main_cat_img,united_armor_all_productstbl.main_cat_id,united_armor_all_productstbl.cat_id,united_armor_all_productstbl.sub_catid,color_code,price,offer_price,available_quantity,reserved_quantity,purchased_quantity,last_updated_time,stock_status,size_id,size_value,inventory_id from vff.united_armor_product_sizestbl,vff.united_armor_main_categorytbl,vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl,vff.united_armor_product_colorstbl,vff.united_armor_all_productstbl,vff.united_armor_inventorytbl where united_armor_all_productstbl.productid=united_armor_product_colorstbl.product_id  and united_armor_inventorytbl.product_id=united_armor_all_productstbl.productid and united_armor_inventorytbl.color_id=united_armor_product_colorstbl.colorsid and united_armor_all_productstbl.main_cat_id=united_armor_main_categorytbl.main_cat_id and  united_armor_all_productstbl.cat_id=united_armor_categorytbl.catid and united_armor_all_productstbl.sub_catid=united_armor_sub_categorytbl.sub_catid  and united_armor_product_sizestbl.sizesid=vff.united_armor_inventorytbl.size_id order by last_updated_time desc"
-    # result = execute_raw_query(query)
-    # data = []    
-    # if not result == 500:
-    #     for row in result:
-    #         epoch = row[19]
-    #         time_date = epochToDateTime(epoch)
-    #         # print(f'time_date::{time_date}')
-    #         sold = row[18]
-    #         if sold == -1:
-    #             sold = 0
-    #         data.append({
-    #             'productid': row[0],
-    #             'product_name': row[1],
-    #             'fitting_type': row[2],
-    #             'color_id': row[3],
-    #             'color_name': row[4],
-    #             'default_images': row[5],
-    #             'main_title_name': row[6],
-    #             'cat_name': row[7],
-    #             'sub_cat_name': row[8],
-    #             'main_category_image': row[9],
-    #             'main_cat_id': row[10],
-    #             'cat_id': row[11],
-    #             'sub_cat_id': row[12],
-    #             'color_code': "#"+row[13],
-    #             'price': row[14],
-    #             'offer_price': row[15],
-    #             'available_quantity': row[16],
-    #             'reserved_quantity': row[17],
-    #             'purchased_quantity': sold,
-    #             'last_updated_time': time_date,
-    #             'stock_status': row[20],
-    #             'size_id': row[21],
-    #             'size_value': row[22],
-    #             'inventory_id': row[23],
-    #             # 'product_type_name': row[6],
-    #             # 'product_category_name': row[7],
-    #         })
-    # else:
-    #     error_msg = 'Something Went Wrong'
+    error_msg = "No Orders Found"
+    query ="select orderid,customerid,customer_name,address,address2,city_name,state,pincode,mobno,quantity,purchased_price,purchased_date,order_status,order_delivered from vff.united_armor_order_tbl,vff.united_armor_customertbl where united_armor_customertbl.customerid=united_armor_order_tbl.customer_id order by orderid desc"
+    result = execute_raw_query(query)
+    data = []    
+    if not result == 500:
+        for row in result:
+            epoch = row[19]
+            time_date = epochToDateTime(epoch)
+            # print(f'time_date::{time_date}')
+            sold = row[18]
+            if sold == -1:
+                sold = 0
+            data.append({
+                'order_id': row[0],
+                'customer_id': row[1],
+                'customer_name': row[2],
+                'address1': row[3],
+                'address2': row[4],
+                'city_name': row[5],
+                'state': row[6],
+                'pincode': row[7],
+                'mobno': row[8],
+                'quantity': row[9],
+                'purchased_price': row[10],
+                'purchased_date': row[11],
+                'order_status': row[12],
+                'order_delivered': row[13],
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
     
     current_url = request.get_full_path()
-    # context = {'query_result':data,'current_url': current_url,'total_products':total_products,'total_sales':total_sales,'total_stock_remaining':total_stock_remaining,'delivery_return':delivery_return}
-    context = {'current_url': current_url}
+    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg}
     return render(request,"orders_pages/all_orders_page.html",context)
 
 def order_details(request,order_id):

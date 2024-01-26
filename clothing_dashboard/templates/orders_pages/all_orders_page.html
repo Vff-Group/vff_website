@@ -40,10 +40,9 @@
               <table class="table align-items-center mb-0  table-hover">
                 <thead class="bg-light">
                   <tr>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sl No</th>
+                    
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Order ID</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Customer Details</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Product Details</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Address Details</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                     <th class="text-secondary opacity-7"></th>
@@ -58,7 +57,64 @@
                   </button>
               </div>
               {% else %}
-                
+                <tbody>
+                  {% for row in query_result %}
+                  <tr>
+                    <td>
+                      <h6 class="mb-0 text-sm text-center">#{{row.order_id}}</h6>
+                    </td>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">{{row.customer_name}}</h6>
+                          <p class="text-xs text-secondary mb-0">{{row.mobno}}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">{{row.address1}},{{row.address2}}</p>
+                      <p class="text-xs text-secondary mb-0">{{row.city_name}},{{row.state}}-{{row.pincode}}</p>
+                    </td>
+                   
+                    <td class="align-middle text-center text-sm">
+    
+                      {% if row.order_status == "Completed" %}
+                        <span class="badge badge-sm bg-success">{{row.order_status}}</span>
+                        {% elif row.order_status == "Order Placed" %}
+                        <span class="badge badge-sm bg-primary">{{row.order_status}}</span>
+                        {% elif row.order_status == "Pick Up Done" %}
+                        <span class="badge badge-sm bg-primary">{{row.order_status}}</span>
+                        {% elif row.order_status == "Reached Store" %}
+                        <span class="badge badge-sm bg-primary">{{row.order_status}}</span>
+                        {% elif row.order_status == "Processing" %}
+                        <span class="badge badge-sm bg-warning">{{row.order_status}}</span>
+                        {% elif row.order_status == "Payment Done" %}
+                        <span class="badge badge-sm bg-info">{{row.order_status}}</span>
+                        {% elif row.order_status == "Ready for Delivery" %}
+                        <span class="badge badge-sm bg-gradient-primary">{{row.order_status}}</span>
+                        {% elif row.order_status == "Out for Delivery" %}
+                        <span class="badge badge-sm bg-info">{{row.order_status}}</span>
+                        {% else %}
+                        <span class="badge badge-sm bg-danger">{{row.order_status}}</span>
+                        {% endif %}
+                      </td>
+                      
+                    <td class="align-middle">
+                        <div class="row">
+                            <div class="col">
+                                <a href="{% url 'clothing_dashboard_app:order_details' row.order_id %}" class="text-info font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                    View Details
+                                  </a>
+                            </div>
+                          
+                        </div>
+                      
+                      
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
               </table>
             </div>
           </div>
