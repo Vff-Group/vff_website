@@ -1374,7 +1374,7 @@ def handle_cancel_return_feedback(request):
                     customer_id = request.session.get('u_customer_id')
                     
                     #Updating Order Cancel 
-                    update_query="update vff.united_armor_active_orders_tbl set cancelled='1',cancel_reason='"+str(cancel_reason)+"' where activeid='"+str(active_id)+"' and customer_id='"+str(customer_id)+"'"
+                    update_query="update vff.united_armor_active_orders_tbl set cancelled='1',cancel_reason='"+str(cancel_reason)+"',order_current_status='Cancelled' where activeid='"+str(active_id)+"' and customer_id='"+str(customer_id)+"'"
                     print(f'Order Cancelled  Details ::{update_query}')
                     cursor.execute(update_query)
                     
@@ -1391,7 +1391,7 @@ def handle_cancel_return_feedback(request):
                     customer_id = request.session.get('u_customer_id')
                     
                     #Updating Order Return 
-                    update_query="update vff.united_armor_active_orders_tbl set returned='1',return_reason='"+str(return_reason)+"' where activeid='"+str(active_id)+"' and customer_id='"+str(customer_id)+"'"
+                    update_query="update vff.united_armor_active_orders_tbl set returned='1',return_reason='"+str(return_reason)+"',order_current_status='Returned' where activeid='"+str(active_id)+"' and customer_id='"+str(customer_id)+"'"
                     print(f'Order Returned  Details ::{update_query}')
                     cursor.execute(update_query)
                     

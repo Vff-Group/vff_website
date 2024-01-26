@@ -200,7 +200,13 @@
                                             <td><h6 class="mb-0 text-sm text-center">{{row.product_name}}</h6></td>
                                             <td><h6 class="mb-0 text-sm text-center">{{row.quantity}}</h6></td>
                                             <td><h6 class="mb-0 text-sm text-center" data-price="{{row.purchased_price}}">₹ {{row.purchased_price}}/-</h6></td>
-                                            <td><h6 class="mb-0 text-sm text-center">{{row.order_current_status}}</h6></td>
+                                            <td>
+                                                
+                                                {% if row.order_current_status =='Cancelled' or row.order_current_status == 'Returned' %}
+                                                <h6 class="mb-0 text-sm text-center text-danger">{{row.order_current_status}}</h6>
+                                                {% endif %}
+                                                <h6 class="mb-0 text-sm text-center text-primary">{{row.order_current_status}}</h6>
+                                            </td>
                                             
                                         </tr>
                                         {% endfor %}
