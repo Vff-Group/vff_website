@@ -206,8 +206,9 @@
                                                 <h6 class="mb-0 text-sm text-center text-danger">{{row.order_current_status}}</h6>
                                                 {% elif row.order_current_status == "Returned" %}
                                                 <h6 class="mb-0 text-sm text-center text-danger">{{row.order_current_status}}</h6>
+                                                {% else %}
+                                                <h6 class="mb-0 text-sm text-center text-info">{{row.order_current_status}}</h6>
                                                 {% endif %}
-                                                <h6 class="mb-0 text-sm text-center text-primary">{{row.order_current_status}}</h6>
                                             </td>
                                             
                                         </tr>
