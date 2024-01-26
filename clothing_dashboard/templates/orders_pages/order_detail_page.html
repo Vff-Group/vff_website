@@ -10,7 +10,7 @@
         
           
           <div class="container-fluid  pb-2">
-            <h4>Order Details: #Order-78414</h4>
+            <h4>Order Details: #Order-{{order_id}}</h4>
             <hr>
             <!-- top cards  -->
             <div class="row m-2">
@@ -256,18 +256,23 @@
                             <div class="container mt-2">
                                 <div class="form-group">
                                     <label class="form-control-label" for="input-fullname">Order ID</label>
-                                    <input type="number" id="input-fullname" class="form-control form-control-alternative" placeholder="Order ID" name="fullname" autocomplete="off" value="78141"  required>
+                                    <input type="number" id="input-fullname" class="form-control form-control-alternative" placeholder="Order ID" name="fullname" autocomplete="off" value="{{order_id}}"  disabled>
                                   </div>
                                   <!-- end of order id  -->
                                   <div class="form-group">
-                                    <label class="form-control-label" for="input-gender">Order Status</label>
-                                    <select class="form-control form-control-alternative" id="input-gender" name="gender">
-                                      <option value="Male"  {% if data.gender == 'Male' %}selected{% endif %}>Delivery Accepted</option>
-                                      <option value="Male"  {% if data.gender == 'Male' %}selected{% endif %}>Progress</option>
-                                      <option value="Male"  {% if data.gender == 'Male' %}selected{% endif %}>Out For Delivery</option>
-                                      <option value="Male"  {% if data.gender == 'Male' %}selected{% endif %}>Reached Destination</option>
-                                      <option value="Female" {% if data.gender == 'Female' %}selected{% endif %}>Completed</option>
-                                      <option value="Other" {% if data.gender == 'Other' %}selected{% endif %}>Pending</option>
+                                    <label class="form-control-label" for="input-status">Order Status</label>
+                                    <select class="form-control form-control-alternative" id="input-status" name="status">
+                                      <option value="Order Placed"  {% if order_current_status == 'Order Placed' %}selected{% endif %}>Order Placed</option>
+                                      <option value="Processing"  {% if order_current_status == 'Processing' %}selected{% endif %}>Processing</option>
+                                      <option value="Scheduling Delivery"  {% if order_current_status == 'Scheduling Delivery' %}selected{% endif %}>Scheduling Delivery</option>
+                                      <option value="Ready For Delivery"  {% if order_current_status == 'Ready For Delivery' %}selected{% endif %}>Ready For Delivery</option>
+                                      <option value="Out For Delivery"  {% if order_current_status == 'Out For Delivery' %}selected{% endif %}>Out For Delivery</option>
+                                      <option value="Reached Destination"  {% if order_current_status == 'Reached Destination' %}selected{% endif %}>Reached Destination</option>
+                                      <option value="Completed" {% if order_current_status == 'Completed' %}selected{% endif %}>Completed</option>
+                                      <option value="Pending" {% if order_current_status == 'Pending' %}selected{% endif %}>Pending</option>
+                                      <option value="Refund" {% if order_current_status == 'Refund' %}selected{% endif %}>Refund</option>
+                                      <option value="Cancelled" {% if order_current_status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                                      <option value="Returned" {% if order_current_status == 'Returned' %}selected{% endif %}>Returned</option>
                                     </select>
                                   </div>
                                   <!-- end of order status  -->

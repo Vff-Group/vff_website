@@ -1818,7 +1818,7 @@ def all_orders(request):
 
 def order_details(request,order_id):
     error_msg='No Data Found'
-    query ="select united_armor_active_orders_tbl.product_id,product_name,customerid,customer_name,address,address2,city_name,state,pincode,mobno,united_armor_active_orders_tbl.quantity,united_armor_active_orders_tbl.price,purchased_date,order_status,order_delivered,product_img_url,cancelled,cancel_reason,feedback,order_current_status,returned,return_reason,purchased_time,colorsid,color_name,sizesid,size_value,email from vff.united_armor_all_productstbl,vff.united_armor_product_colorstbl,vff.united_armor_product_sizestbl,vff.united_armor_active_orders_tbl,vff.united_armor_order_tbl,vff.united_armor_customertbl where united_armor_customertbl.customerid=united_armor_order_tbl.customer_id and united_armor_active_orders_tbl.order_id=united_armor_order_tbl.orderid and united_armor_product_colorstbl.colorsid=united_armor_active_orders_tbl.color_id and united_armor_active_orders_tbl.product_id=united_armor_product_colorstbl.product_id and united_armor_active_orders_tbl.size_id=united_armor_product_sizestbl.sizesid and united_armor_all_productstbl.productid=united_armor_active_orders_tbl.product_id and united_armor_all_productstbl.productid=united_armor_product_colorstbl.product_id   and orderid='"+str(order_id)+"'"
+    query ="select united_armor_active_orders_tbl.product_id,product_name,customerid,customer_name,address,address2,city_name,state,pincode,mobno,united_armor_active_orders_tbl.quantity,united_armor_active_orders_tbl.price,purchased_date,order_status,order_delivered,product_img_url,cancelled,cancel_reason,feedback,order_current_status,returned,return_reason,purchased_time,colorsid,color_name,sizesid,size_value,email,orderid from vff.united_armor_all_productstbl,vff.united_armor_product_colorstbl,vff.united_armor_product_sizestbl,vff.united_armor_active_orders_tbl,vff.united_armor_order_tbl,vff.united_armor_customertbl where united_armor_customertbl.customerid=united_armor_order_tbl.customer_id and united_armor_active_orders_tbl.order_id=united_armor_order_tbl.orderid and united_armor_product_colorstbl.colorsid=united_armor_active_orders_tbl.color_id and united_armor_active_orders_tbl.product_id=united_armor_product_colorstbl.product_id and united_armor_active_orders_tbl.size_id=united_armor_product_sizestbl.sizesid and united_armor_all_productstbl.productid=united_armor_active_orders_tbl.product_id and united_armor_all_productstbl.productid=united_armor_product_colorstbl.product_id   and orderid='"+str(order_id)+"'"
     result = execute_raw_query(query)
     data = []    
     if not result == 500:
@@ -1855,6 +1855,8 @@ def order_details(request,order_id):
                 'sizesid': row[25],
                 'size_value': row[26],
                 'email': row[27],
+                'order_id': row[28],
+                
                 
             })
     else:
@@ -1871,9 +1873,10 @@ def order_details(request,order_id):
     purchased_date = data[0]['purchased_date'] if data else ''
     purchased_time = data[0]['purchased_time'] if data else ''
     order_current_status = data[0]['order_current_status'] if data else ''
+    order_id = data[0]['order_id'] if data else ''
     
     current_url = request.get_full_path()
-    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg,'customer_name':customer_name,'email':email,'mobno':mobno,'address1':address1,'address2':address2,'city':city,'state':state,'pincode':pincode,'purchased_date':purchased_date,'purchased_time':purchased_time,'order_current_status':order_current_status}
+    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg,'customer_name':customer_name,'email':email,'mobno':mobno,'address1':address1,'address2':address2,'city':city,'state':state,'pincode':pincode,'purchased_date':purchased_date,'purchased_time':purchased_time,'order_current_status':order_current_status,'order_id':order_id}
     # context = {'current_url': current_url}
     return render(request,"orders_pages/order_detail_page.html",context)
     
