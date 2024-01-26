@@ -319,8 +319,7 @@
         // Store all original images in a variable
         var allImages = $('.product-gallery-image').clone();
         var carousel = $('#color-carousel');
-        //to hide all sizes
-        $('.product-size a').hide();
+        
         // Initialize the carousel
         initCarousel();
 
@@ -368,6 +367,14 @@
             event.preventDefault();
             var sizeColorId = $(this).data('color-id');
             var sizeId = $(this).data('size-id');
+
+            // Check if a color is selected
+            var selectedColor = $('.color-link.selected-color');
+            if (selectedColor.length === 0) {
+                showToast('Alert','Please choose a color first');
+                return;
+            }
+
             selectedSizeId = $(this).data('size-id');
             console.log('Size clicked for colorId:', sizeColorId, ' and sizeId:', sizeId);
 
