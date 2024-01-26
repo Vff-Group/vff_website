@@ -81,6 +81,9 @@ urlpatterns = [
     #Update Account Details
     path('update_account_details/',views.update_account_details,name='update_account_details'),
    
+    #Handling Cancel , Return and Feedback
+    path('handle_cancel_return_feedback/',views.handle_cancel_return_feedback,name='handle_cancel_return_feedback'),
+   
     #Log Out
     path('logout/',views.logout,name='logout'),
     

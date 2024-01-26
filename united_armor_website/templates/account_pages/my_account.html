@@ -677,15 +677,29 @@ function validateForm() {
             } else {
                 formData.feedback = $('#feedbackTextarea').val();
             }
-
+            // Get the CSRF token from the cookie
+            function getCSRFToken() {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.startsWith("csrftoken=")) {
+                        return cookie.substring("csrftoken=".length, cookie.length);
+                    }
+                }
+                return null;
+            }
+            const csrfToken = getCSRFToken();
             // Use AJAX to submit the form data
             $.ajax({
                 type: 'POST',
-                url: '/your-server-endpoint', // Replace with your actual server endpoint
+                url: '/united_armor/handle_cancel_return_feedback/', // Replace with your actual server endpoint
                 data: {
                     action: actionType,
                     activeId: activeId,
                     formData: formData
+                },
+                headers: {
+                    'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
                 },
                 success: function (response) {
                     // Handle success response

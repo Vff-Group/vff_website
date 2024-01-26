@@ -1347,6 +1347,73 @@ def update_account_details(request):
             print(f"Error loading data: {e}")
     return JsonResponse({'message':'error'})
 
+#
+def handle_cancel_return_feedback(request):
+    if request.method == 'POST':
+        action_type = request.POST.get('action')
+        active_id = request.POST.get('activeId')
+        formData = {}
+
+        if action_type == 'cancel':
+            cancel_reason = request.POST.get('reason')
+            # Handle cancel action
+            try:
+                with connection.cursor() as cursor:
+                    customer_id = request.session.get('u_customer_id')
+                    
+                    #Updating Order Cancel 
+                    update_query="update vff.united_armor_active_orders_tbl set cancelled='1',cancel_reason='"+str(cancel_reason)+"' where activeid='"+str(active_id)+"' and customer_id='"+str(customer_id)+"'"
+                    print(f'Order Cancelled  Details ::{update_query}')
+                    cursor.execute(update_query)
+                    
+                    connection.commit()
+                    print("Order Cancelled Successfully.")
+                    return JsonResponse({'message':'success'})
+            except Exception as e:
+                print(f"Error loading data: {e}")
+        elif action_type == 'return':
+            return_reason = request.POST.get('reason')
+            # Handle return action
+            try:
+                with connection.cursor() as cursor:
+                    customer_id = request.session.get('u_customer_id')
+                    
+                    #Updating Order Return 
+                    update_query="update vff.united_armor_active_orders_tbl set returned='1',return_reason='"+str(return_reason)+"' where activeid='"+str(active_id)+"' and customer_id='"+str(customer_id)+"'"
+                    print(f'Order Returned  Details ::{update_query}')
+                    cursor.execute(update_query)
+                    
+                    connection.commit()
+                    print("Order Returned Successfully.")
+                    return JsonResponse({'message':'success'})
+            except Exception as e:
+                print(f"Error loading data: {e}")
+        elif action_type == 'feedback':
+            feedback = request.POST.get('feedback')
+            try:
+                with connection.cursor() as cursor:
+                    customer_id = request.session.get('u_customer_id')
+                    
+                    #Updating Order Return 
+                    update_query="update vff.united_armor_active_orders_tbl set feedback='"+str(feedback)+"' where activeid='"+str(active_id)+"' and customer_id='"+str(customer_id)+"'"
+                    print(f'Order Feedback  Details ::{update_query}')
+                    cursor.execute(update_query)
+                    
+                    connection.commit()
+                    print("Order Feedback Given Successfully.")
+                    return JsonResponse({'message':'success'})
+            except Exception as e:
+                print(f"Error loading data: {e}")
+            # Handle feedback action
+
+        # Process formData and active_id as needed
+
+        # Return a JsonResponse indicating success
+        return JsonResponse({'message': 'success'})
+    else:
+        # Return an error response for non-POST requests
+        return JsonResponse({'message': 'Invalid request method'}, status=400)
+    
 #Privacy Policy
 def privacy_policy(request):
     return render(request,'privacy_pages/privacy_policy.html')  
