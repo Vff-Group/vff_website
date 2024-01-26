@@ -228,7 +228,7 @@
                                             </div> -->
                                             <!-- shipping end  -->
                                             <div class="container-fluid d-flex justify-content-between mb-2">
-                                            <p class="text-xs text-secondary mb-0">Tax(18%) </p>
+                                            <p class="text-xs text-secondary mb-0">Tax(18%) Inclusive </p>
                                             <p class="text-xs text-secondary mb-0 " name="tax_amount">₹ 0/-</p>
                                             </div>
                                             <!-- shipping end  -->
@@ -358,7 +358,8 @@
             var gst = subTotal * 0.18;
 
             // Calculate total payable
-            var totalPayable = subTotal + gst;
+            //var totalPayable = subTotal + gst;
+            var totalPayable = subTotal ;
 
             // Update the displayed values
             $('[name="sub_total"]').text('₹ ' + subTotal.toFixed(2) + '/-');
