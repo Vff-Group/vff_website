@@ -41,7 +41,7 @@
                 <thead class="bg-light">
                   <tr>
                     
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Order ID</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Order ID</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Customer Details</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Address Details</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
@@ -61,7 +61,7 @@
                 <tbody>
                   {% for row in query_result %}
                   <tr>
-                    <td>
+                    <td class="align-middle text-center text-sm">
                       <h6 class="mb-0 text-sm text-center">#{{row.order_id}}</h6>
                     </td>
                     <td>
@@ -101,7 +101,7 @@
                         {% endif %}
                       </td>
 
-                      <td>
+                      <td class="align-middle text-center text-sm">
                         {% if row.order_delivered == 0%}
                         <span class="badge badge-sm bg-danger">Not Delivered</span>
                         {% else %}
