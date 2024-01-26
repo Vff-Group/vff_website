@@ -171,9 +171,11 @@
                             <td class="stock-col"><span class="in-stock">{{row.order_status}}</span></td>
                             <td class="action-col">
                                 {% if row.order_order_deliveredid == 0 and row.cancelled == 0 %}
-                                    <button class="btn btn-block btn-outline-primary-2" data-action="cancel" data-active-id="{{row.active_id}}"><i class="icon-close"></i>Cancel Order</button>
+                                <button class="btn btn-block btn-outline-dark-2" data-action="return" data-active-id="{{row.active_id}}"><i class="icon-close"></i>Return</button>
+                                    <!-- <button class="btn btn-block btn-outline-primary-2" data-action="cancel" data-active-id="{{row.active_id}}"><i class="icon-close"></i>Cancel Order</button> -->
                                 {% elif order_order_deliveredid == 1 and row.feedback == 'NA' %}
-                                    <button class="btn btn-block btn-outline-dark-2" data-action="return" data-active-id="{{row.active_id}}"><i class="icon-close"></i>Return</button>
+                                    <!-- <button class="btn btn-block btn-outline-dark-2" data-action="return" data-active-id="{{row.active_id}}"><i class="icon-close"></i>Return</button> -->
+                                    <button class="btn btn-block btn-outline-primary-2" data-action="cancel" data-active-id="{{row.active_id}}"><i class="icon-close"></i>Cancel Order</button>
                                 {% elif row.feedback == 'NA' %}
                                     <button class="btn btn-block btn-outline-dark-2" data-action="feedback" data-active-id="{{row.active_id}}"><i class="icon-commenting-o"></i>Feedback</button>
                                 {% else %}
@@ -643,7 +645,7 @@ function validateForm() {
         // Set modal title based on action type
         var modalTitle = actionType === 'cancel' ? 'Cancel Order' : (actionType === 'return' ? 'Return Order' : 'Provide Feedback');
         $('#actionModalLabel').text(modalTitle);
-        
+
         // Set modal title
         $('#actionModalLabel').text(actionType === 'cancel' ? 'Cancel Order' : (actionType === 'return' ? 'Return Order' : 'Provide Feedback'));
 
