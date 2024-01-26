@@ -72,8 +72,11 @@ urlpatterns = [
     #Contact Us
     path('contact_us/',views.contact_us,name='contact_us'),
    
-    #Contact Us
+    #About Us
     path('about_us/',views.about_us,name='about_us'),
+   
+    #Update billing address
+    path('update_billing_address/',views.update_billing_address,name='update_billing_address'),
    
     #Log Out
     path('logout/',views.logout,name='logout'),

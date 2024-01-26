@@ -465,11 +465,18 @@ function showToastSuccess(message, bodyContent) {
                 // Use AJAX to submit the form data
                 $.ajax({
                     type: "POST",
-                    url: "/your-submit-url", // Replace with your actual server endpoint
+                    url: "/united_armor/update_billing_address/", // Replace with your actual server endpoint
                     data: formData,
                     success: function (response) {
                         // Handle success response
                         console.log(response);
+                        if(response.message === "success"){
+                            window.location.reload();
+                            return;
+                        }else{
+                            showToast('Alert','Oops something went wrong');
+                            return;
+                        }
                     },
                     error: function (error) {
                         // Handle error
@@ -494,6 +501,28 @@ function showToastSuccess(message, bodyContent) {
 
             return isValid;
         }
+
+        // Function to show a toast message
+function showToast(message, bodyContent) {
+    toastr.warning(bodyContent, message, {
+      positionClass: "toast-top-center",
+      timeOut: 5e3,
+      closeButton: !0,
+      debug: !1,
+      newestOnTop: !0,
+      progressBar: !0,
+      preventDuplicates: !0,
+      onclick: null,
+      showDuration: "300",
+      hideDuration: "1000",
+      extendedTimeOut: "1000",
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut",
+      tapToDismiss: !1
+  })
+}
     });
 </script>
 {% endblock %}

@@ -1288,7 +1288,35 @@ def my_account(request):
     current_url = request.get_full_path()
     context = {'current_url': current_url,'query_result':data,'error_msg':error_msg,'email':email,'password':password,'customer_name':customer_name,'address1':address1,'address2':address2,'city_name':city_name,'state':state,'pincode':pincode,'mobno':mobno}
     return render(request,'account_pages/my_account.html',context)
-  
+
+
+#Updateing Billing Address 
+def update_billing_address(request):
+    if request.method == "POST":
+        full_name = request.POST.get('full_name', 'NA')
+        country = request.POST.get('country', 'NA')
+        street_address_1 = request.POST.get('street_address_1', 'NA')
+        street_address_2 = request.POST.get('street_address_2', 'NA')
+        town_city = request.POST.get('town_city', 'NA')
+        state_county = request.POST.get('state_county', 'NA')
+        postcode_zip = request.POST.get('postcode_zip', '-1')
+        phone = request.POST.get('phone', '-1')
+        try:
+            with connection.cursor() as cursor:
+                customer_id = request.session.get('u_customer_id')
+                
+                #Updating Customer Information
+                update_query="update vff.united_armor_customertbl set customer_name='"+str(full_name)+"',address='"+str(street_address_1)+"',address2='"+str(street_address_2)+"',city_name='"+str(town_city)+"',state='"+str(state_county)+"',country='"+str(country)+"',mobno='"+str(phone)+"',pincode='"+str(postcode_zip)+"' where customerid='"+str(customer_id)+"'"
+                print(f'Updating Customer Details ::{update_query}')
+                cursor.execute(update_query)
+                
+                connection.commit()
+                print("Billing Address Details Updated Successfully.")
+                return JsonResponse({'message':'success'})
+        except Exception as e:
+            print(f"Error loading data: {e}")
+    return JsonResponse({'message':'error'})
+
 #Privacy Policy
 def privacy_policy(request):
     return render(request,'privacy_pages/privacy_policy.html')  
