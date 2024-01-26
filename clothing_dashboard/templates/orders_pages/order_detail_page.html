@@ -24,7 +24,7 @@
                             </div>
                             <div class="col-lg-10 d-flex justify-content-center flex-column mt-2">
                                 <div class="col "><h6 class="title-text">Order Created At</h6></div>
-                                <div class="col"><p class="time-dsc">23/01/2024 at 4:30 AM</p></div>
+                                <div class="col"><p class="time-dsc">{{purchased_time}}</p></div>
                             </div>
                             
                                 
@@ -43,7 +43,7 @@
                             </div>
                             <div class="col-lg-10 d-flex justify-content-center flex-column mt-2">
                                 <div class="col "><h6 class="title-text">Name</h6></div>
-                                <div class="col"><p class="time-dsc">Aryan</p></div>
+                                <div class="col"><p class="time-dsc">{{customer_name}}</p></div>
                             </div>
                             
                                 
@@ -62,7 +62,7 @@
                             </div>
                             <div class="col-lg-10 d-flex justify-content-center flex-column mt-2">
                                 <div class="col "><h6 class="title-text">Email</h6></div>
-                                <div class="col"><p class="time-dsc">aryan@gmail.com</p></div>
+                                <div class="col"><p class="time-dsc">{{email}}</p></div>
                             </div>
                             
                                 
@@ -81,7 +81,7 @@
                             </div>
                             <div class="col-lg-10 d-flex justify-content-center flex-column mt-2">
                                 <div class="col "><h6 class="title-text">Contact No</h6></div>
-                                <div class="col"><p class="time-dsc">+91-8296565587</p></div>
+                                <div class="col"><p class="time-dsc">+91-{{mobno}}</p></div>
                             </div>
                             
                                 
@@ -98,21 +98,21 @@
                         <div class="card-header pb-0">
                             <div class="d-flex justify-content-between align-items-center">
                                 <h5 class="text-dark font-weight-bolder text-lg">Delivery Address</h5>
-                                <a href="" class="text-secondary font-weight-bold text-xs">Edit</a></div>
+                                {% comment %} <a href="" class="text-secondary font-weight-bold text-xs">Edit</a></div> {% endcomment %}
                         </div>
                         
                         <div class=" card-body  px-0 pt-0 pb-2 mt-2">
                             <div class="container d-flex justify-content-between mb-0">
                                 <small class=" font-weight-normal text-dark">H No:</small>
-                                <small class=" font-weight-normal text-dark">324</small>
+                                <small class=" font-weight-normal text-dark">{{address1}}</small>
                             </div>
                             <div class="container d-flex justify-content-between mb-0">
                                 <small class=" font-weight-normal text-dark">Address:</small>
-                                <small class=" font-weight-normal text-dark">Auto Nagar Circle, Belgaum</small>
+                                <small class=" font-weight-normal text-dark">{{address2}},{{city}},{{state}}</small>
                             </div>
                             <div class="container d-flex justify-content-between mb-0">
                                 <small class=" font-weight-normal text-dark">Pincode:</small>
-                                <small class=" font-weight-normal text-dark">590016</small>
+                                <small class=" font-weight-normal text-dark">{{pincode}}</small>
                             </div>
                             
                         </div>
@@ -123,27 +123,27 @@
                         <div class="card-header pb-0">
                             <div class="d-flex justify-content-between align-items-center">
                                 <h5 class="text-dark font-weight-bolder text-lg">Billing Address</h5>
-                                <a href="" class="text-secondary font-weight-bold text-xs">Edit</a></div>
+                                {% comment %} <a href="" class="text-secondary font-weight-bold text-xs">Edit</a></div> {% endcomment %}
                         </div>
                         
                         <div class=" card-body  px-0 pt-0 pb-2 mt-2">
                             <div class="container d-flex justify-content-between mb-0">
                                 <small class=" font-weight-normal text-dark">H No:</small>
-                                <small class=" font-weight-normal text-dark">324</small>
+                                <small class=" font-weight-normal text-dark">{{address1}}</small>
                             </div>
                             <div class="container d-flex justify-content-between mb-0">
                                 <small class=" font-weight-normal text-dark">Address:</small>
-                                <small class=" font-weight-normal text-dark">Auto Nagar Circle, Belgaum</small>
+                                <small class=" font-weight-normal text-dark">{{address2}},{{city}},{{state}}</small>
                             </div>
                             <div class="container d-flex justify-content-between mb-0">
                                 <small class=" font-weight-normal text-dark">Pincode:</small>
-                                <small class=" font-weight-normal text-dark">590016</small>
+                                <small class=" font-weight-normal text-dark">{{pincode}}</small>
                             </div>
                             
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 d-none">
                     <div class="card mt-4  mb-4">
                         <div class="card-header pb-0">
                             <div class="d-flex justify-content-between align-items-center">
@@ -188,13 +188,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        
+                                        {% for row in query_result %}
                                         <tr>
-                                            <td></td>
-                                            <td><h6 class="mb-0 text-sm text-center">URM Armor T Shirt</h6></td>
-                                            <td><h6 class="mb-0 text-sm text-center">3</h6></td>
-                                            <td><h6 class="mb-0 text-sm text-center">₹ 4500/-</h6></td>
+                                            <td>
+                                                <img src="{{row.product_img_url}}" class="avatar avatar-xl m-1" alt="user1">
+                                            </td>
+                                            <td><h6 class="mb-0 text-sm text-center">{{row.product_name}}</h6></td>
+                                            <td><h6 class="mb-0 text-sm text-center">{{row.quantity}}</h6></td>
+                                            <td><h6 class="mb-0 text-sm text-center" data-price="{{row.purchased_price}}">₹ {{row.purchased_price}}/-</h6></td>
                                             
                                         </tr>
+                                        {% endfor %}
+                                            
                                     </tbody>
                                     
                                 </table>
@@ -206,7 +212,7 @@
                                         <div class="card-body px-0  p-2">
                                             <div class="container-fluid d-flex justify-content-between mb-2">
                                                     <p class="text-xs text-secondary mb-0">Sub Total </p>
-                                                    <p class="text-xs text-secondary mb-0">₹ 4500/-</p>
+                                                    <p class="text-xs text-secondary mb-0" name="sub_total">₹ 0/-</p>
                                             </div>
                                             <!-- sub total end  -->
                                             <div class="container-fluid d-flex justify-content-between  mb-2">
@@ -214,20 +220,20 @@
                                             <p class="text-xs text-secondary mb-0">₹ 0/-</p>
                                             </div>
                                             <!-- shipping end  -->
-                                            <div class="container-fluid d-flex justify-content-between mb-2">
+                                            <!-- <div class="container-fluid d-flex justify-content-between mb-2">
                                             <p class="text-xs text-secondary mb-0">Discount (%) </p>
                                             <p class="text-xs text-secondary mb-0">₹ 100/-</p>
-                                            </div>
+                                            </div> -->
                                             <!-- shipping end  -->
                                             <div class="container-fluid d-flex justify-content-between mb-2">
                                             <p class="text-xs text-secondary mb-0">Tax(18%) </p>
-                                            <p class="text-xs text-secondary mb-0">₹ 280/-</p>
+                                            <p class="text-xs text-secondary mb-0 " name="tax_amount">₹ 0/-</p>
                                             </div>
                                             <!-- shipping end  -->
                                             <hr class="ms-2 me-2">
                                             <div class="container-fluid d-flex justify-content-between mb-2">
                                             <h6 class="mb-0 text-sm">Total Payable</h6>
-                                            <h6 class="mb-0 text-sm">₹ 4780/-</h6>
+                                            <h6 class="mb-0 text-sm" id="totalPayable">₹ 0/-</h6>
                                             </div>
 
                                         </div>
@@ -323,5 +329,40 @@
       });
     });
   });
+</script>
+<script>
+    $(document).ready(function () {
+        // Calculate totals when the page loads
+        calculateTotals();
+
+        // Update totals when quantity changes
+        $('tbody').on('change', 'input[name="quantity"]', function () {
+            calculateTotals();
+        });
+
+        // Function to calculate totals
+        function calculateTotals() {
+            var subTotal = 0;
+
+            // Calculate subtotal based on purchased price and quantity
+            $('tbody tr').each(function () {
+                var price = parseFloat($(this).find('[data-price]').data('price'));
+                var quantity = parseInt($(this).find('[name="quantity"]').val());
+                //subTotal += price * quantity;
+                subTotal += price ;
+            });
+
+            // Calculate GST (18%)
+            var gst = subTotal * 0.18;
+
+            // Calculate total payable
+            var totalPayable = subTotal + gst;
+
+            // Update the displayed values
+            $('[name="sub_total"]').text('₹ ' + subTotal.toFixed(2) + '/-');
+            $('[name="tax_amount"]').text('₹ ' + gst.toFixed(2) + '/-');
+            $('#totalPayable').text('₹ ' + totalPayable.toFixed(2) + '/-');
+        }
+    });
 </script>
 {% endblock  %}
