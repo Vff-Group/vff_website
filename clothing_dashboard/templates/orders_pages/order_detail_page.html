@@ -391,7 +391,8 @@
             var gst = subTotal * 0.18;
 
             // Calculate total payable
-            var totalPayable = subTotal + gst;
+            //var totalPayable = subTotal + gst;
+            var totalPayable = subTotal;
 
             // Update the displayed values
             $('[name="sub_total"]').text('₹ ' + subTotal.toFixed(2) + '/-');
