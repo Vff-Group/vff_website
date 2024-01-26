@@ -78,6 +78,9 @@ urlpatterns = [
     #Update billing address
     path('update_billing_address/',views.update_billing_address,name='update_billing_address'),
    
+    #Update Account Details
+    path('update_account_details/',views.update_account_details,name='update_account_details'),
+   
     #Log Out
     path('logout/',views.logout,name='logout'),
     

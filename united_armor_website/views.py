@@ -1317,6 +1317,32 @@ def update_billing_address(request):
             print(f"Error loading data: {e}")
     return JsonResponse({'message':'error'})
 
+#Updateing Account Details
+def update_account_details(request):
+    if request.method == "POST":
+        full_name = request.POST.get('full_name', 'NA')
+        email = request.POST.get('email', 'NA')
+        current_password = request.POST.get('current_password', 'NA')
+        confirm_new_password = request.POST.get('confirm_new_password', '')
+        password = current_password
+        if not confirm_new_password:
+            password = current_password
+        try:
+            with connection.cursor() as cursor:
+                customer_id = request.session.get('u_customer_id')
+                
+                #Updating Customer Information
+                update_query="update vff.united_armor_customertbl set customer_name='"+str(full_name)+"',email='"+str(email)+"',password='"+str(password)+"' where customerid='"+str(customer_id)+"'"
+                print(f'Updating Customer Details ::{update_query}')
+                cursor.execute(update_query)
+                
+                connection.commit()
+                print("Billing Address Details Updated Successfully.")
+                return JsonResponse({'message':'success'})
+        except Exception as e:
+            print(f"Error loading data: {e}")
+    return JsonResponse({'message':'error'})
+
 #Privacy Policy
 def privacy_policy(request):
     return render(request,'privacy_pages/privacy_policy.html')  

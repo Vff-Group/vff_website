@@ -296,9 +296,8 @@
                   role="tabpanel"
                   aria-labelledby="tab-account-link"
                 >
-                  <form action="#">
-                    
-  
+                  <form id="editaccount-form">
+                    {% csrf_token %}
                     <label>Display Name *</label>
                     <input type="text" class="form-control" value="{{customer_name}}" name="full_name" required />
                     <small class="form-text"
@@ -307,23 +306,26 @@
                     >
   
                     <label>Email address *</label>
-                    <input type="email" class="form-control" value="{{email}}" required />
+                    <input type="email" class="form-control" value="{{email}}" name="email" required />
   
                     <label
                       >Current password (leave blank to leave
                       unchanged)</label
                     >
-                    <input type="password" class="form-control" value={{password}}/>
+                    <input type="password" class="form-control" value={{password}} name="current_password"/>
   
                     <label
                       >New password (leave blank to leave unchanged)</label
                     >
-                    <input type="password" class="form-control" />
+                    <input type="password" class="form-control" name="new_password"/>
   
                     <label>Confirm new password</label>
-                    <input type="password" class="form-control mb-2" />
-  
-                    <button type="submit" class="btn btn-outline-primary-2">
+                    <input type="password" class="form-control mb-2" name="confirm_new_password" />
+                    
+                    <label for="showPasswordCheckbox">Show Passwords</label>
+                    <input type="checkbox" class="form-control mb-2" id="showPasswordCheckbox" />
+                    
+                    <button type="submit" class="btn btn-outline-primary-2" id="submitChanges">
                       <span>SAVE CHANGES</span>
                       <i class="icon-long-arrow-right"></i>
                     </button>
@@ -524,5 +526,81 @@ function showToast(message, bodyContent) {
   })
 }
     });
+</script>
+
+<script>
+    // Function to toggle password visibility
+function togglePasswordVisibility(inputId) {
+    var inputField = document.getElementById(inputId);
+    if (inputField.type === "password") {
+        inputField.type = "text";
+    } else {
+        inputField.type = "password";
+    }
+}
+
+// Event listener for the checkbox to toggle password visibility
+document.getElementById("showPasswordCheckbox").addEventListener("change", function () {
+    togglePasswordVisibility("current_password");
+    togglePasswordVisibility("new_password");
+    togglePasswordVisibility("confirm_new_password");
+});
+
+    // Handle submit button click
+$("#submitChanges").on("click", function (event) {
+    // Prevent the form from submitting immediately
+    event.preventDefault();
+
+    // Validate form fields
+    if (validateForm()) {
+        // Collect form data
+        var formData = $("#editaccount-form").serialize();
+
+        // Use AJAX to submit the form data
+        $.ajax({
+            type: "POST",
+            url: "/united_armor/update_account_details/", // Replace with your actual server endpoint
+            data: formData,
+            success: function (response) {
+                // Handle success response
+                console.log(response);
+                if (response.message === "success") {
+                    window.location.reload();
+                    return;
+                } else {
+                    showToast('Alert', 'Oops, something went wrong');
+                    return;
+                }
+            },
+            error: function (error) {
+                // Handle error
+                console.error(error);
+            }
+        });
+    }
+});
+
+// Validation function
+function validateForm() {
+    // Check if the new password is the same as the current password
+    var currentPassword = $("input[name='password']").val();
+    var newPassword = $("input[name='new_password']").val();
+    var confirmNewPassword = $("input[name='confirm_new_password']").val();
+
+    if (newPassword === currentPassword) {
+        alert("New password must be different from the current password.");
+        return false;
+    }
+
+    if (newPassword !== confirmNewPassword) {
+        alert("New password and Confirm new password must match.");
+        return false;
+    }
+    // Check for other required fields...
+    // ... Add your additional validation logic here ...
+
+    return true;
+}
+
 </script>
 {% endblock %}
