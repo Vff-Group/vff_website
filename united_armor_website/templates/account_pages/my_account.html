@@ -170,6 +170,8 @@
                             <td class="price-col">₹{{row.price}}</td>
                             <td class="stock-col"><span class="in-stock">{{row.order_status}}</span></td>
                             <td class="action-col">
+                                {% if row.cancelled == 1%}
+                                <span class="text-danger">Order Cancelled</span>
                                 {% if row.order_order_deliveredid == 0 and row.cancelled == 0 %}
                                     <button class="btn btn-block btn-outline-primary-2" data-action="cancel" data-active-id="{{row.active_id}}"><i class="icon-close"></i>Cancel Order</button>
                                 {% elif order_order_deliveredid == 1 and row.feedback == 'NA' %}
