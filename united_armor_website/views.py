@@ -91,7 +91,7 @@ def handle_register(request):
         return JsonResponse({'message': 'Something Went Wrong'})
     
 #Home Page
-@cache_page(60 * 15)  # Cache for 15 minutes
+
 def home(request):
     main_cat_query = "SELECT main_cat_id, main_title_name,images FROM vff.united_armor_main_categorytbl ORDER BY main_cat_id"
     main_cat_result = execute_raw_query(main_cat_query)
