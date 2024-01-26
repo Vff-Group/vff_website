@@ -194,7 +194,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body m-5">
                 <!-- Content will be dynamically added here based on button click -->
             </div>
             <div class="modal-footer">
@@ -640,6 +640,10 @@ function validateForm() {
         var actionType = $(this).data('action');
         var activeId = $(this).data('active-id');
 
+        // Set modal title based on action type
+        var modalTitle = actionType === 'cancel' ? 'Cancel Order' : (actionType === 'return' ? 'Return Order' : 'Provide Feedback');
+        $('#actionModalLabel').text(modalTitle);
+        
         // Set modal title
         $('#actionModalLabel').text(actionType === 'cancel' ? 'Cancel Order' : (actionType === 'return' ? 'Return Order' : 'Provide Feedback'));
 
