@@ -37,6 +37,7 @@
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>Total</th>
+                                <th>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -72,6 +73,16 @@
                                 </td>
                                 <td class="total-col">₹{{row.price}}</td>
                                 <td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
+                                <td class="stock-col">
+                                    {% if row.stock_status == "Fresh Stock"}
+                                    <span class="in-stock">New Arrival</span>
+                                    {% elif row.stock_status == "In Stock"}
+                                    <span class="in-stock">In stock</span>
+                                    {% else %}
+                                    <span class="out-of-stock">Out of stock</span>
+                                    {% endif %}
+                                </td>
+                                
                             </tr>
                             
                             {% endfor %}
