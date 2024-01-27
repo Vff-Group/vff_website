@@ -1826,6 +1826,7 @@ def order_details(request,order_id):
             with connection.cursor() as cursor:
                 #To Update status in Order Table
                 update_query="update vff.united_armor_order_tbl set order_status='"+str(order_status)+"',order_delivered='"+str(order_delivered)+"',admin_comment='"+str(comments)+"' where orderid='"+str(order_id)+"'"
+                print(f'order update query::{update_query}')
                 cursor.execute(update_query)
                 
                 update_query2="update vff.united_armor_order_historytbl set status='"+str(order_status)+"' where order_id='"+str(order_id)+"'"
@@ -1882,6 +1883,26 @@ def order_details(request,order_id):
             })
     else:
         error_msg = 'Something Went Wrong'
+        
+    query_payment_details="select payment_id,status,payment_method,razor_pay_id from vff.united_armor_paymenttbl where order_id='"+str(order_id)+"'"
+    result2 = execute_raw_query(query_payment_details)
+    payment_data = []    
+    if not result2 == 500:
+        for row in result2:
+            
+            payment_data.append({
+                'payment_id': row[0],
+                'payment_status': row[1],
+                'payment_method': row[2],
+                'razorpay_id': row[3],
+                
+            })
+    
+    payment_id = payment_data[0]['payment_id'] if data else ''
+    payment_status = payment_data[0]['payment_status'] if data else ''
+    payment_method = payment_data[0]['payment_method'] if data else ''
+    razorpay_id = payment_data[0]['razorpay_id'] if data else ''
+    
     
     customer_name = data[0]['customer_name'] if data else ''
     email = data[0]['email'] if data else ''
@@ -1900,7 +1921,7 @@ def order_details(request,order_id):
     admin_comment = data[0]['admin_comment'] if data else ''
     
     current_url = request.get_full_path()
-    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg,'customer_name':customer_name,'email':email,'mobno':mobno,'address1':address1,'address2':address2,'city':city,'state':state,'pincode':pincode,'purchased_date':purchased_date,'purchased_time':purchased_time,'order_current_status':order_current_status,'order_id':order_id,'order_status':order_status,'order_delivered':order_delivered}
+    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg,'customer_name':customer_name,'email':email,'mobno':mobno,'address1':address1,'address2':address2,'city':city,'state':state,'pincode':pincode,'purchased_date':purchased_date,'purchased_time':purchased_time,'order_current_status':order_current_status,'order_id':order_id,'order_status':order_status,'order_delivered':order_delivered,'admin_comment':admin_comment,'payment_id':payment_id,'payment_status':payment_status,'payment_method':payment_method,'razorpay_id':razorpay_id}
     # context = {'current_url': current_url}
     return render(request,"orders_pages/order_detail_page.html",context)
     

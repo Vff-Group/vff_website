@@ -224,15 +224,32 @@
                                     <div class="card mb-4">
                                         <div class="card-body px-0  p-2">
                                             <div class="container-fluid d-flex justify-content-between mb-2">
+                                                <p class="text-xs text-secondary mb-0">Payment Status </p>
+                                                <p class="text-xs text-secondary mb-0"> 
+                                                    
+                                                    {% if payment_status == 'Un Paid' %}
+                                                    <span class="badge badge-sm bg-success">{{payment_status}}</span>
+                                                    {% else %}
+                                                    <span class="badge badge-sm bg-danger">{{payment_status}}</span>
+                                                    {% endif %}
+                                                        
+                                                     </p>
+                                        </div>
+                                        <!-- Payment Method End  -->
+                                            <div class="container-fluid d-flex justify-content-between mb-2">
                                                     <p class="text-xs text-secondary mb-0">Payment Method </p>
-                                                    <p class="text-xs text-secondary mb-0"> UPI </p>
+                                                    <p class="text-xs text-secondary text-uppercase mb-0"> {{payment_method}} </p>
                                             </div>
-                                            <!-- sub total end  -->
-                                            <div class="container-fluid d-flex justify-content-between  mb-2">
-                                            <p class="text-xs text-secondary mb-0">Payment ID </p>
-                                            <p class="text-xs text-secondary mb-0"> Razor Pay ID : #5464848</p>
-                                            </div>
+                                            <!-- Payment Method End  -->
                                             
+                                            {% if razorpay_id !='-1' %}
+                                            <div class="container-fluid d-flex justify-content-between  mb-2">
+                                                <p class="text-xs text-secondary mb-0">Payment ID </p>
+                                                <p class="text-xs text-secondary mb-0"> Razor Pay ID : #{{razorpay_id}}</p>
+                                                </div>    
+                                            {% endif %}
+                                            
+                                            <!-- Payment Method End  -->
 
                                         </div>
                                     </div>
@@ -281,7 +298,7 @@
                 <div class="col-lg-4">
                     <div class="card mb-4">
                         <div class=" card-header pb-0">
-                            <h4 class="text-dark font-weight-bolder text-lg">Status Order</h4>
+                            <h4 class="text-dark font-weight-bolder text-lg">Order Status </h4>
                         </div>
                         <div class="card-body  px-0 pt-0 pb-2">
                             <form action="{% url 'clothing_dashboard_app:order_details' order_id %}" method="post">
