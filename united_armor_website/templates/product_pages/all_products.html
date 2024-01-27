@@ -51,7 +51,13 @@
                 </div><!-- End .toolbox-sort -->
             </div><!-- End .toolbox-right -->
         </div><!-- End .toolbox -->
-
+        
+        {% if not all_product_data %}
+        <div >
+            <h4 class="text-center">No Products found !!</h4>
+        </div>
+        
+        {% else%}
         <div class="products">
             <div class="row">
                 <div id="no-matching-products" style="display: none;">
@@ -127,7 +133,7 @@
             </div> -->
             <!-- End .load-more-container -->
         </div><!-- End .products -->
-
+        {% endif %}
         <div class="sidebar-filter-overlay"></div><!-- End .sidebar-filter-overlay -->
         <aside class="sidebar-shop sidebar-filter">
             <div class="sidebar-filter-wrapper">
