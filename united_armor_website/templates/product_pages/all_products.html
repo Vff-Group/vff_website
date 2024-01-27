@@ -150,7 +150,7 @@
                                 {% for row in product_category_data %}
                                 <div class="filter-item">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="hidden" value="{{row.product_catid}}">
+                                        <input type="checkbox" class="custom-control-input" id="cat-1{{row.product_catid}}" name="category_filter" value="{{row.product_catid}}">
                                         <input type="checkbox" class="custom-control-input" id="cat-1{{row.product_catid}}" name="category_filter" >
                                         <label class="custom-control-label" for="cat-1{{row.product_catid}}">{{row.product_category_name}}</label>
                                     </div><!-- End .custom-checkbox -->
@@ -175,8 +175,7 @@
                                 {% for row in product_type_data %}
                                 <div class="filter-item">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="hidden" value="{{row.product_type_id}}">
-                                        <input type="checkbox" class="custom-control-input" id="type-1{{row.product_type_id}}" name="type_filter" >
+                                        <input type="checkbox" class="custom-control-input" id="type-1{{row.product_type_id}}" name="type_filter" value="{{row.product_type_id}}">
                                         <label class="custom-control-label" for="type-1{{row.product_type_id}}">{{row.product_type_name}}</label>
                                     </div><!-- End .custom-checkbox -->
                                 </div><!-- End .filter-item -->
