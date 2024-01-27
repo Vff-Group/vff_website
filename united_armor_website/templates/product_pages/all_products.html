@@ -390,6 +390,19 @@
             var itemCount = $('.product-item:visible').length;
             $('.toolbox-info span').text(itemCount);
         }
+
+        // Function to get price range based on the decimal price
+        function getPriceRange(price) {
+            if (price >= 1000 && price <= 5000) {
+                return "1000-5000";
+            } else if (price > 5000 && price <= 7000) {
+                return "5000-7000";
+            } else if (price > 7000 && price <= 12000) {
+                return "7000-12000";
+            } else {
+                return ""; // Handle other cases or return appropriate default value
+            }
+        }
     });
 </script>
 
