@@ -204,8 +204,10 @@
                                             </td>
                                             <td>
                                                 <h6 class="mb-0 text-sm text-center">{{row.product_name}}</h6>
-                                                <p>[ {{row.size_value}} ]</p>
-                                                <p>[ {{row.color_name}} ]</p>
+                                                <div class="d-flex justify-content-center">
+                                                    <small class="text-sm text-secondary">[ {{row.size_value}} ]</small>
+                                                <small class="text-sm text-secondary">[ {{row.color_name}} ]</small>
+                                                </div>
                                             </td>
                                             <td><h6 class="mb-0 text-sm text-center">{{row.quantity}}</h6></td>
                                             <td><h6 class="mb-0 text-sm text-center" data-price="{{row.purchased_price}}">₹ {{row.purchased_price}}/-</h6></td>
