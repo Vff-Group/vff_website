@@ -200,7 +200,7 @@
                                 {% for row in sizes_filter_data %}
                                 <div class="filter-item">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="hidden" value="{{row.sizes_id}}">
+                                        <input type="checkbox" class="custom-control-input" id="size-1{{row.sizes_id}}" name="size_filter" value="{{row.sizes_id}}">
                                         <input type="checkbox" class="custom-control-input" id="size-1{{row.sizes_id}}" name="size_filter">
                                         <label class="custom-control-label" for="size-1{{row.sizes_id}}">{{row.size_value}}</label>
                                     </div><!-- End .custom-checkbox -->
@@ -223,7 +223,7 @@
                         <div class="widget-body">
                             <div class="filter-colors">
                                 {% for row in color_filter_data %}
-                                <a href="" id="clr{{row.colors_id}}" style="background: #{{row.color_code}};"  data-color-id="{{row.colors_id}}" name="color_filter"><span class="sr-only">{{row.color_name}}</span></a>
+                                <a href="" id="clr{{row.colors_id}}" style="background: #{{row.color_code}};" data-color-id="{{row.colors_id}}" name="color_filter"><span class="sr-only">{{row.color_name}}</span></a>
                                 {% endfor %}
                               
                             </div><!-- End .filter-colors -->
