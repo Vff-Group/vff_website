@@ -134,28 +134,32 @@
                 </div><!-- End .widget -->
                 
 
+                    
                     <!-- Category filter -->
                     <div class="widget widget-collapsible">
                         <h3 class="widget-title">Category</h3>
                         <div class="collapse show" id="widget-category">
                             <div class="widget-body">
                                 <div class="filter-items filter-items-count">
-                                    {% set unique_categories = [] %}
-                                    {% for category in all_product_data %}
-                                        {% if category.product_category_name not in unique_categories %}
-                                            {% set _ = unique_categories.append(category.product_category_name) %}
-                                            <div class="filter-item">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input category-checkbox" id="cat-{{ category.product_catid }}" value="{{ category.product_category_name }}">
-                                                    <label class="custom-control-label" for="cat-{{ category.product_catid }}">{{ category.product_category_name }}</label>
-                                                </div>
-                                            </div>
-                                        {% endif %}
-                                    {% endfor %}
+                                    {% with unique_categories=set() %}
+                                        {% for category in all_product_data %}
+                                            {% if category.product_category_name not in unique_categories %}
+                                                {% with _=unique_categories.add(category.product_category_name) %}
+                                                    <div class="filter-item">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input category-checkbox" id="cat-{{ category.product_catid }}" value="{{ category.product_category_name }}">
+                                                            <label class="custom-control-label" for="cat-{{ category.product_catid }}">{{ category.product_category_name }}</label>
+                                                        </div>
+                                                    </div>
+                                                {% endwith %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endwith %}
                                 </div>
                             </div>
                         </div>
                     </div>
+
 
 
                     <!-- Product Type filter -->
