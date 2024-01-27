@@ -249,6 +249,10 @@
                                                 </div>    
                                             {% endif %}
                                             
+                                            <div class="d-flex justify-content-center">
+                            
+                                                <a href="{% url 'clothing_dashboard_app:generate_bill' order_id %}" target="_blank"  class="btn btn-primary my-4">Generate Bill</a>
+                                            </div>
                                             <!-- Payment Method End  -->
 
                                         </div>
@@ -352,10 +356,7 @@
                             </div>
                         </form>
                         </div>
-                        <div class=" card-footer d-flex justify-content-center">
-                            
-                            <a href="{% url 'clothing_dashboard_app:generate_bill' order_id %}" target="_blank"  class="btn btn-primary my-4">Generate Bill</a>
-                        </div>
+                        
                     </div>
                 </div>
                 <!-- end of order status  -->
