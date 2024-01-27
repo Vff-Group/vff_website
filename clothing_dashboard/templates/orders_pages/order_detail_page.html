@@ -284,42 +284,44 @@
                             <h4 class="text-dark font-weight-bolder text-lg">Status Order</h4>
                         </div>
                         <div class="card-body  px-0 pt-0 pb-2">
-                            
+                            <form action="{% url 'clothing_dashboard_app:order_details' order_id %}" method="post">
                             <div class="container mt-2">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="input-fullname">Order ID</label>
-                                    <input type="number" id="input-fullname" class="form-control form-control-alternative" placeholder="Order ID" name="fullname" autocomplete="off" value="{{order_id}}"  disabled>
+                                    <label class="form-control-label" for="input-order-id">Order ID</label>
+                                    <input type="number" id="input-order-id" class="form-control form-control-alternative" placeholder="Order ID"  autocomplete="off" value="{{order_id}}"  disabled>
+                                    <input type="hidden" id="input-order-id" class="form-control form-control-alternative" placeholder="Order ID" name="order_id" autocomplete="off" value="{{order_id}}" >
                                   </div>
                                   <!-- end of order id  -->
                                   <div class="form-group">
                                     <label class="form-control-label" for="input-status">Order Status</label>
-                                    <select class="form-control form-control-alternative" id="input-status" name="status">
-                                      <option value="Order Placed"  {% if order_current_status == 'Order Placed' %}selected{% endif %}>Order Placed</option>
-                                      <option value="Processing"  {% if order_current_status == 'Processing' %}selected{% endif %}>Processing</option>
-                                      <option value="Scheduling Delivery"  {% if order_current_status == 'Scheduling Delivery' %}selected{% endif %}>Scheduling Delivery</option>
-                                      <option value="Ready For Delivery"  {% if order_current_status == 'Ready For Delivery' %}selected{% endif %}>Ready For Delivery</option>
-                                      <option value="Out For Delivery"  {% if order_current_status == 'Out For Delivery' %}selected{% endif %}>Out For Delivery</option>
-                                      <option value="Reached Destination"  {% if order_current_status == 'Reached Destination' %}selected{% endif %}>Reached Destination</option>
-                                      <option value="Completed" {% if order_current_status == 'Completed' %}selected{% endif %}>Completed</option>
-                                      <option value="Pending" {% if order_current_status == 'Pending' %}selected{% endif %}>Pending</option>
-                                      <option value="Refund" {% if order_current_status == 'Refund' %}selected{% endif %}>Refund</option>
-                                      <option value="Cancelled" {% if order_current_status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
-                                      <option value="Returned" {% if order_current_status == 'Returned' %}selected{% endif %}>Returned</option>
+                                    <select class="form-control form-control-alternative" id="input-status" name="order_status">
+                                      <option value="Order Placed"  {% if order_status == 'Order Placed' %}selected{% endif %}>Order Placed</option>
+                                      <option value="Processing"  {% if order_status == 'Processing' %}selected{% endif %}>Processing</option>
+                                      <option value="Scheduling Delivery"  {% if order_status == 'Scheduling Delivery' %}selected{% endif %}>Scheduling Delivery</option>
+                                      <option value="Ready For Delivery"  {% if order_status == 'Ready For Delivery' %}selected{% endif %}>Ready For Delivery</option>
+                                      <option value="Out For Delivery"  {% if order_status == 'Out For Delivery' %}selected{% endif %}>Out For Delivery</option>
+                                      <option value="Reached Destination"  {% if order_status == 'Reached Destination' %}selected{% endif %}>Reached Destination</option>
+                                      <option value="Completed" {% if order_status == 'Completed' %}selected{% endif %}>Completed</option>
+                                      <option value="Pending" {% if order_status == 'Pending' %}selected{% endif %}>Pending</option>
+                                      <option value="Refund" {% if order_status == 'Refund' %}selected{% endif %}>Refund</option>
+                                      <option value="Cancelled" {% if order_status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                                      <option value="Returned" {% if order_status == 'Returned' %}selected{% endif %}>Returned</option>
                                     </select>
                                   </div>
                                   <!-- end of order status  -->
                                   <div class="form-group">
-                                    <label class="form-control-label" for="input-gender">Order Transition</label>
-                                    <select class="form-control form-control-alternative" id="input-gender" name="gender">
-                                      <option value="Male"  {% if data.gender == 'Male' %}selected{% endif %}>Completed</option>
-                                      <option value="Male"  {% if data.gender == 'Male' %}selected{% endif %}>Failed</option>
+                                    <label class="form-control-label" for="input-order-delivered">Order Transition</label>
+                                    <select class="form-control form-control-alternative" id="input-order-delivered" name="order_delivered">
+                                        <option value="0"  {% if data.order_delivered == 0 %}selected{% endif %}>Not Completed Yet</option>
+                                        <option value="1"  {% if data.order_delivered == 1 %}selected{% endif %}>Completed</option>
+                                        <option value="2"  {% if data.order_delivered == 2 %}selected{% endif %}>Failed</option>
                                       
                                     </select>
                                   </div>
                                   <!-- end of order transition  -->
                                   <div class="form-group">
                                     <label>Comments </label>
-                                    <textarea rows="4" class="form-control form-control-alternative" placeholder="Any comments on this order" name="questions" >{{ data.questions|default:'' }}</textarea>
+                                    <textarea rows="4" class="form-control form-control-alternative" placeholder="Any comments on this order" name="comments" >{{ comment|default:'' }}</textarea>
                                   </div>
 
                                   <div class="row d-flex justify-content-center">
@@ -330,7 +332,7 @@
                                   </div>
                                   
                             </div>
-
+                        </form>
                         </div>
                     </div>
                 </div>

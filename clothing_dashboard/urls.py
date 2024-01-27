@@ -148,6 +148,8 @@ urlpatterns = [
     #order details
     path('order_details/<int:order_id>/',views.order_details,name='order_details'),
     
+    
+    
     #-------------- REPORTS ------------------------
     #sales report
     path('sales_report/',views.sales_report,name='sales_report'),

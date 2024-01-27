@@ -1817,8 +1817,28 @@ def all_orders(request):
     return render(request,"orders_pages/all_orders_page.html",context)
 
 def order_details(request,order_id):
+    if request.method == "POST":
+        
+        order_status = request.POST.get('order_status')
+        order_delivered = request.POST.get('order_delivered')
+        comments = request.POST.get('comments','NA')
+        try:
+            with connection.cursor() as cursor:
+                #To Update status in Order Table
+                update_query="update vff.united_armor_order_tbl set order_status='"+str(order_status)+"',order_delivered='"+str(order_delivered)+"',admin_comment='"+str(comments)+"' where orderid='"+str(order_id)+"'"
+                cursor.execute(update_query)
+                
+                update_query2="update vff.united_armor_order_historytbl set status='"+str(order_status)+"' where order_id='"+str(order_id)+"'"
+                cursor.execute(update_query2)
+                connection.commit()
+                print(f" Order Status Updated Successfully.")
+                redirect_url = reverse('clothing_dashboard_app:order_details', kwargs={'order_id': order_id})
+                return HttpResponseRedirect(redirect_url)
+                
+        except Exception as e:
+            print(f"Error loading data: {e}")
     error_msg='No Data Found'
-    query ="select united_armor_active_orders_tbl.product_id,product_name,customerid,customer_name,address,address2,city_name,state,pincode,mobno,united_armor_active_orders_tbl.quantity,united_armor_active_orders_tbl.price,purchased_date,order_status,order_delivered,product_img_url,cancelled,cancel_reason,feedback,order_current_status,returned,return_reason,purchased_time,colorsid,color_name,sizesid,size_value,email,orderid from vff.united_armor_all_productstbl,vff.united_armor_product_colorstbl,vff.united_armor_product_sizestbl,vff.united_armor_active_orders_tbl,vff.united_armor_order_tbl,vff.united_armor_customertbl where united_armor_customertbl.customerid=united_armor_order_tbl.customer_id and united_armor_active_orders_tbl.order_id=united_armor_order_tbl.orderid and united_armor_product_colorstbl.colorsid=united_armor_active_orders_tbl.color_id and united_armor_active_orders_tbl.product_id=united_armor_product_colorstbl.product_id and united_armor_active_orders_tbl.size_id=united_armor_product_sizestbl.sizesid and united_armor_all_productstbl.productid=united_armor_active_orders_tbl.product_id and united_armor_all_productstbl.productid=united_armor_product_colorstbl.product_id   and orderid='"+str(order_id)+"'"
+    query ="select united_armor_active_orders_tbl.product_id,product_name,customerid,customer_name,address,address2,city_name,state,pincode,mobno,united_armor_active_orders_tbl.quantity,united_armor_active_orders_tbl.price,purchased_date,order_status,order_delivered,product_img_url,cancelled,cancel_reason,feedback,order_current_status,returned,return_reason,purchased_time,colorsid,color_name,sizesid,size_value,email,orderid,admin_comment from vff.united_armor_all_productstbl,vff.united_armor_product_colorstbl,vff.united_armor_product_sizestbl,vff.united_armor_active_orders_tbl,vff.united_armor_order_tbl,vff.united_armor_customertbl where united_armor_customertbl.customerid=united_armor_order_tbl.customer_id and united_armor_active_orders_tbl.order_id=united_armor_order_tbl.orderid and united_armor_product_colorstbl.colorsid=united_armor_active_orders_tbl.color_id and united_armor_active_orders_tbl.product_id=united_armor_product_colorstbl.product_id and united_armor_active_orders_tbl.size_id=united_armor_product_sizestbl.sizesid and united_armor_all_productstbl.productid=united_armor_active_orders_tbl.product_id and united_armor_all_productstbl.productid=united_armor_product_colorstbl.product_id   and orderid='"+str(order_id)+"'"
     result = execute_raw_query(query)
     data = []    
     if not result == 500:
@@ -1856,6 +1876,7 @@ def order_details(request,order_id):
                 'size_value': row[26],
                 'email': row[27],
                 'order_id': row[28],
+                'admin_comment': row[29],
                 
                 
             })
@@ -1874,9 +1895,12 @@ def order_details(request,order_id):
     purchased_time = data[0]['purchased_time'] if data else ''
     order_current_status = data[0]['order_current_status'] if data else ''
     order_id = data[0]['order_id'] if data else ''
+    order_status = data[0]['order_status'] if data else ''
+    order_delivered = data[0]['order_delivered'] if data else ''
+    admin_comment = data[0]['admin_comment'] if data else ''
     
     current_url = request.get_full_path()
-    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg,'customer_name':customer_name,'email':email,'mobno':mobno,'address1':address1,'address2':address2,'city':city,'state':state,'pincode':pincode,'purchased_date':purchased_date,'purchased_time':purchased_time,'order_current_status':order_current_status,'order_id':order_id}
+    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg,'customer_name':customer_name,'email':email,'mobno':mobno,'address1':address1,'address2':address2,'city':city,'state':state,'pincode':pincode,'purchased_date':purchased_date,'purchased_time':purchased_time,'order_current_status':order_current_status,'order_id':order_id,'order_status':order_status,'order_delivered':order_delivered}
     # context = {'current_url': current_url}
     return render(request,"orders_pages/order_detail_page.html",context)
     
