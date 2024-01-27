@@ -1897,6 +1897,18 @@ def order_details(request,order_id):
                 'razorpay_id': row[3],
                 
             })
+    receiptID = ''
+    receiptName = ''
+    receiptDate = ''
+    bill_generate = False
+    #Insert Record in Receipt Table
+    receipt_query = "select receiptid,receipt_name,date  from vff.united_armor_receipttbl where order_id='"+str(order_id)+"'"
+    receipt_result = execute_raw_query_fetch_one(receipt_query)
+    if receipt_result:   
+        receiptID = receipt_result[0]
+        receiptName = receipt_result[1]
+        receiptDate = receipt_result[2]
+        bill_generate = True
     
     payment_id = payment_data[0]['payment_id'] if data else ''
     payment_status = payment_data[0]['payment_status'] if data else ''
@@ -1921,7 +1933,7 @@ def order_details(request,order_id):
     admin_comment = data[0]['admin_comment'] if data else ''
     
     current_url = request.get_full_path()
-    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg,'customer_name':customer_name,'email':email,'mobno':mobno,'address1':address1,'address2':address2,'city':city,'state':state,'pincode':pincode,'purchased_date':purchased_date,'purchased_time':purchased_time,'order_current_status':order_current_status,'order_id':order_id,'order_status':order_status,'order_delivered':order_delivered,'admin_comment':admin_comment,'payment_id':payment_id,'payment_status':payment_status,'payment_method':payment_method,'razorpay_id':razorpay_id}
+    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg,'customer_name':customer_name,'email':email,'mobno':mobno,'address1':address1,'address2':address2,'city':city,'state':state,'pincode':pincode,'purchased_date':purchased_date,'purchased_time':purchased_time,'order_current_status':order_current_status,'order_id':order_id,'order_status':order_status,'order_delivered':order_delivered,'admin_comment':admin_comment,'payment_id':payment_id,'payment_status':payment_status,'payment_method':payment_method,'razorpay_id':razorpay_id,'receiptID':receiptID,'receiptName':receiptName,'receiptDate':receiptDate,'bill_generate':bill_generate}
     # context = {'current_url': current_url}
     return render(request,"orders_pages/order_detail_page.html",context)
     

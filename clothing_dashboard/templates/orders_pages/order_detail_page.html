@@ -145,31 +145,36 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 d-none">
+                
+                {% if bill_generate %}
+                <div class="col-lg-4">
                     <div class="card mt-4  mb-4">
                         <div class="card-header pb-0">
                             <div class="d-flex justify-content-between align-items-center">
                                 <h5 class="text-dark font-weight-bold text-lg">Invoice Details</h5>
-                                <a href="" class="text-secondary font-weight-bold text-xs">Download</a></div>
+                                <!-- <a href="" class="text-secondary font-weight-bold text-xs">Download</a> -->
+                            </div>
                         </div>
                         
                         <div class=" card-body  px-0 pt-0 pb-2 mt-2">
                             <div class="container d-flex justify-content-between mb-0">
-                                <small class=" font-weight-normal text-dark">Number:</small>
-                                <small class=" font-weight-normal text-dark">124</small>
+                                <small class=" font-weight-normal text-dark">Invoice Number:</small>
+                                <small class=" font-weight-normal text-dark">#{{receiptID}}</small>
                             </div>
                             <div class="container d-flex justify-content-between mb-0">
-                                <small class=" font-weight-normal text-dark">Seller GST:</small>
-                                <small class=" font-weight-normal text-dark">ARE45FTSHD</small>
+                                <small class=" font-weight-normal text-dark">GST NO:</small>
+                                <small class=" font-weight-normal text-dark">29BRGPS5251K1Z7</small>
                             </div>
                             <div class="container d-flex justify-content-between mb-0">
-                                <small class=" font-weight-normal text-dark">Purchase GST:</small>
-                                <small class=" font-weight-normal text-dark">SHTYRDYIWKO</small>
+                                <small class=" font-weight-normal text-dark">Invoice Generated Date:</small>
+                                <small class=" font-weight-normal text-dark">{{receiptDate}}</small>
                             </div>
                             
                         </div>
                     </div>
                 </div>
+                {% endif %}
+                    
             </div>
             <!-- addressing details end  -->
             <div class="row m-2">
