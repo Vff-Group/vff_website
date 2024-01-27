@@ -58,7 +58,7 @@
                     No products found with the selected filters.
                 </div>
                 {% for row in all_product_data%}
-                <div class="col-6 col-md-4 col-lg-4 col-xl-3 product-item" data-catid="{{ row.product_catid }}" data-product-category="{{row.product_category_name}}" data-typeid="{{ row.product_type_id }}" data-product-type="{{row.product_type_name}}"  data-size="{{ row.size }}" data-colorid="{{ row.default_color_id }}">
+                <div class="col-6 col-md-4 col-lg-4 col-xl-3 product-item" data-price="{{row.price}}" data-catid="{{ row.product_catid }}" data-product-category="{{row.product_category_name}}" data-typeid="{{ row.product_type_id }}" data-product-type="{{row.product_type_name}}"  data-size="{{ row.size }}" data-colorid="{{ row.default_color_id }}">
                     <div class="product">
                         <input type="hidden" name="fitting_id" value="{{row.fitting_id}}">
                         <input type="hidden" name="fitting_type" value="{{row.fitting_type}}">
@@ -185,7 +185,38 @@
                         </div><!-- End .widget-body -->
                     </div><!-- End .collapse -->
                 </div><!-- End .widget -->
-
+                <div class="widget widget-collapsible">
+                    <h3 class="widget-title">
+                        <a data-toggle="collapse" href="#widget-price" role="button" aria-expanded="true" aria-controls="widget-price">
+                            Price Range
+                        </a>
+                    </h3><!-- End .widget-title -->
+                
+                    <div class="collapse show" id="widget-price">
+                        <div class="widget-body">
+                            <div class="filter-items">
+                                <div class="filter-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="price-range-1" name="price_filter" value="1000-5000">
+                                        <label class="custom-control-label" for="price-range-1">₹1000 - ₹5000</label>
+                                    </div><!-- End .custom-checkbox -->
+                                </div><!-- End .filter-item -->
+                                <div class="filter-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="price-range-2" name="price_filter" value="5000-7000">
+                                        <label class="custom-control-label" for="price-range-2">₹5000 - ₹7000</label>
+                                    </div><!-- End .custom-checkbox -->
+                                </div><!-- End .filter-item -->
+                                <div class="filter-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="price-range-3" name="price_filter" value="7000-12000">
+                                        <label class="custom-control-label" for="price-range-3">₹7000 - ₹12000</label>
+                                    </div><!-- End .custom-checkbox -->
+                                </div><!-- End .filter-item -->
+                            </div><!-- End .filter-items -->
+                        </div><!-- End .widget-body -->
+                    </div><!-- End .collapse -->
+                </div><!-- End .widget -->
                 {% comment %} size filter  {% endcomment %}
                 <div class="widget widget-collapsible">
                     <h3 class="widget-title">
@@ -310,12 +341,16 @@
             var colorFilter = $('a[name="color_filter"].active').map(function () {
                 return $(this).data('color-id');
             }).get();
+            var priceFilter = $('input[name="price_filter"]:checked').map(function () {
+                return $(this).val();
+            }).get();
 
              // Log selected filter values
             console.log("Selected Category Filter:", categoryFilter);
             console.log("Selected Type Filter:", typeFilter);
             console.log("Selected Size Filter:", sizeFilter);
             console.log("Selected Color Filter:", colorFilter);
+            console.log("Selected Price Filter:", priceFilter);
         
             // Show products that match the filters
             $('.product-item').filter(function () {
@@ -323,6 +358,7 @@
                 var dataTypeId = $(this).data('typeid');
                 var dataSize = $(this).data('size');
                 var dataColorId = $(this).data('colorid');
+                var dataPrice = $(this).data('price');
             
                 // Log data attributes of each product item
                 console.log("Product Item - Category:", dataCatId);
@@ -335,9 +371,12 @@
                 var typeMatch = typeFilter.length === 0 || typeFilter.includes(dataTypeId.toString());
                 var sizeMatch = sizeFilter.length === 0 || sizeFilter.includes(dataSize.toString());
                 var colorMatch = colorFilter.length === 0 || colorFilter.includes(dataColorId.toString());
+                var priceMatch = priceFilter.length === 0 || priceFilter.includes(getPriceRange(dataPrice)); // Define getPriceRange function
             
-                return categoryMatch && typeMatch && sizeMatch && colorMatch;
+                return categoryMatch && typeMatch && sizeMatch && colorMatch && priceMatch;
             }).show();
+             // Update item count
+            updateItemCount();
         
             // Show "No products found" message if no matching products
             if ($('.product-item:visible').length === 0) {
@@ -346,7 +385,10 @@
                 $('#no-matching-products').hide();
             }
         }
-        
+        function updateItemCount() {
+            var itemCount = $('.product-item:visible').length;
+            $('.toolbox-info span').text(itemCount);
+        }
     });
 </script>
 
