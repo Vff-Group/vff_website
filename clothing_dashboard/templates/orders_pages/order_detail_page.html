@@ -285,6 +285,7 @@
                         </div>
                         <div class="card-body  px-0 pt-0 pb-2">
                             <form action="{% url 'clothing_dashboard_app:order_details' order_id %}" method="post">
+                                {% csrf_token %}
                             <div class="container mt-2">
                                 <div class="form-group">
                                     <label class="form-control-label" for="input-order-id">Order ID</label>
