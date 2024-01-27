@@ -148,6 +148,9 @@ urlpatterns = [
     #order details
     path('order_details/<int:order_id>/',views.order_details,name='order_details'),
     
+    #Generate Bill
+    path('generate_bill/<int:order_id>/',views.generate_bill,name='generate_bill'),
+    
     
     
     #-------------- REPORTS ------------------------

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      width: 3in; /* Adjust the width as needed */
+      height: auto;
+      margin: 0;
+      color: #000000;
+    }
+    
+
+    .bill {
+      
+      color: #000000;
+      padding: 10px;
+      text-align: center; /* Center align the content within the bill div border: 1px solid #000; */
+    }
+    .bill h1,
+    .bill p {
+      color: inherit; /* Inherit the color from the .bill class */
+    }
+
+    .header {
+      border-top: 1px dashed #000; /* Add a dotted divider above payment details */
+      color: #000000;
+      text-align: center;
+      font-size: 10px; /* Set the font size for headings to 10px */
+    }
+
+    .brand-logo {
+      margin-bottom: 10px;
+      color: #000000;
+    }
+
+    .store-info {
+      
+      text-align: left;
+      color: #000000;
+      border-bottom: 1px dashed black; /* Add a dotted divider after company details */
+      padding-bottom: 10px;
+      font-size: 8px; /* Set the font size for items to 8px */
+    }
+
+    .receipt-info {
+      border-top: 1px dashed black; /* Add a dotted divider above payment details */
+      text-align: left;
+      color: #000000;
+      border-bottom: 1px dashed black; /* Add a dotted divider after receipt details */
+      padding-bottom: 5px;
+      font-size: 8px; /* Set the font size for items to 8px */
+    }
+
+    .item-list {
+      margin-top: 10px;
+      color: #000000;
+    }
+
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+      color: #000000;
+      background-color: #f2f2f2; /* Background color for the table header */
+      font-weight: bold; /* Make the header text bold */
+      font-size: 10px; /* Set the font size for headings to 10px */
+      border-bottom: 1px solid #000; /* Add a solid border below the header */
+    }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 8px; /* Set the font size for items to 8px */
+      padding: 5px 0;
+      color: #000000;
+    }
+
+    .item-name {
+      width: 80px; /* Set a fixed width for the "Item" column */
+      margin: 2px auto;
+      display: flex;
+      justify-content: center; /* Align the item name to the center */
+      word-wrap: break-word; 
+      color: #000000;/* Allow text to wrap to the next line */
+    }
+
+    .item-sub-name{
+      width: 80px; /* Set a fixed width for the "Item" column */
+      margin: 2px auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* Align the item name to the center */
+      word-wrap: break-word; 
+      color: #000000;/* Allow text to wrap to the next line */
+    }
+
+    .total {
+      color: #000000;
+      text-align: right;
+      font-size: 10px; /* Set the font size for headings to 10px */
+    }
+
+
+    .payment-info {
+      text-align: left;
+      margin-top: 10px;
+      border-top: 1px dashed #000; /* Add a dotted divider above payment details */
+      padding-top: 10px;
+      font-size: 8px; /* Set the font size for items to 8px */
+    }
+
+    /* Add a small dotted line after every table row */
+    .item-list .item {
+      color: #000000;
+      border-bottom: 1px dotted #000;
+    }
+
+    .terms-and-conditions {
+      color: #000000;
+      margin: 0;
+      border-top: 1px dashed #000; 
+      font-size: 6px; /* Set the font size for terms and conditions to 8px */
+      margin-top: 10px;
+      text-align: left;
+    }
+    .monochrome {
+      filter: none;
+  }
+
+  img{
+    width: 100px;
+  }
+  h1{
+    font-size: 10px;
+  }
+  </style>
+</head>
+<body>
+  <div class="bill">
+    <div class="brand-logo">
+      <img class="monochrome" src="https://vff-group.com/static/img/logos/logo_black_and_white.png" alt="Logo" >
+      <h1 style="font-size: 14px;">VFF Group</h1>
+    </div>
+
+    <div class="header">
+      
+      
+      <h1 style="font-size: 14px;">United Armor</h1>
+      <h1>Plot no. 516, Main Road, Ramteerth Nagar, Lakshmipuri Layout, Auto Nagar,
+        Belagavi, Karnataka 590015 - India.</h1>
+      <h1>Phone: (+91) 6364912877 </h1>
+      <h1>Website: www.vff-group.com </h1>
+    </div>
+
+    <div class="receipt-info">
+      <h1>GST No : </h1>
+      <h1>Invoice No : #{{receipt_id}}</h1>
+      <h1>Date: {{receiptDate}}</h1>
+      <h1>Cashier: {{receiptName}}</h1>
+    </div>
+
+    <div class="receipt-info">
+      <h1>Order ID: #{{order_id}}</h1>
+      <h1>Customer: {{customer_name}}</h1>
+      <h1>Phone: +91-{{mobno}}</h1>
+      <h1>Address:
+        {% if address1 != 'NA' %} 
+        {{address1}}
+        {% endif %}
+         {{address2}},
+         {% if city_name != 'NA' %} 
+          {{city_name}} ,
+          {{state}} 
+          {% endif %}
+          {% if pincode != 'NA' %} 
+          {{pincode}}
+          {% endif %}
+          -INDIA</h1>
+    </div>
+
+    <div class="item-list">
+      <div class="table-header">
+        <span class="item-name">Product</span>
+        <span class="item-name">Quantity</span>
+        <span class="item-name">Price</span>
+        
+      </div>
+      {% for row in query_result %}
+      <div class="item">
+        <h1 class="item-name">
+          
+          {{row.product_name}}
+          
+          
+        </h1>
+        <h1 class="item-name">
+          
+          {{row.quantity}} 
+          
+        </h1>
+        
+        <h1 class="item-name">
+          ₹ {{row.purchased_price}}
+        </h1>
+      </div>
+      {% endfor %}
+     
+      
+    </div>
+
+    <div class="total">
+      <h1 id=sub-total>Subtotal : ₹ 0.0/-</h1>
+      
+      <h1 id='tax-amount'>Tax Amount (18%) [Inclusive] : ₹ 0.0/-</h1>
+      
+      
+      <h1 style="font-size: 16px;" id="total-amount">Total : ₹{{total_cost}}/-</h1>
+      
+    </div>
+
+    <div class="payment-info">
+      
+      
+        {% if payment_type != 'cod' %}  
+        <h1>Payment Method: {{payment_method}}</h1>  
+        <h1>Transaction ID: {{razorpay_id}}</h1>
+        {% else %}
+        <h1>Payment Method: Cash on Delivery</h1>
+        <p>Need to collect the amount</p>
+        {% endif %}
+     
+    </div>
+
+    <div class="terms-and-conditions">
+      <h1 style="font-size: 12px;">Terms and Conditions:</h1>
+      <h1 style="font-size: 6px;">1. Payment Terms: All payments are due upon receipt. We accept cash, credit cards, and other payment methods as specified.</h1>
+      <h1 style="font-size: 6px;">2. Refund Policy: Once the payment has been made, refunds are not applicable, except under specific circumstances as determined by management.</h1>
+      <h1 style="font-size: 6px;">3. Lost or Damaged Items: We take utmost care with your garments; however, we are not responsible for any lost or damaged items that are not explicitly documented during drop-off.</h1>
+      <h1 style="font-size: 6px;">4. Quality Assurance: We strive for the highest quality service. In case of any dissatisfaction, please notify us within 24 hours of receiving your order.</h1>
+      <h1 style="font-size: 6px;">5. Delivery Schedule: We aim to meet the estimated delivery time; however, unforeseen circumstances might cause delays.</h1>
+      <!-- Add more terms and conditions text here -->
+    </div>
+  </div>
+
+  <!-- Include jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Calculate Subtotal
+        var subTotal = 0;
+        $('.item').each(function () {
+            var price = parseFloat($(this).find('.item-name:nth-child(3)').text().replace('₹ ', '').replace('/-', ''));
+            var quantity = parseInt($(this).find('.item-name:nth-child(2)').text());
+            //subTotal += price * quantity;
+            subTotal += price ;
+        });
+        $('#sub-total').text('Subtotal : ₹ ' + subTotal.toFixed(2) + '/-');
+
+        // Calculate Tax Amount (18%)
+        var taxRate = 0.18;
+        //var taxAmount = subTotal * taxRate;
+        var taxAmount = subTotal * taxRate;
+        $('#tax-amount').text('Tax Amount (18%) [Inclusive] : ₹ ' + taxAmount.toFixed(2) + '/-');
+
+        // Calculate Total
+        //var totalAmount = subTotal + taxAmount;
+        var totalAmount = subTotal;
+        $('#total-amount').text('Total : ₹ ' + totalAmount.toFixed(2) + '/-');
+    });
+</script>
+
+</body>
+</html>
+
+
+

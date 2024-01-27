@@ -1925,6 +1925,131 @@ def order_details(request,order_id):
     # context = {'current_url': current_url}
     return render(request,"orders_pages/order_detail_page.html",context)
     
+def generate_bill(request,order_id):
+    
+    error_msg='No Data Found'
+    query ="select united_armor_active_orders_tbl.product_id,product_name,customerid,customer_name,address,address2,city_name,state,pincode,mobno,united_armor_active_orders_tbl.quantity,united_armor_active_orders_tbl.price,purchased_date,order_status,order_delivered,product_img_url,cancelled,cancel_reason,feedback,order_current_status,returned,return_reason,purchased_time,colorsid,color_name,sizesid,size_value,email,orderid,admin_comment from vff.united_armor_all_productstbl,vff.united_armor_product_colorstbl,vff.united_armor_product_sizestbl,vff.united_armor_active_orders_tbl,vff.united_armor_order_tbl,vff.united_armor_customertbl where united_armor_customertbl.customerid=united_armor_order_tbl.customer_id and united_armor_active_orders_tbl.order_id=united_armor_order_tbl.orderid and united_armor_product_colorstbl.colorsid=united_armor_active_orders_tbl.color_id and united_armor_active_orders_tbl.product_id=united_armor_product_colorstbl.product_id and united_armor_active_orders_tbl.size_id=united_armor_product_sizestbl.sizesid and united_armor_all_productstbl.productid=united_armor_active_orders_tbl.product_id and united_armor_all_productstbl.productid=united_armor_product_colorstbl.product_id   and orderid='"+str(order_id)+"' and cancelled !='1'"
+    result = execute_raw_query(query)
+    data = []    
+    if not result == 500:
+        for row in result:
+            epoch = row[22]
+            time_date = epochToDateTime(epoch)
+            
+            data.append({
+                'product_id': row[0],
+                'product_name': row[1],
+                'customer_id': row[2],
+                'customer_name': row[3],
+                'address1': row[4],
+                'address2': row[5],
+                'city_name': row[6],
+                'state': row[7],
+                'pincode': row[8],
+                'mobno': row[9],
+                'quantity': row[10],
+                'purchased_price': row[11],
+                'purchased_date': row[12],
+                'order_status': row[13],
+                'order_delivered': row[14],
+                'product_img_url': row[15],
+                'cancelled': row[16],
+                'cancel_reason': row[17],
+                'feedback': row[18],
+                'order_current_status': row[19],
+                'returned': row[20],
+                'return_reason': row[21],
+                'purchased_time': time_date,
+                'colorsid': row[23],
+                'color_name': row[24],
+                'sizesid': row[25],
+                'size_value': row[26],
+                'email': row[27],
+                'order_id': row[28],
+                'admin_comment': row[29],
+                
+                
+            })
+    else:
+        error_msg = 'Something Went Wrong'
+   
+    #Payment Details     
+    query_payment_details="select payment_id,status,payment_method,razor_pay_id from vff.united_armor_paymenttbl where order_id='"+str(order_id)+"'"
+    result2 = execute_raw_query(query_payment_details)
+    payment_data = []    
+    if not result2 == 500:
+        for row in result2:
+            
+            payment_data.append({
+                'payment_id': row[0],
+                'payment_status': row[1],
+                'payment_method': row[2],
+                'razorpay_id': row[3], 
+            })
+    
+    payment_id = payment_data[0]['payment_id'] if data else ''
+    payment_status = payment_data[0]['payment_status'] if data else ''
+    payment_method = payment_data[0]['payment_method'] if data else ''
+    razorpay_id = payment_data[0]['razorpay_id'] if data else ''
+    
+    
+    customer_name = data[0]['customer_name'] if data else ''
+    customer_id = data[0]['customer_id'] if data else ''
+    email = data[0]['email'] if data else ''
+    mobno = data[0]['mobno'] if data else ''
+    address1 = data[0]['address1'] if data else ''
+    address2 = data[0]['address2'] if data else ''
+    city = data[0]['city_name'] if data else ''
+    state = data[0]['state'] if data else ''
+    pincode = data[0]['pincode'] if data else ''
+    purchased_date = data[0]['purchased_date'] if data else ''
+    purchased_time = data[0]['purchased_time'] if data else ''
+    order_current_status = data[0]['order_current_status'] if data else ''
+    order_id = data[0]['order_id'] if data else ''
+    order_status = data[0]['order_status'] if data else ''
+    order_delivered = data[0]['order_delivered'] if data else ''
+    admin_comment = data[0]['admin_comment'] if data else ''
+    
+    receiptID = ''
+    receiptName = ''
+    receiptDate = ''
+    #Insert Record in Receipt Table
+    receipt_query = "select receiptid,receipt_name,date  from vff.united_armor_receipttbl where order_id='"+str(order_id)+"'"
+    receipt_result = execute_raw_query_fetch_one(receipt_query)
+    if receipt_result:   
+        receiptID = receipt_result[0]
+        receiptName = receipt_result[1]
+        receiptDate = receipt_result[2]
+        
+    else:
+        try:
+            with connection.cursor() as cursor:
+                insert_receipt="insert into vff.united_armor_receipttbl (order_id,receipt_name) values ('"+str(order_id)+"','"+str(request.session.clothing_admin_name)+"')"
+                cursor.execute(insert_receipt)
+                print(f'Insert receipt record:{insert_receipt}')
+                
+                receipt_query = "select receiptid,receipt_name,date  from vff.united_armor_receipttbl where order_id='"+str(order_id)+"'"
+                receipt_result = execute_raw_query_fetch_one(receipt_query)
+                if receipt_result:   
+                    receiptID = receipt_result[0]
+                    receiptName = receipt_result[1]
+                    receiptDate = receipt_result[2]
+     
+        except Exception as e:
+            print(e)
+            receipt_query = "select receiptid,receipt_name,date  from vff.laundry_receipt_invoice_tbl where order_id='"+str(order_id)+"'"
+            receipt_result = execute_raw_query_fetch_one(receipt_query)
+            if receipt_result:   
+                receiptID = receipt_result[0]
+                receiptName = receipt_result[1]
+                receiptDate = receipt_result[2]
+        
+    current_url = request.get_full_path()
+    context = {'query_result':data,'current_url': current_url,'error_msg':error_msg,'customer_name':customer_name,'email':email,'mobno':mobno,'address1':address1,'address2':address2,'city':city,'state':state,'pincode':pincode,'purchased_date':purchased_date,'purchased_time':purchased_time,'order_current_status':order_current_status,'order_id':order_id,'order_status':order_status,'order_delivered':order_delivered,'admin_comment':admin_comment,'payment_id':payment_id,'payment_status':payment_status,'payment_method':payment_method,'razorpay_id':razorpay_id,'receiptID':receiptID,'receiptName':receiptName,'receiptDate':receiptDate,'customer_id':customer_id}
+    # context = {'current_url': current_url}
+    return render(request,"billing/billing_page.html",context)
+    
+    
 def sales_report(request):
     current_url = request.get_full_path()
     context = {'current_url': current_url}
