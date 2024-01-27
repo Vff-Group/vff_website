@@ -296,7 +296,7 @@
         function applyFilters() {
             // Hide all products
             $('.product-item').hide();
-
+        
             // Get selected filter values
             var categoryFilter = $('input[name="category_filter"]:checked').map(function () {
                 return $(this).val();
@@ -310,22 +310,23 @@
             var colorFilter = $('a[name="color_filter"].active').map(function () {
                 return $(this).data('color-id');
             }).get();
-
+        
             // Show products that match the filters
             $('.product-item').filter(function () {
                 var dataCatId = $(this).data('catid');
                 var dataTypeId = $(this).data('typeid');
                 var dataSize = $(this).data('size');
                 var dataColorId = $(this).data('colorid');
-
-                return (
-                    ($.inArray(dataCatId, categoryFilter) !== -1 || categoryFilter.length === 0) &&
-                    ($.inArray(dataTypeId, typeFilter) !== -1 || typeFilter.length === 0) &&
-                    ($.inArray(dataSize, sizeFilter) !== -1 || sizeFilter.length === 0) &&
-                    ($.inArray(dataColorId, colorFilter) !== -1 || colorFilter.length === 0)
-                );
+        
+                // Check if filters are empty or if the item matches the selected filters
+                var categoryMatch = categoryFilter.length === 0 || $.inArray(dataCatId, categoryFilter) !== -1;
+                var typeMatch = typeFilter.length === 0 || $.inArray(dataTypeId, typeFilter) !== -1;
+                var sizeMatch = sizeFilter.length === 0 || $.inArray(dataSize, sizeFilter) !== -1;
+                var colorMatch = colorFilter.length === 0 || $.inArray(dataColorId, colorFilter) !== -1;
+        
+                return categoryMatch && typeMatch && sizeMatch && colorMatch;
             }).show();
-
+        
             // Show "No products found" message if no matching products
             if ($('.product-item:visible').length === 0) {
                 $('#no-matching-products').show();
@@ -333,6 +334,7 @@
                 $('#no-matching-products').hide();
             }
         }
+        
     });
 </script>
 
