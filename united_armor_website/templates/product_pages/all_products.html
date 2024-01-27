@@ -393,12 +393,15 @@
 
         // Function to get price range based on the decimal price
         function getPriceRange(price) {
-            if (price >= 1000 && price <= 5000) {
-                return "1000-5000";
-            } else if (price > 5000 && price <= 7000) {
-                return "5000-7000";
-            } else if (price > 7000 && price <= 12000) {
-                return "7000-12000";
+            // Remove rupees symbol and any non-digit characters
+            var numericPrice = parseFloat(price.replace(/[^\d.]/g, ''));
+        
+            if (numericPrice >= 1000 && numericPrice <= 5000) {
+                return "₹1000 - ₹5000";
+            } else if (numericPrice > 5000 && numericPrice <= 7000) {
+                return "₹5000 - ₹7000";
+            } else if (numericPrice > 7000 && numericPrice <= 12000) {
+                return "₹7000 - ₹12000";
             } else {
                 return ""; // Handle other cases or return appropriate default value
             }
