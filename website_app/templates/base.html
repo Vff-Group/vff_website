@@ -84,26 +84,22 @@
                 >
               </li>
               <li class="nav-item">
-                <a
-                  class="nav-link {% if current_url == '/aboutus/' %}active {% endif %}"
-                  href="{% url 'website_app:aboutus' %}"
-                  >About Us</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link {% if current_url == '/services/' %}active {% endif %}"
-                  href="{% url 'website_app:services' %}"
-                  >Services</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link {% if current_url == '/' %}active {% endif %}"
-                  href="{% url 'website_app:index' %}"
-                  >Laundry</a
-                >
-              </li>
+                <a class="nav-link {% if current_url == '/' %}active{% endif %}" href="{% url 'website_app:index' %}">Laundry</a>
+            </li>
+            
+            <!-- Dropdown structure for 'About Us' and 'Services' -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown Title
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <!-- Link for 'About Us' -->
+                    <a class="dropdown-item {% if current_url == '/aboutus/' %}active{% endif %}" href="{% url 'website_app:aboutus' %}">About Us</a>
+                    
+                    <!-- Link for 'Services' -->
+                    <a class="dropdown-item {% if current_url == '/services/' %}active{% endif %}" href="{% url 'website_app:services' %}">Services</a>
+                </div>
+            </li>
               <li class="nav-item">
                 <a
                   class="nav-link {% if current_url == '/franchise/' %}active {% endif %}"
