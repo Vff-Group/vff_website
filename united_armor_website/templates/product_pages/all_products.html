@@ -372,6 +372,8 @@
             
                 return categoryMatch && typeMatch && sizeMatch && colorMatch;
             }).show();
+                // Update item count
+                updateItemCount();
         
             // Show "No products found" message if no matching products
             if ($('.product-item:visible').length === 0) {
@@ -381,6 +383,10 @@
             }
         }
         
+        function updateItemCount() {
+            var itemCount = $('.product-item:visible').length;
+            $('.toolbox-info span').text(itemCount);
+        }
     });
 </script>
 
