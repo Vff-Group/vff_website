@@ -2024,7 +2024,9 @@ def generate_bill(request,order_id):
     else:
         try:
             with connection.cursor() as cursor:
-                insert_receipt="insert into vff.united_armor_receipttbl (order_id,receipt_name) values ('"+str(order_id)+"','"+str(request.session.clothing_admin_name)+"')"
+                admin_name = request.session.clothing_admin_name
+                
+                insert_receipt="insert into vff.united_armor_receipttbl (order_id,receipt_name) values ('"+str(order_id)+"','"+str(admin_name)+"')"
                 cursor.execute(insert_receipt)
                 print(f'Insert receipt record:{insert_receipt}')
                 
