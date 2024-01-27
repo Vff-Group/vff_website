@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-w$a1myz)1y_m=5xxq(8857a&4p3#8*pez_m8)oi!54jg7vj3!k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True 
+DEBUG = False 
 
-ALLOWED_HOSTS = ['www.vff-group.com','www.vffgroup.in','vffgroup.in','vff-group.com','localhost','62.72.57.222','velvetwash.in','www.velvetwash.in']
+ALLOWED_HOSTS = ['www.vff-group.com','www.vffgroup.in','vffgroup.in','vff-group.com','localhost','62.72.57.222','www.velvetwash.in','velvetwash.in']
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 # Application definition
