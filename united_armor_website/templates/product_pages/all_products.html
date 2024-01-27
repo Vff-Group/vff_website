@@ -140,18 +140,23 @@
                         <div class="collapse show" id="widget-category">
                             <div class="widget-body">
                                 <div class="filter-items filter-items-count">
+                                    {% set unique_categories = [] %}
                                     {% for category in all_product_data %}
-                                        <div class="filter-item">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input category-checkbox" id="cat-{{ category.product_catid }}" value="{{ category.product_category_name }}">
-                                                <label class="custom-control-label" for="cat-{{ category.product_catid }}">{{ category.product_category_name }}</label>
+                                        {% if category.product_category_name not in unique_categories %}
+                                            {% set _ = unique_categories.append(category.product_category_name) %}
+                                            <div class="filter-item">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input category-checkbox" id="cat-{{ category.product_catid }}" value="{{ category.product_category_name }}">
+                                                    <label class="custom-control-label" for="cat-{{ category.product_catid }}">{{ category.product_category_name }}</label>
+                                                </div>
                                             </div>
-                                        </div>
+                                        {% endif %}
                                     {% endfor %}
                                 </div>
                             </div>
                         </div>
                     </div>
+
 
                     <!-- Product Type filter -->
                     <div class="widget widget-collapsible">
