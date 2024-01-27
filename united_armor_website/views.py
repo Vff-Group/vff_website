@@ -690,7 +690,7 @@ def all_products_with_sub_category(request,s_main_cat_id,s_main_cat_name,s_cat_i
                     'ratings':row[18],
                     'default_color_id':row[19],
                     'color_name':row[20],
-                    'color_code':row[21],
+                    'color_code':"#"+row[21],
                 
             })
     else:
