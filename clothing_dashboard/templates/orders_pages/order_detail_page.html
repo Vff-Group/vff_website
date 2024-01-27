@@ -14,7 +14,7 @@
             <hr>
             <!-- top cards  -->
             <div class="row m-2">
-                <div class="col-lg-3">
+                <div class="col-lg-3 ">
                     <div class="container green-background">
                         <div class="row d-flex align-items-center p-1">
                             <div class="col-lg-2">
@@ -202,7 +202,11 @@
                                             <td>
                                                 <img src="{{row.product_img_url}}" class="avatar avatar-xl m-1" alt="user1">
                                             </td>
-                                            <td><h6 class="mb-0 text-sm text-center">{{row.product_name}}</h6></td>
+                                            <td>
+                                                <h6 class="mb-0 text-sm text-center">{{row.product_name}}</h6>
+                                                <p>[ {{row.size_value}} ]</p>
+                                                <p>[ {{row.color_name}} ]</p>
+                                            </td>
                                             <td><h6 class="mb-0 text-sm text-center">{{row.quantity}}</h6></td>
                                             <td><h6 class="mb-0 text-sm text-center" data-price="{{row.purchased_price}}">₹ {{row.purchased_price}}/-</h6></td>
                                             <td>
