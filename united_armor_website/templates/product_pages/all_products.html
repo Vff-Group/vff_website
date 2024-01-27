@@ -271,40 +271,74 @@
 
 <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
 
-<!-- Include jQuery -->
+<!-- including jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
     $(document).ready(function () {
-        var productItems = $('.product-item');
-    
-        function filterProducts() {
-            var selectedCategories = $('input[name="category_filter"]:checked').map(function() {
+        // Initialize the filters on page load
+        applyFilters();
+
+        // Handle category, type, size, and color filter changes
+        $('input[name="category_filter"], input[name="type_filter"], input[name="size_filter"], a[name="color_filter"]').on('change', function () {
+            applyFilters();
+        });
+
+        // Handle clear filters button
+        $('.sidebar-filter-clear').on('click', function () {
+            // Clear all filters
+            $('input[name="category_filter"], input[name="type_filter"], input[name="size_filter"], a[name="color_filter"]').prop('checked', false);
+
+            // Reapply filters to show all products
+            applyFilters();
+        });
+
+        function applyFilters() {
+            // Hide all products
+            $('.product-item').hide();
+
+            // Get selected filter values
+            var categoryFilter = $('input[name="category_filter"]:checked').map(function () {
                 return $(this).val();
             }).get();
-    
-            if (selectedCategories.length === 0) {
-                productItems.show();
+            var typeFilter = $('input[name="type_filter"]:checked').map(function () {
+                return $(this).val();
+            }).get();
+            var sizeFilter = $('input[name="size_filter"]:checked').map(function () {
+                return $(this).val();
+            }).get();
+            var colorFilter = $('a[name="color_filter"].active').map(function () {
+                return $(this).data('color-id');
+            }).get();
+
+            // Show products that match the filters
+            $('.product-item').filter(function () {
+                var dataCatId = $(this).data('catid');
+                var dataTypeId = $(this).data('typeid');
+                var dataSize = $(this).data('size');
+                var dataColorId = $(this).data('colorid');
+
+                return (
+                    ($.inArray(dataCatId, categoryFilter) !== -1 || categoryFilter.length === 0) &&
+                    ($.inArray(dataTypeId, typeFilter) !== -1 || typeFilter.length === 0) &&
+                    ($.inArray(dataSize, sizeFilter) !== -1 || sizeFilter.length === 0) &&
+                    ($.inArray(dataColorId, colorFilter) !== -1 || colorFilter.length === 0)
+                );
+            }).show();
+
+            // Show "No products found" message if no matching products
+            if ($('.product-item:visible').length === 0) {
+                $('#no-matching-products').show();
             } else {
-                productItems.hide().filter(function() {
-                    return selectedCategories.includes($(this).data('product-category'));
-                }).show();
+                $('#no-matching-products').hide();
             }
         }
-    
-        function clearAllFilters() {
-            $('input[type="checkbox"]').prop('checked', false);
-            productItems.show();
-        }
-    
-        $('input[name="category_filter"]').change(filterProducts);
-        $('.sidebar-filter-clear').click(clearAllFilters);
     });
-    </script>
-    
+</script>
 
 
-<script>
+
+    <script>
     function addToCart(productId,color_id,size_id,price,quantity,offer_price) {
         console.log("productId::"+productId)
         $.ajax({
