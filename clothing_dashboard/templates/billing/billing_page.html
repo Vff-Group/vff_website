@@ -222,7 +222,7 @@
     <div class="payment-info">
       
       
-        {% if payment_type != 'cod' %}  
+        {% if payment_method != 'cod' %}  
         <h1>Payment Method: {{payment_method}}</h1>  
         <h1>Transaction ID: {{razorpay_id}}</h1>
         {% else %}
