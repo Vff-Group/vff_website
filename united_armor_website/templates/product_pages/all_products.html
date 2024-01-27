@@ -323,19 +323,19 @@
                 var dataTypeId = $(this).data('typeid');
                 var dataSize = $(this).data('size');
                 var dataColorId = $(this).data('colorid');
-
+            
                 // Log data attributes of each product item
                 console.log("Product Item - Category:", dataCatId);
                 console.log("Product Item - Type:", dataTypeId);
                 console.log("Product Item - Size:", dataSize);
                 console.log("Product Item - Color:", dataColorId);
-        
+            
                 // Check if filters are empty or if the item matches the selected filters
-                var categoryMatch = categoryFilter.length === 0 || $.inArray(dataCatId, categoryFilter) !== -1;
-                var typeMatch = typeFilter.length === 0 || $.inArray(dataTypeId, typeFilter) !== -1;
-                var sizeMatch = sizeFilter.length === 0 || $.inArray(dataSize, sizeFilter) !== -1;
-                var colorMatch = colorFilter.length === 0 || $.inArray(dataColorId, colorFilter) !== -1;
-        
+                var categoryMatch = categoryFilter.length === 0 || categoryFilter.includes(dataCatId.toString());
+                var typeMatch = typeFilter.length === 0 || typeFilter.includes(dataTypeId.toString());
+                var sizeMatch = sizeFilter.length === 0 || sizeFilter.includes(dataSize.toString());
+                var colorMatch = colorFilter.length === 0 || colorFilter.includes(dataColorId.toString());
+            
                 return categoryMatch && typeMatch && sizeMatch && colorMatch;
             }).show();
         
