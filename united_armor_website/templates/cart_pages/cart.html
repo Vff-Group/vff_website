@@ -146,7 +146,7 @@
 <script>
     $(document).ready(function () {
         // Handle change events for cart product quantity inputs
-$('.cart-product-quantity input').on('change', function () {
+//$('.cart-product-quantity input').on('change', function () {
     var $quantityInput = $(this);
     var quantityAvailable = parseInt($quantityInput.data('quantity-available'), 10);
     var maxCheckoutQty = parseInt($quantityInput.attr('max'), 10);
@@ -175,7 +175,7 @@ $('.cart-product-quantity input').on('change', function () {
 
     // Update the UI or make additional adjustments as needed
     // ...
-});
+//});
 
         // Get the CSRF token from the cookie
         function getCSRFToken() {
@@ -266,6 +266,7 @@ $('.cart-product-quantity input').on('change', function () {
             var quantityAvailable = parseInt($quantityInput.data('quantity-available'), 10);
             if(quantity > quantityAvailable){
                 showToast('Alert', 'Max Quantity Available Right Now');
+                $quantityInput.val(quantityAvailable); 
                 return;
             }
             // Check if the available quantity is zero or -1
