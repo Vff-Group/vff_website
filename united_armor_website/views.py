@@ -1379,7 +1379,7 @@ def my_orders(request):
     
     current_url = request.get_full_path()
     context = {'current_url': current_url,'query_result':data,'error_msg':error_msg}
-    return render(request,'account_pages/my_account.html',context)
+    return render(request,'account_pages/my_orders.html',context)
 
 
 #Updateing Billing Address 
