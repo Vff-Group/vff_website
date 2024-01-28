@@ -338,6 +338,21 @@
 
         updateCarouselAndSizes(initialColorId, initialSizeId);
 
+        $('#qty').on('input', function () {
+            var selectedColorId = $('#selected-color-id').val();
+            var selectedSizeId = $('#selected-size-id').val();
+        
+            // Check if color and size are selected
+            if (!selectedColorId || !selectedSizeId) {
+                // If either color or size is not selected, prevent changing the quantity
+                showToast('Alert', 'Please choose both color and size first');
+                $(this).val(1); // Reset the quantity to 1 or another default value
+            }
+        
+            // Update other logic as needed
+            // ...
+        });
+
        // Handle mouse enter and click events for colors
         $('.color-link').on('mouseenter click', function (event) {
             event.preventDefault();
