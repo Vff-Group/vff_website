@@ -63,6 +63,9 @@ urlpatterns = [
     #My Account
     path('account/',views.my_account,name='account'),
    
+    #My Account
+    path('my_orders/',views.my_orders,name='my_orders'),
+   
     #Privacy Policy
     path('privacy_policy/',views.privacy_policy,name='privacy_policy'),
    
