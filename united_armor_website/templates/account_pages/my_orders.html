@@ -58,6 +58,7 @@
                                 <th>Price</th>
                                 <th>Status</th>
                                 <th></th>
+                                <th>Actions</th>
                                 
                             </tr>
                         </thead>
@@ -112,10 +113,34 @@
                                     {% endif %}
                                 </td>
                                 
+                                <td>
+                                    <button class="btn btn-block btn-outline-dark-2" data-action="order-status" data-active-id="{{row.active_id}}">
+                                        <i class="icon-commenting-o"></i> View Order Status
+                                    </button>
+                                </td>
                             </tr>
                             {% endfor %}
     
-          
+                            <!-- Modal -->
+                            <div class="modal fade" id="orderStatusModal" tabindex="-1" role="dialog" aria-labelledby="orderStatusModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="orderStatusModalLabel">Order Status</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body" id="orderStatusContent">
+                                            <!-- Order status content will be loaded here -->
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
     
                         </tbody>
                     </table><!-- End .table table-wishlist -->
@@ -227,6 +252,33 @@
     });
 </script>
 
+<script>
+    $(document).ready(function () {
+        // Handle button click
+        $('[data-action="order-status"]').on('click', function () {
+            var activeId = $(this).data('active-id');
+
+            // Assume you have an API endpoint to fetch order status transitions based on activeId
+            var apiUrl = '/api/getOrderStatus?activeId=' + activeId;
+            $('#orderStatusModal').modal('show');
+            // Make an AJAX request to fetch order status data
+           /// $.ajax({
+           ///     url: apiUrl,
+           ///     method: 'POST',
+           ///     success: function (data) {
+           ///         // Update modal content with order status data
+           ///         $('#orderStatusContent').html(data);
+///
+           ///         // Open the modal
+           ///         $('#orderStatusModal').modal('show');
+           ///     },
+           ///     error: function (error) {
+           ///         console.error('Error fetching order status:', error);
+           ///     }
+           /// });
+        });
+    });
+</script>
 
 
 {% endblock %}
