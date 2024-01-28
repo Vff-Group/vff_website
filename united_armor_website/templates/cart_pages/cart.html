@@ -155,9 +155,11 @@ $('.cart-product-quantity input').on('change', function () {
     // Check if the entered quantity exceeds the available or max checkout quantity
     if (currentQuantity > quantityAvailable) {
         showToast('Alert', 'Quantity exceeds available quantity');
+        return;
         $quantityInput.val(quantityAvailable); // Set the quantity to the available quantity
     } else if (currentQuantity > maxCheckoutQty) {
         showToast('Alert', 'Quantity exceeds max checkout quantity');
+        return;
         $quantityInput.val(maxCheckoutQty); // Set the quantity to the max checkout quantity
     }
 
