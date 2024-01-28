@@ -232,21 +232,25 @@
         // Function to update subtotal and total
         function updateCartTotal() {
             var subTotal = 0;
-
+        
             // Iterate through each row in the cart
             $('.table-cart tbody tr').each(function () {
                 var productID = $(this).data('product-id');
                 var quantity = parseInt($(this).find('.cart-product-quantity input').val());
                 var price = parseFloat($(this).find('.price-col').text().replace('₹', '').replace(/,/g, '').trim());
-
-                // Calculate row total
-                var rowTotal = quantity * price;
-                subTotal += rowTotal;
-
-                // Update total column in the table with formatted currency
-                $(this).find('.total-col').text(formatCurrency(rowTotal));
+                var stockStatus = $(this).find('.stock-col span').text().trim();
+        
+                // Check if the product is not "Out of Stock"
+                if (stockStatus !== "Out of stock") {
+                    // Calculate row total
+                    var rowTotal = quantity * price;
+                    subTotal += rowTotal;
+        
+                    // Update total column in the table with formatted currency
+                    $(this).find('.total-col').text(formatCurrency(rowTotal));
+                }
             });
-
+        
             // Update subtotal and total labels with formatted currency
             $('.summary-subtotal td:last-child').text(formatCurrency(subTotal));
             $('.summary-total td:last-child').text(formatCurrency(subTotal));
@@ -265,13 +269,13 @@
             var maxQuantity = parseInt($quantityInput.data('max-quantity'));
             var quantityAvailable = parseInt($quantityInput.data('quantity-available'), maxQuantity);
             if(quantity >= maxQuantity){
-                showToast('Alert', 'Max Quantity Available Right Now');
+                showToast('Alert', 'Max Quantity Available To Checkout Right Now');
                 $quantityInput.val(quantityAvailable); 
                 return;
             }
             
             if(quantity > quantityAvailable){
-                showToast('Alert', 'Max Quantity Available Right Now');
+                showToast('Alert', 'Max Quantity Available Available In Stock');
                 $quantityInput.val(quantityAvailable); 
                 return;
             }
