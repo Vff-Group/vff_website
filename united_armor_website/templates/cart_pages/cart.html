@@ -68,7 +68,7 @@
                                 <td class="price-col">₹{{row.actual_price}}</td>
                                 <td class="quantity-col">
                                     <div class="cart-product-quantity">
-                                        <input type="number" class="form-control" value="{{row.quantity}}" min="1" max="{{row.max_checkout_qty}}" step="1" data-decimals="0" data-quantity-available="{{row.reserved_quantity}}" required>
+                                        <input type="number" class="form-control" value="{{row.quantity}}" min="1" max="{{row.max_checkout_qty}}" step="1" data-decimals="0" data-quantity-available="{{row.reserved_quantity}}" data-max-quantity="{{row.max_checkout_qty}}" required>
                                     </div><!-- End .cart-product-quantity -->
                                 </td>
                                 <td class="total-col">₹{{row.price}}</td>
@@ -262,8 +262,14 @@
             var cartID = $quantityInput.closest('tr').find('input[type="hidden"]').val();
             var quantity = $quantityInput.val();
             var price = $quantityInput.closest('tr').find('.price-col').text();
-
-            var quantityAvailable = parseInt($quantityInput.data('quantity-available'), 10);
+            var maxQuantity = parseInt($quantityInput.data('max-quantity'));
+            var quantityAvailable = parseInt($quantityInput.data('quantity-available'), maxQuantity);
+            if(quantity > maxQuantity){
+                showToast('Alert', 'Max Quantity Available Right Now');
+                $quantityInput.val(quantityAvailable); 
+                return;
+            }
+            
             if(quantity > quantityAvailable){
                 showToast('Alert', 'Max Quantity Available Right Now');
                 $quantityInput.val(quantityAvailable); 
@@ -331,7 +337,7 @@
 
         function showToast(message, bodyContent) {
             toastr.info(bodyContent, message, {
-                positionClass: "toast-bottom-right",
+                positionClass: "toast-bottom-center",
                 timeOut: 5e3,
                 closeButton: !0,
                 debug: !1,
