@@ -1210,8 +1210,9 @@ def place_order(request):
                         WHERE product_id = {product_id}
                           AND color_id = {color_id}
                           AND size_id = {size_id}
-                          AND reserved_quantity >= {quantity};
+                          
                     """
+                    #AND reserved_quantity >= {quantity};
                     cursor.execute(update_query)
                     print(f'update_query_inventory::{update_query}')
                 connection.commit()
