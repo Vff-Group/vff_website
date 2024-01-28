@@ -223,8 +223,8 @@
                 <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel" aria-labelledby="product-shipping-link">
                     <div class="product-desc-content">
                         <h3>Delivery & returns</h3>
-                        
-                        {% for policy in return_policy %}
+                    
+                        {% for policy in product.return_policy %}
                         <p>{{policy}}</p>    
                         {% endfor %}
                             
