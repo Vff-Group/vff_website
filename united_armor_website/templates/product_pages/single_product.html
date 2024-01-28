@@ -345,7 +345,7 @@
             // Check if color and size are selected
             if (!selectedColorId || !selectedSizeId) {
                 // If either color or size is not selected, prevent changing the quantity
-                showToast('Alert', 'Please choose both color and size first');
+                showToast('Alert', 'Please choose both color and size first to check if stock is available or not');
                 $(this).val(1); // Reset the quantity to 1 or another default value
             }
         
