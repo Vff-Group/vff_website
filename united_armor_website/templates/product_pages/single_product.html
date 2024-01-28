@@ -415,6 +415,15 @@
             quantityInput.value = 1; // Reset to 1 when size is changed
         }
 
+        $('#qty').on('input', function () {
+            var selectedSizeId = $('#selected-size-id').val();
+        
+            // Check if a size is selected
+            if (!selectedSizeId) {
+                // If no size is selected, prevent changing the quantity
+                showToast('Alert', 'Please choose a size first');
+                $(this).val(1); // Reset the quantity to 1 or another default value
+            }
 
         // Function to update carousel and sizes based on color id and size id
         function updateCarouselAndSizes(colorId, sizeId) {
