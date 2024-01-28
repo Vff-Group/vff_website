@@ -57,7 +57,7 @@
                             </div>
 
                             <div class="product-content">
-                                <p>{{ product.specifications }}</p>
+                                <p>{{ product.what_it_does }}</p>
                             </div>
                         
 
@@ -223,7 +223,12 @@
                 <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel" aria-labelledby="product-shipping-link">
                     <div class="product-desc-content">
                         <h3>Delivery & returns</h3>
-                        <p></p>
+                        
+                        {% for return_policy in return_policy_list %}
+                        <p>{{return_policy}}</p>    
+                        {% endfor %}
+                            
+                        
                     </div><!-- End .product-desc-content -->
                 </div><!-- .End .tab-pane -->
                 <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">

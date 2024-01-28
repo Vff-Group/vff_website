@@ -756,13 +756,17 @@ def product(request,product_id):
         error_msg = 'Something Went Wrong'
 
     
-    query = "SELECT product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,main_title_name,cat_name,sub_cat_name,product_catid,product_category_name,united_armor_all_productstbl.product_type_id,product_type_name,price,united_armor_all_productstbl.main_cat_id,united_armor_all_productstbl.cat_id,united_armor_all_productstbl.sub_catid,offer_price,default_images,default_size,ratings,default_color_id,color_name,color_code,measurementid,image_url FROM  vff.united_armor_measurementtbl,vff.united_armor_product_colorstbl,vff.united_armor_all_productstbl,vff.united_armor_product_categorytbl,vff.united_armor_product_typetbl,vff.united_armor_main_categorytbl,vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl WHERE united_armor_measurementtbl.measurementid=united_armor_all_productstbl.measurement_id and united_armor_product_colorstbl.colorsid=default_color_id  AND united_armor_product_categorytbl.product_catid=united_armor_all_productstbl.product_collection_id AND united_armor_product_typetbl.product_type_id=united_armor_all_productstbl.product_type_id AND united_armor_main_categorytbl.main_cat_id=united_armor_all_productstbl.main_cat_id AND united_armor_all_productstbl.cat_id=united_armor_categorytbl.catid AND united_armor_all_productstbl.sub_catid=united_armor_sub_categorytbl.sub_catid AND productid='"+str(product_id)+"'"
+    query = "SELECT product_name,fitting_type,fitting_id,max_checkout_qty,what_it_does,specifications,fit_and_care_desc,main_title_name,cat_name,sub_cat_name,product_catid,product_category_name,united_armor_all_productstbl.product_type_id,product_type_name,price,united_armor_all_productstbl.main_cat_id,united_armor_all_productstbl.cat_id,united_armor_all_productstbl.sub_catid,offer_price,default_images,default_size,ratings,default_color_id,color_name,color_code,measurementid,image_url,return_policy FROM  vff.united_armor_measurementtbl,vff.united_armor_product_colorstbl,vff.united_armor_all_productstbl,vff.united_armor_product_categorytbl,vff.united_armor_product_typetbl,vff.united_armor_main_categorytbl,vff.united_armor_categorytbl,vff.united_armor_sub_categorytbl WHERE united_armor_measurementtbl.measurementid=united_armor_all_productstbl.measurement_id and united_armor_product_colorstbl.colorsid=default_color_id  AND united_armor_product_categorytbl.product_catid=united_armor_all_productstbl.product_collection_id AND united_armor_product_typetbl.product_type_id=united_armor_all_productstbl.product_type_id AND united_armor_main_categorytbl.main_cat_id=united_armor_all_productstbl.main_cat_id AND united_armor_all_productstbl.cat_id=united_armor_categorytbl.catid AND united_armor_all_productstbl.sub_catid=united_armor_sub_categorytbl.sub_catid AND productid='"+str(product_id)+"'"
     query_result = execute_raw_query(query)
     data = []    
     if not query_result == 500:
         for row in query_result:
             specifications_list = row[5].split('.') if '.' in row[5] else [row[5]]
+            specifications_list = [item.strip() for item in specifications_list]
             fit_and_care_list = row[6].split('.') if '.' in row[6] else [row[6]]
+            fit_and_care_list = [item.strip() for item in fit_and_care_list]
+            return_policy_list = row[27].split('.') if '.' in row[27] else [row[27]]
+            return_policy_list = [item.strip() for item in return_policy_list]
             data.append({
                     'product_name':row[0],
                     'fitting_type':row[1],
@@ -791,6 +795,7 @@ def product(request,product_id):
                     'color_code':row[24],
                     'measurement_id':row[25],
                     'size_guide_image_url':row[26],
+                    'return_policy':return_policy_list,
                 
             })
     else:
