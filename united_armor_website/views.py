@@ -1213,7 +1213,7 @@ def place_order(request):
                           AND reserved_quantity >= {quantity};
                     """
                     cursor.execute(update_query)
-                
+                    print(f'update_query_inventory::{update_query}')
                 connection.commit()
                 print("Order Placed Successfully")
                 return JsonResponse({'message':'success'})
