@@ -257,12 +257,31 @@ $('.cart-product-quantity input').on('change', function () {
 
         // Event listener for quantity change
         $('.cart-product-quantity input').on('input', function () {
-            var cartID = $(this).closest('tr').find('input[type="hidden"]').val();
-            var quantity = $(this).val();
-            var price = $(this).closest('tr').find('.price-col').text();
+            var $quantityInput = $(this);
 
+            var cartID = $quantityInput.closest('tr').find('input[type="hidden"]').val();
+            var quantity = $quantityInput.val();
+            var price = $quantityInput.closest('tr').find('.price-col').text();
+
+            var quantityAvailable = parseInt($quantityInput.data('quantity-available'), 10);
+            if(quantity > quantityAvailable){
+                showToast('Alert', 'Max Quantity Available Right Now');
+                return;
+            }
+            // Check if the available quantity is zero or -1
+            if (quantityAvailable <= 0) {
+                // Handle out-of-stock scenario
+                showToast('Alert', 'This item is out of stock');
+                // You can hide the input or take other appropriate actions
+                $quantityInput.closest('.cart-product-quantity').hide();
+            } else {
+                // Update cart item via AJAX
+                updateCartItem(cartID, quantity, price);
+                // Update subtotal and total on the client side
+                // updateCartTotal();
+            }
             // Update cart item via AJAX
-            updateCartItem(cartID, quantity, price);
+            //updateCartItem(cartID, quantity, price);
 
             // Update subtotal and total on the client side
            // updateCartTotal();
