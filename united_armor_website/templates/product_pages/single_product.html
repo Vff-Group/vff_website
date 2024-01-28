@@ -314,6 +314,19 @@
 
 <script>
     $(document).ready(function () {
+        var reviewDataLength = {{ review_data|length }}; // Get the length of review_data from your server-side code
+
+        // Hide the ratings container if review_data length is 0
+        if (reviewDataLength === 0) {
+            $('.ratings-container').hide();
+        } else {
+            // Calculate width percentage based on the number of reviews
+            var widthPercentage = (reviewDataLength - 1) * 20 + 20; // 20% for the first review, then add 20% for each additional review
+
+            // Set the width of ratings-val element
+            $('.ratings-val').css('width', widthPercentage + '%');
+        }
+
         var selectedColorId = null;
         var selectedSizeId = null;
         // Store all original images in a variable
