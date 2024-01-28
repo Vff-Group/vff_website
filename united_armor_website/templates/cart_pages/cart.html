@@ -264,7 +264,7 @@
             var price = $quantityInput.closest('tr').find('.price-col').text();
             var maxQuantity = parseInt($quantityInput.data('max-quantity'));
             var quantityAvailable = parseInt($quantityInput.data('quantity-available'), maxQuantity);
-            if(quantity > maxQuantity){
+            if(quantity >= maxQuantity){
                 showToast('Alert', 'Max Quantity Available Right Now');
                 $quantityInput.val(quantityAvailable); 
                 return;
