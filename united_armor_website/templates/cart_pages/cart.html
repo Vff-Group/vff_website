@@ -268,17 +268,19 @@
             var price = $quantityInput.closest('tr').find('.price-col').text();
             var maxQuantity = parseInt($quantityInput.data('max-quantity'));
             var quantityAvailable = parseInt($quantityInput.data('quantity-available'), maxQuantity);
-            if(quantity >= maxQuantity){
-                showToast('Alert', 'Max Quantity Available To Checkout Right Now');
-                $quantityInput.val(quantityAvailable); 
-                return;
-            }
-            
             if(quantity > quantityAvailable){
                 showToast('Alert', 'Max Quantity Available Available In Stock');
                 $quantityInput.val(quantityAvailable); 
                 return;
             }
+
+            if(quantity >= maxQuantity){
+                showToast('Alert', 'Max Quantity Available To Checkout Right Now');
+                $quantityInput.val(quantity-1); 
+                return;
+            }
+            
+            
             // Check if the available quantity is zero or -1
             if (quantityAvailable <= 0) {
                 // Handle out-of-stock scenario
