@@ -401,8 +401,19 @@
                 $('.btn-cart').show();
                 $('.btn-out-of-stock').hide();
             }
+            var maxCheckoutQty = parseInt(document.getElementById('qty').getAttribute('max'), 10);
+            updateQuantityInput(quantityAvailable,maxCheckoutQty)
         });
 
+        function updateQuantityInput(quantityAvailable, maxCheckoutQty) {
+            var quantityInput = document.getElementById('qty');
+    
+            // If available quantity is less than max checkout quantity, set max value to available quantity
+            var maxQuantityToShow = quantityAvailable < maxCheckoutQty ? quantityAvailable : maxCheckoutQty;
+    
+            quantityInput.max = maxQuantityToShow;
+            quantityInput.value = 1; // Reset to 1 when size is changed
+        }
 
 
         // Function to update carousel and sizes based on color id and size id
