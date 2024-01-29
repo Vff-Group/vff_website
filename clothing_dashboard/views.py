@@ -1846,7 +1846,8 @@ def order_details(request,order_id):
         for row in result:
             epoch = row[22]
             time_date = epochToDateTime(epoch)
-            
+            order_delivered = row[14]
+            print(f'order_delivered::{order_delivered}')
             data.append({
                 'product_id': row[0],
                 'product_name': row[1],
