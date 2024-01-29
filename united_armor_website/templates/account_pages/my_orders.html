@@ -58,7 +58,7 @@
                                 <th>Price</th>
                                 <th>Status</th>
                                 <th></th>
-                                <th>Actions</th>
+                                <!-- <th>Actions</th> -->
                                 
                             </tr>
                         </thead>
@@ -113,11 +113,11 @@
                                     {% endif %}
                                 </td>
                                 
-                                <td class=" text-center m-1">
+                                <!-- <td class=" text-center m-1">
                                     <button class="btn btn-sm btn-outline-dark-2" data-action="order-status" data-active-id="{{row.active_id}}">
                                         <i class="icon-commenting-o"></i> View Order Status
                                     </button>
-                                </td>
+                                </td> -->
                             </tr>
                             {% endfor %}
     
@@ -180,7 +180,9 @@
         } else if (actionType === 'return') {
             modalBodyContent = '<label for="returnReason">Return Reason</label><textarea class="form-control" id="returnReason" rows="3"></textarea>';
         } else {
-            modalBodyContent = '<label for="feedbackTextarea">Feedback</label><textarea class="form-control" id="feedbackTextarea" rows="3"></textarea>';
+             // For 'Provide Feedback' action, include a rating bar and feedback textarea
+            modalBodyContent = '<div class="mb-3"><label for="feedbackRating">Rating</label><input type="range" class="form-range" id="feedbackRating" min="1" max="5"></div>';
+            modalBodyContent += '<label for="feedbackTextarea">Feedback</label><textarea class="form-control" id="feedbackTextarea" rows="3"></textarea>';
         }
 
         // Set modal body content

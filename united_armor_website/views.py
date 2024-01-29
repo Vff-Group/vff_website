@@ -1482,8 +1482,13 @@ def handle_cancel_return_feedback(request):
                 with connection.cursor() as cursor:
                     customer_id = request.session.get('u_customer_id')
                     
-                    #Updating Order Return 
+                    #Updating Order Feed back 
                     update_query="update vff.united_armor_active_orders_tbl set feedback='"+str(feedback)+"' where activeid='"+str(active_id)+"' and customer_id='"+str(customer_id)+"'"
+                    print(f'Order Feedback  Details ::{update_query}')
+                    cursor.execute(update_query)
+                    
+                    #Updating Order Reviews #TODO: Assign the product_id for review table and also create a rating bar
+                    update_query="insert into vff.united_armor_product_reviewtbl(customer_id,comment,ratings,product_id) values ()"
                     print(f'Order Feedback  Details ::{update_query}')
                     cursor.execute(update_query)
                     
