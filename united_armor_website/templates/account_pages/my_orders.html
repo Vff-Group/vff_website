@@ -107,7 +107,7 @@
                                     {% elif order_order_deliveredid == 1 and row.feedback == 'NA' %}
                                         <button class="btn btn-sm btn-outline-dark-2" data-action="return" data-active-id="{{row.active_id}}">Return</button>
                                     {% elif row.feedback == 'NA' %}
-                                        <button class="btn btn-sm btn-outline-dark-2" data-action="feedback" data-active-id="{{row.active_id}}"><i class="icon-commenting-o"></i>Feedback</button>
+                                        <button class="btn btn-sm btn-outline-dark-2" data-action="feedback" data-active-id="{{row.active_id}}" data-product-id="{{row.product_id}}"><i class="icon-commenting-o"></i>Feedback</button>
                                     {% else %}
                                         <span class="in-stock">Order Delivered</span>
                                     {% endif %}
@@ -164,6 +164,7 @@
     $(document).on('click', '.action-col button', function () {
         var actionType = $(this).data('action');
         var activeId = $(this).data('active-id');
+        var productId = $(this).data('product-id');
         // Clear previous modal body content
         $('.modal-body').empty();
         // Set modal title based on action type
@@ -180,9 +181,8 @@
         } else if (actionType === 'return') {
             modalBodyContent = '<label for="returnReason">Return Reason</label><textarea class="form-control" id="returnReason" rows="3"></textarea>';
         } else {
-               // For 'Provide Feedback' action, include a rating bar and feedback textarea
-    modalBodyContent = '<div class="card"><h1>Ratings</h1><br /><span onclick="gfg(1)" class="star">★</span><span onclick="gfg(2)" class="star">★</span><span onclick="gfg(3)" class="star">★</span><span onclick="gfg(4)" class="star">★</span><span onclick="gfg(5)" class="star">★</span><h3 id="output"> Rating is: 0/5</h3></div>';
-    modalBodyContent += '<label for="feedbackTextarea">Feedback</label><textarea class="form-control" id="feedbackTextarea" rows="3"></textarea>';
+    
+            modalBodyContent = '<label for="feedbackTextarea">Feedback</label><textarea class="form-control" id="feedbackTextarea" rows="3"></textarea>';
             
         }
 
@@ -190,34 +190,7 @@
         // Set modal body content
         $('.modal-body').html(modalBodyContent);
 
-        // To access the stars
-        let stars = 
-        document.getElementsByClassName("star");
-        let output = 
-        document.getElementById("output");
-
-        // Funtion to update rating
-        function gfg(n) {
-        remove();
-        for (let i = 0; i < n; i++) {
-            if (n == 1) cls = "one";
-            else if (n == 2) cls = "two";
-            else if (n == 3) cls = "three";
-            else if (n == 4) cls = "four";
-            else if (n == 5) cls = "five";
-            stars[i].className = "star " + cls;
-        }
-        output.innerText = "Rating is: " + n + "/5";
-        }
-
-        // To remove the pre-applied styling
-        function remove() {
-        let i = 0;
-        while (i < 5) {
-            stars[i].className = "star";
-            i++;
-        }
-        }
+        
 
 
         // Dynamically set modal footer buttons
@@ -256,6 +229,7 @@
                 data: {
                     action: actionType,
                     activeId: activeId,
+                    productId: productId,
                     formData: formData
                 },
                 headers: {

@@ -1440,6 +1440,7 @@ def handle_cancel_return_feedback(request):
     if request.method == 'POST':
         action_type = request.POST.get('action')
         active_id = request.POST.get('activeId')
+        productId = request.POST.get('productId')
         formData = {}
 
         if action_type == 'cancel':
@@ -1487,10 +1488,10 @@ def handle_cancel_return_feedback(request):
                     print(f'Order Feedback  Details ::{update_query}')
                     cursor.execute(update_query)
                     
-                    #Updating Order Reviews #TODO: Assign the product_id for review table and also create a rating bar
-                    update_query="insert into vff.united_armor_product_reviewtbl(customer_id,comment,ratings,product_id) values ()"
-                    print(f'Order Feedback  Details ::{update_query}')
-                    cursor.execute(update_query)
+                    #Updating Order Reviews 
+                    update_order_query="insert into vff.united_armor_product_reviewtbl(customer_id,comment,product_id) values ('"+str(customer_id)+"','"+str(feedback)+"','"+str(productId)+"')"
+                    print(f'Order Review Feedback  Details ::{update_order_query}')
+                    cursor.execute(update_order_query)
                     
                     connection.commit()
                     print("Order Feedback Given Successfully.")
