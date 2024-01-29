@@ -1277,48 +1277,56 @@ a:focus {
 /*# sourceMappingURL=skin-demo-9.css.map */
 
 
-.rating {
+/* style.css */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
+  
+  body {
+  min-height: 50vh;
   display: flex;
-  flex-direction: row-reverse;
+  align-items: center;
+  text-align: center;
   justify-content: center;
-}
-
-.rating > input{ display:none;}
-
-.rating > label {
-  position: relative;
-    width: 1em;
-    font-size: 6vw;
-    color: #FFD600;
-    cursor: pointer;
-}
-.rating > label::before{ 
-  content: "\2605";
-  position: absolute;
-  opacity: 0;
-}
-.rating > label:hover:before,
-.rating > label:hover ~ label:before {
-  opacity: 1 !important;
-}
-
-.rating > input:checked ~ label:before{
-  opacity:1;
-}
-
-.rating:hover > input:checked ~ label:before{ opacity: 0.4; }
-
-body{ background: #222225; color: white;}
-h1, p{ 
-    text-align: center;
-    
-}
-
-h1{
-    margin-top:150px;
-}
-p{ font-size: 1.2rem;}
-@media only screen and (max-width: 600px) {
-  h1{font-size: 14px;}
-  p{font-size: 12px;}
-}
+  background: hsl(137, 46%, 24%);
+  font-family: "Poppins", sans-serif;
+  }
+  
+  .card {
+  max-width: 33rem;
+  background: #fff;
+  margin: 0 1rem;
+  padding: 1rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  border-radius: 0.5rem;
+  }
+  
+  .star {
+  font-size: 10vh;
+  cursor: pointer;
+  }
+  
+  .one {
+  color: rgb(255, 0, 0);
+  }
+  
+  .two {
+  color: rgb(255, 106, 0);
+  }
+  
+  .three {
+  color: rgb(251, 255, 120);
+  }
+  
+  .four {
+  color: rgb(255, 255, 0);
+  }
+  
+  .five {
+  color: rgb(24, 159, 14);
+  }
+  
