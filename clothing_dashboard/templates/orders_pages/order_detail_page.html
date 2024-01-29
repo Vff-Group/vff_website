@@ -345,9 +345,9 @@
                                   <div class="form-group">
                                     <label class="form-control-label" for="input-order-delivered">Order Transition</label>
                                     <select class="form-control form-control-alternative" id="input-order-delivered" name="order_delivered">
-                                        <option value="0"  {% if data.order_delivered == 0 %}selected{% endif %}>Not Completed Yet</option>
-                                        <option value="1"  {% if data.order_delivered == 1 %}selected{% endif %}>Completed</option>
-                                        <option value="2"  {% if data.order_delivered == 2 %}selected{% endif %}>Failed</option>
+                                        <option value="0"  {% if order_delivered == 0 %}selected{% endif %}>Not Completed Yet</option>
+                                        <option value="1"  {% if order_delivered == 1 %}selected{% endif %}>Completed</option>
+                                        <option value="2"  {% if order_delivered == 2 %}selected{% endif %}>Failed</option>
                                       
                                     </select>
                                   </div>
