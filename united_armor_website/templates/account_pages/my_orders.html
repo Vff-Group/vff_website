@@ -156,10 +156,13 @@
     </div><!-- End .cart -->
 </div><!-- End .page-content -->
 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<style>
+    .checked {
+      color: orange;
+    }
+    </style>
 <script>
     // Handle button click event
     $(document).on('click', '.action-col button', function () {
@@ -182,7 +185,7 @@
             modalBodyContent = '<label for="returnReason">Return Reason</label><textarea class="form-control" id="returnReason" rows="3"></textarea>';
         } else {
                // For 'Provide Feedback' action, include a rating bar and feedback textarea
-    modalBodyContent = '<div class="rating"><input type="radio" name="rating" value="5" id="5"><label for="5">☆</label><input type="radio" name="rating" value="4" id="4"><label for="4">☆</label><input type="radio" name="rating" value="3" id="3"><label for="3">☆</label><input type="radio" name="rating" value="2" id="2"><label for="2">☆</label><input type="radio" name="rating" value="1" id="1"><label for="1">☆</label></div>';
+    modalBodyContent = '<span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
     modalBodyContent += '<label for="feedbackTextarea">Feedback</label><textarea class="form-control" id="feedbackTextarea" rows="3"></textarea>';
             
         }
