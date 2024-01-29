@@ -94,7 +94,7 @@
                 </div>
             </li>
             
-              <li class="nav-item">
+              {% comment %} <li class="nav-item">
                 <a
                   class="nav-link {% if current_url == '/aboutus/' %}active {% endif %}"
                   href="{% url 'website_app:aboutus' %}"
@@ -108,7 +108,7 @@
                   href="{% url 'website_app:services' %}"
                   >Services</a
                 >
-              </li>
+              </li> {% endcomment %}
               
               <li class="nav-item">
                 <a

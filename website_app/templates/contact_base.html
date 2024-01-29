@@ -83,7 +83,17 @@
                   >Home</a
                 >
               </li>
-              <li class="nav-item">
+              <li class="nav-item {% if current_url == '/aboutus/' %}active {% elif current_url == '/services/'%}active {% endif %} dropdown">
+                <a class="nav-link dropdown-toggle"  id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    Laundry
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="{% url 'website_app:aboutus' %}">About Us</a>
+                    <a class="dropdown-item" href="{% url 'website_app:services' %}">Services</a>
+                    
+                </div>
+            </li>
+              {% comment %} <li class="nav-item">
                 <a
                   class="nav-link {% if current_url == '/aboutus/' %}active {% endif %}"
                   href="{% url 'website_app:aboutus' %}"
@@ -96,7 +106,7 @@
                   href="{% url 'website_app:services' %}"
                   >Services</a
                 >
-              </li>
+              </li> {% endcomment %}
               <li class="nav-item">
                 <a
                   class="nav-link {% if current_url == '/franchise/' %}active {% endif %}"
