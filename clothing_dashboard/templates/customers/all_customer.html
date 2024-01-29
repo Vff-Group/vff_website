@@ -50,8 +50,6 @@
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Address</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Joined</th>
                     
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                    <th class="text-secondary opacity-7"></th>
                   </tr>
                 </thead>
                 {% if not query_result%}
@@ -63,58 +61,34 @@
                   </button>
               </div>
               {% else %}
-                <!-- <tbody >
+                <tbody >
                   {% for row in query_result %}
                   <tr>
                     <td>
                       <div class="d-flex px-2 py-1">
-                        <div>
-                          <img src="{{row.profile_img}}" class="avatar avatar-sm me-3" alt="user1">
-                        </div>
+                        
                         <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-sm">{{row.usrname}}</h6>
+                          <h6 class="mb-0 text-sm">{{row.customer_name}}</h6>
                           <p class="text-xs text-secondary mb-0">{{row.mobno}}</p>
                         </div>
                       </div>
                     </td>
                     <td>
-                      <p class="text-xs font-weight-bold mb-0">{{row.address}}</p>
-                      <p class="text-xs text-secondary mb-0"></p>
+                      <p class="text-xs font-weight-bold mb-0">{{row.address1}}{{row.address2}}</p>
+                      <p class="text-xs text-secondary mb-0">{{row.city_name}} {{row.state}} - {{pincode}}</p>
                     </td>
                     <td>
-                        <p class="text-xs font-weight-bold mb-0 text-center">{{row.creation_date_time}}</p>
+                        <p class="text-xs font-weight-bold mb-0 text-center">{{row.join_time}}</p>
                         {% comment %} <p class="text-xs text-secondary mb-0 text-center">{{row.creation_time}}</p> {% endcomment %}
                       </td>
                     
+                    <!-- <td class="align-middle text-center">
+                      <span class="text-secondary text-xs font-weight-bold">
+                        {% comment %} {{row.last_service}} {% endcomment %}
+                        Need to add
+                      </span>
+                    </td> -->
                     
-                    <td class="align-middle text-center text-sm">
-                      {% if row.is_online == 1 %}
-                        <span class="badge badge-sm bg-success">
-                            Online
-                        </span>
-                      {% else %}
-                          <span class="badge badge-sm bg-warning">
-                          Offline
-                          </span>
-                      {% endif %}
-                        
-                      </td>
-                    <td class="align-middle">
-                        <div class="row">
-                            <div class="col">
-                                <a href="{% url 'dashboard_app:update_customer' row.usrid %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                    Edit
-                                  </a>
-                            </div>
-                            <div class="col">
-                                <a href="" class="text-danger font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#modal-default{{row.usrid}}">
-                                    Delete
-                                  </a>
-                            </div> 
-                        </div>
-                      
-                      
-                    </td>
                   </tr>
 
                   <div class="col-md-4">
@@ -147,7 +121,7 @@
                     </div>
                   </div>
                   {% endfor %}
-                </tbody> -->
+                </tbody>
               </table>
             </div>
           </div>

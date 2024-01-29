@@ -75,9 +75,38 @@ def all_customers(request):
     if isLogin == False:
         return redirect('clothing_dashboard_app:login')
     error_msg = 'No Customers Found'
+    #
+    query = "select customerid,customer_name,address,address2,city_name,state,country,join_time,mobno,email,pincode from vff.united_armor_customertbl order by customerid desc"
+    
+    query_result = execute_raw_query(query)
+    
+    
+        
+    data = []    
+    if not query_result == 500:
+        for row in query_result:
+            epoch = row[7]
+            join_time = epochToDateTime(epoch)
+            data.append({
+                'customer_id': row[0],
+                'customer_name': row[1],
+                'address1': row[2],
+                'address2': row[3],
+                'city_name': row[4],
+                'state': row[5],
+                'country': row[6],
+                'join_time': join_time,
+                'mobno': row[8],
+                'email': row[9],
+                'pincode': row[10],
+                
+               
+            })
+    else:
+        error_msg = 'Something Went Wrong'
     current_url = request.get_full_path()
     # using the 'current_url' variable to determine the active card.
-    context = {'current_url': current_url,'error_msg':error_msg}
+    context = {'current_url': current_url,'error_msg':error_msg,'query_result':data}
     return render(request,"customers/all_customer.html",context)
 
 def all_main_categories(request):
