@@ -1445,9 +1445,6 @@ def handle_cancel_return_feedback(request):
 
         if action_type == 'cancel':
             cancel_reason = request.POST.get('reason')
-            formData= request.POST.get('formData')
-            print(f'cancel_reason::{cancel_reason}')
-            return JsonResponse({'message':'error'})
             # Handle cancel action
             try:
                 with connection.cursor() as cursor:
