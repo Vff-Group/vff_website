@@ -230,7 +230,8 @@
                     action: actionType,
                     activeId: activeId,
                     productId: productId,
-                    formData: formData
+                    reason: formData.reason, // Include the specific properties of formData
+                    feedback: formData.feedback
                 },
                 headers: {
                     'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
