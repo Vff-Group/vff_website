@@ -181,10 +181,11 @@
             modalBodyContent = '<label for="returnReason">Return Reason</label><textarea class="form-control" id="returnReason" rows="3"></textarea>';
         } else {
              // For 'Provide Feedback' action, include a rating bar and feedback textarea
-            modalBodyContent = '<div class="mb-3"><label for="feedbackRating">Rating</label><input type="range" class="form-range" id="feedbackRating" min="1" max="5"></div>';
+            modalBodyContent = '<div class="container"><span id="rateMe2"  class="empty-stars"></span></div>';
             modalBodyContent += '<label for="feedbackTextarea">Feedback</label><textarea class="form-control" id="feedbackTextarea" rows="3"></textarea>';
         }
 
+        //$('#rateMe2').mdbRate();
         // Set modal body content
         $('.modal-body').html(modalBodyContent);
 
