@@ -180,18 +180,22 @@
         } else if (actionType === 'return') {
             modalBodyContent = '<label for="returnReason">Return Reason</label><textarea class="form-control" id="returnReason" rows="3"></textarea>';
         } else {
-             // For 'Provide Feedback' action, include a rating bar and feedback textarea
-            modalBodyContent = '<label for="feedbackRating">Feedback Rating</label> <div class="rating-container"><input type="hidden" id="feedbackRating" name="feedbackRating" value="0"><div class="rating-stars"><span class="star" data-value="1" data-tooltip="Very Poor">&#9733;</span><span class="star" data-value="2" data-tooltip="Poor">&#9733;</span><span class="star" data-value="3" data-tooltip="Good">&#9733;</span><span class="star" data-value="4" data-tooltip="Very Good">&#9733;</span><span class="star" data-value="5" data-tooltip="Excellent">&#9733;</span></div></div>';
-            modalBodyContent += '<label for="feedbackTextarea">Feedback</label><textarea class="form-control" id="feedbackTextarea" rows="3"></textarea>';
-            $('.star').on('click', function() {
-                var selectedValue = $(this).data('value');
-                $('#feedbackRating').val(selectedValue);
-            });
+               // For 'Provide Feedback' action, include a rating bar and feedback textarea
+    modalBodyContent = '<label for="feedbackRating">Feedback Rating</label> <div class="rating-container"><input type="hidden" id="feedbackRating" name="feedbackRating" value="0"><div class="rating-stars"><span class="star" data-value="1" data-tooltip="Very Poor">&#9733;</span><span class="star" data-value="2" data-tooltip="Poor">&#9733;</span><span class="star" data-value="3" data-tooltip="Good">&#9733;</span><span class="star" data-value="4" data-tooltip="Very Good">&#9733;</span><span class="star" data-value="5" data-tooltip="Excellent">&#9733;</span></div></div>';
+    modalBodyContent += '<label for="feedbackTextarea">Feedback</label><textarea class="form-control" id="feedbackTextarea" rows="3"></textarea>';
+            
         }
 
         
         // Set modal body content
         $('.modal-body').html(modalBodyContent);
+
+        // Handle click events on dynamic stars
+$('.modal-body').on('click', '.star', function() {
+    var selectedValue = $(this).data('value');
+    $('#feedbackRating').val(selectedValue);
+});
+
 
         // Dynamically set modal footer buttons
         var modalFooterButtons = '<button type="button" class="btn btn-primary" id="submitAction">Submit</button>';
