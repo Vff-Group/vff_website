@@ -105,8 +105,8 @@
                                     {% elif row.order_order_deliveredid == 0 and row.cancelled == 0 %}
                                         <button class="btn btn-sm btn-outline-primary-2" data-action="cancel" data-active-id="{{row.active_id}}"><i class="icon-close"></i>Cancel Order</button>
                                     {% elif row.feedback == 'NA' %}
-                                        <button class="btn btn-sm btn-outline-dark-2" data-action="return" data-active-id="{{row.active_id}}">Return</button>
-                                        <button class="btn btn-sm btn-outline-dark-2 ms-1" data-action="feedback" data-active-id="{{row.active_id}}" data-product-id="{{row.product_id}}"><i class="icon-commenting-o"></i>Feedback</button>
+                                        <button class="btn btn-sm btn-outline-primary-2" data-action="return" data-active-id="{{row.active_id}}">Return</button>
+                                        <button class="btn btn-sm btn-outline-dark-2 mt-1" data-action="feedback" data-active-id="{{row.active_id}}" data-product-id="{{row.product_id}}"><i class="icon-commenting-o"></i>Feedback</button>
                                     
                                     {% else %}
                                         <span class="in-stock">Order Delivered</span>
