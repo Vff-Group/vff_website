@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-w$a1myz)1y_m=5xxq(8857a&4p3#8*pez_m8)oi!54jg7vj3!k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False 
+DEBUG = True
 
 ALLOWED_HOSTS = ['www.vff-group.com','www.vffgroup.in','vffgroup.in','vff-group.com','www.velvetwash.in','velvetwash.in','localhost','62.72.57.222']
 
