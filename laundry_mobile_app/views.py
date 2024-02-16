@@ -1272,7 +1272,7 @@ def load_sub_category_section_wise_details(request):
             jdict = json.loads(request.body)
             section_type = jdict['section_type']
 
-            query="select sub_cat_name,sub_cat_img,cost,type,subcatid from vff.laundry_sub_categorytbl where section_type='"+str(section_type)+"'"
+            query="select sub_cat_name,sub_cat_img,cost,type,subcatid from vff.laundry_sub_categorytbl where section_type='"+str(section_type)+"' and catid='16'"
             if query != "":
                 reply_data="ErrorCode#0"
                 mapVal = execute_query_and_get_result(query)
