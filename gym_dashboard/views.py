@@ -637,7 +637,7 @@ def make_admission_payment(request,member_id,name,due_date):
     
     isLogin = is_loggedin(request)
     if isLogin == False:
-        return redirect('dashboard_app:login')
+        return redirect('gym_dashboard_app:login')
     
     
     error_msg = "Something Went Wrong"
@@ -682,7 +682,7 @@ def make_admission_payment(request,member_id,name,due_date):
                 connection.commit()
                 
                 #Insert fees table
-                query_fees_tbl = "insert into vff.gym_feestbl (member_type,duration_in_months,price,member_id,fees_date,last_due_date,fees_paid_date,gym_id,payment_type,fees_plan_id) values ('Regular Member','"+str(plan_duration)+"','"+str(plan_price)+"','"+str(member_id)+"','"+str(fees_date)+"','"+str(last_due_date)+"','"+str(fees_paid_date)+"','"+str(gym_id)+"','"+str(payment_type)+"','"+str(fees_plan_id)+"')"
+                query_fees_tbl = "insert into vff.gym_feestbl (member_type,duration_in_months,price,member_id,fees_date,last_due_date,fees_paid_date,gym_id,payment_type,fees_plan_id) values ('Regular Member','"+str(plan_duration)+"','"+str(plan_price)+"','"+str(member_id)+"','"+str(next_fees_date)+"','"+str(last_due_date)+"','"+str(fees_paid_date)+"','"+str(gym_id)+"','"+str(payment_type)+"','"+str(fees_plan_id)+"')"
                 print(f'Fees Table Insert Queyr::{query_fees_tbl}')
                 cursor.execute(query_fees_tbl)
                 
@@ -778,7 +778,7 @@ def add_new_admission_fees_details(request):
                 connection.commit()
                 
                 #Insert fees table
-                query_fees_tbl = "insert into vff.gym_feestbl (member_type,duration_in_months,price,member_id,fees_date,last_due_date,fees_paid_date,gym_id,payment_type,fees_plan_id) values ('Regular Member','"+str(plan_duration)+"','"+str(plan_price)+"','"+str(member_id)+"','"+str(fees_date)+"','"+str(last_due_date)+"','"+str(fees_paid_date)+"','"+str(gym_id)+"','"+str(payment_type)+"','"+str(fees_plan_id)+"')"
+                query_fees_tbl = "insert into vff.gym_feestbl (member_type,duration_in_months,price,member_id,fees_date,last_due_date,fees_paid_date,gym_id,payment_type,fees_plan_id) values ('Regular Member','"+str(plan_duration)+"','"+str(plan_price)+"','"+str(member_id)+"','"+str(next_fees_date)+"','"+str(last_due_date)+"','"+str(fees_paid_date)+"','"+str(gym_id)+"','"+str(payment_type)+"','"+str(fees_plan_id)+"')"
                 print(f'Fees Table Insert Queyr::{query_fees_tbl}')
                 cursor.execute(query_fees_tbl)
                 
