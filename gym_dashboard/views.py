@@ -440,7 +440,7 @@ def fees_due_details(request):
         return redirect('gym_dashboard_app:login')
     error_msg = 'No Due Fees Details Found'
     gym_branch_id = request.session.get('gym_branch_id')
-    query = "select name,mobno,gym_feestbl.member_id,join_date,profile_image,fees_type as planname,feesid,member_type,gym_fees_detailstbl.duration_in_months,gym_fees_detailstbl.price,gym_fees_detailstbl.description,fees_date,last_due_date,fees_paid_date,cardio from vff.gym_memberstbl,vff.gym_feestbl,vff.gym_fees_detailstbl where gym_fees_detailstbl.fdetail_id=gym_feestbl.fees_plan_id and gym_memberstbl.memberid=gym_feestbl.member_id and gym_feestbl.gym_id='"+str(gym_branch_id)+"' and fees_date<=CURRENT_DATE"
+    query = "select name,mobno,gym_feestbl.member_id,join_date,profile_image,fees_type as planname,feesid,member_type,gym_fees_detailstbl.duration_in_months,gym_fees_detailstbl.price,gym_fees_detailstbl.description,fees_date,last_due_date,fees_paid_date,cardio,due_date from vff.gym_memberstbl,vff.gym_feestbl,vff.gym_fees_detailstbl where gym_fees_detailstbl.fdetail_id=gym_feestbl.fees_plan_id and gym_memberstbl.memberid=gym_feestbl.member_id and gym_feestbl.gym_id='"+str(gym_branch_id)+"' and due_date<=CURRENT_DATE"
     
     query_result = execute_raw_query(query)
     
@@ -466,6 +466,7 @@ def fees_due_details(request):
                 'last_due_date': row[12],
                 'fees_paid_date': row[13],
                 'cardio': row[14],
+                'due_date': row[15],
                 
                 
             })
