@@ -1,307 +1,438 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
 
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
-
-    <!-- inner banner -->
-    <section class="inner-banner py-5">
-        <div class="w3l-breadcrumb py-lg-5">
-            <div class="container pt-5 pb-sm-4 pb-2">
-                <h4 class="inner-text-title font-weight-bold pt-5">About Us</h4>
-                <ul class="breadcrumbs-custom-path">
-                    <li><a href="{% url 'website_app:index' %}">Home</a></li>
-                    <li class="active"><i class="fas fa-angle-right mx-2"></i>About</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    <!-- //inner banner -->
-
-    <!-- about section -->
-    <section class="w3l-about-2 py-5">
-        <div class="container py-lg-5 py-md-4 py-2">
-            <div class="row justify-content-between align-items-center pb-lg-5">
-                <div class="col-lg-6 about-2-secs-right mb-lg-0 mb-5">
-                    <div class="image-box inverse position-relative">
-                        <div class="image-box__static">
-				<img src="{% static 'images/auto_nagar_store.jpg' %}" alt="" width="364" height="459">
-                        </div>
-                        <div class="image-box__float">
-                            <img src="{% static 'profiles/deepa.jpeg' %}" alt="" width="364" height="459">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 about-2-secs-left ps-lg-5 mt-lg-4 mt-5">
-                    <h5 class="sub-title">Introducing Mrs. Deepa R Pattar</h5>
-                    <h3 class="title-style">A Leading Woman Entrepreneur in the World of Laundry Services</h3>
-                    <p class="mt-4">Welcome to Velvet Wash, a sanctuary of pristine fabrics and a celebration of empowerment, where we honor exceptional women 
-                        who have carved their path in the business world. 
-                        Today, we proudly shine a spotlight on <strong>Mrs. Deepa Pattar</strong>, 
-                        an exemplary woman entrepreneur, whose passion for quality and dedication to service have propelled Velvet Wash 
-                        to unparalleled heights.</p>
-                        <p class="mt-4">WOMEN ENTERPRENEUR OF THE YEAR AWARD 2022 winner Miss Deepa Raghavendra Pattar founder of VELVET WASH Laundry and Dry Cleaning. With demonstrated history of working in textile service industry. </p>
-                        <ul class="mt-4 list-style-lis">
-                            <li><i class="fas fa-check-circle"></i>100% Customer Satisfaction</li>
-                            <li><i class="fas fa-check-circle"></i>Free Collection & Delivery</li>
-                            <li><i class="fas fa-check-circle"></i>Affordable Prices</li>
-                        </ul>
-                    <a href="{% url 'website_app:index' %}" class="btn btn-style mt-5">Get Started</a>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- //about section -->
-
-    <!-- stats section -->
-    <div class="w3-stats pb-5">
-        <div class="container pb-lg-5 pb-md-4 pb-2">
-            <div class="row text-center">
-                <div class="col-md-3 col-6">
-                    <div class="counter">
-                        <div class="timer count-title count-number" data-to="10945" data-speed="1500"></div>
-                        <p class="count-text">Clothes Washed</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="counter active">
-                        <div class="timer count-title count-number" data-to="5050" data-speed="1500"></div>
-                        <p class="count-text">Happy Customers</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6 mt-md-0 mt-4">
-                    <div class="counter">
-                        <div class="timer count-title count-number" data-to="6430" data-speed="1500"></div>
-                        <p class="count-text">Dry Cleaned</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6 mt-md-0 mt-4">
-                    <div class="counter border-right-0">
-                        <div class="timer count-title count-number" data-to="11400" data-speed="1500"></div>
-                        <p class="count-text">Steam & Ironed</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- inner banner -->
+<section class="inner-banner py-5">
+  <div class="w3l-breadcrumb py-lg-5">
+    <div class="container pt-5 pb-sm-4 pb-2">
+      <h4 class="inner-text-title font-weight-bold pt-5">About Us</h4>
+      <ul class="breadcrumbs-custom-path">
+        <li><a href="{% url 'website_app:index' %}">Home</a></li>
+        <li class="active"><i class="fas fa-angle-right mx-2"></i>About</li>
+      </ul>
     </div>
-    <!-- //stats section -->
+  </div>
+</section>
+<!-- //inner banner -->
 
-    <!-- image with content section -->
-    <section class="home-block-3 py-xl-4 py-2">
-        <div class="row m-0 align-items-center">
-            <div class="col-lg-6 left-w3l-img p-0">
-		    <img src="{% static 'images/tilakwadi_store.jpg' %}" alt="card-image" class="img-fluid">
-            </div>
-            <div class="col-lg-6 right-w3l-img mt-lg-0 mt-sm-4 mt-5">
-                <div class="p-xl-5 p-sm-4 mx-xl-3">
-                    <h5 class="sub-title">Get Discounts</h5>
-                    <h3 class="title-style">Book Our Laundry Services</h3>
-                    <p class="sub-title mt-3">Book Your Hassle-Free Laundry Services with Velvet Wash. 
-                        Enjoy Fresh, Clean Clothes Delivered Right to Your Doorstep.
-                         Schedule Your Service Now!.</p>
-                         <div class="row mt-5 pt-xl-4">
-                            <div class="col-sm-6 icon-style">
-                                <i class="fas fa-tshirt"></i>
-                                <div class="ab-detail">
-                                    <h4 class="title-head mb-sm-3 mb-2"><a href="{% url 'website_app:services' %}">Clean Result</a></h4>
-                                    <p>Where Immaculacy Meets Quality, Ensuring Exceptional Clean Results.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 icon-style mt-sm-0 mt-4">
-                                <i class="fas fa-shipping-fast"></i>
-                                <div class="ab-detail">
-                                    <h4 class="title-head mb-sm-3 mb-2"><a href="{% url 'website_app:services' %}">Fast Delivery</a></h4>
-                                    <p>Enjoy Rapid Delivery for Your Freshly Laundered Garments.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-            </div>
+<!-- about section -->
+<section class="w3l-about-2 py-5">
+  <div class="container py-lg-5 py-md-4 py-2">
+    <div class="row justify-content-between align-items-center pb-lg-5">
+      <div class="col-lg-6 about-2-secs-right mb-lg-0 mb-5">
+        <div class="image-box inverse position-relative">
+          <div class="image-box__static">
+            <img
+              src="{% static 'images/auto_nagar_store.jpg' %}"
+              alt=""
+              width="364"
+              height="459"
+            />
+          </div>
+          <div class="image-box__float">
+            <img
+              src="{% static 'profiles/deepa.jpeg' %}"
+              alt=""
+              width="364"
+              height="459"
+            />
+          </div>
         </div>
-    </section>
-    <!-- //image with content section -->
+      </div>
+      <div class="col-lg-6 about-2-secs-left ps-lg-5 mt-lg-4 mt-5">
+        <h5 class="sub-title">Introducing Mrs. Deepa R Pattar</h5>
+        <h3 class="title-style">
+          A Leading Woman Entrepreneur in the World of Laundry Services
+        </h3>
+        <p class="mt-4">
+          Welcome to Velvet Wash, a sanctuary of pristine fabrics and a
+          celebration of empowerment, where we honor exceptional women who have
+          carved their path in the business world. Today, we proudly shine a
+          spotlight on <strong>Mrs. Deepa Pattar</strong>, an exemplary woman
+          entrepreneur, whose passion for quality and dedication to service have
+          propelled Velvet Wash to unparalleled heights.
+        </p>
+        <p class="mt-4">
+          WOMEN ENTERPRENEUR OF THE YEAR AWARD 2022 winner Miss Deepa
+          Raghavendra Pattar founder of VELVET WASH Laundry and Dry Cleaning.
+          With demonstrated history of working in textile service industry.
+        </p>
+        <ul class="mt-4 list-style-lis">
+          <li><i class="fas fa-check-circle"></i>100% Customer Satisfaction</li>
+          <li><i class="fas fa-check-circle"></i>Free Collection & Delivery</li>
+          <li><i class="fas fa-check-circle"></i>Affordable Prices</li>
+        </ul>
+        <a href="{% url 'website_app:index' %}" class="btn btn-style mt-5"
+          >Get Started</a
+        >
+      </div>
+    </div>
+  </div>
+</section>
+<!-- //about section -->
 
-    <!-- team section -->
-    <section class="w3l-content-11-main py-5">
-        <div class="container py-lg-5 py-md-4 py-2">
-            <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
-                <h5 class="sub-title">Meet Our Team</h5>
-                <h3 class="title-style">Allow us to introduce you to the exceptional team behind Velvet Wash</h3>
-            </div>
-            <div class="row justify-content-center ">
-                
-                {% comment %} <div class="col-md-4 col-sm-6 ">
-                    <div class="position-relative">
-                        <img src="{% static 'profiles/satu.jpeg' %}" class="img-fluid" alt="image">
-                        <div class="text-position">
-                            <h4><a href="{% url 'website_app:aboutus' %}">Mr.Satu </a></h4>
-                            <p>General Manager</p>
-                            <div class="social-team">
-                                <ul class="list-inline">
-                                    <li><a href="#url"><i class="fab fa-facebook-f"></i></a></li>
-                                    <li><a href="#url"><i class="fab fa-twitter"></i></a></li>
-                                    <li><a href="#url"><i class="fab fa-linkedin-in"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div> {% endcomment %}
-                <div class="col-md-4 col-sm-6 mt-sm-0 mt-4">
-                    <div class="position-relative">
-                        <img src="{% static 'profiles/uttam.jpeg' %}" class="img-fluid" alt="image">
-                        <div class="text-position">
-                            <h4><a href="{% url 'website_app:aboutus' %}">Mr. Uttam</a></h4>
-                            <p>Board of Director</p>
-                            <div class="social-team">
-                                <ul class="list-inline">
-                                    <li><a href="#url"><i class="fab fa-facebook-f"></i></a></li>
-                                    <li><a href="#url"><i class="fab fa-twitter"></i></a></li>
-                                    <li><a href="#url"><i class="fab fa-linkedin-in"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% comment %} <div class="col-md-4 col-sm-6 mt-md-0 mt-4 mb-4">
-                    <div class="position-relative">
-                        <img src="{% static 'profiles/shubam.jpeg' %}" class="img-fluid" alt="image">
-                        <div class="text-position">
-                            <h4><a href="{% url 'website_app:aboutus' %}"> Mr. Shubham</a></h4>
-                            <p>Head of outlet projects</p>
-                            <div class="social-team">
-                                <ul class="list-inline">
-                                    <li><a href="#url"><i class="fab fa-facebook-f"></i></a></li>
-                                    <li><a href="#url"><i class="fab fa-twitter"></i></a></li>
-                                    <li><a href="#url"><i class="fab fa-linkedin-in"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div> {% endcomment %}
-                <div class="col-md-4 col-sm-6 mt-md-0 mt-4">
-                    <div class="position-relative">
-                        <img src="{% static 'profiles/shankar.jpeg' %}" class="img-fluid" alt="image">
-                        <div class="text-position">
-                            <h4><a href="{% url 'website_app:aboutus' %}"> Mr. Shankar Gauda </a></h4>
-                            <p>Managing partner and Director marketing franchise</p>
-                            <div class="social-team">
-                                <ul class="list-inline">
-                                    <li><a href="#url"><i class="fab fa-facebook-f"></i></a></li>
-                                    <li><a href="#url"><i class="fab fa-twitter"></i></a></li>
-                                    <li><a href="#url"><i class="fab fa-linkedin-in"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- stats section -->
+<div class="w3-stats pb-5">
+  <div class="container pb-lg-5 pb-md-4 pb-2">
+    <div class="row text-center">
+      <div class="col-md-3 col-6">
+        <div class="counter">
+          <div
+            class="timer count-title count-number"
+            data-to="10945"
+            data-speed="1500"
+          ></div>
+          <p class="count-text">Clothes Washed</p>
         </div>
-    </section>
-    <!-- //team section -->
-
-    <!-- testimonials -->
-    <section class="w3l-clients pb-5" id="testimonials">
-        <div class="container py-lg-5 py-md-4 pt-2">
-            <div class="row w3-testimonial-grids align-items-center">
-                <div class="col-lg-6 w3-testimonial-content-top">
-                    <div class="title-main mb-4">
-                        <h5 class="sub-title">Tesimonials</h5>
-                        <h3 class="title-style">What our Customers think about us</h3>
-                    </div>
-                    <div id="owl-demo1" class="owl-carousel owl-theme py-sm-2 mb-4">
-                        <div class="item">
-                            <div class="testimonial-content">
-                                <div class="testimonial">
-                                    <blockquote>
-                                        <q>VFF Velvet Wash, your laundry's true delight,
-                                            Stains vanished, fabrics gleaming, pure and white.
-                                            With service that's top-notch and staff so kind,
-                                            You've won my trust, the best I've ever find.</q>
-                                    </blockquote>
-                                    <div class="testi-des">
-                                        <div class="test-img"><img src="assets/images/testi1.jpg" class="img-fluid"
-                                                alt="client-img">
-                                        </div>
-                                        <div class="peopl align-self">
-                                            <h3>Deepak Sharma</h3>
-                                            <p class="indentity">Google Reviews</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial-content">
-                                <div class="testimonial">
-                                    <blockquote>
-                                        <q>When it comes to laundry services, Velvet Wash and Dry Cleaning stands head and 
-                                            shoulders above the rest. I have been using their services for quite some time now, 
-                                            and I am continually impressed with the exceptional quality of their work. From simple everyday
-                                             clothing to delicate and luxurious fabrics, they handle each item with the utmost care 
-                                             and attention to detail.</q>
-                                    </blockquote>
-                                    <div class="testi-des">
-                                        <div class="test-img"><img src="assets/images/testi2.jpg" class="img-fluid"
-                                                alt="client-img">
-                                        </div>
-                                        <div class="peopl align-self">
-                                            <h3>Faizaan Marfani</h3>
-                                            <p class="indentity">Google Reviews</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial-content">
-                                <div class="testimonial">
-                                    <blockquote>
-                                        <q>was very impressed with the service had just returned from a tour and was leaving the following evening.
-                                             I was surprised that it was possible to get my laundry done at a reasonable price on time before I left. 
-                                            The laundry was collected and delivered promptly and the job was well done. Many thanks!.</q>
-                                    </blockquote>
-                                    <div class="testi-des">
-                                        <div class="test-img"><img src="assets/images/testi3.jpg" class="img-fluid"
-                                                alt="client-img">
-                                        </div>
-                                        <div class="peopl align-self">
-                                            <h3>AMOGH HUDDAR</h3>
-                                            <p class="indentity">Google Reviews</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial-content">
-                                <div class="testimonial">
-                                    <blockquote>
-                                        <q>Excellent Service !  "I really love this laundromat and appreciate the workers and all they have done to keep the store well running with the amazing staff 
-                                            and even through after pandemic they've made us feel reassured and comfortable washing here." 
-                                            I Can give 5/5 for their commitment, On time delivery, Good hygiene, Price and Quality. 
-                                            </q>
-                                    </blockquote>
-                                    <div class="testi-des">
-                                        <div class="test-img"><img src="assets/images/testi2.jpg" class="img-fluid"
-                                                alt="client-img">
-                                        </div>
-                                        <div class="peopl align-self">
-                                            <h3>Santosh Kagawade</h3>
-                                            <p class="indentity">Google Reviews</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 position-relative ps-lg-5 mt-lg-0 mt-5">
-                    <img src="assets/images/testimonials.jpg" alt="" class="radius-image img-fluid">
-                </div>
-            </div>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="counter active">
+          <div
+            class="timer count-title count-number"
+            data-to="5050"
+            data-speed="1500"
+          ></div>
+          <p class="count-text">Happy Customers</p>
         </div>
-    </section>
-    <!-- //testimonials -->
+      </div>
+      <div class="col-md-3 col-6 mt-md-0 mt-4">
+        <div class="counter">
+          <div
+            class="timer count-title count-number"
+            data-to="6430"
+            data-speed="1500"
+          ></div>
+          <p class="count-text">Dry Cleaned</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-6 mt-md-0 mt-4">
+        <div class="counter border-right-0">
+          <div
+            class="timer count-title count-number"
+            data-to="11400"
+            data-speed="1500"
+          ></div>
+          <p class="count-text">Steam & Ironed</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- //stats section -->
 
-    {% endblock %}
+<!-- image with content section -->
+<section class="home-block-3 py-xl-4 py-2">
+  <div class="row m-0 align-items-center">
+    <div class="col-lg-6 left-w3l-img p-0">
+      <img
+        src="{% static 'images/tilakwadi_store.jpg' %}"
+        alt="card-image"
+        class="img-fluid"
+      />
+    </div>
+    <div class="col-lg-6 right-w3l-img mt-lg-0 mt-sm-4 mt-5">
+      <div class="p-xl-5 p-sm-4 mx-xl-3">
+        <h5 class="sub-title">Get Discounts</h5>
+        <h3 class="title-style">Book Our Laundry Services</h3>
+        <p class="sub-title mt-3">
+          Book Your Hassle-Free Laundry Services with Velvet Wash. Enjoy Fresh,
+          Clean Clothes Delivered Right to Your Doorstep. Schedule Your Service
+          Now!.
+        </p>
+        <div class="row mt-5 pt-xl-4">
+          <div class="col-sm-6 icon-style">
+            <i class="fas fa-tshirt"></i>
+            <div class="ab-detail">
+              <h4 class="title-head mb-sm-3 mb-2">
+                <a href="{% url 'website_app:services' %}">Clean Result</a>
+              </h4>
+              <p>
+                Where Immaculacy Meets Quality, Ensuring Exceptional Clean
+                Results.
+              </p>
+            </div>
+          </div>
+          <div class="col-sm-6 icon-style mt-sm-0 mt-4">
+            <i class="fas fa-shipping-fast"></i>
+            <div class="ab-detail">
+              <h4 class="title-head mb-sm-3 mb-2">
+                <a href="{% url 'website_app:services' %}">Fast Delivery</a>
+              </h4>
+              <p>Enjoy Rapid Delivery for Your Freshly Laundered Garments.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- //image with content section -->
+
+<!-- team section -->
+<section class="w3l-content-11-main py-5">
+  <div class="container py-lg-5 py-md-4 py-2">
+    <div
+      class="title-main text-center mx-auto mb-md-5 mb-4"
+      style="max-width: 500px"
+    >
+      <h5 class="sub-title">Meet Our Team</h5>
+      <h3 class="title-style">
+        Allow us to introduce you to the exceptional team behind Velvet Wash
+      </h3>
+    </div>
+    <div class="row justify-content-center">
+      {% comment %}
+      <div class="col-md-4 col-sm-6">
+        <div class="position-relative">
+          <img
+            src="{% static 'profiles/satu.jpeg' %}"
+            class="img-fluid"
+            alt="image"
+          />
+          <div class="text-position">
+            <h4><a href="{% url 'website_app:aboutus' %}">Mr.Satu </a></h4>
+            <p>General Manager</p>
+            <div class="social-team">
+              <ul class="list-inline">
+                <li>
+                  <a href="#url"><i class="fab fa-facebook-f"></i></a>
+                </li>
+                <li>
+                  <a href="#url"><i class="fab fa-twitter"></i></a>
+                </li>
+                <li>
+                  <a href="#url"><i class="fab fa-linkedin-in"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endcomment %}
+      <div class="col-md-4 col-sm-6 mt-sm-0 mt-4">
+        <div class="position-relative">
+          <img
+            src="{% static 'profiles/uttam.jpeg' %}"
+            class="img-fluid"
+            alt="image"
+          />
+          <div class="text-position">
+            <h4><a href="{% url 'website_app:aboutus' %}">Mr. Uttam</a></h4>
+            <p>Board of Director</p>
+            <div class="social-team">
+              <ul class="list-inline">
+                <li>
+                  <a href="#url"><i class="fab fa-facebook-f"></i></a>
+                </li>
+                <li>
+                  <a href="#url"><i class="fab fa-twitter"></i></a>
+                </li>
+                <li>
+                  <a href="#url"><i class="fab fa-linkedin-in"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% comment %}
+      <div class="col-md-4 col-sm-6 mt-md-0 mt-4 mb-4">
+        <div class="position-relative">
+          <img
+            src="{% static 'profiles/shubam.jpeg' %}"
+            class="img-fluid"
+            alt="image"
+          />
+          <div class="text-position">
+            <h4><a href="{% url 'website_app:aboutus' %}"> Mr. Shubham</a></h4>
+            <p>Head of outlet projects</p>
+            <div class="social-team">
+              <ul class="list-inline">
+                <li>
+                  <a href="#url"><i class="fab fa-facebook-f"></i></a>
+                </li>
+                <li>
+                  <a href="#url"><i class="fab fa-twitter"></i></a>
+                </li>
+                <li>
+                  <a href="#url"><i class="fab fa-linkedin-in"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endcomment %}
+      <div class="col-md-4 col-sm-6 mt-md-0 mt-4">
+        <div class="position-relative">
+          <img
+            src="{% static 'profiles/shankar.jpeg' %}"
+            class="img-fluid"
+            alt="image"
+          />
+          <div class="text-position">
+            <h4>
+              <a href="{% url 'website_app:aboutus' %}"> Mr. Shankar Gauda </a>
+            </h4>
+            <p>Managing partner and Director marketing franchise</p>
+            <div class="social-team">
+              <ul class="list-inline">
+                <li>
+                  <a href="#url"><i class="fab fa-facebook-f"></i></a>
+                </li>
+                <li>
+                  <a href="#url"><i class="fab fa-twitter"></i></a>
+                </li>
+                <li>
+                  <a href="#url"><i class="fab fa-linkedin-in"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- //team section -->
+
+<!-- testimonials -->
+<section class="w3l-clients pb-5" id="testimonials">
+  <div class="container py-lg-5 py-md-4 pt-2">
+    <div class="row w3-testimonial-grids align-items-center">
+      <div class="col-lg-6 w3-testimonial-content-top">
+        <div class="title-main mb-4">
+          <h5 class="sub-title">Tesimonials</h5>
+          <h3 class="title-style">What our Customers think about us</h3>
+        </div>
+        <div id="owl-demo1" class="owl-carousel owl-theme py-sm-2 mb-4">
+          <div class="item">
+            <div class="testimonial-content">
+              <div class="testimonial">
+                <blockquote>
+                  <q
+                    >VFF Velvet Wash, your laundry's true delight, Stains
+                    vanished, fabrics gleaming, pure and white. With service
+                    that's top-notch and staff so kind, You've won my trust, the
+                    best I've ever find.</q
+                  >
+                </blockquote>
+                <div class="testi-des">
+                  <div class="test-img">
+                    <img
+                      src="assets/images/testi1.jpg"
+                      class="img-fluid"
+                      alt="client-img"
+                    />
+                  </div>
+                  <div class="peopl align-self">
+                    <h3>Deepak Sharma</h3>
+                    <p class="indentity">Google Reviews</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="testimonial-content">
+              <div class="testimonial">
+                <blockquote>
+                  <q
+                    >When it comes to laundry services, Velvet Wash and Dry
+                    Cleaning stands head and shoulders above the rest. I have
+                    been using their services for quite some time now, and I am
+                    continually impressed with the exceptional quality of their
+                    work. From simple everyday clothing to delicate and
+                    luxurious fabrics, they handle each item with the utmost
+                    care and attention to detail.</q
+                  >
+                </blockquote>
+                <div class="testi-des">
+                  <div class="test-img">
+                    <img
+                      src="assets/images/testi2.jpg"
+                      class="img-fluid"
+                      alt="client-img"
+                    />
+                  </div>
+                  <div class="peopl align-self">
+                    <h3>Faizaan Marfani</h3>
+                    <p class="indentity">Google Reviews</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="testimonial-content">
+              <div class="testimonial">
+                <blockquote>
+                  <q
+                    >was very impressed with the service had just returned from
+                    a tour and was leaving the following evening. I was
+                    surprised that it was possible to get my laundry done at a
+                    reasonable price on time before I left. The laundry was
+                    collected and delivered promptly and the job was well done.
+                    Many thanks!.</q
+                  >
+                </blockquote>
+                <div class="testi-des">
+                  <div class="test-img">
+                    <img
+                      src="assets/images/testi3.jpg"
+                      class="img-fluid"
+                      alt="client-img"
+                    />
+                  </div>
+                  <div class="peopl align-self">
+                    <h3>AMOGH HUDDAR</h3>
+                    <p class="indentity">Google Reviews</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="testimonial-content">
+              <div class="testimonial">
+                <blockquote>
+                  <q
+                    >Excellent Service ! "I really love this laundromat and
+                    appreciate the workers and all they have done to keep the
+                    store well running with the amazing staff and even through
+                    after pandemic they've made us feel reassured and
+                    comfortable washing here." I Can give 5/5 for their
+                    commitment, On time delivery, Good hygiene, Price and
+                    Quality.
+                  </q>
+                </blockquote>
+                <div class="testi-des">
+                  <div class="test-img">
+                    <img
+                      src="assets/images/testi2.jpg"
+                      class="img-fluid"
+                      alt="client-img"
+                    />
+                  </div>
+                  <div class="peopl align-self">
+                    <h3>Santosh Kagawade</h3>
+                    <p class="indentity">Google Reviews</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 position-relative ps-lg-5 mt-lg-0 mt-5">
+        <img
+          src="assets/images/testimonials.jpg"
+          alt=""
+          class="radius-image img-fluid"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+<!-- //testimonials -->
+
+{% endblock %}

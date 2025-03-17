@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <!-- Hero Slider -->
+    <div class="hero-slider">
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="slider-content" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{% static 'images/slider1.jpg' %}');">
+                        <div class="container">
+                            <div class="slider-text text-center text-white">
+                                <h1>Exclusive Designer Collection</h1>
+                                <p>Discover our latest collection of ethnic wear</p>
+                                <a href="#products" class="btn btn-style mt-4">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more carousel items similarly -->
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Product Categories -->
+    <section class="product-categories py-5" id="products">
+        <div class="container py-md-5 py-4">
+            <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
+                <h5 class="sub-title">Our Collections</h5>
+                <h3 class="title-style">Best Selling Products</h3>
+            </div>
+            <div class="row">
+                <!-- Lehengas -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="category-card">
+                        <div class="category-img-box">
+                            <img src="{% static 'images/lehenga1.jpg' %}" alt="Lehenga" class="img-fluid">
+                            <div class="category-overlay">
+                                <h4>L E H E N G A S</h4>
+                                <div class="price-box">
+                                    <span class="original-price">₹25,000</span>
+                                    <span class="offer-price">₹19,999</span>
+                                </div>
+                                <a href="https://wa.me/your_number?text=I'm%20interested%20in%20Lehenga%20(₹19,999)" 
+                                   class="btn btn-style mt-3">Contact on WhatsApp</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sarees -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="category-card">
+                        <div class="category-img-box">
+                            <img src="{% static 'images/saree1.jpg' %}" alt="Saree" class="img-fluid">
+                            <div class="category-overlay">
+                                <h4>S A R E E S</h4>
+                                <div class="price-box">
+                                    <span class="original-price">₹15,000</span>
+                                    <span class="offer-price">₹12,999</span>
+                                </div>
+                                <a href="https://wa.me/your_number?text=I'm%20interested%20in%20Saree%20(₹12,999)" 
+                                   class="btn btn-style mt-3">Contact on WhatsApp</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Suits and Gowns similarly -->
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .hero-slider {
+            margin-top: -76px;
+        }
+        .slider-content {
+            height: 80vh;
+            background-size: cover!important;
+            background-position: center!important;
+            display: flex;
+            align-items: center;
+        }
+        .slider-text {
+            padding: 20px;
+        }
+        .slider-text h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+        .category-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .category-img-box {
+            position: relative;
+        }
+        .category-img-box img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+        .category-overlay {
+            position: absolute;
+            bottom: -100%;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        .category-card:hover .category-overlay {
+            bottom: 0;
+        }
+        .price-box {
+            margin: 15px 0;
+        }
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            margin-right: 10px;
+        }
+        .offer-price {
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        @media (max-width: 768px) {
+            .slider-text h1 {
+                font-size: 2rem;
+            }
+            .category-img-box img {
+                height: 300px;
+            }
+        }
+    </style>
+{% endblock %}
