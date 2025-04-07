@@ -117,13 +117,13 @@
                   >Franchise</a
                 >
               </li>
-		<li class="nav-item">
+		{% comment %} <li class="nav-item">
                 <a
                   class="nav-link {% if current_url == '/boutique/' %}active {% endif %}"
                   href="{% url 'website_app:boutique' %}"
                   >Boutique</a
                 >
-              </li>
+              </li> {% endcomment %}
               <li class="nav-item">
                 <a
                   class="nav-link {% if current_url == '/united_armor/' %}active {% endif %}"
