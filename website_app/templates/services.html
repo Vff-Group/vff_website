@@ -3,8 +3,15 @@
 {% block title %}Services & Pricing | Velvet Wash{% endblock %}
 
 {% block content %}
-<section class="lw-page-hero">
+<section class="lw-page-hero lw-page-hero--video">
+  <div class="lw-page-hero__video">
+    <video autoplay muted loop playsinline>
+      <source src="{{ vff_videos.3 }}" type="video/mp4" />
+    </video>
+  </div>
+  <div class="lw-page-hero__overlay"></div>
   <div class="container">
+    <img src="{{ logo_url }}" alt="VFF Group" class="lw-page-hero__logo mb-2" width="160" height="48" />
     <h1>Services</h1>
     <ul class="lw-breadcrumb">
       <li><a href="{% url 'website_app:index' %}">Home</a></li>
@@ -47,6 +54,8 @@
     </div>
   </div>
 </section>
+
+{% include 'includes/lw_video_showcase.html' %}
 
 <section class="lw-section lw-section--muted" id="pricing">
   <div class="container">

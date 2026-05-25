@@ -1,11 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}About Us | Velvet Wash{% endblock %}
+{% block title %}About Us | Velvet Wash — VFF Group{% endblock %}
 
 {% block content %}
-<section class="lw-page-hero">
+<section class="lw-page-hero lw-page-hero--video">
+  <div class="lw-page-hero__video">
+    <video autoplay muted loop playsinline>
+      <source src="{{ vff_videos.1 }}" type="video/mp4" />
+    </video>
+  </div>
+  <div class="lw-page-hero__overlay"></div>
   <div class="container">
+    <img src="{{ logo_url }}" alt="VFF Group" class="lw-page-hero__logo mb-2" width="180" height="54" />
     <h1>About Us</h1>
     <ul class="lw-breadcrumb">
       <li><a href="{% url 'website_app:index' %}">Home</a></li>
@@ -18,16 +25,19 @@
   <div class="container">
     <div class="lw-grid-2">
       <div class="lw-about-img">
-        <img src="{{ img.about }}" alt="Professional laundry team at work" loading="lazy" />
+        <img src="{{ img.about }}" alt="Velvet Wash professional laundry" loading="lazy" />
       </div>
       <div>
         <span class="lw-section__label">Our Story</span>
-        <h2 class="lw-section__title">Professional &amp; reliable laundry</h2>
-        <p style="color:var(--lw-text-muted);line-height:1.7;">Velvet Wash by VFF Group brings world-class laundry and dry cleaning to Belagavi — with free collection, transparent pricing, and care you can trust.</p>
+        <h2 class="lw-section__title">VFF Group · Velvet Wash</h2>
+        <p style="color:var(--lw-text-muted);line-height:1.75;">
+          <strong>Velvet Wash</strong> is the laundry and dry-cleaning division of <strong>VFF Group</strong> — bringing world-class garment care to Belagavi with free collection, transparent pricing, and operations you can trust. From everyday wash &amp; fold to premium dry cleaning and commercial laundry, we serve homes, hotels, and businesses across Tilakwadi and Auto Nagar.
+        </p>
         <ul class="lw-check-list">
           <li><i class="fas fa-check-circle"></i> Professional &amp; reliable service</li>
           <li><i class="fas fa-check-circle"></i> Eco-friendly cleaning products</li>
-          <li><i class="fas fa-check-circle"></i> 100% customer satisfaction</li>
+          <li><i class="fas fa-check-circle"></i> 100% customer satisfaction focus</li>
+          <li><i class="fas fa-check-circle"></i> VFF Group mobile app for booking &amp; tracking</li>
         </ul>
         <a href="{% url 'website_app:book_order' %}" class="lw-btn lw-btn-primary mt-2">Get Started</a>
       </div>
@@ -37,22 +47,30 @@
 
 <section class="lw-section lw-section--muted">
   <div class="container">
-    <div class="lw-grid-2">
+    <div class="lw-owner-section lw-owner-section--about">
       <div>
         <span class="lw-section__label">Leadership</span>
         <h2 class="lw-section__title">Mrs. Deepa R Pattar</h2>
-        <p style="color:var(--lw-text-muted);line-height:1.7;">Women Entrepreneur of the Year 2022 — founder of Velvet Wash Laundry and Dry Cleaning, with a demonstrated history in the textile service industry.</p>
+        <p class="lw-lead">Founder &amp; Chief Executive Officer — VFF Group</p>
+        <p style="color:var(--lw-text-muted);line-height:1.75;">
+          Mrs. <strong>Deepa R Pattar</strong> founded Velvet Wash Laundry &amp; Dry Cleaning under VFF Group with a vision to raise laundry standards in Karnataka and beyond. Recognized as <strong>Women Entrepreneur of the Year 2022</strong>, she leads a team that combines textile-industry expertise with modern equipment, hygiene protocols, and customer-first service.
+        </p>
+        <p style="color:var(--lw-text-muted);line-height:1.75;">
+          Under her leadership, Velvet Wash operates two Belagavi locations (Tilakwadi &amp; Auto Nagar), serves thousands of customers through the VFF Group app, and is expanding nationally through a structured <a href="{% url 'website_app:franchise' %}">franchise program</a> for entrepreneurs who want a proven laundry brand — not a startup from scratch.
+        </p>
         <ul class="lw-check-list">
-          <li><i class="fas fa-check-circle"></i> Free collection &amp; delivery</li>
-          <li><i class="fas fa-check-circle"></i> Affordable prices</li>
+          <li><i class="fas fa-check-circle"></i> Founder of Velvet Wash Laundry &amp; Dry Cleaning</li>
+          <li><i class="fas fa-check-circle"></i> Women Entrepreneur of the Year 2022</li>
+          <li><i class="fas fa-check-circle"></i> Free collection &amp; delivery across Belagavi</li>
+          <li><i class="fas fa-check-circle"></i> Franchise &amp; partnership enquiries: <a href="mailto:franchise@vff-group.com">franchise@vff-group.com</a></li>
         </ul>
       </div>
-      <div class="lw-about-img">
-        <img src="{{ img.about_team }}" alt="Laundry professional" loading="lazy" style="min-height:320px;" />
-      </div>
+      {% include 'includes/lw_owner_card.html' %}
     </div>
   </div>
 </section>
+
+{% include 'includes/lw_video_showcase.html' with showcase_title="Behind Velvet Wash" showcase_desc="A glimpse of the standards Mrs. Deepa R Pattar and the VFF Group team deliver every day." %}
 
 <section class="lw-stats-bar">
   <div class="container">

@@ -7,16 +7,9 @@
   <meta name="description" content="Velvet Wash by VFF Group — professional laundry and dry cleaning in Belagavi. Free pickup & delivery." />
   <meta name="robots" content="index, follow" />
   <title>{% block title %}Velvet Wash | Professional Laundry Service{% endblock %}</title>
-  <link rel="icon" type="image/png" href="{% static 'logos/favicon.png' %}" />
+  <link rel="icon" type="image/png" href="{{ logo_url }}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <meta name="color-scheme" content="light dark" />
-  <script>
-    (function () {
-      var t = localStorage.getItem('theme');
-      if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
-    })();
-  </script>
   <link rel="stylesheet" href="{% static 'css/style-starter.css' %}" />
   <link rel="stylesheet" href="{% static 'css/laundry-ui.css' %}" />
   {% block extra_head %}{% endblock %}
@@ -26,8 +19,7 @@
     <div class="container">
       <nav class="navbar navbar-expand-lg">
         <a class="lw-brand navbar-brand" href="{% url 'website_app:index' %}">
-          <span class="lw-brand__icon"><i class="fas fa-tint" aria-hidden="true"></i></span>
-          Velvet <span>Wash</span>
+          <img src="{{ logo_url }}" alt="VFF Group — Velvet Wash" class="lw-brand__logo" width="160" height="48" />
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#lwNav" aria-label="Menu">
           <span class="navbar-toggler-icon fa fa-bars"></span>
@@ -38,13 +30,10 @@
             <li class="nav-item"><a class="nav-link {% if current_url == '/aboutus/' %}active{% endif %}" href="{% url 'website_app:aboutus' %}">About Us</a></li>
             <li class="nav-item"><a class="nav-link {% if current_url == '/services/' %}active{% endif %}" href="{% url 'website_app:services' %}">Services</a></li>
             <li class="nav-item"><a class="nav-link {% if current_url == '/how-it-works/' %}active{% endif %}" href="{% url 'website_app:how_it_works' %}">How It Works</a></li>
+            <li class="nav-item"><a class="nav-link {% if current_url == '/franchise/' %}active{% endif %}" href="{% url 'website_app:franchise' %}">Franchise</a></li>
             <li class="nav-item"><a class="nav-link {% if current_url == '/contactus/' %}active{% endif %}" href="{% url 'website_app:contactus' %}">Contact Us</a></li>
           </ul>
           <div class="lw-header__actions ms-lg-3">
-            <label class="lw-theme-toggle" title="Light / Dark theme">
-              <input type="checkbox" id="checkbox" class="theme-switch-input" aria-label="Toggle dark mode" />
-              <span class="lw-theme-toggle__track"><span class="lw-theme-toggle__thumb"><i class="fas fa-moon"></i></span></span>
-            </label>
             <a href="#" class="lw-btn lw-btn-ghost lw-btn-sm d-none d-md-inline-flex" data-bs-toggle="modal" data-bs-target="#orderModal">Log In</a>
             <a href="{% url 'website_app:book_order' %}" class="lw-btn lw-btn-primary lw-btn-sm">Book Now</a>
           </div>
@@ -100,9 +89,9 @@
       <div class="row g-4">
         <div class="col-lg-4">
           <a href="{% url 'website_app:index' %}" class="lw-footer__brand">
-            <span class="lw-brand__icon"><i class="fas fa-tint"></i></span> Velvet Wash
+            <img src="{{ logo_url }}" alt="VFF Group — Velvet Wash" class="lw-footer__logo" width="200" height="60" />
           </a>
-          <p class="small">World-class laundry &amp; dry cleaning by VFF Group, Belagavi.</p>
+          <p class="small">World-class laundry &amp; dry cleaning by VFF Group, Belagavi. Velvet Wash — VE7VET F1ERCE FASHION.</p>
           <div class="lw-footer__social">
             <a href="https://www.facebook.com/profile.php?id=100066521419862" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.instagram.com/velvetwash_" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
@@ -119,19 +108,19 @@
           </ul>
         </div>
         <div class="col-6 col-lg-2">
-          <h6>More</h6>
+          <h6>Franchise</h6>
           <ul class="list-unstyled small">
-            <li class="mb-2"><a href="{% url 'website_app:franchise' %}">Franchise</a></li>
+            <li class="mb-2"><a href="{% url 'website_app:franchise' %}">Franchise Opportunity</a></li>
+            <li class="mb-2"><a href="{% static 'new_images/velvet-wash-franchise-opportunity.pdf' %}" download>Download Brochure</a></li>
             <li class="mb-2"><a href="{% url 'website_app:contactus' %}">Contact</a></li>
             <li class="mb-2"><a href="{% url 'website_app:privacy' %}">Privacy</a></li>
-            <li class="mb-2"><a href="{% url 'united_armor:home' %}">Clothing</a></li>
-            <li class="mb-2"><a href="{% url 'website_app:gym_home' %}">Gym</a></li>
           </ul>
         </div>
         <div class="col-lg-4">
           <h6>Contact</h6>
           <p class="small mb-1"><a href="tel:+916364912877">+(91) 06364912877</a></p>
           <p class="small mb-1"><a href="mailto:info@vff-group.com">info@vff-group.com</a></p>
+          <p class="small mb-1"><a href="mailto:franchise@vff-group.com">franchise@vff-group.com</a></p>
           <p class="small">Tilakwadi &amp; Auto Nagar, Belagavi · 8 AM – 8 PM</p>
         </div>
       </div>
@@ -144,7 +133,6 @@
   <button type="button" onclick="topFunction()" id="movetop" title="Back to top"><i class="fas fa-arrow-up"></i></button>
 
   <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-  <script src="{% static 'js/theme-change.js' %}"></script>
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
   <script>
     function topFunction() { window.scrollTo({ top: 0, behavior: 'smooth' }); }

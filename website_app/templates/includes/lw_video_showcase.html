@@ -1,0 +1,18 @@
+<section class="lw-section lw-video-showcase">
+  <div class="container">
+    <div class="lw-section__head">
+      <span class="lw-section__label">Velvet Wash in action</span>
+      <h2 class="lw-section__title">{{ showcase_title|default:"See our world-class laundry operations" }}</h2>
+      <p class="lw-section__desc">{{ showcase_desc|default:"Professional equipment, hygiene standards, and care — the experience every VFF Group customer receives." }}</p>
+    </div>
+    <div class="lw-video-grid">
+      {% for video_url in vff_videos %}
+      <div class="lw-video-card">
+        <video autoplay muted loop playsinline preload="metadata">
+          <source src="{{ video_url }}" type="video/mp4" />
+        </video>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

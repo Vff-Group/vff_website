@@ -92,26 +92,39 @@ body.laundry-site .w3l-footer-29-main { display: none !important; }
 .lw-brand {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-weight: 800;
-  font-size: 1.35rem;
-  color: var(--lw-text) !important;
+  padding: 0;
   text-decoration: none;
 }
 
-.lw-brand__icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--lw-primary), var(--lw-primary-light));
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
+.lw-brand__logo {
+  height: 48px;
+  width: auto;
+  max-width: min(200px, 55vw);
+  object-fit: contain;
+  display: block;
 }
 
-.lw-brand span { color: var(--lw-primary); }
+.lw-hero__logo,
+.lw-page-hero__logo,
+.lw-franchise-hero__logo {
+  height: auto;
+  max-width: 220px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.25));
+}
+
+.lw-footer__brand {
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.lw-footer__logo {
+  height: 56px;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+  display: block;
+}
 
 .lw-nav .nav-link {
   color: var(--lw-text-muted) !important;
@@ -915,6 +928,83 @@ body.laundry-site .w3l-footer-29-main { display: none !important; }
 
 body.laundry-site { scroll-padding-top: 80px; }
 
+/* Video showcase */
+.lw-video-showcase { background: var(--lw-bg-muted); }
+
+.lw-video-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.lw-video-card {
+  border-radius: var(--lw-radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--lw-border);
+  box-shadow: var(--lw-shadow-md);
+  aspect-ratio: 16/10;
+  background: #0f172a;
+}
+
+.lw-video-card video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.lw-video-inline {
+  border-radius: var(--lw-radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--lw-border);
+  aspect-ratio: 16/10;
+  background: #0f172a;
+}
+
+.lw-video-inline video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Page hero with video */
+.lw-page-hero--video {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  min-height: 220px;
+}
+
+.lw-page-hero--video .lw-page-hero__video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.lw-page-hero--video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lw-page-hero--video .lw-page-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(29,78,216,0.88), rgba(15,23,42,0.75));
+  z-index: 1;
+}
+
+.lw-page-hero--video .container {
+  position: relative;
+  z-index: 2;
+}
+
+.lw-page-hero--video h1,
+.lw-page-hero--video .lw-breadcrumb,
+.lw-page-hero--video .lw-breadcrumb a {
+  color: #fff;
+}
+
 /* ─── Franchise page ─── */
 .lw-franchise-hero {
   padding: clamp(6.5rem, 12vw, 8rem) 0 3rem;
@@ -924,15 +1014,26 @@ body.laundry-site { scroll-padding-top: 80px; }
   overflow: hidden;
 }
 
-.lw-franchise-hero::before {
-  content: '';
+.lw-franchise-hero--video .lw-franchise-hero__video {
   position: absolute;
   inset: 0;
-  background: url('') center/cover;
-  opacity: 0.15;
+  z-index: 0;
 }
 
-.lw-franchise-hero .container { position: relative; z-index: 1; }
+.lw-franchise-hero--video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lw-franchise-hero--video .lw-franchise-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(29,78,216,0.92), rgba(37,99,235,0.85));
+  z-index: 1;
+}
+
+.lw-franchise-hero .container { position: relative; z-index: 2; }
 
 .lw-franchise-hero h1 {
   color: #fff;
@@ -1008,6 +1109,112 @@ body.laundry-site { scroll-padding-top: 80px; }
   font-size: 0.8rem;
   font-weight: 600;
   margin-bottom: 0.25rem;
+}
+
+.lw-owner-card__role {
+  font-size: 0.85rem;
+  color: var(--lw-text-muted);
+  margin: 0 0 1rem;
+  line-height: 1.4;
+}
+
+.lw-owner-card__facts {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.25rem;
+  text-align: left;
+  font-size: 0.82rem;
+  color: var(--lw-text-muted);
+}
+
+.lw-owner-card__facts li {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--lw-border);
+}
+
+.lw-owner-card__facts li i {
+  color: var(--lw-primary);
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+
+.lw-owner-section--about .lw-owner-card {
+  max-width: 300px;
+  margin-left: auto;
+}
+
+.lw-lead {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--lw-primary);
+  margin-bottom: 0.75rem;
+}
+
+.lw-franchise-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.lw-franchise-detail-card {
+  background: var(--lw-surface);
+  border: 1px solid var(--lw-border);
+  border-radius: var(--lw-radius-lg);
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: var(--lw-shadow);
+}
+
+.lw-franchise-detail-card i {
+  font-size: 1.75rem;
+  color: var(--lw-primary);
+  margin-bottom: 0.75rem;
+}
+
+.lw-franchise-detail-card h4 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.lw-franchise-detail-card p {
+  font-size: 0.88rem;
+  color: var(--lw-text-muted);
+  margin: 0;
+  line-height: 1.55;
+}
+
+.lw-steps--franchise {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.lw-faq-list {
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+.lw-faq-item {
+  background: var(--lw-surface);
+  border: 1px solid var(--lw-border);
+  border-radius: var(--lw-radius);
+  margin-bottom: 0.75rem;
+  padding: 0 1rem;
+}
+
+.lw-faq-item summary {
+  font-weight: 700;
+  padding: 1rem 0;
+  cursor: pointer;
+  color: var(--lw-text);
+}
+
+.lw-faq-item p {
+  padding: 0 0 1rem;
+  margin: 0;
+  color: var(--lw-text-muted);
+  line-height: 1.65;
+  font-size: 0.92rem;
 }
 
 .lw-poster-section {
@@ -1133,6 +1340,9 @@ body.laundry-site { scroll-padding-top: 80px; }
   .lw-franchise-benefits { grid-template-columns: 1fr; }
   .lw-franchise-gallery { grid-template-columns: 1fr; }
   .lw-franchise-gallery img { height: 200px; }
+  .lw-franchise-detail-grid { grid-template-columns: 1fr; }
+  .lw-steps--franchise { grid-template-columns: 1fr; }
+  .lw-video-grid { grid-template-columns: 1fr; }
 }
 
 /* Responsive */

@@ -2,22 +2,22 @@
 {% load static %}
 
 {% block content %}
-<!-- Hero with video (replace video.mp4 when ready) -->
 <section class="lw-hero lw-hero--video">
   <div class="lw-hero__video">
     <video autoplay muted loop playsinline poster="{{ img.banner }}">
-      <source src="{% static 'videos/video.mp4' %}" type="video/mp4" />
+      <source src="{{ vff_videos.0 }}" type="video/mp4" />
     </video>
   </div>
   <div class="lw-hero__overlay"></div>
   <div class="container">
     <div class="row align-items-center">
       <div class="col-lg-6 py-4">
+        <img src="{{ logo_url }}" alt="VFF Group Velvet Wash" class="lw-hero__logo mb-3" width="200" height="60" />
         <h1 class="lw-hero__title">Fresh Clothes, <span>Happy Life</span></h1>
-        <p class="lw-hero__desc">Velvet Wash delivers world-class laundry and dry cleaning with free pickup &amp; delivery in Belagavi.</p>
+        <p class="lw-hero__desc">Velvet Wash by VFF Group delivers world-class laundry and dry cleaning with free pickup &amp; delivery in Belagavi.</p>
         <div class="lw-hero__btns">
           <a href="{% url 'website_app:book_order' %}" class="lw-btn lw-btn-primary">Book Now</a>
-          <a href="{% url 'website_app:aboutus' %}" class="lw-btn lw-btn-outline" style="border-color:#fff;color:#fff;">Learn More</a>
+          <a href="{% url 'website_app:franchise' %}" class="lw-btn lw-btn-outline" style="border-color:#fff;color:#fff;">Franchise</a>
         </div>
       </div>
       <div class="col-lg-6 d-none d-lg-flex justify-content-center">
@@ -55,6 +55,8 @@
     </div>
   </div>
 </section>
+
+{% include 'includes/lw_video_showcase.html' %}
 
 <section class="lw-section lw-section--muted" id="services-preview">
   <div class="container">

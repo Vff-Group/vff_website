@@ -3,8 +3,15 @@
 {% block title %}How It Works | Velvet Wash{% endblock %}
 
 {% block content %}
-<section class="lw-page-hero">
+<section class="lw-page-hero lw-page-hero--video">
+  <div class="lw-page-hero__video">
+    <video autoplay muted loop playsinline>
+      <source src="{{ vff_videos.0 }}" type="video/mp4" />
+    </video>
+  </div>
+  <div class="lw-page-hero__overlay"></div>
   <div class="container">
+    <img src="{{ logo_url }}" alt="VFF Group" class="lw-page-hero__logo mb-2" width="160" height="48" />
     <h1>How It Works</h1>
     <ul class="lw-breadcrumb">
       <li><a href="{% url 'website_app:index' %}">Home</a></li>
@@ -36,8 +43,10 @@
       </div>
     </div>
     <div class="lw-grid-2">
-      <div class="lw-about-img">
-        <img src="{{ img.delivery }}" alt="Laundry delivery" loading="lazy" />
+      <div class="lw-video-inline">
+        <video autoplay muted loop playsinline>
+          <source src="{{ vff_videos.1 }}" type="video/mp4" />
+        </video>
       </div>
       <div>
         <h3 class="mb-3">Track your order in the app</h3>
@@ -48,4 +57,6 @@
     </div>
   </div>
 </section>
+
+{% include 'includes/lw_video_showcase.html' %}
 {% endblock %}

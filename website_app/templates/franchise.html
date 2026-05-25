@@ -1,16 +1,22 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Franchise | Velvet Wash — VFF Group{% endblock %}
+{% block title %}Franchise Opportunity | Velvet Wash — VFF Group{% endblock %}
 
 {% block content %}
-<!-- Hero (aligned with franchise poster messaging) -->
-<section class="lw-franchise-hero" style="background-image: linear-gradient(135deg, rgba(29,78,216,0.95) 0%, rgba(37,99,235,0.9) 100%), url('{{ img.franchise_machines }}'); background-size: cover; background-position: center;">
+<!-- Hero with video -->
+<section class="lw-franchise-hero lw-franchise-hero--video">
+  <div class="lw-franchise-hero__video">
+    <video autoplay muted loop playsinline poster="{{ img.franchise_machines }}">
+      <source src="{{ vff_videos.2 }}" type="video/mp4" />
+    </video>
+  </div>
+  <div class="lw-franchise-hero__overlay"></div>
   <div class="container">
-    <p class="lw-brand-mark mb-0">VELVET <span class="accent">WASH</span></p>
-    <p class="lw-tagline">Laundry · Dry Cleaning</p>
+    <img src="{{ logo_url }}" alt="VFF Group Velvet Wash" class="lw-franchise-hero__logo mb-3" width="220" height="66" />
+    <p class="lw-tagline">Laundry · Dry Cleaning · Franchise</p>
     <h1>Start Your Own Laundry &amp; Dry Cleaning Business</h1>
-    <p class="mb-4">Be part of India’s emerging laundry brand — powered by VFF Group, Belagavi.</p>
+    <p class="mb-4">Partner with Velvet Wash — India’s emerging laundry brand under VFF Group, Belagavi. End-to-end setup, marketing, and 24×7 operational support led by Mrs. Deepa R Pattar.</p>
     <div class="d-flex flex-wrap gap-2">
       <a href="{% static 'new_images/velvet-wash-franchise-opportunity.pdf' %}" class="lw-btn lw-btn-primary" style="background:#fff;color:var(--lw-primary);" download>
         <i class="fas fa-file-pdf" aria-hidden="true"></i> Download Franchise PDF
@@ -18,26 +24,33 @@
       <a href="tel:+916364912877" class="lw-btn lw-btn-outline" style="border-color:#fff;color:#fff;">
         <i class="fas fa-phone" aria-hidden="true"></i> Call Now
       </a>
+      <a href="mailto:franchise@vff-group.com" class="lw-btn lw-btn-outline" style="border-color:#fff;color:#fff;">
+        <i class="fas fa-envelope" aria-hidden="true"></i> Email Us
+      </a>
     </div>
   </div>
 </section>
 
-<!-- Founder + opportunity details -->
+<!-- Founder -->
 <section class="lw-section">
   <div class="container">
     <div class="lw-owner-section">
       <div>
-        <span class="lw-section__label">Franchise Opportunity</span>
-        <h2 class="lw-section__title">Grow with Velvet Wash</h2>
+        <span class="lw-section__label">Meet the Founder</span>
+        <h2 class="lw-section__title">Mrs. Deepa R Pattar</h2>
+        <p class="lw-lead">Founder &amp; CEO · VFF Group · Velvet Wash</p>
         <p style="color:var(--lw-text-muted);line-height:1.75;">
-          If you are a budding entrepreneur or an experienced business owner, partner with <strong>Velvet Wash Laundry &amp; Dry Cleaning</strong> — a trusted name under VFF Group. We help you launch and scale with world-class processes, proven operations, and nationwide brand ambition.
+          Mrs. Deepa R Pattar built Velvet Wash into a trusted Belagavi brand and is now inviting entrepreneurs nationwide to grow under the same systems, quality bar, and customer promise. As <strong>Women Entrepreneur of the Year 2022</strong>, she brings hands-on leadership in textile care, operations, and franchise development.
+        </p>
+        <p style="color:var(--lw-text-muted);line-height:1.75;">
+          Franchise partners work directly with the VFF Group head office for equipment guidance, chemical supply, staff training, branding, and ongoing machine maintenance — so you focus on growing your outlet while we support the backbone.
         </p>
         <ul class="lw-detail-list">
-          <li><i class="fas fa-check-circle"></i> <span><strong>24×7 franchise support</strong> — machine maintenance, equipment, packaging &amp; chemical supply</span></li>
-          <li><i class="fas fa-check-circle"></i> <span><strong>Marketing &amp; branding</strong> — online and offline campaigns under the Velvet Wash identity</span></li>
-          <li><i class="fas fa-check-circle"></i> <span><strong>Assured business model</strong> — training, SOPs, and quality standards customers already trust</span></li>
-          <li><i class="fas fa-check-circle"></i> <span><strong>No brand-building from scratch</strong> — leverage an established laundry reputation in Karnataka</span></li>
-          <li><i class="fas fa-check-circle"></i> <span><strong>World-class service delivery</strong> — laundry, dry clean, steam iron &amp; commercial solutions</span></li>
+          <li><i class="fas fa-check-circle"></i> <span><strong>24×7 franchise support</strong> — maintenance, equipment, packaging &amp; chemicals</span></li>
+          <li><i class="fas fa-check-circle"></i> <span><strong>Marketing &amp; branding</strong> — Velvet Wash identity online and offline</span></li>
+          <li><i class="fas fa-check-circle"></i> <span><strong>Assured business model</strong> — SOPs, training, quality standards</span></li>
+          <li><i class="fas fa-check-circle"></i> <span><strong>Established reputation</strong> — no need to build a brand from zero</span></li>
+          <li><i class="fas fa-check-circle"></i> <span><strong>VFF Group app</strong> — orders, payments, and customer tracking</span></li>
         </ul>
         <div class="mt-4">
           <a href="mailto:franchise@vff-group.com" class="lw-btn lw-btn-primary me-2 mb-2">
@@ -48,40 +61,24 @@
           </a>
         </div>
       </div>
-      <aside class="lw-owner-card">
-        <img
-          src="{% static 'new_images/owner_profile_picture.jpeg' %}"
-          alt="Mrs. Deepa R Pattar — Founder & CEO of VFF Group"
-          class="lw-owner-card__photo"
-          loading="eager"
-          decoding="async"
-        />
-        <div class="lw-owner-card__badge">
-          <span>Founder &amp; CEO</span>
-          Mrs. Deepa R Pattar<br />
-          VFF Group · Velvet Wash
-        </div>
-        <p class="small mt-3 mb-0" style="color:var(--lw-text-muted);">
-          Women Entrepreneur of the Year 2022 · Leading Velvet Wash Laundry &amp; Dry Cleaning
-        </p>
-      </aside>
+      {% include 'includes/lw_owner_card.html' %}
     </div>
   </div>
 </section>
 
-<!-- Official franchise poster -->
+<!-- Official poster -->
 <section class="lw-section lw-poster-section py-5">
   <div class="container">
     <div class="lw-section__head">
       <span class="lw-section__label">Official Poster</span>
       <h2 class="lw-section__title">Velvet Wash franchise at a glance</h2>
-      <p class="lw-section__desc">Our franchise creative — download the full opportunity document below for complete details.</p>
+      <p class="lw-section__desc">Download the full PDF for investment overview, territory discussion, and onboarding steps.</p>
     </div>
     <div class="lw-poster-wrap">
       <a href="{% static 'new_images/franchise_poster.jpeg' %}" target="_blank" rel="noopener" title="View full size poster">
         <img
           src="{% static 'new_images/franchise_poster.jpeg' %}"
-          alt="Velvet Wash franchise opportunity poster — laundry and dry cleaning business"
+          alt="Velvet Wash franchise opportunity poster"
           loading="lazy"
           decoding="async"
         />
@@ -94,7 +91,7 @@
   </div>
 </section>
 
-<!-- Three pillars (from poster) -->
+<!-- Three pillars -->
 <section class="lw-section lw-section--muted">
   <div class="container">
     <div class="lw-franchise-benefits">
@@ -105,13 +102,88 @@
   </div>
 </section>
 
-<!-- Unsplash laundry imagery -->
+<!-- What you get - detailed -->
+<section class="lw-section">
+  <div class="container">
+    <div class="lw-section__head">
+      <span class="lw-section__label">Franchise Package</span>
+      <h2 class="lw-section__title">What franchise partners receive</h2>
+    </div>
+    <div class="lw-franchise-detail-grid">
+      <div class="lw-franchise-detail-card">
+        <i class="fas fa-cogs"></i>
+        <h4>Equipment &amp; setup</h4>
+        <p>Guidance on commercial washers, dryers, pressing, and store layout aligned with Velvet Wash standards.</p>
+      </div>
+      <div class="lw-franchise-detail-card">
+        <i class="fas fa-flask"></i>
+        <h4>Chemicals &amp; packaging</h4>
+        <p>Approved detergents, solvents, bags, and tags — consistent with head-office quality control.</p>
+      </div>
+      <div class="lw-franchise-detail-card">
+        <i class="fas fa-graduation-cap"></i>
+        <h4>Training &amp; SOPs</h4>
+        <p>Staff onboarding, wash/dry-clean procedures, customer handling, and hygiene checklists.</p>
+      </div>
+      <div class="lw-franchise-detail-card">
+        <i class="fas fa-bullhorn"></i>
+        <h4>Marketing</h4>
+        <p>Brand creatives, local launch support, and digital presence under the Velvet Wash name.</p>
+      </div>
+      <div class="lw-franchise-detail-card">
+        <i class="fas fa-tools"></i>
+        <h4>24×7 maintenance</h4>
+        <p>Machine support line and technical assistance to minimise downtime.</p>
+      </div>
+      <div class="lw-franchise-detail-card">
+        <i class="fas fa-mobile-alt"></i>
+        <h4>VFF Group app</h4>
+        <p>Order intake, tracking, and payments through the same ecosystem Belagavi customers use.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process -->
+<section class="lw-section lw-section--alt">
+  <div class="container">
+    <div class="lw-section__head">
+      <span class="lw-section__label">How to join</span>
+      <h2 class="lw-section__title">Franchise onboarding process</h2>
+    </div>
+    <div class="lw-steps lw-steps--franchise">
+      <div class="lw-step">
+        <div class="lw-step__icon">1</div>
+        <h4>Enquiry</h4>
+        <p>Call, email, or download the PDF — share your city and background.</p>
+      </div>
+      <div class="lw-step">
+        <div class="lw-step__icon">2</div>
+        <h4>Discovery call</h4>
+        <p>Meet the VFF Group team to review model, territory, and investment fit.</p>
+      </div>
+      <div class="lw-step">
+        <div class="lw-step__icon">3</div>
+        <h4>Agreement &amp; setup</h4>
+        <p>Sign franchise terms, plan store layout, and procure equipment with our guidance.</p>
+      </div>
+      <div class="lw-step">
+        <div class="lw-step__icon">4</div>
+        <h4>Launch</h4>
+        <p>Training complete, branding live, and your Velvet Wash outlet opens for business.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include 'includes/lw_video_showcase.html' with showcase_title="See the Velvet Wash standard" showcase_desc="Four views of our operations — the experience your franchise will deliver." %}
+
+<!-- Gallery -->
 <section class="lw-section">
   <div class="container">
     <div class="lw-section__head">
       <span class="lw-section__label">Our Operations</span>
       <h2 class="lw-section__title">Professional laundry infrastructure</h2>
-      <p class="lw-section__desc">The standard every Velvet Wash franchise delivers — modern equipment, hygiene, and care.</p>
     </div>
     <div class="lw-franchise-gallery mb-4">
       <img src="{{ img.franchise_machines }}" alt="Commercial washing machines" loading="lazy" decoding="async" />
@@ -123,15 +195,43 @@
         <img src="{{ img.franchise_team }}" alt="Professional laundry service" loading="lazy" />
       </div>
       <div>
-        <h3 class="h4 mb-3">What franchise partners receive</h3>
+        <h3 class="h4 mb-3">Ideal franchise partner</h3>
         <ul class="lw-check-list">
-          <li><i class="fas fa-cog"></i> Machine maintenance &amp; technical support</li>
-          <li><i class="fas fa-box"></i> Equipment, packaging &amp; chemical requirements</li>
-          <li><i class="fas fa-bullhorn"></i> Coordinated advertising (digital + local)</li>
-          <li><i class="fas fa-graduation-cap"></i> Staff training &amp; operational playbooks</li>
-          <li><i class="fas fa-mobile-alt"></i> VFF Group app ecosystem for orders &amp; payments</li>
+          <li><i class="fas fa-user-tie"></i> First-time entrepreneurs or experienced operators</li>
+          <li><i class="fas fa-store"></i> Retail or service space suitable for laundry operations</li>
+          <li><i class="fas fa-heart"></i> Commitment to hygiene, customer care, and brand standards</li>
+          <li><i class="fas fa-chart-line"></i> Interest in a scalable, recurring-revenue business</li>
         </ul>
+        <a href="tel:+916364912877" class="lw-btn lw-btn-primary mt-3">Speak with franchise team</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="lw-section lw-section--muted">
+  <div class="container">
+    <div class="lw-section__head">
+      <span class="lw-section__label">FAQ</span>
+      <h2 class="lw-section__title">Franchise questions</h2>
+    </div>
+    <div class="lw-faq-list">
+      <details class="lw-faq-item" open>
+        <summary>Who should apply for a Velvet Wash franchise?</summary>
+        <p>Budding entrepreneurs and existing business owners who want a proven laundry brand with full operational support from VFF Group.</p>
+      </details>
+      <details class="lw-faq-item">
+        <summary>What support does Mrs. Deepa R Pattar’s team provide?</summary>
+        <p>24×7 machine maintenance support, marketing, training, chemicals, packaging, and the VFF Group app for orders and payments.</p>
+      </details>
+      <details class="lw-faq-item">
+        <summary>Where are Velvet Wash flagship stores?</summary>
+        <p>Belagavi — Tilakwadi and Auto Nagar. Franchise expansion targets new cities across India.</p>
+      </details>
+      <details class="lw-faq-item">
+        <summary>How do I get the full investment details?</summary>
+        <p>Download the official PDF brochure or contact <a href="mailto:franchise@vff-group.com">franchise@vff-group.com</a> / call the numbers below.</p>
+      </details>
     </div>
   </div>
 </section>
@@ -151,10 +251,10 @@
 <section class="lw-section lw-section--alt">
   <div class="container">
     <div class="lw-download-card">
-      <i class="fas fa-file-pdf fa-3x mb-3" style="color:var(--lw-primary);"></i>
+      <img src="{{ logo_url }}" alt="VFF Group" width="160" class="mb-3" />
       <h3 class="mb-2">Velvet Wash Franchise Opportunity (PDF)</h3>
-      <p class="mb-0" style="color:var(--lw-text-muted);max-width:32rem;margin:0 auto;">
-        Download our official franchise brochure for investment overview, support structure, and next steps to open your Velvet Wash outlet.
+      <p class="mb-0" style="color:var(--lw-text-muted);max-width:36rem;margin:0 auto;">
+        Official brochure: investment overview, support structure, and next steps to open your Velvet Wash outlet under VFF Group.
       </p>
       <a
         href="{% static 'new_images/velvet-wash-franchise-opportunity.pdf' %}"
@@ -163,9 +263,6 @@
       >
         <i class="fas fa-download"></i> Download Franchise PDF
       </a>
-      <p class="small mt-3 mb-0" style="color:var(--lw-text-muted);">
-        Gallery photos are royalty-free stock images (Unsplash / Pexels).
-      </p>
     </div>
   </div>
 </section>
