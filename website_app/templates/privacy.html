@@ -1,27 +1,21 @@
 
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}Privacy Policy | VFF Group{% endblock %}
 {% block content %}
-
-    <!-- inner banner -->
-    <section class="inner-banner py-5">
-        <div class="w3l-breadcrumb py-lg-5">
-            <div class="container pt-5 pb-sm-4 pb-2">
-                <h4 class="inner-text-title font-weight-bold pt-5">Privacy Policy</h4>
-                <ul class="breadcrumbs-custom-path">
-                    <li><a href="{% url 'website_app:index' %}">Home</a></li>
-                    <li class="active"><i class="fas fa-angle-right mx-2"></i>Privacy Policy</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    <!-- //inner banner -->
-
-    <section class="w3l-about-2 py-5">
-        <div class="container py-lg-5 py-md-4 py-2">
-            <div class="row justify-content-between align-items-center pb-lg-5">
-                <div class="col about-2-secs-right mb-lg-0 mb-5">
-                    <h1 class="sub-title">Privacy Policy</h1>
+<section class="vw-page-hero">
+  <div class="container">
+    <h1>Privacy Policy</h1>
+    <ul class="vw-breadcrumb">
+      <li><a href="{% url 'website_app:index' %}">Home</a></li>
+      <li class="active"> / Privacy Policy</li>
+    </ul>
+  </div>
+</section>
+<section class="vw-section">
+  <div class="container">
+    <div class="vw-prose vw-reveal">
+      <h1>Privacy Policy</h1>
                    
                     <p class="mt-4">We value the trust you place in us and recognize the importance of secure transactions and information
                         privacy. This Privacy Policy describes how VFF Group collect, use, share or otherwise process your personal information through VFF Group website <strong> <u> https://vff-group.com </u> </strong> , its mobile application, and m-site (hereinafter referred to as the “Platform”).</p>
@@ -116,8 +110,7 @@ establishments, consent to us (including our other corporate entities, affiliate
                                 <li><i class="fas fa-email"></i>Email: inquiry@vff-group.com</li>
                             </ul>
                         
-                </div>
-                </div>
-                </div>
-                </div>
-    {% endblock %}
+    </div>
+  </div>
+</section>
+{% endblock %}

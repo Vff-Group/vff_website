@@ -1,92 +1,71 @@
-
 {% extends 'base.html' %}
 {% load static %}
+
+{% block title %}Franchise | Velvet Wash — VFF Group{% endblock %}
+
 {% block content %}
+<section class="vw-page-hero">
+  <div class="container">
+    <h1>Franchise Opportunities</h1>
+    <ul class="vw-breadcrumb">
+      <li><a href="{% url 'website_app:index' %}">Home</a></li>
+      <li class="active"> / Franchise</li>
+    </ul>
+  </div>
+</section>
 
-    <!-- inner banner -->
-    <section class="inner-banner py-5" >
-        <div class="w3l-breadcrumb py-lg-5">
-            <div class="container pt-5 pb-sm-4 pb-2">
-                <h4 class="inner-text-title font-weight-bold pt-5">Franchise</h4>
-                <ul class="breadcrumbs-custom-path">
-                    <li><a href="{% url 'website_app:index' %}">Home</a></li>
-                    <li class="active"><i class="fas fa-angle-right mx-2"></i>Franchise</li>
-                </ul>
-            </div>
+<section class="vw-section">
+  <div class="container">
+    <div class="vw-franchise-hero vw-reveal">
+      <img src="{% static 'images/franchise.jpg' %}" alt="Velvet Wash franchise" />
+      <div class="vw-franchise-hero__content">
+        <span class="vw-section__label">Partner With Us</span>
+        <h2 class="vw-section__title">24×7 support for franchise partners</h2>
+        <p class="vw-section__desc">Whether you're a budding entrepreneur or an experienced business owner, partner with Velvet Wash Laundry &amp; Dry Cleaning to grow across India.</p>
+        <div class="vw-benefit-pills">
+          <span class="vw-benefit-pill">Machine maintenance</span>
+          <span class="vw-benefit-pill">Equipment supply</span>
+          <span class="vw-benefit-pill">Chemicals &amp; packaging</span>
+          <span class="vw-benefit-pill">Brand marketing</span>
+          <span class="vw-benefit-pill">Online &amp; offline ads</span>
         </div>
-    </section>
-    <!-- //inner banner -->
+        <p class="vw-section__desc">As a well-known brand, you won't need to build recognition from scratch. We help you deliver world-class laundry services that stand out from competitors.</p>
+        <a href="mailto:franchise@vff-group.com" class="vw-btn vw-btn-teal mt-3">
+          <i class="fas fa-envelope"></i> franchise@vff-group.com
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- image with content section -->
-    <section class="home-block-3 py-xl-4 py-2">
-        <div class="row m-0 align-items-center">
-            <div class="col-lg-6 left-w3l-img p-0">
-                <img src="{% static 'images/franchise.jpg' %}" alt="card-image" class="img-fluid">
-            </div>
-            <div class="col-lg-6 right-w3l-img mt-lg-0 mt-sm-4 mt-5">
-                <div class="p-xl-5 p-sm-4 mx-xl-3">
-                    <h5 class="sub-title">Franchise</h5>
-                    <h3 class="title-style">24 X 7 SUPPORT TO OUR FRANCHISE PARTNERS</h3>
-                    <p class="sub-title mt-3">If you are budding enterpreneur or you are already an experienced business person looking for the new ideas to launch your venture then you should put your skills into Velvet Wash Laundry & Dry Cleaning Service to out partner through outlet and franchise to all over India.</p>
-                    <p class="sub-title mt-3">WE PROVIDE 24 X 7 SUPPORT TO OUR FRANCHISE PARTNERS, MACHINE MAINTENANCE, EQUIPMENT REQUIREMENT, PACKAGING MATERIAL & CHEMICAL REQUIREMENT. AS WE ARE WELL KNOWN BRAND, YOU DON’T HAVE TO WORRY ABOUT CREATING A BRAND IMAGE WE ALSO HELP TO ADVERTISE THROUGH ONLINE AS WELL AS OFFLINE.</p>
-                    <p class="sub-title mt-3">YOU WILL BE ABLE TO PROVIDE WORLD CLASS LAUNDRY AND DRY CLEANING SERVICES WHICH WILL GRAB CUSTOMERS ATTENTION AND THIS ALSO MAKES US DIFFERENT AND BETTER THEN OUR COMPETETORS.</p>
-                    <a href="mailto:franchise@vff-group.com" class="btn btn-style mt-md-5 mt-4">Contact Now</a>
-                </div>
-            </div>
+<section class="vw-section vw-section--alt">
+  <div class="container">
+    <div class="row g-4 vw-reveal">
+      <div class="col-md-4">
+        <div class="vw-feature-card h-100">
+          <div class="vw-feature-card__icon"><i class="fas fa-headset"></i></div>
+          <h4>Round-the-clock support</h4>
+          <p>Dedicated assistance whenever your outlet needs help.</p>
         </div>
-    </section>
-    
-    <!-- //image with content section -->
-
-    <!-- image with content section -->
-    <!-- <section class="home-block-3 py-xl-4 py-2">
-        <div class="row m-0 align-items-center">
-            
-            <div class="col-lg-6 right-w3l-img mt-lg-0 mt-sm-4 mt-5">
-                <div class="p-xl-5 p-sm-4 mx-xl-3">
-                    <h5 class="sub-title">Why Choose Us</h5>
-                    <h3 class="title-style">24 X 7 SUPPORT TO OUR FRANCHISE PARTNERS</h3>
-                    <p class="sub-title mt-3">We want to provide world class laundry & drycleaning service to our customers through outlet to all over India 
-                        WE PROVIDE 24 X 7 SUPPORT TO OUR FRANCHISE PARTNERS, MACHINE MAINTAINANCE, EQUIPEMENT REQUIREMENT, PACKAGING MATIRIAL & CHEMICAL REQUIREMENT.
-                        AS WE ARE WELL KNOWN BRAND, YOU DON’T HAVE TO WORRY ABOUT CREATING A BRAND IMAGE WE ALSO HELP TO ADVERTISE THROUGH ONLINE AS WELL AS OFFLINE. </p>
-                    <p class="sub-title mt-3">YOU WILL BE ABLE TO PROVIDE WORLD CLASS LAUNDRY AND DRY CLEANING SERVICES WHICH WILL GRAB CUSTOMERS ATTENTION AND THIS ALSO MAKES US DIFFERENT AND BETTER THEN OUR COMPETETORS.</p>
-                    <a href="mailto:franchise@vff-group.com" class="btn btn-style mt-md-5 mt-4">Contact Now</a>
-                </div>
-            </div>
-
-            <div class="col-lg-6 left-w3l-img p-0">
-                <img src="{% static 'images/franchise_2.jpg' %}" alt="card-image" class="img-fluid">
-            </div>
-
+      </div>
+      <div class="col-md-4">
+        <div class="vw-feature-card h-100">
+          <div class="vw-feature-card__icon"><i class="fas fa-bullhorn"></i></div>
+          <h4>Marketing muscle</h4>
+          <p>Coordinated online and offline campaigns under the Velvet Wash brand.</p>
         </div>
-    </section>  -->
-    
-    <!-- //image with content section -->
-
-    <!-- image with content section -->
-    {% comment %} <section class="home-block-3 py-xl-4 py-2">
-        <div class="row m-0 align-items-center">
-            
-            <div class="col-lg-6 left-w3l-img p-0">
-                <img src="{% static 'images/tilakwadi_store.jpg' %}" alt="card-image" class="img-fluid">
-            </div>
-
-            <div class="col-lg-6 right-w3l-img mt-lg-0 mt-sm-4 mt-5">
-                <div class="p-xl-5 p-sm-4 mx-xl-3">
-                    <h5 class="sub-title">Franchise</h5>
-                    <h3 class="title-style">24 X 7 SUPPORT TO OUR FRANCHISE PARTNERS</h3>
-                    <p class="sub-title mt-3">We want to provide world class laundry & drycleaning service to our customers through outlet to all over India 
-                        WE PROVIDE 24 X 7 SUPPORT TO OUR FRANCHISE PARTNERS, MACHINE MAINTAINANCE, EQUIPEMENT REQUIREMENT, PACKAGING MATIRIAL & CHEMICAL REQUIREMENT.
-                        AS WE ARE WELL KNOWN BRAND, YOU DON’T HAVE TO WORRY ABOUT CREATING A BRAND IMAGE WE ALSO HELP TO ADVERTISE THROUGH ONLINE AS WELL AS OFFLINE. </p>
-                    <p class="sub-title mt-3">YOU WILL BE ABLE TO PROVIDE WORLD CLASS LAUNDRY AND DRY CLEANING SERVICES WHICH WILL GRAB CUSTOMERS ATTENTION AND THIS ALSO MAKES US DIFFERENT AND BETTER THEN OUR COMPETETORS.</p>
-                    <a href="mailto:franchise@vff-group.com" class="btn btn-style mt-md-5 mt-4">Contact Now</a>
-                </div>
-            </div>
-
-            
-
+      </div>
+      <div class="col-md-4">
+        <div class="vw-feature-card h-100">
+          <div class="vw-feature-card__icon"><i class="fas fa-store"></i></div>
+          <h4>Proven operations</h4>
+          <p>Systems, supplies, and training to run a successful laundry outlet.</p>
         </div>
-    </section> {% endcomment %}
-    
-    <!-- //image with content section -->
-    {% endblock %}
+      </div>
+    </div>
+    <div class="text-center mt-5">
+      <a href="{% url 'website_app:contactus' %}" class="vw-btn vw-btn-primary">Talk to Our Team</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

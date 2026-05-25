@@ -1,189 +1,84 @@
-{% extends 'contact_base.html' %}
+{% extends 'base.html' %}
 {% load static %}
+
+{% block title %}Contact Us | Velvet Wash — VFF Group{% endblock %}
+
 {% block content %}
-    <!-- inner banner -->
-    <section class="inner-banner py-5">
-        <div class="w3l-breadcrumb py-lg-5">
-            <div class="container pt-5 pb-sm-4 pb-2">
-                <h4 class="inner-text-title font-weight-bold pt-5">Contact Us</h4>
-                <ul class="breadcrumbs-custom-path">
-                    <li><a href="{% url 'website_app:index' %}">Home</a></li>
-                    <li class="active"><i class="fas fa-angle-right mx-2"></i>Contact</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    <!-- //inner banner -->
+<section class="vw-page-hero">
+  <div class="container">
+    <h1>Contact Us</h1>
+    <ul class="vw-breadcrumb">
+      <li><a href="{% url 'website_app:index' %}">Home</a></li>
+      <li class="active"> / Contact</li>
+    </ul>
+  </div>
+</section>
 
-    <!-- contact -->
-    <section class="w3l-w3l-contacts-12 py-5">
-        <div class="contact-top py-lg-5 py-md-4 py-2">
-            <div class="container">
-                <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
-                    <h5 class="sub-title">Get In Touch</h5>
-                    <h3 class="title-style">Contact Us</h3>
-                </div>
-                <div class="row">
-                    <div class="col-md-8 contacts12-main">
-                        <form id="contactForm"  class="main-input"  method="POST">
-                            {% csrf_token %}
-                            <div class="row top-inputs">
-                                <div class="col-md-4">
-                                    <input type="text" name="name"  placeholder="Name" name="w3lName" id="sender_name" required="">
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="email" name="email" placeholder="Email" id="sender_email" required="">
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="text" name="subject" placeholder="Subject" id="subject_id" required="">
-                                </div>
-                            </div>
-                            
-                            <textarea placeholder="Message" name="message" name="w3lMessage" id="body_msg" required=""></textarea>
-                            <div class="text-end">
-                                {% comment %} <button type="submit" class="btn btn-style">Send Now</button> {% endcomment %}
-                                {% comment %} <a href="mailto:info@vff-group.com?subject=Subject%20Here&body=Your%20message%20here" class="mail btn btn-style">Send Now</a> {% endcomment %}
-                                <a href="" class="mail btn btn-style" id="sendMailBtn">Send Now</a>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-md-4 ps-lg-5 mt-md-0 mt-4">
-                        <h3 class="title-style mb-4">Contact Info</h3>
-                        <div class="contact">
-                            <a href="mailto:info@vff-group.com">
-                                <p class="contact-text-sub">info@vff-group.com</p>
-                            </a>
-                            <a href="tel:+(91) 06364912877">
-                                <p class="contact-text-sub">+(91) 06364912877</p>
-                            </a>
-                            <p class="contact-text-sub">PLOT NO 198, VFF Group, Saraf Colony, Ranade Colony, Tilakwadi,<br>Belagavi, Karnataka 590006-India.</p>
-                            <div class="buttons-teams">
-                                <a href="#"><span class="fab fa-facebook-square" aria-hidden="true"></span></a>
-                                <a href="#"><span class="fab fa-twitter-square" aria-hidden="true"></span></a>
-                                <a href="#"><span class="fab fa-google-plus-square" aria-hidden="true"></span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<section class="vw-section">
+  <div class="container">
+    <div class="text-center mb-5 vw-reveal">
+      <span class="vw-section__label">Get In Touch</span>
+      <h2 class="vw-section__title">We'd love to hear from you</h2>
+    </div>
+    <div class="vw-contact-grid">
+      <div class="vw-contact-form vw-reveal">
+        <form id="contactForm" method="POST">
+          {% csrf_token %}
+          <div class="row g-3 mb-3">
+            <div class="col-md-4">
+              <input type="text" name="name" placeholder="Your name" id="sender_name" required />
             </div>
-        </div>
-    </section>
-    <!-- contact map -->
-    <section class="w3l-contacts-1">
-        <div class="contacts">
-            <div class="contacts-content">
-              
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3838.398904044754!2d74.50461417532074!3d15.83561814564928!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbf6684441d2301%3A0xad3188bda749833c!2sVELVET%20WASH%2C%20%26%20Dry%20Cleaning*21*21%20(%20a%20member%20of%20VFF%20GROUP%20)!5e0!3m2!1sen!2sin!4v1695795615456!5m2!1sen!2sin"
-                    width="100%" height="650" frameborder="0" style="border:0" allowfullscreen></iframe>
-                <address>
-                    <h4>Belagavi</h4>
-                    <a href="mailto:info@vff-group.com">Email: info@vff-group.com</a>
-                    <a href="tel:+(91) 06364912877">Tel: +(91) 06364912877</a>
-                </address>
+            <div class="col-md-4">
+              <input type="email" name="email" placeholder="Email address" id="sender_email" required />
             </div>
+            <div class="col-md-4">
+              <input type="text" name="subject" placeholder="Subject" id="subject_id" required />
+            </div>
+          </div>
+          <textarea placeholder="Your message" name="message" id="body_msg" rows="5" required></textarea>
+          <div class="text-end mt-3">
+            <a href="#" class="vw-btn vw-btn-teal" id="sendMailBtn">Send Message</a>
+          </div>
+        </form>
+      </div>
+      <div class="vw-contact-info-card vw-reveal">
+        <h3>Contact Info</h3>
+        <p class="mb-3"><i class="fas fa-envelope me-2"></i><a href="mailto:info@vff-group.com">info@vff-group.com</a></p>
+        <p class="mb-3"><i class="fas fa-phone me-2"></i><a href="tel:+916364912877">+(91) 06364912877</a></p>
+        <p class="small opacity-75 mb-4">PLOT NO 198, VFF Group, Saraf Colony, Ranade Colony, Tilakwadi, Belagavi, Karnataka 590006</p>
+        <div class="vw-footer-social">
+          <a href="https://www.facebook.com/profile.php?id=100066521419862" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/velvetwash_" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/company/vff-group/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
         </div>
-    </section>
-    <!-- //contact -->
+      </div>
+    </div>
+    <div class="vw-map-wrap vw-reveal">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3838.398904044754!2d74.50461417532074!3d15.83561814564928!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbf6684441d2301%3A0xad3188bda749833c!2sVELVET%20WASH%2C%20%26%20Dry%20Cleaning*21*21%20(%20a%20member%20of%20VFF%20GROUP%20)!5e0!3m2!1sen!2sin!4v1695795615456!5m2!1sen!2sin"
+        width="100%" height="450" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        title="Velvet Wash location on Google Maps"></iframe>
+    </div>
+  </div>
+</section>
+{% endblock %}
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://smtpjs.com/v3/smtp.js">
-    </script>
+{% block extra_scripts %}
 <script>
-    function getCSRFToken() {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.startsWith("csrftoken=")) {
-                return cookie.substring("csrftoken=".length, cookie.length);
-            }
-        }
-        return null;
-    }
-
-    document.getElementById('sendMailBtn').addEventListener('click', function(event) {
-        event.preventDefault();
-        
-        var name = document.getElementById('sender_name').value;
-        var email = document.getElementById('sender_email').value;
-        var subject = document.getElementById('subject_id').value;
-        var message = document.getElementById('body_msg').value;
-        console.log('email::'+email)
-        console.log('message::'+message)
-        var mailtoLink = 'mailto:info@vff-group.com'
-            + '?subject=' + encodeURIComponent(subject)
-            + '&body=' + encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\nSubject: ' + subject + '\nMessage: ' + message);
-        console.log('mailtoLink::'+mailtoLink);
-        window.location.href = mailtoLink;
-        // Clear form fields
+  document.getElementById('sendMailBtn').addEventListener('click', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('sender_name').value;
+    var email = document.getElementById('sender_email').value;
+    var subject = document.getElementById('subject_id').value;
+    var message = document.getElementById('body_msg').value;
+    var mailtoLink = 'mailto:info@vff-group.com'
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message);
+    window.location.href = mailtoLink;
     document.getElementById('sender_name').value = '';
     document.getElementById('sender_email').value = '';
     document.getElementById('subject_id').value = '';
     document.getElementById('body_msg').value = '';
-    
-    });
-    
-    {% comment %} $(document).ready(function () {
-        const csrfToken = getCSRFToken();
-        $('#contactForm').submit(function (e) {
-            e.preventDefault();
-            const dataValue = $(this).serialize()
-            console.log("dataValue ::"+dataValue)
-            $.ajax({
-                url: '/contact_form_submit/',  // Replace with your Django URL for handling form submission
-                type: 'POST',
-                headers: {
-                    'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
-                },
-                data: dataValue,
-                success: function (response) {
-                    // Clear the form on success
-                    $('#contactForm')[0].reset();
-                    // Show success toast or message
-                    // Replace this with your preferred method (e.g., Bootstrap Toast)
-                    alert('Message sent successfully!');
-                },
-                error: function (error) {
-                    // Show error toast or message
-                    // Replace this with your preferred method (e.g., Bootstrap Toast)
-                    $('#contactForm')[0].reset();
-                    alert('Message sent successfully!');
-                }
-            });
-        });
-    }); {% endcomment %}
-
+  });
 </script>
-
-<!-- <script>
-    $(document).ready(function () {
-        const csrfToken = getCSRFToken();
-        $('#contactForm').submit(function (e) {
-            e.preventDefault();
-            const dataValue = $(this).serialize()
-            console.log("dataValue ::"+dataValue)
-            $.ajax({
-                url: '/contact_form_submit/',  // Replace with your Django URL for handling form submission
-                type: 'POST',
-                headers: {
-                    'X-CSRFToken': csrfToken  // Include the CSRF token in the headers
-                },
-                data: dataValue,
-                success: function (response) {
-                    // Clear the form on success
-                    $('#contactForm')[0].reset();
-                    // Show success toast or message
-                    // Replace this with your preferred method (e.g., Bootstrap Toast)
-                    alert('Message sent successfully!');
-                },
-                error: function (error) {
-                    // Show error toast or message
-                    // Replace this with your preferred method (e.g., Bootstrap Toast)
-                    alert('Error sending message!');
-                }
-            });
-        });
-    });
-
-</script> -->
 {% endblock %}

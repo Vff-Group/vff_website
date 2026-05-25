@@ -1,18 +1,25 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}Page Not Found | VFF Group{% endblock %}
 {% block content %}
-
-    <!-- inner banner -->
-    <section class="inner-banner py-5">
-        <div class="w3l-breadcrumb py-lg-5">
-            <div class="container pt-5 pb-sm-4 pb-2">
-                <h4 class="inner-text-title font-weight-bold pt-5">404 Page Not Found</h4>
-                <ul class="breadcrumbs-custom-path">
-                    <li><a href="{% url 'website_app:index' %}">Home</a></li>
-                    <li class="active"><i class="fas fa-angle-right mx-2"></i>404 Error</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    <!-- //inner banner -->
-    {% endblock %}
+<section class="vw-page-hero">
+  <div class="container">
+    <h1>Page Not Found</h1>
+    <ul class="vw-breadcrumb">
+      <li><a href="{% url 'website_app:index' %}">Home</a></li>
+      <li class="active"> / 404</li>
+    </ul>
+  </div>
+</section>
+<section class="vw-section">
+  <div class="container">
+    <div class="vw-error-page vw-reveal">
+      <div class="vw-error-code">404</div>
+      <h2 class="vw-section__title mt-3">This page went to the laundry</h2>
+      <p class="vw-section__desc mx-auto mb-4">We couldn't find what you're looking for. Head back home or contact us for help.</p>
+      <a href="{% url 'website_app:index' %}" class="vw-btn vw-btn-teal me-2">Back to Home</a>
+      <a href="{% url 'website_app:contactus' %}" class="vw-btn vw-btn-outline-teal">Contact Us</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

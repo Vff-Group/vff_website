@@ -1,18 +1,24 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}Server Error | VFF Group{% endblock %}
 {% block content %}
-
-    <!-- inner banner -->
-    <section class="inner-banner py-5">
-        <div class="w3l-breadcrumb py-lg-5">
-            <div class="container pt-5 pb-sm-4 pb-2">
-                <h4 class="inner-text-title font-weight-bold pt-5">500 Internal Server Error</h4>
-                <ul class="breadcrumbs-custom-path">
-                    <li><a href="{% url 'website_app:index' %}">Home</a></li>
-                    <li class="active"><i class="fas fa-angle-right mx-2"></i>500 Error</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    <!-- //inner banner -->
-    {% endblock %}
+<section class="vw-page-hero">
+  <div class="container">
+    <h1>Server Error</h1>
+    <ul class="vw-breadcrumb">
+      <li><a href="{% url 'website_app:index' %}">Home</a></li>
+      <li class="active"> / 500</li>
+    </ul>
+  </div>
+</section>
+<section class="vw-section">
+  <div class="container">
+    <div class="vw-error-page vw-reveal">
+      <div class="vw-error-code">500</div>
+      <h2 class="vw-section__title mt-3">Something went wrong</h2>
+      <p class="vw-section__desc mx-auto mb-4">Our team has been notified. Please try again in a few moments or return to the homepage.</p>
+      <a href="{% url 'website_app:index' %}" class="vw-btn vw-btn-teal">Back to Home</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
