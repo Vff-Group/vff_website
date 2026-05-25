@@ -95,21 +95,32 @@ def custom_404_view(request, exception=None):
 def custom_500_view(request, exception=None):
     return render(request, '500.html', status=500)
 
+def how_it_works(request):
+    current_url = request.get_full_path()
+    return render(request, "how_it_works.html", {'current_url': current_url})
+
+
+def faq(request):
+    current_url = request.get_full_path()
+    return render(request, "faq.html", {'current_url': current_url})
+
+
 def book_order_now(request):
+    current_url = request.get_full_path()
     if request.method == "POST":
         name = request.POST.get("customer_name")
         address = request.POST.get("address")
         phone_no = request.POST.get("contact_no")
-        
-        #Inserting record
         try:
             with connection.cursor() as cursor:
-                insert_query="insert into vff.laundry_website_bookingstbl (name,phone_no,address) values ('"+str(name)+"','"+str(phone_no)+"','"+str(address)+"')"
+                insert_query = (
+                    "insert into vff.laundry_website_bookingstbl (name,phone_no,address) "
+                    "values ('" + str(name) + "','" + str(phone_no) + "','" + str(address) + "')"
+                )
                 cursor.execute(insert_query)
                 connection.commit()
-                print(f" New Website Bookings Done Successfully.")
+                print("New Website Bookings Done Successfully.")
                 return redirect('website_app:index')
         except Exception as e:
             print(f"Error loading data: {e}")
-            
-        
+    return render(request, "book_order.html", {'current_url': current_url})

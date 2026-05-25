@@ -15,6 +15,9 @@ urlpatterns = [
     path('terms_of_service/',views.terms_of_service,name="terms_of_service"),
     path('contact_form_submit/',views.contact_form_submit,name="contact_form_submit"),
     path('book_order_now/',views.book_order_now,name="book_order_now"),
+    path('book/',views.book_order_now,name="book_order"),
+    path('how-it-works/',views.how_it_works,name="how_it_works"),
+    path('faq/',views.faq,name="faq"),
 
     #  path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]

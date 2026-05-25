@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}How It Works | Velvet Wash{% endblock %}
+
+{% block content %}
+<section class="lw-page-hero">
+  <div class="container">
+    <h1>How It Works</h1>
+    <ul class="lw-breadcrumb">
+      <li><a href="{% url 'website_app:index' %}">Home</a></li>
+      <li class="active"> / How It Works</li>
+    </ul>
+  </div>
+</section>
+
+<section class="lw-section">
+  <div class="container">
+    <div class="lw-section__head">
+      <p class="lw-section__desc">Three simple steps from pickup to delivery — the same flow as our mobile app.</p>
+    </div>
+    <div class="lw-steps mb-5">
+      <div class="lw-step">
+        <div class="lw-step__icon"><i class="fas fa-calendar-check"></i></div>
+        <h4>Schedule Pickup</h4>
+        <p>Book on the website or VFF Group app. Choose your address and time slot.</p>
+      </div>
+      <div class="lw-step">
+        <div class="lw-step__icon"><i class="fas fa-soap"></i></div>
+        <h4>We Clean Your Clothes</h4>
+        <p>Wash, dry clean, steam iron — handled by trained professionals.</p>
+      </div>
+      <div class="lw-step">
+        <div class="lw-step__icon"><i class="fas fa-box"></i></div>
+        <h4>We Deliver</h4>
+        <p>Neatly folded, fresh clothes delivered to your doorstep.</p>
+      </div>
+    </div>
+    <div class="lw-grid-2">
+      <div class="lw-about-img">
+        <img src="{{ img.delivery }}" alt="Laundry delivery" loading="lazy" />
+      </div>
+      <div>
+        <h3 class="mb-3">Track your order in the app</h3>
+        <p style="color:var(--lw-text-muted);">Download the VFF Group app to track status from pickup to delivery — just like our order tracking screen.</p>
+        <a href="#" class="lw-btn lw-btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#orderModal">Download App</a>
+        <a href="{% url 'website_app:book_order' %}" class="lw-btn lw-btn-outline mt-3 ms-2">Book on Web</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

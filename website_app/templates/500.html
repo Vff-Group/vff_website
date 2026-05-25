@@ -1,24 +1,14 @@
 {% extends 'base.html' %}
-{% load static %}
-{% block title %}Server Error | VFF Group{% endblock %}
+
+{% block title %}Server Error | Velvet Wash{% endblock %}
+
 {% block content %}
-<section class="vw-page-hero">
-  <div class="container">
-    <h1>Server Error</h1>
-    <ul class="vw-breadcrumb">
-      <li><a href="{% url 'website_app:index' %}">Home</a></li>
-      <li class="active"> / 500</li>
-    </ul>
-  </div>
-</section>
-<section class="vw-section">
-  <div class="container">
-    <div class="vw-error-page vw-reveal">
-      <div class="vw-error-code">500</div>
-      <h2 class="vw-section__title mt-3">Something went wrong</h2>
-      <p class="vw-section__desc mx-auto mb-4">Our team has been notified. Please try again in a few moments or return to the homepage.</p>
-      <a href="{% url 'website_app:index' %}" class="vw-btn vw-btn-teal">Back to Home</a>
-    </div>
+<section class="lw-section">
+  <div class="container lw-404">
+    <div class="lw-404__code">500</div>
+    <h1 class="h2 mb-2">Something Went Wrong</h1>
+    <p class="mb-4" style="color:var(--lw-text-muted);">Please try again in a moment.</p>
+    <a href="{% url 'website_app:index' %}" class="lw-btn lw-btn-primary">Go Home</a>
   </div>
 </section>
 {% endblock %}

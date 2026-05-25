@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}FAQ | Velvet Wash{% endblock %}
+
+{% block content %}
+<section class="lw-page-hero">
+  <div class="container">
+    <h1>Frequently Asked Questions</h1>
+    <ul class="lw-breadcrumb">
+      <li><a href="{% url 'website_app:index' %}">Home</a></li>
+      <li class="active"> / FAQ</li>
+    </ul>
+  </div>
+</section>
+
+<section class="lw-section">
+  <div class="container" style="max-width:800px;">
+    <div class="accordion lw-accordion" id="faqAccordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">How do I book a laundry pickup?</button>
+        </h2>
+        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">Book online via our Book Now page, call us, or use the VFF Group mobile app for the fastest scheduling.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">Is pickup and delivery free?</button>
+        </h2>
+        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">Yes — Velvet Wash offers free collection and delivery across our service areas in Belagavi.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">How long does laundry take?</button>
+        </h2>
+        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">Standard turnaround is 48–72 hours. Express options may be available — ask when booking.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">What payment methods do you accept?</button>
+        </h2>
+        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">Pay securely through the VFF Group app. In-store cash and other methods may also be available.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">Do you offer dry cleaning for sarees and suits?</button>
+        </h2>
+        <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">Yes — we specialize in dry cleaning for delicate fabrics including sarees, suits, coats, and more.</div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-5">
+      <p style="color:var(--lw-text-muted);">Still have questions?</p>
+      <a href="{% url 'website_app:contactus' %}" class="lw-btn lw-btn-primary">Contact Us</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

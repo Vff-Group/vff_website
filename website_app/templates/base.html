@@ -4,75 +4,50 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Velvet Wash by VFF Group — premium laundry and dry cleaning in Belagavi. Free pickup & delivery, world-class care for your wardrobe." />
+  <meta name="description" content="Velvet Wash by VFF Group — professional laundry and dry cleaning in Belagavi. Free pickup & delivery." />
   <meta name="robots" content="index, follow" />
-  <meta name="googlebot" content="index, follow" />
-  <meta name="keywords" content="vff group, velvet wash, laundry belgaum, dry cleaning belgaum, best laundry near me, tilakwadi, auto nagar" />
-  <meta name="author" content="VFF Group" />
-  <title>{% block title %}VFF Group | Velvet Wash — Premium Laundry & Dry Cleaning{% endblock %}</title>
-  <link rel="icon" type="image/png" href="{% static 'logos/favicon.png' %}" sizes="32x32" />
-  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'logos/apple-touch-icon.png' %}" />
-  <link rel="icon" type="image/png" href="{% static 'logos/android-chrome-192x192.png' %}" sizes="192x192" />
-  <link rel="shortcut icon" href="{% static 'logos/favicon.ico' %}" />
+  <title>{% block title %}Velvet Wash | Professional Laundry Service{% endblock %}</title>
+  <link rel="icon" type="image/png" href="{% static 'logos/favicon.png' %}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <meta name="color-scheme" content="light dark" />
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
   <link rel="stylesheet" href="{% static 'css/style-starter.css' %}" />
-  <link rel="stylesheet" href="{% static 'css/velvet-wash.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/laundry-ui.css' %}" />
   {% block extra_head %}{% endblock %}
 </head>
-<body class="velvet-site">
-  <header id="site-header" class="vw-header fixed-top">
+<body class="laundry-site">
+  <header class="lw-header fixed-top">
     <div class="container">
-      <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="{% url 'website_app:index' %}">
-          <img src="{% static 'images/logo.png' %}" alt="VFF Group Velvet Wash" width="48" height="48" />
-          <span class="brand-text">V<span class="accent">FF</span> <span>Group</span></span>
+      <nav class="navbar navbar-expand-lg">
+        <a class="lw-brand navbar-brand" href="{% url 'website_app:index' %}">
+          <span class="lw-brand__icon"><i class="fas fa-tint" aria-hidden="true"></i></span>
+          Velvet <span>Wash</span>
         </a>
-        <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
-          <span class="navbar-toggler-icon fa icon-close fa-times"></span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#lwNav" aria-label="Menu">
+          <span class="navbar-toggler-icon fa fa-bars"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarScroll">
-          <ul class="navbar-nav ms-auto my-2 my-lg-0 align-items-lg-center">
-            <li class="nav-item">
-              <a class="nav-link {% if current_url == '/' %}active{% endif %}" href="{% url 'website_app:index' %}">Home</a>
-            </li>
-            <li class="nav-item dropdown {% if current_url == '/aboutus/' or current_url == '/services/' %}active{% endif %}">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Laundry</a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="{% url 'website_app:aboutus' %}">About Us</a>
-                <a class="dropdown-item" href="{% url 'website_app:services' %}">Services</a>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link {% if current_url == '/franchise/' %}active{% endif %}" href="{% url 'website_app:franchise' %}">Franchise</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link {% if current_url == '/united_armor/' %}active{% endif %}" href="{% url 'united_armor:home' %}">Clothing</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link {% if current_url == '/gym_home/' %}active{% endif %}" href="{% url 'website_app:gym_home' %}">Gym</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link {% if current_url == '/contactus/' %}active{% endif %}" href="{% url 'website_app:contactus' %}">Contact</a>
-            </li>
-            <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
-              <a href="#" class="nav-link vw-nav-cta" data-bs-toggle="modal" data-bs-target="#orderModal">Order Now</a>
-            </li>
+        <div class="collapse navbar-collapse" id="lwNav">
+          <ul class="navbar-nav mx-auto lw-nav">
+            <li class="nav-item"><a class="nav-link {% if current_url == '/' %}active{% endif %}" href="{% url 'website_app:index' %}">Home</a></li>
+            <li class="nav-item"><a class="nav-link {% if current_url == '/aboutus/' %}active{% endif %}" href="{% url 'website_app:aboutus' %}">About Us</a></li>
+            <li class="nav-item"><a class="nav-link {% if current_url == '/services/' %}active{% endif %}" href="{% url 'website_app:services' %}">Services</a></li>
+            <li class="nav-item"><a class="nav-link {% if current_url == '/how-it-works/' %}active{% endif %}" href="{% url 'website_app:how_it_works' %}">How It Works</a></li>
+            <li class="nav-item"><a class="nav-link {% if current_url == '/contactus/' %}active{% endif %}" href="{% url 'website_app:contactus' %}">Contact Us</a></li>
           </ul>
-        </div>
-        <div class="cont-ser-position">
-          <nav class="navigation">
-            <div class="theme-switch-wrapper">
-              <label class="theme-switch" for="checkbox">
-                <input type="checkbox" id="checkbox" />
-                <div class="mode-container">
-                  <i class="gg-sun"></i>
-                  <i class="gg-moon"></i>
-                </div>
-              </label>
-            </div>
-          </nav>
+          <div class="lw-header__actions ms-lg-3">
+            <label class="lw-theme-toggle" title="Light / Dark theme">
+              <input type="checkbox" id="checkbox" class="theme-switch-input" aria-label="Toggle dark mode" />
+              <span class="lw-theme-toggle__track"><span class="lw-theme-toggle__thumb"><i class="fas fa-moon"></i></span></span>
+            </label>
+            <a href="#" class="lw-btn lw-btn-ghost lw-btn-sm d-none d-md-inline-flex" data-bs-toggle="modal" data-bs-target="#orderModal">Log In</a>
+            <a href="{% url 'website_app:book_order' %}" class="lw-btn lw-btn-primary lw-btn-sm">Book Now</a>
+          </div>
         </div>
       </nav>
     </div>
@@ -80,135 +55,105 @@
 
   {% block content %}{% endblock %}
 
-  <!-- CTA strip -->
-  <section class="vw-section" style="padding-top: 0;">
+  <section class="lw-section" style="padding-top:0;">
     <div class="container">
-      <div class="vw-cta-strip vw-reveal">
-        <h2>Quality service with free collection &amp; delivery</h2>
-        <div class="d-flex flex-wrap align-items-center gap-3">
-          <a class="phone-link" href="tel:+916364912877">
-            <i class="fas fa-phone-volume"></i> +(91) 06364912877
-          </a>
-          <a href="#" class="vw-btn vw-btn-primary" data-bs-toggle="modal" data-bs-target="#orderModal">Order Now</a>
+      <div class="lw-cta">
+        <h2>Free pickup &amp; delivery across Belagavi</h2>
+        <div class="d-flex flex-wrap gap-2">
+          <a href="tel:+916364912877" class="lw-btn lw-btn-outline" style="border-color:#fff;color:#fff;">+(91) 06364912877</a>
+          <a href="{% url 'website_app:book_order' %}" class="lw-btn lw-btn-primary" style="background:#fff;color:var(--lw-primary);">Book Now</a>
         </div>
       </div>
     </div>
   </section>
 
   <div class="whatsapp-button">
-    <a href="https://wa.me/+916364912877" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-      <img src="{% static 'images/whatsapp-logo.png' %}" alt="WhatsApp" width="36" height="36" />
+    <a href="https://wa.me/+916364912877" target="_blank" rel="noopener" aria-label="WhatsApp">
+      <img src="{% static 'images/whatsapp-logo.png' %}" alt="" width="32" height="32" />
     </a>
   </div>
 
-  <!-- Order / app modal -->
-  <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen">
-      <div class="modal-content border-0">
-        <div class="modal-header border-0 position-absolute top-0 end-0 z-3" style="background: transparent;">
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+  <div class="modal fade lw-modal" id="orderModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Get the VFF Group App</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body p-0">
-          <div class="modal-background-image">
-            <img src="{% static 'images/order_now_bg.jpg' %}" alt="Find your nearest Velvet Wash store" class="img-fluid" />
-            <div class="overlay">
-              <h3>Find Your Nearest Laundry Store</h3>
-              <div class="modal-icons m-3">
-                <a href="https://wa.me/+916364912877" target="_blank" rel="noopener">
-                  <img src="{% static 'images/whatsapp-logo.png' %}" alt="WhatsApp" class="icon" />
-                </a>
-                <a href="https://play.google.com/store/apps/details?id=com.vffgroup.vffgroup" target="_blank" rel="noopener">
-                  <img src="{% static 'images/play_logo.png' %}" alt="Google Play" class="icon" />
-                </a>
-                <a href="https://apps.apple.com/dk/app/vff-group/id6469453683" target="_blank" rel="noopener">
-                  <img src="{% static 'images/app_store_logo.png' %}" alt="App Store" class="icon" />
-                </a>
-              </div>
-              <p class="text-white mb-0" style="font-size: 1.1rem;">Download the VFF Group app</p>
-            </div>
+        <div class="modal-body text-center py-4">
+          <p class="text-muted mb-4">Download to log in, track orders, and pay online.</p>
+          <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="https://play.google.com/store/apps/details?id=com.vffgroup.vffgroup" target="_blank" rel="noopener">
+              <img src="{% static 'images/play_store_logo.png' %}" alt="Google Play" height="44" />
+            </a>
+            <a href="https://apps.apple.com/dk/app/vff-group/id6469453683" target="_blank" rel="noopener">
+              <img src="{% static 'images/app_store_logo.webp' %}" alt="App Store" height="44" />
+            </a>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="vw-footer">
-    <div class="container py-5">
-      <div class="d-flex flex-wrap align-items-center justify-content-between mb-5 pb-4 border-bottom border-secondary border-opacity-25">
-        <h6 class="mb-0 text-white">Contact Us</h6>
-        <div class="vw-footer-social">
-          <a href="https://www.facebook.com/profile.php?id=100066521419862" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://x.com/VelvetFierce" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-          <a href="https://www.instagram.com/velvetwash_" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="https://www.linkedin.com/company/vff-group/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-        </div>
-      </div>
+  <footer class="lw-footer">
+    <div class="container">
       <div class="row g-4">
         <div class="col-lg-4">
-          <h5 class="h6 mb-3">Tilakwadi</h5>
-          <p class="small mb-2">PLOT NO 198, VFF Group, Saraf Colony, Ranade Colony, Tilakwadi, Belagavi, Karnataka 590006</p>
-          <p class="small"><strong class="text-white">Hours:</strong> 8:00 AM – 8:00 PM daily</p>
-          <h5 class="h6 mb-3 mt-4">Auto Nagar</h5>
-          <p class="small mb-2">Plot no. 516, Main Road, Ramteerth Nagar, Lakshmipuri Layout, Auto Nagar, Belagavi, Karnataka 590015</p>
-          <p class="small"><strong class="text-white">Hours:</strong> 8:00 AM – 8:00 PM daily</p>
-        </div>
-        <div class="col-lg-4">
-          <h5 class="h6 mb-3">Phone</h5>
-          <p class="mb-1"><a href="tel:+916364912876">+(91) 06364912876</a></p>
-          <p class="mb-4"><a href="tel:+916364912877">+(91) 06364912877</a></p>
-          <h5 class="h6 mb-3">Email</h5>
-          <p class="mb-1"><a href="mailto:info@vff-group.com">info@vff-group.com</a></p>
-          <p><a href="mailto:marketing@vff-group.com">marketing@vff-group.com</a></p>
-        </div>
-        <div class="col-lg-4">
-          <h5 class="h6 mb-3">Support</h5>
-          <ul class="list-unstyled small">
-            <li class="mb-2"><a href="{% url 'website_app:privacy' %}">Privacy Policy</a></li>
-            <li class="mb-2"><a href="{% url 'website_app:terms_of_service' %}">Terms of Service</a></li>
-            <li class="mb-2"><a href="{% url 'website_app:contactus' %}">Contact &amp; Support</a></li>
-          </ul>
-          <div class="d-flex gap-3 mt-3 flex-wrap">
-            <a href="https://play.google.com/store/apps/details?id=com.vffgroup.vffgroup" target="_blank" rel="noopener">
-              <img src="{% static 'images/play_store_logo.png' %}" alt="Google Play" height="40" style="object-fit: contain;" />
-            </a>
-            <a href="https://apps.apple.com/dk/app/vff-group/id6469453683" target="_blank" rel="noopener">
-              <img src="{% static 'images/app_store_logo.webp' %}" alt="App Store" height="40" style="object-fit: contain;" />
-            </a>
+          <a href="{% url 'website_app:index' %}" class="lw-footer__brand">
+            <span class="lw-brand__icon"><i class="fas fa-tint"></i></span> Velvet Wash
+          </a>
+          <p class="small">World-class laundry &amp; dry cleaning by VFF Group, Belagavi.</p>
+          <div class="lw-footer__social">
+            <a href="https://www.facebook.com/profile.php?id=100066521419862" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/velvetwash_" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/vff-group/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
           </div>
         </div>
+        <div class="col-6 col-lg-2">
+          <h6>Quick Links</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="{% url 'website_app:index' %}">Home</a></li>
+            <li class="mb-2"><a href="{% url 'website_app:aboutus' %}">About</a></li>
+            <li class="mb-2"><a href="{% url 'website_app:services' %}">Services</a></li>
+            <li class="mb-2"><a href="{% url 'website_app:faq' %}">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h6>More</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="{% url 'website_app:franchise' %}">Franchise</a></li>
+            <li class="mb-2"><a href="{% url 'website_app:contactus' %}">Contact</a></li>
+            <li class="mb-2"><a href="{% url 'website_app:privacy' %}">Privacy</a></li>
+            <li class="mb-2"><a href="{% url 'united_armor:home' %}">Clothing</a></li>
+            <li class="mb-2"><a href="{% url 'website_app:gym_home' %}">Gym</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4">
+          <h6>Contact</h6>
+          <p class="small mb-1"><a href="tel:+916364912877">+(91) 06364912877</a></p>
+          <p class="small mb-1"><a href="mailto:info@vff-group.com">info@vff-group.com</a></p>
+          <p class="small">Tilakwadi &amp; Auto Nagar, Belagavi · 8 AM – 8 PM</p>
+        </div>
       </div>
-      <div class="vw-footer-bottom">
+      <div class="lw-footer__bottom">
         <p class="mb-0">© {% now "Y" %} VFF Group · Velvet Wash. All rights reserved.</p>
       </div>
     </div>
   </footer>
 
-  <button onclick="topFunction()" id="movetop" title="Go to top" type="button">
-    <span class="fas fa-level-up-alt" aria-hidden="true"></span>
-  </button>
+  <button type="button" onclick="topFunction()" id="movetop" title="Back to top"><i class="fas fa-arrow-up"></i></button>
 
-  <script>
-    window.onscroll = function () { scrollFunction(); };
-    function scrollFunction() {
-      var btn = document.getElementById('movetop');
-      if (!btn) return;
-      btn.style.display = (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) ? 'flex' : 'none';
-    }
-    function topFunction() {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
-    }
-  </script>
   <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-  <script src="{% static 'js/counter.js' %}"></script>
   <script src="{% static 'js/theme-change.js' %}"></script>
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
-  <script src="{% static 'js/velvet-wash.js' %}"></script>
   <script>
-    $(".navbar-toggler").on("click", function () { $("header").toggleClass("active"); });
-    $(function () {
-      $(".navbar-toggler").click(function () { $("body").toggleClass("noscroll"); });
+    function topFunction() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    window.onscroll = function () {
+      var b = document.getElementById('movetop');
+      if (b) b.style.display = window.scrollY > 200 ? 'flex' : 'none';
+    };
+    document.querySelector('.navbar-toggler')?.addEventListener('click', function () {
+      document.body.classList.toggle('noscroll');
     });
   </script>
   {% block extra_scripts %}{% endblock %}

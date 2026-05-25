@@ -1,146 +1,103 @@
 {% extends 'base.html' %}
-{% load static %}
 
-{% block title %}Services | Velvet Wash — VFF Group{% endblock %}
+{% block title %}Services & Pricing | Velvet Wash{% endblock %}
 
 {% block content %}
-<section class="vw-page-hero">
+<section class="lw-page-hero">
   <div class="container">
-    <h1>Our Services</h1>
-    <ul class="vw-breadcrumb">
+    <h1>Services</h1>
+    <ul class="lw-breadcrumb">
       <li><a href="{% url 'website_app:index' %}">Home</a></li>
       <li class="active"> / Services</li>
     </ul>
   </div>
 </section>
 
-<section class="vw-section">
+<section class="lw-section">
   <div class="container">
-    <div class="text-center mb-5 vw-reveal">
-      <span class="vw-section__label">What We Offer</span>
-      <h2 class="vw-section__title">Complete fabric care</h2>
-      <p class="vw-section__desc mx-auto">From everyday laundry to specialty dry cleaning — every service delivered with Velvet Wash precision.</p>
+    <div class="lw-section__head">
+      <span class="lw-section__label">What We Offer</span>
+      <h2 class="lw-section__title">Complete laundry solutions</h2>
     </div>
-    <div class="vw-services-grid">
-      <article class="vw-service-card vw-reveal">
-        <div class="vw-service-card__img"><img src="{% static 'images/service1.jpg' %}" alt="Laundry" /><span class="vw-service-card__tag">Core</span></div>
-        <div class="vw-service-card__body">
-          <h4><a href="{% url 'website_app:services' %}">Laundry Services</a></h4>
-          <p>Exceptional laundry with care, precision, and commitment to excellence.</p>
-        </div>
-      </article>
-      <article class="vw-service-card vw-reveal">
-        <div class="vw-service-card__img"><img src="{% static 'images/service2.jpg' %}" alt="Dry cleaning" /></div>
-        <div class="vw-service-card__body">
-          <h4><a href="{% url 'website_app:services' %}">Dry Cleaning</a></h4>
-          <p>Immaculately cleaned garments delivered with care and professionalism.</p>
-        </div>
-      </article>
-      <article class="vw-service-card vw-reveal">
-        <div class="vw-service-card__img"><img src="{% static 'images/service3.jpg' %}" alt="Steam iron" /></div>
-        <div class="vw-service-card__body">
-          <h4><a href="{% url 'website_app:services' %}">Steam Iron</a></h4>
-          <p>Wrinkle-free perfection and a polished look for your wardrobe.</p>
-        </div>
-      </article>
-      <article class="vw-service-card vw-reveal">
-        <div class="vw-service-card__img"><img src="{% static 'images/service4.jpg' %}" alt="Stain removal" /></div>
-        <div class="vw-service-card__body">
-          <h4><a href="{% url 'website_app:services' %}">Stain Removal</a></h4>
-          <p>Expert stain treatment for impeccably clean, blemish-free garments.</p>
-        </div>
-      </article>
-      <article class="vw-service-card vw-reveal">
-        <div class="vw-service-card__img"><img src="{% static 'images/service5.jpg' %}" alt="Wet washing" /></div>
-        <div class="vw-service-card__body">
-          <h4><a href="{% url 'website_app:services' %}">Wet Washing</a></h4>
-          <p>Thorough wet wash for fresh, hygienic clothes every time.</p>
-        </div>
-      </article>
-      <article class="vw-service-card vw-reveal">
-        <div class="vw-service-card__img"><img src="{% static 'images/service6.jpg' %}" alt="Commercial laundry" /></div>
-        <div class="vw-service-card__body">
-          <h4><a href="{% url 'website_app:services' %}">Commercial Laundry</a></h4>
-          <p>Tailored solutions for hotels, offices, and business laundry needs.</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="vw-section vw-section--alt">
-  <div class="container">
-    <div class="text-center mb-5 vw-reveal">
-      <span class="vw-section__label">Pricing</span>
-      <h2 class="vw-section__title">Transparent plans</h2>
-      <p class="vw-section__desc mx-auto">Per-piece and per-kg options — order via app for exact rates at your location.</p>
-    </div>
-    <div class="vw-pricing-grid">
-      <div class="vw-price-card vw-reveal">
-        <h4>Dry Cleaning</h4>
-        <p class="price-label">Per piece</p>
-        <ul>
-          <li><i class="fas fa-check"></i> All shirts</li>
-          <li><i class="fas fa-check"></i> Pants, jeans, skirts</li>
-          <li><i class="fas fa-check"></i> Sweaters &amp; scarves</li>
-          <li><i class="fas fa-check"></i> Coats, jackets, dresses</li>
-          <li><i class="fas fa-check"></i> Shoes, bags &amp; more</li>
-        </ul>
-        <a href="#" class="vw-btn vw-btn-teal w-100" data-bs-toggle="modal" data-bs-target="#orderModal">Order Now</a>
+    <div class="lw-grid-3">
+      <div class="lw-card">
+        <div class="lw-card__img"><img src="{{ img.wash_fold }}" alt="Laundry" loading="lazy" /></div>
+        <div class="lw-card__body"><h4>Laundry Services</h4><p>Exceptional wash &amp; fold with care and precision.</p></div>
       </div>
-      <div class="vw-price-card featured vw-reveal">
-        <h4>Steam Ironing</h4>
-        <p class="price-label">Per piece</p>
-        <ul>
-          <li><i class="fas fa-check"></i> All shirts</li>
-          <li><i class="fas fa-check"></i> Pants, jeans, skirts</li>
-          <li><i class="fas fa-check"></i> Sweaters &amp; scarves</li>
-          <li><i class="fas fa-check"></i> Coats, jackets, dresses</li>
-          <li><i class="fas fa-check"></i> Shoes, bags &amp; more</li>
-        </ul>
-        <a href="#" class="vw-btn vw-btn-primary w-100" data-bs-toggle="modal" data-bs-target="#orderModal">Order Now</a>
+      <div class="lw-card">
+        <div class="lw-card__img"><img src="{{ img.dry_clean }}" alt="Dry cleaning" loading="lazy" /></div>
+        <div class="lw-card__body"><h4>Dry Cleaning</h4><p>Immaculate cleaning for garments and fabrics.</p></div>
       </div>
-      <div class="vw-price-card vw-reveal">
-        <h4>Premium Wash</h4>
-        <p class="price-label">Per kg</p>
-        <ul>
-          <li><i class="fas fa-check"></i> All shirts</li>
-          <li><i class="fas fa-check"></i> Pants, jeans, skirts</li>
-          <li><i class="fas fa-check"></i> Sweaters &amp; scarves</li>
-          <li><i class="fas fa-check"></i> Coats, jackets, dresses</li>
-          <li><i class="fas fa-check"></i> Shoes, bags &amp; more</li>
-        </ul>
-        <a href="#" class="vw-btn vw-btn-teal w-100" data-bs-toggle="modal" data-bs-target="#orderModal">Order Now</a>
+      <div class="lw-card">
+        <div class="lw-card__img"><img src="{{ img.steam_iron }}" alt="Steam iron" loading="lazy" /></div>
+        <div class="lw-card__body"><h4>Steam Iron</h4><p>Wrinkle-free perfection for your wardrobe.</p></div>
+      </div>
+      <div class="lw-card">
+        <div class="lw-card__img"><img src="{{ img.stain }}" alt="Stain removal" loading="lazy" /></div>
+        <div class="lw-card__body"><h4>Stain Removal</h4><p>Expert treatment for tough stains.</p></div>
+      </div>
+      <div class="lw-card">
+        <div class="lw-card__img"><img src="{{ img.wet_wash }}" alt="Wet washing" loading="lazy" /></div>
+        <div class="lw-card__body"><h4>Wet Washing</h4><p>Thorough wet wash for fresh, hygienic clothes.</p></div>
+      </div>
+      <div class="lw-card">
+        <div class="lw-card__img"><img src="{{ img.commercial }}" alt="Commercial laundry" loading="lazy" /></div>
+        <div class="lw-card__body"><h4>Commercial Laundry</h4><p>Tailored solutions for businesses.</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="vw-section vw-section--dark">
+<section class="lw-section lw-section--muted" id="pricing">
   <div class="container">
-    <div class="text-center mb-5 vw-reveal">
-      <span class="vw-section__label">How It Works</span>
-      <h2 class="vw-section__title text-white">Pickup to delivery</h2>
+    <div class="lw-section__head">
+      <span class="lw-section__label">Pricing Plans</span>
+      <h2 class="lw-section__title">More details on pricing</h2>
     </div>
-    <div class="vw-process">
-      <div class="vw-process-step vw-reveal">
-        <div class="vw-process-step__num">1</div>
-        <h4>Pick up your clothes</h4>
-        <p>Schedule a pickup and relax while we handle the rest.</p>
+    <div class="lw-grid-3">
+      <div class="lw-pricing-card">
+        <h3>Dry Cleaning</h3>
+        <div class="lw-price">Per piece</div>
+        <ul class="lw-pricing-list">
+          <li><i class="fas fa-check"></i> Shirts, pants, skirts</li>
+          <li><i class="fas fa-check"></i> Coats &amp; jackets</li>
+          <li><i class="fas fa-check"></i> Sarees &amp; dresses</li>
+        </ul>
+        <a href="{% url 'website_app:book_order' %}" class="lw-btn lw-btn-outline lw-btn-block">Order Now</a>
       </div>
-      <div class="vw-process-step vw-reveal">
-        <div class="vw-process-step__num">2</div>
-        <h4>Laundry &amp; dry clean</h4>
-        <p>One-stop expert care for all your garments.</p>
+      <div class="lw-pricing-card lw-pricing-card--popular">
+        <h3>Steam Ironing</h3>
+        <div class="lw-price">Per piece</div>
+        <ul class="lw-pricing-list">
+          <li><i class="fas fa-check"></i> All garment types</li>
+          <li><i class="fas fa-check"></i> Crisp finish</li>
+          <li><i class="fas fa-check"></i> Fast turnaround</li>
+        </ul>
+        <a href="{% url 'website_app:book_order' %}" class="lw-btn lw-btn-primary lw-btn-block">Order Now</a>
       </div>
-      <div class="vw-process-step vw-reveal">
-        <div class="vw-process-step__num">3</div>
-        <h4>Fold &amp; deliver</h4>
-        <p>Precisely folded clothes at your doorstep.</p>
+      <div class="lw-pricing-card">
+        <h3>Premium Wash</h3>
+        <div class="lw-price">Per kg</div>
+        <ul class="lw-pricing-list">
+          <li><i class="fas fa-check"></i> Premium detergent</li>
+          <li><i class="fas fa-check"></i> Extra care</li>
+          <li><i class="fas fa-check"></i> Free delivery</li>
+        </ul>
+        <a href="{% url 'website_app:book_order' %}" class="lw-btn lw-btn-outline lw-btn-block">Order Now</a>
       </div>
     </div>
-    <div class="text-center mt-5 vw-reveal">
-      <a href="#" class="vw-btn vw-btn-primary" data-bs-toggle="modal" data-bs-target="#orderModal">Book Our Services Now</a>
+  </div>
+</section>
+
+<section class="lw-section">
+  <div class="container">
+    <div class="lw-section__head">
+      <h2 class="lw-section__title">How we work</h2>
+    </div>
+    <div class="lw-steps">
+      <div class="lw-step"><div class="lw-step__icon">1</div><h4>Pick Up</h4><p>Schedule at your convenience.</p></div>
+      <div class="lw-step"><div class="lw-step__icon">2</div><h4>Clean</h4><p>Expert laundry &amp; dry clean.</p></div>
+      <div class="lw-step"><div class="lw-step__icon">3</div><h4>Deliver</h4><p>Folded fresh to your door.</p></div>
     </div>
   </div>
 </section>

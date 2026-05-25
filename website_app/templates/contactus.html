@@ -1,63 +1,72 @@
 {% extends 'base.html' %}
-{% load static %}
 
-{% block title %}Contact Us | Velvet Wash — VFF Group{% endblock %}
+{% block title %}Contact Us | Velvet Wash{% endblock %}
 
 {% block content %}
-<section class="vw-page-hero">
+<section class="lw-page-hero">
   <div class="container">
     <h1>Contact Us</h1>
-    <ul class="vw-breadcrumb">
+    <ul class="lw-breadcrumb">
       <li><a href="{% url 'website_app:index' %}">Home</a></li>
       <li class="active"> / Contact</li>
     </ul>
   </div>
 </section>
 
-<section class="vw-section">
+<section class="lw-section">
   <div class="container">
-    <div class="text-center mb-5 vw-reveal">
-      <span class="vw-section__label">Get In Touch</span>
-      <h2 class="vw-section__title">We'd love to hear from you</h2>
-    </div>
-    <div class="vw-contact-grid">
-      <div class="vw-contact-form vw-reveal">
-        <form id="contactForm" method="POST">
-          {% csrf_token %}
-          <div class="row g-3 mb-3">
-            <div class="col-md-4">
-              <input type="text" name="name" placeholder="Your name" id="sender_name" required />
-            </div>
-            <div class="col-md-4">
-              <input type="email" name="email" placeholder="Email address" id="sender_email" required />
-            </div>
-            <div class="col-md-4">
-              <input type="text" name="subject" placeholder="Subject" id="subject_id" required />
-            </div>
+    <div class="lw-contact-grid">
+      <div class="lw-info-box">
+        <h3 class="mb-4">Get in touch</h3>
+        <div class="lw-info-item">
+          <div class="lw-info-item__icon"><i class="fas fa-phone"></i></div>
+          <div>
+            <strong>Phone</strong><br />
+            <a href="tel:+916364912877">+(91) 06364912877</a>
           </div>
-          <textarea placeholder="Your message" name="message" id="body_msg" rows="5" required></textarea>
-          <div class="text-end mt-3">
-            <a href="#" class="vw-btn vw-btn-teal" id="sendMailBtn">Send Message</a>
+        </div>
+        <div class="lw-info-item">
+          <div class="lw-info-item__icon"><i class="fas fa-envelope"></i></div>
+          <div>
+            <strong>Email</strong><br />
+            <a href="mailto:info@vff-group.com">info@vff-group.com</a>
           </div>
-        </form>
-      </div>
-      <div class="vw-contact-info-card vw-reveal">
-        <h3>Contact Info</h3>
-        <p class="mb-3"><i class="fas fa-envelope me-2"></i><a href="mailto:info@vff-group.com">info@vff-group.com</a></p>
-        <p class="mb-3"><i class="fas fa-phone me-2"></i><a href="tel:+916364912877">+(91) 06364912877</a></p>
-        <p class="small opacity-75 mb-4">PLOT NO 198, VFF Group, Saraf Colony, Ranade Colony, Tilakwadi, Belagavi, Karnataka 590006</p>
-        <div class="vw-footer-social">
-          <a href="https://www.facebook.com/profile.php?id=100066521419862" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://www.instagram.com/velvetwash_" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
-          <a href="https://www.linkedin.com/company/vff-group/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <div class="lw-info-item">
+          <div class="lw-info-item__icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div>
+            <strong>Address</strong><br />
+            <span style="color:var(--lw-text-muted);">Tilakwadi &amp; Auto Nagar, Belagavi, Karnataka</span>
+          </div>
+        </div>
+        <div class="lw-info-item mb-0">
+          <div class="lw-info-item__icon"><i class="fas fa-clock"></i></div>
+          <div>
+            <strong>Hours</strong><br />
+            <span style="color:var(--lw-text-muted);">Every day 8:00 AM – 8:00 PM</span>
+          </div>
         </div>
       </div>
+      <div class="lw-form-card">
+        <h3 class="mb-4">Send a message</h3>
+        <form id="contactForm">
+          {% csrf_token %}
+          <label class="lw-form-label" for="sender_name">Name</label>
+          <input type="text" id="sender_name" name="name" class="lw-form-control" required />
+          <label class="lw-form-label" for="sender_email">Email</label>
+          <input type="email" id="sender_email" name="email" class="lw-form-control" required />
+          <label class="lw-form-label" for="subject_id">Subject</label>
+          <input type="text" id="subject_id" name="subject" class="lw-form-control" required />
+          <label class="lw-form-label" for="body_msg">Message</label>
+          <textarea id="body_msg" name="message" class="lw-form-control" rows="5" required></textarea>
+          <button type="button" class="lw-btn lw-btn-primary" id="sendMailBtn">Send Now</button>
+        </form>
+      </div>
     </div>
-    <div class="vw-map-wrap vw-reveal">
+    <div class="mt-5 rounded overflow-hidden border" style="border-color:var(--lw-border)!important;">
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3838.398904044754!2d74.50461417532074!3d15.83561814564928!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbf6684441d2301%3A0xad3188bda749833c!2sVELVET%20WASH%2C%20%26%20Dry%20Cleaning*21*21%20(%20a%20member%20of%20VFF%20GROUP%20)!5e0!3m2!1sen!2sin!4v1695795615456!5m2!1sen!2sin"
-        width="100%" height="450" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-        title="Velvet Wash location on Google Maps"></iframe>
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3838.398904044754!2d74.50461417532074!3d15.83561814564928!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbf6684441d2301%3A0xad3188bda749833c!2sVELVET%20WASH!5e0!3m2!1sen!2sin!4v1695795615456!5m2!1sen!2sin"
+        width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" title="Velvet Wash map"></iframe>
     </div>
   </div>
 </section>
@@ -71,14 +80,8 @@
     var email = document.getElementById('sender_email').value;
     var subject = document.getElementById('subject_id').value;
     var message = document.getElementById('body_msg').value;
-    var mailtoLink = 'mailto:info@vff-group.com'
-      + '?subject=' + encodeURIComponent(subject)
-      + '&body=' + encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message);
-    window.location.href = mailtoLink;
-    document.getElementById('sender_name').value = '';
-    document.getElementById('sender_email').value = '';
-    document.getElementById('subject_id').value = '';
-    document.getElementById('body_msg').value = '';
+    window.location.href = 'mailto:info@vff-group.com?subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message);
   });
 </script>
 {% endblock %}

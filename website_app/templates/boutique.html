@@ -1,65 +1,49 @@
 {% extends 'base.html' %}
-{% load static %}
-{% block title %}Boutique | VFF Group{% endblock %}
+
+{% block title %}Boutique | Velvet Wash{% endblock %}
+
 {% block content %}
-<section class="vw-page-hero">
+<section class="lw-page-hero">
   <div class="container">
     <h1>Boutique Collection</h1>
-    <ul class="vw-breadcrumb">
+    <ul class="lw-breadcrumb">
       <li><a href="{% url 'website_app:index' %}">Home</a></li>
       <li class="active"> / Boutique</li>
     </ul>
   </div>
 </section>
 
-<section class="vw-section" style="padding-top: 0;">
-  <div class="vw-hero" style="min-height: 70vh;">
-    <div class="vw-hero__video-wrap">
-      <div style="width:100%;height:100%;background:url('{% static 'images/slider1.jpg' %}') center/cover;"></div>
-    </div>
-    <div class="vw-hero__overlay"></div>
-    <div class="container vw-hero__content text-center" style="max-width: 100%;">
-      <span class="vw-hero__badge">VFF Boutique</span>
-      <h1 class="vw-hero__title vw-display">Exclusive designer collection</h1>
-      <p class="vw-hero__subtitle mx-auto">Discover our latest ethnic wear — lehengas, sarees, and more.</p>
-      <a href="#products" class="vw-btn vw-btn-primary">Shop Collection</a>
-    </div>
-  </div>
-</section>
-
-<section class="vw-section vw-section--alt" id="products">
+<section class="lw-section">
   <div class="container">
-    <div class="text-center mb-5 vw-reveal">
-      <span class="vw-section__label">Collections</span>
-      <h2 class="vw-section__title">Best selling pieces</h2>
+    <div class="lw-section__head">
+      <h2 class="lw-section__title">Designer ethnic wear</h2>
+      <p class="lw-section__desc">Inquire via WhatsApp for lehengas, sarees, and exclusive pieces.</p>
     </div>
-    <div class="vw-services-grid">
-      <article class="vw-service-card vw-reveal">
-        <div class="vw-service-card__img">
-          <img src="{% static 'images/lehenga1.jpg' %}" alt="Lehenga" onerror="this.src='{% static 'images/service1.jpg' %}'" />
-          <span class="vw-service-card__tag">Lehenga</span>
+    <div class="lw-grid-3">
+      <div class="lw-card">
+        <div class="lw-card__img"><img src="{{ img.wash_fold }}" alt="Lehenga collection" loading="lazy" /></div>
+        <div class="lw-card__body text-center">
+          <h4>Lehenga</h4>
+          <p><s style="color:var(--lw-text-muted);">₹25,000</s> <strong style="color:var(--lw-primary);">₹19,999</strong></p>
+          <a href="https://wa.me/+916364912877?text=Lehenga%20inquiry" class="lw-btn lw-btn-primary lw-btn-sm" target="_blank" rel="noopener">WhatsApp</a>
         </div>
-        <div class="vw-service-card__body text-center">
-          <div class="mb-2">
-            <span class="text-muted text-decoration-line-through me-2">₹25,000</span>
-            <strong class="text-teal">₹19,999</strong>
-          </div>
-          <a href="https://wa.me/+916364912877?text=I'm%20interested%20in%20Lehenga%20(₹19,999)" class="vw-btn vw-btn-teal" target="_blank" rel="noopener">WhatsApp Inquiry</a>
+      </div>
+      <div class="lw-card">
+        <div class="lw-card__img"><img src="{{ img.dry_clean }}" alt="Saree collection" loading="lazy" /></div>
+        <div class="lw-card__body text-center">
+          <h4>Saree</h4>
+          <p><s style="color:var(--lw-text-muted);">₹15,000</s> <strong style="color:var(--lw-primary);">₹12,999</strong></p>
+          <a href="https://wa.me/+916364912877?text=Saree%20inquiry" class="lw-btn lw-btn-primary lw-btn-sm" target="_blank" rel="noopener">WhatsApp</a>
         </div>
-      </article>
-      <article class="vw-service-card vw-reveal">
-        <div class="vw-service-card__img">
-          <img src="{% static 'images/saree1.jpg' %}" alt="Saree" onerror="this.src='{% static 'images/service2.jpg' %}'" />
-          <span class="vw-service-card__tag">Saree</span>
+      </div>
+      <div class="lw-card">
+        <div class="lw-card__img"><img src="{{ img.testimonial }}" alt="Exclusive wear" loading="lazy" /></div>
+        <div class="lw-card__body text-center">
+          <h4>Custom</h4>
+          <p style="color:var(--lw-text-muted);">Visit our store for fittings</p>
+          <a href="{% url 'website_app:contactus' %}" class="lw-btn lw-btn-outline lw-btn-sm">Contact</a>
         </div>
-        <div class="vw-service-card__body text-center">
-          <div class="mb-2">
-            <span class="text-muted text-decoration-line-through me-2">₹15,000</span>
-            <strong class="text-teal">₹12,999</strong>
-          </div>
-          <a href="https://wa.me/+916364912877?text=I'm%20interested%20in%20Saree%20(₹12,999)" class="vw-btn vw-btn-teal" target="_blank" rel="noopener">WhatsApp Inquiry</a>
-        </div>
-      </article>
+      </div>
     </div>
   </div>
 </section>

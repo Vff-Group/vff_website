@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Book Order | Velvet Wash{% endblock %}
+
+{% block content %}
+<section class="lw-page-hero">
+  <div class="container">
+    <h1>Book Your Order</h1>
+    <ul class="lw-breadcrumb">
+      <li><a href="{% url 'website_app:index' %}">Home</a></li>
+      <li class="active"> / Book Order</li>
+    </ul>
+  </div>
+</section>
+
+<section class="lw-section">
+  <div class="container">
+    <div class="lw-book-grid">
+      <div class="lw-form-card">
+        <h3 class="mb-4">Schedule your laundry pickup</h3>
+        <form method="post" action="{% url 'website_app:book_order' %}">
+          {% csrf_token %}
+          <label class="lw-form-label" for="input-customer-name">Full Name</label>
+          <input type="text" id="input-customer-name" class="lw-form-control" name="customer_name" placeholder="Your name" required />
+
+          <label class="lw-form-label" for="input-contact-name">Phone Number</label>
+          <input type="tel" id="input-contact-name" class="lw-form-control" name="contact_no" placeholder="+91..." required />
+
+          <label class="lw-form-label" for="address-field">Pickup Address</label>
+          <textarea id="address-field" class="lw-form-control" name="address" rows="4" placeholder="Full address for pickup &amp; delivery" required></textarea>
+
+          <button type="submit" class="lw-btn lw-btn-primary lw-btn-block mt-2">Confirm Booking</button>
+        </form>
+      </div>
+      <aside class="lw-order-summary">
+        <h4 class="mb-3">Order summary</h4>
+        <img src="{{ img.basket }}" alt="Laundry basket" loading="lazy" />
+        <ul class="lw-pricing-list mb-0">
+          <li><i class="fas fa-check"></i> Free pickup &amp; delivery</li>
+          <li><i class="fas fa-check"></i> Quality guarantee</li>
+          <li><i class="fas fa-check"></i> Pay via app after service</li>
+        </ul>
+        <p class="small mt-3 mb-0" style="color:var(--lw-text-muted);">For full pricing, download the VFF Group app or call us.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+{% endblock %}

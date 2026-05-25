@@ -1,171 +1,71 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}About Us | Velvet Wash — VFF Group{% endblock %}
+{% block title %}About Us | Velvet Wash{% endblock %}
 
 {% block content %}
-<section class="vw-page-hero">
+<section class="lw-page-hero">
   <div class="container">
     <h1>About Us</h1>
-    <ul class="vw-breadcrumb">
+    <ul class="lw-breadcrumb">
       <li><a href="{% url 'website_app:index' %}">Home</a></li>
-      <li class="active"> / About</li>
+      <li class="active"> / About Us</li>
     </ul>
   </div>
 </section>
 
-<section class="vw-section">
+<section class="lw-section">
   <div class="container">
-    <div class="vw-about-grid">
-      <div class="vw-about-images vw-reveal">
-        <img src="{% static 'images/auto_nagar_store.jpg' %}" alt="Velvet Wash Auto Nagar" class="img-main" />
-        <img src="{% static 'profiles/deepa.jpeg' %}" alt="Mrs. Deepa R Pattar" class="img-float" />
+    <div class="lw-grid-2">
+      <div class="lw-about-img">
+        <img src="{{ img.about }}" alt="Professional laundry team at work" loading="lazy" />
       </div>
-      <div class="vw-reveal">
-        <span class="vw-section__label">Leadership</span>
-        <h2 class="vw-section__title">Mrs. Deepa R Pattar</h2>
-        <p class="vw-section__desc">A leading woman entrepreneur in laundry — Velvet Wash celebrates empowerment and exceptional service. <strong>Mrs. Deepa Pattar</strong> has propelled Velvet Wash to unparalleled heights through passion for quality and dedication to customers.</p>
-        <p class="vw-section__desc">Women Entrepreneur of the Year Award 2022 winner — founder of Velvet Wash Laundry and Dry Cleaning, with a demonstrated history in the textile service industry.</p>
-        <ul class="vw-check-list">
+      <div>
+        <span class="lw-section__label">Our Story</span>
+        <h2 class="lw-section__title">Professional &amp; reliable laundry</h2>
+        <p style="color:var(--lw-text-muted);line-height:1.7;">Velvet Wash by VFF Group brings world-class laundry and dry cleaning to Belagavi — with free collection, transparent pricing, and care you can trust.</p>
+        <ul class="lw-check-list">
+          <li><i class="fas fa-check-circle"></i> Professional &amp; reliable service</li>
+          <li><i class="fas fa-check-circle"></i> Eco-friendly cleaning products</li>
           <li><i class="fas fa-check-circle"></i> 100% customer satisfaction</li>
+        </ul>
+        <a href="{% url 'website_app:book_order' %}" class="lw-btn lw-btn-primary mt-2">Get Started</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="lw-section lw-section--muted">
+  <div class="container">
+    <div class="lw-grid-2">
+      <div>
+        <span class="lw-section__label">Leadership</span>
+        <h2 class="lw-section__title">Mrs. Deepa R Pattar</h2>
+        <p style="color:var(--lw-text-muted);line-height:1.7;">Women Entrepreneur of the Year 2022 — founder of Velvet Wash Laundry and Dry Cleaning, with a demonstrated history in the textile service industry.</p>
+        <ul class="lw-check-list">
           <li><i class="fas fa-check-circle"></i> Free collection &amp; delivery</li>
           <li><i class="fas fa-check-circle"></i> Affordable prices</li>
         </ul>
-        <a href="{% url 'website_app:index' %}" class="vw-btn vw-btn-teal mt-4">Get Started</a>
+      </div>
+      <div class="lw-about-img">
+        <img src="{{ img.about_team }}" alt="Laundry professional" loading="lazy" style="min-height:320px;" />
       </div>
     </div>
   </div>
 </section>
 
-<section class="vw-section vw-section--alt">
+<section class="lw-stats-bar">
   <div class="container">
-    <div class="vw-stats vw-reveal">
-      <div class="vw-stat-card">
-        <div class="timer count-title count-number" data-to="10945" data-speed="1500">0</div>
-        <p>Clothes Washed</p>
-      </div>
-      <div class="vw-stat-card">
-        <div class="timer count-title count-number" data-to="5050" data-speed="1500">0</div>
-        <p>Happy Customers</p>
-      </div>
-      <div class="vw-stat-card">
-        <div class="timer count-title count-number" data-to="6430" data-speed="1500">0</div>
-        <p>Dry Cleaned</p>
-      </div>
-      <div class="vw-stat-card">
-        <div class="timer count-title count-number" data-to="11400" data-speed="1500">0</div>
-        <p>Steam &amp; Ironed</p>
-      </div>
+    <div class="lw-stats-bar__grid">
+      <div class="lw-stats-bar__item"><strong class="timer count-number" data-to="10945" data-speed="1500">0</strong><span>Clothes Washed</span></div>
+      <div class="lw-stats-bar__item"><strong class="timer count-number" data-to="5050" data-speed="1500">0</strong><span>Happy Customers</span></div>
+      <div class="lw-stats-bar__item"><strong class="timer count-number" data-to="6430" data-speed="1500">0</strong><span>Dry Cleaned</span></div>
+      <div class="lw-stats-bar__item"><strong class="timer count-number" data-to="11400" data-speed="1500">0</strong><span>Steam &amp; Ironed</span></div>
     </div>
   </div>
 </section>
+{% endblock %}
 
-<section class="vw-section">
-  <div class="container">
-    <div class="vw-split vw-reveal">
-      <div class="vw-split__image">
-        <img src="{% static 'images/tilakwadi_store.jpg' %}" alt="Velvet Wash store" />
-      </div>
-      <div class="vw-split__content">
-        <span class="vw-section__label">Book Today</span>
-        <h2 class="vw-section__title">Hassle-free laundry services</h2>
-        <p class="vw-section__desc">Enjoy fresh, clean clothes delivered right to your doorstep.</p>
-        <div class="vw-mini-features">
-          <div class="vw-mini-feature">
-            <i class="fas fa-tshirt"></i>
-            <div>
-              <h4 class="h6 mb-1">Clean Results</h4>
-              <p class="small text-muted mb-0">Immaculacy meets quality.</p>
-            </div>
-          </div>
-          <div class="vw-mini-feature">
-            <i class="fas fa-shipping-fast"></i>
-            <div>
-              <h4 class="h6 mb-1">Fast Delivery</h4>
-              <p class="small text-muted mb-0">Rapid delivery for fresh garments.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="vw-section vw-section--alt">
-  <div class="container">
-    <div class="text-center mb-5 vw-reveal">
-      <span class="vw-section__label">Our Team</span>
-      <h2 class="vw-section__title">The people behind Velvet Wash</h2>
-    </div>
-    <div class="vw-team-grid">
-      <div class="vw-team-card vw-reveal">
-        <img src="{% static 'profiles/uttam.jpeg' %}" alt="Mr. Uttam" />
-        <div class="vw-team-card__info">
-          <h4>Mr. Uttam</h4>
-          <p>Board of Director</p>
-        </div>
-      </div>
-      <div class="vw-team-card vw-reveal">
-        <img src="{% static 'profiles/shankar.jpeg' %}" alt="Mr. Shankar Gauda" />
-        <div class="vw-team-card__info">
-          <h4>Mr. Shankar Gauda</h4>
-          <p>Managing Partner &amp; Director, Marketing Franchise</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="vw-section">
-  <div class="container">
-    <div class="row align-items-center g-5">
-      <div class="col-lg-6 vw-reveal">
-        <span class="vw-section__label">Testimonials</span>
-        <h2 class="vw-section__title">What our customers say</h2>
-        <div class="vw-testimonial-wrap mt-4">
-          <div class="vw-testimonial-item">
-            <blockquote>
-              <q>VFF Velvet Wash — stains vanished, fabrics gleaming. Top-notch service and staff so kind. You've won my trust.</q>
-            </blockquote>
-            <div class="vw-testimonial-author">
-              <div class="vw-testimonial-author__avatar">DS</div>
-              <div>
-                <strong>Deepak Sharma</strong>
-                <p class="small text-muted mb-0">Google Reviews</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6 vw-reveal">
-        <div class="vw-testimonial-wrap">
-          <div class="vw-testimonial-item mb-4">
-            <blockquote>
-              <q>Velvet Wash stands head and shoulders above the rest. Exceptional quality on everyday clothing and delicate fabrics alike.</q>
-            </blockquote>
-            <div class="vw-testimonial-author">
-              <div class="vw-testimonial-author__avatar">FM</div>
-              <div>
-                <strong>Faizaan Marfani</strong>
-                <p class="small text-muted mb-0">Google Reviews</p>
-              </div>
-            </div>
-          </div>
-          <div class="vw-testimonial-item">
-            <blockquote>
-              <q>Excellent service — on time delivery, good hygiene, fair price and quality. I can give 5/5 for their commitment.</q>
-            </blockquote>
-            <div class="vw-testimonial-author">
-              <div class="vw-testimonial-author__avatar">SK</div>
-              <div>
-                <strong>Santosh Kagawade</strong>
-                <p class="small text-muted mb-0">Google Reviews</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+{% block extra_scripts %}
+<script src="{% static 'js/counter.js' %}"></script>
 {% endblock %}
