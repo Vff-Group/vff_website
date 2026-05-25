@@ -143,6 +143,29 @@
     document.querySelector('.navbar-toggler')?.addEventListener('click', function () {
       document.body.classList.toggle('noscroll');
     });
+    (function () {
+      var videos = document.querySelectorAll('.lw-video-showcase video[data-src]');
+      if (!videos.length || !('IntersectionObserver' in window)) {
+        videos.forEach(function (v) {
+          if (v.dataset.src) { v.src = v.dataset.src; v.play().catch(function () {}); }
+        });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          var v = entry.target;
+          if (entry.isIntersecting) {
+            if (!v.src && v.dataset.src) {
+              v.src = v.dataset.src;
+              v.play().catch(function () {});
+            }
+          } else if (v.src) {
+            v.pause();
+          }
+        });
+      }, { rootMargin: '80px', threshold: 0.2 });
+      videos.forEach(function (v) { io.observe(v); });
+    })();
   </script>
   {% block extra_scripts %}{% endblock %}
 </body>

@@ -6,13 +6,18 @@
       <p class="lw-section__desc">{{ showcase_desc|default:"Professional equipment, hygiene standards, and care — the experience every VFF Group customer receives." }}</p>
     </div>
     <div class="lw-video-grid">
-      {% for video_url in vff_videos %}
       <div class="lw-video-card">
-        <video autoplay muted loop playsinline preload="metadata">
-          <source src="{{ video_url }}" type="video/mp4" />
-        </video>
+        <video muted loop playsinline preload="none" data-src="{{ vff_video_1 }}"></video>
       </div>
-      {% endfor %}
+      <div class="lw-video-card">
+        <video muted loop playsinline preload="none" data-src="{{ vff_video_2 }}"></video>
+      </div>
+      <div class="lw-video-card">
+        <video muted loop playsinline preload="none" data-src="{{ vff_video_3 }}"></video>
+      </div>
+      <div class="lw-video-card">
+        <video muted loop playsinline preload="none" data-src="{{ vff_video_4 }}"></video>
+      </div>
     </div>
   </div>
 </section>
