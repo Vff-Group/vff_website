@@ -928,6 +928,65 @@ body.laundry-site .w3l-footer-29-main { display: none !important; }
 
 body.laundry-site { scroll-padding-top: 80px; }
 
+/* Homepage: franchise first */
+.lw-home-franchise {
+  padding-top: clamp(5.5rem, 10vw, 6.5rem);
+  background: linear-gradient(180deg, var(--lw-primary-soft) 0%, var(--lw-bg) 100%);
+  border-bottom: 1px solid var(--lw-border);
+}
+
+.lw-home-franchise .lw-section__head {
+  margin-bottom: 2rem;
+}
+
+.lw-owner-section--home {
+  grid-template-columns: 1fr 280px;
+  align-items: start;
+}
+
+.lw-home-poster .lw-poster-wrap {
+  margin: 0;
+}
+
+.lw-home-divider {
+  padding: 1.25rem 0;
+  background: var(--lw-bg-muted);
+  border-top: 1px solid var(--lw-border);
+  border-bottom: 1px solid var(--lw-border);
+}
+
+.lw-home-divider .container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.lw-home-divider__line {
+  flex: 1;
+  height: 1px;
+  background: var(--lw-border);
+}
+
+.lw-home-divider__label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lw-text-muted);
+  white-space: nowrap;
+}
+
+@media (max-width: 991.98px) {
+  .lw-owner-section--home {
+    grid-template-columns: 1fr;
+  }
+  .lw-owner-section--home .lw-owner-card {
+    max-width: 320px;
+    margin: 0 auto 1.5rem;
+    position: static;
+  }
+}
+
 /* Video showcase */
 .lw-video-showcase { background: var(--lw-bg-muted); }
 

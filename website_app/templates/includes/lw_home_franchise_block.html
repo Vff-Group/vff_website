@@ -1,0 +1,74 @@
+{% load static %}
+<section class="lw-home-franchise lw-section" id="franchise">
+  <div class="container">
+    <div class="lw-section__head">
+      <img src="{{ logo_url }}" alt="VFF Group Velvet Wash" width="200" height="60" class="mb-3" style="height:auto;max-width:200px;" />
+      <span class="lw-section__label">Franchise Opportunity</span>
+      <h2 class="lw-section__title">Start your own Velvet Wash laundry business</h2>
+      <p class="lw-section__desc">
+        Partner with India’s emerging laundry brand under VFF Group, Belagavi — end-to-end setup, marketing, and 24×7 support.
+      </p>
+    </div>
+
+    <div class="lw-franchise-benefits mb-4">
+      <div class="lw-franchise-benefit">End-to-End<br />Setup Support</div>
+      <div class="lw-franchise-benefit">Marketing &amp;<br />Branding Support</div>
+      <div class="lw-franchise-benefit">Assured<br />Business Model</div>
+    </div>
+
+    <div class="lw-owner-section lw-owner-section--home mb-4">
+      <div>
+        <span class="lw-section__label">Meet the Founder</span>
+        <h3 class="h2 lw-section__title" style="text-align:left;margin-bottom:0.5rem;">Mrs. Deepa R Pattar</h3>
+        <p class="lw-lead">Founder &amp; CEO · VFF Group · Velvet Wash</p>
+        <p style="color:var(--lw-text-muted);line-height:1.75;">
+          Mrs. <strong>Deepa R Pattar</strong> founded Velvet Wash Laundry &amp; Dry Cleaning and leads VFF Group with a vision to raise laundry standards across Karnataka and India. Honoured as <strong>Women Entrepreneur of the Year 2022</strong>, she brings deep experience in textile care, operations, and franchise development.
+        </p>
+        <p style="color:var(--lw-text-muted);line-height:1.75;">
+          Entrepreneurs partner directly with her team for equipment, chemicals, staff training, branding, and machine maintenance — so you grow your outlet while VFF Group handles the backbone.
+        </p>
+        <ul class="lw-detail-list">
+          <li><i class="fas fa-check-circle"></i> <span><strong>24×7 franchise support</strong> — maintenance, equipment, packaging &amp; chemicals</span></li>
+          <li><i class="fas fa-check-circle"></i> <span><strong>Marketing &amp; branding</strong> under the Velvet Wash identity</span></li>
+          <li><i class="fas fa-check-circle"></i> <span><strong>VFF Group app</strong> for orders, payments &amp; tracking</span></li>
+        </ul>
+        <div class="d-flex flex-wrap gap-2 mt-3">
+          <a href="{% static 'new_images/velvet-wash-franchise-opportunity.pdf' %}" class="lw-btn lw-btn-primary" download>
+            <i class="fas fa-file-pdf"></i> Download Franchise PDF
+          </a>
+          <a href="tel:+916364912877" class="lw-btn lw-btn-outline">
+            <i class="fas fa-phone"></i> Call Franchise Team
+          </a>
+          <a href="{% url 'website_app:franchise' %}" class="lw-btn lw-btn-outline">Full Franchise Details</a>
+        </div>
+      </div>
+      {% include 'includes/lw_owner_card.html' %}
+    </div>
+
+    <div class="lw-home-poster row g-4 align-items-center">
+      <div class="col-lg-5">
+        <a href="{% static 'new_images/franchise_poster.jpeg' %}" target="_blank" rel="noopener" class="lw-poster-wrap d-block">
+          <img
+            src="{% static 'new_images/franchise_poster.jpeg' %}"
+            alt="Velvet Wash franchise opportunity poster"
+            loading="eager"
+            decoding="async"
+          />
+        </a>
+      </div>
+      <div class="col-lg-7">
+        <h3 class="h4 mb-3">Why partner with Velvet Wash?</h3>
+        <ul class="lw-check-list">
+          <li><i class="fas fa-cog"></i> Commercial equipment &amp; store layout guidance</li>
+          <li><i class="fas fa-graduation-cap"></i> Staff training &amp; operational SOPs</li>
+          <li><i class="fas fa-bullhorn"></i> Coordinated local &amp; digital marketing</li>
+          <li><i class="fas fa-chart-line"></i> Proven recurring-revenue laundry model</li>
+        </ul>
+        <p class="small mt-3 mb-0" style="color:var(--lw-text-muted);">
+          Enquiries: <a href="mailto:franchise@vff-group.com">franchise@vff-group.com</a> ·
+          <a href="tel:+916364912877">+91 63649 12877</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

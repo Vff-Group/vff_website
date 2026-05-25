@@ -2,7 +2,17 @@
 {% load static %}
 
 {% block content %}
-<section class="lw-hero lw-hero--video">
+{% include 'includes/lw_home_franchise_block.html' %}
+
+<section class="lw-home-divider" aria-hidden="true">
+  <div class="container">
+    <span class="lw-home-divider__line"></span>
+    <span class="lw-home-divider__label">Laundry &amp; dry cleaning services</span>
+    <span class="lw-home-divider__line"></span>
+  </div>
+</section>
+
+<section class="lw-hero lw-hero--video" id="home">
   <div class="lw-hero__video">
     <video autoplay muted loop playsinline poster="{{ img.banner }}">
       <source src="{{ vff_video_1 }}" type="video/mp4" />
@@ -12,12 +22,11 @@
   <div class="container">
     <div class="row align-items-center">
       <div class="col-lg-6 py-4">
-        <img src="{{ logo_url }}" alt="VFF Group Velvet Wash" class="lw-hero__logo mb-3" width="200" height="60" />
         <h1 class="lw-hero__title">Fresh Clothes, <span>Happy Life</span></h1>
         <p class="lw-hero__desc">Velvet Wash by VFF Group delivers world-class laundry and dry cleaning with free pickup &amp; delivery in Belagavi.</p>
         <div class="lw-hero__btns">
           <a href="{% url 'website_app:book_order' %}" class="lw-btn lw-btn-primary">Book Now</a>
-          <a href="{% url 'website_app:franchise' %}" class="lw-btn lw-btn-outline" style="border-color:#fff;color:#fff;">Franchise</a>
+          <a href="{% url 'website_app:aboutus' %}" class="lw-btn lw-btn-outline" style="border-color:#fff;color:#fff;">Learn More</a>
         </div>
       </div>
       <div class="col-lg-6 d-none d-lg-flex justify-content-center">
