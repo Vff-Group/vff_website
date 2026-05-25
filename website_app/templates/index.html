@@ -4,7 +4,7 @@
 {% block content %}
 {% include 'includes/lw_home_franchise_block.html' %}
 
-<section class="lw-home-divider" aria-hidden="true">
+<section class="lw-home-divider lw-reveal" aria-hidden="true">
   <div class="container">
     <span class="lw-home-divider__line"></span>
     <span class="lw-home-divider__label">Laundry &amp; dry cleaning services</span>
@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="col-lg-6 d-none d-lg-flex justify-content-center">
-        <div class="lw-hero__circle">
+        <div class="lw-hero__circle lw-reveal-scale">
           <img src="{{ img.hero }}" alt="Happy customer with clean laundry" loading="eager" decoding="async" />
         </div>
       </div>
@@ -38,9 +38,9 @@
   </div>
 </section>
 
-<section class="lw-features-strip">
+<section class="lw-features-strip lw-reveal">
   <div class="container">
-    <div class="lw-features-strip__grid">
+    <div class="lw-features-strip__grid lw-stagger">
       <div class="lw-feature-item">
         <div class="lw-feature-item__icon"><i class="fas fa-truck"></i></div>
         <h5>Free Pickup &amp; Delivery</h5>
@@ -67,14 +67,14 @@
 
 {% include 'includes/lw_video_showcase.html' %}
 
-<section class="lw-section lw-section--muted" id="services-preview">
+<section class="lw-section lw-section--muted lw-reveal" id="services-preview">
   <div class="container">
     <div class="lw-section__head">
       <span class="lw-section__label">Our Services</span>
       <h2 class="lw-section__title">Professional fabric care</h2>
       <p class="lw-section__desc">From everyday laundry to premium dry cleaning — we handle it all.</p>
     </div>
-    <div class="lw-grid-3">
+    <div class="lw-grid-3 lw-stagger">
       <div class="lw-card">
         <div class="lw-card__img"><img src="{{ img.wash_fold }}" alt="Wash and fold" loading="lazy" /></div>
         <div class="lw-card__body">
@@ -103,13 +103,13 @@
   </div>
 </section>
 
-<section class="lw-section" id="how-it-works">
+<section class="lw-section lw-reveal" id="how-it-works">
   <div class="container">
     <div class="lw-section__head">
       <span class="lw-section__label">Simple Process</span>
       <h2 class="lw-section__title">How it works</h2>
     </div>
-    <div class="lw-steps">
+    <div class="lw-steps lw-stagger">
       <div class="lw-step">
         <div class="lw-step__icon"><i class="fas fa-calendar-alt"></i></div>
         <h4>Schedule Pickup</h4>
@@ -132,13 +132,13 @@
   </div>
 </section>
 
-<section class="lw-section lw-section--muted" id="pricing">
+<section class="lw-section lw-section--muted lw-reveal" id="pricing">
   <div class="container">
     <div class="lw-section__head">
       <span class="lw-section__label">Pricing</span>
       <h2 class="lw-section__title">Plans for every need</h2>
     </div>
-    <div class="lw-grid-3">
+    <div class="lw-grid-3 lw-stagger">
       <div class="lw-pricing-card">
         <h3>Basic</h3>
         <div class="lw-price">Per kg</div>
@@ -174,12 +174,12 @@
   </div>
 </section>
 
-<section class="lw-stats-bar">
+<section class="lw-stats-bar lw-reveal">
   <div class="container">
-    <div class="lw-stats-bar__grid">
-      <div class="lw-stats-bar__item"><strong>10K+</strong><span>Happy Customers</span></div>
-      <div class="lw-stats-bar__item"><strong>50K+</strong><span>Orders Completed</span></div>
-      <div class="lw-stats-bar__item"><strong>2</strong><span>Store Locations</span></div>
+    <div class="lw-stats-bar__grid lw-stagger">
+      <div class="lw-stats-bar__item"><strong data-count="10" data-suffix="K+">0</strong><span>Happy Customers</span></div>
+      <div class="lw-stats-bar__item"><strong data-count="50" data-suffix="K+">0</strong><span>Orders Completed</span></div>
+      <div class="lw-stats-bar__item"><strong data-count="2">0</strong><span>Store Locations</span></div>
       <div class="lw-stats-bar__item"><strong>8AM–8PM</strong><span>Daily Service</span></div>
     </div>
   </div>

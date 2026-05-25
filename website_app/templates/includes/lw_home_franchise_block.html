@@ -1,8 +1,10 @@
 {% load static %}
 <section class="lw-home-franchise lw-section" id="franchise">
+  <div class="lw-home-franchise__blob lw-home-franchise__blob--1" aria-hidden="true"></div>
+  <div class="lw-home-franchise__blob lw-home-franchise__blob--2" aria-hidden="true"></div>
   <div class="container">
-    <div class="lw-section__head">
-      <img src="{{ logo_url }}" alt="VFF Group Velvet Wash" width="200" height="60" class="mb-3" style="height:auto;max-width:200px;" />
+    <div class="lw-section__head lw-reveal">
+      <img src="{{ logo_url }}" alt="VFF Group Velvet Wash" width="200" height="60" class="mb-3 lw-reveal-scale" style="height:auto;max-width:200px;" />
       <span class="lw-section__label">Franchise Opportunity</span>
       <h2 class="lw-section__title">Start your own Velvet Wash laundry business</h2>
       <p class="lw-section__desc">
@@ -10,14 +12,23 @@
       </p>
     </div>
 
-    <div class="lw-franchise-benefits mb-4">
-      <div class="lw-franchise-benefit">End-to-End<br />Setup Support</div>
-      <div class="lw-franchise-benefit">Marketing &amp;<br />Branding Support</div>
-      <div class="lw-franchise-benefit">Assured<br />Business Model</div>
+    <div class="lw-franchise-benefits mb-4 lw-stagger">
+      <div class="lw-franchise-benefit">
+        <span class="lw-franchise-benefit__icon"><i class="fas fa-tools"></i></span>
+        End-to-End<br />Setup Support
+      </div>
+      <div class="lw-franchise-benefit">
+        <span class="lw-franchise-benefit__icon"><i class="fas fa-bullhorn"></i></span>
+        Marketing &amp;<br />Branding Support
+      </div>
+      <div class="lw-franchise-benefit">
+        <span class="lw-franchise-benefit__icon"><i class="fas fa-chart-line"></i></span>
+        Assured<br />Business Model
+      </div>
     </div>
 
     <div class="lw-owner-section lw-owner-section--home mb-4">
-      <div>
+      <div class="lw-reveal-left">
         <span class="lw-section__label">Meet the Founder</span>
         <h3 class="h2 lw-section__title" style="text-align:left;margin-bottom:0.5rem;">Mrs. Deepa R Pattar</h3>
         <p class="lw-lead">Founder &amp; CEO · VFF Group · Velvet Wash</p>
@@ -42,12 +53,14 @@
           <a href="{% url 'website_app:franchise' %}" class="lw-btn lw-btn-outline">Full Franchise Details</a>
         </div>
       </div>
-      {% include 'includes/lw_owner_card.html' %}
+      <div class="lw-reveal-right">
+        {% include 'includes/lw_owner_card.html' %}
+      </div>
     </div>
 
-    <div class="lw-home-poster row g-4 align-items-center">
+    <div class="lw-home-poster row g-4 align-items-stretch lw-reveal">
       <div class="col-lg-5">
-        <a href="{% static 'new_images/franchise_poster.jpeg' %}" target="_blank" rel="noopener" class="lw-poster-wrap d-block">
+        <a href="{% static 'new_images/franchise_poster.jpeg' %}" target="_blank" rel="noopener" class="lw-poster-wrap d-block h-100">
           <img
             src="{% static 'new_images/franchise_poster.jpeg' %}"
             alt="Velvet Wash franchise opportunity poster"
@@ -57,17 +70,19 @@
         </a>
       </div>
       <div class="col-lg-7">
-        <h3 class="h4 mb-3">Why partner with Velvet Wash?</h3>
-        <ul class="lw-check-list">
-          <li><i class="fas fa-cog"></i> Commercial equipment &amp; store layout guidance</li>
-          <li><i class="fas fa-graduation-cap"></i> Staff training &amp; operational SOPs</li>
-          <li><i class="fas fa-bullhorn"></i> Coordinated local &amp; digital marketing</li>
-          <li><i class="fas fa-chart-line"></i> Proven recurring-revenue laundry model</li>
-        </ul>
-        <p class="small mt-3 mb-0" style="color:var(--lw-text-muted);">
-          Enquiries: <a href="mailto:franchise@vff-group.com">franchise@vff-group.com</a> ·
-          <a href="tel:+916364912877">+91 63649 12877</a>
-        </p>
+        <div class="lw-home-poster-panel">
+          <h3 class="h4 mb-3">Why partner with Velvet Wash?</h3>
+          <ul class="lw-check-list">
+            <li><i class="fas fa-cog"></i> Commercial equipment &amp; store layout guidance</li>
+            <li><i class="fas fa-graduation-cap"></i> Staff training &amp; operational SOPs</li>
+            <li><i class="fas fa-bullhorn"></i> Coordinated local &amp; digital marketing</li>
+            <li><i class="fas fa-chart-line"></i> Proven recurring-revenue laundry model</li>
+          </ul>
+          <p class="small mt-3 mb-0" style="color:var(--lw-text-muted);">
+            Enquiries: <a href="mailto:franchise@vff-group.com">franchise@vff-group.com</a> ·
+            <a href="tel:+916364912877">+91 63649 12877</a>
+          </p>
+        </div>
       </div>
     </div>
   </div>
