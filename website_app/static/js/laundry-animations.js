@@ -106,4 +106,34 @@
       movetop.classList.toggle('lw-movetop--visible', window.scrollY > 280);
     }, { passive: true });
   }
+
+  /* Ambassador video — muted at start, tap to unmute */
+  document.querySelectorAll('.lw-video-sound-toggle').forEach(function (btn) {
+    var wrap = btn.closest('.lw-ambassador-video');
+    var video = wrap && wrap.querySelector('video');
+    if (!video) return;
+
+    function syncBtn() {
+      var on = !video.muted;
+      btn.setAttribute('aria-label', on ? 'Mute video' : 'Unmute video');
+      btn.setAttribute('title', on ? 'Mute' : 'Tap for sound');
+      btn.classList.toggle('lw-video-sound-toggle--on', on);
+      var icon = btn.querySelector('i');
+      if (icon) {
+        icon.className = on ? 'fas fa-volume-up' : 'fas fa-volume-mute';
+      }
+      var label = btn.querySelector('.lw-ambassador-video__sound-label');
+      if (label) label.textContent = on ? 'Sound on' : 'Tap for sound';
+    }
+
+    btn.addEventListener('click', function () {
+      video.muted = !video.muted;
+      if (!video.muted) {
+        video.play().catch(function () {});
+      }
+      syncBtn();
+    });
+
+    syncBtn();
+  });
 })();

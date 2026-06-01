@@ -3,6 +3,8 @@ from django.templatetags.static import static
 from .laundry_images import LAUNDRY_IMAGE_FILES
 
 LOGO_PATH = "img/logos/logo_new.png"
+AMBASSADOR_PHOTO = "profiles/brand_ambassador_profile_picture.png"
+AMBASSADOR_VIDEO = "videos/vff_brand_ambassador.mp4"
 
 VFF_VIDEOS = [
     "videos/vff_video_1.mp4",
@@ -22,4 +24,6 @@ def laundry_media(request):
         "vff_video_2": urls[1],
         "vff_video_3": urls[2],
         "vff_video_4": urls[3],
+        "ambassador_photo_url": static(AMBASSADOR_PHOTO),
+        "ambassador_video_url": static(AMBASSADOR_VIDEO),
     }

@@ -130,6 +130,11 @@ package-lock.json
 # Large video/source assets (uncomment if you host videos outside git)
 # website_app/static/videos/*.mp4
 # static/videos/*.mp4
+# Raw camera files — too large for GitHub; use compressed .mp4 in repo
+static/videos/*.MOV
+static/videos/*.mov
+website_app/static/videos/*.MOV
+website_app/static/videos/*.mov
 
 # ─── OS / tooling misc ─────────────────────────────────────────────────
 *.bak

@@ -1787,6 +1787,105 @@ body.laundry-site { scroll-padding-top: 80px; }
   height: 100%;
 }
 
+/* Brand ambassador */
+.lw-ambassador-section {
+  padding-top: clamp(1.5rem, 4vw, 2.5rem);
+  padding-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  margin-bottom: 0;
+}
+
+.lw-home-franchise .lw-ambassador-section {
+  background: var(--lw-surface);
+  border: 1px solid var(--lw-border);
+  box-shadow: var(--lw-shadow-md);
+  padding: clamp(2rem, 5vw, 3rem) 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.lw-ambassador-grid {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 2rem 2.5rem;
+  align-items: start;
+}
+
+.lw-ambassador-video-wrap {
+  grid-column: 1 / -1;
+}
+
+.lw-ambassador-card__photo {
+  object-position: center top;
+  border-color: #ec4899;
+  box-shadow: 0 8px 28px rgba(236, 72, 153, 0.2);
+}
+
+.lw-ambassador-card .lw-owner-card__badge span {
+  color: #db2777;
+}
+
+.lw-ambassador-video {
+  position: relative;
+  border-radius: var(--lw-radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--lw-border);
+  box-shadow: var(--lw-shadow-md);
+  background: #0f172a;
+  aspect-ratio: 16 / 9;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.lw-ambassador-video__player {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.lw-ambassador-video__sound {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  border: none;
+  border-radius: var(--lw-radius-pill);
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease;
+  z-index: 2;
+}
+
+.lw-ambassador-video__sound:hover {
+  background: rgba(37, 99, 235, 0.92);
+  transform: scale(1.04);
+}
+
+.lw-ambassador-video__sound--on,
+.lw-video-sound-toggle--on {
+  background: rgba(37, 99, 235, 0.92);
+}
+
+.lw-ambassador-video__sound i {
+  font-size: 1rem;
+}
+
+@media (max-width: 991.98px) {
+  .lw-ambassador-grid {
+    grid-template-columns: 1fr;
+  }
+  .lw-ambassador-card {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

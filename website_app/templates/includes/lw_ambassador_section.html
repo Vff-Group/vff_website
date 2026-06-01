@@ -1,0 +1,54 @@
+{% load static %}
+<div class="lw-ambassador-section lw-reveal" id="brand-ambassador">
+  <div class="container">
+    <div class="lw-section__head">
+      <span class="lw-section__label">Brand Ambassador</span>
+      <h2 class="lw-section__title">Meet Ms. Jyoti Giri</h2>
+      <p class="lw-section__desc">Official Brand Ambassador &amp; Brand Model for Velvet Wash — representing VFF Group with style, confidence, and care.</p>
+    </div>
+
+    <div class="lw-ambassador-grid">
+      <div class="lw-reveal-left">
+        <p style="color:var(--lw-text-muted);line-height:1.75;">
+          <strong>Ms. Jyoti Giri</strong> is the brand ambassador and model for <strong>Velvet Wash</strong> by VFF Group. She embodies the premium, professional image of our laundry and dry-cleaning services — from customer-facing campaigns to franchise and digital promotions.
+        </p>
+        <p style="color:var(--lw-text-muted);line-height:1.75;">
+          Watch her message below and discover why Velvet Wash stands for fresh clothes, happy lives, and a brand you can trust across Belagavi and beyond.
+        </p>
+        <ul class="lw-check-list mt-3">
+          <li><i class="fas fa-check-circle"></i> Velvet Wash Brand Ambassador</li>
+          <li><i class="fas fa-check-circle"></i> Brand Model for VFF Group campaigns</li>
+          <li><i class="fas fa-check-circle"></i> Representing quality laundry &amp; dry cleaning</li>
+        </ul>
+      </div>
+
+      <div class="lw-reveal-right">
+        {% include 'includes/lw_ambassador_card.html' %}
+      </div>
+
+      <div class="lw-ambassador-video-wrap lw-reveal-scale">
+        <div class="lw-ambassador-video">
+          <video
+            class="lw-ambassador-video__player"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="{{ ambassador_photo_url }}"
+          >
+            <source src="{{ ambassador_video_url }}" type="video/mp4" />
+            <source src="{{ ambassador_video_url }}" type="video/quicktime" />
+          </video>
+          <button type="button" class="lw-ambassador-video__sound lw-video-sound-toggle" aria-label="Unmute video" title="Tap for sound">
+            <i class="fas fa-volume-mute" aria-hidden="true"></i>
+            <span class="lw-ambassador-video__sound-label">Tap for sound</span>
+          </button>
+        </div>
+        <p class="lw-ambassador-video__caption small text-center mt-2 mb-0" style="color:var(--lw-text-muted);">
+          Ms. Jyoti Giri · Brand Ambassador &amp; Brand Model · Velvet Wash
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
