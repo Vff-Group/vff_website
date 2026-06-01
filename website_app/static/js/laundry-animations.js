@@ -107,33 +107,92 @@
     }, { passive: true });
   }
 
-  /* Ambassador video — muted at start, tap to unmute */
-  document.querySelectorAll('.lw-video-sound-toggle').forEach(function (btn) {
-    var wrap = btn.closest('.lw-ambassador-video');
-    var video = wrap && wrap.querySelector('video');
+  /* Ambassador video — muted at start, tap to unmute, fullscreen */
+  document.querySelectorAll('.lw-ambassador-video').forEach(function (wrap) {
+    var video = wrap.querySelector('video');
     if (!video) return;
 
-    function syncBtn() {
+    var soundBtn = wrap.querySelector('.lw-video-sound-toggle');
+    var fsBtn = wrap.querySelector('.lw-video-fullscreen-toggle');
+
+    function syncSoundBtn() {
+      if (!soundBtn) return;
       var on = !video.muted;
-      btn.setAttribute('aria-label', on ? 'Mute video' : 'Unmute video');
-      btn.setAttribute('title', on ? 'Mute' : 'Tap for sound');
-      btn.classList.toggle('lw-video-sound-toggle--on', on);
-      var icon = btn.querySelector('i');
-      if (icon) {
-        icon.className = on ? 'fas fa-volume-up' : 'fas fa-volume-mute';
-      }
-      var label = btn.querySelector('.lw-ambassador-video__sound-label');
+      soundBtn.setAttribute('aria-label', on ? 'Mute video' : 'Unmute video');
+      soundBtn.setAttribute('title', on ? 'Mute' : 'Tap for sound');
+      soundBtn.classList.toggle('lw-video-sound-toggle--on', on);
+      var icon = soundBtn.querySelector('i');
+      if (icon) icon.className = on ? 'fas fa-volume-up' : 'fas fa-volume-mute';
+      var label = soundBtn.querySelector('.lw-ambassador-video__sound-label');
       if (label) label.textContent = on ? 'Sound on' : 'Tap for sound';
     }
 
-    btn.addEventListener('click', function () {
-      video.muted = !video.muted;
-      if (!video.muted) {
-        video.play().catch(function () {});
+    if (soundBtn) {
+      soundBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        video.muted = !video.muted;
+        if (!video.muted) video.play().catch(function () {});
+        syncSoundBtn();
+      });
+      syncSoundBtn();
+    }
+
+    function isFsActive() {
+      var fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+      return fsEl === wrap || fsEl === video;
+    }
+
+    function syncFsBtn() {
+      if (!fsBtn) return;
+      var active = isFsActive();
+      fsBtn.setAttribute('aria-label', active ? 'Exit fullscreen' : 'Open video fullscreen');
+      fsBtn.setAttribute('title', active ? 'Exit fullscreen' : 'Fullscreen');
+      var icon = fsBtn.querySelector('i');
+      if (icon) icon.className = active ? 'fas fa-compress' : 'fas fa-expand';
+    }
+
+    function enterFullscreen() {
+      if (video.webkitEnterFullscreen) {
+        video.webkitEnterFullscreen();
+        return;
       }
-      syncBtn();
+      var req = wrap.requestFullscreen || wrap.webkitRequestFullscreen || wrap.msRequestFullscreen;
+      if (req) {
+        Promise.resolve(req.call(wrap)).then(function () {
+          video.play().catch(function () {});
+        }).catch(function () {});
+      }
+    }
+
+    function exitFullscreen() {
+      if (document.webkitFullscreenElement === video && video.webkitExitFullscreen) {
+        video.webkitExitFullscreen();
+        return;
+      }
+      var exit = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
+      if (exit) exit.call(document);
+    }
+
+    function toggleFullscreen() {
+      if (isFsActive()) exitFullscreen();
+      else enterFullscreen();
+    }
+
+    if (fsBtn) {
+      fsBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        toggleFullscreen();
+      });
+    }
+
+    video.addEventListener('click', function () {
+      toggleFullscreen();
     });
 
-    syncBtn();
+    document.addEventListener('fullscreenchange', syncFsBtn);
+    document.addEventListener('webkitfullscreenchange', syncFsBtn);
+    video.addEventListener('webkitbeginfullscreen', syncFsBtn);
+    video.addEventListener('webkitendfullscreen', syncFsBtn);
+    syncFsBtn();
   });
 })();
