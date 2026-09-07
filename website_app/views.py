@@ -133,22 +133,8 @@ def _normalize_mobile(raw):
     return digits
 
 
-def _ensure_deletion_requests_table(cursor):
-    cursor.execute(
-        """
-        CREATE TABLE IF NOT EXISTS vff.account_deletion_requeststbl (
-            id SERIAL PRIMARY KEY,
-            usrid INTEGER,
-            usrname VARCHAR(255) NOT NULL,
-            mobile_no VARCHAR(50) NOT NULL,
-            requested_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-            status VARCHAR(50) DEFAULT 'pending'
-        )
-        """
-    )
-
-
 def delete_account(request):
+    """Show delete form. On valid username+mobile, only show a message — never delete the account."""
     current_url = request.get_full_path()
     context = {
         "current_url": current_url,
@@ -178,7 +164,7 @@ def delete_account(request):
         with connection.cursor() as cursor:
             cursor.execute(
                 """
-                SELECT usrid, usrname, mobile_no
+                SELECT usrid
                 FROM vff.usertbl
                 WHERE LOWER(TRIM(usrname)) = LOWER(%s)
                   AND RIGHT(REGEXP_REPLACE(COALESCE(mobile_no, ''), '[^0-9]', '', 'g'), 10) = %s
@@ -191,22 +177,12 @@ def delete_account(request):
                 context["error"] = "No account found with this username and mobile number."
                 return render(request, "delete_account.html", context)
 
-            usrid, db_username, db_mobile = row
-            _ensure_deletion_requests_table(cursor)
-            cursor.execute(
-                """
-                INSERT INTO vff.account_deletion_requeststbl (usrid, usrname, mobile_no, status)
-                VALUES (%s, %s, %s, 'pending')
-                """,
-                [usrid, db_username, db_mobile],
-            )
-            connection.commit()
-            print(f"Account deletion requested for usrid={usrid}, username={db_username}")
+            # Intentionally do not delete or modify the account — message only.
             context["success"] = True
             context["username"] = ""
             context["mobile"] = ""
     except Exception as e:
-        print(f"Error processing account deletion request: {e}")
+        print(f"Error validating account deletion form: {e}")
         context["error"] = "Something went wrong. Please try again later or contact support."
 
     return render(request, "delete_account.html", context)
