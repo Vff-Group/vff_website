@@ -16,6 +16,7 @@ import requests
 import json
 import time
 import re
+from vff_website_project.firebase_messaging import sendFMCMsg
 
 
 from PIL import Image  # Pillow library for image processing
@@ -114,43 +115,6 @@ def send_notification(registration_ids , message_title , message_desc):
 
     result = requests.post(url,  data=json.dumps(payload), headers=headers )
     print(result.json())
-
-
-def sendFMCMsg(deviceToken, msg, title, data):
-    global serverToken
-    deviceToken = deviceToken.replace('__colon__', ':')
-
-    # Validate the device token
-    if not deviceToken:
-        print("Invalid device token")
-        return
-
-    # Check if the token has already been sent a notification
-    # (You may want to implement a more robust solution to track notifications)
-
-    headers = {
-        'Content-Type': 'application/json',
-        'Authorization': 'key=' + serverToken,
-    }
-
-    body = {
-        'notification': {
-            'title': title,
-            'body': msg
-        },
-        'data': data,
-        'to': deviceToken,
-        'priority': 'high',
-    }
-
-    try:
-        response = requests.post("https://fcm.googleapis.com/fcm/send", headers=headers, data=json.dumps(body))
-        response_data = response.json()
-        print("FCM Response:")
-        print(response_data)
-        print("Status Code:", response.status_code)
-    except requests.exceptions.RequestException as e:
-        print("Error sending FCM notification:", e)
 
 #Login Page
 @never_cache

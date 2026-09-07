@@ -10,20 +10,25 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
+
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(BASE_DIR / ".env")
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-w$a1myz)1y_m=5xxq(8857a&4p3#8*pez_m8)oi!54jg7vj3!k'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-w$a1myz)1y_m=5xxq(8857a&4p3#8*pez_m8)oi!54jg7vj3!k')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True 
+DEBUG = os.getenv('DEBUG', 'True').lower() in ('true', '1', 'yes')
 
 ALLOWED_HOSTS = ['www.vff-group.com','www.vffgroup.in','vffgroup.in','vff-group.com','www.velvetwash.in','velvetwash.in','localhost','62.72.57.222']
 

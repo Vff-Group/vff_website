@@ -93,7 +93,8 @@ secrets.json
 credentials.json
 githubAuthKey.txt
 firebase-adminsdk*.json
-serviceAccount*.json
+credentials/
+credentials/*.json
 
 # ─── IDEs & editors ────────────────────────────────────────────────────
 .idea/

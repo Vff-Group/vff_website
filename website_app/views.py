@@ -124,3 +124,89 @@ def book_order_now(request):
         except Exception as e:
             print(f"Error loading data: {e}")
     return render(request, "book_order.html", {'current_url': current_url})
+
+
+def _normalize_mobile(raw):
+    digits = re.sub(r"\D", "", (raw or "").strip())
+    if len(digits) > 10 and digits.startswith("91"):
+        digits = digits[-10:]
+    return digits
+
+
+def _ensure_deletion_requests_table(cursor):
+    cursor.execute(
+        """
+        CREATE TABLE IF NOT EXISTS vff.account_deletion_requeststbl (
+            id SERIAL PRIMARY KEY,
+            usrid INTEGER,
+            usrname VARCHAR(255) NOT NULL,
+            mobile_no VARCHAR(50) NOT NULL,
+            requested_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+            status VARCHAR(50) DEFAULT 'pending'
+        )
+        """
+    )
+
+
+def delete_account(request):
+    current_url = request.get_full_path()
+    context = {
+        "current_url": current_url,
+        "success": False,
+        "error": "",
+        "username": "",
+        "mobile": "",
+    }
+
+    if request.method != "POST":
+        return render(request, "delete_account.html", context)
+
+    username = (request.POST.get("username") or "").strip()
+    mobile = _normalize_mobile(request.POST.get("mobile"))
+    context["username"] = username
+    context["mobile"] = mobile
+
+    if not username or not mobile:
+        context["error"] = "Please enter both username and mobile number."
+        return render(request, "delete_account.html", context)
+
+    if len(mobile) != 10:
+        context["error"] = "Please enter a valid 10-digit mobile number."
+        return render(request, "delete_account.html", context)
+
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT usrid, usrname, mobile_no
+                FROM vff.usertbl
+                WHERE LOWER(TRIM(usrname)) = LOWER(%s)
+                  AND RIGHT(REGEXP_REPLACE(COALESCE(mobile_no, ''), '[^0-9]', '', 'g'), 10) = %s
+                LIMIT 1
+                """,
+                [username, mobile],
+            )
+            row = cursor.fetchone()
+            if not row:
+                context["error"] = "No account found with this username and mobile number."
+                return render(request, "delete_account.html", context)
+
+            usrid, db_username, db_mobile = row
+            _ensure_deletion_requests_table(cursor)
+            cursor.execute(
+                """
+                INSERT INTO vff.account_deletion_requeststbl (usrid, usrname, mobile_no, status)
+                VALUES (%s, %s, %s, 'pending')
+                """,
+                [usrid, db_username, db_mobile],
+            )
+            connection.commit()
+            print(f"Account deletion requested for usrid={usrid}, username={db_username}")
+            context["success"] = True
+            context["username"] = ""
+            context["mobile"] = ""
+    except Exception as e:
+        print(f"Error processing account deletion request: {e}")
+        context["error"] = "Something went wrong. Please try again later or contact support."
+
+    return render(request, "delete_account.html", context)

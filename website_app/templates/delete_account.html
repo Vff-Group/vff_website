@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Account | VFF Group{% endblock %}
+
+{% block content %}
+<section class="lw-page-hero">
+  <div class="container">
+    <img src="{{ logo_url }}" alt="VFF Group Velvet Wash" class="lw-page-hero__logo mb-2" width="160" height="48" style="filter:none;" />
+    <h1>Delete Account</h1>
+    <ul class="lw-breadcrumb">
+      <li><a href="{% url 'website_app:index' %}">Home</a></li>
+      <li class="active"> / Delete Account</li>
+    </ul>
+  </div>
+</section>
+
+<section class="lw-section">
+  <div class="container">
+    <div class="lw-book-grid">
+      <div class="lw-form-card">
+        {% if success %}
+        <div class="alert alert-success mb-0" role="alert" style="border-radius:12px;padding:1.25rem 1.5rem;">
+          <h3 class="mb-2" style="font-size:1.25rem;">Request received</h3>
+          <p class="mb-0">Your account data will be deleted within <strong>24 hours</strong>.</p>
+          <p class="small mt-3 mb-0" style="color:var(--lw-text-muted);">
+            If you did not mean to request this, contact us at
+            <a href="tel:+916364912877">+(91) 06364912877</a>
+            or
+            <a href="mailto:info@vff-group.com">info@vff-group.com</a>
+            as soon as possible.
+          </p>
+        </div>
+        {% else %}
+        <h3 class="mb-2">Request account deletion</h3>
+        <p class="mb-4" style="color:var(--lw-text-muted);">
+          Enter the username and mobile number registered with your VFF Group app account.
+          After verification, your data will be deleted within 24 hours.
+        </p>
+
+        {% if error %}
+        <div class="alert alert-danger mb-3" role="alert" style="border-radius:12px;">
+          {{ error }}
+        </div>
+        {% endif %}
+
+        <form method="post" action="{% url 'website_app:delete_account' %}" novalidate>
+          {% csrf_token %}
+          <label class="lw-form-label" for="input-username">Username</label>
+          <input
+            type="text"
+            id="input-username"
+            class="lw-form-control"
+            name="username"
+            value="{{ username|default:'' }}"
+            placeholder="Your registered username"
+            autocomplete="username"
+            required
+          />
+
+          <label class="lw-form-label" for="input-mobile">Mobile Number</label>
+          <input
+            type="tel"
+            id="input-mobile"
+            class="lw-form-control"
+            name="mobile"
+            value="{{ mobile|default:'' }}"
+            placeholder="10-digit mobile number"
+            inputmode="numeric"
+            maxlength="15"
+            autocomplete="tel"
+            required
+          />
+
+          <button type="submit" class="lw-btn lw-btn-primary lw-btn-block mt-2">Submit Delete Request</button>
+        </form>
+        {% endif %}
+      </div>
+
+      <aside class="lw-order-summary">
+        <h4 class="mb-3">Before you delete</h4>
+        <ul class="lw-pricing-list mb-0">
+          <li><i class="fas fa-check"></i> Username &amp; mobile must match your app account</li>
+          <li><i class="fas fa-check"></i> Deletion is processed within 24 hours</li>
+          <li><i class="fas fa-check"></i> Orders, bookings, and profile data will be removed</li>
+          <li><i class="fas fa-check"></i> This action cannot be undone after processing</li>
+        </ul>
+        <p class="small mt-3 mb-0" style="color:var(--lw-text-muted);">
+          Need help instead?
+          <a href="{% url 'website_app:contactus' %}">Contact support</a>
+        </p>
+      </aside>
+    </div>
+  </div>
+</section>
+{% endblock %}
