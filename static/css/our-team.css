@@ -292,8 +292,15 @@
 @media (prefers-reduced-motion: reduce) {
   .lw-team-page .lw-team-card,
   .lw-team-page .lw-team-owner,
-  .lw-team-page .lw-team-card__photo img {
+  .lw-team-page .lw-team-card__photo img,
+  .lw-team-tech {
     animation: none !important;
     transition: none !important;
   }
+}
+
+@media (max-width: 767px) {
+  .lw-team-tech { grid-template-columns: 1fr; text-align: center; }
+  .lw-team-tech__photo-wrap { max-width: 260px; margin: 0 auto; }
+  .lw-team-tech-pills { justify-content: center; }
 }
