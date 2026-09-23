@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Our Team | Velvet Wash — VFF Group{% endblock %}
+
+{% block content %}
+<section class="lw-page-hero lw-page-hero--video">
+  <div class="lw-page-hero__video">
+    <video autoplay muted loop playsinline>
+      <source src="{{ vff_video_2 }}" type="video/mp4" />
+    </video>
+  </div>
+  <div class="lw-page-hero__overlay"></div>
+  <div class="container">
+    <img src="{{ logo_url }}" alt="VFF Group" class="lw-page-hero__logo mb-2" width="180" height="54" />
+    <h1>Our Team</h1>
+    <ul class="lw-breadcrumb">
+      <li><a href="{% url 'website_app:index' %}">Home</a></li>
+      <li class="active"> / Our Team</li>
+    </ul>
+  </div>
+</section>
+
+<section class="lw-section">
+  <div class="container">
+    <div class="lw-section__head">
+      <span class="lw-section__label">Founder &amp; CEO</span>
+      <h2 class="lw-section__title">Leadership at Velvet Wash</h2>
+      <p class="lw-section__desc">The people who lead Velvet Wash across India and the UAE — from the founder to regional directors, technical, and marketing.</p>
+    </div>
+
+    <article class="lw-team-owner">
+      <div class="lw-team-owner__photo-wrap">
+        <img
+          src="{% static 'new_images/owner_profile_picture.jpeg' %}"
+          alt="Mrs. Deepa R Pattar — Founder &amp; CEO, VFF Group"
+          class="lw-team-owner__photo"
+          width="420"
+          height="560"
+        />
+      </div>
+      <div class="lw-team-owner__info">
+        <span class="lw-team-chip">Founder &amp; Chief Executive Officer</span>
+        <h3>Mrs. Deepa R Pattar</h3>
+        <p class="lw-lead">VFF Group · Velvet Wash Laundry &amp; Dry Cleaning</p>
+        <p>Mrs. Deepa R Pattar founded Velvet Wash under VFF Group to raise laundry standards in Karnataka and beyond. Women Entrepreneur of the Year 2022, she leads operations, franchise growth, and the team you see below.</p>
+        <ul class="lw-check-list">
+          <li><i class="fas fa-award"></i> Women Entrepreneur of the Year 2022</li>
+          <li><i class="fas fa-map-marker-alt"></i> Belagavi, Karnataka — Tilakwadi &amp; Auto Nagar</li>
+          <li><i class="fas fa-handshake"></i> Driving Velvet Wash franchise growth across India</li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="lw-section lw-section--alt">
+  <div class="container">
+    <div class="lw-section__head">
+      <span class="lw-section__label">Board</span>
+      <h2 class="lw-section__title">Director &amp; Board Advisor</h2>
+    </div>
+    <div class="lw-team-grid lw-team-grid--featured">
+      <article class="lw-team-card lw-team-card--featured">
+        <div class="lw-team-card__photo">
+          <img src="{% static 'images/our_partners/david-muller.jpeg' %}" alt="Mr. David Muller" loading="lazy" />
+        </div>
+        <div class="lw-team-card__body">
+          <span class="lw-team-chip">Director &amp; Board Advisor</span>
+          <h3>Mr. David Muller</h3>
+          <p class="lw-team-card__region"><i class="fas fa-globe-asia"></i> UAE</p>
+          <p>Director &amp; Board Advisor for Velvet Wash, supporting strategy and governance from the UAE.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="lw-section">
+  <div class="container">
+    <div class="lw-section__head">
+      <span class="lw-section__label">Regional Leadership</span>
+      <h2 class="lw-section__title">Directors &amp; Managing Partners</h2>
+      <p class="lw-section__desc">Territory heads who grow Velvet Wash across North East India, Maharashtra, Telangana, Andhra Pradesh, and Karnataka.</p>
+    </div>
+    <div class="lw-team-grid lw-team-grid--4">
+      <article class="lw-team-card">
+        <div class="lw-team-card__photo">
+          <img src="{% static 'images/our_partners/saurabh-goswami.jpeg' %}" alt="Mr. Saurabh Goswami" loading="lazy" />
+        </div>
+        <div class="lw-team-card__body">
+          <span class="lw-team-chip">Director Marketing &amp; Managing Partner</span>
+          <h3>Mr. Saurabh Goswami</h3>
+          <p class="lw-team-card__region"><i class="fas fa-map-marker-alt"></i> Entire North East region</p>
+        </div>
+      </article>
+      <article class="lw-team-card">
+        <div class="lw-team-card__photo">
+          <img src="{% static 'images/our_partners/sham-gaonkar.jpeg' %}" alt="Mr. Sham Gaonkar" loading="lazy" />
+        </div>
+        <div class="lw-team-card__body">
+          <span class="lw-team-chip">Director Marketing &amp; Managing Partner</span>
+          <h3>Mr. Sham Gaonkar</h3>
+          <p class="lw-team-card__region"><i class="fas fa-map-marker-alt"></i> Entire Maharashtra State</p>
+        </div>
+      </article>
+      <article class="lw-team-card">
+        <div class="lw-team-card__photo">
+          <img src="{% static 'images/our_partners/srinivas-paladi.png' %}" alt="Mr. Srinivas Paladi" loading="lazy" />
+        </div>
+        <div class="lw-team-card__body">
+          <span class="lw-team-chip">Director Marketing &amp; Managing Partner</span>
+          <h3>Mr. Srinivas Paladi</h3>
+          <p class="lw-team-card__region"><i class="fas fa-map-marker-alt"></i> Telangana &amp; Andhra Pradesh</p>
+        </div>
+      </article>
+      <article class="lw-team-card">
+        <div class="lw-team-card__photo">
+          <img src="{% static 'images/our_partners/uday.png' %}" alt="Mr. Uday" loading="lazy" />
+        </div>
+        <div class="lw-team-card__body">
+          <span class="lw-team-chip">Director</span>
+          <h3>Mr. Uday</h3>
+          <p class="lw-team-card__region"><i class="fas fa-map-marker-alt"></i> Bengaluru &amp; Karnataka rural</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="lw-section lw-section--alt">
+  <div class="container">
+    <div class="lw-section__head">
+      <span class="lw-section__label">Operations &amp; Marketing</span>
+      <h2 class="lw-section__title">Corporate team</h2>
+    </div>
+    <div class="lw-team-grid lw-team-grid--2">
+      <article class="lw-team-card">
+        <div class="lw-team-card__photo">
+          <img src="{% static 'images/our_partners/madhav-pejoli.jpeg' %}" alt="Mr. Madhav Pejoli" loading="lazy" />
+        </div>
+        <div class="lw-team-card__body">
+          <span class="lw-team-chip">Head of Technical &amp; Sourcing</span>
+          <h3>Mr. Madhav Pejoli</h3>
+          <p class="lw-team-card__region"><i class="fas fa-cogs"></i> Equipment, technical &amp; sourcing</p>
+        </div>
+      </article>
+      <article class="lw-team-card">
+        <div class="lw-team-card__photo">
+          <img src="{% static 'images/our_partners/laxmi-zazari.png' %}" alt="Ms. Laxmi Zazari" loading="lazy" />
+        </div>
+        <div class="lw-team-card__body">
+          <span class="lw-team-chip">Marketing Executive</span>
+          <h3>Ms. Laxmi Zazari</h3>
+          <p class="lw-team-card__region"><i class="fas fa-bullhorn"></i> Brand &amp; marketing</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+{% endblock %}

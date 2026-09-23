@@ -105,6 +105,11 @@ def faq(request):
     return render(request, "faq.html", {'current_url': current_url})
 
 
+def our_team(request):
+    current_url = request.get_full_path()
+    return render(request, "our_team.html", {'current_url': current_url})
+
+
 def book_order_now(request):
     current_url = request.get_full_path()
     if request.method == "POST":
