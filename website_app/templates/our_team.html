@@ -4,7 +4,7 @@
 {% block title %}Our Team | Velvet Wash — VFF Group{% endblock %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{% static 'css/our-team.css' %}?v=2" />
+<link rel="stylesheet" href="{% static 'css/our-team.css' %}?v=3" />
 <style>
   .lw-team-page { overflow-x: hidden; }
   .lw-team-page .lw-team-owner {
@@ -12,19 +12,53 @@
     grid-template-columns: minmax(200px, 300px) 1fr;
     gap: 2rem;
     align-items: center;
-    background: #fff;
+    position: relative;
+    background: linear-gradient(180deg, #fff 0%, #f8fbff 100%);
     border: 1px solid #e2e8f0;
     border-radius: 16px;
     box-shadow: 0 8px 30px rgba(37, 99, 235, 0.12);
     padding: 1.75rem;
     max-width: 980px;
     margin: 0 auto;
+    overflow: hidden;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease, border-color 0.45s ease;
   }
+  .lw-team-page .lw-team-owner::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(120deg, #2563eb, #7c3aed, #db2777, #2563eb);
+    background-size: 300% 300%;
+    opacity: 0;
+    z-index: 0;
+    transition: opacity 0.45s ease;
+    animation: lw-team-gradient-move 8s linear infinite;
+  }
+  .lw-team-page .lw-team-owner::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    background: linear-gradient(180deg, #fff 0%, #f8fbff 100%);
+    border-radius: 14px;
+    z-index: 0;
+  }
+  .lw-team-page .lw-team-owner:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 22px 50px rgba(37, 99, 235, 0.22);
+    border-color: transparent;
+  }
+  .lw-team-page .lw-team-owner:hover::before { opacity: 1; }
+  .lw-team-page .lw-team-owner > * { position: relative; z-index: 1; }
   .lw-team-page .lw-team-owner__photo-wrap {
     border-radius: 12px;
     overflow: hidden;
     border: 3px solid #2563eb;
     margin: 0;
+    transition: transform 0.45s ease, box-shadow 0.45s ease;
+  }
+  .lw-team-page .lw-team-owner:hover .lw-team-owner__photo-wrap {
+    transform: scale(1.03);
+    box-shadow: 0 12px 28px rgba(37, 99, 235, 0.28);
   }
   .lw-team-page .lw-team-owner__photo,
   .lw-team-page .lw-team-card__photo img {
@@ -36,7 +70,9 @@
     object-position: top center;
     display: block !important;
     margin: 0 !important;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   }
+  .lw-team-page .lw-team-owner:hover .lw-team-owner__photo { transform: scale(1.06); }
   .lw-team-page .lw-team-owner__info h3 { font-size: 1.75rem; margin: 0.6rem 0 0.25rem; }
   .lw-team-page .lw-team-chip {
     display: inline-block;
@@ -49,6 +85,7 @@
     background: #eff6ff;
     border-radius: 999px;
     border: 1px solid rgba(37, 99, 235, 0.15);
+    transition: background 0.35s ease, color 0.35s ease, transform 0.35s ease;
   }
   .lw-team-page .lw-team-grid {
     display: grid !important;
@@ -64,6 +101,7 @@
     margin: 0 auto;
   }
   .lw-team-page .lw-team-card {
+    position: relative;
     background: #fff;
     border: 1px solid #e2e8f0;
     border-radius: 16px;
@@ -71,12 +109,96 @@
     overflow: hidden;
     height: 100%;
     margin: 0;
+    cursor: pointer;
+    transform: translateY(0);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease, border-color 0.45s ease;
+    animation: lw-team-rise 0.7s ease both;
   }
-  .lw-team-page .lw-team-card__photo { background: #f8fafc; }
-  .lw-team-page .lw-team-card__body { padding: 1.1rem 1.15rem 1.3rem; }
-  .lw-team-page .lw-team-card__body h3 { font-size: 1.08rem; margin: 0.5rem 0 0.3rem; }
-  .lw-team-page .lw-team-card__region { margin: 0; color: #64748b; font-size: 0.88rem; }
+  .lw-team-page .lw-team-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(145deg, rgba(37, 99, 235, 0.16), rgba(124, 58, 237, 0.12), rgba(219, 39, 119, 0.1));
+    opacity: 0;
+    z-index: 2;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .lw-team-page .lw-team-card::after {
+    content: "";
+    position: absolute;
+    width: 160%;
+    height: 160%;
+    top: -30%;
+    left: -30%;
+    background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%);
+    transform: translateX(-80%);
+    pointer-events: none;
+    z-index: 3;
+    transition: transform 0.7s ease;
+  }
+  .lw-team-page .lw-team-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 22px 48px rgba(37, 99, 235, 0.24);
+    border-color: rgba(37, 99, 235, 0.35);
+  }
+  .lw-team-page .lw-team-card:hover::before { opacity: 1; }
+  .lw-team-page .lw-team-card:hover::after { transform: translateX(70%); }
+  .lw-team-page .lw-team-card:hover .lw-team-chip {
+    background: linear-gradient(90deg, #2563eb, #7c3aed);
+    color: #fff;
+    border-color: transparent;
+    transform: translateY(-2px);
+  }
+  .lw-team-page .lw-team-card:hover .lw-team-card__photo img { transform: scale(1.1); }
+  .lw-team-page .lw-team-card:hover .lw-team-card__body { background: linear-gradient(180deg, rgba(255,255,255,0.92), #eef4ff); }
+  .lw-team-page .lw-team-card__photo {
+    position: relative;
+    background: #f8fafc;
+    overflow: hidden;
+  }
+  .lw-team-page .lw-team-card__photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 45%, rgba(15, 23, 42, 0.45) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+  }
+  .lw-team-page .lw-team-card:hover .lw-team-card__photo::after { opacity: 1; }
+  .lw-team-page .lw-team-card__body {
+    position: relative;
+    z-index: 4;
+    padding: 1.1rem 1.15rem 1.3rem;
+    transition: background 0.4s ease;
+  }
+  .lw-team-page .lw-team-card__body h3 { font-size: 1.08rem; margin: 0.5rem 0 0.3rem; transition: color 0.35s ease; }
+  .lw-team-page .lw-team-card:hover .lw-team-card__body h3 { color: #1d4ed8; }
+  .lw-team-page .lw-team-card__region { margin: 0 0 0.65rem; color: #64748b; font-size: 0.88rem; }
   .lw-team-page .lw-team-card__region i { color: #2563eb; margin-right: 0.3rem; }
+  .lw-team-page .lw-team-card__desc {
+    margin: 0;
+    color: #475569;
+    font-size: 0.84rem;
+    line-height: 1.6;
+  }
+  .lw-team-page .lw-team-grid--featured .lw-team-card { animation-delay: 0.12s; }
+  .lw-team-page .lw-team-grid--4 .lw-team-card:nth-child(1) { animation-delay: 0.08s; }
+  .lw-team-page .lw-team-grid--4 .lw-team-card:nth-child(2) { animation-delay: 0.16s; }
+  .lw-team-page .lw-team-grid--4 .lw-team-card:nth-child(3) { animation-delay: 0.24s; }
+  .lw-team-page .lw-team-grid--4 .lw-team-card:nth-child(4) { animation-delay: 0.32s; }
+  .lw-team-page .lw-team-grid--2 .lw-team-card:nth-child(1) { animation-delay: 0.1s; }
+  .lw-team-page .lw-team-grid--2 .lw-team-card:nth-child(2) { animation-delay: 0.2s; }
+  @keyframes lw-team-rise {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes lw-team-gradient-move {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
   @media (max-width: 1199px) {
     .lw-team-page .lw-team-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
@@ -91,6 +213,12 @@
       margin-left: auto;
       margin-right: auto;
     }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lw-team-page .lw-team-card,
+    .lw-team-page .lw-team-owner,
+    .lw-team-page .lw-team-owner__photo,
+    .lw-team-page .lw-team-card__photo img { animation: none !important; transition: none !important; }
   }
 </style>
 {% endblock %}
@@ -136,7 +264,7 @@
         <span class="lw-team-chip">Founder &amp; Chief Executive Officer</span>
         <h3>Mrs. Deepa R Pattar</h3>
         <p class="lw-lead">VFF Group · Velvet Wash Laundry &amp; Dry Cleaning</p>
-        <p>Mrs. Deepa R Pattar founded Velvet Wash under VFF Group to raise laundry standards in Karnataka and beyond. Women Entrepreneur of the Year 2022, she leads operations, franchise growth, and the team you see below.</p>
+        <p>Mrs. Deepa R Pattar leads Velvet Wash end to end — brand vision, service quality, pricing, and national expansion. She oversees both Belagavi plants, the franchise program, and the leadership team, so every outlet delivers the same professional laundry and dry-cleaning standard. Women Entrepreneur of the Year 2022, she built Velvet Wash under VFF Group and continues to guide its growth across India.</p>
         <ul class="lw-check-list">
           <li><i class="fas fa-award"></i> Women Entrepreneur of the Year 2022</li>
           <li><i class="fas fa-map-marker-alt"></i> Belagavi, Karnataka — Tilakwadi &amp; Auto Nagar</li>
@@ -162,7 +290,7 @@
           <span class="lw-team-chip">Director &amp; Board Advisor</span>
           <h3>Mr. David Muller</h3>
           <p class="lw-team-card__region"><i class="fas fa-globe-asia"></i> UAE</p>
-          <p>Director &amp; Board Advisor for Velvet Wash, supporting strategy and governance from the UAE.</p>
+          <p class="lw-team-card__desc">Handles board-level strategy, partnerships, and international direction from the UAE. He advises on expansion, governance, and how Velvet Wash scales as a brand beyond a single city.</p>
         </div>
       </article>
     </div>
@@ -185,6 +313,7 @@
           <span class="lw-team-chip">Director Marketing &amp; Managing Partner</span>
           <h3>Mr. Saurabh Goswami</h3>
           <p class="lw-team-card__region"><i class="fas fa-map-marker-alt"></i> Entire North East region</p>
+          <p class="lw-team-card__desc">Handles marketing, franchise onboarding, and outlet growth across the entire North East. He builds local demand, signs and supports partners, and keeps every Velvet Wash store on brand in the region.</p>
         </div>
       </article>
       <article class="lw-team-card">
@@ -195,6 +324,7 @@
           <span class="lw-team-chip">Director Marketing &amp; Managing Partner</span>
           <h3>Mr. Sham Gaonkar</h3>
           <p class="lw-team-card__region"><i class="fas fa-map-marker-alt"></i> Entire Maharashtra State</p>
+          <p class="lw-team-card__desc">Handles marketing, partner onboarding, and outlet support across Maharashtra. He runs local campaigns, opens new Velvet Wash locations, and holds the same service standard as the flagship stores.</p>
         </div>
       </article>
       <article class="lw-team-card">
@@ -205,6 +335,7 @@
           <span class="lw-team-chip">Director Marketing &amp; Managing Partner</span>
           <h3>Mr. Srinivas Paladi</h3>
           <p class="lw-team-card__region"><i class="fas fa-map-marker-alt"></i> Telangana &amp; Andhra Pradesh</p>
+          <p class="lw-team-card__desc">Handles marketing and managing-partner operations for Telangana and Andhra Pradesh. He selects locations, onboards franchise partners, and keeps laundry operations aligned with Velvet Wash quality in both states.</p>
         </div>
       </article>
       <article class="lw-team-card">
@@ -215,6 +346,7 @@
           <span class="lw-team-chip">Director</span>
           <h3>Mr. Uday</h3>
           <p class="lw-team-card__region"><i class="fas fa-map-marker-alt"></i> Bengaluru &amp; Karnataka rural</p>
+          <p class="lw-team-card__desc">Handles Velvet Wash in Bengaluru and rural Karnataka — pickup coverage, new outlets, and franchise expansion beyond Belagavi, while keeping the same service standard as the home stores.</p>
         </div>
       </article>
     </div>
@@ -236,6 +368,7 @@
           <span class="lw-team-chip">Head of Technical &amp; Sourcing</span>
           <h3>Mr. Madhav Pejoli</h3>
           <p class="lw-team-card__region"><i class="fas fa-cogs"></i> Equipment, technical &amp; sourcing</p>
+          <p class="lw-team-card__desc">Handles plant machinery, chemicals, spare parts, and vendor sourcing for company and franchise outlets. He selects equipment, manages suppliers, and keeps every Velvet Wash unit stocked and running.</p>
         </div>
       </article>
       <article class="lw-team-card">
@@ -246,6 +379,7 @@
           <span class="lw-team-chip">Marketing Executive</span>
           <h3>Ms. Laxmi Zazari</h3>
           <p class="lw-team-card__region"><i class="fas fa-bullhorn"></i> Brand &amp; marketing</p>
+          <p class="lw-team-card__desc">Handles brand campaigns, social media, offers, and customer-facing creatives. She keeps Velvet Wash’s look and message consistent across the app, website, and store promotions.</p>
         </div>
       </article>
     </div>
