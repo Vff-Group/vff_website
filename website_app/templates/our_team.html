@@ -3,7 +3,100 @@
 
 {% block title %}Our Team | Velvet Wash — VFF Group{% endblock %}
 
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/our-team.css' %}?v=2" />
+<style>
+  .lw-team-page { overflow-x: hidden; }
+  .lw-team-page .lw-team-owner {
+    display: grid !important;
+    grid-template-columns: minmax(200px, 300px) 1fr;
+    gap: 2rem;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(37, 99, 235, 0.12);
+    padding: 1.75rem;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+  .lw-team-page .lw-team-owner__photo-wrap {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 3px solid #2563eb;
+    margin: 0;
+  }
+  .lw-team-page .lw-team-owner__photo,
+  .lw-team-page .lw-team-card__photo img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    object-position: top center;
+    display: block !important;
+    margin: 0 !important;
+  }
+  .lw-team-page .lw-team-owner__info h3 { font-size: 1.75rem; margin: 0.6rem 0 0.25rem; }
+  .lw-team-page .lw-team-chip {
+    display: inline-block;
+    color: #2563eb;
+    font-weight: 700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.3rem 0.75rem;
+    background: #eff6ff;
+    border-radius: 999px;
+    border: 1px solid rgba(37, 99, 235, 0.15);
+  }
+  .lw-team-page .lw-team-grid {
+    display: grid !important;
+    gap: 1.25rem;
+    width: 100%;
+  }
+  .lw-team-page .lw-team-grid--featured { max-width: 380px; margin: 0 auto; }
+  .lw-team-page .lw-team-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .lw-team-page .lw-team-grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 360px));
+    justify-content: center;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+  .lw-team-page .lw-team-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
+    overflow: hidden;
+    height: 100%;
+    margin: 0;
+  }
+  .lw-team-page .lw-team-card__photo { background: #f8fafc; }
+  .lw-team-page .lw-team-card__body { padding: 1.1rem 1.15rem 1.3rem; }
+  .lw-team-page .lw-team-card__body h3 { font-size: 1.08rem; margin: 0.5rem 0 0.3rem; }
+  .lw-team-page .lw-team-card__region { margin: 0; color: #64748b; font-size: 0.88rem; }
+  .lw-team-page .lw-team-card__region i { color: #2563eb; margin-right: 0.3rem; }
+  @media (max-width: 1199px) {
+    .lw-team-page .lw-team-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 767px) {
+    .lw-team-page .lw-team-owner { grid-template-columns: 1fr; text-align: center; }
+    .lw-team-page .lw-team-owner__photo-wrap { max-width: 260px; margin: 0 auto; }
+    .lw-team-page .lw-team-owner .lw-check-list { text-align: left; }
+    .lw-team-page .lw-team-grid--4,
+    .lw-team-page .lw-team-grid--2 {
+      grid-template-columns: 1fr;
+      max-width: 360px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+</style>
+{% endblock %}
+
 {% block content %}
+<div class="lw-team-page">
 <section class="lw-page-hero lw-page-hero--video">
   <div class="lw-page-hero__video">
     <video autoplay muted loop playsinline>
@@ -158,4 +251,5 @@
     </div>
   </div>
 </section>
+</div>
 {% endblock %}

@@ -1,0 +1,84 @@
+/* Our Team page — loaded separately so it is not lost in cached laundry-ui.css */
+.lw-team-page .lw-team-owner {
+  display: grid;
+  grid-template-columns: minmax(200px, 300px) 1fr;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  align-items: center;
+  background: var(--lw-surface, #fff);
+  border: 1px solid var(--lw-border, #e2e8f0);
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(37, 99, 235, 0.12);
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.lw-team-page .lw-team-owner__photo-wrap {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 3px solid var(--lw-primary, #2563eb);
+}
+
+.lw-team-page .lw-team-owner__photo,
+.lw-team-page .lw-team-card__photo img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.lw-team-page .lw-team-chip {
+  display: inline-block;
+  color: var(--lw-primary, #2563eb);
+  font-weight: 700;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.75rem;
+  background: var(--lw-primary-soft, #eff6ff);
+  border-radius: 999px;
+}
+
+.lw-team-page .lw-team-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.lw-team-page .lw-team-grid--featured { max-width: 380px; margin: 0 auto; }
+.lw-team-page .lw-team-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.lw-team-page .lw-team-grid--2 {
+  grid-template-columns: repeat(2, minmax(0, 360px));
+  justify-content: center;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.lw-team-page .lw-team-card {
+  background: var(--lw-surface, #fff);
+  border: 1px solid var(--lw-border, #e2e8f0);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
+  overflow: hidden;
+  height: 100%;
+}
+
+.lw-team-page .lw-team-card__body { padding: 1.1rem 1.15rem 1.3rem; }
+.lw-team-page .lw-team-card__body h3 { font-size: 1.08rem; margin: 0.5rem 0 0.3rem; }
+.lw-team-page .lw-team-card__region { margin: 0; color: var(--lw-text-muted, #64748b); font-size: 0.88rem; }
+
+@media (max-width: 1199px) {
+  .lw-team-page .lw-team-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 767px) {
+  .lw-team-page .lw-team-owner { grid-template-columns: 1fr; text-align: center; }
+  .lw-team-page .lw-team-owner__photo-wrap { max-width: 260px; margin: 0 auto; }
+  .lw-team-page .lw-team-grid--4,
+  .lw-team-page .lw-team-grid--2 {
+    grid-template-columns: 1fr;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
