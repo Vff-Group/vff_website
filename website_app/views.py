@@ -7,7 +7,7 @@ from django.shortcuts import render,redirect, reverse
 from django.db import connection, DatabaseError
 from django.views.decorators.cache import never_cache
 from django.contrib.auth import logout
-from django.http import HttpResponseServerError,JsonResponse,HttpResponse,HttpResponseRedirect
+from django.http import HttpResponseServerError,JsonResponse,HttpResponse,HttpResponseRedirect,FileResponse,Http404
 from colorama import Fore, Style
 from django.views.decorators.cache import never_cache
 from django.utils import timezone
@@ -108,6 +108,38 @@ def faq(request):
 def our_team(request):
     current_url = request.get_full_path()
     return render(request, "our_team.html", {'current_url': current_url})
+
+
+TEAM_ASSET_FILES = {
+    "our-team.css": ("css", "our-team.css"),
+    "david-muller.jpeg": ("images/our_partners", "david-muller.jpeg"),
+    "saurabh-goswami.jpeg": ("images/our_partners", "saurabh-goswami.jpeg"),
+    "sham-gaonkar.jpeg": ("images/our_partners", "sham-gaonkar.jpeg"),
+    "srinivas-paladi.png": ("images/our_partners", "srinivas-paladi.png"),
+    "uday.png": ("images/our_partners", "uday.png"),
+    "madhav-pejoli.jpeg": ("images/our_partners", "madhav-pejoli.jpeg"),
+    "laxmi-zazari.png": ("images/our_partners", "laxmi-zazari.png"),
+    "mohammed-shaheed-maniyar.png": ("images/our_partners", "mohammed-shaheed-maniyar.png"),
+    "harmeet-singh.jpg": ("images/our_partners", "harmeet-singh.jpg"),
+}
+
+
+def serve_team_asset(request, filename):
+    """Serve team photos/CSS from app static so nginx /static 404s do not break Our Team."""
+    filename = os.path.basename(filename)
+    spec = TEAM_ASSET_FILES.get(filename)
+    if not spec:
+        raise Http404()
+    rel_dir, name = spec
+    for root in (
+        os.path.join(settings.BASE_DIR, "website_app", "static"),
+        os.path.join(settings.BASE_DIR, "static"),
+    ):
+        path = os.path.join(root, rel_dir, name)
+        if os.path.isfile(path):
+            content_type, _ = mimetypes.guess_type(path)
+            return FileResponse(open(path, "rb"), content_type=content_type or "application/octet-stream")
+    raise Http404()
 
 
 def book_order_now(request):

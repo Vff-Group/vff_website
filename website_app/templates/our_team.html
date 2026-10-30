@@ -4,7 +4,7 @@
 {% block title %}Our Team | Velvet Wash — VFF Group{% endblock %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="/static/css/our-team.css?v=5" />
+<link rel="stylesheet" href="/team-assets/our-team.css?v=6" />
 <style>
   .lw-team-page { overflow-x: hidden; }
   .lw-team-page .lw-team-owner {
@@ -93,7 +93,7 @@
     width: 100%;
   }
   .lw-team-page .lw-team-grid--featured { max-width: 380px; margin: 0 auto; }
-  .lw-team-page .lw-team-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .lw-team-page .lw-team-grid--4 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
   .lw-team-page .lw-team-grid--2 {
     grid-template-columns: repeat(2, minmax(0, 360px));
     justify-content: center;
@@ -188,6 +188,7 @@
   .lw-team-page .lw-team-grid--4 .lw-team-card:nth-child(2) { animation-delay: 0.16s; }
   .lw-team-page .lw-team-grid--4 .lw-team-card:nth-child(3) { animation-delay: 0.24s; }
   .lw-team-page .lw-team-grid--4 .lw-team-card:nth-child(4) { animation-delay: 0.32s; }
+  .lw-team-page .lw-team-grid--4 .lw-team-card:nth-child(5) { animation-delay: 0.4s; }
   .lw-team-page .lw-team-grid--2 .lw-team-card:nth-child(1) { animation-delay: 0.1s; }
   .lw-team-page .lw-team-grid--2 .lw-team-card:nth-child(2) { animation-delay: 0.2s; }
   @keyframes lw-team-rise {
@@ -387,7 +388,7 @@
     <div class="lw-team-grid lw-team-grid--featured">
       <article class="lw-team-card lw-team-card--featured">
         <div class="lw-team-card__photo">
-          <img src="/static/images/our_partners/david-muller.jpeg" alt="Mr. David Muller" loading="lazy" />
+          <img src="/team-assets/david-muller.jpeg" alt="Mr. David Muller" loading="lazy" />
         </div>
         <div class="lw-team-card__body">
           <span class="lw-team-chip">Director &amp; Board Advisor</span>
@@ -405,12 +406,12 @@
     <div class="lw-section__head">
       <span class="lw-section__label">Regional Leadership</span>
       <h2 class="lw-section__title">Directors &amp; Managing Partners</h2>
-      <p class="lw-section__desc">Territory heads who grow Velvet Wash across North East India, Maharashtra, Telangana, Andhra Pradesh, and Karnataka.</p>
+      <p class="lw-section__desc">Territory heads who grow Velvet Wash across North East India, Jammu &amp; Kashmir, Punjab, Maharashtra, Telangana, Andhra Pradesh, and Karnataka.</p>
     </div>
     <div class="lw-team-grid lw-team-grid--4">
       <article class="lw-team-card">
         <div class="lw-team-card__photo">
-          <img src="/static/images/our_partners/saurabh-goswami.jpeg" alt="Mr. Saurabh Goswami" loading="lazy" />
+          <img src="/team-assets/saurabh-goswami.jpeg" alt="Mr. Saurabh Goswami" loading="lazy" />
         </div>
         <div class="lw-team-card__body">
           <span class="lw-team-chip">Director Marketing &amp; Managing Partner</span>
@@ -421,7 +422,7 @@
       </article>
       <article class="lw-team-card">
         <div class="lw-team-card__photo">
-          <img src="/static/images/our_partners/sham-gaonkar.jpeg" alt="Mr. Sham Gaonkar" loading="lazy" />
+          <img src="/team-assets/sham-gaonkar.jpeg" alt="Mr. Sham Gaonkar" loading="lazy" />
         </div>
         <div class="lw-team-card__body">
           <span class="lw-team-chip">Director Marketing &amp; Managing Partner</span>
@@ -432,7 +433,7 @@
       </article>
       <article class="lw-team-card">
         <div class="lw-team-card__photo">
-          <img src="/static/images/our_partners/srinivas-paladi.png" alt="Mr. Srinivas Paladi" loading="lazy" />
+          <img src="/team-assets/srinivas-paladi.png" alt="Mr. Srinivas Paladi" loading="lazy" />
         </div>
         <div class="lw-team-card__body">
           <span class="lw-team-chip">Director Marketing &amp; Managing Partner</span>
@@ -443,13 +444,24 @@
       </article>
       <article class="lw-team-card">
         <div class="lw-team-card__photo">
-          <img src="/static/images/our_partners/uday.png" alt="Mr. Uday" loading="lazy" />
+          <img src="/team-assets/uday.png" alt="Mr. Uday" loading="lazy" />
         </div>
         <div class="lw-team-card__body">
           <span class="lw-team-chip">Director</span>
           <h3>Mr. Uday</h3>
           <p class="lw-team-card__region"><i class="fas fa-map-marker-alt"></i> Bengaluru &amp; Karnataka rural</p>
           <p class="lw-team-card__desc">Handles Velvet Wash in Bengaluru and rural Karnataka — pickup coverage, new outlets, and franchise expansion beyond Belagavi, while keeping the same service standard as the home stores.</p>
+        </div>
+      </article>
+      <article class="lw-team-card">
+        <div class="lw-team-card__photo">
+          <img src="/team-assets/harmeet-singh.jpg" alt="Mr. Harmeet Singh" loading="lazy" />
+        </div>
+        <div class="lw-team-card__body">
+          <span class="lw-team-chip">Director &amp; Managing Partner</span>
+          <h3>Mr. Harmeet Singh</h3>
+          <p class="lw-team-card__region"><i class="fas fa-map-marker-alt"></i> Jammu &amp; Kashmir and Punjab</p>
+          <p class="lw-team-card__desc">Handles marketing, franchise onboarding, and outlet growth across Jammu &amp; Kashmir and Punjab. He builds local partnerships, opens Velvet Wash locations, and keeps every store on the same service standard.</p>
         </div>
       </article>
     </div>
@@ -465,7 +477,7 @@
     <div class="lw-team-grid lw-team-grid--2">
       <article class="lw-team-card">
         <div class="lw-team-card__photo">
-          <img src="/static/images/our_partners/madhav-pejoli.jpeg" alt="Mr. Madhav Pejoli" loading="lazy" />
+          <img src="/team-assets/madhav-pejoli.jpeg" alt="Mr. Madhav Pejoli" loading="lazy" />
         </div>
         <div class="lw-team-card__body">
           <span class="lw-team-chip">Head of Technical &amp; Sourcing</span>
@@ -476,7 +488,7 @@
       </article>
       <article class="lw-team-card">
         <div class="lw-team-card__photo">
-          <img src="/static/images/our_partners/laxmi-zazari.png" alt="Ms. Laxmi Zazari" loading="lazy" />
+          <img src="/team-assets/laxmi-zazari.png" alt="Ms. Laxmi Zazari" loading="lazy" />
         </div>
         <div class="lw-team-card__body">
           <span class="lw-team-chip">Marketing Executive</span>
@@ -499,7 +511,7 @@
     <article class="lw-team-tech">
       <div class="lw-team-tech__photo-wrap">
         <img
-          src="/static/images/our_partners/mohammed-shaheed-maniyar.png"
+          src="/team-assets/mohammed-shaheed-maniyar.png"
           alt="Mr. Mohammed Shaheed Maniyar — Founder &amp; CEO, AZ Deploy"
           class="lw-team-tech__photo"
           width="400"

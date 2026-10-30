@@ -86,7 +86,7 @@
 
 .lw-team-page .lw-team-grid { display: grid; gap: 1.25rem; }
 .lw-team-page .lw-team-grid--featured { max-width: 380px; margin: 0 auto; }
-.lw-team-page .lw-team-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.lw-team-page .lw-team-grid--4 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
 .lw-team-page .lw-team-grid--2 {
   grid-template-columns: repeat(2, minmax(0, 360px));
   justify-content: center;
@@ -183,6 +183,7 @@
 .lw-team-page .lw-team-grid--4 .lw-team-card:nth-child(2) { animation-delay: 0.16s; }
 .lw-team-page .lw-team-grid--4 .lw-team-card:nth-child(3) { animation-delay: 0.24s; }
 .lw-team-page .lw-team-grid--4 .lw-team-card:nth-child(4) { animation-delay: 0.32s; }
+.lw-team-page .lw-team-grid--4 .lw-team-card:nth-child(5) { animation-delay: 0.4s; }
 .lw-team-page .lw-team-grid--2 .lw-team-card:nth-child(1) { animation-delay: 0.1s; }
 .lw-team-page .lw-team-grid--2 .lw-team-card:nth-child(2) { animation-delay: 0.2s; }
 
