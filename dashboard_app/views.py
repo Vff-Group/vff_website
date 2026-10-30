@@ -1521,7 +1521,7 @@ def delivery_accept(request,booking_id,delivery_boy_id):
                             return redirect('dashboard_app:all_bookings')
                     except Exception as e:
                         print(e)
-    return redirect('dashboard_app:all_unassigned_orders')
+    return redirect('dashboard_app:all_unassigned_bookings')
 #Assign Delivery Boy to Order ID
 def assigned_delivery_boy(request,orderid):
     branch_id = request.session.get('branchid')
