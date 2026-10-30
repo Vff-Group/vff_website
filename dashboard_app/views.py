@@ -1476,7 +1476,8 @@ def delivery_accept(request,booking_id,delivery_boy_id):
             delivery_boyid = cresult[0] #Selected from DB
             bookingid = cresult[1]
             print(f'DB delivery_boyid::{delivery_boyid}')
-            if delivery_boyid != -1:
+            already_assigned = str(delivery_boyid) not in ('-1', '', 'None')
+            if already_assigned:
                 query_order_check = "select orderid from vff.laundry_ordertbl where booking_id='"+str(booking_id)+"'"
                 oresult = execute_raw_query_fetch_one(query_order_check)
                 print(f'Order Status Check::{oresult}')   
@@ -1489,19 +1490,6 @@ def delivery_accept(request,booking_id,delivery_boy_id):
                     try:
                         with connection.cursor() as cursor:
                             print('Assigning Delivery Boy')
-                            title="VFF Group Order Assigned"
-                            body = "New Order assigned by admin for Booking ID #"+str(booking_id)+""
-                            data={
-                                'booking_id':str(booking_id)
-                            }
-                            intent = "MainRoute"
-                            order_status = "Accepted"
-                            #query_token = "select usrname,mobile_no,device_token,delivery_boy_id,profile_img,usertbl.usrid from vff.laundry_delivery_boytbl,vff.usertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and is_online='1' and status='Free' and delivery_boy_id='"+str(delivery_boy_id)+"'"
-                            query_token = "select usrname,mobile_no,device_token,delivery_boy_id,profile_img,usertbl.usrid from vff.laundry_delivery_boytbl,vff.usertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and is_online='1' and delivery_boy_id='"+str(delivery_boy_id)+"'"
-                            result = execute_raw_query_fetch_one(query_token)
-                            if result:  
-                                device_token = result[2] 
-                                sendFMCMsg(device_token,body,title,data)
                             status = "Accepted"
                             query = "insert into vff.laundry_delivery_accept_tbl(delivery_boy_id,status,booking_id,branch_id) values ('"+str(delivery_boy_id)+"','"+str(status)+"','"+str(booking_id)+"','"+str(branch_id)+"')"
                             print(f'Updating To Busy Status::{query}')
@@ -1517,6 +1505,19 @@ def delivery_accept(request,booking_id,delivery_boy_id):
                             query4="insert into vff.laundry_order_assignmenttbl(booking_id,delivery_boy_id,type_of_order) values ('"+str(booking_id)+"','"+str(delivery_boy_id)+"','Pickup')"
                             cursor.execute(query4)
                             connection.commit()
+
+                            title="VFF Group Order Assigned"
+                            body = "New Order assigned by admin for Booking ID #"+str(booking_id)+""
+                            data={
+                                'booking_id':str(booking_id)
+                            }
+                            query_token = "select usrname,mobile_no,device_token,delivery_boy_id,profile_img,usertbl.usrid from vff.laundry_delivery_boytbl,vff.usertbl where usertbl.usrid=laundry_delivery_boytbl.usrid and is_online='1' and delivery_boy_id='"+str(delivery_boy_id)+"'"
+                            result = execute_raw_query_fetch_one(query_token)
+                            if result and result[2]:
+                                try:
+                                    sendFMCMsg(result[2], body, title, data)
+                                except Exception as notify_err:
+                                    print(f'FCM skipped after assign: {notify_err}')
 
                             return redirect('dashboard_app:all_bookings')
                     except Exception as e:

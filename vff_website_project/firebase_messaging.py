@@ -72,7 +72,14 @@ def send_fcm_message(device_token: str, msg: str, title: str, data: dict[str, An
         return False
 
     token = device_token.replace("__colon__", ":")
-    init_firebase()
+    try:
+        init_firebase()
+    except FileNotFoundError as exc:
+        logger.error("%s — skipping FCM send", exc)
+        return False
+    except Exception as exc:
+        logger.exception("Firebase init failed: %s", exc)
+        return False
 
     payload_data = {str(k): str(v) for k, v in (data or {}).items()}
 
